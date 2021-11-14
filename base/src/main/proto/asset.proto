@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.bluecc.packer.asset";
+option java_outer_classname = "AssetProto";
+option objc_class_prefix = "ATP";
+
+package asset;
+import "routines.proto";
+
+// Interface exported by the server.
+service Assets {
+  rpc GetConfig(routines.ConfigItem) returns (routines.ValueObject) {}
+  rpc FindFixedAssetRegistration(routines.Filter) returns (FixedAssetRegistrations) {}
+}
+
+// Entity FixedAssetRegistration(accounting.fixedasset): Fixed Asset Registration
+message FixedAssetRegistration{
+  // keys
+  bytes fixed_asset_id = 1;   // id
+  string from_date = 2;   // date-time
+  // fields
+  string thru_date = 11;   // date-time
+  string registration_date = 12;   // date-time
+  bytes gov_agency_party_id = 13;   // id
+  string registration_number = 14;   // long-varchar
+  string license_number = 15;   // long-varchar
+}
+
+message FixedAssetRegistrations{
+  repeated FixedAssetRegistration values=1;
+}
