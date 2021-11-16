@@ -1,5 +1,6 @@
 package com.bluecc.domain.dummy.guice;
 
+import com.bluecc.domain.util.Sequence;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Scopes;
@@ -66,4 +67,8 @@ public class ServiceModule extends AbstractModule {
         }
     }
 
+    @Provides
+    public Sequence sequence(){
+        return new Sequence(null);
+    }
 }

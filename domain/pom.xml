@@ -22,6 +22,13 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+        </dependency>
+
+
         <!-- guice -->
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -66,13 +73,6 @@
         </dependency>
 
 
-        <!-- addons -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.9</version>
-        </dependency>
-
         <!-- TEST dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -96,6 +96,12 @@
 
     <build>
         <finalName>querydsl-example-sql-guice</finalName>
+
+        <!-- add resources location -->
+        <resources>
+            <resource><directory>src/main/resources</directory></resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -126,12 +132,27 @@
                     <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
                     <exportBeans>true</exportBeans>
                 </configuration>
+<!--                <configuration>-->
+<!--                    <jdbcDriver>com.mysql.cj.jdbc.Driver</jdbcDriver>-->
+<!--                    <jdbcUrl>jdbc:mysql://localhost:3306/order_proto?useSSL=false&amp;characterEncoding=utf8&amp;connectTimeout=3000-->
+<!--                    </jdbcUrl>-->
+<!--                    <jdbcUser>root</jdbcUser>-->
+<!--                    <jdbcPassword>root</jdbcPassword>-->
+<!--                    <packageName>com.bluecc.domain.sql.model</packageName>-->
+<!--                    <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>-->
+<!--                    <exportBeans>true</exportBeans>-->
+<!--                </configuration>-->
                 <dependencies>
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
                         <version>${h2.version}</version>
                     </dependency>
+<!--                    <dependency>-->
+<!--                        <groupId>mysql</groupId>-->
+<!--                        <artifactId>mysql-connector-java</artifactId>-->
+<!--                        <version>${mysql.version}</version>-->
+<!--                    </dependency>-->
                 </dependencies>
             </plugin>
 
