@@ -1,17 +1,23 @@
 package com.bluecc.domain.dummy.procs;
 
+// import com.alibaba.fastjson.JSON;
 import com.bluecc.domain.dummy.guice.ServiceModule;
 import com.bluecc.domain.dummy.guice.Transactional;
 import com.bluecc.domain.dummy.repository.AbstractRepository;
 import com.bluecc.domain.sql.model.Person;
 import com.bluecc.domain.sql.model.User;
+import com.bluecc.domain.util.JdbcHelper;
 import com.bluecc.domain.util.Sequence;
+import com.github.javafaker.Faker;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.querydsl.core.types.Predicate;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import static com.bluecc.domain.sql.model.QUser.user;
@@ -34,14 +40,26 @@ public class PersonProcs extends AbstractRepository {
             return entity.getPartyId();
         }
 
-        // String uid=UUID.randomUUID().toString();
+        // String uid=sequence.nextStringId();
+        // entity.setPartyId(uid);
+        // // return insert(person).populate(entity)
+        // //         .executeWithKey(person.partyId);
+        // // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        // insert(person).populate(entity)
+        //         .executeWithKey(person.partyId);
+        // return uid;
+
         String uid=sequence.nextStringId();
         entity.setPartyId(uid);
-        // return insert(person).populate(entity)
-        //         .executeWithKey(person.partyId);
+        return create(entity);
+    }
+
+    @Transactional
+    public String create(Person entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
         insert(person).populate(entity)
                 .executeWithKey(person.partyId);
-        return uid;
+        return entity.getPartyId();
     }
 
     @Transactional
@@ -57,20 +75,47 @@ public class PersonProcs extends AbstractRepository {
     private static final Injector injector = Guice
             .createInjector(new ServiceModule());
 
+    @Data
+    @Builder
+    static class PersonDo{
+        String partyId;
+        String lastName;
+        String fristName;
+    }
+
+    @Inject
+    JdbcHelper jdbcHelper;
     public static void main(String[] args) {
+        Faker faker;
+        faker = new Faker(new Locale("zh-CN"));
+
         PersonProcs procs=injector.getInstance(PersonProcs.class);
+        procs.jdbcHelper.truncate("person");
 
-        Person p=new Person();
-        p.setLastName("Samlet");
-        p.setFirstName("Wu");
-        String pid=procs.save(p);
-        System.out.println("save ok: "+pid);
+        for (int i = 0; i < 10; i++) {
+            Person p = new Person();
+            p.setLastName(faker.name().lastName());
+            p.setFirstName(faker.name().firstName());
+            String pid = procs.save(p);
+            System.out.println("save ok: " + pid);
+        }
 
-        procs.all().forEach(e -> {
+        List<Person> rs=procs.all();
+        rs.forEach(e -> {
             // ?? 使用gson序列化的结果与直接获取bean的属性不一致,
             // 还是需要用transform提取字段值到dto中
             System.out.println(e.getPartyId());
-            System.out.println(GSON.toJson(p));
+
+            PersonDo pdo=PersonDo.builder()
+                    .partyId(e.getPartyId())
+                    .fristName(e.getFirstName())
+                    .lastName(e.getLastName())
+                    .build();
+
+            System.out.println(GSON.toJson(e));
+            System.out.println(GSON.toJson(pdo));
+            // String jsonObject = JSON.toJSONString(e);
+            // System.out.println(jsonObject);
         });
     }
 }

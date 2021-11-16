@@ -72,6 +72,17 @@
             <version>${jodatime.version}</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>fastjson</artifactId>-->
+<!--            <version>1.2.76</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
 
         <!-- TEST dependencies -->
         <dependency>
@@ -131,6 +142,10 @@
                     <packageName>com.bluecc.domain.sql.model</packageName>
                     <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
                     <exportBeans>true</exportBeans>
+                    <customTypes>
+                        <customType>com.querydsl.sql.types.DateTimeType</customType>
+                        <customType>com.querydsl.sql.types.LocalDateType</customType>
+                    </customTypes>
                 </configuration>
 <!--                <configuration>-->
 <!--                    <jdbcDriver>com.mysql.cj.jdbc.Driver</jdbcDriver>-->
@@ -153,6 +168,11 @@
 <!--                        <artifactId>mysql-connector-java</artifactId>-->
 <!--                        <version>${mysql.version}</version>-->
 <!--                    </dependency>-->
+                    <dependency>
+                        <groupId>joda-time</groupId>
+                        <artifactId>joda-time</artifactId>
+                        <version>${jodatime.version}</version>
+                    </dependency>
                 </dependencies>
             </plugin>
 
