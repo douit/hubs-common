@@ -102,8 +102,6 @@ public class PersonProcs extends AbstractRepository {
 
         List<Person> rs=procs.all();
         rs.forEach(e -> {
-            // ?? 使用gson序列化的结果与直接获取bean的属性不一致,
-            // 还是需要用transform提取字段值到dto中
             System.out.println(e.getPartyId());
 
             PersonDo pdo=PersonDo.builder()
