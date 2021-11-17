@@ -1,6 +1,7 @@
 package com.bluecc.gentool.common;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -8,6 +9,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -49,7 +51,7 @@ public class Util {
     }
 
     public static final Gson GSON = new GsonBuilder()
-            .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
+            // .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
 //            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
@@ -58,5 +60,9 @@ public class Util {
 
     public static void pretty(Object o){
         System.out.println(GSON.toJson(o));
+    }
+
+    public static InputStream dataSource(String src) throws IOException {
+        return Resources.getResource(src).openStream();
     }
 }

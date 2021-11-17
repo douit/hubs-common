@@ -33,4 +33,14 @@
             <version>1.81</version>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>hubs-gentool</finalName>
+
+        <!-- add resources location -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
 </project>

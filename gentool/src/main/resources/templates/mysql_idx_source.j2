@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS `{{table.tableName}}`;
+CREATE TABLE {{table.tableName}} (
+    {% for f in table.fields -%}
+    {{f.col}} {{f.fixSqlType}} {% if f.notNull %}NOT NULL{% endif %},
+    {% endfor %}
+    PRIMARY KEY (`{{table.pkCol}}`) {% if table.combine %}, UNIQUE KEY unique_{{table.tableName}} ({{table.uniqueCols}}) {% endif %}
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

@@ -111,7 +111,7 @@
     </dependencies>
 
     <build>
-        <finalName>querydsl-example-sql-guice</finalName>
+        <finalName>hubs-domain</finalName>
 
         <!-- add resources location -->
         <resources>
@@ -141,7 +141,7 @@
                 </executions>
                 <configuration>
                     <jdbcDriver>org.h2.Driver</jdbcDriver>
-                    <jdbcUrl>jdbc:h2:mem:;INIT=runscript from 'file:${project.baseUri}/src/main/sql/001_schema.sql'\;RUNSCRIPT FROM 'src/main/sql/ofbiz.sql'
+                    <jdbcUrl>jdbc:h2:mem:;INIT=runscript from 'file:${project.baseUri}/src/main/sql/001_schema.sql'\;RUNSCRIPT FROM 'src/main/sql/hubs.sql'
                     </jdbcUrl>
                     <jdbcUser>sa</jdbcUser>
                     <packageName>com.bluecc.domain.sql.model</packageName>
@@ -154,13 +154,17 @@
                 </configuration>
 <!--                <configuration>-->
 <!--                    <jdbcDriver>com.mysql.cj.jdbc.Driver</jdbcDriver>-->
-<!--                    <jdbcUrl>jdbc:mysql://localhost:3306/order_proto?useSSL=false&amp;characterEncoding=utf8&amp;connectTimeout=3000-->
+<!--                    <jdbcUrl>jdbc:mysql://localhost:3306/hubs-->
 <!--                    </jdbcUrl>-->
 <!--                    <jdbcUser>root</jdbcUser>-->
 <!--                    <jdbcPassword>root</jdbcPassword>-->
 <!--                    <packageName>com.bluecc.domain.sql.model</packageName>-->
 <!--                    <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>-->
 <!--                    <exportBeans>true</exportBeans>-->
+<!--                    <customTypes>-->
+<!--                        <customType>com.querydsl.sql.types.DateTimeType</customType>-->
+<!--                        <customType>com.querydsl.sql.types.LocalDateType</customType>-->
+<!--                    </customTypes>-->
 <!--                </configuration>-->
                 <dependencies>
                     <dependency>
@@ -168,11 +172,11 @@
                         <artifactId>h2</artifactId>
                         <version>${h2.version}</version>
                     </dependency>
-<!--                    <dependency>-->
-<!--                        <groupId>mysql</groupId>-->
-<!--                        <artifactId>mysql-connector-java</artifactId>-->
-<!--                        <version>${mysql.version}</version>-->
-<!--                    </dependency>-->
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.version}</version>
+                    </dependency>
                     <dependency>
                         <groupId>joda-time</groupId>
                         <artifactId>joda-time</artifactId>

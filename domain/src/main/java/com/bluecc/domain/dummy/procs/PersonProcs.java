@@ -1,6 +1,7 @@
 package com.bluecc.domain.dummy.procs;
 
 // import com.alibaba.fastjson.JSON;
+
 import com.bluecc.domain.dummy.guice.ServiceModule;
 import com.bluecc.domain.dummy.guice.Transactional;
 import com.bluecc.domain.dummy.repository.AbstractRepository;
@@ -29,10 +30,11 @@ public class PersonProcs extends AbstractRepository {
     Sequence sequence;
 
     @Transactional
-    public Person findById(String id) {
+    public Person findById(Long id) {
         return selectFrom(person).where(person.partyId.eq(id)).fetchOne();
     }
 
+/*
     @Transactional
     public String save(Person entity) {
         if (entity.getPartyId() != null) {
@@ -61,6 +63,23 @@ public class PersonProcs extends AbstractRepository {
                 .executeWithKey(person.partyId);
         return entity.getPartyId();
     }
+*/
+
+    @Transactional
+    public Long save(Person entity) {
+        if (entity.getPartyId() != null) {
+            update(person).populate(entity).execute();
+            return entity.getPartyId();
+        }
+
+        return create(entity);
+    }
+
+    @Transactional
+    public Long create(Person entity) {
+        return insert(person).populate(entity)
+                .executeWithKey(person.partyId);
+    }
 
     @Transactional
     public List<Person> findAll(Predicate expr) {
@@ -77,34 +96,35 @@ public class PersonProcs extends AbstractRepository {
 
     @Data
     @Builder
-    static class PersonDo{
-        String partyId;
+    static class PersonDo {
+        Long partyId;
         String lastName;
         String fristName;
     }
 
     @Inject
     JdbcHelper jdbcHelper;
+
     public static void main(String[] args) {
         Faker faker;
         faker = new Faker(new Locale("zh-CN"));
 
-        PersonProcs procs=injector.getInstance(PersonProcs.class);
+        PersonProcs procs = injector.getInstance(PersonProcs.class);
         procs.jdbcHelper.truncate("person");
 
         for (int i = 0; i < 10; i++) {
             Person p = new Person();
             p.setLastName(faker.name().lastName());
             p.setFirstName(faker.name().firstName());
-            String pid = procs.save(p);
+            Long pid = procs.save(p);
             System.out.println("save ok: " + pid);
         }
 
-        List<Person> rs=procs.all();
+        List<Person> rs = procs.all();
         rs.forEach(e -> {
             System.out.println(e.getPartyId());
 
-            PersonDo pdo=PersonDo.builder()
+            PersonDo pdo = PersonDo.builder()
                     .partyId(e.getPartyId())
                     .fristName(e.getFirstName())
                     .lastName(e.getLastName())
