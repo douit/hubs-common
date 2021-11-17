@@ -7,6 +7,8 @@ import org.junit.Test;
 import javax.inject.Inject;
 import java.util.List;
 
+import static com.bluecc.domain.util.JsonUtil.GSON;
+import static com.bluecc.domain.util.JsonUtil.pretty;
 import static org.junit.Assert.*;
 
 public class UserRepositoryTest extends AbstractPersistenceTest {
@@ -48,6 +50,25 @@ public class UserRepositoryTest extends AbstractPersistenceTest {
         assertFalse(infos.isEmpty());
         for (UserInfo info : infos) {
             assertNotNull(info.getUsername());
+        }
+    }
+
+    @Test
+    public void get_all_with_user_and_tweet() {
+        User user = new User();
+        user.setUsername("jimmy");
+        Long posterId = repository.save(user);
+
+        Tweet tw3 = new Tweet();
+        tw3.setPosterId(posterId);
+        tw3.setContent("#EpicFail");
+        tweetRepository.save(tw3);
+
+        List<UserAndTweets> infos = repository.allUserAndTweets();
+        assertFalse(infos.isEmpty());
+        for (UserAndTweets info : infos) {
+            assertNotNull(info.getUsername());
+            pretty(info);
         }
     }
 }

@@ -35,4 +35,7 @@ public class JsonUtil {
             .setPrettyPrinting()
             .create();
 
+    public static void pretty(Object o){
+        System.out.println(GSON.toJson(o));
+    }
 }

@@ -25,14 +25,8 @@
         <hbase.version>2.4.5</hbase.version>
         <clickhouse-native-jdbc.version>2.5.6</clickhouse-native-jdbc.version>
     </properties>
+
     <dependencies>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-walkthrough-common_${scala.binary.version}</artifactId>
