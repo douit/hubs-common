@@ -6,6 +6,7 @@ import com.bluecc.domain.generic.dao.OrderHeaderRepository;
 import com.bluecc.domain.sql.model.*;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.QBean;
+import com.querydsl.sql.SQLBindings;
 import com.querydsl.sql.dml.SQLInsertClause;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -87,6 +88,16 @@ public class OrderProcs extends OrderHeaderRepository {
                 // .limit(1) // 如果限制为1, 则只会查找1条orderItems
                 .transform(GroupBy.groupBy(orderHeader.orderId).list(orderAndItemsBean));
         return rs.isEmpty() ? null : rs.get(0);
+    }
+
+    public String findWithItemsSql(Long orderId){
+        SQLBindings sql=selectFrom(orderHeader)
+                .innerJoin(orderItem).on(orderHeader.orderId.eq(orderItem.orderId))
+                .leftJoin(orderItemPriceInfo).on(orderHeader.orderId.eq(orderItemPriceInfo.orderId),
+                        orderItem.orderItemSeqId.eq(orderItemPriceInfo.orderItemSeqId))
+                .where(orderHeader.orderId.eq(orderId))
+                .getSQL();
+        return sql.getSQL();
     }
 
     @Transactional

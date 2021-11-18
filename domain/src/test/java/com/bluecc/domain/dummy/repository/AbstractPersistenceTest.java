@@ -1,7 +1,7 @@
 package com.bluecc.domain.dummy.repository;
 
-import com.bluecc.domain.dummy.guice.GuiceTestRunner;
-import com.bluecc.domain.dummy.guice.Transactional;
+import com.bluecc.domain.guice.GuiceTestRunner;
+import com.bluecc.domain.guice.Transactional;
 import com.bluecc.domain.util.JdbcHelper;
 import org.junit.Before;
 import org.junit.runner.RunWith;

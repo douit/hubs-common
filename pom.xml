@@ -25,6 +25,7 @@
         <sqlite.version>3.36.0.3</sqlite.version>
 
         <jodatime.version>2.10.12</jodatime.version>
+        <guice.version>5.0.1</guice.version>
     </properties>
 
     <dependencies>
@@ -45,6 +46,7 @@
         <!--            <artifactId>lombok</artifactId>-->
         <!--            <optional>true</optional>-->
         <!--        </dependency>-->
+
     </dependencies>
 
     <modules>
@@ -100,6 +102,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>3.16.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,0 +1,18 @@
+{
+  "entities": [
+    "SecurityGroupPermission",
+    "Person",
+    "ElectronicText",
+    "Party",
+    "DataResource",
+    "PartyStatus",
+    "ProductFeatureCategory",
+    "UserLogin",
+    "PartyRole",
+    "Content",
+    "ProductFeature",
+    "WorkEffort",
+    "CustRequestType",
+    "WorkEffortAssoc"
+  ]
+}

@@ -61,6 +61,7 @@ public class CrudGenTool {
         gen(entityName, writer);
         writer.close();
     }
+
     void gen(String entityName, Writer writer) throws IOException {
         EntityMeta meta=readEntityMeta(entityName);
         DummyTemplateProcs procs=new DummyTemplateProcs();

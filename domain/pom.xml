@@ -15,7 +15,6 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <failIfNoTests>false</failIfNoTests>
-        <guice.version>5.0.1</guice.version>
         <h2.version>1.4.186</h2.version>
         <querydsl.version>5.0.0</querydsl.version>
     </properties>
@@ -112,6 +111,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
         </dependency>
     </dependencies>
 

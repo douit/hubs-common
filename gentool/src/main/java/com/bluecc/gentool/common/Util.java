@@ -7,9 +7,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -68,5 +70,16 @@ public class Util {
 
     public static InputStream dataSource(String src) throws IOException {
         return Resources.getResource(src).openStream();
+    }
+
+    public static void writeJsonFile(Object o, File file) throws IOException {
+        Writer writer=new FileWriter(file);
+        writer.write(GSON.toJson(o));
+        writer.close();
+    }
+
+    public static <T> T readJsonFile(Class<T> clz, File file) throws IOException {
+        String cnt=IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
+        return GSON.fromJson(cnt, clz);
     }
 }

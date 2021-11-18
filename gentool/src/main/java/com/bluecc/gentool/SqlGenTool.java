@@ -4,15 +4,15 @@ import com.bluecc.gentool.common.EntityMeta;
 import com.bluecc.gentool.dummy.DummyTemplateProcs;
 import com.bluecc.gentool.dummy.FieldMappings;
 import com.bluecc.gentool.dummy.SeedReader;
+import com.google.common.collect.Lists;
+import lombok.Builder;
+import lombok.Data;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
-import static com.bluecc.gentool.common.Util.GSON;
-import static com.bluecc.gentool.common.Util.pretty;
+import static com.bluecc.gentool.common.Util.*;
 import static com.bluecc.gentool.dummy.FieldMappings.getFieldTypes;
 import static com.bluecc.gentool.dummy.SeedCollector.dataFile;
 import static java.util.Objects.requireNonNull;
@@ -21,15 +21,14 @@ import static java.util.Objects.requireNonNull;
  * $ just gen SqlGenTool
  */
 public class SqlGenTool {
+    @Data
+    @Builder
+    public static class MetaList{
+        Set<String> entities;
+    }
     public static void main(String[] args) throws IOException {
-        // String entName="Person";
-        // genDDL("Person");
-        // genDDL("PartyStatus");
-
-        // buildAll();
-
         Writer writer=new FileWriter("asset/mysql/hubs.sql");
-        Collection<String> entityList=SeedReader.collectEntityNames(dataFile);
+        Set<String> entityList=SeedReader.collectEntityNames(dataFile);
         for (String entityName : entityList) {
             File metaFile = getMetaFile(entityName);
             System.out.println(metaFile.getName());
@@ -38,6 +37,10 @@ public class SqlGenTool {
         writer.write(String.format("-- total entities %d, from %s\n",
                 entityList.size(), dataFile));
         writer.close();
+
+        writeJsonFile(MetaList.builder()
+                .entities(entityList)
+                .build(), new File("asset/mysql/hubs.json"));
     }
 
     public static File getMetaFile(String entityName) {
@@ -61,7 +64,7 @@ public class SqlGenTool {
         genDDL(file, null);
     }
 
-    private static void genDDL(File file, Writer writer) throws IOException {
+    public static void genDDL(File file, Writer writer) throws IOException {
         EntityMeta meta = getEntityMeta(file);
 
         System.out.println(meta.getName());

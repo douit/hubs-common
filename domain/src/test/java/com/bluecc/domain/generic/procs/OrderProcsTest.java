@@ -118,4 +118,10 @@ public class OrderProcsTest  extends AbstractProcsTest {
         RandomDate randomDate=new RandomDate(startTime, endTime, 3600);
         return randomDate;
     }
+
+    @Test
+    public void testSql(){
+        String sql=orderProcs.findWithItemsSql(1L);
+        System.out.println(sql);
+    }
 }

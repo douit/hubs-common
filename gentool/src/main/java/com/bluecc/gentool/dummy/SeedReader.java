@@ -60,7 +60,7 @@ public class SeedReader {
         }
     }
 
-    private static JsonObject convertElement(Element element) {
+    public static JsonObject convertElement(Element element) {
         JsonObject jsonObject=new JsonObject();
         NamedNodeMap attrs=element.getAttributes();
         for(int i=0;i<attrs.getLength();++i){
@@ -70,7 +70,7 @@ public class SeedReader {
         return jsonObject;
     }
 
-    private static NodeList getNodeList(String dataFile)  {
+    public static NodeList getNodeList(String dataFile)  {
         try {
             // Get Document Builder
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
