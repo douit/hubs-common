@@ -1,4 +1,4 @@
-package com.bluecc.domain.dummy.guice;
+package com.bluecc.domain.guice;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;

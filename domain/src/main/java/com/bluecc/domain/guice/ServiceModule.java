@@ -1,5 +1,6 @@
-package com.bluecc.domain.dummy.guice;
+package com.bluecc.domain.guice;
 
+import com.bluecc.domain.event.ConsoleTracker;
 import com.bluecc.domain.util.Sequence;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -42,6 +43,10 @@ public class ServiceModule extends AbstractModule {
         TransactionInterceptor interceptor = new TransactionInterceptor();
         requestInjection(interceptor);
         bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
+
+        FireEventInterceptor fireEventInterceptor=new FireEventInterceptor();
+        requestInjection(fireEventInterceptor);
+        bindInterceptor(Matchers.any(), Matchers.annotatedWith(Fire.class), fireEventInterceptor);
     }
 
     @Provides
@@ -70,5 +75,10 @@ public class ServiceModule extends AbstractModule {
     @Provides
     public Sequence sequence(){
         return new Sequence(null);
+    }
+
+    @Provides
+    public IEventProvider eventProvider(){
+        return new ConsoleTracker();
     }
 }

@@ -43,36 +43,11 @@ public class OrderProcsTest  extends AbstractProcsTest {
 
     @Test
     public void saveOrder() {
-        DateTime endTime=DateTime.now();
-        DateTime startTime=endTime.minusDays(30);
-        RandomDate randomDate=new RandomDate(startTime, endTime, 3600);
+        RandomDate randomDate = getRandomDate();
 
         for (int genN=0;genN<3;++genN) {
-            OrderHeader header = new OrderHeader();
-            header.setOrderDate(randomDate.getRandomDate());
-            List<OrderItem> items = Lists.newArrayList();
-            for (int i = 0; i < 5; ++i) {
-                OrderItem item = new OrderItem();
-                item.setOrderItemSeqId((long) i);
-                item.setQuantity(randDecimal(1, 10));
-                item.setUnitPrice(randDecimal(1, 10000));
-                item.setItemDescription(faker.commerce().productName());
-                items.add(item);
-            }
+            OrderAndItems orderAndItems = getOrderAndItems(randomDate);
 
-            List<OrderItemPriceInfo> orderItemPriceInfos=Lists.newArrayList();
-            for(int i=0;i<3;++i){
-                OrderItemPriceInfo orderItemPriceInfo=new OrderItemPriceInfo();
-                orderItemPriceInfo.setOrderItemSeqId((long) i);
-                orderItemPriceInfo.setModifyAmount(randDecimal(0, 99));
-                orderItemPriceInfos.add(orderItemPriceInfo);
-            }
-
-            OrderAndItems orderAndItems = OrderAndItems.builder()
-                    .header(header)
-                    .items(items)
-                    .itemPriceInfos(orderItemPriceInfos)
-                    .build();
             Long id = orderProcs.saveOrder(orderAndItems);
             System.out.println(id);
 
@@ -90,5 +65,57 @@ public class OrderProcsTest  extends AbstractProcsTest {
 
         System.out.println("total orders: "+orderProcs.count());
         assertEquals(3, orderProcs.count());
+    }
+
+    @Test
+    public void saveOrderEvent() {
+        RandomDate randomDate = getRandomDate();
+
+        for (int genN=0;genN<3;++genN) {
+            OrderAndItems input = getOrderAndItems(randomDate);
+
+            OrderAndItems result = orderProcs.saveAndReturnOrder(input);
+            assertEquals(5, result.items.size());
+            assertEquals(5, result.getItemPriceInfos().size());
+        }
+
+        System.out.println("total orders: "+orderProcs.count());
+        assertEquals(3, orderProcs.count());
+    }
+
+    private OrderAndItems getOrderAndItems(RandomDate randomDate) {
+        OrderHeader header = new OrderHeader();
+        header.setOrderDate(randomDate.getRandomDate());
+        List<OrderItem> items = Lists.newArrayList();
+        for (int i = 0; i < 5; ++i) {
+            OrderItem item = new OrderItem();
+            item.setOrderItemSeqId((long) i);
+            item.setQuantity(randDecimal(1, 10));
+            item.setUnitPrice(randDecimal(1, 10000));
+            item.setItemDescription(faker.commerce().productName());
+            items.add(item);
+        }
+
+        List<OrderItemPriceInfo> orderItemPriceInfos=Lists.newArrayList();
+        for(int i=0;i<3;++i){
+            OrderItemPriceInfo orderItemPriceInfo=new OrderItemPriceInfo();
+            orderItemPriceInfo.setOrderItemSeqId((long) i);
+            orderItemPriceInfo.setModifyAmount(randDecimal(0, 99));
+            orderItemPriceInfos.add(orderItemPriceInfo);
+        }
+
+        OrderAndItems orderAndItems = OrderAndItems.builder()
+                .header(header)
+                .items(items)
+                .itemPriceInfos(orderItemPriceInfos)
+                .build();
+        return orderAndItems;
+    }
+
+    private RandomDate getRandomDate() {
+        DateTime endTime=DateTime.now();
+        DateTime startTime=endTime.minusDays(30);
+        RandomDate randomDate=new RandomDate(startTime, endTime, 3600);
+        return randomDate;
     }
 }

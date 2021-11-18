@@ -4,7 +4,7 @@ import com.bluecc.domain.sql.model.Tweet;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
-import com.bluecc.domain.dummy.guice.Transactional;
+import com.bluecc.domain.guice.Transactional;
 import com.bluecc.domain.sql.model.User;
 import com.querydsl.core.types.QBean;
 

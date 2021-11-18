@@ -1,6 +1,6 @@
 package com.bluecc.domain.generic.procs;
 
-import com.bluecc.domain.dummy.guice.GuiceTestRunner;
+import com.bluecc.domain.guice.GuiceTestRunner;
 import com.bluecc.domain.util.RandomNum;
 import org.junit.runner.RunWith;
 

@@ -1,4 +1,4 @@
-package com.bluecc.domain.dummy.guice;
+package com.bluecc.domain.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

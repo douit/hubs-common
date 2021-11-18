@@ -1,9 +1,9 @@
 package com.bluecc.domain.generic.procs;
 
-import com.bluecc.domain.dummy.guice.Transactional;
+import com.bluecc.domain.guice.Fire;
+import com.bluecc.domain.guice.Transactional;
 import com.bluecc.domain.generic.dao.OrderHeaderRepository;
 import com.bluecc.domain.sql.model.*;
-import com.google.common.collect.Lists;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.QBean;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -57,6 +57,13 @@ public class OrderProcs extends OrderHeaderRepository {
         }
 
         return orderId;
+    }
+
+    @Transactional
+    @Fire
+    public OrderAndItems saveAndReturnOrder(OrderAndItems orderAndItems) {
+        Long orderId=saveOrder(orderAndItems);
+        return findWithItems(orderId);
     }
 
     // detail

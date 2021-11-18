@@ -1,4 +1,4 @@
-package com.bluecc.domain.dummy.guice;
+package com.bluecc.domain.guice;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

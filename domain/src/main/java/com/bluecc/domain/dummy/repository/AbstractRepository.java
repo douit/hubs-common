@@ -1,7 +1,7 @@
 package com.bluecc.domain.dummy.repository;
 
 import com.querydsl.core.types.Expression;
-import com.bluecc.domain.dummy.guice.ConnectionContext;
+import com.bluecc.domain.guice.ConnectionContext;
 import com.querydsl.sql.Configuration;
 import com.querydsl.sql.RelationalPath;
 import com.querydsl.sql.SQLQuery;

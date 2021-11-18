@@ -1,7 +1,7 @@
 package com.bluecc.domain.dummy.repository;
 
 
-import com.bluecc.domain.dummy.guice.GuiceTestRunner;
+import com.bluecc.domain.guice.GuiceTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

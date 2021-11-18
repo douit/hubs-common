@@ -1,7 +1,7 @@
 package com.bluecc.domain.dummy.repository;
 
 import com.querydsl.core.types.Predicate;
-import com.bluecc.domain.dummy.guice.Transactional;
+import com.bluecc.domain.guice.Transactional;
 import com.bluecc.domain.sql.model.Tweet;
 import com.bluecc.domain.sql.model.TweetUser;
 import com.querydsl.sql.dml.SQLInsertClause;

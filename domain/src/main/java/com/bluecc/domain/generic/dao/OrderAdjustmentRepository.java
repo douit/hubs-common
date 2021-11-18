@@ -1,8 +1,7 @@
 package com.bluecc.domain.generic.dao;
 
 import com.querydsl.core.types.Predicate;
-import com.bluecc.domain.dummy.guice.Transactional;
-import com.querydsl.sql.dml.SQLInsertClause;
+import com.bluecc.domain.guice.Transactional;
 import com.bluecc.domain.dummy.repository.AbstractRepository;
 
 import java.util.List;

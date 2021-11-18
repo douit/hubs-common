@@ -2,11 +2,10 @@ package com.bluecc.domain.dummy.procs;
 
 // import com.alibaba.fastjson.JSON;
 
-import com.bluecc.domain.dummy.guice.ServiceModule;
-import com.bluecc.domain.dummy.guice.Transactional;
+import com.bluecc.domain.guice.ServiceModule;
+import com.bluecc.domain.guice.Transactional;
 import com.bluecc.domain.dummy.repository.AbstractRepository;
 import com.bluecc.domain.sql.model.Person;
-import com.bluecc.domain.sql.model.User;
 import com.bluecc.domain.util.JdbcHelper;
 import com.bluecc.domain.util.Sequence;
 import com.github.javafaker.Faker;
@@ -19,9 +18,7 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
-import static com.bluecc.domain.sql.model.QUser.user;
 import static com.bluecc.domain.sql.model.QPerson.person;
 import static com.bluecc.domain.util.JsonUtil.GSON;
 
