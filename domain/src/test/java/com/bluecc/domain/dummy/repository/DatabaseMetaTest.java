@@ -26,7 +26,7 @@ public class DatabaseMetaTest {
             DatabaseMetaData md = connection.getMetaData();
             // ResultSet rs = md.getTables(null, null, null,
             //         new String[] { "TABLE" });
-            ResultSet rs = md.getTables("order_proto", "", null,
+            ResultSet rs = md.getTables("hubs", "", null,
                     new String[] { "TABLE" });
             try {
                 while (rs.next()) {

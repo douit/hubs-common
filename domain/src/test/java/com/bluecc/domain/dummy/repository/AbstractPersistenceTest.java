@@ -2,6 +2,7 @@ package com.bluecc.domain.dummy.repository;
 
 import com.bluecc.domain.dummy.guice.GuiceTestRunner;
 import com.bluecc.domain.dummy.guice.Transactional;
+import com.bluecc.domain.util.JdbcHelper;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -18,16 +19,25 @@ import java.util.List;
 public abstract class AbstractPersistenceTest {
     @Inject
     private DataSource dataSource;
+    @Inject
+    JdbcHelper jdbcHelper;
 
     @Before
     @Transactional
-    public void before() {
+    public void setUp(){
+        System.out.println("truncate tables");
+        jdbcHelper.truncate("LOCATION", "USER",
+                "tweet", "TWEET_USER");
+    }
+
+    @Transactional
+    public void truncateAll() {
         try (Connection connection = dataSource.getConnection()) {
             List<String> tables = new ArrayList<String>();
             DatabaseMetaData md = connection.getMetaData();
             // ResultSet rs = md.getTables(null, null, null,
             //         new String[] { "TABLE" });
-            ResultSet rs = md.getTables("order_proto", "order_proto", null,
+            ResultSet rs = md.getTables("hubs", "", null,
                     new String[] { "TABLE" });
             try {
                 while (rs.next()) {

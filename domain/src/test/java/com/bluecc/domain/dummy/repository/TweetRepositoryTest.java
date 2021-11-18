@@ -22,6 +22,8 @@ public class TweetRepositoryTest extends AbstractPersistenceTest {
 
     @Before
     public void setUp() {
+        super.setUp();
+        System.out.println("create ...");
         User poster = new User();
         poster.setUsername("dr_frank");
         posterId = userRepository.save(poster);
