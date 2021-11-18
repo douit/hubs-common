@@ -33,6 +33,10 @@ public class Util {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, str);
     }
 
+    public static String toClassName(String str){
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, str);
+    }
+
 
     /**
      * A simpler implementation. Add null support to by registering the nullSafe() wrapped version

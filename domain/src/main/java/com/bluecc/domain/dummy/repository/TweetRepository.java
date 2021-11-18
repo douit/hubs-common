@@ -20,8 +20,10 @@ public class TweetRepository extends AbstractRepository {
             update(tweet).populate(entity).execute();
             return entity.getId();
         }
+        // return insert(tweet).populate(entity)
+        //         .executeWithKey(user.id);
         return insert(tweet).populate(entity)
-                .executeWithKey(user.id);
+                .executeWithKey(tweet.id);
     }
 
     @Transactional

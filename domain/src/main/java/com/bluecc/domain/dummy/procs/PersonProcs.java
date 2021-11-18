@@ -106,8 +106,7 @@ public class PersonProcs extends AbstractRepository {
     JdbcHelper jdbcHelper;
 
     public static void main(String[] args) {
-        Faker faker;
-        faker = new Faker(new Locale("zh-CN"));
+        Faker faker = new Faker(new Locale("zh-CN"));
 
         PersonProcs procs = injector.getInstance(PersonProcs.class);
         procs.jdbcHelper.truncate("person");

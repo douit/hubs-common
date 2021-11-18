@@ -36,6 +36,10 @@ public class EntityMeta {
         }
     }
 
+    public String getPkGetter(){
+        return "get"+Util.toClassName(getPk());
+    }
+
     public String getPkCol() {
         if (combine) {
             return "ID";
@@ -55,8 +59,16 @@ public class EntityMeta {
         return String.join(", ", pkCols());
     }
 
+    public String getVarName(){
+        return Util.toVarName(this.name);
+    }
+
     public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types) {
-        fields.forEach(f -> f.setSqlType(types.get(f.type).getSqlType()));
+        fields.forEach(f -> {
+            FieldMappings.FieldTypeDef typDef=types.get(f.type);
+            f.setSqlType(typDef.getSqlType());
+            f.setJavaType(typDef.getJavaType());
+        });
         if (combine) {
             getFields().add(FieldMeta.builder()
                     .name("id")
@@ -70,7 +82,7 @@ public class EntityMeta {
                     .autoCreatedInternal(true)
                     .autoInc(true)
                     .build());
-        }else{
+        } else {
             fields.stream().filter(f -> f.pk).forEach(f -> f.setAutoInc(true));
         }
     }

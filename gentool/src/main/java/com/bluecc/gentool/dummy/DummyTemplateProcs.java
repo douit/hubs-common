@@ -34,7 +34,7 @@ public class DummyTemplateProcs {
                 jinjava, table, context);
     }
 
-    String procCrud(EntityMeta table) throws IOException {
+    public String procCrud(EntityMeta table) throws IOException {
         Jinjava jinjava = new Jinjava();
         Map<String, Object> context = Maps.newHashMap();
         context.put("ent", table);

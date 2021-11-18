@@ -18,9 +18,9 @@ import static com.bluecc.gentool.dummy.SeedCollector.dataFile;
 import static java.util.Objects.requireNonNull;
 
 /**
- * $ just gen DummyGenTool
+ * $ just gen SqlGenTool
  */
-public class DummyGenTool {
+public class SqlGenTool {
     public static void main(String[] args) throws IOException {
         // String entName="Person";
         // genDDL("Person");
@@ -31,13 +31,17 @@ public class DummyGenTool {
         Writer writer=new FileWriter("asset/mysql/hubs.sql");
         Collection<String> entityList=SeedReader.collectEntityNames(dataFile);
         for (String entityName : entityList) {
-            File metaFile=new File("asset/meta/"+entityName+".json");
+            File metaFile = getMetaFile(entityName);
             System.out.println(metaFile.getName());
             genDDL(metaFile, writer);
         }
         writer.write(String.format("-- total entities %d, from %s\n",
                 entityList.size(), dataFile));
         writer.close();
+    }
+
+    public static File getMetaFile(String entityName) {
+        return new File("asset/meta/" + entityName + ".json");
     }
 
     private static void buildAll() throws IOException {
@@ -53,14 +57,12 @@ public class DummyGenTool {
 
     static Map<String, FieldMappings.FieldTypeDef> types=getFieldTypes();
     private static void genDDL(String entName) throws IOException {
-        File file=new File("asset/meta/"+ entName +".json");
+        File file = getMetaFile(entName);
         genDDL(file, null);
     }
 
     private static void genDDL(File file, Writer writer) throws IOException {
-        EntityMeta meta=GSON.fromJson(new FileReader(file),
-                EntityMeta.class);
-        meta.setupFieldMappings(types);
+        EntityMeta meta = getEntityMeta(file);
 
         System.out.println(meta.getName());
         meta.getFields().forEach(f -> pretty(f));
@@ -71,5 +73,16 @@ public class DummyGenTool {
             writer.write(cnt);
             writer.write('\n');
         }
+    }
+
+    private static EntityMeta getEntityMeta(File file) throws FileNotFoundException {
+        EntityMeta meta=GSON.fromJson(new FileReader(file),
+                EntityMeta.class);
+        meta.setupFieldMappings(types);
+        return meta;
+    }
+
+    public static EntityMeta readEntityMeta(String entityName) throws IOException {
+        return getEntityMeta(getMetaFile(entityName));
     }
 }
