@@ -30,6 +30,9 @@ public class CrudGenTool {
     @Parameter(names = { "-log", "-verbose" }, description = "Level of verbosity")
     public Integer verbose = 1;
     public static void main(String[] args) throws IOException {
+        Path currentPath = Paths.get(System.getProperty("user.dir"));
+        System.out.println("Current directory is "+currentPath);
+
         CrudGenTool main = new CrudGenTool();
         JCommander.newBuilder()
                 .addObject(main)
@@ -49,9 +52,6 @@ public class CrudGenTool {
     }
 
     void gen(String entityName) throws IOException {
-        Path currentPath = Paths.get(System.getProperty("user.dir"));
-        System.out.println("Current directory is "+currentPath);
-
         // String entityName="Person";
         File targetDir=new File("domain/src/main/java/com/bluecc/domain/generic/dao");
         Preconditions.checkArgument(targetDir.exists(),

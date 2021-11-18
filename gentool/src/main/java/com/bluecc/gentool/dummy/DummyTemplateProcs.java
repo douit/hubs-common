@@ -20,17 +20,17 @@ import static com.bluecc.gentool.dummy.DummyMeta.partyMeta;
 public class DummyTemplateProcs {
     public static void main(String[] args) throws IOException {
         DummyTemplateProcs procs = new DummyTemplateProcs();
-        procs.procBean(partyMeta);
+        procs.procBean(partyMeta, "bean_source.j2");
     }
 
     Map<Tuple2<String, String>, String> templateRepos = Maps.newHashMap();
     Set<String> ignoreFields = Sets.newHashSet("last_updated_tx_stamp", "created_tx_stamp");
 
-    String procBean(EntityMeta table) throws IOException {
+    public String procBean(EntityMeta table, String template) throws IOException {
         Jinjava jinjava = new Jinjava();
         Map<String, Object> context = Maps.newHashMap();
         context.put("ent", table);
-        return buildWithTemplate("bean", "bean_source.j2",
+        return buildWithTemplate("bean", template,
                 jinjava, table, context);
     }
 

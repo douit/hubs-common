@@ -33,4 +33,31 @@ public class {{ent.name}}Repository extends AbstractRepository {
     public List<{{ent.name}}> findAll(Predicate expr) {
         return selectFrom({{ent.varName}}).where(expr).fetch();
     }
+
+    @Transactional
+    public long count() {
+        return selectFrom({{ent.varName}}).fetchCount();
+    }
+
+    @Transactional
+    public void delete({{ent.name}} s) {
+        delete({{ent.varName}})
+            .where({{ent.varName}}.{{ent.pk}}.eq(s.{{ent.pkGetter}}()))
+            .execute();
+    }
 }
+
+/*
+-- keys: {{ent.keyNames}}
+
+-- fields --
+    {% for f in ent.publicFields %}
+    {{f.javaType}} {{f.name}}
+    {%- endfor %}
+
+-- relations --
+    {% for rel in ent.relations %}
+    {% if rel.type=='many' %}+{% else %}-{% endif %} {{rel.name}} ({{rel.type}}, autoRelation: {{rel.autoRelation}}, keymaps: {{rel.desc}})
+    {%- endfor %}
+*/
+

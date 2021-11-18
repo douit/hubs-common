@@ -28,6 +28,15 @@ public class EntityMeta {
     List<String> pks = Lists.newArrayList();
     boolean isView;
 
+    public List<FieldMeta> getPublicFields(){
+        return fields.stream().filter(f -> !f.isAutoCreatedInternal())
+                .collect(Collectors.toList());
+    }
+
+    public String getKeyNames(){
+        return String.join(", ", pks);
+    }
+
     public String getPk() {
         if (combine) {
             return "id";
@@ -36,8 +45,8 @@ public class EntityMeta {
         }
     }
 
-    public String getPkGetter(){
-        return "get"+Util.toClassName(getPk());
+    public String getPkGetter() {
+        return "get" + Util.toClassName(getPk());
     }
 
     public String getPkCol() {
@@ -59,13 +68,13 @@ public class EntityMeta {
         return String.join(", ", pkCols());
     }
 
-    public String getVarName(){
+    public String getVarName() {
         return Util.toVarName(this.name);
     }
 
     public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types) {
         fields.forEach(f -> {
-            FieldMappings.FieldTypeDef typDef=types.get(f.type);
+            FieldMappings.FieldTypeDef typDef = types.get(f.type);
             f.setSqlType(typDef.getSqlType());
             f.setJavaType(typDef.getJavaType());
         });
@@ -86,6 +95,8 @@ public class EntityMeta {
             fields.stream().filter(f -> f.pk).forEach(f -> f.setAutoInc(true));
         }
     }
+
+    // public List<RelationMeta>
 
     @Data
     @Builder
@@ -137,6 +148,17 @@ public class EntityMeta {
         @Singular
         List<KeymapMeta> keymaps = Lists.newArrayList();
         boolean autoRelation;
+
+        public String getDesc() {
+            return keymaps.stream().map(r -> {
+                        if (r.fieldName.equals(r.relFieldName)) {
+                            return r.fieldName;
+                        } else {
+                            return String.format("%s -> %s", r.fieldName, r.relFieldName);
+                        }
+                    })
+                    .collect(Collectors.joining(", "));
+        }
     }
 
     @Data

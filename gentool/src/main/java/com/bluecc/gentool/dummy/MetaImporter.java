@@ -18,7 +18,7 @@ public class MetaImporter {
         meta.getFields().forEach(f -> pretty(f));
 
         DummyTemplateProcs procs=new DummyTemplateProcs();
-        procs.procBean(meta);
+        procs.procBean(meta, "bean_source.j2");
         procs.procMysql(meta);
         procs.procCrud(meta);
     }

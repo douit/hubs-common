@@ -1,9 +1,9 @@
 package com.bluecc.domain.generic.procs;
 
 import com.bluecc.domain.dummy.guice.Transactional;
-import com.bluecc.domain.dummy.repository.UserAndTweets;
 import com.bluecc.domain.generic.dao.OrderHeaderRepository;
 import com.bluecc.domain.sql.model.*;
+import com.google.common.collect.Lists;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.QBean;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -17,9 +17,7 @@ import java.util.List;
 
 import static com.bluecc.domain.sql.model.QOrderHeader.orderHeader;
 import static com.bluecc.domain.sql.model.QOrderItem.orderItem;
-import static com.bluecc.domain.sql.model.QTweet.tweet;
-import static com.bluecc.domain.sql.model.QTweetUser.tweetUser;
-import static com.bluecc.domain.sql.model.QUser.user;
+import static com.bluecc.domain.sql.model.QOrderItemPriceInfo.orderItemPriceInfo;
 import static com.querydsl.core.types.Projections.bean;
 
 public class OrderProcs extends OrderHeaderRepository {
@@ -33,6 +31,7 @@ public class OrderProcs extends OrderHeaderRepository {
 
         OrderHeader header;
         List<OrderItem> items;
+        List<OrderItemPriceInfo> itemPriceInfos;
     }
 
     @Transactional
@@ -41,30 +40,42 @@ public class OrderProcs extends OrderHeaderRepository {
         Long orderId = save(orderAndItems.header);
 
         if (!orderAndItems.getItems().isEmpty()) {
-            SQLInsertClause insert = insert(orderItem);
+            SQLInsertClause insertItems = insert(orderItem);
             orderAndItems.getItems().forEach(item -> {
                 item.setOrderId(orderId);
-                insert.populate(item).addBatch();
+                insertItems.populate(item).addBatch();
             });
-            insert.execute();
+            insertItems.execute();
+        }
+        if (!orderAndItems.getItemPriceInfos().isEmpty()) {
+            SQLInsertClause insertItemPriceInfos = insert(orderItemPriceInfo);
+            orderAndItems.getItemPriceInfos().forEach(e -> {
+                e.setOrderId(orderId);
+                insertItemPriceInfos.populate(e).addBatch();
+            });
+            insertItemPriceInfos.execute();
         }
 
         return orderId;
     }
 
-    // slaves
+    // detail
     final QBean<OrderItem> orderItemBean = bean(OrderItem.class, orderItem.all());
-    // master and slaves
+    final QBean<OrderItemPriceInfo> orderItemPriceInfoBean = bean(OrderItemPriceInfo.class, orderItemPriceInfo.all());
+    // master and detail
     final QBean<OrderAndItems> orderAndItemsBean = bean(OrderAndItems.class,
             orderHeader.orderId, orderHeader.createdStamp,  // digest attrs
             bean(OrderHeader.class, orderHeader.all()).as("header"), // master
-            GroupBy.list(orderItemBean).as("items")  // slave: order items
+            GroupBy.list(orderItemBean).as("items"),  // detail: order items
+            GroupBy.list(orderItemPriceInfoBean).as("itemPriceInfos")
     );
 
     @Transactional
     public OrderAndItems findWithItems(Long orderId) {
         List<OrderAndItems> rs = selectFrom(orderHeader)
                 .innerJoin(orderItem).on(orderHeader.orderId.eq(orderItem.orderId))
+                .leftJoin(orderItemPriceInfo).on(orderHeader.orderId.eq(orderItemPriceInfo.orderId),
+                        orderItem.orderItemSeqId.eq(orderItemPriceInfo.orderItemSeqId))
                 .where(orderHeader.orderId.eq(orderId))
                 // .limit(1) // 如果限制为1, 则只会查找1条orderItems
                 .transform(GroupBy.groupBy(orderHeader.orderId).list(orderAndItemsBean));

@@ -1,0 +1,22 @@
+package com.bluecc.domain.beans;
+
+import lombok.Data;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.*;
+
+@Data
+public class {{ent.name}} implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    {% for f in ent.fields -%}
+    {{f.javaType}} {{f.name}};
+    {% endfor %}
+}
+
+/*
+{% for rel in ent.relations %}
+- {{rel.name}} ({{rel.type}}, autoRelation: {{rel.autoRelation}})
+{%- endfor %}
+*/
