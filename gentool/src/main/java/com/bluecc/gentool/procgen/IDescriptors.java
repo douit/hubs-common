@@ -1,5 +1,6 @@
 package com.bluecc.gentool.procgen;
 
+import com.bluecc.gentool.common.Util;
 import com.bluecc.gentool.descriptor.EntityNames;
 import com.google.common.collect.Sets;
 import lombok.Builder;
@@ -15,6 +16,7 @@ public interface IDescriptors {
     @Builder
     public static class DaoDescriptor {
         String name;
+        boolean params;
 
         EntityNames master;
         @Singular
@@ -24,6 +26,14 @@ public interface IDescriptors {
 
         @Singular
         List<String> attrs;
+
+        public String getKey(){
+            return Util.toVarName(master.entityName)+"Id";
+        }
+
+        public String getKeySetter(){
+            return "set"+master.entityName+"Id";
+        }
     }
 
     @Data

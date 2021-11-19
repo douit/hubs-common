@@ -70,7 +70,7 @@ public class CustomerProcs extends PartyRepository {
 
     @Transactional
     public Long saveCustomer(CustomerParams params) {
-        Long partyId = save(params.getParty());
+        Long partyId = save(params.party);
 
         params.person.setPartyId(partyId);
         insert(person).populate(params.person)

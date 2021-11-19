@@ -26,6 +26,11 @@ public class {{ds.daoName}} extends {{ds.base}}Repository {
         // master
         {{obj.master.entityName}} {{obj.master.entityName|varName}};
 
+        // attrs
+        {% for attr in obj.attrs -%}
+        String {{attr}};
+        {% endfor %}
+
         // sigulars
         {%- for sym in obj.sigulars %}
         {{sym.entityName}} {{sym.entityName|varName}};
@@ -37,6 +42,61 @@ public class {{ds.daoName}} extends {{ds.base}}Repository {
         List<{{sym.entityName}}> {{sym.entityName|varName}}List;
         {%- endfor %}
     }
+
+    {% if !obj.params %}
+
+    // detail beans
+    {%- for sym in obj.details %}
+    final QBean<{{sym.entityName}}> {{sym.entityName|varName}}Bean = bean({{sym.entityName}}.class, {{sym.entityName|varName}}.all());
+    {%- endfor %}
+
+    // master and detail
+    final QBean<{{obj.name}}> {{obj.name|varName}}Bean = bean({{obj.name}}.class,
+            {% for attr in obj.attrs -%}{{obj.master.entityName|varName}}.{{attr}}, {% endfor %}  // digest attrs
+            {%- for sym in obj.sigulars %}
+            bean({{sym.entityName}}.class, {{sym.entityName|varName}}.all()).as("{{sym.entityName|varName}}"),
+            {%- endfor %}
+            {%- for sym in obj.details %}
+            GroupBy.list({{sym.entityName|varName}}Bean).as("{{sym.entityName|varName}}List") {% if not loop.last %},{% endif %}
+            {%- endfor %}
+    );
+
+    @Transactional
+    public {{obj.name}} find{{obj.name}}(Long {{obj.key}}) {
+        List<{{obj.name}}> rs = selectFrom({{obj.master.entityName|varName}})
+                {%- for sym in obj.sigulars %}                
+                .leftJoin({{sym.entityName|varName}}).on({{obj.master.entityName|varName}}.{{obj.key}}.eq({{sym.entityName|varName}}.{{obj.key}}))
+                {%- endfor %}
+                .where({{obj.master.entityName|varName}}.{{obj.key}}.eq({{obj.key}}))
+                .transform(GroupBy.groupBy({{obj.master.entityName|varName}}.{{obj.key}}).list({{obj.name|varName}}Bean));
+        return rs.isEmpty() ? null : rs.get(0);
+    }
+    {% endif %}
+
+    {% if obj.params %}
+    @Transactional
+    public Long saveWith{{obj.name}}({{obj.name}} params) {
+        Long {{obj.key}} = save(params.{{obj.master.entityName|varName}});
+
+        {%- for sym in obj.sigulars %}   
+        params.{{sym.entityName|varName}}.{{obj.keySetter}}({{obj.key}});
+        insert({{sym.entityName|varName}}).populate(params.{{sym.entityName|varName}})
+                .executeWithKey({{sym.entityName|varName}}.{{obj.key}});
+        {% endfor %}
+
+        // insert list
+        {%- for sym in obj.details %}
+        SQLInsertClause insert = insert({{sym.entityName|varName}});
+        for ({{sym.entityName}} element : params.{{sym.entityName|varName}}List) {
+            element.{{obj.keySetter}}({{obj.key}});
+            insert.populate(element).addBatch();
+        }        
+        insert.execute();
+        {% endfor %}
+
+        return {{obj.key}};
+    }
+    {% endif %}
 
     {% endfor %}
 }

@@ -10,6 +10,7 @@ public class Descriptors implements IDescriptors {
                 .base(Party)
                 .item(DaoDescriptor.builder()
                         .name("CustomerParams")
+                        .params(true)
                         .master(Party)
                         .sigular(Person)
                         .sigular(UserLogin)

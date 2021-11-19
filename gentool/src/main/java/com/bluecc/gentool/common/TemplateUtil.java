@@ -1,6 +1,7 @@
 package com.bluecc.gentool.common;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.hubspot.jinjava.Jinjava;
@@ -14,6 +15,10 @@ public class TemplateUtil {
     static class VarFilter implements Filter {
         @Override
         public Object filter(Object o, JinjavaInterpreter jinjavaInterpreter, String... strings) {
+            // Preconditions.checkNotNull(o, "filter object is null");
+            if(o==null){
+                return "**NONE**";
+            }
             return Util.toVarName(o.toString());
         }
 
