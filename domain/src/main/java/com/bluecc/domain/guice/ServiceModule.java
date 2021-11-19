@@ -23,6 +23,18 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 public class ServiceModule extends AbstractModule {
+    public enum RunMode{
+        Default, Test
+    }
+    RunMode runMode;
+    public ServiceModule(){
+        this(RunMode.Default);
+    }
+
+    public ServiceModule(RunMode mode){
+        this.runMode=mode;
+    }
+
     @Override
     protected void configure() {
         Properties properties = new Properties();

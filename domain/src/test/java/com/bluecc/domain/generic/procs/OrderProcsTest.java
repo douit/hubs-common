@@ -77,6 +77,7 @@ public class OrderProcsTest  extends AbstractProcsTest {
             OrderAndItems result = orderProcs.saveAndReturnOrder(input);
             assertEquals(5, result.items.size());
             assertEquals(5, result.getItemPriceInfos().size());
+            // pretty(result.header);
         }
 
         System.out.println("total orders: "+orderProcs.count());
@@ -84,14 +85,17 @@ public class OrderProcsTest  extends AbstractProcsTest {
     }
 
     private OrderAndItems getOrderAndItems(RandomDate randomDate) {
-        OrderHeader header = new OrderHeader();
-        header.setOrderDate(randomDate.getRandomDate());
+        OrderHeader header = getOrderHeader(randomDate);
+
         List<OrderItem> items = Lists.newArrayList();
         for (int i = 0; i < 5; ++i) {
             OrderItem item = new OrderItem();
+            // item.setProductId();
             item.setOrderItemSeqId((long) i);
             item.setQuantity(randDecimal(1, 10));
             item.setUnitPrice(randDecimal(1, 10000));
+            item.setOrderItemTypeId("PRODUCT_ORDER_ITEM");
+            item.setStatusId("ITEM_APPROVED");
             item.setItemDescription(faker.commerce().productName());
             items.add(item);
         }
@@ -110,6 +114,15 @@ public class OrderProcsTest  extends AbstractProcsTest {
                 .itemPriceInfos(orderItemPriceInfos)
                 .build();
         return orderAndItems;
+    }
+
+    private OrderHeader getOrderHeader(RandomDate randomDate) {
+        OrderHeader header = new OrderHeader();
+        header.setOrderDate(randomDate.getRandomDate());
+        header.setCurrencyUom("USD");
+        header.setStatusId("ORDER_APPROVED");
+        header.setSalesChannelEnumId("WEB_SALES_CHANNEL");
+        return header;
     }
 
     private RandomDate getRandomDate() {

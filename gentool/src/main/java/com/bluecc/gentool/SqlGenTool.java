@@ -30,7 +30,7 @@ public class SqlGenTool {
                 "asset/mysql/hubs.json");
 
         genTool=new SqlGenTool("h2");
-        genTool.build("asset/mysql/hubs_h2.sql",null);
+        genTool.build("domain/src/main/sql/hubs_h2.sql",null);
     }
 
     public SqlGenTool(){

@@ -8,7 +8,7 @@ import org.junit.runners.model.InitializationError;
 public class GuiceTestRunner extends BlockJUnit4ClassRunner {
 
     private static final Injector injector = Guice
-            .createInjector(new ServiceModule());
+            .createInjector(new ServiceModule(ServiceModule.RunMode.Test));
 
     public GuiceTestRunner(Class<?> klass) throws InitializationError {
         super(klass);

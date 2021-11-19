@@ -130,7 +130,12 @@ public class EntityMeta {
                     .autoInc(true)
                     .build());
         } else {
-            fields.stream().filter(f -> f.pk).forEach(f -> f.setAutoInc(true));
+            fields.stream().filter(f -> f.pk).forEach(f -> {
+                f.setAutoInc(true);
+                f.setType("id");  // 修正唯一键的类型
+                f.setJavaType("Long");
+                f.setSqlType("BIGINT");
+            });
         }
     }
 
