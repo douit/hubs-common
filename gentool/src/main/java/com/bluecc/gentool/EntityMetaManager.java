@@ -20,7 +20,7 @@ import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
 public class EntityMetaManager {
     Map<String, EntityMeta> metaMap= Maps.newHashMap();
 
-    static SqlGenTool.MetaList typeList=EntityTypesTool.types();
+    public static SqlGenTool.MetaList typeList=EntityTypesTool.types();
     static Map<String, FieldMappings.FieldTypeDef> types=getFieldTypes();
 
     public EntityMeta getEntityMeta(String entityName){
@@ -45,7 +45,7 @@ public class EntityMetaManager {
     public static EntityMeta getEntityMeta(File file) throws IOException {
         EntityMeta meta=GSON.fromJson(new FileReader(file),
                 EntityMeta.class);
-        meta.setupFieldMappings(types, typeList);
+        meta.setupFieldMappings(types);
         return meta;
     }
 

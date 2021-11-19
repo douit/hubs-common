@@ -42,10 +42,15 @@ public class DummyTemplateProcs {
                 jinjava, table, context);
     }
 
-    public String procMysql(EntityMeta table) throws IOException {
+    public String procSql(String sqlMode, EntityMeta table) throws IOException {
         Jinjava jinjava = new Jinjava();
         Map<String, Object> context = Maps.newHashMap();
         context.put("table", table);
+        if(sqlMode.equals("mysql")) {
+            context.put("engine", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        }else{
+            context.put("engine", "");
+        }
         String code = buildWithTemplate("mysql", "mysql_idx_source.j2",
                 jinjava, table, context);
         return code;

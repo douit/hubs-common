@@ -47,6 +47,7 @@ public class EntityMetaDigester {
                             new TypeRef(relation.getRelEntityName()),
                             ref,
                             relation.getType(),
+                            relation.getTitle(),
                             relation.getKeymaps().stream()
                                     .map(r -> r.fieldName).collect(Collectors.toList())
                     ));
@@ -67,6 +68,7 @@ public class EntityMetaDigester {
         TypeRef typeRef;
         RefType refType;
         String relType;
+        String title;
         List<String> unionFields;
     }
 

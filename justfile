@@ -13,3 +13,6 @@ gen program +FLAGS='':
 bang:
 	just gen CrudGenTool Person Party OrderHeader OrderItem OrderRole OrderItemPriceInfo PartyRole
 
+recreate:
+	mysql -uroot -proot hubs < asset/mysql/hubs.sql 
+

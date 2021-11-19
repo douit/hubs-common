@@ -52,9 +52,13 @@ public class MetaTool {
                     System.out.println("■■ " + entry.getKey() + ": " + fieldDigest.getTypeRef().getEntityType());
                 } else {
                     if(!onlyShowTypeRef) {
-                        System.out.println("▒▒ " + entry.getKey() + ": "
+                        System.out.print("▒▒ " + entry.getKey() + ": "
                                 + fieldDigest.getTypeRef().getEntityType()
                                 +"("+ (fieldDigest.getRelType().equals("many") ?"*":"1")+")");
+                        if(!fieldDigest.getTitle().isEmpty()) {
+                            System.out.format(" [%s]", fieldDigest.getTitle());
+                        }
+                        System.out.println();
                     }
                 }
             }

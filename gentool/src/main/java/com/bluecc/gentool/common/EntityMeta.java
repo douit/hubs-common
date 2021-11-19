@@ -1,13 +1,18 @@
 package com.bluecc.gentool.common;
 
+import com.bluecc.gentool.EntityMetaManager;
 import com.bluecc.gentool.SqlGenTool;
+import com.bluecc.gentool.common.EntityMetaDigester.FieldDigest;
 import com.bluecc.gentool.dummy.FieldMappings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
+@Slf4j
 public class EntityMeta {
     String name;
     String title;
@@ -75,14 +81,38 @@ public class EntityMeta {
         return Util.toVarName(this.name);
     }
 
-    static final Set<String> IGNORE_FIELDS= Sets.newHashSet("lastUpdatedTxStamp", "createdTxStamp");
-    public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types,
-                                   SqlGenTool.MetaList typeList) {
-        fields=fields.stream().filter(f -> !IGNORE_FIELDS.contains(f.getName())).collect(Collectors.toList());
+    static final Set<String> IGNORE_FIELDS = Sets.newHashSet("lastUpdatedTxStamp", "createdTxStamp");
+
+    public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types) {
+        fields = fields.stream().filter(f -> !IGNORE_FIELDS.contains(f.getName())).collect(Collectors.toList());
         fields.forEach(f -> {
             FieldMappings.FieldTypeDef typDef = types.get(f.type);
             f.setSqlType(typDef.getSqlType());
             f.setJavaType(typDef.getJavaType());
+        });
+
+        // process entity types
+        Map<String, FieldDigest> fieldWithTypes = Maps.newHashMap();
+        EntityMetaDigester digester = new EntityMetaDigester(this, EntityMetaManager.typeList);
+        for (Map.Entry<String, Collection<FieldDigest>> entry : digester.getFieldDigestMap().asMap().entrySet()) {
+            for (FieldDigest fieldDigest : entry.getValue()) {
+                if (fieldDigest.getRefType() == EntityMetaDigester.RefType.TYPE_REF) {
+                    // System.out.println("■■ " + entry.getKey() + ": "
+                    //         + fieldDigest.getTypeRef().getEntityType());
+                    fieldWithTypes.put(entry.getKey(), fieldDigest);
+                }
+            }
+        }
+
+        log.debug("fieldWithTypes: {}", fieldWithTypes.keySet());
+
+        getFields().forEach(f -> {
+            if (fieldWithTypes.containsKey(f.getName())) {
+                f.setJavaType("String");
+                f.setSqlType("VARCHAR(20)");
+                f.setType("type-id");
+                f.setFieldDigest(fieldWithTypes.get(f.getName()));
+            }
         });
 
         // if the entity build with combine-keys, then add a new primary field.
@@ -134,6 +164,8 @@ public class EntityMeta {
         boolean autoInc;
         List<String> validators = Lists.newArrayList();
 
+        FieldDigest fieldDigest;
+
         public String getFixSqlType() {
             if (type.startsWith("id")) {
                 if (autoInc) {
@@ -144,6 +176,14 @@ public class EntityMeta {
             }
             return sqlType;
         }
+
+        public String getComment(){
+            if(fieldDigest!=null){
+                return fieldDigest.getTypeRef().getEntityType();
+            }else{
+                return name;
+            }
+        }
     }
 
     @Data
@@ -153,6 +193,8 @@ public class EntityMeta {
         String type;
         String relEntityName;
         String fkName;
+        String title;
+
         @Singular
         List<KeymapMeta> keymaps = Lists.newArrayList();
         boolean autoRelation;

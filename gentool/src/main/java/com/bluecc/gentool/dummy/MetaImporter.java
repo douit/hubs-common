@@ -2,7 +2,6 @@ package com.bluecc.gentool.dummy;
 
 import com.bluecc.gentool.common.EntityMeta;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -19,7 +18,7 @@ public class MetaImporter {
 
         DummyTemplateProcs procs=new DummyTemplateProcs();
         procs.procBean(meta, "bean_source.j2");
-        procs.procMysql(meta);
+        procs.procSql("mysql", meta);
         procs.procCrud(meta);
     }
 
