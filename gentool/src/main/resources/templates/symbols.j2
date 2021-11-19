@@ -1,0 +1,23 @@
+package com.bluecc.gentool.descriptor;
+
+import lombok.Getter;
+
+public enum EntityNames implements INameSymbol{
+
+    {% for ent in ents -%}
+    {{ent.name}}("{{ent.name}}", "{{ent.title}}"),
+    {% endfor %}
+    ;
+
+    @Getter(onMethod_ = {@Override})
+    public final String entityName;
+    @Getter(onMethod_ = {@Override})
+    public final String description;
+
+    private EntityNames(String entityName, String description){
+        this.entityName=entityName;
+        this.description=description;
+    }
+}
+
+

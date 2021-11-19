@@ -1,0 +1,42 @@
+package com.bluecc.domain.generic.procs;
+
+import com.bluecc.domain.generic.dao.{{ds.base}}Repository;
+import com.bluecc.domain.guice.Transactional;
+import com.bluecc.domain.sql.model.*;
+import com.querydsl.core.group.GroupBy;
+import com.querydsl.core.types.QBean;
+import com.querydsl.sql.dml.SQLInsertClause;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Singular;
+
+import java.util.List;
+import static com.querydsl.core.types.Projections.bean;
+
+// Infers
+{%- for infer in ds.infers %}
+import static com.bluecc.domain.sql.model.Q{{infer}}.{{infer|varName}};
+{%- endfor %}
+
+public class {{ds.daoName}} extends {{ds.base}}Repository {
+    {% for obj in ds.items -%}
+    @Data
+    @Builder
+    public static class {{obj.name}} {
+        // master
+        {{obj.master.entityName}} {{obj.master.entityName|varName}};
+
+        // sigulars
+        {%- for sym in obj.sigulars %}
+        {{sym.entityName}} {{sym.entityName|varName}};
+        {%- endfor %}
+
+        // details
+        {%- for sym in obj.details %}
+        @Singular("{{sym.entityName|varName}}")
+        List<{{sym.entityName}}> {{sym.entityName|varName}}List;
+        {%- endfor %}
+    }
+
+    {% endfor %}
+}

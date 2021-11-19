@@ -78,6 +78,12 @@ public class Util {
         writer.close();
     }
 
+    public static void writeFile(String string, File file) throws IOException {
+        Writer writer=new FileWriter(file);
+        writer.write(string);
+        writer.close();
+    }
+
     public static <T> T readJsonFile(Class<T> clz, File file) throws IOException {
         String cnt=IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
         return GSON.fromJson(cnt, clz);

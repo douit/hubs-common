@@ -11,18 +11,15 @@ import lombok.Data;
 import lombok.Singular;
 
 import java.util.List;
+import static com.querydsl.core.types.Projections.bean;
 
 import static com.bluecc.domain.sql.model.QGeoPoint.geoPoint;
-import static com.bluecc.domain.sql.model.QOrderHeader.orderHeader;
-import static com.bluecc.domain.sql.model.QOrderItem.orderItem;
-import static com.bluecc.domain.sql.model.QOrderItemPriceInfo.orderItemPriceInfo;
 import static com.bluecc.domain.sql.model.QParty.party;
 import static com.bluecc.domain.sql.model.QPartyGeoPoint.partyGeoPoint;
 import static com.bluecc.domain.sql.model.QPartyRole.partyRole;
 import static com.bluecc.domain.sql.model.QPartyStatus.partyStatus;
 import static com.bluecc.domain.sql.model.QPerson.person;
 import static com.bluecc.domain.sql.model.QUserLogin.userLogin;
-import static com.querydsl.core.types.Projections.bean;
 
 public class CustomerProcs extends PartyRepository {
     @Data
