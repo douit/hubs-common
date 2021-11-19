@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import static com.bluecc.gentool.SqlGenTool.readEntityMeta;
+import static com.bluecc.gentool.EntityMetaManager.readEntityMeta;
 
 public class MetaGenBase {
 

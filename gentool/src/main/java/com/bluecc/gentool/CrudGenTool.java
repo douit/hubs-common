@@ -17,7 +17,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.bluecc.gentool.SqlGenTool.readEntityMeta;
+import static com.bluecc.gentool.EntityMetaManager.readEntityMeta;
+
 
 /**
  * $ just gen CrudGenTool Person Party

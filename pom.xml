@@ -57,6 +57,7 @@
         <module>secas</module>
         <module>gentool</module>
         <module>saga</module>
+        <module>common</module>
     </modules>
 
     <dependencyManagement>

@@ -60,7 +60,7 @@ public class DummyTemplateProcs {
                         .getResource("templates/" + tplSource),
                 Charsets.UTF_8);
         renderedTemplate = jinjava.render(template, context);
-        System.out.println(renderedTemplate);
+        // System.out.println(renderedTemplate);
 
         templateRepos.put(Tuple2.of(table.getName(), tplName), renderedTemplate);
 

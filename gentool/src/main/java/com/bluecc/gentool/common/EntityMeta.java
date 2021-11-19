@@ -1,13 +1,16 @@
 package com.bluecc.gentool.common;
 
+import com.bluecc.gentool.SqlGenTool;
 import com.bluecc.gentool.dummy.FieldMappings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -28,12 +31,12 @@ public class EntityMeta {
     List<String> pks = Lists.newArrayList();
     boolean isView;
 
-    public List<FieldMeta> getPublicFields(){
+    public List<FieldMeta> getPublicFields() {
         return fields.stream().filter(f -> !f.isAutoCreatedInternal())
                 .collect(Collectors.toList());
     }
 
-    public String getKeyNames(){
+    public String getKeyNames() {
         return String.join(", ", pks);
     }
 
@@ -72,7 +75,10 @@ public class EntityMeta {
         return Util.toVarName(this.name);
     }
 
-    public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types) {
+    static final Set<String> IGNORE_FIELDS= Sets.newHashSet("lastUpdatedTxStamp", "createdTxStamp");
+    public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types,
+                                   SqlGenTool.MetaList typeList) {
+        fields=fields.stream().filter(f -> !IGNORE_FIELDS.contains(f.getName())).collect(Collectors.toList());
         fields.forEach(f -> {
             FieldMappings.FieldTypeDef typDef = types.get(f.type);
             f.setSqlType(typDef.getSqlType());

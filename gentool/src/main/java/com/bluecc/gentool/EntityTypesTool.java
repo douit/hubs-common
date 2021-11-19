@@ -12,28 +12,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.bluecc.gentool.EntityMetaManager.getMetaFile;
 import static com.bluecc.gentool.SqlGenTool.genDDL;
-import static com.bluecc.gentool.SqlGenTool.getMetaFile;
 import static com.bluecc.gentool.common.Util.readJsonFile;
 import static com.bluecc.gentool.common.Util.writeJsonFile;
+import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
 import static java.util.Objects.requireNonNull;
 
 public class EntityTypesTool {
     public static String seedDir = "dataset/seed";
 
     public static void main(String[] args) throws IOException {
-        Writer writer = new FileWriter("asset/mysql/types.sql");
-        Set<String> entityList = collectFromFiles(new File(seedDir));
+        Writer writer = new FileWriter(prependHubsHomeFile("asset/mysql/types.sql"));
+        Set<String> entityList = collectFromFiles(prependHubsHomeFile(seedDir));
         int totalTypeEntities=entityList.size();
         SqlGenTool.MetaList hubsEntities = readJsonFile(SqlGenTool.MetaList.class,
-                new File("asset/mysql/hubs.json"));
+                prependHubsHomeFile("asset/mysql/hubs.json"));
 
         Set<String> intersection = new HashSet<String>(hubsEntities.getEntities()); // use the copy constructor
         intersection.retainAll(entityList);
         // 在数据库中维护的实体类型
         writeJsonFile(SqlGenTool.MetaList.builder()
                 .entities(intersection)
-                .build(), new File("asset/mysql/retain_types.json"));
+                .build(), prependHubsHomeFile("asset/mysql/retain_types.json"));
 
         entityList.removeAll(hubsEntities.getEntities());
 
@@ -49,7 +50,7 @@ public class EntityTypesTool {
 
         writeJsonFile(SqlGenTool.MetaList.builder()
                 .entities(entityList)
-                .build(), new File("asset/mysql/types.json"));
+                .build(), prependHubsHomeFile("asset/mysql/types.json"));
     }
 
     static Set<String> collectFromFiles(File metaDir) {
@@ -60,5 +61,14 @@ public class EntityTypesTool {
             rs.addAll(entityList);
         }
         return rs;
+    }
+
+    public static SqlGenTool.MetaList types()  {
+        try {
+            return readJsonFile(SqlGenTool.MetaList.class,
+                    prependHubsHomeFile("asset/mysql/types.json"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

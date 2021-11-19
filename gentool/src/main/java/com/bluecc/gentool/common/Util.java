@@ -82,4 +82,8 @@ public class Util {
         String cnt=IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
         return GSON.fromJson(cnt, clz);
     }
+
+    public static String getCurrentDirectory(){
+        return System.getProperty("user.dir");
+    }
 }
