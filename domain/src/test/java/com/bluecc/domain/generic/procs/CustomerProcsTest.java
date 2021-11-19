@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import static com.bluecc.domain.util.JsonUtil.pretty;
 import static org.junit.Assert.*;
 
 public class CustomerProcsTest extends AbstractProcsTest{
@@ -49,6 +50,9 @@ public class CustomerProcsTest extends AbstractProcsTest{
         System.out.println(id);
 
         assertEquals(2L, partyRoleRepository.count());
+
+        CustomerProcs.Customer customer=customerProcs.findCustomer(id);
+        pretty(customer);
     }
 
     private GeoPoint geoPoint() {
