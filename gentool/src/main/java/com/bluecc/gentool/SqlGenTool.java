@@ -29,6 +29,11 @@ public class SqlGenTool {
     }
 
     public static void main(String[] args) throws IOException {
+        SqlGenTool genTool=new SqlGenTool();
+        genTool.build();
+    }
+
+    public void build()  throws IOException{
         Writer writer=new FileWriter("asset/mysql/hubs.sql");
 
         Set<String> entityList=SeedReader.collectEntityNames(dataFile);
@@ -48,8 +53,7 @@ public class SqlGenTool {
                 .build(), new File("asset/mysql/hubs.json"));
     }
 
-
-    private static void buildAll() throws IOException {
+    private  void buildAll() throws IOException {
         File metaDir=new File("asset/meta");
         Writer writer=new FileWriter("asset/mysql/hubs.sql");
         for (File metaFile : requireNonNull(metaDir.listFiles((dir, name)
@@ -60,12 +64,12 @@ public class SqlGenTool {
         writer.close();
     }
 
-    private static void genDDL(String entName) throws IOException {
+    private  void genDDL(String entName) throws IOException {
         File file = getMetaFile(entName);
         genDDL(file, null);
     }
 
-    public static String genDDL(File file, Writer writer) throws IOException {
+    public String genDDL(File file, Writer writer) throws IOException {
         EntityMeta meta = getEntityMeta(file);
 
         // System.out.println(meta.getName());

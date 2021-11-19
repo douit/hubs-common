@@ -84,6 +84,8 @@ public class EntityMeta {
             f.setSqlType(typDef.getSqlType());
             f.setJavaType(typDef.getJavaType());
         });
+
+        // if the entity build with combine-keys, then add a new primary field.
         if (combine) {
             getFields().add(FieldMeta.builder()
                     .name("id")

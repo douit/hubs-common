@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.bluecc.gentool.EntityMetaManager.getMetaFile;
-import static com.bluecc.gentool.SqlGenTool.genDDL;
 import static com.bluecc.gentool.common.Util.readJsonFile;
 import static com.bluecc.gentool.common.Util.writeJsonFile;
 import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
@@ -21,10 +20,12 @@ import static java.util.Objects.requireNonNull;
 
 public class EntityTypesTool {
     public static String seedDir = "dataset/seed";
+    public static String commonDir = "dataset/common";
 
     public static void main(String[] args) throws IOException {
         Writer writer = new FileWriter(prependHubsHomeFile("asset/mysql/types.sql"));
-        Set<String> entityList = collectFromFiles(prependHubsHomeFile(seedDir));
+        Set<String> entityList = collectFromFiles(prependHubsHomeFile(seedDir),
+                prependHubsHomeFile(commonDir));
         int totalTypeEntities=entityList.size();
         SqlGenTool.MetaList hubsEntities = readJsonFile(SqlGenTool.MetaList.class,
                 prependHubsHomeFile("asset/mysql/hubs.json"));
@@ -38,14 +39,16 @@ public class EntityTypesTool {
 
         entityList.removeAll(hubsEntities.getEntities());
 
+        SqlGenTool genTool=new SqlGenTool();
+
         for (String entityName : entityList) {
             File metaFile = getMetaFile(entityName);
             System.out.println(metaFile.getName());
-            genDDL(metaFile, writer);
+            genTool.genDDL(metaFile, writer);
         }
 
         writer.write(String.format("-- collect entities %d, from %s; total %d\n",
-                entityList.size(), seedDir, totalTypeEntities));
+                entityList.size(), seedDir+", "+commonDir, totalTypeEntities));
         writer.close();
 
         writeJsonFile(SqlGenTool.MetaList.builder()
@@ -53,12 +56,14 @@ public class EntityTypesTool {
                 .build(), prependHubsHomeFile("asset/mysql/types.json"));
     }
 
-    static Set<String> collectFromFiles(File metaDir) {
+    static Set<String> collectFromFiles(File... metaDirs) {
         Set<String> rs = Sets.newHashSet();
-        for (File metaFile : requireNonNull(metaDir.listFiles((dir, name)
-                -> name.toLowerCase().endsWith(".xml")))) {
-            Set<String> entityList = SeedReader.collectEntityNames(metaFile.toString());
-            rs.addAll(entityList);
+        for (File metaDir : metaDirs) {
+            for (File metaFile : requireNonNull(metaDir.listFiles((dir, name)
+                    -> name.toLowerCase().endsWith(".xml")))) {
+                Set<String> entityList = SeedReader.collectEntityNames(metaFile.toString());
+                rs.addAll(entityList);
+            }
         }
         return rs;
     }
