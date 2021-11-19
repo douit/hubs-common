@@ -63,6 +63,7 @@
     "ProductFacilityLocation",
     "ShipmentBoxType",
     "ShipmentPackageRouteSeg",
+    "GeoPoint",
     "SubscriptionResource",
     "ProductFeatureAppl",
     "PartyContactMechPurpose",

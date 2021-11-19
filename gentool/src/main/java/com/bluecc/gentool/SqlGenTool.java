@@ -3,6 +3,8 @@ package com.bluecc.gentool;
 import com.bluecc.gentool.common.EntityMeta;
 import com.bluecc.gentool.dummy.DummyTemplateProcs;
 import com.bluecc.gentool.dummy.SeedReader;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import lombok.Builder;
 import lombok.Data;
 
@@ -25,11 +27,15 @@ public class SqlGenTool {
     }
 
     public static void main(String[] args) throws IOException {
+        List<String> entityNames= Lists.newArrayList("GeoPoint");
+
         SqlGenTool genTool=new SqlGenTool("mysql");
+        genTool.addAdditions(entityNames);
         genTool.build("asset/mysql/hubs.sql",
                 "asset/mysql/hubs.json");
 
         genTool=new SqlGenTool("h2");
+        genTool.addAdditions(entityNames);
         genTool.build("domain/src/main/sql/hubs_h2.sql",null);
     }
 
@@ -38,14 +44,19 @@ public class SqlGenTool {
     }
 
     String sqlMode;
+    Set<String> additions= Sets.newHashSet();
     public SqlGenTool(String sqlMode){
         this.sqlMode=sqlMode;
     }
 
+    public void addAdditions(List<String> entityNames){
+        additions.addAll(entityNames);
+    }
     public void build(String outputSqlFile, String outputJsonFile)  throws IOException{
         Writer writer=new FileWriter(outputSqlFile);
 
         Set<String> entityList=SeedReader.collectEntityNames(dataFile);
+        entityList.addAll(this.additions);
         if(sqlMode.equals("h2")){
             writer.write("SET MODE MYSQL; /* another h2 way to set mode */\n" +
                     "CREATE SCHEMA IF NOT EXISTS \"public\";\n\n");

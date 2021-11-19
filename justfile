@@ -13,8 +13,12 @@ gen program +FLAGS='':
 bang:
     just gen CrudGenTool Person Party OrderHeader OrderItem OrderRole OrderItemPriceInfo PartyRole
 
+# 重新生成sql文件
+regen:
+	just gen SqlGenTool
+
+# 重新建表和生成模型类
 recreate:
     mysql -uroot -proot hubs < asset/mysql/hubs.sql
     cd domain && mvn compile
-
 

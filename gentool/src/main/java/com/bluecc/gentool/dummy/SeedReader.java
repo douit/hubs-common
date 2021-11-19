@@ -36,13 +36,16 @@ public class SeedReader {
         }
     }
 
-    public static Set<String> collectEntityNames(String dataFile)  {
-        NodeList nodeList = getNodeList(dataFile);
-        Set<String> nameSet= Sets.newHashSet();
-        for(int i=0;i<nodeList.getLength();++i){
-            if (nodeList.item(i) instanceof Element){
-                Element element=(Element) nodeList.item(i);
-                nameSet.add(element.getTagName());
+    public static Set<String> collectEntityNames(String... dataFiles)  {
+        Set<String> nameSet = Sets.newHashSet();
+        for (String dataFile : dataFiles) {
+            NodeList nodeList = getNodeList(dataFile);
+
+            for (int i = 0; i < nodeList.getLength(); ++i) {
+                if (nodeList.item(i) instanceof Element) {
+                    Element element = (Element) nodeList.item(i);
+                    nameSet.add(element.getTagName());
+                }
             }
         }
         return nameSet;
