@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
+import javax.inject.Singleton;
 import java.util.List;
 
 import static com.bluecc.domain.sql.model.QOrderHeader.orderHeader;
@@ -21,6 +22,7 @@ import static com.bluecc.domain.sql.model.QOrderItem.orderItem;
 import static com.bluecc.domain.sql.model.QOrderItemPriceInfo.orderItemPriceInfo;
 import static com.querydsl.core.types.Projections.bean;
 
+@Singleton
 public class OrderProcs extends OrderHeaderRepository {
     @Data
     @Builder

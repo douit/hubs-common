@@ -12,7 +12,7 @@ public class Descriptors implements IDescriptors {
                         .name("CustomerParams")
                         .params(true)
                         .master(Party)
-                        .sigular(Person)
+                        .sigular(Person.fields("lastName", "firstName"))
                         .sigular(UserLogin)
                         .sigular(PartyStatus)
                         .detail(PartyRole)
@@ -23,7 +23,7 @@ public class Descriptors implements IDescriptors {
                         .attr("lastName")
                         .attr("firstName")
                         .master(Party)
-                        .sigular(Person)
+                        .sigular(Person)  // 前面定义的也会起作用
                         .detail(PartyRole)
                         .build())
                 .build();

@@ -18,14 +18,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.bluecc.gentool.DataSetUtil.collectEntitiesFromResources;
 import static com.bluecc.gentool.dummy.SeedCollector.dataFile;
 
 public class ProcGen {
 
     public static void main(String[] args) throws IOException {
-        Set<String> entityList = SeedReader.collectEntityNames(
-                "dataset/OrderDemoData.xml",
-                "dataset/PartyGeoPointData.xml");
+        Set<String> entityList = collectEntitiesFromResources();
         ProcGen procGen = new ProcGen();
         String code = procGen.gen(entityList);
         System.out.println(code);
@@ -43,7 +42,9 @@ public class ProcGen {
     }
 
     String gen(Set<String> entityList) throws IOException {
-        List<EntityMeta> metaList = entityList.stream().map(name -> entityMetaManager.getEntityMeta(name))
+        List<EntityMeta> metaList = entityList.stream()
+                .sorted()
+                .map(name -> entityMetaManager.getEntityMeta(name))
                 .collect(Collectors.toList());
         Map<String, Object> ctx = ImmutableMap.of("ents", metaList);
         return TemplateUtil.build("templates/symbols.j2",

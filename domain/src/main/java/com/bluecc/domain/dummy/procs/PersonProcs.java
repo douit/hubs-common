@@ -100,7 +100,7 @@ public class PersonProcs extends AbstractRepository {
     }
 
     @Inject
-    JdbcHelper jdbcHelper;
+    public JdbcHelper jdbcHelper;
 
     public static void main(String[] args) {
         Faker faker = new Faker(new Locale("zh-CN"));

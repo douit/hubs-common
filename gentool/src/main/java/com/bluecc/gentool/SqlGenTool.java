@@ -11,6 +11,7 @@ import lombok.Data;
 import java.io.*;
 import java.util.*;
 
+import static com.bluecc.gentool.DataSetUtil.collectEntitiesFromResources;
 import static com.bluecc.gentool.EntityMetaManager.*;
 import static com.bluecc.gentool.common.Util.*;
 import static com.bluecc.gentool.dummy.SeedCollector.dataFile;
@@ -27,15 +28,14 @@ public class SqlGenTool {
     }
 
     public static void main(String[] args) throws IOException {
-        List<String> entityNames= Lists.newArrayList("GeoPoint");
-
+        // List<String> entityNames= Lists.newArrayList("GeoPoint");
         SqlGenTool genTool=new SqlGenTool("mysql");
-        genTool.addAdditions(entityNames);
+        // genTool.addAdditions(entityNames);
         genTool.build("asset/mysql/hubs.sql",
                 "asset/mysql/hubs.json");
 
         genTool=new SqlGenTool("h2");
-        genTool.addAdditions(entityNames);
+        // genTool.addAdditions(entityNames);
         genTool.build("domain/src/main/sql/hubs_h2.sql",null);
     }
 
@@ -55,7 +55,8 @@ public class SqlGenTool {
     public void build(String outputSqlFile, String outputJsonFile)  throws IOException{
         Writer writer=new FileWriter(outputSqlFile);
 
-        Set<String> entityList=SeedReader.collectEntityNames(dataFile);
+        // Set<String> entityList=SeedReader.collectEntityNames(dataFile);
+        Set<String> entityList = collectEntitiesFromResources();
         entityList.addAll(this.additions);
         if(sqlMode.equals("h2")){
             writer.write("SET MODE MYSQL; /* another h2 way to set mode */\n" +

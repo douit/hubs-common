@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 
+import javax.inject.Singleton;
 import java.util.List;
 import static com.querydsl.core.types.Projections.bean;
 
@@ -21,6 +22,7 @@ import static com.bluecc.domain.sql.model.QPartyStatus.partyStatus;
 import static com.bluecc.domain.sql.model.QPerson.person;
 import static com.bluecc.domain.sql.model.QUserLogin.userLogin;
 
+@Singleton
 public class CustomerProcs extends PartyRepository {
     @Data
     @Builder
