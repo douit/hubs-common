@@ -1,0 +1,9 @@
+{% for obj in ds.items -%}
+- {{obj.name}}.sigulars -
+    {%- for sym in obj.sigulars %}
+    {{sym.entityName}} {{sym.entityName|varName}}
+        fields: {% for f in sym.fields %} {{f}} {% endfor %}
+    {%- endfor %}
+    
+{% endfor %}
+

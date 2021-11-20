@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.bluecc.hubs.stub";
+option java_outer_classname = "DoProto";
+option objc_class_prefix = "DP";
+
+package domain;
+
+// The fixture service definition.
+service FixtureProcs {
+  rpc AllPerson (QueryPersonRequest) returns (PersonObjects) {}
+}
+
+// The request message containing the user's name.
+message QueryPersonRequest {
+  string name = 1;
+}
+
+message PersonObject {
+  int64 party_id=1;
+  string last_name=2;
+  string first_name=3;
+}
+
+message PersonObjects {
+  string message = 1;
+  repeated PersonObject objects=2;
+}
+
