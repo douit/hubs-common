@@ -2,22 +2,30 @@ package com.bluecc.domain.generic.dao;
 
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
+import com.querydsl.sql.dml.SQLInsertClause;
 import com.bluecc.domain.dummy.repository.AbstractRepository;
 
 import java.util.List;
+import org.joda.time.DateTime;
 
 import com.bluecc.domain.sql.model.*;
+import com.querydsl.core.types.QBean;
+import static com.querydsl.core.types.Projections.bean;
 
 import static com.bluecc.domain.sql.model.QOrderHeader.orderHeader;
 
 // Order Header
 public class OrderHeaderRepository extends AbstractRepository {
+    public static final QBean<OrderHeader> orderHeaderBean = bean(OrderHeader.class, orderHeader.all());
+
     @Transactional
     public Long save(OrderHeader entity) {
         if (entity.getOrderId() != null) {
+            entity.setLastUpdatedStamp(DateTime.now());
             update(orderHeader).populate(entity).execute();
             return entity.getOrderId();
         }
+        entity.setCreatedStamp(DateTime.now());
         return insert(orderHeader).populate(entity)
                 .executeWithKey(orderHeader.orderId);
     }
@@ -52,20 +60,20 @@ public class OrderHeaderRepository extends AbstractRepository {
 -- fields --
     
     Long orderId
-    Long orderTypeId
+    String orderTypeId
     String orderName
     Long externalId
-    Long salesChannelEnumId
+    String salesChannelEnumId
     java.sql.Timestamp orderDate
     String priority
     java.sql.Timestamp entryDate
     java.sql.Timestamp pickSheetPrintedDate
     Long visitId
-    Long statusId
+    String statusId
     Long createdBy
     Long firstAttemptOrderId
-    Long currencyUom
-    Long syncStatusId
+    String currencyUom
+    String syncStatusId
     Long billingAccountId
     Long originFacilityId
     Long webSiteId

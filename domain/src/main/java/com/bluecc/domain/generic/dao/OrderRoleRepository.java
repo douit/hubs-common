@@ -2,22 +2,30 @@ package com.bluecc.domain.generic.dao;
 
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
+import com.querydsl.sql.dml.SQLInsertClause;
 import com.bluecc.domain.dummy.repository.AbstractRepository;
 
 import java.util.List;
+import org.joda.time.DateTime;
 
 import com.bluecc.domain.sql.model.*;
+import com.querydsl.core.types.QBean;
+import static com.querydsl.core.types.Projections.bean;
 
 import static com.bluecc.domain.sql.model.QOrderRole.orderRole;
 
 // Order Role
 public class OrderRoleRepository extends AbstractRepository {
+    public static final QBean<OrderRole> orderRoleBean = bean(OrderRole.class, orderRole.all());
+
     @Transactional
     public Long save(OrderRole entity) {
         if (entity.getId() != null) {
+            entity.setLastUpdatedStamp(DateTime.now());
             update(orderRole).populate(entity).execute();
             return entity.getId();
         }
+        entity.setCreatedStamp(DateTime.now());
         return insert(orderRole).populate(entity)
                 .executeWithKey(orderRole.id);
     }
@@ -53,7 +61,7 @@ public class OrderRoleRepository extends AbstractRepository {
     
     Long orderId
     Long partyId
-    Long roleTypeId
+    String roleTypeId
 
 -- relations --
     

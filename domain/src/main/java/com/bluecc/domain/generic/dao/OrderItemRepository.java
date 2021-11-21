@@ -2,22 +2,30 @@ package com.bluecc.domain.generic.dao;
 
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
+import com.querydsl.sql.dml.SQLInsertClause;
 import com.bluecc.domain.dummy.repository.AbstractRepository;
 
 import java.util.List;
+import org.joda.time.DateTime;
 
 import com.bluecc.domain.sql.model.*;
+import com.querydsl.core.types.QBean;
+import static com.querydsl.core.types.Projections.bean;
 
 import static com.bluecc.domain.sql.model.QOrderItem.orderItem;
 
 // Order Item
 public class OrderItemRepository extends AbstractRepository {
+    public static final QBean<OrderItem> orderItemBean = bean(OrderItem.class, orderItem.all());
+
     @Transactional
     public Long save(OrderItem entity) {
         if (entity.getId() != null) {
+            entity.setLastUpdatedStamp(DateTime.now());
             update(orderItem).populate(entity).execute();
             return entity.getId();
         }
+        entity.setCreatedStamp(DateTime.now());
         return insert(orderItem).populate(entity)
                 .executeWithKey(orderItem.id);
     }
@@ -54,7 +62,7 @@ public class OrderItemRepository extends AbstractRepository {
     Long orderId
     Long orderItemSeqId
     Long externalId
-    Long orderItemTypeId
+    String orderItemTypeId
     Long orderItemGroupSeqId
     String isItemGroupPrimary
     Long fromInventoryItemId
@@ -80,12 +88,12 @@ public class OrderItemRepository extends AbstractRepository {
     java.math.BigDecimal unitAverageCost
     java.math.BigDecimal unitRecurringPrice
     String isModifiedPrice
-    Long recurringFreqUomId
+    String recurringFreqUomId
     String itemDescription
     String comments
     Long correspondingPoId
-    Long statusId
-    Long syncStatusId
+    String statusId
+    String syncStatusId
     java.sql.Timestamp estimatedShipDate
     java.sql.Timestamp estimatedDeliveryDate
     java.sql.Timestamp autoCancelDate

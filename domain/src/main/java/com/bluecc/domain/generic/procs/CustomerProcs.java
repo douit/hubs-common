@@ -9,6 +9,7 @@ import com.querydsl.sql.dml.SQLInsertClause;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
+import org.joda.time.DateTime;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -111,6 +112,7 @@ public class CustomerProcs extends PartyRepository {
         SQLInsertClause insert = insert(partyRole);
         for (PartyRole role : roles) {
             role.setPartyId(partyId);
+            role.setCreatedStamp(DateTime.now());
             insert.populate(role).addBatch();
         }
         insert.execute();

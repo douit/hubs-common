@@ -17,6 +17,7 @@ import org.joda.time.DateTime;
 import javax.inject.Singleton;
 import java.util.List;
 
+import static com.bluecc.domain.generic.dao.OrderItemRepository.orderItemBean;
 import static com.bluecc.domain.sql.model.QOrderHeader.orderHeader;
 import static com.bluecc.domain.sql.model.QOrderItem.orderItem;
 import static com.bluecc.domain.sql.model.QOrderItemPriceInfo.orderItemPriceInfo;
@@ -39,7 +40,7 @@ public class OrderProcs extends OrderHeaderRepository {
 
     @Transactional
     public Long saveOrder(OrderAndItems orderAndItems) {
-        orderAndItems.header.setCreatedStamp(DateTime.now());
+        // orderAndItems.header.setCreatedStamp(DateTime.now());
         Long orderId = save(orderAndItems.header);
 
         if (!orderAndItems.getItems().isEmpty()) {
@@ -70,7 +71,7 @@ public class OrderProcs extends OrderHeaderRepository {
     }
 
     // detail
-    final QBean<OrderItem> orderItemBean = bean(OrderItem.class, orderItem.all());
+    // final QBean<OrderItem> orderItemBean = bean(OrderItem.class, orderItem.all());
     final QBean<OrderItemPriceInfo> orderItemPriceInfoBean = bean(OrderItemPriceInfo.class, orderItemPriceInfo.all());
     // master and detail
     final QBean<OrderAndItems> orderAndItemsBean = bean(OrderAndItems.class,

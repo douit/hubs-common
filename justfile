@@ -14,7 +14,10 @@ rpc program +FLAGS='':
 	mvn compile exec:java -Dexec.mainClass="com.bluecc.facade.{{program}}" -Dexec.args="{{FLAGS}}" -f facade/pom.xml
 
 bang:
-    just gen CrudGenTool Person Party OrderHeader OrderItem OrderRole OrderItemPriceInfo PartyRole
+    just gen CrudGenTool Person Party OrderHeader OrderItem OrderRole OrderItemPriceInfo PartyRole PartyGroup ProductPrice
+
+model name:
+	just gen MetaTool {{name}}
 
 # 重新生成sql文件
 regen:

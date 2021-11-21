@@ -40,6 +40,7 @@ public class MetaTool {
         EntityMetaDigester digester=new EntityMetaDigester(meta, EntityMetaManager.typeList);
         Set<String> relFields=digester.getFieldDigestMap().keySet();
 
+        System.out.println("primary: "+meta.getPks());
         meta.getFields().stream()
                 .filter(f -> !relFields.contains(f.getName()))
                 .forEach(f -> System.out.format("%s %s %s\n",

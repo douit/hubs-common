@@ -2,22 +2,30 @@ package com.bluecc.domain.generic.dao;
 
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
+import com.querydsl.sql.dml.SQLInsertClause;
 import com.bluecc.domain.dummy.repository.AbstractRepository;
 
 import java.util.List;
+import org.joda.time.DateTime;
 
 import com.bluecc.domain.sql.model.*;
+import com.querydsl.core.types.QBean;
+import static com.querydsl.core.types.Projections.bean;
 
 import static com.bluecc.domain.sql.model.QParty.party;
 
 // Party
 public class PartyRepository extends AbstractRepository {
+    public static final QBean<Party> partyBean = bean(Party.class, party.all());
+
     @Transactional
     public Long save(Party entity) {
         if (entity.getPartyId() != null) {
+            entity.setLastUpdatedStamp(DateTime.now());
             update(party).populate(entity).execute();
             return entity.getPartyId();
         }
+        entity.setCreatedStamp(DateTime.now());
         return insert(party).populate(entity)
                 .executeWithKey(party.partyId);
     }
@@ -52,16 +60,16 @@ public class PartyRepository extends AbstractRepository {
 -- fields --
     
     Long partyId
-    Long partyTypeId
+    String partyTypeId
     Long externalId
-    Long preferredCurrencyUomId
+    String preferredCurrencyUomId
     String description
-    Long statusId
+    String statusId
     java.sql.Timestamp createdDate
     Long createdByUserLogin
     java.sql.Timestamp lastModifiedDate
     Long lastModifiedByUserLogin
-    Long dataSourceId
+    String dataSourceId
     String isUnread
 
 -- relations --
