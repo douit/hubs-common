@@ -42,15 +42,25 @@ public class EntityMetaManager {
         return getEntityMeta(entityName).getPks();
     }
 
-    public static EntityMeta getEntityMeta(File file) throws IOException {
+    public static EntityMeta getEntityMeta(File file, boolean remap) throws IOException {
         EntityMeta meta=GSON.fromJson(new FileReader(file),
                 EntityMeta.class);
-        meta.setupFieldMappings(types);
+        if(remap) {
+            meta.setupFieldMappings(types);
+        }
         return meta;
     }
 
+    public static EntityMeta getEntityMeta(File file) throws IOException {
+        return getEntityMeta(file, true);
+    }
+
     public static EntityMeta readEntityMeta(String entityName) throws IOException {
-        return getEntityMeta(getMetaFile(entityName));
+        return getEntityMeta(getMetaFile(entityName), true);
+    }
+
+    public static EntityMeta getEntityMeta(String entityName, boolean remap) throws IOException {
+        return getEntityMeta(getMetaFile(entityName), remap);
     }
 
     public static File getMetaFile(String entityName) {

@@ -42,6 +42,10 @@ public class EntityMeta {
                 .collect(Collectors.toList());
     }
 
+    public int getPublicFieldNumber(){
+        return getPublicFields().size();
+    }
+
     public String getKeyNames() {
         return String.join(", ", pks);
     }
@@ -79,6 +83,10 @@ public class EntityMeta {
 
     public String getVarName() {
         return Util.toVarName(this.name);
+    }
+
+    public String getUnderscore() {
+        return Util.toSnakecase(this.name);
     }
 
     static final Set<String> IGNORE_FIELDS = Sets.newHashSet("lastUpdatedTxStamp", "createdTxStamp");
@@ -182,12 +190,20 @@ public class EntityMeta {
             return sqlType;
         }
 
-        public String getComment(){
-            if(fieldDigest!=null){
+        public String getComment() {
+            if (fieldDigest != null) {
                 return fieldDigest.getTypeRef().getEntityType();
-            }else{
+            } else {
                 return name;
             }
+        }
+
+        public String getUnderscore() {
+            return Util.toSnakecase(this.name);
+        }
+
+        public String getProtoType() {
+            return NameUtil.getProtoType(this.type);
         }
     }
 
@@ -213,6 +229,14 @@ public class EntityMeta {
                         }
                     })
                     .collect(Collectors.joining(", "));
+        }
+
+        public String getProtoDef() {
+            String prefix = this.type.equals("many") ? "repeated " : "";
+            // return String.format("%s %sData %s", prefix, relEntityName,
+            //         Util.toSnakecase(title) + "_" + Util.toSnakecase(name));
+            return String.format("%s%sData %s", prefix, relEntityName,
+                    Util.toSnakecase(name));
         }
     }
 

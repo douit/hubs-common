@@ -1,6 +1,7 @@
 package com.bluecc.gentool.common;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Preconditions;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +25,7 @@ public class Util {
     }
 
     public static String snakeToCamel(String str){
+        Preconditions.checkNotNull(str, "parameter is null");
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, str);
     }
 

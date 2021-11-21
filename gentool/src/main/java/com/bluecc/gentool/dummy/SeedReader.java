@@ -24,7 +24,11 @@ public class SeedReader {
         System.out.println("total entity types: "+nameSet.size());
         System.out.println(GSON.toJson(nameSet));
 
-        // collect data
+        // collect and print data
+        printDataMap(dataFile);
+    }
+
+    private static void printDataMap(String dataFile) {
         Multimap<String, JsonObject> dataList=ArrayListMultimap.create();
         collectEntityData(dataList, dataFile);
         // dataList.forEach(e -> System.out.println(e));

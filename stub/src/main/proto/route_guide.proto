@@ -95,3 +95,9 @@ message RouteSummary {
   // The duration of the traversal in seconds.
   int32 elapsed_time = 4;
 }
+
+
+// Not used in the RPC.  Instead, this is here for the form serialized to disk.
+message FeatureDatabase {
+  repeated Feature feature = 1;
+}

@@ -14,7 +14,10 @@ rpc program +FLAGS='':
 	mvn compile exec:java -Dexec.mainClass="com.bluecc.facade.{{program}}" -Dexec.args="{{FLAGS}}" -f facade/pom.xml
 
 bang:
-    just gen CrudGenTool Person Party OrderHeader OrderItem OrderRole OrderItemPriceInfo PartyRole PartyGroup ProductPrice
+    just gen CrudGenTool Person Party PartyRole PartyGroup \
+        OrderHeader OrderItem OrderRole OrderItemPriceInfo \
+        ProductPrice \
+        Invoice InvoiceItem
 
 model name:
 	just gen MetaTool {{name}}

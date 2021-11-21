@@ -20,8 +20,6 @@ import static org.junit.Assert.*;
 
 public class CustomerProcsTest extends AbstractProcsTest{
     @Inject
-    JdbcHelper jdbcHelper;
-    @Inject
     CustomerProcs customerProcs;
     @Inject
     PartyRoleRepository partyRoleRepository;

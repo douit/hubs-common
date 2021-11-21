@@ -1,0 +1,11 @@
+message {{ent.name}}Data {
+    {% for f in ent.publicFields -%}
+    {{f.protoType}} {{f.underscore}} = {{loop.index}};
+    {% endfor %}
+
+    // relations
+    {% for r in ent.relations -%}
+    {{r.protoDef}} = {{loop.index+ent.publicFieldNumber}};
+    {% endfor %}
+}
+
