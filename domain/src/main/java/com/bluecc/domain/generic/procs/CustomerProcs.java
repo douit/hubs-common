@@ -105,6 +105,16 @@ public class CustomerProcs extends PartyRepository {
 
         return partyId;
     }
+
+    @Transactional
+    public void addRoles(Long partyId, PartyRole... roles){
+        SQLInsertClause insert = insert(partyRole);
+        for (PartyRole role : roles) {
+            role.setPartyId(partyId);
+            insert.populate(role).addBatch();
+        }
+        insert.execute();
+    }
 }
 
 

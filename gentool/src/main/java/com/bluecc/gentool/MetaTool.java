@@ -20,6 +20,7 @@ public class MetaTool {
     public List<String> entities = Lists.newArrayList("OrderHeader");
     @Parameter(names = {"--only-show-type-ref", "-o"})
     boolean onlyShowTypeRef=false;
+    SqlGenTool.MetaList metaList=DataSetUtil.getAvailableEntities();
     public static void main(String[] args) {
         MetaTool main = new MetaTool();
         JCommander.newBuilder()
@@ -52,11 +53,17 @@ public class MetaTool {
                     System.out.println("■■ " + entry.getKey() + ": " + fieldDigest.getTypeRef().getEntityType());
                 } else {
                     if(!onlyShowTypeRef) {
+                        String entityName=fieldDigest.getTypeRef().getEntityType();
                         System.out.print("▒▒ " + entry.getKey() + ": "
-                                + fieldDigest.getTypeRef().getEntityType()
+                                + entityName
                                 +"("+ (fieldDigest.getRelType().equals("many") ?"*":"1")+")");
                         if(!fieldDigest.getTitle().isEmpty()) {
                             System.out.format(" [%s]", fieldDigest.getTitle());
+                        }
+                        if(!metaList.has(entityName)){
+                            System.out.print(" 🆓");
+                        }else{
+                            System.out.print(" ✳️");
                         }
                         System.out.println();
                     }

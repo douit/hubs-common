@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>stub</artifactId>
+    <artifactId>facade</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -17,6 +17,17 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.bluecc</groupId>
+            <artifactId>stub</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bluecc</groupId>
+            <artifactId>domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
@@ -54,10 +65,16 @@
         </dependency>
 
         <!-- testing -->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter</artifactId>-->
+<!--            <version>RELEASE</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -73,37 +90,9 @@
 
         <!-- add resources location -->
         <resources>
-            <resource><directory>src/main/resources</directory></resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
-
-        <!-- for grpc -->
-        <extensions>
-            <extension>
-                <groupId>kr.motd.maven</groupId>
-                <artifactId>os-maven-plugin</artifactId>
-                <version>1.6.2</version>
-            </extension>
-        </extensions>
-        <plugins>
-            <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
-                <version>0.6.1</version>
-                <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:3.17.2:exe:${os.detected.classifier}</protocArtifact>
-                    <pluginId>grpc-java</pluginId>
-                    <!--                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.42.1:exe:${os.detected.classifier}</pluginArtifact>-->
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.40.1:exe:${os.detected.classifier}</pluginArtifact>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>compile-custom</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>

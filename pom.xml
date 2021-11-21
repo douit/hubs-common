@@ -82,6 +82,7 @@
         <module>gentool</module>
         <module>saga</module>
         <module>fund</module>
+        <module>facade</module>
     </modules>
 
     <dependencyManagement>

@@ -11,7 +11,7 @@ gen program +FLAGS='':
     mvn compile exec:java -Dexec.mainClass="com.bluecc.gentool.{{program}}" -Dexec.args="{{FLAGS}}" -f gentool/pom.xml
 
 rpc program +FLAGS='':
-	mvn compile exec:java -Dexec.mainClass="com.bluecc.hubs.{{program}}" -Dexec.args="{{FLAGS}}" -f stub/pom.xml
+	mvn compile exec:java -Dexec.mainClass="com.bluecc.facade.{{program}}" -Dexec.args="{{FLAGS}}" -f facade/pom.xml
 
 bang:
     just gen CrudGenTool Person Party OrderHeader OrderItem OrderRole OrderItemPriceInfo PartyRole

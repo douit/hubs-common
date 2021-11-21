@@ -1,4 +1,4 @@
-package com.bluecc.hubs.dummy;
+package com.bluecc.facade.dummy;
 
 import com.bluecc.domain.dummy.procs.PersonProcs;
 import com.bluecc.domain.guice.ServiceModule;

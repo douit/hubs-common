@@ -25,6 +25,9 @@ public class SqlGenTool {
     @Builder
     public static class MetaList{
         Set<String> entities;
+        public boolean has(String ent){
+            return entities.contains(ent);
+        }
     }
 
     public static void main(String[] args) throws IOException {

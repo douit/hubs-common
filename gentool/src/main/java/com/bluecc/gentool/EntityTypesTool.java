@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.bluecc.gentool.DataSetUtil.getAvailableEntities;
 import static com.bluecc.gentool.EntityMetaManager.getMetaFile;
 import static com.bluecc.gentool.common.Util.readJsonFile;
 import static com.bluecc.gentool.common.Util.writeJsonFile;
@@ -27,8 +28,7 @@ public class EntityTypesTool {
         Set<String> entityList = collectFromFiles(prependHubsHomeFile(seedDir),
                 prependHubsHomeFile(commonDir));
         int totalTypeEntities=entityList.size();
-        SqlGenTool.MetaList hubsEntities = readJsonFile(SqlGenTool.MetaList.class,
-                prependHubsHomeFile("asset/mysql/hubs.json"));
+        SqlGenTool.MetaList hubsEntities = getAvailableEntities();
 
         Set<String> intersection = new HashSet<String>(hubsEntities.getEntities()); // use the copy constructor
         intersection.retainAll(entityList);
