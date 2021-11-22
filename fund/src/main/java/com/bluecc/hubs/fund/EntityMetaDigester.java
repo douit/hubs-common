@@ -1,12 +1,9 @@
-package com.bluecc.gentool.common;
+package com.bluecc.hubs.fund;
 
-import com.bluecc.gentool.SqlGenTool;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,10 +15,10 @@ import java.util.stream.Collectors;
 public class EntityMetaDigester {
     EntityMeta meta;
     Multimap<String, FieldDigest> fieldDigestMap = ArrayListMultimap.create();
-    SqlGenTool.MetaList typeList;
+    MetaTypes.MetaList typeList;
     Map<String, String> fieldRefTypes=Maps.newHashMap();
 
-    public EntityMetaDigester(EntityMeta meta, SqlGenTool.MetaList typeList) {
+    public EntityMetaDigester(EntityMeta meta, MetaTypes.MetaList typeList) {
         this.meta = meta;
         this.typeList = typeList;
         build();
@@ -60,9 +57,9 @@ public class EntityMetaDigester {
         }
 
         // field entity type ref
-        for (Map.Entry<String, Collection<EntityMetaDigester.FieldDigest>> entry : fieldDigestMap.asMap().entrySet()) {
-            for (EntityMetaDigester.FieldDigest fieldDigest : entry.getValue()) {
-                if (fieldDigest.getRefType() == EntityMetaDigester.RefType.TYPE_REF) {
+        for (Map.Entry<String, Collection<FieldDigest>> entry : fieldDigestMap.asMap().entrySet()) {
+            for (FieldDigest fieldDigest : entry.getValue()) {
+                if (fieldDigest.getRefType() == RefType.TYPE_REF) {
                     // System.out.println("■■ " + entry.getKey() + ": " + fieldDigest.getTypeRef().getEntityType());
                     fieldRefTypes.put(entry.getKey(), fieldDigest.getTypeRef().getEntityType());
                 }

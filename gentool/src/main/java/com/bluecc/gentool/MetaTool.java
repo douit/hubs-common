@@ -2,14 +2,18 @@ package com.bluecc.gentool;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.bluecc.gentool.common.EntityMeta;
-import com.bluecc.gentool.common.EntityMetaDigester;
+import com.bluecc.hubs.fund.DataSetUtil;
+import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.EntityMetaDigester;
+import com.bluecc.hubs.fund.MetaTypes;
 import com.google.common.collect.Lists;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.bluecc.hubs.fund.MetaTypes.typeList;
 
 /**
  * $ just gen MetaTool OrderHeader OrderItem
@@ -20,7 +24,7 @@ public class MetaTool {
     public List<String> entities = Lists.newArrayList("OrderHeader");
     @Parameter(names = {"--only-show-type-ref", "-o"})
     boolean onlyShowTypeRef=false;
-    SqlGenTool.MetaList metaList=DataSetUtil.getAvailableEntities();
+    MetaTypes.MetaList metaList= DataSetUtil.getAvailableEntities();
     public static void main(String[] args) {
         MetaTool main = new MetaTool();
         JCommander.newBuilder()
@@ -37,7 +41,7 @@ public class MetaTool {
     }
 
     public void digest(EntityMeta meta) {
-        EntityMetaDigester digester=new EntityMetaDigester(meta, EntityMetaManager.typeList);
+        EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
         Set<String> relFields=digester.getFieldDigestMap().keySet();
 
         System.out.format("%s: %s\n", meta.getName(), meta.getTitle());

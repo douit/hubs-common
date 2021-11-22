@@ -1,6 +1,7 @@
 package com.bluecc.gentool.procgen;
 
-import static com.bluecc.gentool.descriptor.EntityNames.*;
+
+import static com.bluecc.hubs.fund.descriptor.EntityNames.*;
 
 public class Descriptors implements IDescriptors {
 

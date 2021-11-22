@@ -1,4 +1,4 @@
-package com.bluecc.gentool.dummy;
+package com.bluecc.hubs.fund;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -11,8 +11,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.Set;
 
-import static com.bluecc.gentool.common.Util.GSON;
-import static com.bluecc.gentool.common.Util.pretty;
+import static com.bluecc.hubs.fund.Util.GSON;
+import static com.bluecc.hubs.fund.Util.pretty;
 
 public class SeedReader {
 

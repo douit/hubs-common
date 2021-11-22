@@ -1,11 +1,10 @@
 package com.bluecc.gentool.procgen;
 
 import com.bluecc.gentool.EntityMetaManager;
-import com.bluecc.gentool.common.EntityMeta;
 import com.bluecc.gentool.common.TemplateUtil;
-import com.bluecc.gentool.common.Util;
-import com.bluecc.gentool.dummy.SeedReader;
+import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.SystemDefs;
+import com.bluecc.hubs.fund.Util;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import lombok.Data;
@@ -18,8 +17,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.bluecc.gentool.DataSetUtil.collectEntitiesFromResources;
 import static com.bluecc.gentool.dummy.SeedCollector.dataFile;
+import static com.bluecc.hubs.fund.DataSetUtil.collectEntitiesFromResources;
 
 public class ProcGen {
 

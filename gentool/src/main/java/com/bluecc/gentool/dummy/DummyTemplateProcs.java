@@ -1,7 +1,7 @@
 package com.bluecc.gentool.dummy;
 
-import com.bluecc.gentool.common.EntityMeta;
-import com.bluecc.gentool.common.Tuple2;
+import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.Tuple2;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;

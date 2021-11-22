@@ -1,12 +1,12 @@
 package com.bluecc.gentool.dummy;
 
-import com.bluecc.gentool.common.EntityMeta;
+
+import com.bluecc.hubs.fund.EntityMeta;
 
 import java.io.FileReader;
 import java.io.IOException;
 
-import static com.bluecc.gentool.common.Util.GSON;
-import static com.bluecc.gentool.common.Util.pretty;
+import static com.bluecc.hubs.fund.Util.*;
 
 public class MetaImporter {
     public static void main(String[] args) throws IOException {

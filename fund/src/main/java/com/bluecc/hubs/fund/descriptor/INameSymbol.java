@@ -1,6 +1,4 @@
-package com.bluecc.gentool.descriptor;
-
-import com.bluecc.gentool.common.Util;
+package com.bluecc.hubs.fund.descriptor;
 
 public interface INameSymbol {
     String getEntityName();

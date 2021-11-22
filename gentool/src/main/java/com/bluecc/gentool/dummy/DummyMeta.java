@@ -1,9 +1,8 @@
 package com.bluecc.gentool.dummy;
 
-import com.bluecc.gentool.common.EntityMeta;
-import com.bluecc.gentool.common.EntityMeta.*;
 import com.bluecc.gentool.common.ServiceMeta;
 import com.bluecc.gentool.common.ServiceMeta.*;
+import com.bluecc.hubs.fund.EntityMeta;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,11 +20,11 @@ public class DummyMeta {
             .create();
     public static final EntityMeta partyMeta = EntityMeta.builder()
             .name("Party")
-            .field(FieldMeta.builder()
+            .field(EntityMeta.FieldMeta.builder()
                     .name("partyId").type("id")
                     .javaType("String")
                     .build())
-            .field(FieldMeta.builder()
+            .field(EntityMeta.FieldMeta.builder()
                     .name("lastName").type("string")
                     .javaType("String")
                     .build())

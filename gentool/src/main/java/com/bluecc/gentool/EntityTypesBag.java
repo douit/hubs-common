@@ -1,7 +1,6 @@
 package com.bluecc.gentool;
 
-import com.bluecc.gentool.common.Util;
-import com.google.common.collect.BiMap;
+import com.bluecc.hubs.fund.Util;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,7 +8,9 @@ import org.apache.commons.io.IOUtils;
 import org.redisson.misc.BiHashMap;
 
 import javax.inject.Singleton;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;

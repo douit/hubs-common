@@ -1,7 +1,7 @@
 package com.bluecc.gentool.procgen;
 
-import com.bluecc.gentool.common.Util;
-import com.bluecc.gentool.descriptor.EntityNames;
+import com.bluecc.hubs.fund.Util;
+import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.google.common.collect.Sets;
 import lombok.Builder;
 import lombok.Data;

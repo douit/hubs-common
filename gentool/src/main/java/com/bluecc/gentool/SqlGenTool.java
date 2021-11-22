@@ -1,8 +1,8 @@
 package com.bluecc.gentool;
 
-import com.bluecc.gentool.common.EntityMeta;
 import com.bluecc.gentool.dummy.DummyTemplateProcs;
-import com.bluecc.gentool.dummy.SeedReader;
+import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.MetaTypes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Builder;
@@ -11,24 +11,16 @@ import lombok.Data;
 import java.io.*;
 import java.util.*;
 
-import static com.bluecc.gentool.DataSetUtil.collectEntitiesFromResources;
 import static com.bluecc.gentool.EntityMetaManager.*;
-import static com.bluecc.gentool.common.Util.*;
 import static com.bluecc.gentool.dummy.SeedCollector.dataFile;
+import static com.bluecc.hubs.fund.DataSetUtil.collectEntitiesFromResources;
+import static com.bluecc.hubs.fund.Util.writeJsonFile;
 import static java.util.Objects.requireNonNull;
 
 /**
  * $ just gen SqlGenTool
  */
 public class SqlGenTool {
-    @Data
-    @Builder
-    public static class MetaList{
-        Set<String> entities;
-        public boolean has(String ent){
-            return entities.contains(ent);
-        }
-    }
 
     public static void main(String[] args) throws IOException {
         // List<String> entityNames= Lists.newArrayList("GeoPoint");
@@ -77,7 +69,7 @@ public class SqlGenTool {
         writer.close();
 
         if(outputJsonFile!=null) {
-            writeJsonFile(MetaList.builder()
+            writeJsonFile(MetaTypes.MetaList.builder()
                     .entities(entityList)
                     .build(), new File(outputJsonFile));
         }

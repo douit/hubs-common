@@ -1,4 +1,4 @@
-package com.bluecc.gentool.common;
+package com.bluecc.hubs.fund;
 
 import com.google.common.collect.ImmutableMap;
 

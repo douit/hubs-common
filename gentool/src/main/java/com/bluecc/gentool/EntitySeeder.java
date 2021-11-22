@@ -22,9 +22,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.bluecc.gentool.common.Util.GSON;
-import static com.bluecc.gentool.common.Util.pretty;
-import static com.bluecc.gentool.dummy.SeedReader.*;
+
+import static com.bluecc.hubs.fund.SeedReader.*;
+import static com.bluecc.hubs.fund.Util.GSON;
 
 public class EntitySeeder {
     private static final Injector injector = Guice

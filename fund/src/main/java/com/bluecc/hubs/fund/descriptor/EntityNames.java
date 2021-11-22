@@ -1,4 +1,4 @@
-package com.bluecc.gentool.descriptor;
+package com.bluecc.hubs.fund.descriptor;
 
 import com.google.common.collect.Lists;
 import lombok.Getter;

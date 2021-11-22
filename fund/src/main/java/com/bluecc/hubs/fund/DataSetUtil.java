@@ -1,12 +1,10 @@
-package com.bluecc.gentool;
-
-import com.bluecc.gentool.dummy.SeedReader;
+package com.bluecc.hubs.fund;
 
 import java.io.IOException;
 import java.util.Set;
 
-import static com.bluecc.gentool.common.Util.readJsonFile;
 import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
+import static com.bluecc.hubs.fund.Util.readJsonFile;
 
 public class DataSetUtil {
     public static Set<String> collectEntitiesFromResources() {
@@ -17,10 +15,10 @@ public class DataSetUtil {
         return entityList;
     }
 
-    public static SqlGenTool.MetaList getAvailableEntities()  {
-        SqlGenTool.MetaList hubsEntities = null;
+    public static MetaTypes.MetaList getAvailableEntities()  {
+        MetaTypes.MetaList hubsEntities = null;
         try {
-            hubsEntities = readJsonFile(SqlGenTool.MetaList.class,
+            hubsEntities = readJsonFile(MetaTypes.MetaList.class,
                     prependHubsHomeFile("asset/mysql/hubs.json"));
 
             return hubsEntities;
@@ -28,7 +26,5 @@ public class DataSetUtil {
             throw new RuntimeException(e);
         }
     }
-
-
 }
 

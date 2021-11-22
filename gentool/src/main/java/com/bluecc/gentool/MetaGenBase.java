@@ -1,7 +1,7 @@
 package com.bluecc.gentool;
 
-import com.bluecc.gentool.common.EntityMeta;
 import com.bluecc.gentool.dummy.DummyTemplateProcs;
+import com.bluecc.hubs.fund.EntityMeta;
 
 import java.io.IOException;
 import java.io.Writer;

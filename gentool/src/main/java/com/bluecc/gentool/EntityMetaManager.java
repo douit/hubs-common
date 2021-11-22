@@ -1,7 +1,6 @@
 package com.bluecc.gentool;
 
-import com.bluecc.gentool.common.EntityMeta;
-import com.bluecc.gentool.dummy.FieldMappings;
+import com.bluecc.hubs.fund.EntityMeta;
 import com.google.common.collect.Maps;
 
 import javax.inject.Singleton;
@@ -12,16 +11,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static com.bluecc.gentool.common.Util.GSON;
-import static com.bluecc.gentool.dummy.FieldMappings.getFieldTypes;
+import static com.bluecc.hubs.fund.MetaTypes.types;
 import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
+import static com.bluecc.hubs.fund.Util.GSON;
 
 @Singleton
 public class EntityMetaManager {
     Map<String, EntityMeta> metaMap= Maps.newHashMap();
 
-    public static SqlGenTool.MetaList typeList=EntityTypesTool.types();
-    static Map<String, FieldMappings.FieldTypeDef> types=getFieldTypes();
+
 
     public EntityMeta getEntityMeta(String entityName){
         EntityMeta meta=metaMap.get(entityName);

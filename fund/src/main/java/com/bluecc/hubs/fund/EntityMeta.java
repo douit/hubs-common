@@ -1,9 +1,6 @@
-package com.bluecc.gentool.common;
+package com.bluecc.hubs.fund;
 
-import com.bluecc.gentool.EntityMetaManager;
-import com.bluecc.gentool.SqlGenTool;
-import com.bluecc.gentool.common.EntityMetaDigester.FieldDigest;
-import com.bluecc.gentool.dummy.FieldMappings;
+import com.bluecc.hubs.fund.EntityMetaDigester.FieldDigest;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -18,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.bluecc.hubs.fund.MetaTypes.typeList;
 
 @Data
 @Builder
@@ -53,6 +52,14 @@ public class EntityMeta {
                     .build()
     );
 
+    public enum FacetType{
+        PeriodFacet
+    }
+    @Data
+    public static class Facet{
+        Set<FacetType> facets= Sets.newHashSet();
+    }
+
     String name;
     String title;
     String tableName;
@@ -68,6 +75,8 @@ public class EntityMeta {
     List<String> pks = Lists.newArrayList();
     boolean isView;
 
+    Facet facet;
+
     public List<FieldMeta> getPublicFields() {
         return fields.stream().filter(f -> !f.isAutoCreatedInternal())
                 .collect(Collectors.toList());
@@ -79,6 +88,10 @@ public class EntityMeta {
 
     public String getKeyNames() {
         return String.join(", ", pks);
+    }
+
+    public Set<String> getFieldNames(){
+        return fields.stream().map(f -> f.name).collect(Collectors.toSet());
     }
 
     public String getPk() {
@@ -136,7 +149,7 @@ public class EntityMeta {
 
         // process entity types
         Map<String, FieldDigest> fieldWithTypes = Maps.newHashMap();
-        EntityMetaDigester digester = new EntityMetaDigester(this, EntityMetaManager.typeList);
+        EntityMetaDigester digester = new EntityMetaDigester(this, typeList);
         for (Map.Entry<String, Collection<FieldDigest>> entry : digester.getFieldDigestMap().asMap().entrySet()) {
             for (FieldDigest fieldDigest : entry.getValue()) {
                 if (fieldDigest.getRefType() == EntityMetaDigester.RefType.TYPE_REF) {

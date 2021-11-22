@@ -1,4 +1,4 @@
-package com.bluecc.gentool.common;
+package com.bluecc.hubs.fund;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
@@ -11,12 +11,9 @@ import com.google.gson.stream.JsonWriter;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-
-import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
 
 public class Util {
     public static String arrayAwareToString(Object o) {

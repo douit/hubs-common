@@ -1,6 +1,6 @@
 package com.bluecc.gentool.procgen;
 
-import com.bluecc.gentool.descriptor.EntityNames;
+import com.bluecc.hubs.fund.descriptor.EntityNames;
 import org.junit.Test;
 
 import java.util.stream.Collectors;

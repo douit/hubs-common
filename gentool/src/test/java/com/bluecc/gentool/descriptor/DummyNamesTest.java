@@ -1,5 +1,6 @@
 package com.bluecc.gentool.descriptor;
 
+import com.bluecc.hubs.fund.descriptor.DummyNames;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

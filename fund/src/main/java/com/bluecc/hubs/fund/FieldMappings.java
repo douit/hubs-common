@@ -1,15 +1,11 @@
-package com.bluecc.gentool.dummy;
+package com.bluecc.hubs.fund;
 
-import com.bluecc.gentool.common.Util;
 import com.google.common.collect.Maps;
-import lombok.Builder;
 import lombok.Data;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class FieldMappings {

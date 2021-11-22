@@ -1,6 +1,8 @@
 package com.bluecc.gentool.dummy;
 
-import com.bluecc.gentool.common.Util;
+import com.bluecc.hubs.fund.SeedReader;
+
+import static com.bluecc.hubs.fund.Util.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +12,7 @@ public class SeedCollector {
 
     static List<String> entityList() {
         return SeedReader.collectEntityNames(dataFile).stream()
-                .map(e -> Util.toSnakecase(e))
+                .map(e -> toSnakecase(e))
                 .collect(Collectors.toList());
     }
 

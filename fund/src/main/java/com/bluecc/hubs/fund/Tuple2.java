@@ -1,4 +1,4 @@
-package com.bluecc.gentool.common;
+package com.bluecc.hubs.fund;
 
 
 /**
@@ -19,7 +19,7 @@ package com.bluecc.gentool.common;
  *       DataStream&lt;Foo&gt; / DataSet&lt;Foo&gt;.)
  * </ul>
  *
- * @see com.bluecc.gentool.common.Tuple
+ * @see Tuple
  * @param <T0> The type of field 0
  * @param <T1> The type of field 1
  */

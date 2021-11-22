@@ -1,4 +1,4 @@
-package com.bluecc.gentool.common;
+package com.bluecc.hubs.fund;
 
 public abstract class Tuple implements java.io.Serializable {
 

@@ -1,6 +1,8 @@
 package com.bluecc.gentool.common;
 
 import com.bluecc.gentool.EntityMetaManager;
+import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.Util;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;

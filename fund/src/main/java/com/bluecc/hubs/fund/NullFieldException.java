@@ -1,4 +1,4 @@
-package com.bluecc.gentool.common;
+package com.bluecc.hubs.fund;
 
 /**
  * An exception specifying that a required field was not set in a record, i.e. was <code>null</code>
