@@ -93,6 +93,7 @@ service PartyGroupService {
 
 // flat-ent: Order Header
 message OrderHeaderFlatData {
+    option (routines.entity_type) = "OrderHeader";
     // keys: orderId
         
     string order_id = 1;
@@ -129,6 +130,7 @@ message OrderHeaderFlatData {
 
 // flat-ent: Order Item
 message OrderItemFlatData {
+    option (routines.entity_type) = "OrderItem";
     // keys: orderId, orderItemSeqId
         
     string order_id = 1;    
@@ -182,6 +184,7 @@ message OrderItemFlatData {
 
 // flat-ent: Payment
 message PaymentFlatData {
+    option (routines.entity_type) = "Payment";
     // keys: paymentId
         
     string payment_id = 1;
@@ -207,6 +210,7 @@ message PaymentFlatData {
 
 // flat-ent: Invoice
 message InvoiceFlatData {
+    option (routines.entity_type) = "Invoice";
     // keys: invoiceId
         
     string invoice_id = 1;
@@ -229,6 +233,7 @@ message InvoiceFlatData {
 
 // flat-ent: Product
 message ProductFlatData {
+    option (routines.entity_type) = "Product";
     // keys: productId
         
     string product_id = 1;
@@ -305,6 +310,7 @@ message ProductFlatData {
 
 // flat-ent: Shipment
 message ShipmentFlatData {
+    option (routines.entity_type) = "Shipment";
     // keys: shipmentId
         
     string shipment_id = 1;
@@ -341,6 +347,7 @@ message ShipmentFlatData {
 
 // flat-ent: Product Store
 message ProductStoreFlatData {
+    option (routines.entity_type) = "ProductStore";
     // keys: productStoreId
         
     string product_store_id = 1;
@@ -425,6 +432,7 @@ message ProductStoreFlatData {
 
 // flat-ent: Party
 message PartyFlatData {
+    option (routines.entity_type) = "Party";
     // keys: partyId
         
     string party_id = 1;
@@ -443,6 +451,7 @@ message PartyFlatData {
 
 // flat-ent: Person
 message PersonFlatData {
+    option (routines.entity_type) = "Person";
     // keys: partyId
         
     string party_id = 1;    
@@ -482,6 +491,7 @@ message PersonFlatData {
 
 // flat-ent: Party Group
 message PartyGroupFlatData {
+    option (routines.entity_type) = "PartyGroup";
     // keys: partyId
         
     string party_id = 1;    
@@ -497,6 +507,7 @@ message PartyGroupFlatData {
 
 // Shipment Route Segment
 message ShipmentRouteSegmentData {
+    option (routines.entity_type) = "ShipmentRouteSegment";
     // keys: shipmentId, shipmentRouteSegmentId
 
     // fields
@@ -542,6 +553,7 @@ message ShipmentRouteSegmentData {
 
 // Invoice
 message InvoiceData {
+    option (routines.entity_type) = "Invoice";
     // keys: invoiceId
 
     // fields
@@ -576,6 +588,7 @@ message InvoiceData {
 
 // Order Adjustment
 message OrderAdjustmentData {
+    option (routines.entity_type) = "OrderAdjustment";
     // keys: orderAdjustmentId
 
     // fields
@@ -618,6 +631,7 @@ message OrderAdjustmentData {
 
 // Product
 message ProductData {
+    option (routines.entity_type) = "Product";
     // keys: productId
 
     // fields
@@ -729,6 +743,7 @@ message ProductData {
 
 // Carrier Shipment Method
 message CarrierShipmentBoxTypeData {
+    option (routines.entity_type) = "CarrierShipmentBoxType";
     // keys: shipmentBoxTypeId, partyId
 
     // fields
@@ -742,6 +757,7 @@ message CarrierShipmentBoxTypeData {
 
 // Fixed Asset
 message FixedAssetData {
+    option (routines.entity_type) = "FixedAsset";
     // keys: fixedAssetId
 
     // fields
@@ -776,6 +792,7 @@ message FixedAssetData {
 
 // Web Analytics Configuration
 message WebAnalyticsConfigData {
+    option (routines.entity_type) = "WebAnalyticsConfig";
     // keys: webSiteId, webAnalyticsTypeId
 
     // fields
@@ -788,6 +805,7 @@ message WebAnalyticsConfigData {
 
 // Product Category Rollup
 message ProductCategoryRollupData {
+    option (routines.entity_type) = "ProductCategoryRollup";
     // keys: productCategoryId, parentProductCategoryId, fromDate
 
     // fields
@@ -802,6 +820,7 @@ message ProductCategoryRollupData {
 
 // Payment Gateway Response
 message PaymentGatewayResponseData {
+    option (routines.entity_type) = "PaymentGatewayResponse";
     // keys: paymentGatewayResponseId
 
     // fields
@@ -833,6 +852,7 @@ message PaymentGatewayResponseData {
 
 // Shipment Item Billing
 message ShipmentItemBillingData {
+    option (routines.entity_type) = "ShipmentItemBilling";
     // keys: shipmentId, shipmentItemSeqId, invoiceId, invoiceItemSeqId
 
     // fields
@@ -846,6 +866,7 @@ message ShipmentItemBillingData {
 
 // Product Promotion Action
 message ProductPromoActionData {
+    option (routines.entity_type) = "ProductPromoAction";
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId
 
     // fields
@@ -867,6 +888,7 @@ message ProductPromoActionData {
 
 // Shipment Cost Estimate
 message ShipmentCostEstimateData {
+    option (routines.entity_type) = "ShipmentCostEstimate";
     // keys: shipmentCostEstimateId
 
     // fields
@@ -904,6 +926,7 @@ message ShipmentCostEstimateData {
 
 // Security Component - Security Group Permission
 message SecurityGroupPermissionData {
+    option (routines.entity_type) = "SecurityGroupPermission";
     // keys: groupId, permissionId, fromDate
 
     // fields
@@ -917,6 +940,7 @@ message SecurityGroupPermissionData {
 
 // Product Store Inventory Facility Applicability
 message ProductStoreKeywordOvrdData {
+    option (routines.entity_type) = "ProductStoreKeywordOvrd";
     // keys: productStoreId, keyword, fromDate
 
     // fields
@@ -932,6 +956,7 @@ message ProductStoreKeywordOvrdData {
 
 // Product Association
 message ProductAssocData {
+    option (routines.entity_type) = "ProductAssoc";
     // keys: productId, productIdTo, productAssocTypeId, fromDate
 
     // fields
@@ -954,6 +979,7 @@ message ProductAssocData {
 
 // Fixed Asset Product Representation
 message FixedAssetProductData {
+    option (routines.entity_type) = "FixedAssetProduct";
     // keys: fixedAssetId, productId, fixedAssetProductTypeId, fromDate
 
     // fields
@@ -972,6 +998,7 @@ message FixedAssetProductData {
 
 // Payment Application
 message PaymentApplicationData {
+    option (routines.entity_type) = "PaymentApplication";
     // keys: paymentApplicationId
 
     // fields
@@ -990,6 +1017,7 @@ message PaymentApplicationData {
 
 // CustRequest
 message CustRequestData {
+    option (routines.entity_type) = "CustRequest";
     // keys: custRequestId
 
     // fields
@@ -1026,6 +1054,7 @@ message CustRequestData {
 
 // Shipment Receipt
 message ShipmentReceiptData {
+    option (routines.entity_type) = "ShipmentReceipt";
     // keys: receiptId
 
     // fields
@@ -1051,6 +1080,7 @@ message ShipmentReceiptData {
 
 // Inventory Item Detail
 message InventoryItemDetailData {
+    option (routines.entity_type) = "InventoryItemDetail";
     // keys: inventoryItemId, inventoryItemDetailSeqId
 
     // fields
@@ -1082,6 +1112,7 @@ message InventoryItemDetailData {
 
 // Order Adjustment Billing
 message OrderAdjustmentBillingData {
+    option (routines.entity_type) = "OrderAdjustmentBilling";
     // keys: orderAdjustmentId, invoiceId, invoiceItemSeqId
 
     // fields
@@ -1095,6 +1126,7 @@ message OrderAdjustmentBillingData {
 
 // Product Feature Price
 message ProductFeaturePriceData {
+    option (routines.entity_type) = "ProductFeaturePrice";
     // keys: productFeatureId, productPriceTypeId, currencyUomId, fromDate
 
     // fields
@@ -1114,6 +1146,7 @@ message ProductFeaturePriceData {
 
 // Product Configuration Options
 message ProductConfigOptionData {
+    option (routines.entity_type) = "ProductConfigOption";
     // keys: configItemId, configOptionId
 
     // fields
@@ -1130,6 +1163,7 @@ message ProductConfigOptionData {
 
 // Postal Address
 message PostalAddressData {
+    option (routines.entity_type) = "PostalAddress";
     // keys: contactMechId
 
     // fields
@@ -1157,6 +1191,7 @@ message PostalAddressData {
 
 // Define associations between Product facilities
 message ProductFacilityAssocData {
+    option (routines.entity_type) = "ProductFacilityAssoc";
     // keys: productId, facilityId, facilityIdTo, facilityAssocTypeId, fromDate
 
     // fields
@@ -1174,6 +1209,7 @@ message ProductFacilityAssocData {
 
 // Order Item Price Info
 message OrderItemPriceInfoData {
+    option (routines.entity_type) = "OrderItemPriceInfo";
     // keys: orderItemPriceInfoId
 
     // fields
@@ -1191,6 +1227,7 @@ message OrderItemPriceInfoData {
 
 // Work Effort Good Standard
 message WorkEffortGoodStandardData {
+    option (routines.entity_type) = "WorkEffortGoodStandard";
     // keys: workEffortId, productId, workEffortGoodStdTypeId, fromDate
 
     // fields
@@ -1208,6 +1245,7 @@ message WorkEffortGoodStandardData {
 
 // Person
 message PersonData {
+    option (routines.entity_type) = "Person";
     // keys: partyId
 
     // fields
@@ -1260,6 +1298,7 @@ message PersonData {
 
 // Product Store Role Association
 message ProductStoreRoleData {
+    option (routines.entity_type) = "ProductStoreRole";
     // keys: partyId, roleTypeId, productStoreId, fromDate
 
     // fields
@@ -1275,6 +1314,7 @@ message ProductStoreRoleData {
 
 // Party Contact Mechanism
 message PartyContactMechData {
+    option (routines.entity_type) = "PartyContactMech";
     // keys: partyId, contactMechId, fromDate
 
     // fields
@@ -1295,6 +1335,7 @@ message PartyContactMechData {
 
 // Product Store Email Settings
 message ProductStoreEmailSettingData {
+    option (routines.entity_type) = "ProductStoreEmailSetting";
     // keys: productStoreId, emailType
 
     // fields
@@ -1313,6 +1354,7 @@ message ProductStoreEmailSettingData {
 
 // Electronic Text
 message ElectronicTextData {
+    option (routines.entity_type) = "ElectronicText";
     // keys: dataResourceId
 
     // fields
@@ -1324,6 +1366,7 @@ message ElectronicTextData {
 
 // Item Issuance
 message ItemIssuanceData {
+    option (routines.entity_type) = "ItemIssuance";
     // keys: itemIssuanceId
 
     // fields
@@ -1346,6 +1389,7 @@ message ItemIssuanceData {
 
 // Party Group
 message PartyGroupData {
+    option (routines.entity_type) = "PartyGroup";
     // keys: partyId
 
     // fields
@@ -1374,6 +1418,7 @@ message PartyGroupData {
 
 // Product Promotion Category
 message ProductPromoProductData {
+    option (routines.entity_type) = "ProductPromoProduct";
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productId
 
     // fields
@@ -1389,6 +1434,7 @@ message ProductPromoProductData {
 
 // Product Review
 message ProductReviewData {
+    option (routines.entity_type) = "ProductReview";
     // keys: productReviewId
 
     // fields
@@ -1407,6 +1453,7 @@ message ProductReviewData {
 
 // The Order Payment Preference
 message OrderPaymentPreferenceData {
+    option (routines.entity_type) = "OrderPaymentPreference";
     // keys: orderPaymentPreferenceId
 
     // fields
@@ -1440,6 +1487,7 @@ message OrderPaymentPreferenceData {
 
 // Supplier Product
 message SupplierProductData {
+    option (routines.entity_type) = "SupplierProduct";
     // keys: productId, partyId, currencyUomId, minimumOrderQuantity, availableFromDate
 
     // fields
@@ -1469,6 +1517,7 @@ message SupplierProductData {
 
 // Order Status
 message OrderStatusData {
+    option (routines.entity_type) = "OrderStatus";
     // keys: orderStatusId
 
     // fields
@@ -1486,6 +1535,7 @@ message OrderStatusData {
 
 // Party
 message PartyData {
+    option (routines.entity_type) = "Party";
     // keys: partyId
 
     // fields
@@ -1557,6 +1607,7 @@ message PartyData {
 
 // Agreement Item
 message AgreementItemData {
+    option (routines.entity_type) = "AgreementItem";
     // keys: agreementId, agreementItemSeqId
 
     // fields
@@ -1572,6 +1623,7 @@ message AgreementItemData {
 
 // Party Tax Information
 message PartyTaxAuthInfoData {
+    option (routines.entity_type) = "PartyTaxAuthInfo";
     // keys: partyId, taxAuthGeoId, taxAuthPartyId, fromDate
 
     // fields
@@ -1589,6 +1641,7 @@ message PartyTaxAuthInfoData {
 
 // Accounting Transaction
 message AcctgTransData {
+    option (routines.entity_type) = "AcctgTrans";
     // keys: acctgTransId
 
     // fields
@@ -1626,6 +1679,7 @@ message AcctgTransData {
 
 // Data Object
 message DataResourceData {
+    option (routines.entity_type) = "DataResource";
     // keys: dataResourceId
 
     // fields
@@ -1654,6 +1708,7 @@ message DataResourceData {
 
 // Shipment Item
 message ShipmentItemData {
+    option (routines.entity_type) = "ShipmentItem";
     // keys: shipmentId, shipmentItemSeqId
 
     // fields
@@ -1668,6 +1723,7 @@ message ShipmentItemData {
 
 // Facility Contact Mechanism
 message FacilityContactMechData {
+    option (routines.entity_type) = "FacilityContactMech";
     // keys: facilityId, contactMechId, fromDate
 
     // fields
@@ -1683,6 +1739,7 @@ message FacilityContactMechData {
 
 // Agreement
 message AgreementData {
+    option (routines.entity_type) = "Agreement";
     // keys: agreementId
 
     // fields
@@ -1704,6 +1761,7 @@ message AgreementData {
 
 // Catalog Category Association
 message ProdCatalogCategoryData {
+    option (routines.entity_type) = "ProdCatalogCategory";
     // keys: prodCatalogId, productCategoryId, prodCatalogCategoryTypeId, fromDate
 
     // fields
@@ -1719,6 +1777,7 @@ message ProdCatalogCategoryData {
 
 // Product Category Role
 message ProductCategoryRoleData {
+    option (routines.entity_type) = "ProductCategoryRole";
     // keys: productCategoryId, partyId, roleTypeId, fromDate
 
     // fields
@@ -1734,6 +1793,7 @@ message ProductCategoryRoleData {
 
 // Order Item
 message OrderItemData {
+    option (routines.entity_type) = "OrderItem";
     // keys: orderId, orderItemSeqId
 
     // fields
@@ -1804,6 +1864,7 @@ message OrderItemData {
 
 // Shipment Time Estimation Entity
 message ShipmentTimeEstimateData {
+    option (routines.entity_type) = "ShipmentTimeEstimate";
     // keys: shipmentMethodTypeId, partyId, roleTypeId, geoIdTo, geoIdFrom, fromDate
 
     // fields
@@ -1823,6 +1884,7 @@ message ShipmentTimeEstimateData {
 
 // Product Category Data Object
 message ProductCategoryContentData {
+    option (routines.entity_type) = "ProductCategoryContent";
     // keys: productCategoryId, contentId, prodCatContentTypeId, fromDate
 
     // fields
@@ -1841,6 +1903,7 @@ message ProductCategoryContentData {
 
 // Order Item Package Association
 message OrderItemShipGroupAssocData {
+    option (routines.entity_type) = "OrderItemShipGroupAssoc";
     // keys: orderId, orderItemSeqId, shipGroupSeqId
 
     // fields
@@ -1855,6 +1918,7 @@ message OrderItemShipGroupAssocData {
 
 // Content Association
 message ContentAssocData {
+    option (routines.entity_type) = "ContentAssoc";
     // keys: contentId, contentIdTo, contentAssocTypeId, fromDate
 
     // fields
@@ -1879,6 +1943,7 @@ message ContentAssocData {
 
 // Quote Item
 message QuoteItemData {
+    option (routines.entity_type) = "QuoteItem";
     // keys: quoteId, quoteItemSeqId
 
     // fields
@@ -1909,6 +1974,7 @@ message QuoteItemData {
 
 // Catalog
 message ProdCatalogData {
+    option (routines.entity_type) = "ProdCatalog";
     // keys: prodCatalogId
 
     // fields
@@ -1927,6 +1993,7 @@ message ProdCatalogData {
 
 // Product Promotion Condition
 message ProductPromoCondData {
+    option (routines.entity_type) = "ProductPromoCond";
     // keys: productPromoId, productPromoRuleId, productPromoCondSeqId
 
     // fields
@@ -1944,6 +2011,7 @@ message ProductPromoCondData {
 
 // Facility Location
 message FacilityLocationData {
+    option (routines.entity_type) = "FacilityLocation";
     // keys: facilityId, locationSeqId
 
     // fields
@@ -1962,6 +2030,7 @@ message FacilityLocationData {
 
 // Product Promotion Category
 message ProductPromoCategoryData {
+    option (routines.entity_type) = "ProductPromoCategory";
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productCategoryId, andGroupId
 
     // fields
@@ -1979,6 +2048,7 @@ message ProductPromoCategoryData {
 
 // Tracks a history of the status of a Party
 message PartyStatusData {
+    option (routines.entity_type) = "PartyStatus";
     // keys: statusId, partyId, statusDate
 
     // fields
@@ -1992,6 +2062,7 @@ message PartyStatusData {
 
 // Product Facility
 message ProductFacilityLocationData {
+    option (routines.entity_type) = "ProductFacilityLocation";
     // keys: productId, facilityId, locationSeqId
 
     // fields
@@ -2006,6 +2077,7 @@ message ProductFacilityLocationData {
 
 // Shipment Contact Mechanism Type
 message ShipmentBoxTypeData {
+    option (routines.entity_type) = "ShipmentBoxType";
     // keys: shipmentBoxTypeId
 
     // fields
@@ -2023,6 +2095,7 @@ message ShipmentBoxTypeData {
 
 // Shipment Package Route Segment
 message ShipmentPackageRouteSegData {
+    option (routines.entity_type) = "ShipmentPackageRouteSeg";
     // keys: shipmentId, shipmentPackageSeqId, shipmentRouteSegmentId
 
     // fields
@@ -2048,6 +2121,7 @@ message ShipmentPackageRouteSegData {
 
 // Geographic Location
 message GeoPointData {
+    option (routines.entity_type) = "GeoPoint";
     // keys: geoPointId
 
     // fields
@@ -2066,6 +2140,7 @@ message GeoPointData {
 
 // Subscription Resource
 message SubscriptionResourceData {
+    option (routines.entity_type) = "SubscriptionResource";
     // keys: subscriptionResourceId
 
     // fields
@@ -2081,6 +2156,7 @@ message SubscriptionResourceData {
 
 // Product Feature Applicability
 message ProductFeatureApplData {
+    option (routines.entity_type) = "ProductFeatureAppl";
     // keys: productId, productFeatureId, fromDate
 
     // fields
@@ -2098,6 +2174,7 @@ message ProductFeatureApplData {
 
 // Party Contact Mechanism Purpose
 message PartyContactMechPurposeData {
+    option (routines.entity_type) = "PartyContactMechPurpose";
     // keys: partyId, contactMechId, contactMechPurposeTypeId, fromDate
 
     // fields
@@ -2112,6 +2189,7 @@ message PartyContactMechPurposeData {
 
 // Recurrence Info
 message RecurrenceInfoData {
+    option (routines.entity_type) = "RecurrenceInfo";
     // keys: recurrenceInfoId
 
     // fields
@@ -2128,6 +2206,7 @@ message RecurrenceInfoData {
 
 // Product Feature Category
 message ProductFeatureCategoryData {
+    option (routines.entity_type) = "ProductFeatureCategory";
     // keys: productFeatureCategoryId
 
     // fields
@@ -2140,6 +2219,7 @@ message ProductFeatureCategoryData {
 
 // Facility Location Geo Location with history
 message FacilityLocationGeoPointData {
+    option (routines.entity_type) = "FacilityLocationGeoPoint";
     // keys: facilityId, locationSeqId, geoPointId, fromDate
 
     // fields
@@ -2154,6 +2234,7 @@ message FacilityLocationGeoPointData {
 
 // Security Component - User Login Security Group
 message UserLoginSecurityGroupData {
+    option (routines.entity_type) = "UserLoginSecurityGroup";
     // keys: userLoginId, groupId, fromDate
 
     // fields
@@ -2167,6 +2248,7 @@ message UserLoginSecurityGroupData {
 
 // Product Store Catalog Association
 message ProductStoreCatalogData {
+    option (routines.entity_type) = "ProductStoreCatalog";
     // keys: productStoreId, prodCatalogId, fromDate
 
     // fields
@@ -2181,6 +2263,7 @@ message ProductStoreCatalogData {
 
 // UserLogin
 message UserLoginData {
+    option (routines.entity_type) = "UserLogin";
     // keys: userLoginId
 
     // fields
@@ -2206,6 +2289,7 @@ message UserLoginData {
 
 // Product Pice Rule
 message ProductPriceRuleData {
+    option (routines.entity_type) = "ProductPriceRule";
     // keys: productPriceRuleId
 
     // fields
@@ -2221,6 +2305,7 @@ message ProductPriceRuleData {
 
 // Party Role
 message PartyRoleData {
+    option (routines.entity_type) = "PartyRole";
     // keys: partyId, roleTypeId
 
     // fields
@@ -2232,6 +2317,7 @@ message PartyRoleData {
 
 // Product Facility
 message ProductFacilityData {
+    option (routines.entity_type) = "ProductFacility";
     // keys: productId, facilityId
 
     // fields
@@ -2249,6 +2335,7 @@ message ProductFacilityData {
 
 // Party Geo Location with history
 message PartyGeoPointData {
+    option (routines.entity_type) = "PartyGeoPoint";
     // keys: partyId, geoPointId, fromDate
 
     // fields
@@ -2262,6 +2349,7 @@ message PartyGeoPointData {
 
 // Order Header
 message OrderHeaderData {
+    option (routines.entity_type) = "OrderHeader";
     // keys: orderId
 
     // fields
@@ -2319,6 +2407,7 @@ message OrderHeaderData {
 
 // Carrier Shipment Method
 message CarrierShipmentMethodData {
+    option (routines.entity_type) = "CarrierShipmentMethod";
     // keys: shipmentMethodTypeId, partyId, roleTypeId
 
     // fields
@@ -2333,6 +2422,7 @@ message CarrierShipmentMethodData {
 
 // Shipment
 message ShipmentData {
+    option (routines.entity_type) = "Shipment";
     // keys: shipmentId
 
     // fields
@@ -2392,6 +2482,7 @@ message ShipmentData {
 
 // Shipment Package Content
 message ShipmentPackageContentData {
+    option (routines.entity_type) = "ShipmentPackageContent";
     // keys: shipmentId, shipmentPackageSeqId, shipmentItemSeqId
 
     // fields
@@ -2407,6 +2498,7 @@ message ShipmentPackageContentData {
 
 // Security Component - Security Group
 message SecurityGroupData {
+    option (routines.entity_type) = "SecurityGroup";
     // keys: groupId
 
     // fields
@@ -2419,6 +2511,7 @@ message SecurityGroupData {
 
 // Product Data Object
 message ProductContentData {
+    option (routines.entity_type) = "ProductContent";
     // keys: productId, contentId, productContentTypeId, fromDate
 
     // fields
@@ -2440,6 +2533,7 @@ message ProductContentData {
 
 // Party Relationship
 message PartyRelationshipData {
+    option (routines.entity_type) = "PartyRelationship";
     // keys: partyIdFrom, partyIdTo, roleTypeIdFrom, roleTypeIdTo, fromDate
 
     // fields
@@ -2463,6 +2557,7 @@ message PartyRelationshipData {
 
 // Product Store Carrier Shipment Method
 message ProductStoreShipmentMethData {
+    option (routines.entity_type) = "ProductStoreShipmentMeth";
     // keys: productStoreShipMethId
 
     // fields
@@ -2500,6 +2595,7 @@ message ProductStoreShipmentMethData {
 
 // Payment
 message PaymentData {
+    option (routines.entity_type) = "Payment";
     // keys: paymentId
 
     // fields
@@ -2536,6 +2632,7 @@ message PaymentData {
 
 // Content
 message ContentData {
+    option (routines.entity_type) = "Content";
     // keys: contentId
 
     // fields
@@ -2568,6 +2665,7 @@ message ContentData {
 
 // Shipment Package
 message ShipmentPackageData {
+    option (routines.entity_type) = "ShipmentPackage";
     // keys: shipmentId, shipmentPackageSeqId
 
     // fields
@@ -2588,6 +2686,7 @@ message ShipmentPackageData {
 
 // Product Store Inventory Facility Applicability
 message ProductStoreFacilityData {
+    option (routines.entity_type) = "ProductStoreFacility";
     // keys: productStoreId, facilityId, fromDate
 
     // fields
@@ -2602,6 +2701,7 @@ message ProductStoreFacilityData {
 
 // WebSite
 message WebSiteData {
+    option (routines.entity_type) = "WebSite";
     // keys: webSiteId
 
     // fields
@@ -2628,6 +2728,7 @@ message WebSiteData {
 
 // Product Category
 message ProductCategoryData {
+    option (routines.entity_type) = "ProductCategory";
     // keys: productCategoryId
 
     // fields
@@ -2648,6 +2749,7 @@ message ProductCategoryData {
 
 // Product Store Payment Settings
 message ProductStorePaymentSettingData {
+    option (routines.entity_type) = "ProductStorePaymentSetting";
     // keys: productStoreId, paymentMethodTypeId, paymentServiceTypeEnumId
 
     // fields
@@ -2665,6 +2767,7 @@ message ProductStorePaymentSettingData {
 
 // Payment Method
 message PaymentMethodData {
+    option (routines.entity_type) = "PaymentMethod";
     // keys: paymentMethodId
 
     // fields
@@ -2682,6 +2785,7 @@ message PaymentMethodData {
 
 // Product Price Condition
 message ProductPriceCondData {
+    option (routines.entity_type) = "ProductPriceCond";
     // keys: productPriceRuleId, productPriceCondSeqId
 
     // fields
@@ -2696,6 +2800,7 @@ message ProductPriceCondData {
 
 // Inventory Item
 message InventoryItemData {
+    option (routines.entity_type) = "InventoryItem";
     // keys: inventoryItemId
 
     // fields
@@ -2733,6 +2838,7 @@ message InventoryItemData {
 
 // Billing Account Role
 message BillingAccountRoleData {
+    option (routines.entity_type) = "BillingAccountRole";
     // keys: billingAccountId, partyId, roleTypeId, fromDate
 
     // fields
@@ -2747,6 +2853,7 @@ message BillingAccountRoleData {
 
 // Invoice Item
 message InvoiceItemData {
+    option (routines.entity_type) = "InvoiceItem";
     // keys: invoiceId, invoiceItemSeqId
 
     // fields
@@ -2775,6 +2882,7 @@ message InvoiceItemData {
 
 // Product Feature Category Application
 message ProductFeatureCategoryApplData {
+    option (routines.entity_type) = "ProductFeatureCategoryAppl";
     // keys: productCategoryId, productFeatureCategoryId, fromDate
 
     // fields
@@ -2788,6 +2896,7 @@ message ProductFeatureCategoryApplData {
 
 // Product Configuration Question
 message ProductConfigItemData {
+    option (routines.entity_type) = "ProductConfigItem";
     // keys: configItemId
 
     // fields
@@ -2803,6 +2912,7 @@ message ProductConfigItemData {
 
 // Telecommunications Number
 message TelecomNumberData {
+    option (routines.entity_type) = "TelecomNumber";
     // keys: contactMechId
 
     // fields
@@ -2817,6 +2927,7 @@ message TelecomNumberData {
 
 // Product Feature
 message ProductFeatureData {
+    option (routines.entity_type) = "ProductFeature";
     // keys: productFeatureId
 
     // fields
@@ -2836,6 +2947,7 @@ message ProductFeatureData {
 
 // Product Configuration Templates
 message ProductConfigData {
+    option (routines.entity_type) = "ProductConfig";
     // keys: productId, configItemId, sequenceNum, fromDate
 
     // fields
@@ -2855,6 +2967,7 @@ message ProductConfigData {
 
 // Product Promotion
 message ProductPromoCodeData {
+    option (routines.entity_type) = "ProductPromoCode";
     // keys: productPromoCodeId
 
     // fields
@@ -2876,6 +2989,7 @@ message ProductPromoCodeData {
 
 // Product Store
 message ProductStoreData {
+    option (routines.entity_type) = "ProductStore";
     // keys: productStoreId
 
     // fields
@@ -2978,6 +3092,7 @@ message ProductStoreData {
 
 // Product Price
 message ProductPriceData {
+    option (routines.entity_type) = "ProductPrice";
     // keys: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate
 
     // fields
@@ -3008,6 +3123,7 @@ message ProductPriceData {
 
 // Quantity Break
 message QuantityBreakData {
+    option (routines.entity_type) = "QuantityBreak";
     // keys: quantityBreakId
 
     // fields
@@ -3021,6 +3137,7 @@ message QuantityBreakData {
 
 // Contact Mechanism
 message ContactMechData {
+    option (routines.entity_type) = "ContactMech";
     // keys: contactMechId
 
     // fields
@@ -3033,6 +3150,7 @@ message ContactMechData {
 
 // Order Item Inventory Reservation
 message OrderItemShipGrpInvResData {
+    option (routines.entity_type) = "OrderItemShipGrpInvRes";
     // keys: orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId
 
     // fields
@@ -3056,6 +3174,7 @@ message OrderItemShipGrpInvResData {
 
 // TenantDataSource
 message TenantDataSourceData {
+    option (routines.entity_type) = "TenantDataSource";
     // keys: tenantId, entityGroupName
 
     // fields
@@ -3070,6 +3189,7 @@ message TenantDataSourceData {
 
 // Product Promotion Rule
 message ProductPromoRuleData {
+    option (routines.entity_type) = "ProductPromoRule";
     // keys: productPromoId, productPromoRuleId
 
     // fields
@@ -3082,6 +3202,7 @@ message ProductPromoRuleData {
 
 // Order Contact Mechanism
 message OrderContactMechData {
+    option (routines.entity_type) = "OrderContactMech";
     // keys: orderId, contactMechPurposeTypeId, contactMechId
 
     // fields
@@ -3094,6 +3215,7 @@ message OrderContactMechData {
 
 // WorkEffort
 message WorkEffortData {
+    option (routines.entity_type) = "WorkEffort";
     // keys: workEffortId
 
     // fields
@@ -3155,6 +3277,7 @@ message WorkEffortData {
 
 // Tenant
 message TenantData {
+    option (routines.entity_type) = "Tenant";
     // keys: tenantId
 
     // fields
@@ -3168,6 +3291,7 @@ message TenantData {
 
 // Shipment Status
 message ShipmentStatusData {
+    option (routines.entity_type) = "ShipmentStatus";
     // keys: statusId, shipmentId
 
     // fields
@@ -3181,6 +3305,7 @@ message ShipmentStatusData {
 
 // Billing Account
 message BillingAccountData {
+    option (routines.entity_type) = "BillingAccount";
     // keys: billingAccountId
 
     // fields
@@ -3198,6 +3323,7 @@ message BillingAccountData {
 
 // Facility Contact Mechanism Purpose
 message FacilityContactMechPurposeData {
+    option (routines.entity_type) = "FacilityContactMechPurpose";
     // keys: facilityId, contactMechId, contactMechPurposeTypeId, fromDate
 
     // fields
@@ -3212,6 +3338,7 @@ message FacilityContactMechPurposeData {
 
 // Product Keyword
 message ProductKeywordData {
+    option (routines.entity_type) = "ProductKeyword";
     // keys: productId, keyword, keywordTypeId
 
     // fields
@@ -3226,6 +3353,7 @@ message ProductKeywordData {
 
 // Customer Request Item
 message CustRequestItemData {
+    option (routines.entity_type) = "CustRequestItem";
     // keys: custRequestId, custRequestItemSeqId
 
     // fields
@@ -3252,6 +3380,7 @@ message CustRequestItemData {
 
 // Tenant and its Domain Name
 message TenantDomainNameData {
+    option (routines.entity_type) = "TenantDomainName";
     // keys: domainName
 
     // fields
@@ -3263,6 +3392,7 @@ message TenantDomainNameData {
 
 // Order Role
 message OrderRoleData {
+    option (routines.entity_type) = "OrderRole";
     // keys: orderId, partyId, roleTypeId
 
     // fields
@@ -3275,6 +3405,7 @@ message OrderRoleData {
 
 // Fixed Asset Geo Location with history
 message FixedAssetGeoPointData {
+    option (routines.entity_type) = "FixedAssetGeoPoint";
     // keys: fixedAssetId, geoPointId, fromDate
 
     // fields
@@ -3288,6 +3419,7 @@ message FixedAssetGeoPointData {
 
 // Recurrence Rule
 message RecurrenceRuleData {
+    option (routines.entity_type) = "RecurrenceRule";
     // keys: recurrenceRuleId
 
     // fields
@@ -3313,6 +3445,7 @@ message RecurrenceRuleData {
 
 // Product Store Promotion Applicability
 message ProductStorePromoApplData {
+    option (routines.entity_type) = "ProductStorePromoAppl";
     // keys: productStoreId, productPromoId, fromDate
 
     // fields
@@ -3328,6 +3461,7 @@ message ProductStorePromoApplData {
 
 // Product Configuration Option to Products
 message ProductConfigProductData {
+    option (routines.entity_type) = "ProductConfigProduct";
     // keys: configItemId, configOptionId, productId
 
     // fields
@@ -3342,6 +3476,7 @@ message ProductConfigProductData {
 
 // Product Price Action
 message ProductPriceActionData {
+    option (routines.entity_type) = "ProductPriceAction";
     // keys: productPriceRuleId, productPriceActionSeqId
 
     // fields
@@ -3356,6 +3491,7 @@ message ProductPriceActionData {
 
 // Shipment Method Type
 message ShipmentMethodTypeData {
+    option (routines.entity_type) = "ShipmentMethodType";
     // keys: shipmentMethodTypeId
 
     // fields
@@ -3368,6 +3504,7 @@ message ShipmentMethodTypeData {
 
 // Quote Term
 message QuoteTermData {
+    option (routines.entity_type) = "QuoteTerm";
     // keys: termTypeId, quoteId, quoteItemSeqId
 
     // fields
@@ -3385,6 +3522,7 @@ message QuoteTermData {
 
 // Transaction Entry
 message AcctgTransEntryData {
+    option (routines.entity_type) = "AcctgTransEntry";
     // keys: acctgTransId, acctgTransEntrySeqId
 
     // fields
@@ -3419,6 +3557,7 @@ message AcctgTransEntryData {
 
 // Order Item Billing
 message OrderItemBillingData {
+    option (routines.entity_type) = "OrderItemBilling";
     // keys: orderId, orderItemSeqId, invoiceId, invoiceItemSeqId
 
     // fields
@@ -3436,6 +3575,7 @@ message OrderItemBillingData {
 
 // Order Item Ship Group
 message OrderItemShipGroupData {
+    option (routines.entity_type) = "OrderItemShipGroup";
     // keys: orderId, shipGroupSeqId
 
     // fields
@@ -3465,6 +3605,7 @@ message OrderItemShipGroupData {
 
 // Customer Request Type
 message CustRequestTypeData {
+    option (routines.entity_type) = "CustRequestType";
     // keys: custRequestTypeId
 
     // fields
@@ -3479,6 +3620,7 @@ message CustRequestTypeData {
 
 // Agreement Product Application
 message AgreementProductApplData {
+    option (routines.entity_type) = "AgreementProductAppl";
     // keys: agreementId, agreementItemSeqId, productId
 
     // fields
@@ -3492,6 +3634,7 @@ message AgreementProductApplData {
 
 // Product Subscription Resource
 message ProductSubscriptionResourceData {
+    option (routines.entity_type) = "ProductSubscriptionResource";
     // keys: productId, subscriptionResourceId, fromDate
 
     // fields
@@ -3520,6 +3663,7 @@ message ProductSubscriptionResourceData {
 
 // Credit Card Information
 message CreditCardData {
+    option (routines.entity_type) = "CreditCard";
     // keys: paymentMethodId
 
     // fields
@@ -3546,6 +3690,7 @@ message CreditCardData {
 
 // Quote
 message QuoteData {
+    option (routines.entity_type) = "Quote";
     // keys: quoteId
 
     // fields
@@ -3567,6 +3712,7 @@ message QuoteData {
 
 // Product Promotion
 message ProductPromoData {
+    option (routines.entity_type) = "ProductPromo";
     // keys: productPromoId
 
     // fields
@@ -3591,6 +3737,7 @@ message ProductPromoData {
 
 // Product Category Member
 message ProductCategoryMemberData {
+    option (routines.entity_type) = "ProductCategoryMember";
     // keys: productCategoryId, productId, fromDate
 
     // fields
@@ -3607,6 +3754,7 @@ message ProductCategoryMemberData {
 
 // Agreement Term
 message AgreementTermData {
+    option (routines.entity_type) = "AgreementTerm";
     // keys: agreementTermId
 
     // fields
@@ -3629,6 +3777,7 @@ message AgreementTermData {
 
 // Product Category Link
 message ProductCategoryLinkData {
+    option (routines.entity_type) = "ProductCategoryLink";
     // keys: productCategoryId, linkSeqId, fromDate
 
     // fields
@@ -3651,6 +3800,7 @@ message ProductCategoryLinkData {
 
 // Product Feature Interaction
 message ProductFeatureIactnData {
+    option (routines.entity_type) = "ProductFeatureIactn";
     // keys: productFeatureId, productFeatureIdTo
 
     // fields
@@ -3664,6 +3814,7 @@ message ProductFeatureIactnData {
 
 // Work Effort Association
 message WorkEffortAssocData {
+    option (routines.entity_type) = "WorkEffortAssoc";
     // keys: workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate
 
     // fields
@@ -3679,6 +3830,7 @@ message WorkEffortAssocData {
 
 // Quote Role
 message QuoteRoleData {
+    option (routines.entity_type) = "QuoteRole";
     // keys: quoteId, partyId, roleTypeId
 
     // fields

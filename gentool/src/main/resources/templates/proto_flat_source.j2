@@ -1,5 +1,6 @@
 // flat-ent: {{ent.title}}
 message {{ent.name}}FlatData {
+    option (routines.entity_type) = "{{ent.name}}";
     // keys: {{ent.keyNames}}
     {% for f in ent.publicFields -%}
     {%- if digester.isRefField(f.name) %}

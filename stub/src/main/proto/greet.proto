@@ -7,6 +7,7 @@ option objc_class_prefix = "GP";
 
 package greet;
 import "google/protobuf/timestamp.proto";
+//import "google/protobuf/duration.proto";
 
 // The greeting service definition.
 service Greeter {

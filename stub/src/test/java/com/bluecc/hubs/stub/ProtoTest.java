@@ -1,10 +1,9 @@
 package com.bluecc.hubs.stub;
 
 import com.bluecc.hubs.ProtoJsonUtils;
-import com.google.protobuf.ByteString;
-import com.google.protobuf.Descriptors;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.Timestamp;
+import com.bluecc.hubs.proto.DataFill;
+import com.bluecc.hubs.proto.ProtoTypes;
+import com.google.protobuf.*;
 import org.assertj.core.internal.bytebuddy.description.field.FieldDescription;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -134,7 +133,31 @@ public class ProtoTest {
     }
 
     @Test
-    void testFieldData() throws InvalidProtocolBufferException {
+    void testRepeatedFieldMeta(){
+        Descriptors.Descriptor descriptor=OrderItemData.getDescriptor();
+        descriptor.getFields().forEach(f ->
+                System.out.format("%s, %s\n", f.getName(), f.isRepeated()));
+
+        GeneratedMessageV3.Builder<?> builder=OrderItemData.newBuilder();
+        // Descriptors.FieldDescriptor fieldDescriptor = message.getDescriptorForType().findFieldByName("fieldXyz");
+        Descriptors.FieldDescriptor fieldDescriptor =descriptor.findFieldByName("order_adjustment");
+        OrderAdjustmentData adjustmentData= OrderAdjustmentData.newBuilder()
+                .setAmount(DataFill.getDecimalValue("12.345"))
+                .build();
+        builder.addRepeatedField(fieldDescriptor, adjustmentData);
+        builder.addRepeatedField(fieldDescriptor, OrderAdjustmentData.newBuilder()
+                .setAmount(DataFill.getDecimalValue("34.345"))
+                .build());
+        System.out.println(builder.build());
+        System.out.println(ProtoJsonUtils.toJson(builder.build()));
+
+        OrderItemData orderItemData=(OrderItemData)builder.build();
+        orderItemData.getOrderAdjustmentList().forEach(a ->
+                System.out.println(ProtoTypes.getBigDecimal(a.getAmount())));
+    }
+
+    @Test
+    void testSerializedData() throws InvalidProtocolBufferException {
         ShipmentTimeEstimateData estimateData=createShipmentTime();
         byte[] bytes = estimateData.toByteArray();
         System.out.println(bytes.length);

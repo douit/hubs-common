@@ -1,7 +1,5 @@
 package com.bluecc.hubs.proto;
 
-import com.bluecc.hubs.fund.EntityMeta;
-import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.stub.*;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -10,24 +8,22 @@ import com.google.gson.JsonObject;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3.Builder;
-import com.google.protobuf.MessageOrBuilder;
 import com.google.protobuf.Timestamp;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Base64;
 
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
-import static com.bluecc.hubs.fund.Util.pretty;
 
 @Slf4j
 public class DataFill {
 
     public static void main(String[] args) {
-        String dataFile = "dataset/sample/sales_order.xml";
+        // String dataFile = "dataset/sample/sales_order.xml";
+        String dataFile = "dataset/OrderDemoData.xml";
         Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
         collectEntityData(dataList, dataFile, false);
 
@@ -35,6 +31,7 @@ public class DataFill {
         dataFill.setupData(dataList);
     }
 
+    DataBuilder dataBuilder=new DataBuilder();
     void setupData(Multimap<String, JsonObject> dataList){
         for (String key : dataList.keySet()) {
             System.out.println(key + ":");
@@ -55,16 +52,16 @@ public class DataFill {
         return FMT.parseDateTime(dtStr.substring(0, DT_STR.length()));
     }
 
-    private Timestamp getTimestamp(long millis) {
+    public static Timestamp getTimestamp(long millis) {
         return Timestamp.newBuilder().setSeconds(millis / 1000)
                 .setNanos((int) ((millis % 1000) * 1000000)).build();
     }
 
-    Timestamp getTimestamp(DateTime dt){
+    public static Timestamp getTimestamp(DateTime dt){
         return getTimestamp(dt.getMillis());
     }
 
-    Timestamp getTimestamp(String dtStr){
+    public static Timestamp getTimestamp(String dtStr){
         return getTimestamp(trimParse(dtStr));
     }
 
@@ -73,54 +70,58 @@ public class DataFill {
         switch (entityName) {
             case "Party": {
                 msg = PartyFlatData.newBuilder();
-                convertData(msg, jsonObject, PartyFlatData.getDescriptor());
+                convertData(entityName, msg, jsonObject, PartyFlatData.getDescriptor());
                 break;
             }
             case "Person": {
                 msg = PersonFlatData.newBuilder();
-                convertData(msg, jsonObject, PersonFlatData.getDescriptor());
+                convertData(entityName, msg, jsonObject, PersonFlatData.getDescriptor());
                 break;
             }
             case "PartyRole": {
                 msg = PartyRoleData.newBuilder();
-                convertData(msg, jsonObject, PartyRoleData.getDescriptor());
+                convertData(entityName, msg, jsonObject, PartyRoleData.getDescriptor());
                 break;
             }
             case "PartyStatus": {
                 msg = PartyStatusData.newBuilder();
-                convertData(msg, jsonObject, PartyStatusData.getDescriptor());
+                convertData(entityName, msg, jsonObject, PartyStatusData.getDescriptor());
                 break;
             }
             case "UserLogin": {
                 msg = UserLoginData.newBuilder();
-                convertData(msg, jsonObject, UserLoginData.getDescriptor());
+                convertData(entityName, msg, jsonObject, UserLoginData.getDescriptor());
                 break;
             }
             case "UserLoginSecurityGroup": {
                 msg = UserLoginSecurityGroupData.newBuilder();
-                convertData(msg, jsonObject, UserLoginSecurityGroupData.getDescriptor());
+                convertData(entityName, msg, jsonObject, UserLoginSecurityGroupData.getDescriptor());
                 break;
             }
             case "Product": {
                 msg = ProductFlatData.newBuilder();
-                convertData(msg, jsonObject, ProductFlatData.getDescriptor());
+                convertData(entityName, msg, jsonObject, ProductFlatData.getDescriptor());
                 break;
             }
             case "ProductPrice": {
                 msg = ProductPriceData.newBuilder();
-                convertData(msg, jsonObject, ProductPriceData.getDescriptor());
+                convertData(entityName, msg, jsonObject, ProductPriceData.getDescriptor());
                 break;
             }
             default:
-                log.warn(".. ignore " + entityName);
+                // log.warn(".. ignore " + entityName);
+                DataBuilder.ProtoBuilder protoBuilder=dataBuilder.procData(entityName, false);
+                convertData(entityName, protoBuilder.getBuilder(), jsonObject,
+                        protoBuilder.getDescriptor());
+                msg= protoBuilder.getBuilder();
         }
         return msg;
     }
 
-    private  void convertData(Builder<?> msg, JsonObject jsonObject, Descriptors.Descriptor descriptor) {
+    private void convertData(String entityName, Builder<?> msg, JsonObject jsonObject, Descriptors.Descriptor descriptor) {
         // System.out.println("field names: "+descriptor.getFields().stream().map(f ->
         //         f.getName()).collect(Collectors.joining(", ")));
-        log.info(jsonObject.toString());
+        // log.info("{}/{}: {}", entityName, descriptor.getName(), jsonObject.toString());
         // for (Map.Entry<Descriptors.FieldDescriptor, Object> fld : msg.getAllFields().entrySet()) {
         for (Descriptors.FieldDescriptor fld : descriptor.getFields()) {
             JsonElement val = jsonObject.get(fld.getName());
@@ -131,6 +132,22 @@ public class DataFill {
                         msg.setField(fld, val.getAsString());
                         // System.out.println("** put "+fld.getName()+" - "+val.getAsString());
                         break;
+                    case INT64:
+                        msg.setField(fld, val.getAsLong());
+                        break;
+                    case INT32:
+                        msg.setField(fld, val.getAsInt());
+                        break;
+                    case DOUBLE:
+                        msg.setField(fld, val.getAsDouble());
+                        break;
+                    case FLOAT:
+                        msg.setField(fld, val.getAsFloat());
+                        break;
+                    case BYTES:
+                        // msg.setField(fld, val.get);
+                        setBase64Field(msg, fld, val.getAsString());
+                        break;
                     case MESSAGE:
                         setFieldWithMessage(msg, fld, val);
                         break;
@@ -138,16 +155,22 @@ public class DataFill {
                         // System.out.println("\tenum: "+fld.getEnumType().getName());
                         setFieldWithEnum(msg, fld, val);
                         break;
+
                     default:
-                        // throw new RuntimeException("Cannot handle type: "
-                        //         + fld.getKey().getType() + ", for field "
-                        //         + fld.getKey().getName());
-                        log.error("Cannot handle type: "
-                                        + fld.getType() + ", for field "
-                                        + fld.getName());
+                        throw new RuntimeException("Cannot handle type: "
+                                + fld.getType() + ", for field "
+                                + fld.getName());
+                        // log.error("Cannot handle type: "
+                        //                 + fld.getType() + ", for field "
+                        //                 + fld.getName());
                 }
             }
         }
+    }
+
+    private void setBase64Field(Builder<?> msg, Descriptors.FieldDescriptor fld, String asString) {
+        byte[] decodedBytes = Base64.getDecoder().decode(asString);
+        msg.setField(fld, ByteString.copyFrom(decodedBytes));
     }
 
     private  void setFieldWithMessage(Builder<?> msg, Descriptors.FieldDescriptor fld, JsonElement val) {
@@ -164,17 +187,27 @@ public class DataFill {
                 msg.setField(fld, getTimestamp(val.getAsString()));
                 break;
             case "DecimalValue":
-                java.math.BigDecimal bigDecimal = new java.math.BigDecimal(val.getAsString());
-                DecimalValue serialized = DecimalValue.newBuilder()
-                        .setScale(bigDecimal.scale())
-                        .setPrecision(bigDecimal.precision())
-                        .setValue(ByteString.copyFrom(bigDecimal.unscaledValue().toByteArray()))
-                        .build();
+                DecimalValue serialized = getDecimalValue(val);
                 msg.setField(fld, serialized);
                 break;
             default:
                 log.error("\t🚫 "+ fld.getMessageType().getName()+" -> "+val);
+                throw new RuntimeException("Cannot handle "+fld.getMessageType().getName()+" -> "+val);
         }
+    }
+
+    public static DecimalValue getDecimalValue(JsonElement val) {
+        return getDecimalValue(val.getAsString());
+    }
+
+    public static DecimalValue getDecimalValue(String val) {
+        java.math.BigDecimal bigDecimal = new java.math.BigDecimal(val);
+        DecimalValue serialized = DecimalValue.newBuilder()
+                .setScale(bigDecimal.scale())
+                .setPrecision(bigDecimal.precision())
+                .setValue(ByteString.copyFrom(bigDecimal.unscaledValue().toByteArray()))
+                .build();
+        return serialized;
     }
 
     private  void setFieldWithEnum(Builder<?> msg, Descriptors.FieldDescriptor fld, JsonElement val) {
@@ -188,6 +221,7 @@ public class DataFill {
 
             default:
                 log.error("\t🚫 "+ fld.getMessageType().getName());
+                throw new RuntimeException("Cannot handle "+fld.getMessageType().getName());
         }
     }
 

@@ -6,6 +6,11 @@ option java_outer_classname = "RoutinesProto";
 option objc_class_prefix = "RTP";
 
 package routines;
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MessageOptions {
+  optional string entity_type = 51234;
+}
 
 // Interface exported by the server.
 service Routines {

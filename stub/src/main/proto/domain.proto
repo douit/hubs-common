@@ -6,6 +6,7 @@ option java_outer_classname = "DoProto";
 option objc_class_prefix = "DP";
 
 package domain;
+import "routines.proto";
 
 // The fixture service definition.
 service FixtureProcs {
@@ -18,12 +19,14 @@ message QueryPersonRequest {
 }
 
 message PersonObject {
+  option (routines.entity_type) = "Person";
   int64 party_id=1;
   string last_name=2;
   string first_name=3;
 }
 
 message PersonObjects {
+  option (routines.entity_type) = "PersonList";
   string message = 1;
   repeated PersonObject objects=2;
 }
