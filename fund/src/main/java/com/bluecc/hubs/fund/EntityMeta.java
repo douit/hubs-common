@@ -5,9 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -52,14 +50,6 @@ public class EntityMeta {
                     .build()
     );
 
-    public enum FacetType{
-        PeriodFacet
-    }
-    @Data
-    public static class Facet{
-        Set<FacetType> facets= Sets.newHashSet();
-    }
-
     String name;
     String title;
     String tableName;
@@ -74,8 +64,6 @@ public class EntityMeta {
     int pksSize;
     List<String> pks = Lists.newArrayList();
     boolean isView;
-
-    Facet facet;
 
     public List<FieldMeta> getPublicFields() {
         return fields.stream().filter(f -> !f.isAutoCreatedInternal())
@@ -300,7 +288,8 @@ public class EntityMeta {
         }
 
         public String getRelFields(){
-            return keymaps.stream().map(k -> k.fieldName).collect(Collectors.joining(" + "));
+            return keymaps.stream().map(k -> k.fieldName)
+                    .collect(Collectors.joining(" + "));
         }
     }
 

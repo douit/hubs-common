@@ -30,7 +30,7 @@ public class SeedReader {
 
     private static void printDataMap(String dataFile) {
         Multimap<String, JsonObject> dataList=ArrayListMultimap.create();
-        collectEntityData(dataList, dataFile);
+        collectEntityData(dataList, dataFile, true);
         // dataList.forEach(e -> System.out.println(e));
         for (String key : dataList.keySet()) {
             System.out.println(key+":");
@@ -55,24 +55,26 @@ public class SeedReader {
         return nameSet;
     }
 
-    public static void collectEntityData(Multimap<String, JsonObject> dataList, String dataFile) {
+    public static void collectEntityData(Multimap<String, JsonObject> dataList,
+                                         String dataFile, boolean camelCase) {
         // List<JsonObject> rs= Lists.newArrayList();
         // Multimap<String, JsonObject> rs= ArrayListMultimap.create();
         NodeList nodeList = getNodeList(dataFile);
         for(int i=0;i<nodeList.getLength();++i){
             if (nodeList.item(i) instanceof Element){
                 Element element=(Element) nodeList.item(i);
-                dataList.put(element.getTagName(), convertElement(element));
+                dataList.put(element.getTagName(), convertElement(element, camelCase));
             }
         }
     }
 
-    public static JsonObject convertElement(Element element) {
+    public static JsonObject convertElement(Element element, boolean camelCase) {
         JsonObject jsonObject=new JsonObject();
         NamedNodeMap attrs=element.getAttributes();
         for(int i=0;i<attrs.getLength();++i){
             Node node=attrs.item(i);
-            jsonObject.addProperty(node.getNodeName(), node.getNodeValue());
+            jsonObject.addProperty(camelCase?node.getNodeName():Util.toSnakecase(node.getNodeName()),
+                    node.getNodeValue());
         }
         return jsonObject;
     }

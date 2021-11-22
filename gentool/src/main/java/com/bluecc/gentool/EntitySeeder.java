@@ -69,7 +69,7 @@ public class EntitySeeder {
 
         // collect data
         Multimap<String, JsonObject> dataList= ArrayListMultimap.create();
-        collectEntityData(dataList, dataFile);
+        collectEntityData(dataList, dataFile, true);
         for (String key : dataList.keySet()) {
             Map<String, String> valueMap= Maps.newHashMap();
             for (JsonObject jsonObject : dataList.get(key)) {

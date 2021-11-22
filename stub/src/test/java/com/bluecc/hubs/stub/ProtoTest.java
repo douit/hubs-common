@@ -8,6 +8,8 @@ import com.google.protobuf.Timestamp;
 import org.assertj.core.internal.bytebuddy.description.field.FieldDescription;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.junit.jupiter.api.Test;
 
@@ -70,6 +72,24 @@ public class ProtoTest {
     private Timestamp getTimestamp(long millis) {
         return Timestamp.newBuilder().setSeconds(millis / 1000)
                 .setNanos((int) ((millis % 1000) * 1000000)).build();
+    }
+
+    @Test
+    void testDateTimeParse(){
+        String dtStrLong="2001-01-01 12:00:00.0";
+        // String dtStr="2001-01-01T12:00:00";
+        // DateTimeFormatter parser= ISODateTimeFormat.dateTimeNoMillis();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.S");
+        System.out.println(fmt.parseDateTime(dtStrLong));
+
+        String dtStr="2001-05-13 00:00:00";
+        fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        System.out.println(fmt.parseDateTime(dtStr));
+
+        System.out.println(dtStrLong.substring(0, dtStr.length()));
+
+        // https://www.joda.org/joda-time/userguide.html#Custom_Formatters
+        // if you wanted to use the ISO standard format for datetime, which is yyyy-MM-dd'T'HH:mm:ss.SSSZZ
     }
 
     // https://stackoverflow.com/questions/1051732/what-is-the-best-approach-for-serializing-bigdecimal-biginteger-to-protocolbuffe

@@ -1,0 +1,12 @@
+// flat-ent: {{ent.title}}
+message {{ent.name}}FlatData {
+    // keys: {{ent.keyNames}}
+    {% for f in ent.publicFields -%}
+    {%- if digester.isRefField(f.name) %}
+    routines.TypeSymbol {{f.underscore}} = {{loop.index}}; // {{digester.getEntityRef(f.name)}}
+    {%- else %}    
+    {{f.protoType}} {{f.underscore}} = {{loop.index}};
+    {%- endif -%}
+    {% endfor %}  
+}
+
