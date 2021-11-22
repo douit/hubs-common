@@ -1,0 +1,3278 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.bluecc.hubs.stub";
+option java_outer_classname = "DataProto";
+option objc_class_prefix = "DTP";
+
+package domain;
+
+import "google/protobuf/timestamp.proto";
+import "routines.proto";
+
+// The Order Header service definition.
+service OrderHeaderService {
+    rpc Create(OrderHeaderData) returns (routines.Response) {}
+    rpc Update(OrderHeaderData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (OrderHeaderData) {}
+}
+// The Order Item service definition.
+service OrderItemService {
+    rpc Create(OrderItemData) returns (routines.Response) {}
+    rpc Update(OrderItemData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (OrderItemData) {}
+}
+// The Payment service definition.
+service PaymentService {
+    rpc Create(PaymentData) returns (routines.Response) {}
+    rpc Update(PaymentData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (PaymentData) {}
+}
+// The Invoice service definition.
+service InvoiceService {
+    rpc Create(InvoiceData) returns (routines.Response) {}
+    rpc Update(InvoiceData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (InvoiceData) {}
+}
+// The Product service definition.
+service ProductService {
+    rpc Create(ProductData) returns (routines.Response) {}
+    rpc Update(ProductData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (ProductData) {}
+}
+// The Shipment service definition.
+service ShipmentService {
+    rpc Create(ShipmentData) returns (routines.Response) {}
+    rpc Update(ShipmentData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (ShipmentData) {}
+}
+// The Product Store service definition.
+service ProductStoreService {
+    rpc Create(ProductStoreData) returns (routines.Response) {}
+    rpc Update(ProductStoreData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (ProductStoreData) {}
+}
+// The Party service definition.
+service PartyService {
+    rpc Create(PartyData) returns (routines.Response) {}
+    rpc Update(PartyData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (PartyData) {}
+}
+// The Person service definition.
+service PersonService {
+    rpc Create(PersonData) returns (routines.Response) {}
+    rpc Update(PersonData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (PersonData) {}
+}
+// The Party Group service definition.
+service PartyGroupService {
+    rpc Create(PartyGroupData) returns (routines.Response) {}
+    rpc Update(PartyGroupData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (PartyGroupData) {}
+}
+// Shipment Route Segment
+message ShipmentRouteSegmentData {
+    // keys: shipmentId, shipmentRouteSegmentId
+
+    // fields
+        
+    string shipment_id = 1;    
+    string shipment_route_segment_id = 2;    
+    string delivery_id = 3;    
+    string origin_facility_id = 4;    
+    string dest_facility_id = 5;    
+    string origin_contact_mech_id = 6;    
+    string origin_telecom_number_id = 7;    
+    string dest_contact_mech_id = 8;    
+    string dest_telecom_number_id = 9;    
+    string carrier_party_id = 10;    
+    string shipment_method_type_id = 11;
+    routines.TypeSymbol carrier_service_status_id = 12; // StatusItem    
+    string carrier_delivery_zone = 13;    
+    string carrier_restriction_codes = 14;    
+    string carrier_restriction_desc = 15;    
+    routines.DecimalValue billing_weight = 16;
+    routines.TypeSymbol billing_weight_uom_id = 17; // Uom    
+    routines.DecimalValue actual_transport_cost = 18;    
+    routines.DecimalValue actual_service_cost = 19;    
+    routines.DecimalValue actual_other_cost = 20;    
+    routines.DecimalValue actual_cost = 21;
+    routines.TypeSymbol currency_uom_id = 22; // Uom    
+    google.protobuf.Timestamp actual_start_date = 23;    
+    google.protobuf.Timestamp actual_arrival_date = 24;    
+    google.protobuf.Timestamp estimated_start_date = 25;    
+    google.protobuf.Timestamp estimated_arrival_date = 26;    
+    string tracking_id_number = 27;    
+    string tracking_digest = 28;    
+    string updated_by_user_login_id = 29;    
+    google.protobuf.Timestamp last_updated_date = 30;    
+    string home_delivery_type = 31;    
+    google.protobuf.Timestamp home_delivery_date = 32;    
+    string third_party_account_number = 33;    
+    string third_party_postal_code = 34;    
+    string third_party_country_geo_code = 35;    
+    bytes ups_high_value_report = 36;
+    
+}
+
+// Invoice
+message InvoiceData {
+    // keys: invoiceId
+
+    // fields
+        
+    string invoice_id = 1;
+    routines.TypeSymbol invoice_type_id = 2; // InvoiceType    
+    string party_id_from = 3;
+    routines.TypeSymbol role_type_id = 4; // RoleType
+    routines.TypeSymbol status_id = 5; // StatusItem    
+    google.protobuf.Timestamp invoice_date = 6;    
+    google.protobuf.Timestamp due_date = 7;    
+    google.protobuf.Timestamp paid_date = 8;    
+    string invoice_message = 9;    
+    string reference_number = 10;    
+    string description = 11;
+    routines.TypeSymbol currency_uom_id = 12; // Uom
+    
+    // relations
+    PartyRoleData party_role = 15; // ref: partyId + roleTypeId
+    BillingAccountData billing_account = 16; // ref: billingAccountId
+    ContactMechData contact_mech = 17; // ref: contactMechId
+    RecurrenceInfoData recurrence_info = 18; // ref: recurrenceInfoId
+    repeated AcctgTransData acctg_trans = 19; // ref: invoiceId
+    repeated InvoiceItemData invoice_item = 20; // ref: invoiceId
+    repeated OrderAdjustmentBillingData order_adjustment_billing = 21; // ref: invoiceId
+    repeated OrderItemBillingData order_item_billing = 22; // ref: invoiceId
+    repeated PaymentApplicationData payment_application = 23; // ref: invoiceId
+    repeated ShipmentItemBillingData shipment_item_billing = 24; // ref: invoiceId
+    
+    
+}
+
+// Order Adjustment
+message OrderAdjustmentData {
+    // keys: orderAdjustmentId
+
+    // fields
+        
+    string order_adjustment_id = 1;
+    routines.TypeSymbol order_adjustment_type_id = 2; // OrderAdjustmentType    
+    string order_id = 3;    
+    string order_item_seq_id = 4;    
+    string ship_group_seq_id = 5;    
+    string comments = 6;    
+    string description = 7;    
+    routines.DecimalValue amount = 8;    
+    routines.DecimalValue recurring_amount = 9;    
+    routines.DecimalValue amount_already_included = 10;    
+    string product_promo_id = 11;    
+    string product_promo_rule_id = 12;    
+    string product_promo_action_seq_id = 13;    
+    string product_feature_id = 14;    
+    string corresponding_product_id = 15;    
+    string tax_authority_rate_seq_id = 16;    
+    string source_reference_id = 17;    
+    routines.DecimalValue source_percentage = 18;    
+    string customer_reference_id = 19;
+    routines.TypeSymbol primary_geo_id = 20; // Geo
+    routines.TypeSymbol secondary_geo_id = 21; // Geo    
+    routines.DecimalValue exempt_amount = 22;    
+    string tax_auth_geo_id = 23;    
+    string tax_auth_party_id = 24;    
+    string override_gl_account_id = 25;    
+    routines.Indicator include_in_tax = 26;    
+    routines.Indicator include_in_shipping = 27;    
+    routines.Indicator is_manual = 28;    
+    google.protobuf.Timestamp created_date = 29;    
+    string created_by_user_login = 30;    
+    google.protobuf.Timestamp last_modified_date = 31;    
+    string last_modified_by_user_login = 32;    
+    string original_adjustment_id = 33;
+    
+}
+
+// Product
+message ProductData {
+    // keys: productId
+
+    // fields
+        
+    string product_id = 1;
+    routines.TypeSymbol product_type_id = 2; // ProductType    
+    string facility_id = 3;    
+    google.protobuf.Timestamp introduction_date = 4;    
+    google.protobuf.Timestamp release_date = 5;    
+    google.protobuf.Timestamp support_discontinuation_date = 6;    
+    google.protobuf.Timestamp sales_discontinuation_date = 7;    
+    routines.Indicator sales_disc_when_not_avail = 8;    
+    string internal_name = 9;    
+    string brand_name = 10;    
+    string comments = 11;    
+    string product_name = 12;    
+    string description = 13;    
+    string long_description = 14;    
+    string price_detail_text = 15;    
+    string small_image_url = 16;    
+    string medium_image_url = 17;    
+    string large_image_url = 18;    
+    string detail_image_url = 19;    
+    string original_image_url = 20;    
+    string detail_screen = 21;    
+    string inventory_message = 22;
+    routines.TypeSymbol inventory_item_type_id = 23; // InventoryItemType    
+    routines.Indicator require_inventory = 24;
+    routines.TypeSymbol quantity_uom_id = 25; // Uom    
+    routines.DecimalValue quantity_included = 26;    
+    int64 pieces_included = 27;    
+    routines.Indicator require_amount = 28;    
+    routines.DecimalValue fixed_amount = 29;
+    routines.TypeSymbol amount_uom_type_id = 30; // UomType
+    routines.TypeSymbol weight_uom_id = 31; // Uom    
+    routines.DecimalValue shipping_weight = 32;    
+    routines.DecimalValue product_weight = 33;
+    routines.TypeSymbol height_uom_id = 34; // Uom    
+    routines.DecimalValue product_height = 35;    
+    routines.DecimalValue shipping_height = 36;
+    routines.TypeSymbol width_uom_id = 37; // Uom    
+    routines.DecimalValue product_width = 38;    
+    routines.DecimalValue shipping_width = 39;
+    routines.TypeSymbol depth_uom_id = 40; // Uom    
+    routines.DecimalValue product_depth = 41;    
+    routines.DecimalValue shipping_depth = 42;
+    routines.TypeSymbol diameter_uom_id = 43; // Uom    
+    routines.DecimalValue product_diameter = 44;    
+    routines.DecimalValue product_rating = 45;
+    routines.TypeSymbol rating_type_enum = 46; // Enumeration    
+    routines.Indicator returnable = 47;    
+    routines.Indicator taxable = 48;    
+    routines.Indicator charge_shipping = 49;    
+    routines.Indicator auto_create_keywords = 50;    
+    routines.Indicator include_in_promotions = 51;    
+    routines.Indicator is_virtual = 52;    
+    routines.Indicator is_variant = 53;
+    routines.TypeSymbol virtual_variant_method_enum = 54; // Enumeration
+    routines.TypeSymbol origin_geo_id = 55; // Geo
+    routines.TypeSymbol requirement_method_enum_id = 56; // Enumeration    
+    int64 bill_of_material_level = 57;    
+    routines.DecimalValue reserv_max_persons = 58;    
+    routines.DecimalValue reserv2nd_p_p_perc = 59;    
+    routines.DecimalValue reserv_nth_p_p_perc = 60;    
+    string config_id = 61;    
+    google.protobuf.Timestamp created_date = 62;    
+    google.protobuf.Timestamp last_modified_date = 63;    
+    routines.Indicator in_shipping_box = 64;    
+    string lot_id_filled_in = 65;    
+    routines.Indicator order_decimal_quantity = 66;
+    
+    // relations
+    ProductCategoryData primary_product_category = 67; // ref: primaryProductCategoryId
+    UserLoginData created_by_user_login = 68; // ref: createdByUserLogin
+    UserLoginData last_modified_by_user_login = 69; // ref: lastModifiedByUserLogin
+    ShipmentBoxTypeData default_shipment_box_type = 70; // ref: defaultShipmentBoxTypeId
+    repeated AgreementData agreement = 71; // ref: productId
+    repeated AgreementProductApplData agreement_product_appl = 72; // ref: productId
+    repeated CustRequestItemData cust_request_item = 73; // ref: productId
+    repeated FixedAssetData instance_of_fixed_asset = 74; // ref: productId
+    repeated FixedAssetProductData fixed_asset_product = 75; // ref: productId
+    repeated InventoryItemData inventory_item = 76; // ref: productId
+    repeated InvoiceItemData invoice_item = 77; // ref: productId
+    repeated OrderItemData order_item = 78; // ref: productId
+    repeated ProductAssocData main_product_assoc = 79; // ref: productId
+    repeated ProductAssocData assoc_product_assoc = 80; // ref: productId
+    repeated ProductCategoryMemberData product_category_member = 81; // ref: productId
+    repeated ProductConfigData product_product_config = 82; // ref: productId
+    repeated ProductConfigProductData product_product_config_product = 83; // ref: productId
+    repeated ProductContentData product_content = 84; // ref: productId
+    repeated ProductFacilityData product_facility = 85; // ref: productId
+    repeated ProductFacilityAssocData product_facility_assoc = 86; // ref: productId
+    repeated ProductFacilityLocationData product_facility_location = 87; // ref: productId
+    repeated ProductFeatureApplData product_feature_appl = 88; // ref: productId
+    repeated ProductKeywordData product_keyword = 89; // ref: productId
+    repeated ProductPriceData product_price = 90; // ref: productId
+    repeated ProductPromoProductData product_promo_product = 91; // ref: productId
+    repeated ProductReviewData product_review = 92; // ref: productId
+    repeated ProductSubscriptionResourceData product_subscription_resource = 93; // ref: productId
+    repeated QuoteItemData quote_item = 94; // ref: productId
+    repeated ShipmentItemData shipment_item = 95; // ref: productId
+    repeated ShipmentPackageContentData sub_shipment_package_content = 96; // ref: productId
+    repeated ShipmentReceiptData shipment_receipt = 97; // ref: productId
+    repeated SupplierProductData supplier_product = 98; // ref: productId
+    repeated WorkEffortGoodStandardData work_effort_good_standard = 99; // ref: productId
+    
+    
+}
+
+// Carrier Shipment Method
+message CarrierShipmentBoxTypeData {
+    // keys: shipmentBoxTypeId, partyId
+
+    // fields
+        
+    string shipment_box_type_id = 1;    
+    string party_id = 2;    
+    string packaging_type_code = 3;    
+    string oversize_code = 4;
+    
+}
+
+// Fixed Asset
+message FixedAssetData {
+    // keys: fixedAssetId
+
+    // fields
+        
+    string fixed_asset_id = 1;
+    routines.TypeSymbol fixed_asset_type_id = 2; // FixedAssetType    
+    string parent_fixed_asset_id = 3;    
+    string instance_of_product_id = 4;
+    routines.TypeSymbol class_enum_id = 5; // Enumeration    
+    string party_id = 6;
+    routines.TypeSymbol role_type_id = 7; // RoleType    
+    string fixed_asset_name = 8;    
+    string acquire_order_id = 9;    
+    string acquire_order_item_seq_id = 10;    
+    google.protobuf.Timestamp date_acquired = 11;    
+    google.protobuf.Timestamp date_last_serviced = 12;    
+    google.protobuf.Timestamp date_next_service = 13;    
+    google.protobuf.Timestamp expected_end_of_life = 14;    
+    google.protobuf.Timestamp actual_end_of_life = 15;    
+    routines.DecimalValue production_capacity = 16;
+    routines.TypeSymbol uom_id = 17; // Uom
+    routines.TypeSymbol calendar_id = 18; // TechDataCalendar    
+    string serial_number = 19;    
+    string located_at_facility_id = 20;    
+    string located_at_location_seq_id = 21;    
+    routines.DecimalValue salvage_value = 22;    
+    routines.DecimalValue depreciation = 23;    
+    routines.DecimalValue purchase_cost = 24;    
+    string purchase_cost_uom_id = 25;
+    
+}
+
+// Web Analytics Configuration
+message WebAnalyticsConfigData {
+    // keys: webSiteId, webAnalyticsTypeId
+
+    // fields
+        
+    string web_site_id = 1;
+    routines.TypeSymbol web_analytics_type_id = 2; // WebAnalyticsType    
+    string web_analytics_code = 3;
+    
+}
+
+// Product Category Rollup
+message ProductCategoryRollupData {
+    // keys: productCategoryId, parentProductCategoryId, fromDate
+
+    // fields
+        
+    string product_category_id = 1;    
+    string parent_product_category_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    int64 sequence_num = 5;
+    
+}
+
+// Payment Gateway Response
+message PaymentGatewayResponseData {
+    // keys: paymentGatewayResponseId
+
+    // fields
+        
+    string payment_gateway_response_id = 1;
+    routines.TypeSymbol payment_service_type_enum_id = 2; // Enumeration    
+    string order_payment_preference_id = 3;
+    routines.TypeSymbol payment_method_type_id = 4; // PaymentMethodType    
+    string payment_method_id = 5;
+    routines.TypeSymbol trans_code_enum_id = 6; // Enumeration    
+    routines.DecimalValue amount = 7;
+    routines.TypeSymbol currency_uom_id = 8; // Uom    
+    string reference_num = 9;    
+    string alt_reference = 10;    
+    string sub_reference = 11;    
+    string gateway_code = 12;    
+    string gateway_flag = 13;    
+    string gateway_avs_result = 14;    
+    string gateway_cv_result = 15;    
+    string gateway_score_result = 16;    
+    string gateway_message = 17;    
+    google.protobuf.Timestamp transaction_date = 18;    
+    routines.Indicator result_declined = 19;    
+    routines.Indicator result_nsf = 20;    
+    routines.Indicator result_bad_expire = 21;    
+    routines.Indicator result_bad_card_number = 22;
+    
+}
+
+// Shipment Item Billing
+message ShipmentItemBillingData {
+    // keys: shipmentId, shipmentItemSeqId, invoiceId, invoiceItemSeqId
+
+    // fields
+        
+    string shipment_id = 1;    
+    string shipment_item_seq_id = 2;    
+    string invoice_id = 3;    
+    string invoice_item_seq_id = 4;
+    
+}
+
+// Product Promotion Action
+message ProductPromoActionData {
+    // keys: productPromoId, productPromoRuleId, productPromoActionSeqId
+
+    // fields
+        
+    string product_promo_id = 1;    
+    string product_promo_rule_id = 2;    
+    string product_promo_action_seq_id = 3;
+    routines.TypeSymbol product_promo_action_enum_id = 4; // Enumeration
+    routines.TypeSymbol custom_method_id = 5; // CustomMethod
+    routines.TypeSymbol order_adjustment_type_id = 6; // OrderAdjustmentType    
+    string service_name = 7;    
+    routines.DecimalValue quantity = 8;    
+    routines.DecimalValue amount = 9;    
+    string product_id = 10;    
+    string party_id = 11;    
+    routines.Indicator use_cart_quantity = 12;
+    
+}
+
+// Shipment Cost Estimate
+message ShipmentCostEstimateData {
+    // keys: shipmentCostEstimateId
+
+    // fields
+        
+    string shipment_cost_estimate_id = 1;    
+    string shipment_method_type_id = 2;    
+    string carrier_party_id = 3;    
+    string carrier_role_type_id = 4;    
+    string product_store_ship_meth_id = 5;    
+    string product_store_id = 6;    
+    string party_id = 7;
+    routines.TypeSymbol role_type_id = 8; // RoleType
+    routines.TypeSymbol geo_id_to = 9; // Geo
+    routines.TypeSymbol geo_id_from = 10; // Geo    
+    string weight_break_id = 11;
+    routines.TypeSymbol weight_uom_id = 12; // Uom    
+    routines.DecimalValue weight_unit_price = 13;    
+    string quantity_break_id = 14;
+    routines.TypeSymbol quantity_uom_id = 15; // Uom    
+    routines.DecimalValue quantity_unit_price = 16;    
+    string price_break_id = 17;
+    routines.TypeSymbol price_uom_id = 18; // Uom    
+    routines.DecimalValue price_unit_price = 19;    
+    routines.DecimalValue order_flat_price = 20;    
+    routines.DecimalValue order_price_percent = 21;    
+    routines.DecimalValue order_item_flat_price = 22;    
+    routines.DecimalValue shipping_price_percent = 23;    
+    string product_feature_group_id = 24;    
+    routines.DecimalValue oversize_unit = 25;    
+    routines.DecimalValue oversize_price = 26;    
+    routines.DecimalValue feature_percent = 27;    
+    routines.DecimalValue feature_price = 28;
+    
+}
+
+// Security Component - Security Group Permission
+message SecurityGroupPermissionData {
+    // keys: groupId, permissionId, fromDate
+
+    // fields
+        
+    string group_id = 1;
+    routines.TypeSymbol permission_id = 2; // SecurityPermission    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;
+    
+}
+
+// Product Store Inventory Facility Applicability
+message ProductStoreKeywordOvrdData {
+    // keys: productStoreId, keyword, fromDate
+
+    // fields
+        
+    string product_store_id = 1;    
+    string keyword = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    string target = 5;
+    routines.TypeSymbol target_type_enum_id = 6; // Enumeration
+    
+}
+
+// Product Association
+message ProductAssocData {
+    // keys: productId, productIdTo, productAssocTypeId, fromDate
+
+    // fields
+        
+    string product_id = 1;    
+    string product_id_to = 2;
+    routines.TypeSymbol product_assoc_type_id = 3; // ProductAssocType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    int64 sequence_num = 6;    
+    string reason = 7;    
+    routines.DecimalValue quantity = 8;    
+    routines.DecimalValue scrap_factor = 9;    
+    string instruction = 10;    
+    string routing_work_effort_id = 11;
+    routines.TypeSymbol estimate_calc_method = 12; // CustomMethod    
+    string recurrence_info_id = 13;
+    
+}
+
+// Fixed Asset Product Representation
+message FixedAssetProductData {
+    // keys: fixedAssetId, productId, fixedAssetProductTypeId, fromDate
+
+    // fields
+        
+    string fixed_asset_id = 1;    
+    string product_id = 2;
+    routines.TypeSymbol fixed_asset_product_type_id = 3; // FixedAssetProductType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    string comments = 6;    
+    int64 sequence_num = 7;    
+    routines.DecimalValue quantity = 8;
+    routines.TypeSymbol quantity_uom_id = 9; // Uom
+    
+}
+
+// Payment Application
+message PaymentApplicationData {
+    // keys: paymentApplicationId
+
+    // fields
+        
+    string payment_application_id = 1;    
+    string payment_id = 2;    
+    string invoice_id = 3;    
+    string invoice_item_seq_id = 4;    
+    string billing_account_id = 5;    
+    string override_gl_account_id = 6;    
+    string to_payment_id = 7;
+    routines.TypeSymbol tax_auth_geo_id = 8; // Geo    
+    routines.DecimalValue amount_applied = 9;
+    
+}
+
+// CustRequest
+message CustRequestData {
+    // keys: custRequestId
+
+    // fields
+        
+    string cust_request_id = 1;    
+    string cust_request_type_id = 2;    
+    string cust_request_category_id = 3;
+    routines.TypeSymbol status_id = 4; // StatusItem    
+    string from_party_id = 5;    
+    int64 priority = 6;    
+    google.protobuf.Timestamp cust_request_date = 7;    
+    google.protobuf.Timestamp response_required_date = 8;    
+    string cust_request_name = 9;    
+    string description = 10;
+    routines.TypeSymbol maximum_amount_uom_id = 11; // Uom    
+    string product_store_id = 12;
+    routines.TypeSymbol sales_channel_enum_id = 13; // Enumeration    
+    string fulfill_contact_mech_id = 14;
+    routines.TypeSymbol currency_uom_id = 15; // Uom    
+    google.protobuf.Timestamp open_date_time = 16;    
+    google.protobuf.Timestamp closed_date_time = 17;    
+    string internal_comment = 18;    
+    string reason = 19;    
+    google.protobuf.Timestamp created_date = 20;    
+    string created_by_user_login = 21;    
+    google.protobuf.Timestamp last_modified_date = 22;    
+    string last_modified_by_user_login = 23;    
+    double cust_estimated_milli_seconds = 24;    
+    int64 cust_sequence_num = 25;    
+    string parent_cust_request_id = 26;    
+    routines.Indicator billed = 27;
+    
+}
+
+// Shipment Receipt
+message ShipmentReceiptData {
+    // keys: receiptId
+
+    // fields
+        
+    string receipt_id = 1;    
+    string inventory_item_id = 2;    
+    string product_id = 3;    
+    string shipment_id = 4;    
+    string shipment_item_seq_id = 5;    
+    string shipment_package_seq_id = 6;    
+    string order_id = 7;    
+    string order_item_seq_id = 8;    
+    string return_id = 9;    
+    string return_item_seq_id = 10;
+    routines.TypeSymbol rejection_id = 11; // RejectionReason    
+    string received_by_user_login_id = 12;    
+    google.protobuf.Timestamp datetime_received = 13;    
+    string item_description = 14;    
+    routines.DecimalValue quantity_accepted = 15;    
+    routines.DecimalValue quantity_rejected = 16;
+    
+}
+
+// Inventory Item Detail
+message InventoryItemDetailData {
+    // keys: inventoryItemId, inventoryItemDetailSeqId
+
+    // fields
+        
+    string inventory_item_id = 1;    
+    string inventory_item_detail_seq_id = 2;    
+    google.protobuf.Timestamp effective_date = 3;    
+    routines.DecimalValue quantity_on_hand_diff = 4;    
+    routines.DecimalValue available_to_promise_diff = 5;    
+    routines.DecimalValue accounting_quantity_diff = 6;    
+    routines.DecimalValue unit_cost = 7;    
+    string order_id = 8;    
+    string order_item_seq_id = 9;    
+    string ship_group_seq_id = 10;    
+    string shipment_id = 11;    
+    string shipment_item_seq_id = 12;    
+    string return_id = 13;    
+    string return_item_seq_id = 14;    
+    string work_effort_id = 15;    
+    string fixed_asset_id = 16;    
+    string maint_hist_seq_id = 17;    
+    string item_issuance_id = 18;    
+    string receipt_id = 19;    
+    string physical_inventory_id = 20;
+    routines.TypeSymbol reason_enum_id = 21; // Enumeration    
+    string description = 22;
+    
+}
+
+// Order Adjustment Billing
+message OrderAdjustmentBillingData {
+    // keys: orderAdjustmentId, invoiceId, invoiceItemSeqId
+
+    // fields
+        
+    string order_adjustment_id = 1;    
+    string invoice_id = 2;    
+    string invoice_item_seq_id = 3;    
+    routines.DecimalValue amount = 4;
+    
+}
+
+// Product Feature Price
+message ProductFeaturePriceData {
+    // keys: productFeatureId, productPriceTypeId, currencyUomId, fromDate
+
+    // fields
+        
+    string product_feature_id = 1;
+    routines.TypeSymbol product_price_type_id = 2; // ProductPriceType
+    routines.TypeSymbol currency_uom_id = 3; // Uom    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    routines.DecimalValue price = 6;    
+    google.protobuf.Timestamp created_date = 7;    
+    string created_by_user_login = 8;    
+    google.protobuf.Timestamp last_modified_date = 9;    
+    string last_modified_by_user_login = 10;
+    
+}
+
+// Product Configuration Options
+message ProductConfigOptionData {
+    // keys: configItemId, configOptionId
+
+    // fields
+        
+    string config_item_id = 1;    
+    string config_option_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    string config_option_name = 5;    
+    string description = 6;    
+    int64 sequence_num = 7;
+    
+}
+
+// Postal Address
+message PostalAddressData {
+    // keys: contactMechId
+
+    // fields
+        
+    string contact_mech_id = 1;    
+    string to_name = 2;    
+    string attn_name = 3;    
+    string address1 = 4;    
+    string address2 = 5;    
+    int64 house_number = 6;    
+    string house_number_ext = 7;    
+    string directions = 8;    
+    string city = 9;
+    routines.TypeSymbol city_geo_id = 10; // Geo    
+    string postal_code = 11;    
+    string postal_code_ext = 12;
+    routines.TypeSymbol country_geo_id = 13; // Geo
+    routines.TypeSymbol state_province_geo_id = 14; // Geo
+    routines.TypeSymbol county_geo_id = 15; // Geo
+    routines.TypeSymbol municipality_geo_id = 16; // Geo
+    routines.TypeSymbol postal_code_geo_id = 17; // Geo    
+    string geo_point_id = 18;
+    
+}
+
+// Define associations between Product facilities
+message ProductFacilityAssocData {
+    // keys: productId, facilityId, facilityIdTo, facilityAssocTypeId, fromDate
+
+    // fields
+        
+    string product_id = 1;    
+    string facility_id = 2;    
+    string facility_id_to = 3;
+    routines.TypeSymbol facility_assoc_type_id = 4; // FacilityAssocType    
+    google.protobuf.Timestamp from_date = 5;    
+    google.protobuf.Timestamp thru_date = 6;    
+    int64 sequence_num = 7;    
+    int64 transit_time = 8;
+    
+}
+
+// Order Item Price Info
+message OrderItemPriceInfoData {
+    // keys: orderItemPriceInfoId
+
+    // fields
+        
+    string order_item_price_info_id = 1;    
+    string order_id = 2;    
+    string order_item_seq_id = 3;    
+    string product_price_rule_id = 4;    
+    string product_price_action_seq_id = 5;    
+    routines.DecimalValue modify_amount = 6;    
+    string description = 7;    
+    string rate_code = 8;
+    
+}
+
+// Work Effort Good Standard
+message WorkEffortGoodStandardData {
+    // keys: workEffortId, productId, workEffortGoodStdTypeId, fromDate
+
+    // fields
+        
+    string work_effort_id = 1;    
+    string product_id = 2;
+    routines.TypeSymbol work_effort_good_std_type_id = 3; // WorkEffortGoodStandardType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;
+    routines.TypeSymbol status_id = 6; // StatusItem    
+    double estimated_quantity = 7;    
+    routines.DecimalValue estimated_cost = 8;
+    
+}
+
+// Person
+message PersonData {
+    // keys: partyId
+
+    // fields
+        
+    string party_id = 1;    
+    string salutation = 2;    
+    string first_name = 3;    
+    string middle_name = 4;    
+    string last_name = 5;    
+    string personal_title = 6;    
+    string suffix = 7;    
+    string nickname = 8;    
+    string first_name_local = 9;    
+    string middle_name_local = 10;    
+    string last_name_local = 11;    
+    string other_local = 12;    
+    string member_id = 13;    
+    routines.Indicator gender = 14;    
+    google.protobuf.Timestamp birth_date = 15;    
+    google.protobuf.Timestamp deceased_date = 16;    
+    double height = 17;    
+    double weight = 18;    
+    string mothers_maiden_name = 19;    
+    routines.Indicator old_marital_status = 20;
+    routines.TypeSymbol marital_status_enum_id = 21; // Enumeration    
+    string social_security_number = 22;    
+    string passport_number = 23;    
+    google.protobuf.Timestamp passport_expire_date = 24;    
+    double total_years_work_experience = 25;    
+    string comments = 26;
+    routines.TypeSymbol employment_status_enum_id = 27; // Enumeration
+    routines.TypeSymbol residence_status_enum_id = 28; // Enumeration    
+    string occupation = 29;    
+    int64 years_with_employer = 30;    
+    int64 months_with_employer = 31;    
+    routines.Indicator existing_customer = 32;    
+    string card_id = 33;
+    
+    // relations
+    repeated PartyContactMechData party_contact_mech = 35; // ref: partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 36; // ref: partyId
+    repeated ProductStoreRoleData product_store_role = 37; // ref: partyId
+    repeated ShipmentData to_shipment = 38; // ref: partyId
+    repeated ShipmentData from_shipment = 39; // ref: partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 40; // ref: partyId
+    repeated UserLoginData user_login = 41; // ref: partyId
+    
+    
+}
+
+// Product Store Role Association
+message ProductStoreRoleData {
+    // keys: partyId, roleTypeId, productStoreId, fromDate
+
+    // fields
+        
+    string party_id = 1;
+    routines.TypeSymbol role_type_id = 2; // RoleType    
+    string product_store_id = 3;    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    int64 sequence_num = 6;
+    
+}
+
+// Party Contact Mechanism
+message PartyContactMechData {
+    // keys: partyId, contactMechId, fromDate
+
+    // fields
+        
+    string party_id = 1;    
+    string contact_mech_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;
+    routines.TypeSymbol role_type_id = 5; // RoleType    
+    routines.Indicator allow_solicitation = 6;    
+    string extension = 7;    
+    routines.Indicator verified = 8;    
+    string comments = 9;    
+    int64 years_with_contact_mech = 10;    
+    int64 months_with_contact_mech = 11;
+    
+}
+
+// Product Store Email Settings
+message ProductStoreEmailSettingData {
+    // keys: productStoreId, emailType
+
+    // fields
+        
+    string product_store_id = 1;
+    routines.TypeSymbol email_type = 2; // Enumeration    
+    string body_screen_location = 3;    
+    string xslfo_attach_screen_location = 4;    
+    string from_address = 5;    
+    string cc_address = 6;    
+    string bcc_address = 7;    
+    string subject = 8;    
+    string content_type = 9;
+    
+}
+
+// Electronic Text
+message ElectronicTextData {
+    // keys: dataResourceId
+
+    // fields
+        
+    string data_resource_id = 1;    
+    string text_data = 2;
+    
+}
+
+// Item Issuance
+message ItemIssuanceData {
+    // keys: itemIssuanceId
+
+    // fields
+        
+    string item_issuance_id = 1;    
+    string order_id = 2;    
+    string order_item_seq_id = 3;    
+    string ship_group_seq_id = 4;    
+    string inventory_item_id = 5;    
+    string shipment_id = 6;    
+    string shipment_item_seq_id = 7;    
+    string fixed_asset_id = 8;    
+    string maint_hist_seq_id = 9;    
+    google.protobuf.Timestamp issued_date_time = 10;    
+    string issued_by_user_login_id = 11;    
+    routines.DecimalValue quantity = 12;    
+    routines.DecimalValue cancel_quantity = 13;
+    
+}
+
+// Party Group
+message PartyGroupData {
+    // keys: partyId
+
+    // fields
+        
+    string party_id = 1;    
+    string group_name = 2;    
+    string group_name_local = 3;    
+    string office_site_name = 4;    
+    routines.DecimalValue annual_revenue = 5;    
+    int64 num_employees = 6;    
+    string ticker_symbol = 7;    
+    string comments = 8;    
+    string logo_image_url = 9;
+    
+    // relations
+    repeated PartyContactMechData party_contact_mech = 11; // ref: partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 12; // ref: partyId
+    repeated ProductStoreRoleData product_store_role = 13; // ref: partyId
+    repeated ShipmentData to_shipment = 14; // ref: partyId
+    repeated ShipmentData from_shipment = 15; // ref: partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 16; // ref: partyId
+    repeated UserLoginData user_login = 17; // ref: partyId
+    
+    
+}
+
+// Product Promotion Category
+message ProductPromoProductData {
+    // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productId
+
+    // fields
+        
+    string product_promo_id = 1;    
+    string product_promo_rule_id = 2;    
+    string product_promo_action_seq_id = 3;    
+    string product_promo_cond_seq_id = 4;    
+    string product_id = 5;
+    routines.TypeSymbol product_promo_appl_enum_id = 6; // Enumeration
+    
+}
+
+// Product Review
+message ProductReviewData {
+    // keys: productReviewId
+
+    // fields
+        
+    string product_review_id = 1;    
+    string product_store_id = 2;    
+    string product_id = 3;    
+    string user_login_id = 4;
+    routines.TypeSymbol status_id = 5; // StatusItem    
+    routines.Indicator posted_anonymous = 6;    
+    google.protobuf.Timestamp posted_date_time = 7;    
+    routines.DecimalValue product_rating = 8;    
+    string product_review = 9;
+    
+}
+
+// The Order Payment Preference
+message OrderPaymentPreferenceData {
+    // keys: orderPaymentPreferenceId
+
+    // fields
+        
+    string order_payment_preference_id = 1;    
+    string order_id = 2;    
+    string order_item_seq_id = 3;    
+    string ship_group_seq_id = 4;
+    routines.TypeSymbol product_price_purpose_id = 5; // ProductPricePurpose
+    routines.TypeSymbol payment_method_type_id = 6; // PaymentMethodType    
+    string payment_method_id = 7;    
+    string fin_account_id = 8;    
+    string security_code = 9;    
+    string track2 = 10;    
+    routines.Indicator present_flag = 11;    
+    routines.Indicator swiped_flag = 12;    
+    routines.Indicator overflow_flag = 13;    
+    routines.DecimalValue max_amount = 14;    
+    int64 process_attempt = 15;    
+    string billing_postal_code = 16;    
+    string manual_auth_code = 17;    
+    string manual_ref_num = 18;
+    routines.TypeSymbol status_id = 19; // StatusItem    
+    routines.Indicator needs_nsf_retry = 20;    
+    google.protobuf.Timestamp created_date = 21;    
+    string created_by_user_login = 22;    
+    google.protobuf.Timestamp last_modified_date = 23;    
+    string last_modified_by_user_login = 24;
+    
+}
+
+// Supplier Product
+message SupplierProductData {
+    // keys: productId, partyId, currencyUomId, minimumOrderQuantity, availableFromDate
+
+    // fields
+        
+    string product_id = 1;    
+    string party_id = 2;    
+    google.protobuf.Timestamp available_from_date = 3;    
+    google.protobuf.Timestamp available_thru_date = 4;
+    routines.TypeSymbol supplier_pref_order_id = 5; // SupplierPrefOrder    
+    string supplier_rating_type_id = 6;    
+    routines.DecimalValue standard_lead_time_days = 7;    
+    routines.DecimalValue minimum_order_quantity = 8;    
+    routines.DecimalValue order_qty_increments = 9;    
+    routines.DecimalValue units_included = 10;
+    routines.TypeSymbol quantity_uom_id = 11; // Uom    
+    string agreement_id = 12;    
+    string agreement_item_seq_id = 13;    
+    routines.DecimalValue last_price = 14;    
+    routines.DecimalValue shipping_price = 15;
+    routines.TypeSymbol currency_uom_id = 16; // Uom    
+    string supplier_product_name = 17;    
+    string supplier_product_id = 18;    
+    routines.Indicator can_drop_ship = 19;    
+    string comments = 20;
+    
+}
+
+// Order Status
+message OrderStatusData {
+    // keys: orderStatusId
+
+    // fields
+        
+    string order_status_id = 1;
+    routines.TypeSymbol status_id = 2; // StatusItem    
+    string order_id = 3;    
+    string order_item_seq_id = 4;    
+    string order_payment_preference_id = 5;    
+    google.protobuf.Timestamp status_datetime = 6;    
+    string status_user_login = 7;    
+    string change_reason = 8;
+    
+}
+
+// Party
+message PartyData {
+    // keys: partyId
+
+    // fields
+        
+    string party_id = 1;
+    routines.TypeSymbol party_type_id = 2; // PartyType    
+    string external_id = 3;
+    routines.TypeSymbol preferred_currency_uom_id = 4; // Uom    
+    string description = 5;
+    routines.TypeSymbol status_id = 6; // StatusItem    
+    google.protobuf.Timestamp created_date = 7;    
+    google.protobuf.Timestamp last_modified_date = 8;
+    routines.TypeSymbol data_source_id = 9; // DataSource    
+    routines.Indicator is_unread = 10;
+    
+    // relations
+    UserLoginData created_by_user_login = 11; // ref: createdByUserLogin
+    UserLoginData last_modified_by_user_login = 12; // ref: lastModifiedByUserLogin
+    repeated AcctgTransData acctg_trans = 13; // ref: partyId
+    repeated AcctgTransEntryData acctg_trans_entry = 14; // ref: partyId
+    repeated AgreementData from_agreement = 15; // ref: partyId
+    repeated AgreementData to_agreement = 16; // ref: partyId
+    repeated BillingAccountRoleData billing_account_role = 17; // ref: partyId
+    repeated CarrierShipmentBoxTypeData carrier_shipment_box_type = 18; // ref: partyId
+    repeated CarrierShipmentMethodData carrier_shipment_method = 19; // ref: partyId
+    repeated CustRequestData from_cust_request = 20; // ref: partyId
+    repeated CustRequestTypeData cust_request_type = 21; // ref: partyId
+    repeated FixedAssetData fixed_asset = 22; // ref: partyId
+    repeated InventoryItemData inventory_item = 23; // ref: partyId
+    repeated InventoryItemData owner_inventory_item = 24; // ref: partyId
+    repeated InvoiceData from_invoice = 25; // ref: partyId
+    repeated InvoiceData invoice = 26; // ref: partyId
+    repeated InvoiceItemData tax_authority_invoice_item = 27; // ref: partyId
+    repeated InvoiceItemData override_org_invoice_item = 28; // ref: partyId
+    repeated OrderItemShipGroupData supplier_order_item_ship_group = 29; // ref: partyId
+    repeated OrderItemShipGroupData vendor_order_item_ship_group = 30; // ref: partyId
+    repeated OrderItemShipGroupData carrier_order_item_ship_group = 31; // ref: partyId
+    repeated OrderRoleData order_role = 32; // ref: partyId
+    repeated PartyContactMechData party_contact_mech = 33; // ref: partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 34; // ref: partyId
+    repeated PartyGeoPointData party_geo_point = 35; // ref: partyId
+    PartyGroupData party_group = 36; // ref: partyId
+    repeated PartyRelationshipData from_party_relationship = 37; // ref: partyId
+    repeated PartyRelationshipData to_party_relationship = 38; // ref: partyId
+    repeated PartyRoleData party_role = 39; // ref: partyId
+    repeated PartyStatusData party_status = 40; // ref: partyId
+    repeated PartyTaxAuthInfoData party_tax_auth_info = 41; // ref: partyId
+    repeated PaymentData from_payment = 42; // ref: partyId
+    repeated PaymentData to_payment = 43; // ref: partyId
+    repeated PaymentMethodData payment_method = 44; // ref: partyId
+    PersonData person = 45; // ref: partyId
+    repeated ProductCategoryRoleData product_category_role = 46; // ref: partyId
+    repeated ProductPriceData tax_authority_product_price = 47; // ref: partyId
+    repeated ProductPromoData product_promo = 48; // ref: partyId
+    repeated ProductStoreData product_store = 49; // ref: partyId
+    repeated ProductStoreRoleData product_store_role = 50; // ref: partyId
+    repeated ProductStoreShipmentMethData product_store_shipment_meth = 51; // ref: partyId
+    repeated QuoteData quote = 52; // ref: partyId
+    repeated QuoteRoleData quote_role = 53; // ref: partyId
+    repeated ShipmentData to_shipment = 54; // ref: partyId
+    repeated ShipmentData from_shipment = 55; // ref: partyId
+    repeated ShipmentCostEstimateData shipment_cost_estimate = 56; // ref: partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 57; // ref: partyId
+    repeated SupplierProductData supplier_product = 58; // ref: partyId
+    repeated UserLoginData user_login = 59; // ref: partyId
+    
+    
+}
+
+// Agreement Item
+message AgreementItemData {
+    // keys: agreementId, agreementItemSeqId
+
+    // fields
+        
+    string agreement_id = 1;    
+    string agreement_item_seq_id = 2;    
+    string agreement_item_type_id = 3;    
+    string currency_uom_id = 4;    
+    string agreement_text = 5;    
+    bytes agreement_image = 6;
+    
+}
+
+// Party Tax Information
+message PartyTaxAuthInfoData {
+    // keys: partyId, taxAuthGeoId, taxAuthPartyId, fromDate
+
+    // fields
+        
+    string party_id = 1;    
+    string tax_auth_geo_id = 2;    
+    string tax_auth_party_id = 3;    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    string party_tax_id = 6;    
+    routines.Indicator is_exempt = 7;    
+    routines.Indicator is_nexus = 8;
+    
+}
+
+// Accounting Transaction
+message AcctgTransData {
+    // keys: acctgTransId
+
+    // fields
+        
+    string acctg_trans_id = 1;
+    routines.TypeSymbol acctg_trans_type_id = 2; // AcctgTransType    
+    string description = 3;    
+    google.protobuf.Timestamp transaction_date = 4;    
+    routines.Indicator is_posted = 5;    
+    google.protobuf.Timestamp posted_date = 6;    
+    google.protobuf.Timestamp scheduled_posting_date = 7;    
+    string gl_journal_id = 8;
+    routines.TypeSymbol gl_fiscal_type_id = 9; // GlFiscalType    
+    string voucher_ref = 10;    
+    google.protobuf.Timestamp voucher_date = 11;
+    routines.TypeSymbol group_status_id = 12; // StatusItem    
+    string fixed_asset_id = 13;    
+    string inventory_item_id = 14;    
+    string physical_inventory_id = 15;    
+    string party_id = 16;
+    routines.TypeSymbol role_type_id = 17; // RoleType    
+    string invoice_id = 18;    
+    string payment_id = 19;    
+    string fin_account_trans_id = 20;    
+    string shipment_id = 21;    
+    string receipt_id = 22;    
+    string work_effort_id = 23;    
+    string their_acctg_trans_id = 24;    
+    google.protobuf.Timestamp created_date = 25;    
+    string created_by_user_login = 26;    
+    google.protobuf.Timestamp last_modified_date = 27;    
+    string last_modified_by_user_login = 28;
+    
+}
+
+// Data Object
+message DataResourceData {
+    // keys: dataResourceId
+
+    // fields
+        
+    string data_resource_id = 1;
+    routines.TypeSymbol data_resource_type_id = 2; // DataResourceType
+    routines.TypeSymbol data_template_type_id = 3; // DataTemplateType
+    routines.TypeSymbol data_category_id = 4; // DataCategory
+    routines.TypeSymbol data_source_id = 5; // DataSource
+    routines.TypeSymbol status_id = 6; // StatusItem    
+    string data_resource_name = 7;    
+    string locale_string = 8;
+    routines.TypeSymbol mime_type_id = 9; // MimeType
+    routines.TypeSymbol character_set_id = 10; // CharacterSet    
+    string object_info = 11;    
+    string survey_id = 12;    
+    string survey_response_id = 13;    
+    string related_detail_id = 14;    
+    routines.Indicator is_public = 15;    
+    google.protobuf.Timestamp created_date = 16;    
+    string created_by_user_login = 17;    
+    google.protobuf.Timestamp last_modified_date = 18;    
+    string last_modified_by_user_login = 19;
+    
+}
+
+// Shipment Item
+message ShipmentItemData {
+    // keys: shipmentId, shipmentItemSeqId
+
+    // fields
+        
+    string shipment_id = 1;    
+    string shipment_item_seq_id = 2;    
+    string product_id = 3;    
+    routines.DecimalValue quantity = 4;    
+    string shipment_content_description = 5;
+    
+}
+
+// Facility Contact Mechanism
+message FacilityContactMechData {
+    // keys: facilityId, contactMechId, fromDate
+
+    // fields
+        
+    string facility_id = 1;    
+    string contact_mech_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    string extension = 5;    
+    string comments = 6;
+    
+}
+
+// Agreement
+message AgreementData {
+    // keys: agreementId
+
+    // fields
+        
+    string agreement_id = 1;    
+    string product_id = 2;    
+    string party_id_from = 3;    
+    string party_id_to = 4;
+    routines.TypeSymbol role_type_id_from = 5; // RoleType
+    routines.TypeSymbol role_type_id_to = 6; // RoleType    
+    string agreement_type_id = 7;    
+    google.protobuf.Timestamp agreement_date = 8;    
+    google.protobuf.Timestamp from_date = 9;    
+    google.protobuf.Timestamp thru_date = 10;    
+    string description = 11;    
+    string text_data = 12;
+    
+}
+
+// Catalog Category Association
+message ProdCatalogCategoryData {
+    // keys: prodCatalogId, productCategoryId, prodCatalogCategoryTypeId, fromDate
+
+    // fields
+        
+    string prod_catalog_id = 1;    
+    string product_category_id = 2;
+    routines.TypeSymbol prod_catalog_category_type_id = 3; // ProdCatalogCategoryType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    int64 sequence_num = 6;
+    
+}
+
+// Product Category Role
+message ProductCategoryRoleData {
+    // keys: productCategoryId, partyId, roleTypeId, fromDate
+
+    // fields
+        
+    string product_category_id = 1;    
+    string party_id = 2;
+    routines.TypeSymbol role_type_id = 3; // RoleType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    string comments = 6;
+    
+}
+
+// Order Item
+message OrderItemData {
+    // keys: orderId, orderItemSeqId
+
+    // fields
+        
+    string order_id = 1;    
+    string order_item_seq_id = 2;    
+    string external_id = 3;
+    routines.TypeSymbol order_item_type_id = 4; // OrderItemType    
+    string order_item_group_seq_id = 5;    
+    routines.Indicator is_item_group_primary = 6;    
+    string budget_id = 7;    
+    string budget_item_seq_id = 8;    
+    string supplier_product_id = 9;    
+    string product_feature_id = 10;    
+    string prod_catalog_id = 11;    
+    string product_category_id = 12;    
+    routines.Indicator is_promo = 13;    
+    string quote_item_seq_id = 14;    
+    string shopping_list_id = 15;    
+    string shopping_list_item_seq_id = 16;    
+    string subscription_id = 17;    
+    string deployment_id = 18;    
+    routines.DecimalValue quantity = 19;    
+    routines.DecimalValue cancel_quantity = 20;    
+    routines.DecimalValue selected_amount = 21;    
+    routines.DecimalValue unit_price = 22;    
+    routines.DecimalValue unit_list_price = 23;    
+    routines.DecimalValue unit_average_cost = 24;    
+    routines.DecimalValue unit_recurring_price = 25;    
+    routines.Indicator is_modified_price = 26;
+    routines.TypeSymbol recurring_freq_uom_id = 27; // Uom    
+    string item_description = 28;    
+    string comments = 29;    
+    string corresponding_po_id = 30;
+    routines.TypeSymbol status_id = 31; // StatusValidChange
+    routines.TypeSymbol sync_status_id = 32; // StatusItem    
+    google.protobuf.Timestamp estimated_ship_date = 33;    
+    google.protobuf.Timestamp estimated_delivery_date = 34;    
+    google.protobuf.Timestamp auto_cancel_date = 35;    
+    google.protobuf.Timestamp dont_cancel_set_date = 36;    
+    google.protobuf.Timestamp ship_before_date = 37;    
+    google.protobuf.Timestamp ship_after_date = 38;    
+    google.protobuf.Timestamp reserve_after_date = 39;    
+    google.protobuf.Timestamp cancel_back_order_date = 40;    
+    string override_gl_account_id = 41;    
+    string sales_opportunity_id = 42;
+    
+    // relations
+    ProductData product = 44; // ref: productId
+    InventoryItemData from_inventory_item = 45; // ref: fromInventoryItemId
+    repeated ProductFacilityLocationData product_facility_location = 46; // ref: productId
+    UserLoginData dont_cancel_set_user_login = 47; // ref: dontCancelSetUserLogin
+    QuoteItemData quote_item = 48; // ref: quoteId + quoteItemSeqId
+    UserLoginData change_by_user_login = 49; // ref: changeByUserLoginId
+    repeated FixedAssetData acquire_fixed_asset = 50; // ref: orderId + orderItemSeqId
+    repeated ItemIssuanceData item_issuance = 51; // ref: orderId + orderItemSeqId
+    repeated OrderAdjustmentData order_adjustment = 52; // ref: orderId + orderItemSeqId
+    repeated OrderItemBillingData order_item_billing = 53; // ref: orderId + orderItemSeqId
+    repeated OrderItemPriceInfoData order_item_price_info = 54; // ref: orderId + orderItemSeqId
+    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 55; // ref: orderId + orderItemSeqId
+    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 56; // ref: orderId + orderItemSeqId
+    repeated OrderPaymentPreferenceData order_payment_preference = 57; // ref: orderId + orderItemSeqId
+    repeated OrderStatusData order_status = 58; // ref: orderId + orderItemSeqId
+    repeated ShipmentReceiptData shipment_receipt = 59; // ref: orderId + orderItemSeqId
+    
+    
+}
+
+// Shipment Time Estimation Entity
+message ShipmentTimeEstimateData {
+    // keys: shipmentMethodTypeId, partyId, roleTypeId, geoIdTo, geoIdFrom, fromDate
+
+    // fields
+        
+    string shipment_method_type_id = 1;    
+    string party_id = 2;    
+    string role_type_id = 3;
+    routines.TypeSymbol geo_id_to = 4; // Geo
+    routines.TypeSymbol geo_id_from = 5; // Geo    
+    google.protobuf.Timestamp from_date = 6;    
+    google.protobuf.Timestamp thru_date = 7;    
+    routines.DecimalValue lead_time = 8;
+    routines.TypeSymbol lead_time_uom_id = 9; // Uom    
+    int64 sequence_number = 10;
+    
+}
+
+// Product Category Data Object
+message ProductCategoryContentData {
+    // keys: productCategoryId, contentId, prodCatContentTypeId, fromDate
+
+    // fields
+        
+    string product_category_id = 1;    
+    string content_id = 2;
+    routines.TypeSymbol prod_cat_content_type_id = 3; // ProductCategoryContentType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp purchase_from_date = 6;    
+    google.protobuf.Timestamp purchase_thru_date = 7;    
+    int64 use_count_limit = 8;    
+    routines.DecimalValue use_days_limit = 9;
+    
+}
+
+// Order Item Package Association
+message OrderItemShipGroupAssocData {
+    // keys: orderId, orderItemSeqId, shipGroupSeqId
+
+    // fields
+        
+    string order_id = 1;    
+    string order_item_seq_id = 2;    
+    string ship_group_seq_id = 3;    
+    routines.DecimalValue quantity = 4;    
+    routines.DecimalValue cancel_quantity = 5;
+    
+}
+
+// Content Association
+message ContentAssocData {
+    // keys: contentId, contentIdTo, contentAssocTypeId, fromDate
+
+    // fields
+        
+    string content_id = 1;    
+    string content_id_to = 2;
+    routines.TypeSymbol content_assoc_type_id = 3; // ContentAssocType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;
+    routines.TypeSymbol content_assoc_predicate_id = 6; // ContentAssocPredicate
+    routines.TypeSymbol data_source_id = 7; // DataSource    
+    int64 sequence_num = 8;    
+    string map_key = 9;    
+    int64 upper_coordinate = 10;    
+    int64 left_coordinate = 11;    
+    google.protobuf.Timestamp created_date = 12;    
+    string created_by_user_login = 13;    
+    google.protobuf.Timestamp last_modified_date = 14;    
+    string last_modified_by_user_login = 15;
+    
+}
+
+// Quote Item
+message QuoteItemData {
+    // keys: quoteId, quoteItemSeqId
+
+    // fields
+        
+    string quote_id = 1;    
+    string quote_item_seq_id = 2;    
+    string product_id = 3;    
+    string product_feature_id = 4;    
+    string deliverable_type_id = 5;    
+    string skill_type_id = 6;
+    routines.TypeSymbol uom_id = 7; // Uom    
+    string work_effort_id = 8;    
+    string cust_request_id = 9;    
+    string cust_request_item_seq_id = 10;    
+    routines.DecimalValue quantity = 11;    
+    routines.DecimalValue selected_amount = 12;    
+    routines.DecimalValue quote_unit_price = 13;    
+    google.protobuf.Timestamp reserv_start = 14;    
+    routines.DecimalValue reserv_length = 15;    
+    routines.DecimalValue reserv_persons = 16;    
+    string config_id = 17;    
+    google.protobuf.Timestamp estimated_delivery_date = 18;    
+    string comments = 19;    
+    routines.Indicator is_promo = 20;    
+    int64 lead_time_days = 21;
+    
+}
+
+// Catalog
+message ProdCatalogData {
+    // keys: prodCatalogId
+
+    // fields
+        
+    string prod_catalog_id = 1;    
+    string catalog_name = 2;    
+    routines.Indicator use_quick_add = 3;    
+    string style_sheet = 4;    
+    string header_logo = 5;    
+    string content_path_prefix = 6;    
+    string template_path_prefix = 7;    
+    routines.Indicator view_allow_perm_reqd = 8;    
+    routines.Indicator purchase_allow_perm_reqd = 9;
+    
+}
+
+// Product Promotion Condition
+message ProductPromoCondData {
+    // keys: productPromoId, productPromoRuleId, productPromoCondSeqId
+
+    // fields
+        
+    string product_promo_id = 1;    
+    string product_promo_rule_id = 2;    
+    string product_promo_cond_seq_id = 3;
+    routines.TypeSymbol custom_method_id = 4; // CustomMethod
+    routines.TypeSymbol input_param_enum_id = 5; // Enumeration
+    routines.TypeSymbol operator_enum_id = 6; // Enumeration    
+    string cond_value = 7;    
+    string other_value = 8;
+    
+}
+
+// Facility Location
+message FacilityLocationData {
+    // keys: facilityId, locationSeqId
+
+    // fields
+        
+    string facility_id = 1;    
+    string location_seq_id = 2;
+    routines.TypeSymbol location_type_enum_id = 3; // Enumeration    
+    string area_id = 4;    
+    string aisle_id = 5;    
+    string section_id = 6;    
+    string level_id = 7;    
+    string position_id = 8;    
+    string geo_point_id = 9;
+    
+}
+
+// Product Promotion Category
+message ProductPromoCategoryData {
+    // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productCategoryId, andGroupId
+
+    // fields
+        
+    string product_promo_id = 1;    
+    string product_promo_rule_id = 2;    
+    string product_promo_action_seq_id = 3;    
+    string product_promo_cond_seq_id = 4;    
+    string product_category_id = 5;    
+    string and_group_id = 6;
+    routines.TypeSymbol product_promo_appl_enum_id = 7; // Enumeration    
+    routines.Indicator include_sub_categories = 8;
+    
+}
+
+// Tracks a history of the status of a Party
+message PartyStatusData {
+    // keys: statusId, partyId, statusDate
+
+    // fields
+    
+    routines.TypeSymbol status_id = 1; // StatusItem    
+    string party_id = 2;    
+    google.protobuf.Timestamp status_date = 3;    
+    string change_by_user_login_id = 4;
+    
+}
+
+// Product Facility
+message ProductFacilityLocationData {
+    // keys: productId, facilityId, locationSeqId
+
+    // fields
+        
+    string product_id = 1;    
+    string facility_id = 2;    
+    string location_seq_id = 3;    
+    routines.DecimalValue minimum_stock = 4;    
+    routines.DecimalValue move_quantity = 5;
+    
+}
+
+// Shipment Contact Mechanism Type
+message ShipmentBoxTypeData {
+    // keys: shipmentBoxTypeId
+
+    // fields
+        
+    string shipment_box_type_id = 1;    
+    string description = 2;
+    routines.TypeSymbol dimension_uom_id = 3; // Uom    
+    routines.DecimalValue box_length = 4;    
+    routines.DecimalValue box_width = 5;    
+    routines.DecimalValue box_height = 6;
+    routines.TypeSymbol weight_uom_id = 7; // Uom    
+    routines.DecimalValue box_weight = 8;
+    
+}
+
+// Shipment Package Route Segment
+message ShipmentPackageRouteSegData {
+    // keys: shipmentId, shipmentPackageSeqId, shipmentRouteSegmentId
+
+    // fields
+        
+    string shipment_id = 1;    
+    string shipment_package_seq_id = 2;    
+    string shipment_route_segment_id = 3;    
+    string tracking_code = 4;    
+    string box_number = 5;    
+    bytes label_image = 6;    
+    bytes label_intl_sign_image = 7;    
+    string label_html = 8;    
+    routines.Indicator label_printed = 9;    
+    bytes international_invoice = 10;    
+    routines.DecimalValue package_transport_cost = 11;    
+    routines.DecimalValue package_service_cost = 12;    
+    routines.DecimalValue package_other_cost = 13;    
+    routines.DecimalValue cod_amount = 14;    
+    routines.DecimalValue insured_amount = 15;
+    routines.TypeSymbol currency_uom_id = 16; // Uom
+    
+}
+
+// Geographic Location
+message GeoPointData {
+    // keys: geoPointId
+
+    // fields
+        
+    string geo_point_id = 1;
+    routines.TypeSymbol geo_point_type_enum_id = 2; // Enumeration    
+    string description = 3;
+    routines.TypeSymbol data_source_id = 4; // DataSource    
+    string latitude = 5;    
+    string longitude = 6;    
+    routines.DecimalValue elevation = 7;
+    routines.TypeSymbol elevation_uom_id = 8; // Uom    
+    string information = 9;
+    
+}
+
+// Subscription Resource
+message SubscriptionResourceData {
+    // keys: subscriptionResourceId
+
+    // fields
+        
+    string subscription_resource_id = 1;    
+    string parent_resource_id = 2;    
+    string description = 3;    
+    string content_id = 4;    
+    string web_site_id = 5;    
+    string service_name_on_expiry = 6;
+    
+}
+
+// Product Feature Applicability
+message ProductFeatureApplData {
+    // keys: productId, productFeatureId, fromDate
+
+    // fields
+        
+    string product_id = 1;    
+    string product_feature_id = 2;
+    routines.TypeSymbol product_feature_appl_type_id = 3; // ProductFeatureApplType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    int64 sequence_num = 6;    
+    routines.DecimalValue amount = 7;    
+    routines.DecimalValue recurring_amount = 8;
+    
+}
+
+// Party Contact Mechanism Purpose
+message PartyContactMechPurposeData {
+    // keys: partyId, contactMechId, contactMechPurposeTypeId, fromDate
+
+    // fields
+        
+    string party_id = 1;    
+    string contact_mech_id = 2;
+    routines.TypeSymbol contact_mech_purpose_type_id = 3; // ContactMechPurposeType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;
+    
+}
+
+// Recurrence Info
+message RecurrenceInfoData {
+    // keys: recurrenceInfoId
+
+    // fields
+        
+    string recurrence_info_id = 1;    
+    google.protobuf.Timestamp start_date_time = 2;    
+    string exception_date_times = 3;    
+    string recurrence_date_times = 4;    
+    string exception_rule_id = 5;    
+    string recurrence_rule_id = 6;    
+    int64 recurrence_count = 7;
+    
+}
+
+// Product Feature Category
+message ProductFeatureCategoryData {
+    // keys: productFeatureCategoryId
+
+    // fields
+        
+    string product_feature_category_id = 1;    
+    string parent_category_id = 2;    
+    string description = 3;
+    
+}
+
+// Facility Location Geo Location with history
+message FacilityLocationGeoPointData {
+    // keys: facilityId, locationSeqId, geoPointId, fromDate
+
+    // fields
+        
+    string facility_id = 1;    
+    string location_seq_id = 2;    
+    string geo_point_id = 3;    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;
+    
+}
+
+// Security Component - User Login Security Group
+message UserLoginSecurityGroupData {
+    // keys: userLoginId, groupId, fromDate
+
+    // fields
+        
+    string user_login_id = 1;    
+    string group_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;
+    
+}
+
+// Product Store Catalog Association
+message ProductStoreCatalogData {
+    // keys: productStoreId, prodCatalogId, fromDate
+
+    // fields
+        
+    string product_store_id = 1;    
+    string prod_catalog_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    int64 sequence_num = 5;
+    
+}
+
+// UserLogin
+message UserLoginData {
+    // keys: userLoginId
+
+    // fields
+    
+    routines.TypeSymbol user_login_id = 1; // UserPreference    
+    string current_password = 2;    
+    string password_hint = 3;    
+    routines.Indicator is_system = 4;    
+    routines.Indicator enabled = 5;    
+    routines.Indicator has_logged_out = 6;    
+    routines.Indicator require_password_change = 7;    
+    string last_currency_uom = 8;    
+    string last_locale = 9;    
+    string last_time_zone = 10;    
+    google.protobuf.Timestamp disabled_date_time = 11;    
+    int64 successive_failed_logins = 12;    
+    string external_auth_id = 13;    
+    string user_ldap_dn = 14;    
+    string disabled_by = 15;    
+    string party_id = 16;
+    
+}
+
+// Product Pice Rule
+message ProductPriceRuleData {
+    // keys: productPriceRuleId
+
+    // fields
+        
+    string product_price_rule_id = 1;    
+    string rule_name = 2;    
+    string description = 3;    
+    routines.Indicator is_sale = 4;    
+    google.protobuf.Timestamp from_date = 5;    
+    google.protobuf.Timestamp thru_date = 6;
+    
+}
+
+// Party Role
+message PartyRoleData {
+    // keys: partyId, roleTypeId
+
+    // fields
+        
+    string party_id = 1;
+    routines.TypeSymbol role_type_id = 2; // RoleType
+    
+}
+
+// Product Facility
+message ProductFacilityData {
+    // keys: productId, facilityId
+
+    // fields
+        
+    string product_id = 1;    
+    string facility_id = 2;    
+    routines.DecimalValue minimum_stock = 3;    
+    routines.DecimalValue reorder_quantity = 4;    
+    int64 days_to_ship = 5;
+    routines.TypeSymbol replenish_method_enum_id = 6; // Enumeration    
+    routines.DecimalValue last_inventory_count = 7;
+    routines.TypeSymbol requirement_method_enum_id = 8; // Enumeration
+    
+}
+
+// Party Geo Location with history
+message PartyGeoPointData {
+    // keys: partyId, geoPointId, fromDate
+
+    // fields
+        
+    string party_id = 1;    
+    string geo_point_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;
+    
+}
+
+// Order Header
+message OrderHeaderData {
+    // keys: orderId
+
+    // fields
+        
+    string order_id = 1;
+    routines.TypeSymbol order_type_id = 2; // OrderType    
+    string order_name = 3;    
+    string external_id = 4;
+    routines.TypeSymbol sales_channel_enum_id = 5; // Enumeration    
+    google.protobuf.Timestamp order_date = 6;    
+    routines.Indicator priority = 7;    
+    google.protobuf.Timestamp entry_date = 8;    
+    google.protobuf.Timestamp pick_sheet_printed_date = 9;    
+    string visit_id = 10;
+    routines.TypeSymbol status_id = 11; // StatusItem    
+    string first_attempt_order_id = 12;
+    routines.TypeSymbol currency_uom = 13; // Uom
+    routines.TypeSymbol sync_status_id = 14; // StatusItem    
+    string origin_facility_id = 15;    
+    string agreement_id = 16;    
+    string terminal_id = 17;    
+    string transaction_id = 18;    
+    string auto_order_shopping_list_id = 19;    
+    routines.Indicator needs_inventory_issuance = 20;    
+    routines.Indicator is_rush_order = 21;    
+    string internal_code = 22;    
+    routines.DecimalValue remaining_sub_total = 23;    
+    routines.DecimalValue grand_total = 24;    
+    routines.Indicator is_viewed = 25;    
+    routines.Indicator invoice_per_shipment = 26;
+    
+    // relations
+    BillingAccountData billing_account = 27; // ref: billingAccountId
+    ProductStoreData product_store = 28; // ref: productStoreId
+    UserLoginData created_by_user_login = 29; // ref: createdBy
+    WebSiteData web_site = 30; // ref: webSiteId
+    repeated FixedAssetData acquire_fixed_asset = 31; // ref: orderId
+    repeated ItemIssuanceData item_issuance = 32; // ref: orderId
+    repeated OrderAdjustmentData order_adjustment = 33; // ref: orderId
+    repeated OrderContactMechData order_contact_mech = 34; // ref: orderId
+    repeated OrderItemData order_item = 35; // ref: orderId
+    repeated OrderItemBillingData order_item_billing = 36; // ref: orderId
+    repeated OrderItemPriceInfoData order_item_price_info = 37; // ref: orderId
+    repeated OrderItemShipGroupData order_item_ship_group = 38; // ref: orderId
+    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 39; // ref: orderId
+    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 40; // ref: orderId
+    repeated OrderPaymentPreferenceData order_payment_preference = 41; // ref: orderId
+    repeated OrderRoleData order_role = 42; // ref: orderId
+    repeated OrderStatusData order_status = 43; // ref: orderId
+    repeated ShipmentData primary_shipment = 44; // ref: orderId
+    repeated ShipmentReceiptData shipment_receipt = 45; // ref: orderId
+    
+    
+}
+
+// Carrier Shipment Method
+message CarrierShipmentMethodData {
+    // keys: shipmentMethodTypeId, partyId, roleTypeId
+
+    // fields
+        
+    string shipment_method_type_id = 1;    
+    string party_id = 2;    
+    string role_type_id = 3;    
+    int64 sequence_number = 4;    
+    string carrier_service_code = 5;
+    
+}
+
+// Shipment
+message ShipmentData {
+    // keys: shipmentId
+
+    // fields
+        
+    string shipment_id = 1;
+    routines.TypeSymbol shipment_type_id = 2; // ShipmentType
+    routines.TypeSymbol status_id = 3; // StatusItem    
+    string primary_return_id = 4;    
+    string primary_ship_group_seq_id = 5;    
+    string picklist_bin_id = 6;    
+    google.protobuf.Timestamp estimated_ready_date = 7;    
+    google.protobuf.Timestamp estimated_ship_date = 8;    
+    google.protobuf.Timestamp estimated_arrival_date = 9;    
+    google.protobuf.Timestamp latest_cancel_date = 10;    
+    routines.DecimalValue estimated_ship_cost = 11;
+    routines.TypeSymbol currency_uom_id = 12; // Uom    
+    string handling_instructions = 13;    
+    string origin_facility_id = 14;    
+    string destination_facility_id = 15;    
+    routines.DecimalValue additional_shipping_charge = 16;    
+    string addtl_shipping_charge_desc = 17;    
+    google.protobuf.Timestamp created_date = 18;    
+    string created_by_user_login = 19;    
+    google.protobuf.Timestamp last_modified_date = 20;    
+    string last_modified_by_user_login = 21;
+    
+    // relations
+    WorkEffortData estimated_ship_work_effort = 22; // ref: estimatedShipWorkEffId
+    WorkEffortData estimated_arrival_work_effort = 23; // ref: estimatedArrivalWorkEffId
+    ContactMechData origin_contact_mech = 24; // ref: originContactMechId
+    ContactMechData dest_contact_mech = 25; // ref: destinationContactMechId
+    PostalAddressData origin_postal_address = 26; // ref: originContactMechId
+    TelecomNumberData origin_telecom_number = 27; // ref: originTelecomNumberId
+    PostalAddressData destination_postal_address = 28; // ref: destinationContactMechId
+    TelecomNumberData destination_telecom_number = 29; // ref: destinationTelecomNumberId
+    OrderHeaderData primary_order_header = 30; // ref: primaryOrderId
+    OrderItemShipGroupData primary_order_item_ship_group = 31; // ref: primaryOrderId + primaryShipGroupSeqId
+    PartyData to_party = 32; // ref: partyIdTo
+    PersonData to_person = 33; // ref: partyIdTo
+    PartyGroupData to_party_group = 34; // ref: partyIdTo
+    PartyData from_party = 35; // ref: partyIdFrom
+    PersonData from_person = 36; // ref: partyIdFrom
+    PartyGroupData from_party_group = 37; // ref: partyIdFrom
+    repeated AcctgTransData acctg_trans = 38; // ref: shipmentId
+    repeated ItemIssuanceData item_issuance = 39; // ref: shipmentId
+    repeated ShipmentItemData shipment_item = 40; // ref: shipmentId
+    repeated ShipmentItemBillingData shipment_item_billing = 41; // ref: shipmentId
+    repeated ShipmentPackageData shipment_package = 42; // ref: shipmentId
+    repeated ShipmentPackageContentData shipment_package_content = 43; // ref: shipmentId
+    repeated ShipmentPackageRouteSegData shipment_package_route_seg = 44; // ref: shipmentId
+    repeated ShipmentReceiptData shipment_receipt = 45; // ref: shipmentId
+    repeated ShipmentRouteSegmentData shipment_route_segment = 46; // ref: shipmentId
+    repeated ShipmentStatusData shipment_status = 47; // ref: shipmentId
+    
+    
+}
+
+// Shipment Package Content
+message ShipmentPackageContentData {
+    // keys: shipmentId, shipmentPackageSeqId, shipmentItemSeqId
+
+    // fields
+        
+    string shipment_id = 1;    
+    string shipment_package_seq_id = 2;    
+    string shipment_item_seq_id = 3;    
+    routines.DecimalValue quantity = 4;    
+    string sub_product_id = 5;    
+    routines.DecimalValue sub_product_quantity = 6;
+    
+}
+
+// Security Component - Security Group
+message SecurityGroupData {
+    // keys: groupId
+
+    // fields
+        
+    string group_id = 1;    
+    string group_name = 2;    
+    string description = 3;
+    
+}
+
+// Product Data Object
+message ProductContentData {
+    // keys: productId, contentId, productContentTypeId, fromDate
+
+    // fields
+        
+    string product_id = 1;    
+    string content_id = 2;
+    routines.TypeSymbol product_content_type_id = 3; // ProductContentType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp purchase_from_date = 6;    
+    google.protobuf.Timestamp purchase_thru_date = 7;    
+    int64 use_count_limit = 8;    
+    int64 use_time = 9;
+    routines.TypeSymbol use_time_uom_id = 10; // Uom
+    routines.TypeSymbol use_role_type_id = 11; // RoleType    
+    int64 sequence_num = 12;
+    
+}
+
+// Party Relationship
+message PartyRelationshipData {
+    // keys: partyIdFrom, partyIdTo, roleTypeIdFrom, roleTypeIdTo, fromDate
+
+    // fields
+        
+    string party_id_from = 1;    
+    string party_id_to = 2;
+    routines.TypeSymbol role_type_id_from = 3; // RoleType
+    routines.TypeSymbol role_type_id_to = 4; // RoleType    
+    google.protobuf.Timestamp from_date = 5;    
+    google.protobuf.Timestamp thru_date = 6;
+    routines.TypeSymbol status_id = 7; // StatusItem    
+    string relationship_name = 8;    
+    string security_group_id = 9;    
+    string priority_type_id = 10;
+    routines.TypeSymbol party_relationship_type_id = 11; // PartyRelationshipType    
+    string permissions_enum_id = 12;    
+    string position_title = 13;    
+    string comments = 14;
+    
+}
+
+// Product Store Carrier Shipment Method
+message ProductStoreShipmentMethData {
+    // keys: productStoreShipMethId
+
+    // fields
+        
+    string product_store_ship_meth_id = 1;    
+    string product_store_id = 2;    
+    string shipment_method_type_id = 3;    
+    string party_id = 4;    
+    string role_type_id = 5;    
+    string company_party_id = 6;    
+    routines.DecimalValue min_weight = 7;    
+    routines.DecimalValue max_weight = 8;    
+    routines.DecimalValue min_size = 9;    
+    routines.DecimalValue max_size = 10;    
+    routines.DecimalValue min_total = 11;    
+    routines.DecimalValue max_total = 12;    
+    routines.Indicator allow_usps_addr = 13;    
+    routines.Indicator require_usps_addr = 14;    
+    routines.Indicator allow_company_addr = 15;    
+    routines.Indicator require_company_addr = 16;    
+    routines.Indicator include_no_charge_items = 17;    
+    string include_feature_group = 18;    
+    string exclude_feature_group = 19;
+    routines.TypeSymbol include_geo_id = 20; // Geo
+    routines.TypeSymbol exclude_geo_id = 21; // Geo    
+    string service_name = 22;    
+    string config_props = 23;
+    routines.TypeSymbol shipment_custom_method_id = 24; // CustomMethod
+    routines.TypeSymbol shipment_gateway_config_id = 25; // ShipmentGatewayConfig    
+    int64 sequence_number = 26;    
+    routines.DecimalValue allowance_percent = 27;    
+    routines.DecimalValue minimum_price = 28;
+    
+}
+
+// Payment
+message PaymentData {
+    // keys: paymentId
+
+    // fields
+        
+    string payment_id = 1;
+    routines.TypeSymbol payment_type_id = 2; // PaymentType
+    routines.TypeSymbol payment_method_type_id = 3; // PaymentMethodType
+    routines.TypeSymbol role_type_id_to = 4; // RoleType
+    routines.TypeSymbol status_id = 5; // StatusItem    
+    google.protobuf.Timestamp effective_date = 6;    
+    string payment_ref_num = 7;    
+    routines.DecimalValue amount = 8;
+    routines.TypeSymbol currency_uom_id = 9; // Uom    
+    string comments = 10;    
+    string fin_account_trans_id = 11;    
+    string override_gl_account_id = 12;    
+    routines.DecimalValue actual_currency_amount = 13;
+    routines.TypeSymbol actual_currency_uom_id = 14; // Uom
+    
+    // relations
+    PaymentMethodData payment_method = 15; // ref: paymentMethodId
+    CreditCardData credit_card = 16; // ref: paymentMethodId
+    OrderPaymentPreferenceData order_payment_preference = 17; // ref: paymentPreferenceId
+    PaymentGatewayResponseData payment_gateway_response = 18; // ref: paymentGatewayResponseId
+    PartyData from_party = 19; // ref: partyIdFrom
+    PartyData to_party = 20; // ref: partyIdTo
+    PartyRoleData to_party_role = 21; // ref: partyIdTo + roleTypeIdTo
+    repeated AcctgTransData acctg_trans = 22; // ref: paymentId
+    repeated PaymentApplicationData payment_application = 23; // ref: paymentId
+    repeated PaymentApplicationData to_payment_application = 24; // ref: paymentId
+    
+    
+}
+
+// Content
+message ContentData {
+    // keys: contentId
+
+    // fields
+        
+    string content_id = 1;
+    routines.TypeSymbol content_type_id = 2; // ContentType    
+    string owner_content_id = 3;    
+    string decorator_content_id = 4;    
+    string instance_of_content_id = 5;    
+    string data_resource_id = 6;    
+    string template_data_resource_id = 7;
+    routines.TypeSymbol data_source_id = 8; // DataSource
+    routines.TypeSymbol status_id = 9; // StatusItem
+    routines.TypeSymbol privilege_enum_id = 10; // Enumeration    
+    string service_name = 11;
+    routines.TypeSymbol custom_method_id = 12; // CustomMethod    
+    string content_name = 13;    
+    string description = 14;    
+    string locale_string = 15;
+    routines.TypeSymbol mime_type_id = 16; // MimeType
+    routines.TypeSymbol character_set_id = 17; // CharacterSet    
+    int64 child_leaf_count = 18;    
+    int64 child_branch_count = 19;    
+    google.protobuf.Timestamp created_date = 20;    
+    string created_by_user_login = 21;    
+    google.protobuf.Timestamp last_modified_date = 22;    
+    string last_modified_by_user_login = 23;
+    
+}
+
+// Shipment Package
+message ShipmentPackageData {
+    // keys: shipmentId, shipmentPackageSeqId
+
+    // fields
+        
+    string shipment_id = 1;    
+    string shipment_package_seq_id = 2;    
+    string shipment_box_type_id = 3;    
+    google.protobuf.Timestamp date_created = 4;    
+    routines.DecimalValue box_length = 5;    
+    routines.DecimalValue box_height = 6;    
+    routines.DecimalValue box_width = 7;
+    routines.TypeSymbol dimension_uom_id = 8; // Uom    
+    routines.DecimalValue weight = 9;
+    routines.TypeSymbol weight_uom_id = 10; // Uom    
+    routines.DecimalValue insured_value = 11;
+    
+}
+
+// Product Store Inventory Facility Applicability
+message ProductStoreFacilityData {
+    // keys: productStoreId, facilityId, fromDate
+
+    // fields
+        
+    string product_store_id = 1;    
+    string facility_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    int64 sequence_num = 5;
+    
+}
+
+// WebSite
+message WebSiteData {
+    // keys: webSiteId
+
+    // fields
+        
+    string web_site_id = 1;    
+    string site_name = 2;    
+    string http_host = 3;    
+    string http_port = 4;    
+    string https_host = 5;    
+    string https_port = 6;    
+    routines.Indicator enable_https = 7;    
+    string webapp_path = 8;    
+    string standard_content_prefix = 9;    
+    string secure_content_prefix = 10;    
+    string cookie_domain = 11;
+    routines.TypeSymbol visual_theme_set_id = 12; // VisualThemeSet    
+    string product_store_id = 13;    
+    routines.Indicator allow_product_store_change = 14;    
+    string hosted_path_alias = 15;    
+    routines.Indicator is_default = 16;    
+    routines.Indicator display_maintenance_page = 17;
+    
+}
+
+// Product Category
+message ProductCategoryData {
+    // keys: productCategoryId
+
+    // fields
+        
+    string product_category_id = 1;
+    routines.TypeSymbol product_category_type_id = 2; // ProductCategoryType    
+    string primary_parent_category_id = 3;    
+    string category_name = 4;    
+    string description = 5;    
+    string long_description = 6;    
+    string category_image_url = 7;    
+    string link_one_image_url = 8;    
+    string link_two_image_url = 9;    
+    string detail_screen = 10;    
+    routines.Indicator show_in_select = 11;
+    
+}
+
+// Product Store Payment Settings
+message ProductStorePaymentSettingData {
+    // keys: productStoreId, paymentMethodTypeId, paymentServiceTypeEnumId
+
+    // fields
+        
+    string product_store_id = 1;
+    routines.TypeSymbol payment_method_type_id = 2; // PaymentMethodType
+    routines.TypeSymbol payment_service_type_enum_id = 3; // Enumeration    
+    string payment_service = 4;
+    routines.TypeSymbol payment_custom_method_id = 5; // CustomMethod    
+    string payment_gateway_config_id = 6;    
+    string payment_properties_path = 7;    
+    routines.Indicator apply_to_all_products = 8;
+    
+}
+
+// Payment Method
+message PaymentMethodData {
+    // keys: paymentMethodId
+
+    // fields
+        
+    string payment_method_id = 1;
+    routines.TypeSymbol payment_method_type_id = 2; // PaymentMethodType    
+    string party_id = 3;    
+    string gl_account_id = 4;    
+    string fin_account_id = 5;    
+    string description = 6;    
+    google.protobuf.Timestamp from_date = 7;    
+    google.protobuf.Timestamp thru_date = 8;
+    
+}
+
+// Product Price Condition
+message ProductPriceCondData {
+    // keys: productPriceRuleId, productPriceCondSeqId
+
+    // fields
+        
+    string product_price_rule_id = 1;    
+    string product_price_cond_seq_id = 2;
+    routines.TypeSymbol input_param_enum_id = 3; // Enumeration
+    routines.TypeSymbol operator_enum_id = 4; // Enumeration    
+    string cond_value = 5;
+    
+}
+
+// Inventory Item
+message InventoryItemData {
+    // keys: inventoryItemId
+
+    // fields
+        
+    string inventory_item_id = 1;
+    routines.TypeSymbol inventory_item_type_id = 2; // InventoryItemType    
+    string product_id = 3;    
+    string party_id = 4;    
+    string owner_party_id = 5;
+    routines.TypeSymbol status_id = 6; // StatusItem    
+    google.protobuf.Timestamp datetime_received = 7;    
+    google.protobuf.Timestamp datetime_manufactured = 8;    
+    google.protobuf.Timestamp expire_date = 9;    
+    string facility_id = 10;    
+    string container_id = 11;    
+    string lot_id = 12;
+    routines.TypeSymbol uom_id = 13; // Uom    
+    string bin_number = 14;    
+    string location_seq_id = 15;    
+    string comments = 16;    
+    routines.DecimalValue quantity_on_hand_total = 17;    
+    routines.DecimalValue available_to_promise_total = 18;    
+    routines.DecimalValue accounting_quantity_total = 19;    
+    routines.DecimalValue old_quantity_on_hand = 20;    
+    routines.DecimalValue old_available_to_promise = 21;    
+    string serial_number = 22;    
+    string soft_identifier = 23;    
+    string activation_number = 24;    
+    google.protobuf.Timestamp activation_valid_thru = 25;    
+    routines.DecimalValue unit_cost = 26;
+    routines.TypeSymbol currency_uom_id = 27; // Uom    
+    string fixed_asset_id = 28;
+    
+}
+
+// Billing Account Role
+message BillingAccountRoleData {
+    // keys: billingAccountId, partyId, roleTypeId, fromDate
+
+    // fields
+        
+    string billing_account_id = 1;    
+    string party_id = 2;
+    routines.TypeSymbol role_type_id = 3; // RoleType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;
+    
+}
+
+// Invoice Item
+message InvoiceItemData {
+    // keys: invoiceId, invoiceItemSeqId
+
+    // fields
+        
+    string invoice_id = 1;    
+    string invoice_item_seq_id = 2;
+    routines.TypeSymbol invoice_item_type_id = 3; // InvoiceItemType    
+    string override_gl_account_id = 4;    
+    string override_org_party_id = 5;    
+    string inventory_item_id = 6;    
+    string product_id = 7;    
+    string product_feature_id = 8;    
+    string parent_invoice_id = 9;    
+    string parent_invoice_item_seq_id = 10;
+    routines.TypeSymbol uom_id = 11; // Uom    
+    routines.Indicator taxable_flag = 12;    
+    routines.DecimalValue quantity = 13;    
+    routines.DecimalValue amount = 14;    
+    string description = 15;    
+    string tax_auth_party_id = 16;
+    routines.TypeSymbol tax_auth_geo_id = 17; // Geo    
+    string tax_authority_rate_seq_id = 18;    
+    string sales_opportunity_id = 19;
+    
+}
+
+// Product Feature Category Application
+message ProductFeatureCategoryApplData {
+    // keys: productCategoryId, productFeatureCategoryId, fromDate
+
+    // fields
+        
+    string product_category_id = 1;    
+    string product_feature_category_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;
+    
+}
+
+// Product Configuration Question
+message ProductConfigItemData {
+    // keys: configItemId
+
+    // fields
+        
+    string config_item_id = 1;    
+    string config_item_type_id = 2;    
+    string config_item_name = 3;    
+    string description = 4;    
+    string long_description = 5;    
+    string image_url = 6;
+    
+}
+
+// Telecommunications Number
+message TelecomNumberData {
+    // keys: contactMechId
+
+    // fields
+        
+    string contact_mech_id = 1;    
+    string country_code = 2;    
+    string area_code = 3;    
+    string contact_number = 4;    
+    string ask_for_name = 5;
+    
+}
+
+// Product Feature
+message ProductFeatureData {
+    // keys: productFeatureId
+
+    // fields
+        
+    string product_feature_id = 1;
+    routines.TypeSymbol product_feature_type_id = 2; // ProductFeatureType    
+    string product_feature_category_id = 3;    
+    string description = 4;
+    routines.TypeSymbol uom_id = 5; // Uom    
+    routines.DecimalValue number_specified = 6;    
+    routines.DecimalValue default_amount = 7;    
+    int64 default_sequence_num = 8;    
+    string abbrev = 9;    
+    string id_code = 10;
+    
+}
+
+// Product Configuration Templates
+message ProductConfigData {
+    // keys: productId, configItemId, sequenceNum, fromDate
+
+    // fields
+        
+    string product_id = 1;    
+    string config_item_id = 2;    
+    int64 sequence_num = 3;    
+    google.protobuf.Timestamp from_date = 4;    
+    string description = 5;    
+    string long_description = 6;    
+    string config_type_id = 7;    
+    string default_config_option_id = 8;    
+    google.protobuf.Timestamp thru_date = 9;    
+    routines.Indicator is_mandatory = 10;
+    
+}
+
+// Product Promotion
+message ProductPromoCodeData {
+    // keys: productPromoCodeId
+
+    // fields
+        
+    string product_promo_code_id = 1;    
+    string product_promo_id = 2;    
+    routines.Indicator user_entered = 3;    
+    routines.Indicator require_email_or_party = 4;    
+    int64 use_limit_per_code = 5;    
+    int64 use_limit_per_customer = 6;    
+    google.protobuf.Timestamp from_date = 7;    
+    google.protobuf.Timestamp thru_date = 8;    
+    google.protobuf.Timestamp created_date = 9;    
+    string created_by_user_login = 10;    
+    google.protobuf.Timestamp last_modified_date = 11;    
+    string last_modified_by_user_login = 12;
+    
+}
+
+// Product Store
+message ProductStoreData {
+    // keys: productStoreId
+
+    // fields
+        
+    string product_store_id = 1;
+    routines.TypeSymbol primary_store_group_id = 2; // ProductStoreGroup    
+    string store_name = 3;    
+    string company_name = 4;    
+    string title = 5;    
+    string subtitle = 6;    
+    string pay_to_party_id = 7;    
+    int64 days_to_cancel_non_pay = 8;    
+    routines.Indicator manual_auth_is_capture = 9;    
+    routines.Indicator prorate_shipping = 10;    
+    routines.Indicator prorate_taxes = 11;    
+    routines.Indicator view_cart_on_add = 12;    
+    routines.Indicator auto_save_cart = 13;    
+    routines.Indicator auto_approve_reviews = 14;    
+    routines.Indicator is_demo_store = 15;    
+    routines.Indicator is_immediately_fulfilled = 16;    
+    string inventory_facility_id = 17;    
+    routines.Indicator one_inventory_facility = 18;    
+    routines.Indicator check_inventory = 19;    
+    routines.Indicator reserve_inventory = 20;
+    routines.TypeSymbol reserve_order_enum_id = 21; // Enumeration    
+    routines.Indicator require_inventory = 22;    
+    routines.Indicator balance_res_on_order_creation = 23;
+    routines.TypeSymbol requirement_method_enum_id = 24; // Enumeration    
+    string order_number_prefix = 25;    
+    string default_locale_string = 26;
+    routines.TypeSymbol default_currency_uom_id = 27; // Uom    
+    string default_time_zone_string = 28;
+    routines.TypeSymbol default_sales_channel_enum_id = 29; // Enumeration    
+    routines.Indicator allow_password = 30;    
+    string default_password = 31;    
+    routines.Indicator explode_order_items = 32;    
+    routines.Indicator check_gc_balance = 33;    
+    routines.Indicator retry_failed_auths = 34;
+    routines.TypeSymbol header_approved_status = 35; // StatusItem
+    routines.TypeSymbol item_approved_status = 36; // StatusItem
+    routines.TypeSymbol digital_item_approved_status = 37; // StatusItem
+    routines.TypeSymbol header_declined_status = 38; // StatusItem
+    routines.TypeSymbol item_declined_status = 39; // StatusItem
+    routines.TypeSymbol header_cancel_status = 40; // StatusItem
+    routines.TypeSymbol item_cancel_status = 41; // StatusItem    
+    string auth_declined_message = 42;    
+    string auth_fraud_message = 43;    
+    string auth_error_message = 44;    
+    string visual_theme_id = 45;
+    routines.TypeSymbol store_credit_account_enum_id = 46; // Enumeration    
+    routines.Indicator use_primary_email_username = 47;    
+    routines.Indicator require_customer_role = 48;    
+    routines.Indicator auto_invoice_digital_items = 49;    
+    routines.Indicator req_ship_addr_for_dig_items = 50;    
+    routines.Indicator show_checkout_gift_options = 51;    
+    routines.Indicator select_payment_type_per_item = 52;    
+    routines.Indicator show_prices_with_vat_tax = 53;    
+    routines.Indicator show_tax_is_exempt = 54;    
+    string vat_tax_auth_geo_id = 55;    
+    string vat_tax_auth_party_id = 56;    
+    routines.Indicator enable_auto_suggestion_list = 57;    
+    routines.Indicator enable_dig_prod_upload = 58;    
+    routines.Indicator prod_search_exclude_variants = 59;    
+    string dig_prod_upload_category_id = 60;    
+    routines.Indicator auto_order_cc_try_exp = 61;    
+    routines.Indicator auto_order_cc_try_other_cards = 62;    
+    routines.Indicator auto_order_cc_try_later_nsf = 63;    
+    int64 auto_order_cc_try_later_max = 64;    
+    int64 store_credit_valid_days = 65;    
+    routines.Indicator auto_approve_invoice = 66;    
+    routines.Indicator auto_approve_order = 67;    
+    routines.Indicator ship_if_capture_fails = 68;    
+    routines.Indicator set_owner_upon_issuance = 69;    
+    routines.Indicator req_return_inventory_receive = 70;    
+    routines.Indicator add_to_cart_remove_incompat = 71;    
+    routines.Indicator add_to_cart_replace_upsell = 72;    
+    routines.Indicator split_pay_pref_per_shp_grp = 73;    
+    routines.Indicator managed_by_lot = 74;    
+    routines.Indicator show_out_of_stock_products = 75;    
+    routines.Indicator order_decimal_quantity = 76;    
+    routines.Indicator allow_comment = 77;    
+    routines.Indicator allocate_inventory = 78;
+    
+    // relations
+    repeated CustRequestData cust_request = 80; // ref: productStoreId
+    repeated OrderHeaderData order_header = 81; // ref: productStoreId
+    repeated ProductReviewData product_review = 82; // ref: productStoreId
+    repeated ProductStoreCatalogData product_store_catalog = 83; // ref: productStoreId
+    repeated ProductStoreEmailSettingData product_store_email_setting = 84; // ref: productStoreId
+    repeated ProductStoreFacilityData product_store_facility = 85; // ref: productStoreId
+    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 86; // ref: productStoreId
+    repeated ProductStorePaymentSettingData product_store_payment_setting = 87; // ref: productStoreId
+    repeated ProductStorePromoApplData product_store_promo_appl = 88; // ref: productStoreId
+    repeated ProductStoreRoleData product_store_role = 89; // ref: productStoreId
+    repeated QuoteData quote = 90; // ref: productStoreId
+    repeated WebSiteData web_site = 91; // ref: productStoreId
+    
+    
+}
+
+// Product Price
+message ProductPriceData {
+    // keys: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate
+
+    // fields
+        
+    string product_id = 1;
+    routines.TypeSymbol product_price_type_id = 2; // ProductPriceType
+    routines.TypeSymbol product_price_purpose_id = 3; // ProductPricePurpose
+    routines.TypeSymbol currency_uom_id = 4; // Uom
+    routines.TypeSymbol product_store_group_id = 5; // ProductStoreGroup    
+    google.protobuf.Timestamp from_date = 6;    
+    google.protobuf.Timestamp thru_date = 7;    
+    routines.DecimalValue price = 8;
+    routines.TypeSymbol term_uom_id = 9; // Uom
+    routines.TypeSymbol custom_price_calc_service = 10; // CustomMethod    
+    routines.DecimalValue price_without_tax = 11;    
+    routines.DecimalValue price_with_tax = 12;    
+    routines.DecimalValue tax_amount = 13;    
+    routines.DecimalValue tax_percentage = 14;    
+    string tax_auth_party_id = 15;
+    routines.TypeSymbol tax_auth_geo_id = 16; // Geo    
+    routines.Indicator tax_in_price = 17;    
+    google.protobuf.Timestamp created_date = 18;    
+    string created_by_user_login = 19;    
+    google.protobuf.Timestamp last_modified_date = 20;    
+    string last_modified_by_user_login = 21;
+    
+}
+
+// Quantity Break
+message QuantityBreakData {
+    // keys: quantityBreakId
+
+    // fields
+        
+    string quantity_break_id = 1;
+    routines.TypeSymbol quantity_break_type_id = 2; // QuantityBreakType    
+    routines.DecimalValue from_quantity = 3;    
+    routines.DecimalValue thru_quantity = 4;
+    
+}
+
+// Contact Mechanism
+message ContactMechData {
+    // keys: contactMechId
+
+    // fields
+        
+    string contact_mech_id = 1;
+    routines.TypeSymbol contact_mech_type_id = 2; // ContactMechType    
+    string info_string = 3;
+    
+}
+
+// Order Item Inventory Reservation
+message OrderItemShipGrpInvResData {
+    // keys: orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId
+
+    // fields
+        
+    string order_id = 1;    
+    string ship_group_seq_id = 2;    
+    string order_item_seq_id = 3;    
+    string inventory_item_id = 4;    
+    string reserve_order_enum_id = 5;    
+    routines.DecimalValue quantity = 6;    
+    routines.DecimalValue quantity_not_available = 7;    
+    google.protobuf.Timestamp reserved_datetime = 8;    
+    google.protobuf.Timestamp created_datetime = 9;    
+    google.protobuf.Timestamp promised_datetime = 10;    
+    google.protobuf.Timestamp current_promised_date = 11;    
+    routines.Indicator priority = 12;    
+    int64 sequence_id = 13;    
+    google.protobuf.Timestamp old_pick_start_date = 14;
+    
+}
+
+// TenantDataSource
+message TenantDataSourceData {
+    // keys: tenantId, entityGroupName
+
+    // fields
+        
+    string tenant_id = 1;    
+    string entity_group_name = 2;    
+    string jdbc_uri = 3;    
+    string jdbc_username = 4;    
+    string jdbc_password = 5;
+    
+}
+
+// Product Promotion Rule
+message ProductPromoRuleData {
+    // keys: productPromoId, productPromoRuleId
+
+    // fields
+        
+    string product_promo_id = 1;    
+    string product_promo_rule_id = 2;    
+    string rule_name = 3;
+    
+}
+
+// Order Contact Mechanism
+message OrderContactMechData {
+    // keys: orderId, contactMechPurposeTypeId, contactMechId
+
+    // fields
+        
+    string order_id = 1;
+    routines.TypeSymbol contact_mech_purpose_type_id = 2; // ContactMechPurposeType    
+    string contact_mech_id = 3;
+    
+}
+
+// WorkEffort
+message WorkEffortData {
+    // keys: workEffortId
+
+    // fields
+        
+    string work_effort_id = 1;
+    routines.TypeSymbol work_effort_type_id = 2; // WorkEffortType
+    routines.TypeSymbol current_status_id = 3; // StatusItem    
+    google.protobuf.Timestamp last_status_update = 4;
+    routines.TypeSymbol work_effort_purpose_type_id = 5; // WorkEffortPurposeType    
+    string work_effort_parent_id = 6;
+    routines.TypeSymbol scope_enum_id = 7; // Enumeration    
+    int64 priority = 8;    
+    int64 percent_complete = 9;    
+    string work_effort_name = 10;    
+    string show_as_enum_id = 11;    
+    routines.Indicator send_notification_email = 12;    
+    string description = 13;    
+    string location_desc = 14;    
+    google.protobuf.Timestamp estimated_start_date = 15;    
+    google.protobuf.Timestamp estimated_completion_date = 16;    
+    google.protobuf.Timestamp actual_start_date = 17;    
+    google.protobuf.Timestamp actual_completion_date = 18;    
+    double estimated_milli_seconds = 19;    
+    double estimated_setup_millis = 20;
+    routines.TypeSymbol estimate_calc_method = 21; // CustomMethod    
+    double actual_milli_seconds = 22;    
+    double actual_setup_millis = 23;    
+    double total_milli_seconds_allowed = 24;    
+    routines.DecimalValue total_money_allowed = 25;
+    routines.TypeSymbol money_uom_id = 26; // Uom    
+    string special_terms = 27;    
+    int64 time_transparency = 28;    
+    string universal_id = 29;    
+    string source_reference_id = 30;    
+    string fixed_asset_id = 31;    
+    string facility_id = 32;    
+    string info_url = 33;    
+    string recurrence_info_id = 34;    
+    string temp_expr_id = 35;    
+    string runtime_data_id = 36;    
+    string note_id = 37;    
+    string service_loader_name = 38;    
+    routines.DecimalValue quantity_to_produce = 39;    
+    routines.DecimalValue quantity_produced = 40;    
+    routines.DecimalValue quantity_rejected = 41;    
+    routines.DecimalValue reserv_persons = 42;    
+    routines.DecimalValue reserv2nd_p_p_perc = 43;    
+    routines.DecimalValue reserv_nth_p_p_perc = 44;    
+    string accommodation_map_id = 45;    
+    string accommodation_spot_id = 46;    
+    int64 revision_number = 47;    
+    google.protobuf.Timestamp created_date = 48;    
+    string created_by_user_login = 49;    
+    google.protobuf.Timestamp last_modified_date = 50;    
+    string last_modified_by_user_login = 51;    
+    int64 sequence_num = 52;
+    
+}
+
+// Tenant
+message TenantData {
+    // keys: tenantId
+
+    // fields
+        
+    string tenant_id = 1;    
+    string tenant_name = 2;    
+    string initial_path = 3;    
+    routines.Indicator disabled = 4;
+    
+}
+
+// Shipment Status
+message ShipmentStatusData {
+    // keys: statusId, shipmentId
+
+    // fields
+    
+    routines.TypeSymbol status_id = 1; // StatusItem    
+    string shipment_id = 2;    
+    google.protobuf.Timestamp status_date = 3;    
+    string change_by_user_login_id = 4;
+    
+}
+
+// Billing Account
+message BillingAccountData {
+    // keys: billingAccountId
+
+    // fields
+        
+    string billing_account_id = 1;    
+    routines.DecimalValue account_limit = 2;
+    routines.TypeSymbol account_currency_uom_id = 3; // Uom    
+    string contact_mech_id = 4;    
+    google.protobuf.Timestamp from_date = 5;    
+    google.protobuf.Timestamp thru_date = 6;    
+    string description = 7;    
+    string external_account_id = 8;
+    
+}
+
+// Facility Contact Mechanism Purpose
+message FacilityContactMechPurposeData {
+    // keys: facilityId, contactMechId, contactMechPurposeTypeId, fromDate
+
+    // fields
+        
+    string facility_id = 1;    
+    string contact_mech_id = 2;
+    routines.TypeSymbol contact_mech_purpose_type_id = 3; // ContactMechPurposeType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;
+    
+}
+
+// Product Keyword
+message ProductKeywordData {
+    // keys: productId, keyword, keywordTypeId
+
+    // fields
+        
+    string product_id = 1;    
+    string keyword = 2;
+    routines.TypeSymbol keyword_type_id = 3; // Enumeration    
+    int64 relevancy_weight = 4;
+    routines.TypeSymbol status_id = 5; // StatusItem
+    
+}
+
+// Customer Request Item
+message CustRequestItemData {
+    // keys: custRequestId, custRequestItemSeqId
+
+    // fields
+        
+    string cust_request_id = 1;    
+    string cust_request_item_seq_id = 2;
+    routines.TypeSymbol cust_request_resolution_id = 3; // CustRequestResolution
+    routines.TypeSymbol status_id = 4; // StatusItem    
+    int64 priority = 5;    
+    int64 sequence_num = 6;    
+    google.protobuf.Timestamp required_by_date = 7;    
+    string product_id = 8;    
+    routines.DecimalValue quantity = 9;    
+    routines.DecimalValue selected_amount = 10;    
+    routines.DecimalValue maximum_amount = 11;    
+    google.protobuf.Timestamp reserv_start = 12;    
+    routines.DecimalValue reserv_length = 13;    
+    routines.DecimalValue reserv_persons = 14;    
+    string config_id = 15;    
+    string description = 16;    
+    string story = 17;
+    
+}
+
+// Tenant and its Domain Name
+message TenantDomainNameData {
+    // keys: domainName
+
+    // fields
+        
+    string tenant_id = 1;    
+    string domain_name = 2;
+    
+}
+
+// Order Role
+message OrderRoleData {
+    // keys: orderId, partyId, roleTypeId
+
+    // fields
+        
+    string order_id = 1;    
+    string party_id = 2;
+    routines.TypeSymbol role_type_id = 3; // RoleType
+    
+}
+
+// Fixed Asset Geo Location with history
+message FixedAssetGeoPointData {
+    // keys: fixedAssetId, geoPointId, fromDate
+
+    // fields
+        
+    string fixed_asset_id = 1;    
+    string geo_point_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;
+    
+}
+
+// Recurrence Rule
+message RecurrenceRuleData {
+    // keys: recurrenceRuleId
+
+    // fields
+        
+    string recurrence_rule_id = 1;    
+    string frequency = 2;    
+    google.protobuf.Timestamp until_date_time = 3;    
+    int64 count_number = 4;    
+    int64 interval_number = 5;    
+    string by_second_list = 6;    
+    string by_minute_list = 7;    
+    string by_hour_list = 8;    
+    string by_day_list = 9;    
+    string by_month_day_list = 10;    
+    string by_year_day_list = 11;    
+    string by_week_no_list = 12;    
+    string by_month_list = 13;    
+    string by_set_pos_list = 14;    
+    string week_start = 15;    
+    string x_name = 16;
+    
+}
+
+// Product Store Promotion Applicability
+message ProductStorePromoApplData {
+    // keys: productStoreId, productPromoId, fromDate
+
+    // fields
+        
+    string product_store_id = 1;    
+    string product_promo_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    int64 sequence_num = 5;    
+    routines.Indicator manual_only = 6;
+    
+}
+
+// Product Configuration Option to Products
+message ProductConfigProductData {
+    // keys: configItemId, configOptionId, productId
+
+    // fields
+        
+    string config_item_id = 1;    
+    string config_option_id = 2;    
+    string product_id = 3;    
+    routines.DecimalValue quantity = 4;    
+    int64 sequence_num = 5;
+    
+}
+
+// Product Price Action
+message ProductPriceActionData {
+    // keys: productPriceRuleId, productPriceActionSeqId
+
+    // fields
+        
+    string product_price_rule_id = 1;    
+    string product_price_action_seq_id = 2;
+    routines.TypeSymbol product_price_action_type_id = 3; // ProductPriceActionType    
+    routines.DecimalValue amount = 4;    
+    string rate_code = 5;
+    
+}
+
+// Shipment Method Type
+message ShipmentMethodTypeData {
+    // keys: shipmentMethodTypeId
+
+    // fields
+        
+    string shipment_method_type_id = 1;    
+    string description = 2;    
+    int64 sequence_num = 3;
+    
+}
+
+// Quote Term
+message QuoteTermData {
+    // keys: termTypeId, quoteId, quoteItemSeqId
+
+    // fields
+    
+    routines.TypeSymbol term_type_id = 1; // TermType    
+    string quote_id = 2;    
+    string quote_item_seq_id = 3;    
+    int64 term_value = 4;    
+    string uom_id = 5;    
+    int64 term_days = 6;    
+    string text_value = 7;    
+    string description = 8;
+    
+}
+
+// Transaction Entry
+message AcctgTransEntryData {
+    // keys: acctgTransId, acctgTransEntrySeqId
+
+    // fields
+        
+    string acctg_trans_id = 1;    
+    string acctg_trans_entry_seq_id = 2;
+    routines.TypeSymbol acctg_trans_entry_type_id = 3; // AcctgTransEntryType    
+    string description = 4;    
+    string voucher_ref = 5;    
+    string party_id = 6;
+    routines.TypeSymbol role_type_id = 7; // RoleType    
+    string their_party_id = 8;    
+    string product_id = 9;    
+    string their_product_id = 10;    
+    string inventory_item_id = 11;
+    routines.TypeSymbol gl_account_type_id = 12; // GlAccountType    
+    string gl_account_id = 13;    
+    string organization_party_id = 14;    
+    routines.DecimalValue amount = 15;
+    routines.TypeSymbol currency_uom_id = 16; // Uom    
+    routines.DecimalValue orig_amount = 17;
+    routines.TypeSymbol orig_currency_uom_id = 18; // Uom    
+    routines.Indicator debit_credit_flag = 19;    
+    google.protobuf.Timestamp due_date = 20;    
+    string group_id = 21;    
+    string tax_id = 22;
+    routines.TypeSymbol reconcile_status_id = 23; // StatusItem
+    routines.TypeSymbol settlement_term_id = 24; // SettlementTerm    
+    routines.Indicator is_summary = 25;
+    
+}
+
+// Order Item Billing
+message OrderItemBillingData {
+    // keys: orderId, orderItemSeqId, invoiceId, invoiceItemSeqId
+
+    // fields
+        
+    string order_id = 1;    
+    string order_item_seq_id = 2;    
+    string invoice_id = 3;    
+    string invoice_item_seq_id = 4;    
+    string item_issuance_id = 5;    
+    string shipment_receipt_id = 6;    
+    routines.DecimalValue quantity = 7;    
+    routines.DecimalValue amount = 8;
+    
+}
+
+// Order Item Ship Group
+message OrderItemShipGroupData {
+    // keys: orderId, shipGroupSeqId
+
+    // fields
+        
+    string order_id = 1;    
+    string ship_group_seq_id = 2;    
+    string shipment_method_type_id = 3;    
+    string supplier_party_id = 4;    
+    string supplier_agreement_id = 5;    
+    string vendor_party_id = 6;    
+    string carrier_party_id = 7;    
+    string carrier_role_type_id = 8;    
+    string facility_id = 9;    
+    string contact_mech_id = 10;    
+    string telecom_contact_mech_id = 11;    
+    string tracking_number = 12;    
+    string shipping_instructions = 13;    
+    routines.Indicator may_split = 14;    
+    string gift_message = 15;    
+    routines.Indicator is_gift = 16;    
+    google.protobuf.Timestamp ship_after_date = 17;    
+    google.protobuf.Timestamp ship_by_date = 18;    
+    google.protobuf.Timestamp estimated_ship_date = 19;    
+    google.protobuf.Timestamp estimated_delivery_date = 20;
+    
+}
+
+// Customer Request Type
+message CustRequestTypeData {
+    // keys: custRequestTypeId
+
+    // fields
+    
+    routines.TypeSymbol cust_request_type_id = 1; // CustRequestResolution    
+    string parent_type_id = 2;    
+    routines.Indicator has_table = 3;    
+    string description = 4;    
+    string party_id = 5;
+    
+}
+
+// Agreement Product Application
+message AgreementProductApplData {
+    // keys: agreementId, agreementItemSeqId, productId
+
+    // fields
+        
+    string agreement_id = 1;    
+    string agreement_item_seq_id = 2;    
+    string product_id = 3;    
+    routines.DecimalValue price = 4;
+    
+}
+
+// Product Subscription Resource
+message ProductSubscriptionResourceData {
+    // keys: productId, subscriptionResourceId, fromDate
+
+    // fields
+        
+    string product_id = 1;    
+    string subscription_resource_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    google.protobuf.Timestamp purchase_from_date = 5;    
+    google.protobuf.Timestamp purchase_thru_date = 6;    
+    int64 max_life_time = 7;
+    routines.TypeSymbol max_life_time_uom_id = 8; // Uom    
+    int64 available_time = 9;
+    routines.TypeSymbol available_time_uom_id = 10; // Uom    
+    int64 use_count_limit = 11;    
+    int64 use_time = 12;
+    routines.TypeSymbol use_time_uom_id = 13; // Uom
+    routines.TypeSymbol use_role_type_id = 14; // RoleType    
+    routines.Indicator automatic_extend = 15;    
+    int64 cancl_autm_ext_time = 16;
+    routines.TypeSymbol cancl_autm_ext_time_uom_id = 17; // Uom    
+    int64 grace_period_on_expiry = 18;
+    routines.TypeSymbol grace_period_on_expiry_uom_id = 19; // Uom
+    
+}
+
+// Credit Card Information
+message CreditCardData {
+    // keys: paymentMethodId
+
+    // fields
+        
+    string payment_method_id = 1;    
+    string card_type = 2;    
+    string card_number = 3;    
+    string valid_from_date = 4;    
+    string expire_date = 5;    
+    string issue_number = 6;    
+    string company_name_on_card = 7;    
+    string title_on_card = 8;    
+    string first_name_on_card = 9;    
+    string middle_name_on_card = 10;    
+    string last_name_on_card = 11;    
+    string suffix_on_card = 12;    
+    string contact_mech_id = 13;    
+    int64 consecutive_failed_auths = 14;    
+    google.protobuf.Timestamp last_failed_auth_date = 15;    
+    int64 consecutive_failed_nsf = 16;    
+    google.protobuf.Timestamp last_failed_nsf_date = 17;
+    
+}
+
+// Quote
+message QuoteData {
+    // keys: quoteId
+
+    // fields
+        
+    string quote_id = 1;
+    routines.TypeSymbol quote_type_id = 2; // QuoteType    
+    string party_id = 3;    
+    google.protobuf.Timestamp issue_date = 4;
+    routines.TypeSymbol status_id = 5; // StatusItem
+    routines.TypeSymbol currency_uom_id = 6; // Uom    
+    string product_store_id = 7;
+    routines.TypeSymbol sales_channel_enum_id = 8; // Enumeration    
+    google.protobuf.Timestamp valid_from_date = 9;    
+    google.protobuf.Timestamp valid_thru_date = 10;    
+    string quote_name = 11;    
+    string description = 12;
+    
+}
+
+// Product Promotion
+message ProductPromoData {
+    // keys: productPromoId
+
+    // fields
+        
+    string product_promo_id = 1;    
+    string promo_name = 2;    
+    string promo_text = 3;    
+    routines.Indicator user_entered = 4;    
+    routines.Indicator show_to_customer = 5;    
+    routines.Indicator require_code = 6;    
+    int64 use_limit_per_order = 7;    
+    int64 use_limit_per_customer = 8;    
+    int64 use_limit_per_promotion = 9;    
+    routines.DecimalValue billback_factor = 10;    
+    string override_org_party_id = 11;    
+    google.protobuf.Timestamp created_date = 12;    
+    string created_by_user_login = 13;    
+    google.protobuf.Timestamp last_modified_date = 14;    
+    string last_modified_by_user_login = 15;
+    
+}
+
+// Product Category Member
+message ProductCategoryMemberData {
+    // keys: productCategoryId, productId, fromDate
+
+    // fields
+        
+    string product_category_id = 1;    
+    string product_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    string comments = 5;    
+    int64 sequence_num = 6;    
+    routines.DecimalValue quantity = 7;
+    
+}
+
+// Agreement Term
+message AgreementTermData {
+    // keys: agreementTermId
+
+    // fields
+        
+    string agreement_term_id = 1;
+    routines.TypeSymbol term_type_id = 2; // TermType    
+    string agreement_id = 3;    
+    string agreement_item_seq_id = 4;
+    routines.TypeSymbol invoice_item_type_id = 5; // InvoiceItemType    
+    google.protobuf.Timestamp from_date = 6;    
+    google.protobuf.Timestamp thru_date = 7;    
+    routines.DecimalValue term_value = 8;    
+    int64 term_days = 9;    
+    string text_value = 10;    
+    double min_quantity = 11;    
+    double max_quantity = 12;    
+    string description = 13;
+    
+}
+
+// Product Category Link
+message ProductCategoryLinkData {
+    // keys: productCategoryId, linkSeqId, fromDate
+
+    // fields
+        
+    string product_category_id = 1;    
+    string link_seq_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    string comments = 5;    
+    int64 sequence_num = 6;    
+    string title_text = 7;    
+    string detail_text = 8;    
+    string image_url = 9;    
+    string image_two_url = 10;
+    routines.TypeSymbol link_type_enum_id = 11; // Enumeration    
+    string link_info = 12;    
+    string detail_sub_screen = 13;
+    
+}
+
+// Product Feature Interaction
+message ProductFeatureIactnData {
+    // keys: productFeatureId, productFeatureIdTo
+
+    // fields
+        
+    string product_feature_id = 1;    
+    string product_feature_id_to = 2;
+    routines.TypeSymbol product_feature_iactn_type_id = 3; // ProductFeatureIactnType    
+    string product_id = 4;
+    
+}
+
+// Work Effort Association
+message WorkEffortAssocData {
+    // keys: workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate
+
+    // fields
+        
+    string work_effort_id_from = 1;    
+    string work_effort_id_to = 2;
+    routines.TypeSymbol work_effort_assoc_type_id = 3; // WorkEffortAssocType    
+    int64 sequence_num = 4;    
+    google.protobuf.Timestamp from_date = 5;    
+    google.protobuf.Timestamp thru_date = 6;
+    
+}
+
+// Quote Role
+message QuoteRoleData {
+    // keys: quoteId, partyId, roleTypeId
+
+    // fields
+        
+    string quote_id = 1;    
+    string party_id = 2;
+    routines.TypeSymbol role_type_id = 3; // RoleType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;
+    
+}
+

@@ -1,4 +1,8 @@
+// {{ent.title}}
 message {{ent.name}}Data {
+    // keys: {{ent.keyNames}}
+
+    // fields
     {% for f in ent.publicFields -%}
     {%- if digester.isRefField(f.name) %}
     routines.TypeSymbol {{f.underscore}} = {{loop.index}}; // {{digester.getEntityRef(f.name)}}

@@ -103,3 +103,19 @@ message TypeSymbol{
   string value_id=2;
 }
 
+message PeriodData{
+  string from_date = 1;
+  string thru_date = 2;
+}
+
+enum Indicator{
+  NO=0;
+  YES=1;
+  UNKNOWN=2;
+}
+
+message DecimalValue {
+  uint32 scale = 1;
+  uint32 precision = 2;
+  bytes value = 3;
+}

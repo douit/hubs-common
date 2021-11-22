@@ -31,3 +31,7 @@ recreate:
     mysql -uroot -proot hubs < asset/mysql/hubs.sql
     cd domain && mvn compile
 
+proto:
+	just gen ProtoTool -w
+stub:
+	mvn compile -f stub/pom.xml

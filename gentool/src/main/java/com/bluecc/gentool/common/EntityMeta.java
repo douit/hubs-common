@@ -38,6 +38,18 @@ public class EntityMeta {
             "Payment", HeadEntity.builder().build(),
             "Invoice", HeadEntity.builder()
                             .flatId("Party")
+                    .build(),
+            "Product", HeadEntity.builder().build(),
+            "Shipment", HeadEntity.builder().build(),
+            "ProductStore", HeadEntity.builder()
+                            .flatId("Party")
+                    .build(),
+            "Party", HeadEntity.builder().build(),
+            "Person", HeadEntity.builder()
+                    .flatId("Party")
+                    .build(),
+            "PartyGroup", HeadEntity.builder()
+                    .flatId("Party")
                     .build()
     );
 

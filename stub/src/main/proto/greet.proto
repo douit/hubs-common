@@ -6,6 +6,7 @@ option java_outer_classname = "GreetProto";
 option objc_class_prefix = "GP";
 
 package greet;
+import "google/protobuf/timestamp.proto";
 
 // The greeting service definition.
 service Greeter {
@@ -21,5 +22,6 @@ message HelloRequest {
 // The response message containing the greetings
 message HelloReply {
   string message = 1;
+  google.protobuf.Timestamp timestamp=2;
 }
 
