@@ -3,6 +3,7 @@ package com.bluecc.gentool;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.bluecc.gentool.common.EntityMeta;
+import com.bluecc.gentool.common.EntityMetaDigester;
 import com.bluecc.gentool.common.TemplateUtil;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -41,6 +42,8 @@ public class ProtoTool {
     String sourceGen(String entName, String tplName) throws IOException {
         SqlGenTool.MetaList metaList=getAvailableEntities();
         EntityMeta meta= EntityMetaManager.getEntityMeta(entName, false);
+        EntityMetaDigester digester=new EntityMetaDigester(meta, EntityMetaManager.typeList);
+
         // setup the entity-meta-info
         meta.getRelations().removeIf(r -> !metaList.has(r.getRelEntityName()));
         // 清除关联对象对应在的字段id
@@ -51,7 +54,7 @@ public class ProtoTool {
         }
 
         return TemplateUtil.build("templates/"+ tplName +"_source.j2",
-                ImmutableMap.of("ent", meta));
+                ImmutableMap.of("ent", meta, "digester", digester));
     }
 }
 

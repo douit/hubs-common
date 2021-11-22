@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class EntityMetaDigester {
     EntityMeta meta;
     Multimap<String, FieldDigest> fieldDigestMap = ArrayListMultimap.create();
     SqlGenTool.MetaList typeList;
+    Map<String, String> fieldRefTypes=Maps.newHashMap();
 
     public EntityMetaDigester(EntityMeta meta, SqlGenTool.MetaList typeList) {
         this.meta = meta;
@@ -32,6 +34,10 @@ public class EntityMetaDigester {
     public Multimap<String, FieldDigest> getFieldDigestMap() {
         return fieldDigestMap;
     }
+    //
+    // public boolean isEntityRefField(String fieldName){
+    //     fieldDigestMap.get(fieldName);
+    // }
 
     void build() {
         for (EntityMeta.RelationMeta relation : meta.getRelations()) {
@@ -52,6 +58,23 @@ public class EntityMetaDigester {
                                     .map(r -> r.fieldName).collect(Collectors.toList())
                     ));
         }
+
+        // field entity type ref
+        for (Map.Entry<String, Collection<EntityMetaDigester.FieldDigest>> entry : fieldDigestMap.asMap().entrySet()) {
+            for (EntityMetaDigester.FieldDigest fieldDigest : entry.getValue()) {
+                if (fieldDigest.getRefType() == EntityMetaDigester.RefType.TYPE_REF) {
+                    // System.out.println("■■ " + entry.getKey() + ": " + fieldDigest.getTypeRef().getEntityType());
+                    fieldRefTypes.put(entry.getKey(), fieldDigest.getTypeRef().getEntityType());
+                }
+            }
+        }
+    }
+
+    public boolean isRefField(String fieldName){
+        return fieldRefTypes.containsKey(fieldName);
+    }
+    public String getEntityRef(String fieldName){
+        return fieldRefTypes.get(fieldName);
     }
 
     @Data
