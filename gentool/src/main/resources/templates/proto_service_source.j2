@@ -1,0 +1,7 @@
+// The {{ent.title}} service definition.
+service {{ent.name}}Service {
+    rpc Create({{ent.name}}Data) returns (routines.Response) {}
+    rpc Update({{ent.name}}Data) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns ({{ent.name}}Data) {}
+}

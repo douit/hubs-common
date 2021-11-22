@@ -2,10 +2,13 @@ message {{ent.name}}Data {
     {% for f in ent.publicFields -%}
     {{f.protoType}} {{f.underscore}} = {{loop.index}};
     {% endfor %}
-
+    {% if ent.headEntity %}
     // relations
     {% for r in ent.relations -%}
-    {{r.protoDef}} = {{loop.index+ent.publicFieldNumber}};
+    {% if r.hasProtoDef(ent.name) -%}
+    {{r.protoDef}} = {{loop.index+ent.publicFieldNumber}}; // ref: {{r.relFields}}
+    {% endif -%}
     {% endfor %}
+    {% endif %}
 }
 

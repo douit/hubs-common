@@ -13,6 +13,9 @@ service Routines {
   rpc CheckValue(ValueObject) returns (stream ValueObject) {}
 }
 
+message Identity{
+  int64 value=1;
+}
 message ConfigItem{
   string item=1;
   string key=2;

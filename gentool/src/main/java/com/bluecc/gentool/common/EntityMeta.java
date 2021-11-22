@@ -4,6 +4,7 @@ import com.bluecc.gentool.EntityMetaManager;
 import com.bluecc.gentool.SqlGenTool;
 import com.bluecc.gentool.common.EntityMetaDigester.FieldDigest;
 import com.bluecc.gentool.dummy.FieldMappings;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -22,6 +23,24 @@ import java.util.stream.Collectors;
 @Builder
 @Slf4j
 public class EntityMeta {
+    @Data
+    @Builder
+    public static class HeadEntity {
+        @Singular
+        Set<String> flatIds;
+    }
+
+    public static final Map<String, HeadEntity> HEAD_ENTITIES = ImmutableMap.of(
+            "OrderHeader", HeadEntity.builder().build(),
+            "OrderItem", HeadEntity.builder()
+                    .flatId("OrderHeader")
+                    .build(),
+            "Payment", HeadEntity.builder().build(),
+            "Invoice", HeadEntity.builder()
+                            .flatId("Party")
+                    .build()
+    );
+
     String name;
     String title;
     String tableName;
@@ -42,7 +61,7 @@ public class EntityMeta {
                 .collect(Collectors.toList());
     }
 
-    public int getPublicFieldNumber(){
+    public int getPublicFieldNumber() {
         return getPublicFields().size();
     }
 
@@ -87,6 +106,10 @@ public class EntityMeta {
 
     public String getUnderscore() {
         return Util.toSnakecase(this.name);
+    }
+
+    public boolean isHeadEntity() {
+        return HEAD_ENTITIES.containsKey(this.name);
     }
 
     static final Set<String> IGNORE_FIELDS = Sets.newHashSet("lastUpdatedTxStamp", "createdTxStamp");
@@ -237,6 +260,22 @@ public class EntityMeta {
             //         Util.toSnakecase(title) + "_" + Util.toSnakecase(name));
             return String.format("%s%sData %s", prefix, relEntityName,
                     Util.toSnakecase(name));
+        }
+
+        public boolean hasProtoDef(String entityName){
+            HeadEntity headEntity=HEAD_ENTITIES.get(entityName);
+            if(headEntity!=null){
+                return !headEntity.flatIds.contains(this.relEntityName);
+            }
+            return false; // not head-entity
+        }
+
+        public String getMainRelField(){
+            return keymaps.get(0).fieldName;
+        }
+
+        public String getRelFields(){
+            return keymaps.stream().map(k -> k.fieldName).collect(Collectors.joining(" + "));
         }
     }
 
