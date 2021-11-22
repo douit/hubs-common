@@ -2,10 +2,7 @@ package com.bluecc.gentool;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.bluecc.hubs.fund.DataSetUtil;
-import com.bluecc.hubs.fund.EntityMeta;
-import com.bluecc.hubs.fund.EntityMetaDigester;
-import com.bluecc.hubs.fund.MetaTypes;
+import com.bluecc.hubs.fund.*;
 import com.google.common.collect.Lists;
 
 import java.util.Collection;

@@ -2,6 +2,7 @@ package com.bluecc.gentool;
 
 import com.bluecc.gentool.dummy.DummyTemplateProcs;
 import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.EntityMetaManager;
 import com.bluecc.hubs.fund.Util;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,14 +1,12 @@
 package com.bluecc.gentool;
 
+import com.bluecc.hubs.fund.EntityMetaManager;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
+import com.google.inject.*;
 import org.redisson.Redisson;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
@@ -32,6 +30,7 @@ public class EntitySeeder {
                 @Override
                 protected void configure() {
                     super.configure();
+                    bind(EntityMetaManager.class).in(Scopes.SINGLETON);
                 }
             });
 
@@ -43,7 +42,8 @@ public class EntitySeeder {
         seeder.shutdown();
     }
 
-    @Inject EntityMetaManager metaManager;
+    @Inject
+    EntityMetaManager metaManager;
     RedissonClient redisson;
 
     EntitySeeder() {

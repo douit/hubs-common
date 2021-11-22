@@ -8,9 +8,18 @@ import java.util.Map;
 public class DataFill {
     Descriptors.Descriptor type;
     EntityMeta meta;
+
     public DataFill(Descriptors.Descriptor type, EntityMeta meta) {
         this.type = type;
         this.meta=meta;
+    }
+
+    public Descriptors.Descriptor getType() {
+        return type;
+    }
+
+    public EntityMeta getMeta() {
+        return meta;
     }
 
     public void fillData(Map<String, String> data) {

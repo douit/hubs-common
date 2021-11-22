@@ -1,6 +1,7 @@
 package com.bluecc.gentool;
 
 import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.EntityMetaManager;
 import com.bluecc.hubs.fund.Util;
 import com.google.common.collect.Sets;
 import org.junit.Before;

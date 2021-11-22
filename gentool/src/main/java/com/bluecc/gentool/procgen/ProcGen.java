@@ -1,8 +1,8 @@
 package com.bluecc.gentool.procgen;
 
-import com.bluecc.gentool.EntityMetaManager;
 import com.bluecc.gentool.common.TemplateUtil;
 import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.EntityMetaManager;
 import com.bluecc.hubs.fund.SystemDefs;
 import com.bluecc.hubs.fund.Util;
 import com.google.common.collect.ImmutableMap;

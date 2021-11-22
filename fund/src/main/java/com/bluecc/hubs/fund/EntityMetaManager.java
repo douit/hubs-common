@@ -1,11 +1,8 @@
-package com.bluecc.gentool;
+package com.bluecc.hubs.fund;
 
-import com.bluecc.hubs.fund.EntityMeta;
 import com.google.common.collect.Maps;
 
-import javax.inject.Singleton;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
@@ -15,11 +12,8 @@ import static com.bluecc.hubs.fund.MetaTypes.types;
 import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
 import static com.bluecc.hubs.fund.Util.GSON;
 
-@Singleton
 public class EntityMetaManager {
     Map<String, EntityMeta> metaMap= Maps.newHashMap();
-
-
 
     public EntityMeta getEntityMeta(String entityName){
         EntityMeta meta=metaMap.get(entityName);

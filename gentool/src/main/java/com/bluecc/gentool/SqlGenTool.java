@@ -11,9 +11,9 @@ import lombok.Data;
 import java.io.*;
 import java.util.*;
 
-import static com.bluecc.gentool.EntityMetaManager.*;
 import static com.bluecc.gentool.dummy.SeedCollector.dataFile;
 import static com.bluecc.hubs.fund.DataSetUtil.collectEntitiesFromResources;
+import static com.bluecc.hubs.fund.EntityMetaManager.*;
 import static com.bluecc.hubs.fund.Util.writeJsonFile;
 import static java.util.Objects.requireNonNull;
 

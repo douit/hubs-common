@@ -13,8 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.bluecc.gentool.EntityMetaManager.getMetaFile;
 import static com.bluecc.hubs.fund.DataSetUtil.getAvailableEntities;
+import static com.bluecc.hubs.fund.EntityMetaManager.getMetaFile;
 import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
 import static com.bluecc.hubs.fund.Util.*;
 import static java.util.Objects.requireNonNull;
