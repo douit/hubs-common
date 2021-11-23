@@ -1,0 +1,8 @@
+order_id: o_123
+order_type_id:
+  value_id: SALES_ORDER
+order_item:
+  - order_item_seq_id: 1
+    quantity: {{decimal(5.3)}}
+  - order_item_seq_id: 2
+    quantity: {{decimal(5.3)}}

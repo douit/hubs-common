@@ -12,6 +12,9 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -90,5 +93,13 @@ public class Util {
 
     public static String getCurrentDirectory(){
         return System.getProperty("user.dir");
+    }
+
+    public static String readFile(String file) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(file)));
+    }
+
+    public static String readFile(Path file) throws IOException {
+        return new String(Files.readAllBytes(file));
     }
 }

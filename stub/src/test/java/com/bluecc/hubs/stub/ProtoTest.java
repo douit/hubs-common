@@ -92,7 +92,7 @@ public class ProtoTest {
 
     // https://stackoverflow.com/questions/1051732/what-is-the-best-approach-for-serializing-bigdecimal-biginteger-to-protocolbuffe
     @Test
-    void testDecimal(){
+    public void testDecimal(){
         java.math.BigDecimal bigDecimal = new java.math.BigDecimal("1234.56789");
         DecimalValue serialized = DecimalValue.newBuilder()
                 .setScale(bigDecimal.scale())
