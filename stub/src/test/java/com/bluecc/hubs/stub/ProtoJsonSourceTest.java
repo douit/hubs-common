@@ -12,7 +12,9 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.Util.pretty;
 
@@ -81,7 +83,14 @@ public class ProtoJsonSourceTest {
             return s+"$";
         }
         public static String makeDecimal(String s){
-            return String.format("{value: \"%s\"}", s);
+            String b64 = Base64.getEncoder().encodeToString(s.getBytes());
+            java.math.BigDecimal bigDecimal = new java.math.BigDecimal(s);
+            String resultStr=ImmutableMap.of("scale", bigDecimal.scale(),
+                    "precision", bigDecimal.precision(),
+                    "value", b64).entrySet().stream()
+                    .map(e -> e.getKey()+": "+e.getValue())
+                    .collect(Collectors.joining(", "));
+            return "{"+resultStr+"}";
         }
     }
     Jinjava createTemplate(){
@@ -105,5 +114,12 @@ public class ProtoJsonSourceTest {
         Map<String, Object> obj = yaml.load(r);
         System.out.println(obj);
         pretty(obj);
+    }
+
+    @Test
+    public void testB64(){
+        String val="MTIzNC41Njc4OQ\u003d\u003d";
+        String sval=new String(Base64.getDecoder().decode(val), StandardCharsets.UTF_8);
+        System.out.println(sval);
     }
 }

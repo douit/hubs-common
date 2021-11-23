@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class ProtoTest {
     @Test
-    void testProto() throws IOException {
+    public void testProto() throws IOException {
         StringValue val = StringValue.newBuilder()
                 .setValue("samlet")
                 .build();
@@ -32,13 +32,13 @@ public class ProtoTest {
     }
 
     @Test
-    void testParseProtoJson() throws IOException {
+    public void testParseProtoJson() throws IOException {
         Collection<Feature> features = RouteGuideUtil.parseFeatures(RouteGuideUtil.getDefaultFeaturesFile());
         features.forEach(e -> System.out.println(e));
     }
 
     @Test
-    void testTimestamp() {
+    public void testTimestamp() {
         long millis = System.currentTimeMillis();
         // the Joda Time's [`ISODateTimeFormat.dateTime()`](
         // http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D
@@ -73,7 +73,7 @@ public class ProtoTest {
     }
 
     @Test
-    void testDateTimeParse(){
+    public void testDateTimeParse(){
         String dtStrLong="2001-01-01 12:00:00.0";
         // String dtStr="2001-01-01T12:00:00";
         // DateTimeFormatter parser= ISODateTimeFormat.dateTimeNoMillis();
@@ -113,7 +113,7 @@ public class ProtoTest {
     }
 
     @Test
-    void testFieldMeta(){
+    public void testFieldMeta(){
         DateTime thruDate=DateTime.now();
         DateTime startDate=thruDate.minusDays(10);
         ShipmentTimeEstimateData estimateData=ShipmentTimeEstimateData.newBuilder()
@@ -132,7 +132,7 @@ public class ProtoTest {
     }
 
     @Test
-    void testRepeatedFieldMeta(){
+    public void testRepeatedFieldMeta(){
         Descriptors.Descriptor descriptor=OrderItemData.getDescriptor();
         descriptor.getFields().forEach(f ->
                 System.out.format("%s, %s\n", f.getName(), f.isRepeated()));
@@ -156,7 +156,7 @@ public class ProtoTest {
     }
 
     @Test
-    void testSerializedData() throws InvalidProtocolBufferException {
+    public void testSerializedData() throws InvalidProtocolBufferException {
         ShipmentTimeEstimateData estimateData=createShipmentTime();
         byte[] bytes = estimateData.toByteArray();
         System.out.println(bytes.length);
@@ -166,7 +166,7 @@ public class ProtoTest {
     }
 
     @Test
-    void testProcessMessageByFindField(){
+    public void testProcessMessageByFindField(){
         ShipmentTimeEstimateData estimateData=createShipmentTime();
         GeneratedMessageV3 msg=estimateData;
         Descriptors.FieldDescriptor fld=msg.getDescriptorForType().findFieldByName("thru_date");
@@ -184,7 +184,7 @@ public class ProtoTest {
     }
 
     @Test
-    void testPeriod(){
+    public void testPeriod(){
         DateTime thruDate=DateTime.now();
         DateTime startDate=thruDate.minusDays(10);
         ShipmentTimeEstimateData estimateData=ShipmentTimeEstimateData.newBuilder()
