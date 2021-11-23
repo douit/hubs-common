@@ -56,7 +56,10 @@ public class FactBagTest {
         factBag.putData("test", "p2", envelope);
         Envelope resultData=factBag.getData("test", "p2");
         System.out.println(resultData.getDataType());
+        assertTrue(resultData.getData().is(StringValue.class));
         StringValue resultVal=resultData.getData().unpack(StringValue.class);
+        assertEquals("string", resultData.getDataType());
         assertEquals("hi", resultVal.getValue());
     }
 }
+

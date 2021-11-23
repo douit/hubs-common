@@ -15,44 +15,52 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import javax.inject.Inject;
 import java.util.Base64;
 
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
+import static com.bluecc.hubs.proto.ProtoModule.startup;
 
 @Slf4j
 public class DataFill {
 
-    @Parameter(names = {"--flat-mode", "-f"})
-    boolean flatMode=false;
+    // specify the option, the value will be set to false: --flat-mode false
+    @Parameter(names = {"--flat-mode", "-f"}, arity = 1)
+    boolean flatMode = true;
+
     public static void main(String[] args) {
         String dataFile = "dataset/sample/sales_order.xml";
         // String dataFile = "dataset/OrderDemoData.xml";
         Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
         collectEntityData(dataList, dataFile, false);
 
-        DataFill dataFill=new DataFill();
+        DataFill dataFill = startup(DataFill.class);
         dataFill.setupData(dataList);
     }
 
-    DataBuilder dataBuilder=new DataBuilder();
-    void setupData(Multimap<String, JsonObject> dataList){
+    @Inject
+    ProtoMeta protoMeta;
+    DataBuilder dataBuilder = new DataBuilder();
+
+    void setupData(Multimap<String, JsonObject> dataList) {
         for (String key : dataList.keySet()) {
             System.out.println(key + ":");
             for (JsonObject jsonObject : dataList.get(key)) {
                 // pretty(jsonObject);
-                Builder<?> msg=flatMode?fillDataWithFlatMode(key, jsonObject)
-                        :fillDataWithHeadMode(key, jsonObject);
-                if(msg!=null){
-                    System.out.println("\t[ok] "+msg.build().toString()
+                Builder<?> msg = flatMode ? fillDataWithFlatMode(key, jsonObject)
+                        : fillDataWithHeadMode(key, jsonObject);
+                if (msg != null) {
+                    System.out.println("\t[ok] " + msg.build().toString()
                             .replace("\n", "\n\t"));
                 }
             }
         }
     }
 
-    static final String DT_STR="2001-05-13 00:00:00";
+    static final String DT_STR = "2001-05-13 00:00:00";
     static final DateTimeFormatter FMT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-    public static DateTime trimParse(String dtStr){
+
+    public static DateTime trimParse(String dtStr) {
         return FMT.parseDateTime(dtStr.substring(0, DT_STR.length()));
     }
 
@@ -61,23 +69,23 @@ public class DataFill {
                 .setNanos((int) ((millis % 1000) * 1000000)).build();
     }
 
-    public static Timestamp getTimestamp(DateTime dt){
+    public static Timestamp getTimestamp(DateTime dt) {
         return getTimestamp(dt.getMillis());
     }
 
-    public static Timestamp getTimestamp(String dtStr){
+    public static Timestamp getTimestamp(String dtStr) {
         return getTimestamp(trimParse(dtStr));
     }
 
-    public  Builder<?> fillDataWithHeadMode(String entityName, JsonObject jsonObject) {
-        DataBuilder.ProtoBuilder protoBuilder=dataBuilder.procData(entityName, false);
+    public Builder<?> fillDataWithHeadMode(String entityName, JsonObject jsonObject) {
+        DataBuilder.ProtoBuilder protoBuilder = dataBuilder.procData(entityName, false);
         convertData(entityName, protoBuilder.getBuilder(), jsonObject,
                 protoBuilder.getDescriptor());
         return protoBuilder.getBuilder();
     }
 
-    public  Builder<?> fillDataWithFlatMode(String entityName, JsonObject jsonObject) {
-        Builder<?> msg=null;
+    public Builder<?> fillDataWithFlatMode(String entityName, JsonObject jsonObject) {
+        Builder<?> msg = null;
         switch (entityName) {
             case "Party": {
                 msg = PartyFlatData.newBuilder();
@@ -121,10 +129,10 @@ public class DataFill {
             }
             default:
                 // log.warn(".. ignore " + entityName);
-                DataBuilder.ProtoBuilder protoBuilder=dataBuilder.procData(entityName, true);
+                DataBuilder.ProtoBuilder protoBuilder = dataBuilder.procData(entityName, true);
                 convertData(entityName, protoBuilder.getBuilder(), jsonObject,
                         protoBuilder.getDescriptor());
-                msg= protoBuilder.getBuilder();
+                msg = protoBuilder.getBuilder();
         }
         return msg;
     }
@@ -184,11 +192,11 @@ public class DataFill {
         msg.setField(fld, ByteString.copyFrom(decodedBytes));
     }
 
-    private  void setFieldWithMessage(String entityName, Builder<?> msg, Descriptors.FieldDescriptor fld, JsonElement val) {
-        String msgType=fld.getMessageType().getName();
-        switch (msgType){
+    private void setFieldWithMessage(String entityName, Builder<?> msg, Descriptors.FieldDescriptor fld, JsonElement val) {
+        String msgType = fld.getMessageType().getName();
+        switch (msgType) {
             case "TypeSymbol":
-                TypeSymbol typeSymbol= TypeSymbol.newBuilder()
+                TypeSymbol typeSymbol = TypeSymbol.newBuilder()
                         .setTypeName(fld.getName())
                         .setValueId(val.getAsString())
                         .build();
@@ -207,15 +215,15 @@ public class DataFill {
     }
 
     private void proessEntityField(String entityName, Builder<?> msg, Descriptors.FieldDescriptor fld, JsonElement val) {
-        Descriptors.Descriptor descriptor=fld.getMessageType();
-        String entityType=descriptor.getOptions().getExtension(RoutinesProto.entityType);
+        Descriptors.Descriptor descriptor = fld.getMessageType();
+        String entityType = descriptor.getOptions().getExtension(RoutinesProto.entityType);
         log.info("process entity field type {}({}), in {}", entityType,
-                fld.isRepeated()?"*":"1", entityName);
+                fld.isRepeated() ? "*" : "1", entityName);
 
         // TODO 根据值id, 从当前数据集中加载相应的实体值
 
-        log.error("\t🚫 "+ fld.getMessageType().getName()+" -> "+ val);
-        throw new RuntimeException("Cannot handle "+ descriptor.getName()+" -> "+ val);
+        log.error("\t🚫 " + fld.getMessageType().getName() + " -> " + val);
+        throw new RuntimeException("Cannot handle " + descriptor.getName() + " -> " + val);
     }
 
     public static DecimalValue getDecimalValue(JsonElement val) {
@@ -232,25 +240,27 @@ public class DataFill {
         return serialized;
     }
 
-    private  void setFieldWithEnum(Builder<?> msg, Descriptors.FieldDescriptor fld, JsonElement val) {
-        String msgType=fld.getEnumType().getName();
-        switch (msgType){
+    private void setFieldWithEnum(Builder<?> msg, Descriptors.FieldDescriptor fld, JsonElement val) {
+        String msgType = fld.getEnumType().getName();
+        switch (msgType) {
             case "Indicator":
-                String c=val.getAsString();
-                Indicator indicator=castIndicator(c);
+                String c = val.getAsString();
+                Indicator indicator = castIndicator(c);
                 msg.setField(fld, indicator.getValueDescriptor());
                 break;
 
             default:
-                log.error("\t🚫 "+ fld.getMessageType().getName());
-                throw new RuntimeException("Cannot handle "+fld.getMessageType().getName());
+                log.error("\t🚫 " + fld.getMessageType().getName());
+                throw new RuntimeException("Cannot handle " + fld.getMessageType().getName());
         }
     }
 
     private Indicator castIndicator(String c) {
-        switch (c.toUpperCase()){
-            case "Y": return Indicator.YES;
-            case "N": return Indicator.NO;
+        switch (c.toUpperCase()) {
+            case "Y":
+                return Indicator.YES;
+            case "N":
+                return Indicator.NO;
             default:
                 return Indicator.UNKNOWN;
         }

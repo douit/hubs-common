@@ -128,5 +128,6 @@ message DecimalValue {
 
 message Envelope{
   string data_type=1;
-  google.protobuf.Any data = 2;
+  repeated string tags=2;
+  google.protobuf.Any data = 5;
 }

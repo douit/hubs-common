@@ -34,4 +34,4 @@ build/
 logs/
 /*.bpmn
 /prefabs/trip.bpmn
-/driver.log
+/*.log

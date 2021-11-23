@@ -11,7 +11,7 @@ public class DummyMaintain {
         maybeCreateSchema(session, keyspaceId);
     }
 
-    private static void maybeCreateSchema(CqlSession session, CqlIdentifier keyspaceId) {
+    public static void maybeCreateSchema(CqlSession session, CqlIdentifier keyspaceId) {
         session.execute(
                 SimpleStatement.newInstance(
                                 String.format(

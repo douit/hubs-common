@@ -183,7 +183,25 @@ public class EntityMeta {
         }
     }
 
-    // public List<RelationMeta>
+    @Data
+    @Builder
+    public static class RelationQueryMeta{
+        String relationFieldName;  // 使用relation名称定义的proto字段名
+        String relationEntity;
+        List<String> fieldNames;
+        boolean repeated;
+    }
+
+    public List<RelationQueryMeta> getRelationQueries(){
+        return relations.stream().filter(r -> r.hasProtoDef(name))
+                .map(r -> RelationQueryMeta.builder()
+                        .relationFieldName(Util.toSnakecase(r.name))
+                        .relationEntity(r.getRelEntityName())
+                        .fieldNames(r.getRelFieldList())
+                        .repeated(r.isRepeated())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     @Data
     @Builder
@@ -275,6 +293,10 @@ public class EntityMeta {
                     Util.toSnakecase(name));
         }
 
+        public boolean isRepeated(){
+            return this.type.equals("many");
+        }
+
         public boolean hasProtoDef(String entityName){
             HeadEntity headEntity=HEAD_ENTITIES.get(entityName);
             if(headEntity!=null){
@@ -290,6 +312,10 @@ public class EntityMeta {
         public String getRelFields(){
             return keymaps.stream().map(k -> k.fieldName)
                     .collect(Collectors.joining(" + "));
+        }
+        public List<String> getRelFieldList(){
+            return keymaps.stream().map(k -> k.fieldName)
+                    .collect(Collectors.toList());
         }
     }
 
