@@ -10,14 +10,13 @@ import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ProtoTest {
     @Test
@@ -164,6 +163,15 @@ public class ProtoTest {
 
         ShipmentTimeEstimateData newData=ShipmentTimeEstimateData.parseFrom(bytes);
         System.out.println(newData);
+    }
+
+    @Test
+    void testProcessMessageByFindField(){
+        ShipmentTimeEstimateData estimateData=createShipmentTime();
+        GeneratedMessageV3 msg=estimateData;
+        Descriptors.FieldDescriptor fld=msg.getDescriptorForType().findFieldByName("thru_date");
+        Timestamp ts=(Timestamp)msg.getField(fld);
+        System.out.println(ts);
     }
 
     private ShipmentTimeEstimateData createShipmentTime() {

@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -23,6 +24,7 @@ import static java.util.Arrays.asList;
 /**
  * $ just gen ProtoTool -w
  */
+@Slf4j
 public class ProtoTool {
     @Parameter
     public List<String> entities = Lists.newArrayList("OrderHeader", "OrderItem");
@@ -43,6 +45,7 @@ public class ProtoTool {
             String protoDir= SystemDefs.prependHubsHome( "stub/src/main/proto");
             String targetFile=protoDir+"/hubs.proto";
             System.out.println(".. write to "+targetFile);
+            log.info(".. write to "+targetFile);
             main.writeProtos(targetFile);
         }
 

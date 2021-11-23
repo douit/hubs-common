@@ -1,7 +1,8 @@
 package com.bluecc.hubs.stub;
 
 import com.google.protobuf.Descriptors;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class ProtoOptTest {
     @Test

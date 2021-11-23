@@ -30,19 +30,16 @@ public class DomainCli {
 
             System.out.println(GSON.toJson(e));
 
-            PersonObjects personObjects=PersonObjects.newBuilder()
+            PersonObjects personObjects = PersonObjects.newBuilder()
                     .addObjects(PersonObject.newBuilder()
                             .setPartyId(e.getPartyId())
                             .setFirstName(e.getFirstName())
                             .setLastName(e.getLastName())
                             .build())
                     .build();
-            try {
-                String jsonString=ProtoJsonUtils.toJson(personObjects);
-                System.out.println(jsonString);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+
+            String jsonString = ProtoJsonUtils.toJson(personObjects);
+            System.out.println(jsonString);
         });
     }
 

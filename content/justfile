@@ -1,0 +1,3 @@
+# $ just run dummy.DummyProducts
+run program +FLAGS='':
+    mvn compile exec:java -Dexec.mainClass="com.bluecc.content.{{program}}" -Dexec.args="{{FLAGS}}"

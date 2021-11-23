@@ -7,13 +7,12 @@ import com.bluecc.hubs.stub.PersonData;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Descriptors.FieldDescriptor.Type;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Locale;
-
+import org.junit.Test;
+import static org.junit.Assert.*;
 import static com.bluecc.hubs.fund.MetaTypes.typeList;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DataFillTest {
 
@@ -38,4 +37,5 @@ class DataFillTest {
         PersonFlatData.Builder person=PersonFlatData.newBuilder();
         // person.setField()
     }
+
 }

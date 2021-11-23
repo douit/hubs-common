@@ -7,6 +7,7 @@ option objc_class_prefix = "RTP";
 
 package routines;
 import "google/protobuf/descriptor.proto";
+import "google/protobuf/any.proto";
 
 extend google.protobuf.MessageOptions {
   optional string entity_type = 51234;
@@ -123,4 +124,9 @@ message DecimalValue {
   uint32 scale = 1;
   uint32 precision = 2;
   bytes value = 3;
+}
+
+message Envelope{
+  string data_type=1;
+  google.protobuf.Any data = 2;
 }

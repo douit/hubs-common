@@ -3,12 +3,12 @@ package com.bluecc.hubs.proto;
 import com.bluecc.hubs.stub.RoutinesProto;
 import com.bluecc.hubs.stub.ShipmentPackageRouteSegData;
 import com.google.protobuf.ByteString;
-import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 class DataBuilderTest {
 
