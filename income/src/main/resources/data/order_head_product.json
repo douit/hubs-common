@@ -1,0 +1,48 @@
+{
+  "order_id": "o_123",
+  "order_type_id": {
+    "value_id": "SALES_ORDER"
+  },
+  "order_item": [
+    {
+      "order_item_seq_id": "1",
+      "quantity": {
+        "value": 53
+      },
+      "product": {
+        "product_id": "p_1",
+        "product_name": "sample prod",
+        "product_price": [
+          {
+            "price": {
+              "currency_uom_id": "CNY",
+              "value": "8.9"
+            }
+          }
+        ]
+      },
+      "from_inventory_item": {
+        "inventory_item_id": "i_1",
+        "container_id": "c_1",
+        "unit_cost": {
+          "value": 180,
+          "scaling_position": 2
+        }
+      },
+      "order_status": [
+        {
+          "status_id": {
+            "type_name": "StatusItem",
+            "value_id": "CREATED"
+          }
+        }
+      ]
+    },
+    {
+      "order_item_seq_id": "2",
+      "quantity": {
+        "value": 53
+      }
+    }
+  ]
+}

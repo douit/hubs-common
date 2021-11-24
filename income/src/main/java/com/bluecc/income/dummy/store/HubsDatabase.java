@@ -5,6 +5,7 @@ import com.bluecc.hubs.stub.PersonFlatData;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
+import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
