@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class NameUtil {
+public class MetaTypeUtil {
     public static final Map<String, String> PROTO_TYPE_MAP = ImmutableMap.of(
             "id", "string",
             "blob", "bytes", "byte-array", "bytes", "object", "bytes",
@@ -16,9 +16,9 @@ public class NameUtil {
     );
     public static final Map<String, String> PROTO_CUSTOM_MAP = ImmutableMap.of(
             "indicator", "routines.Indicator",
-            "currency-amount", "routines.DecimalValue", // DECIMAL(18,2)
-            "currency-precise", "routines.DecimalValue", // DECIMAL(18,3)
-            "fixed-point", "routines.DecimalValue" // DECIMAL(18,6)
+            "currency-amount", "routines.Currency", // DECIMAL(18,2)
+            "currency-precise", "routines.Currency", // DECIMAL(18,3)
+            "fixed-point", "routines.FixedPoint" // DECIMAL(18,6)
     );
 
     public static String getProtoType(String fieldType) {

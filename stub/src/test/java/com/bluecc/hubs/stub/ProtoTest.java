@@ -2,9 +2,8 @@ package com.bluecc.hubs.stub;
 
 import com.bluecc.hubs.ProtoJsonUtils;
 import com.bluecc.hubs.proto.DataFill;
-import com.bluecc.hubs.proto.ProtoTypes;
+import com.bluecc.hubs.ProtoTypes;
 import com.google.protobuf.*;
-import org.assertj.core.internal.bytebuddy.description.field.FieldDescription;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
@@ -14,7 +13,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
 
@@ -141,11 +139,11 @@ public class ProtoTest {
         // Descriptors.FieldDescriptor fieldDescriptor = message.getDescriptorForType().findFieldByName("fieldXyz");
         Descriptors.FieldDescriptor fieldDescriptor =descriptor.findFieldByName("order_adjustment");
         OrderAdjustmentData adjustmentData= OrderAdjustmentData.newBuilder()
-                .setAmount(DataFill.getDecimalValue("12.345"))
+                .setAmount(DataFill.getCurrencyValue("12.345"))
                 .build();
         builder.addRepeatedField(fieldDescriptor, adjustmentData);
         builder.addRepeatedField(fieldDescriptor, OrderAdjustmentData.newBuilder()
-                .setAmount(DataFill.getDecimalValue("34.345"))
+                .setAmount(DataFill.getCurrencyValue("34.345"))
                 .build());
         System.out.println(builder.build());
         System.out.println(ProtoJsonUtils.toJson(builder.build()));

@@ -131,3 +131,13 @@ message Envelope{
   repeated string tags=2;
   google.protobuf.Any data = 5;
 }
+
+message Currency{
+  string currency_uom_id=1;
+  string value = 2;
+}
+
+message FixedPoint{
+  int64 value=1;
+  int32 scaling_position=2;
+}

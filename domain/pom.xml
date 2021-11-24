@@ -155,7 +155,7 @@
                 </executions>
                 <configuration>
                     <jdbcDriver>org.h2.Driver</jdbcDriver>
-                    <jdbcUrl>jdbc:h2:mem:;INIT=runscript from 'file:${project.baseUri}/src/main/sql/001_schema.sql'\;RUNSCRIPT FROM 'src/main/sql/hubs_h2.sql'
+                    <jdbcUrl>jdbc:h2:mem:;INIT=runscript from 'file:${project.baseUri}/src/main/sql/001_schema.sql'\;RUNSCRIPT FROM 'file:${project.baseUri}/src/main/sql/hubs_h2.sql'
                     </jdbcUrl>
                     <jdbcUser>sa</jdbcUser>
                     <packageName>com.bluecc.domain.sql.model</packageName>

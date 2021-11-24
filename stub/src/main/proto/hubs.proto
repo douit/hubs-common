@@ -122,8 +122,8 @@ message OrderHeaderFlatData {
     routines.Indicator needs_inventory_issuance = 24;    
     routines.Indicator is_rush_order = 25;    
     string internal_code = 26;    
-    routines.DecimalValue remaining_sub_total = 27;    
-    routines.DecimalValue grand_total = 28;    
+    routines.Currency remaining_sub_total = 27;    
+    routines.Currency grand_total = 28;    
     routines.Indicator is_viewed = 29;    
     routines.Indicator invoice_per_shipment = 30;  
 }
@@ -154,13 +154,13 @@ message OrderItemFlatData {
     string shopping_list_item_seq_id = 19;    
     string subscription_id = 20;    
     string deployment_id = 21;    
-    routines.DecimalValue quantity = 22;    
-    routines.DecimalValue cancel_quantity = 23;    
-    routines.DecimalValue selected_amount = 24;    
-    routines.DecimalValue unit_price = 25;    
-    routines.DecimalValue unit_list_price = 26;    
-    routines.DecimalValue unit_average_cost = 27;    
-    routines.DecimalValue unit_recurring_price = 28;    
+    routines.FixedPoint quantity = 22;    
+    routines.FixedPoint cancel_quantity = 23;    
+    routines.FixedPoint selected_amount = 24;    
+    routines.Currency unit_price = 25;    
+    routines.Currency unit_list_price = 26;    
+    routines.Currency unit_average_cost = 27;    
+    routines.Currency unit_recurring_price = 28;    
     routines.Indicator is_modified_price = 29;
     routines.TypeSymbol recurring_freq_uom_id = 30; // Uom    
     string item_description = 31;    
@@ -199,12 +199,12 @@ message PaymentFlatData {
     routines.TypeSymbol status_id = 10; // StatusItem    
     google.protobuf.Timestamp effective_date = 11;    
     string payment_ref_num = 12;    
-    routines.DecimalValue amount = 13;
+    routines.Currency amount = 13;
     routines.TypeSymbol currency_uom_id = 14; // Uom    
     string comments = 15;    
     string fin_account_trans_id = 16;    
     string override_gl_account_id = 17;    
-    routines.DecimalValue actual_currency_amount = 18;
+    routines.Currency actual_currency_amount = 18;
     routines.TypeSymbol actual_currency_uom_id = 19; // Uom  
 }
 
@@ -262,26 +262,26 @@ message ProductFlatData {
     routines.TypeSymbol inventory_item_type_id = 24; // InventoryItemType    
     routines.Indicator require_inventory = 25;
     routines.TypeSymbol quantity_uom_id = 26; // Uom    
-    routines.DecimalValue quantity_included = 27;    
+    routines.FixedPoint quantity_included = 27;    
     int64 pieces_included = 28;    
     routines.Indicator require_amount = 29;    
-    routines.DecimalValue fixed_amount = 30;
+    routines.Currency fixed_amount = 30;
     routines.TypeSymbol amount_uom_type_id = 31; // UomType
     routines.TypeSymbol weight_uom_id = 32; // Uom    
-    routines.DecimalValue shipping_weight = 33;    
-    routines.DecimalValue product_weight = 34;
+    routines.FixedPoint shipping_weight = 33;    
+    routines.FixedPoint product_weight = 34;
     routines.TypeSymbol height_uom_id = 35; // Uom    
-    routines.DecimalValue product_height = 36;    
-    routines.DecimalValue shipping_height = 37;
+    routines.FixedPoint product_height = 36;    
+    routines.FixedPoint shipping_height = 37;
     routines.TypeSymbol width_uom_id = 38; // Uom    
-    routines.DecimalValue product_width = 39;    
-    routines.DecimalValue shipping_width = 40;
+    routines.FixedPoint product_width = 39;    
+    routines.FixedPoint shipping_width = 40;
     routines.TypeSymbol depth_uom_id = 41; // Uom    
-    routines.DecimalValue product_depth = 42;    
-    routines.DecimalValue shipping_depth = 43;
+    routines.FixedPoint product_depth = 42;    
+    routines.FixedPoint shipping_depth = 43;
     routines.TypeSymbol diameter_uom_id = 44; // Uom    
-    routines.DecimalValue product_diameter = 45;    
-    routines.DecimalValue product_rating = 46;
+    routines.FixedPoint product_diameter = 45;    
+    routines.FixedPoint product_rating = 46;
     routines.TypeSymbol rating_type_enum = 47; // Enumeration    
     routines.Indicator returnable = 48;    
     routines.Indicator taxable = 49;    
@@ -294,9 +294,9 @@ message ProductFlatData {
     routines.TypeSymbol origin_geo_id = 56; // Geo
     routines.TypeSymbol requirement_method_enum_id = 57; // Enumeration    
     int64 bill_of_material_level = 58;    
-    routines.DecimalValue reserv_max_persons = 59;    
-    routines.DecimalValue reserv2nd_p_p_perc = 60;    
-    routines.DecimalValue reserv_nth_p_p_perc = 61;    
+    routines.FixedPoint reserv_max_persons = 59;    
+    routines.FixedPoint reserv2nd_p_p_perc = 60;    
+    routines.FixedPoint reserv_nth_p_p_perc = 61;    
     string config_id = 62;    
     google.protobuf.Timestamp created_date = 63;    
     string created_by_user_login = 64;    
@@ -326,7 +326,7 @@ message ShipmentFlatData {
     google.protobuf.Timestamp estimated_arrival_date = 11;    
     string estimated_arrival_work_eff_id = 12;    
     google.protobuf.Timestamp latest_cancel_date = 13;    
-    routines.DecimalValue estimated_ship_cost = 14;
+    routines.Currency estimated_ship_cost = 14;
     routines.TypeSymbol currency_uom_id = 15; // Uom    
     string handling_instructions = 16;    
     string origin_facility_id = 17;    
@@ -337,7 +337,7 @@ message ShipmentFlatData {
     string destination_telecom_number_id = 22;    
     string party_id_to = 23;    
     string party_id_from = 24;    
-    routines.DecimalValue additional_shipping_charge = 25;    
+    routines.Currency additional_shipping_charge = 25;    
     string addtl_shipping_charge_desc = 26;    
     google.protobuf.Timestamp created_date = 27;    
     string created_by_user_login = 28;    
@@ -498,7 +498,7 @@ message PartyGroupFlatData {
     string group_name = 2;    
     string group_name_local = 3;    
     string office_site_name = 4;    
-    routines.DecimalValue annual_revenue = 5;    
+    routines.Currency annual_revenue = 5;    
     int64 num_employees = 6;    
     string ticker_symbol = 7;    
     string comments = 8;    
@@ -527,12 +527,12 @@ message ShipmentRouteSegmentData {
     string carrier_delivery_zone = 13;    
     string carrier_restriction_codes = 14;    
     string carrier_restriction_desc = 15;    
-    routines.DecimalValue billing_weight = 16;
+    routines.FixedPoint billing_weight = 16;
     routines.TypeSymbol billing_weight_uom_id = 17; // Uom    
-    routines.DecimalValue actual_transport_cost = 18;    
-    routines.DecimalValue actual_service_cost = 19;    
-    routines.DecimalValue actual_other_cost = 20;    
-    routines.DecimalValue actual_cost = 21;
+    routines.Currency actual_transport_cost = 18;    
+    routines.Currency actual_service_cost = 19;    
+    routines.Currency actual_other_cost = 20;    
+    routines.Currency actual_cost = 21;
     routines.TypeSymbol currency_uom_id = 22; // Uom    
     google.protobuf.Timestamp actual_start_date = 23;    
     google.protobuf.Timestamp actual_arrival_date = 24;    
@@ -600,9 +600,9 @@ message OrderAdjustmentData {
     string ship_group_seq_id = 5;    
     string comments = 6;    
     string description = 7;    
-    routines.DecimalValue amount = 8;    
-    routines.DecimalValue recurring_amount = 9;    
-    routines.DecimalValue amount_already_included = 10;    
+    routines.Currency amount = 8;    
+    routines.Currency recurring_amount = 9;    
+    routines.Currency amount_already_included = 10;    
     string product_promo_id = 11;    
     string product_promo_rule_id = 12;    
     string product_promo_action_seq_id = 13;    
@@ -610,11 +610,11 @@ message OrderAdjustmentData {
     string corresponding_product_id = 15;    
     string tax_authority_rate_seq_id = 16;    
     string source_reference_id = 17;    
-    routines.DecimalValue source_percentage = 18;    
+    routines.FixedPoint source_percentage = 18;    
     string customer_reference_id = 19;
     routines.TypeSymbol primary_geo_id = 20; // Geo
     routines.TypeSymbol secondary_geo_id = 21; // Geo    
-    routines.DecimalValue exempt_amount = 22;    
+    routines.Currency exempt_amount = 22;    
     string tax_auth_geo_id = 23;    
     string tax_auth_party_id = 24;    
     string override_gl_account_id = 25;    
@@ -661,26 +661,26 @@ message ProductData {
     routines.TypeSymbol inventory_item_type_id = 23; // InventoryItemType    
     routines.Indicator require_inventory = 24;
     routines.TypeSymbol quantity_uom_id = 25; // Uom    
-    routines.DecimalValue quantity_included = 26;    
+    routines.FixedPoint quantity_included = 26;    
     int64 pieces_included = 27;    
     routines.Indicator require_amount = 28;    
-    routines.DecimalValue fixed_amount = 29;
+    routines.Currency fixed_amount = 29;
     routines.TypeSymbol amount_uom_type_id = 30; // UomType
     routines.TypeSymbol weight_uom_id = 31; // Uom    
-    routines.DecimalValue shipping_weight = 32;    
-    routines.DecimalValue product_weight = 33;
+    routines.FixedPoint shipping_weight = 32;    
+    routines.FixedPoint product_weight = 33;
     routines.TypeSymbol height_uom_id = 34; // Uom    
-    routines.DecimalValue product_height = 35;    
-    routines.DecimalValue shipping_height = 36;
+    routines.FixedPoint product_height = 35;    
+    routines.FixedPoint shipping_height = 36;
     routines.TypeSymbol width_uom_id = 37; // Uom    
-    routines.DecimalValue product_width = 38;    
-    routines.DecimalValue shipping_width = 39;
+    routines.FixedPoint product_width = 38;    
+    routines.FixedPoint shipping_width = 39;
     routines.TypeSymbol depth_uom_id = 40; // Uom    
-    routines.DecimalValue product_depth = 41;    
-    routines.DecimalValue shipping_depth = 42;
+    routines.FixedPoint product_depth = 41;    
+    routines.FixedPoint shipping_depth = 42;
     routines.TypeSymbol diameter_uom_id = 43; // Uom    
-    routines.DecimalValue product_diameter = 44;    
-    routines.DecimalValue product_rating = 45;
+    routines.FixedPoint product_diameter = 44;    
+    routines.FixedPoint product_rating = 45;
     routines.TypeSymbol rating_type_enum = 46; // Enumeration    
     routines.Indicator returnable = 47;    
     routines.Indicator taxable = 48;    
@@ -693,9 +693,9 @@ message ProductData {
     routines.TypeSymbol origin_geo_id = 55; // Geo
     routines.TypeSymbol requirement_method_enum_id = 56; // Enumeration    
     int64 bill_of_material_level = 57;    
-    routines.DecimalValue reserv_max_persons = 58;    
-    routines.DecimalValue reserv2nd_p_p_perc = 59;    
-    routines.DecimalValue reserv_nth_p_p_perc = 60;    
+    routines.FixedPoint reserv_max_persons = 58;    
+    routines.FixedPoint reserv2nd_p_p_perc = 59;    
+    routines.FixedPoint reserv_nth_p_p_perc = 60;    
     string config_id = 61;    
     google.protobuf.Timestamp created_date = 62;    
     google.protobuf.Timestamp last_modified_date = 63;    
@@ -777,15 +777,15 @@ message FixedAssetData {
     google.protobuf.Timestamp date_next_service = 13;    
     google.protobuf.Timestamp expected_end_of_life = 14;    
     google.protobuf.Timestamp actual_end_of_life = 15;    
-    routines.DecimalValue production_capacity = 16;
+    routines.FixedPoint production_capacity = 16;
     routines.TypeSymbol uom_id = 17; // Uom
     routines.TypeSymbol calendar_id = 18; // TechDataCalendar    
     string serial_number = 19;    
     string located_at_facility_id = 20;    
     string located_at_location_seq_id = 21;    
-    routines.DecimalValue salvage_value = 22;    
-    routines.DecimalValue depreciation = 23;    
-    routines.DecimalValue purchase_cost = 24;    
+    routines.Currency salvage_value = 22;    
+    routines.Currency depreciation = 23;    
+    routines.Currency purchase_cost = 24;    
     string purchase_cost_uom_id = 25;
     
 }
@@ -831,7 +831,7 @@ message PaymentGatewayResponseData {
     routines.TypeSymbol payment_method_type_id = 4; // PaymentMethodType    
     string payment_method_id = 5;
     routines.TypeSymbol trans_code_enum_id = 6; // Enumeration    
-    routines.DecimalValue amount = 7;
+    routines.Currency amount = 7;
     routines.TypeSymbol currency_uom_id = 8; // Uom    
     string reference_num = 9;    
     string alt_reference = 10;    
@@ -878,8 +878,8 @@ message ProductPromoActionData {
     routines.TypeSymbol custom_method_id = 5; // CustomMethod
     routines.TypeSymbol order_adjustment_type_id = 6; // OrderAdjustmentType    
     string service_name = 7;    
-    routines.DecimalValue quantity = 8;    
-    routines.DecimalValue amount = 9;    
+    routines.FixedPoint quantity = 8;    
+    routines.FixedPoint amount = 9;    
     string product_id = 10;    
     string party_id = 11;    
     routines.Indicator use_cart_quantity = 12;
@@ -905,22 +905,22 @@ message ShipmentCostEstimateData {
     routines.TypeSymbol geo_id_from = 10; // Geo    
     string weight_break_id = 11;
     routines.TypeSymbol weight_uom_id = 12; // Uom    
-    routines.DecimalValue weight_unit_price = 13;    
+    routines.Currency weight_unit_price = 13;    
     string quantity_break_id = 14;
     routines.TypeSymbol quantity_uom_id = 15; // Uom    
-    routines.DecimalValue quantity_unit_price = 16;    
+    routines.Currency quantity_unit_price = 16;    
     string price_break_id = 17;
     routines.TypeSymbol price_uom_id = 18; // Uom    
-    routines.DecimalValue price_unit_price = 19;    
-    routines.DecimalValue order_flat_price = 20;    
-    routines.DecimalValue order_price_percent = 21;    
-    routines.DecimalValue order_item_flat_price = 22;    
-    routines.DecimalValue shipping_price_percent = 23;    
+    routines.Currency price_unit_price = 19;    
+    routines.Currency order_flat_price = 20;    
+    routines.FixedPoint order_price_percent = 21;    
+    routines.Currency order_item_flat_price = 22;    
+    routines.FixedPoint shipping_price_percent = 23;    
     string product_feature_group_id = 24;    
-    routines.DecimalValue oversize_unit = 25;    
-    routines.DecimalValue oversize_price = 26;    
-    routines.DecimalValue feature_percent = 27;    
-    routines.DecimalValue feature_price = 28;
+    routines.FixedPoint oversize_unit = 25;    
+    routines.Currency oversize_price = 26;    
+    routines.FixedPoint feature_percent = 27;    
+    routines.Currency feature_price = 28;
     
 }
 
@@ -968,8 +968,8 @@ message ProductAssocData {
     google.protobuf.Timestamp thru_date = 5;    
     int64 sequence_num = 6;    
     string reason = 7;    
-    routines.DecimalValue quantity = 8;    
-    routines.DecimalValue scrap_factor = 9;    
+    routines.FixedPoint quantity = 8;    
+    routines.FixedPoint scrap_factor = 9;    
     string instruction = 10;    
     string routing_work_effort_id = 11;
     routines.TypeSymbol estimate_calc_method = 12; // CustomMethod    
@@ -991,7 +991,7 @@ message FixedAssetProductData {
     google.protobuf.Timestamp thru_date = 5;    
     string comments = 6;    
     int64 sequence_num = 7;    
-    routines.DecimalValue quantity = 8;
+    routines.FixedPoint quantity = 8;
     routines.TypeSymbol quantity_uom_id = 9; // Uom
     
 }
@@ -1011,7 +1011,7 @@ message PaymentApplicationData {
     string override_gl_account_id = 6;    
     string to_payment_id = 7;
     routines.TypeSymbol tax_auth_geo_id = 8; // Geo    
-    routines.DecimalValue amount_applied = 9;
+    routines.Currency amount_applied = 9;
     
 }
 
@@ -1073,8 +1073,8 @@ message ShipmentReceiptData {
     string received_by_user_login_id = 12;    
     google.protobuf.Timestamp datetime_received = 13;    
     string item_description = 14;    
-    routines.DecimalValue quantity_accepted = 15;    
-    routines.DecimalValue quantity_rejected = 16;
+    routines.FixedPoint quantity_accepted = 15;    
+    routines.FixedPoint quantity_rejected = 16;
     
 }
 
@@ -1088,10 +1088,10 @@ message InventoryItemDetailData {
     string inventory_item_id = 1;    
     string inventory_item_detail_seq_id = 2;    
     google.protobuf.Timestamp effective_date = 3;    
-    routines.DecimalValue quantity_on_hand_diff = 4;    
-    routines.DecimalValue available_to_promise_diff = 5;    
-    routines.DecimalValue accounting_quantity_diff = 6;    
-    routines.DecimalValue unit_cost = 7;    
+    routines.FixedPoint quantity_on_hand_diff = 4;    
+    routines.FixedPoint available_to_promise_diff = 5;    
+    routines.FixedPoint accounting_quantity_diff = 6;    
+    routines.FixedPoint unit_cost = 7;    
     string order_id = 8;    
     string order_item_seq_id = 9;    
     string ship_group_seq_id = 10;    
@@ -1120,7 +1120,7 @@ message OrderAdjustmentBillingData {
     string order_adjustment_id = 1;    
     string invoice_id = 2;    
     string invoice_item_seq_id = 3;    
-    routines.DecimalValue amount = 4;
+    routines.Currency amount = 4;
     
 }
 
@@ -1136,7 +1136,7 @@ message ProductFeaturePriceData {
     routines.TypeSymbol currency_uom_id = 3; // Uom    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
-    routines.DecimalValue price = 6;    
+    routines.Currency price = 6;    
     google.protobuf.Timestamp created_date = 7;    
     string created_by_user_login = 8;    
     google.protobuf.Timestamp last_modified_date = 9;    
@@ -1219,7 +1219,7 @@ message OrderItemPriceInfoData {
     string order_item_seq_id = 3;    
     string product_price_rule_id = 4;    
     string product_price_action_seq_id = 5;    
-    routines.DecimalValue modify_amount = 6;    
+    routines.Currency modify_amount = 6;    
     string description = 7;    
     string rate_code = 8;
     
@@ -1239,7 +1239,7 @@ message WorkEffortGoodStandardData {
     google.protobuf.Timestamp thru_date = 5;
     routines.TypeSymbol status_id = 6; // StatusItem    
     double estimated_quantity = 7;    
-    routines.DecimalValue estimated_cost = 8;
+    routines.Currency estimated_cost = 8;
     
 }
 
@@ -1382,8 +1382,8 @@ message ItemIssuanceData {
     string maint_hist_seq_id = 9;    
     google.protobuf.Timestamp issued_date_time = 10;    
     string issued_by_user_login_id = 11;    
-    routines.DecimalValue quantity = 12;    
-    routines.DecimalValue cancel_quantity = 13;
+    routines.FixedPoint quantity = 12;    
+    routines.FixedPoint cancel_quantity = 13;
     
 }
 
@@ -1398,7 +1398,7 @@ message PartyGroupData {
     string group_name = 2;    
     string group_name_local = 3;    
     string office_site_name = 4;    
-    routines.DecimalValue annual_revenue = 5;    
+    routines.Currency annual_revenue = 5;    
     int64 num_employees = 6;    
     string ticker_symbol = 7;    
     string comments = 8;    
@@ -1446,7 +1446,7 @@ message ProductReviewData {
     routines.TypeSymbol status_id = 5; // StatusItem    
     routines.Indicator posted_anonymous = 6;    
     google.protobuf.Timestamp posted_date_time = 7;    
-    routines.DecimalValue product_rating = 8;    
+    routines.FixedPoint product_rating = 8;    
     string product_review = 9;
     
 }
@@ -1471,7 +1471,7 @@ message OrderPaymentPreferenceData {
     routines.Indicator present_flag = 11;    
     routines.Indicator swiped_flag = 12;    
     routines.Indicator overflow_flag = 13;    
-    routines.DecimalValue max_amount = 14;    
+    routines.Currency max_amount = 14;    
     int64 process_attempt = 15;    
     string billing_postal_code = 16;    
     string manual_auth_code = 17;    
@@ -1498,15 +1498,15 @@ message SupplierProductData {
     google.protobuf.Timestamp available_thru_date = 4;
     routines.TypeSymbol supplier_pref_order_id = 5; // SupplierPrefOrder    
     string supplier_rating_type_id = 6;    
-    routines.DecimalValue standard_lead_time_days = 7;    
-    routines.DecimalValue minimum_order_quantity = 8;    
-    routines.DecimalValue order_qty_increments = 9;    
-    routines.DecimalValue units_included = 10;
+    routines.FixedPoint standard_lead_time_days = 7;    
+    routines.FixedPoint minimum_order_quantity = 8;    
+    routines.FixedPoint order_qty_increments = 9;    
+    routines.FixedPoint units_included = 10;
     routines.TypeSymbol quantity_uom_id = 11; // Uom    
     string agreement_id = 12;    
     string agreement_item_seq_id = 13;    
-    routines.DecimalValue last_price = 14;    
-    routines.DecimalValue shipping_price = 15;
+    routines.Currency last_price = 14;    
+    routines.Currency shipping_price = 15;
     routines.TypeSymbol currency_uom_id = 16; // Uom    
     string supplier_product_name = 17;    
     string supplier_product_id = 18;    
@@ -1716,7 +1716,7 @@ message ShipmentItemData {
     string shipment_id = 1;    
     string shipment_item_seq_id = 2;    
     string product_id = 3;    
-    routines.DecimalValue quantity = 4;    
+    routines.FixedPoint quantity = 4;    
     string shipment_content_description = 5;
     
 }
@@ -1816,13 +1816,13 @@ message OrderItemData {
     string shopping_list_item_seq_id = 16;    
     string subscription_id = 17;    
     string deployment_id = 18;    
-    routines.DecimalValue quantity = 19;    
-    routines.DecimalValue cancel_quantity = 20;    
-    routines.DecimalValue selected_amount = 21;    
-    routines.DecimalValue unit_price = 22;    
-    routines.DecimalValue unit_list_price = 23;    
-    routines.DecimalValue unit_average_cost = 24;    
-    routines.DecimalValue unit_recurring_price = 25;    
+    routines.FixedPoint quantity = 19;    
+    routines.FixedPoint cancel_quantity = 20;    
+    routines.FixedPoint selected_amount = 21;    
+    routines.Currency unit_price = 22;    
+    routines.Currency unit_list_price = 23;    
+    routines.Currency unit_average_cost = 24;    
+    routines.Currency unit_recurring_price = 25;    
     routines.Indicator is_modified_price = 26;
     routines.TypeSymbol recurring_freq_uom_id = 27; // Uom    
     string item_description = 28;    
@@ -1876,7 +1876,7 @@ message ShipmentTimeEstimateData {
     routines.TypeSymbol geo_id_from = 5; // Geo    
     google.protobuf.Timestamp from_date = 6;    
     google.protobuf.Timestamp thru_date = 7;    
-    routines.DecimalValue lead_time = 8;
+    routines.FixedPoint lead_time = 8;
     routines.TypeSymbol lead_time_uom_id = 9; // Uom    
     int64 sequence_number = 10;
     
@@ -1897,7 +1897,7 @@ message ProductCategoryContentData {
     google.protobuf.Timestamp purchase_from_date = 6;    
     google.protobuf.Timestamp purchase_thru_date = 7;    
     int64 use_count_limit = 8;    
-    routines.DecimalValue use_days_limit = 9;
+    routines.FixedPoint use_days_limit = 9;
     
 }
 
@@ -1911,8 +1911,8 @@ message OrderItemShipGroupAssocData {
     string order_id = 1;    
     string order_item_seq_id = 2;    
     string ship_group_seq_id = 3;    
-    routines.DecimalValue quantity = 4;    
-    routines.DecimalValue cancel_quantity = 5;
+    routines.FixedPoint quantity = 4;    
+    routines.FixedPoint cancel_quantity = 5;
     
 }
 
@@ -1958,12 +1958,12 @@ message QuoteItemData {
     string work_effort_id = 8;    
     string cust_request_id = 9;    
     string cust_request_item_seq_id = 10;    
-    routines.DecimalValue quantity = 11;    
-    routines.DecimalValue selected_amount = 12;    
-    routines.DecimalValue quote_unit_price = 13;    
+    routines.FixedPoint quantity = 11;    
+    routines.FixedPoint selected_amount = 12;    
+    routines.Currency quote_unit_price = 13;    
     google.protobuf.Timestamp reserv_start = 14;    
-    routines.DecimalValue reserv_length = 15;    
-    routines.DecimalValue reserv_persons = 16;    
+    routines.FixedPoint reserv_length = 15;    
+    routines.FixedPoint reserv_persons = 16;    
     string config_id = 17;    
     google.protobuf.Timestamp estimated_delivery_date = 18;    
     string comments = 19;    
@@ -2070,8 +2070,8 @@ message ProductFacilityLocationData {
     string product_id = 1;    
     string facility_id = 2;    
     string location_seq_id = 3;    
-    routines.DecimalValue minimum_stock = 4;    
-    routines.DecimalValue move_quantity = 5;
+    routines.FixedPoint minimum_stock = 4;    
+    routines.FixedPoint move_quantity = 5;
     
 }
 
@@ -2085,11 +2085,11 @@ message ShipmentBoxTypeData {
     string shipment_box_type_id = 1;    
     string description = 2;
     routines.TypeSymbol dimension_uom_id = 3; // Uom    
-    routines.DecimalValue box_length = 4;    
-    routines.DecimalValue box_width = 5;    
-    routines.DecimalValue box_height = 6;
+    routines.FixedPoint box_length = 4;    
+    routines.FixedPoint box_width = 5;    
+    routines.FixedPoint box_height = 6;
     routines.TypeSymbol weight_uom_id = 7; // Uom    
-    routines.DecimalValue box_weight = 8;
+    routines.FixedPoint box_weight = 8;
     
 }
 
@@ -2110,11 +2110,11 @@ message ShipmentPackageRouteSegData {
     string label_html = 8;    
     routines.Indicator label_printed = 9;    
     bytes international_invoice = 10;    
-    routines.DecimalValue package_transport_cost = 11;    
-    routines.DecimalValue package_service_cost = 12;    
-    routines.DecimalValue package_other_cost = 13;    
-    routines.DecimalValue cod_amount = 14;    
-    routines.DecimalValue insured_amount = 15;
+    routines.Currency package_transport_cost = 11;    
+    routines.Currency package_service_cost = 12;    
+    routines.Currency package_other_cost = 13;    
+    routines.Currency cod_amount = 14;    
+    routines.Currency insured_amount = 15;
     routines.TypeSymbol currency_uom_id = 16; // Uom
     
 }
@@ -2132,7 +2132,7 @@ message GeoPointData {
     routines.TypeSymbol data_source_id = 4; // DataSource    
     string latitude = 5;    
     string longitude = 6;    
-    routines.DecimalValue elevation = 7;
+    routines.FixedPoint elevation = 7;
     routines.TypeSymbol elevation_uom_id = 8; // Uom    
     string information = 9;
     
@@ -2167,8 +2167,8 @@ message ProductFeatureApplData {
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     int64 sequence_num = 6;    
-    routines.DecimalValue amount = 7;    
-    routines.DecimalValue recurring_amount = 8;
+    routines.Currency amount = 7;    
+    routines.Currency recurring_amount = 8;
     
 }
 
@@ -2324,11 +2324,11 @@ message ProductFacilityData {
         
     string product_id = 1;    
     string facility_id = 2;    
-    routines.DecimalValue minimum_stock = 3;    
-    routines.DecimalValue reorder_quantity = 4;    
+    routines.FixedPoint minimum_stock = 3;    
+    routines.FixedPoint reorder_quantity = 4;    
     int64 days_to_ship = 5;
     routines.TypeSymbol replenish_method_enum_id = 6; // Enumeration    
-    routines.DecimalValue last_inventory_count = 7;
+    routines.FixedPoint last_inventory_count = 7;
     routines.TypeSymbol requirement_method_enum_id = 8; // Enumeration
     
 }
@@ -2376,8 +2376,8 @@ message OrderHeaderData {
     routines.Indicator needs_inventory_issuance = 20;    
     routines.Indicator is_rush_order = 21;    
     string internal_code = 22;    
-    routines.DecimalValue remaining_sub_total = 23;    
-    routines.DecimalValue grand_total = 24;    
+    routines.Currency remaining_sub_total = 23;    
+    routines.Currency grand_total = 24;    
     routines.Indicator is_viewed = 25;    
     routines.Indicator invoice_per_shipment = 26;
     
@@ -2437,12 +2437,12 @@ message ShipmentData {
     google.protobuf.Timestamp estimated_ship_date = 8;    
     google.protobuf.Timestamp estimated_arrival_date = 9;    
     google.protobuf.Timestamp latest_cancel_date = 10;    
-    routines.DecimalValue estimated_ship_cost = 11;
+    routines.Currency estimated_ship_cost = 11;
     routines.TypeSymbol currency_uom_id = 12; // Uom    
     string handling_instructions = 13;    
     string origin_facility_id = 14;    
     string destination_facility_id = 15;    
-    routines.DecimalValue additional_shipping_charge = 16;    
+    routines.Currency additional_shipping_charge = 16;    
     string addtl_shipping_charge_desc = 17;    
     google.protobuf.Timestamp created_date = 18;    
     string created_by_user_login = 19;    
@@ -2490,9 +2490,9 @@ message ShipmentPackageContentData {
     string shipment_id = 1;    
     string shipment_package_seq_id = 2;    
     string shipment_item_seq_id = 3;    
-    routines.DecimalValue quantity = 4;    
+    routines.FixedPoint quantity = 4;    
     string sub_product_id = 5;    
-    routines.DecimalValue sub_product_quantity = 6;
+    routines.FixedPoint sub_product_quantity = 6;
     
 }
 
@@ -2568,12 +2568,12 @@ message ProductStoreShipmentMethData {
     string party_id = 4;    
     string role_type_id = 5;    
     string company_party_id = 6;    
-    routines.DecimalValue min_weight = 7;    
-    routines.DecimalValue max_weight = 8;    
-    routines.DecimalValue min_size = 9;    
-    routines.DecimalValue max_size = 10;    
-    routines.DecimalValue min_total = 11;    
-    routines.DecimalValue max_total = 12;    
+    routines.FixedPoint min_weight = 7;    
+    routines.FixedPoint max_weight = 8;    
+    routines.FixedPoint min_size = 9;    
+    routines.FixedPoint max_size = 10;    
+    routines.Currency min_total = 11;    
+    routines.Currency max_total = 12;    
     routines.Indicator allow_usps_addr = 13;    
     routines.Indicator require_usps_addr = 14;    
     routines.Indicator allow_company_addr = 15;    
@@ -2588,8 +2588,8 @@ message ProductStoreShipmentMethData {
     routines.TypeSymbol shipment_custom_method_id = 24; // CustomMethod
     routines.TypeSymbol shipment_gateway_config_id = 25; // ShipmentGatewayConfig    
     int64 sequence_number = 26;    
-    routines.DecimalValue allowance_percent = 27;    
-    routines.DecimalValue minimum_price = 28;
+    routines.FixedPoint allowance_percent = 27;    
+    routines.Currency minimum_price = 28;
     
 }
 
@@ -2607,12 +2607,12 @@ message PaymentData {
     routines.TypeSymbol status_id = 5; // StatusItem    
     google.protobuf.Timestamp effective_date = 6;    
     string payment_ref_num = 7;    
-    routines.DecimalValue amount = 8;
+    routines.Currency amount = 8;
     routines.TypeSymbol currency_uom_id = 9; // Uom    
     string comments = 10;    
     string fin_account_trans_id = 11;    
     string override_gl_account_id = 12;    
-    routines.DecimalValue actual_currency_amount = 13;
+    routines.Currency actual_currency_amount = 13;
     routines.TypeSymbol actual_currency_uom_id = 14; // Uom
     
     // relations
@@ -2674,13 +2674,13 @@ message ShipmentPackageData {
     string shipment_package_seq_id = 2;    
     string shipment_box_type_id = 3;    
     google.protobuf.Timestamp date_created = 4;    
-    routines.DecimalValue box_length = 5;    
-    routines.DecimalValue box_height = 6;    
-    routines.DecimalValue box_width = 7;
+    routines.FixedPoint box_length = 5;    
+    routines.FixedPoint box_height = 6;    
+    routines.FixedPoint box_width = 7;
     routines.TypeSymbol dimension_uom_id = 8; // Uom    
-    routines.DecimalValue weight = 9;
+    routines.FixedPoint weight = 9;
     routines.TypeSymbol weight_uom_id = 10; // Uom    
-    routines.DecimalValue insured_value = 11;
+    routines.Currency insured_value = 11;
     
 }
 
@@ -2821,16 +2821,16 @@ message InventoryItemData {
     string bin_number = 14;    
     string location_seq_id = 15;    
     string comments = 16;    
-    routines.DecimalValue quantity_on_hand_total = 17;    
-    routines.DecimalValue available_to_promise_total = 18;    
-    routines.DecimalValue accounting_quantity_total = 19;    
-    routines.DecimalValue old_quantity_on_hand = 20;    
-    routines.DecimalValue old_available_to_promise = 21;    
+    routines.FixedPoint quantity_on_hand_total = 17;    
+    routines.FixedPoint available_to_promise_total = 18;    
+    routines.FixedPoint accounting_quantity_total = 19;    
+    routines.FixedPoint old_quantity_on_hand = 20;    
+    routines.FixedPoint old_available_to_promise = 21;    
     string serial_number = 22;    
     string soft_identifier = 23;    
     string activation_number = 24;    
     google.protobuf.Timestamp activation_valid_thru = 25;    
-    routines.DecimalValue unit_cost = 26;
+    routines.FixedPoint unit_cost = 26;
     routines.TypeSymbol currency_uom_id = 27; // Uom    
     string fixed_asset_id = 28;
     
@@ -2870,8 +2870,8 @@ message InvoiceItemData {
     string parent_invoice_item_seq_id = 10;
     routines.TypeSymbol uom_id = 11; // Uom    
     routines.Indicator taxable_flag = 12;    
-    routines.DecimalValue quantity = 13;    
-    routines.DecimalValue amount = 14;    
+    routines.FixedPoint quantity = 13;    
+    routines.Currency amount = 14;    
     string description = 15;    
     string tax_auth_party_id = 16;
     routines.TypeSymbol tax_auth_geo_id = 17; // Geo    
@@ -2937,8 +2937,8 @@ message ProductFeatureData {
     string product_feature_category_id = 3;    
     string description = 4;
     routines.TypeSymbol uom_id = 5; // Uom    
-    routines.DecimalValue number_specified = 6;    
-    routines.DecimalValue default_amount = 7;    
+    routines.FixedPoint number_specified = 6;    
+    routines.Currency default_amount = 7;    
     int64 default_sequence_num = 8;    
     string abbrev = 9;    
     string id_code = 10;
@@ -3104,13 +3104,13 @@ message ProductPriceData {
     routines.TypeSymbol product_store_group_id = 5; // ProductStoreGroup    
     google.protobuf.Timestamp from_date = 6;    
     google.protobuf.Timestamp thru_date = 7;    
-    routines.DecimalValue price = 8;
+    routines.Currency price = 8;
     routines.TypeSymbol term_uom_id = 9; // Uom
     routines.TypeSymbol custom_price_calc_service = 10; // CustomMethod    
-    routines.DecimalValue price_without_tax = 11;    
-    routines.DecimalValue price_with_tax = 12;    
-    routines.DecimalValue tax_amount = 13;    
-    routines.DecimalValue tax_percentage = 14;    
+    routines.Currency price_without_tax = 11;    
+    routines.Currency price_with_tax = 12;    
+    routines.Currency tax_amount = 13;    
+    routines.FixedPoint tax_percentage = 14;    
     string tax_auth_party_id = 15;
     routines.TypeSymbol tax_auth_geo_id = 16; // Geo    
     routines.Indicator tax_in_price = 17;    
@@ -3130,8 +3130,8 @@ message QuantityBreakData {
         
     string quantity_break_id = 1;
     routines.TypeSymbol quantity_break_type_id = 2; // QuantityBreakType    
-    routines.DecimalValue from_quantity = 3;    
-    routines.DecimalValue thru_quantity = 4;
+    routines.FixedPoint from_quantity = 3;    
+    routines.FixedPoint thru_quantity = 4;
     
 }
 
@@ -3160,8 +3160,8 @@ message OrderItemShipGrpInvResData {
     string order_item_seq_id = 3;    
     string inventory_item_id = 4;    
     string reserve_order_enum_id = 5;    
-    routines.DecimalValue quantity = 6;    
-    routines.DecimalValue quantity_not_available = 7;    
+    routines.FixedPoint quantity = 6;    
+    routines.FixedPoint quantity_not_available = 7;    
     google.protobuf.Timestamp reserved_datetime = 8;    
     google.protobuf.Timestamp created_datetime = 9;    
     google.protobuf.Timestamp promised_datetime = 10;    
@@ -3244,7 +3244,7 @@ message WorkEffortData {
     double actual_milli_seconds = 22;    
     double actual_setup_millis = 23;    
     double total_milli_seconds_allowed = 24;    
-    routines.DecimalValue total_money_allowed = 25;
+    routines.Currency total_money_allowed = 25;
     routines.TypeSymbol money_uom_id = 26; // Uom    
     string special_terms = 27;    
     int64 time_transparency = 28;    
@@ -3258,12 +3258,12 @@ message WorkEffortData {
     string runtime_data_id = 36;    
     string note_id = 37;    
     string service_loader_name = 38;    
-    routines.DecimalValue quantity_to_produce = 39;    
-    routines.DecimalValue quantity_produced = 40;    
-    routines.DecimalValue quantity_rejected = 41;    
-    routines.DecimalValue reserv_persons = 42;    
-    routines.DecimalValue reserv2nd_p_p_perc = 43;    
-    routines.DecimalValue reserv_nth_p_p_perc = 44;    
+    routines.FixedPoint quantity_to_produce = 39;    
+    routines.FixedPoint quantity_produced = 40;    
+    routines.FixedPoint quantity_rejected = 41;    
+    routines.FixedPoint reserv_persons = 42;    
+    routines.FixedPoint reserv2nd_p_p_perc = 43;    
+    routines.FixedPoint reserv_nth_p_p_perc = 44;    
     string accommodation_map_id = 45;    
     string accommodation_spot_id = 46;    
     int64 revision_number = 47;    
@@ -3311,7 +3311,7 @@ message BillingAccountData {
     // fields
         
     string billing_account_id = 1;    
-    routines.DecimalValue account_limit = 2;
+    routines.Currency account_limit = 2;
     routines.TypeSymbol account_currency_uom_id = 3; // Uom    
     string contact_mech_id = 4;    
     google.protobuf.Timestamp from_date = 5;    
@@ -3366,12 +3366,12 @@ message CustRequestItemData {
     int64 sequence_num = 6;    
     google.protobuf.Timestamp required_by_date = 7;    
     string product_id = 8;    
-    routines.DecimalValue quantity = 9;    
-    routines.DecimalValue selected_amount = 10;    
-    routines.DecimalValue maximum_amount = 11;    
+    routines.FixedPoint quantity = 9;    
+    routines.FixedPoint selected_amount = 10;    
+    routines.Currency maximum_amount = 11;    
     google.protobuf.Timestamp reserv_start = 12;    
-    routines.DecimalValue reserv_length = 13;    
-    routines.DecimalValue reserv_persons = 14;    
+    routines.FixedPoint reserv_length = 13;    
+    routines.FixedPoint reserv_persons = 14;    
     string config_id = 15;    
     string description = 16;    
     string story = 17;
@@ -3469,7 +3469,7 @@ message ProductConfigProductData {
     string config_item_id = 1;    
     string config_option_id = 2;    
     string product_id = 3;    
-    routines.DecimalValue quantity = 4;    
+    routines.FixedPoint quantity = 4;    
     int64 sequence_num = 5;
     
 }
@@ -3484,7 +3484,7 @@ message ProductPriceActionData {
     string product_price_rule_id = 1;    
     string product_price_action_seq_id = 2;
     routines.TypeSymbol product_price_action_type_id = 3; // ProductPriceActionType    
-    routines.DecimalValue amount = 4;    
+    routines.FixedPoint amount = 4;    
     string rate_code = 5;
     
 }
@@ -3541,9 +3541,9 @@ message AcctgTransEntryData {
     routines.TypeSymbol gl_account_type_id = 12; // GlAccountType    
     string gl_account_id = 13;    
     string organization_party_id = 14;    
-    routines.DecimalValue amount = 15;
+    routines.Currency amount = 15;
     routines.TypeSymbol currency_uom_id = 16; // Uom    
-    routines.DecimalValue orig_amount = 17;
+    routines.Currency orig_amount = 17;
     routines.TypeSymbol orig_currency_uom_id = 18; // Uom    
     routines.Indicator debit_credit_flag = 19;    
     google.protobuf.Timestamp due_date = 20;    
@@ -3568,8 +3568,8 @@ message OrderItemBillingData {
     string invoice_item_seq_id = 4;    
     string item_issuance_id = 5;    
     string shipment_receipt_id = 6;    
-    routines.DecimalValue quantity = 7;    
-    routines.DecimalValue amount = 8;
+    routines.FixedPoint quantity = 7;    
+    routines.Currency amount = 8;
     
 }
 
@@ -3628,7 +3628,7 @@ message AgreementProductApplData {
     string agreement_id = 1;    
     string agreement_item_seq_id = 2;    
     string product_id = 3;    
-    routines.DecimalValue price = 4;
+    routines.Currency price = 4;
     
 }
 
@@ -3726,7 +3726,7 @@ message ProductPromoData {
     int64 use_limit_per_order = 7;    
     int64 use_limit_per_customer = 8;    
     int64 use_limit_per_promotion = 9;    
-    routines.DecimalValue billback_factor = 10;    
+    routines.FixedPoint billback_factor = 10;    
     string override_org_party_id = 11;    
     google.protobuf.Timestamp created_date = 12;    
     string created_by_user_login = 13;    
@@ -3748,7 +3748,7 @@ message ProductCategoryMemberData {
     google.protobuf.Timestamp thru_date = 4;    
     string comments = 5;    
     int64 sequence_num = 6;    
-    routines.DecimalValue quantity = 7;
+    routines.FixedPoint quantity = 7;
     
 }
 
@@ -3766,7 +3766,7 @@ message AgreementTermData {
     routines.TypeSymbol invoice_item_type_id = 5; // InvoiceItemType    
     google.protobuf.Timestamp from_date = 6;    
     google.protobuf.Timestamp thru_date = 7;    
-    routines.DecimalValue term_value = 8;    
+    routines.Currency term_value = 8;    
     int64 term_days = 9;    
     string text_value = 10;    
     double min_quantity = 11;    

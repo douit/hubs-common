@@ -30,6 +30,7 @@
         <protobuf.version>3.17.2</protobuf.version>
         <lombok.version>1.18.22</lombok.version>
         <junit4.version>4.13.2</junit4.version>
+        <clickhouse-native-jdbc.version>2.6.0</clickhouse-native-jdbc.version>
     </properties>
 
     <dependencies>
@@ -139,6 +140,14 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
                 <version>3.16.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jdbi</groupId>
+                <artifactId>jdbi3-bom</artifactId>
+                <type>pom</type>
+                <version>3.18.0</version>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

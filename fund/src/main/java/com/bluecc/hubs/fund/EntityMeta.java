@@ -257,7 +257,7 @@ public class EntityMeta {
         }
 
         public String getProtoType() {
-            return NameUtil.getProtoType(this.type);
+            return MetaTypeUtil.getProtoType(this.type);
         }
     }
 

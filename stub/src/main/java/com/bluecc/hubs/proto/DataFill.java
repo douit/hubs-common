@@ -18,6 +18,7 @@ import org.joda.time.format.DateTimeFormatter;
 import javax.inject.Inject;
 import java.util.Base64;
 
+import static com.bluecc.hubs.ProtoTypes.getFixedPoint;
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static com.bluecc.hubs.proto.ProtoModule.startup;
 
@@ -209,6 +210,12 @@ public class DataFill {
                 DecimalValue serialized = getDecimalValue(val);
                 msg.setField(fld, serialized);
                 break;
+            case "Currency":
+                msg.setField(fld, getCurrencyValue(val.getAsString()));
+                break;
+            case "FixedPoint":
+                msg.setField(fld, getFixedPoint(val.getAsString()));
+                break;
             default:
                 proessEntityField(entityName, msg, fld, val);
         }
@@ -237,6 +244,11 @@ public class DataFill {
                 .setPrecision(bigDecimal.precision())
                 .setValue(ByteString.copyFrom(bigDecimal.unscaledValue().toByteArray()))
                 .build();
+        return serialized;
+    }
+
+    public static Currency getCurrencyValue(String val) {
+        Currency serialized = Currency.newBuilder().setValue(val).build();
         return serialized;
     }
 
