@@ -28,10 +28,14 @@ public class CollectorMain {
                 System.out.format("\tresult to: %s -> %s\n",
                         c.parentFld.getName(),
                         queryMeta.getTableFields());
+
+                // TODO save it
             }
         });
+
         ShipmentData.Builder builder=ShipmentData.newBuilder();
         readResource("shipment_simple", builder);
         collector.fillMap(builder.build());
     }
 }
+

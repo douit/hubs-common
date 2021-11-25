@@ -8,12 +8,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class HubsStore implements IStore {
-    MysqlFac fac;
+public class ClickHouseStore implements IStore {
+    ClickHouseFac fac;
     Jdbi jdbi;
 
     @Inject
-    HubsStore(MysqlFac fac){
+    ClickHouseStore(ClickHouseFac fac){
         this.fac=fac;
         this.jdbi = Jdbi.create(fac.getDataSource());
         this.jdbi.installPlugin(new SqlObjectPlugin());

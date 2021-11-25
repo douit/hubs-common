@@ -165,7 +165,7 @@ public class JdbiProcs {
     //     }
     // }
 
-    private static void init(Jdbi db) {
+    static void init(Jdbi db) {
         db.registerArrayType(Integer.class, "Int32");
         db.registerArrayType(BigInteger.class, "UInt64");
         db.registerArrayType(String.class, "String");

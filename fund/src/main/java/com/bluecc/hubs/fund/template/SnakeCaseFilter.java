@@ -1,4 +1,4 @@
-package com.bluecc.gentool.common;
+package com.bluecc.hubs.fund.template;
 
 import com.bluecc.hubs.fund.Util;
 import com.google.common.base.Preconditions;

@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.bluecc.income.exchange.DataStoreHelper.queryMap;
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 
@@ -199,15 +200,6 @@ public class StoreProcTest extends AbstractStoreProc {
         Map<String, Object> rec = c.getHandle()
                 .createQuery("select * from postal_address where contact_mech_id=:id")
                 .bind("id", ids.get(0))
-                .mapToMap().one();
-        return rec;
-    }
-
-    private Map<String, Object> queryMap(IProc.ProcContext c, INameSymbol symbol, Long id) {
-        Map<String, Object> rec = c.getHandle()
-                .createQuery(format("select * from %s where %s=:id",
-                        symbol.getTable(), symbol.getTableKeys().get(0)))
-                .bind("id", id)
                 .mapToMap().one();
         return rec;
     }
