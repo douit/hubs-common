@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.PreparedBatch;
 import org.jdbi.v3.core.statement.StatementContext;
+import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
@@ -33,10 +34,14 @@ import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 
 public class StoreProcTest extends AbstractStoreProc {
+    @RegisterRowMapper(PersonMapper.class)
     public interface PartyDao {
         @SqlQuery("select * from party where party_id=:id")
         @UseRowMapper(PartyMapper.class)
         PartyFlatData getFlat(@Bind("id") long id);
+
+        @SqlQuery("select * from person")
+        List<PersonFlatData> listPersons();
 
         @SqlBatch("INSERT INTO party (party_type_id) VALUES(?)")
         @GetGeneratedKeys
@@ -97,6 +102,13 @@ public class StoreProcTest extends AbstractStoreProc {
         });
     }
 
+    @Test
+    public void testList() {
+        process(c -> {
+            PartyDao dao = c.getHandle().attach(PartyDao.class);
+            dao.listPersons().forEach(e -> System.out.println(e));
+        });
+    }
     @Test
     public void testCreatePartyDao() {
         process(c -> {

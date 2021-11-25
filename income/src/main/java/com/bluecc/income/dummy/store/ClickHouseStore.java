@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class ClickHouseStore implements IStore {
+public class ClickHouseStore extends AbstractStore{
     ClickHouseFac fac;
     Jdbi jdbi;
 
@@ -16,7 +16,7 @@ public class ClickHouseStore implements IStore {
     ClickHouseStore(ClickHouseFac fac){
         this.fac=fac;
         this.jdbi = Jdbi.create(fac.getDataSource());
-        this.jdbi.installPlugin(new SqlObjectPlugin());
+        installPlugins();
     }
 
     public Jdbi getJdbi() {
