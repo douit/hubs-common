@@ -1,15 +1,18 @@
-package com.bluecc.gentool.descriptor;
+package com.bluecc.hubs.fund.descriptor;
 
+import com.bluecc.hubs.fund.Util;
 import lombok.Getter;
 
 import com.google.common.collect.Lists;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum EntityNames implements INameSymbol{
 
     {% for ent in ents -%}
-    {{ent.name}}("{{ent.name}}", "{{ent.title}}"),
+    {{ent.name}}("{{ent.name}}", "{{ent.title}}", 
+        {%- for pk in ent.pks %}"{{pk}}"{% if not loop.last %}, {% endif %}{% endfor %}),
     {% endfor %}
     ;
 
@@ -17,6 +20,8 @@ public enum EntityNames implements INameSymbol{
     public final String entityName;
     @Getter(onMethod_ = {@Override})
     public final String description;
+    @Getter(onMethod_ = {@Override})
+    public final String[] keys;
 
     @Getter
     private final List<String> fields= Lists.newArrayList();
@@ -25,9 +30,10 @@ public enum EntityNames implements INameSymbol{
     @Getter
     private final List<String> excludes=Lists.newArrayList();
 
-    private EntityNames(String entityName, String description){
+    private EntityNames(String entityName, String description, String... keys){
         this.entityName=entityName;
         this.description=description;
+        this.keys=keys;
     }
 
     public EntityNames fields(String...flds){
@@ -43,6 +49,16 @@ public enum EntityNames implements INameSymbol{
     public EntityNames excludes(String...flds){
         this.excludes.addAll(Arrays.asList(flds));
         return this;
+    }
+    
+    public String getTable(){
+        return Util.toSnakecase(entityName);
+    }
+    
+    public List<String> getTableKeys(){
+        return Arrays.stream(keys).map(k -> 
+                Util.toSnakecase(k))
+                .collect(Collectors.toList());
     }
 }
 

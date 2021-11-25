@@ -28,9 +28,12 @@ public class ProcGen {
         String code = procGen.gen(entityList);
         System.out.println(code);
 
+        //
+        // File targetFile = SystemDefs.prependHubsHomeFile(
+        //         "gentool/src/main/java/com/bluecc/gentool/descriptor/"
+        //                 + "EntityNames.java");
         File targetFile = SystemDefs.prependHubsHomeFile(
-                "gentool/src/main/java/com/bluecc/gentool/descriptor/"
-                        + "EntityNames.java");
+                "fund/src/main/java/com/bluecc/hubs/fund/descriptor/EntityNames.java");
         Util.writeFile(code, targetFile);
     }
 
