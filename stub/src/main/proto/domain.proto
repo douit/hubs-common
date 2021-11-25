@@ -15,7 +15,8 @@ service FixtureProcs {
 
 // The request message containing the user's name.
 message QueryPersonRequest {
-  string name = 1;
+  int64 id=1;
+  string name = 2;
 }
 
 message PersonObject {

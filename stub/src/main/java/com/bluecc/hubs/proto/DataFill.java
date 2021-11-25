@@ -18,6 +18,7 @@ import org.joda.time.format.DateTimeFormatter;
 import javax.inject.Inject;
 import java.util.Base64;
 
+import static com.bluecc.hubs.ProtoTypes.castIndicator;
 import static com.bluecc.hubs.ProtoTypes.getFixedPoint;
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static com.bluecc.hubs.proto.ProtoModule.startup;
@@ -267,14 +268,4 @@ public class DataFill {
         }
     }
 
-    private Indicator castIndicator(String c) {
-        switch (c.toUpperCase()) {
-            case "Y":
-                return Indicator.YES;
-            case "N":
-                return Indicator.NO;
-            default:
-                return Indicator.UNKNOWN;
-        }
-    }
 }

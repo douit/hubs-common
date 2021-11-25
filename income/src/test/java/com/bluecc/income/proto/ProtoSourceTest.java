@@ -1,6 +1,7 @@
 package com.bluecc.income.proto;
 
 import com.bluecc.hubs.stub.OrderHeaderData;
+import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.hubs.stub.ShipmentData;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.util.JsonFormat;
@@ -40,5 +41,13 @@ public class ProtoSourceTest {
                 "/data/" + jsonName + ".json")), StandardCharsets.UTF_8);
         JsonFormat.parser().merge(json, builder);
         System.out.println(builder.build());
+    }
+
+    @Test
+    public void testProtoToMap(){
+        PersonFlatData personFlatData= PersonFlatData.newBuilder()
+                .setLastName("s")
+                .setFirstName("joe").build();
+
     }
 }

@@ -1,5 +1,6 @@
 package com.bluecc.income.dummy.store;
 
+import com.bluecc.hubs.stub.QueryPersonRequest;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;
@@ -31,7 +32,8 @@ public class DaoProcs {
             Dao dao = handle.attach(Dao.class);
             createTable(handle);
             handle.execute("insert into something (id, name) values (1, 'Alice')");
-            // dao.update(1, singletonMap("name", "Alicia"));
+
+            dao.update(1, singletonMap("name", "Alicia"));
             dao.updatePrefix(1, singletonMap("name", "Alicia"));
             System.out.println(dao.get(1).getName());
             return null;
@@ -45,6 +47,10 @@ public class DaoProcs {
             handle.execute("insert into something (id, name) values (1, 'Alice')");
             System.out.println(dao.getName(1));
             dao.update(new Something(1, "Alicia"));
+            dao.updateByProto(QueryPersonRequest.newBuilder()
+                    .setId(1)
+                    .setName("Samlet")
+                    .build());
             System.out.println(dao.getName(1));
             return null;
         });
@@ -52,7 +58,8 @@ public class DaoProcs {
 
     private static void createTable(Handle handle) {
         handle.execute("create table something (" +
-                "id identity primary key, name varchar(50), " +
+                "id identity primary key, " +
+                "name varchar(50), " +
                 "integerValue integer, " +
                 "intValue integer)");
     }
@@ -60,6 +67,9 @@ public class DaoProcs {
     public interface BeanDao {
         @SqlUpdate("update something set name=:name where id=:id")
         void update(@BindBean Something thing);
+
+        @SqlUpdate("update something set name=:name where id=:id")
+        void updateByProto(@BindBean QueryPersonRequest thing);
 
         @SqlUpdate("update something set name=:thing.name where id=:thing.id")
         void updatePrefix(@BindBean("thing") Something thing);
@@ -70,16 +80,16 @@ public class DaoProcs {
 
     public interface Dao {
         @SqlUpdate("update something set name=:name where id=:id")
-        void update(@Bind int id, @BindMap Map<Object, Object> map);
+        void update(@Bind("id") int id, @BindMap Map<Object, Object> map);
 
         @SqlUpdate("update something set name=:map.name where id=:id")
         void updatePrefix(@Bind("id") int id, @BindMap("map") Map<String, Object> map);
 
         @SqlUpdate("update something set name=:name where id=:id")
-        void updateNameKey(@Bind int id, @BindMap(keys = "name") Map<String, Object> map);
+        void updateNameKey(@Bind("id") int id, @BindMap(keys = "name") Map<String, Object> map);
 
         @SqlUpdate("update something set name=:name where id=:id")
-        void updateConvertKeys(@Bind int id, @BindMap(convertKeys = true) Map<Object, Object> map);
+        void updateConvertKeys(@Bind("id") int id, @BindMap(convertKeys = true) Map<Object, Object> map);
 
         @SqlQuery("select * from something where id=:id")
         @UseRowMapper(SomethingMapper.class)
