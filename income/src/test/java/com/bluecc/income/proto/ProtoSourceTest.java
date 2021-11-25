@@ -27,6 +27,9 @@ public class ProtoSourceTest {
         JsonFormat.parser().merge(json, builder);
         OrderHeaderData data=builder.build();
         System.out.println(data);
+        // data.getAllFields().entrySet().stream().filter((f,v)-> f.getKey().get)
+        data.getAllFields()
+                .forEach((f,v) -> System.out.println(f.getName()));
     }
 
     @Test

@@ -5,7 +5,9 @@ import lombok.Getter;
 
 import com.google.common.collect.Lists;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum EntityNames implements INameSymbol{
@@ -168,6 +170,16 @@ public enum EntityNames implements INameSymbol{
     private final List<String> includes=Lists.newArrayList();
     @Getter
     private final List<String> excludes=Lists.newArrayList();
+
+    private static final Map<String, EntityNames> BY_TYPE = new HashMap<>();
+    static {
+        for (EntityNames e : values()) {
+            BY_TYPE.put(e.entityName, e);
+        }
+    }
+    public static EntityNames valueOfType(String typeId) {
+        return BY_TYPE.get(typeId);
+    }
 
     private EntityNames(String entityName, String description, String... keys){
         this.entityName=entityName;

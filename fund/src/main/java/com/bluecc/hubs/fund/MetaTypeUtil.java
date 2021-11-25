@@ -26,4 +26,5 @@ public class MetaTypeUtil {
                 PROTO_CUSTOM_MAP.getOrDefault(fieldType,
                         "string"));
     }
+
 }

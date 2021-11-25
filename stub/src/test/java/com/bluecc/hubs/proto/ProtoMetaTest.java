@@ -15,5 +15,10 @@ public class ProtoMetaTest {
         System.out.println(queryMeta);
 
         assertThat(queryMeta.getFieldNames()).containsOnly("partyId");
+
+        queryMeta=protoMeta.findRelationQueryMeta(
+                "Shipment", "origin_contact_mech");
+        System.out.println(queryMeta);
+        assertThat(queryMeta.getFieldNames()).containsOnly("originContactMechId");
     }
 }

@@ -1,9 +1,8 @@
 package com.bluecc.hubs;
 
-import com.bluecc.hubs.stub.Currency;
-import com.bluecc.hubs.stub.DecimalValue;
-import com.bluecc.hubs.stub.FixedPoint;
-import com.bluecc.hubs.stub.Indicator;
+import com.bluecc.hubs.stub.*;
+import com.google.protobuf.Descriptors;
+import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.Timestamp;
 import com.google.type.Money;
 import org.joda.time.DateTime;
@@ -70,6 +69,13 @@ public class ProtoTypes {
             case NO: return 'N';
         }
         return ' ';
+    }
+
+
+    public static String getEntityTypeByMessage(GeneratedMessageV3 msg){
+        Descriptors.Descriptor descriptor = msg.getDescriptorForType();
+        String entityType=descriptor.getOptions().getExtension(RoutinesProto.entityType);
+        return entityType;
     }
 }
 

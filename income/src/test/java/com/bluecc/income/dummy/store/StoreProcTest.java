@@ -42,12 +42,12 @@ public class StoreProcTest extends AbstractStoreProc {
         List<Long> createParties(String... types);
 
         @SqlBatch("INSERT INTO person (party_id, last_name) VALUES(?, ?)")
-        // @GetGeneratedKeys
-        // @UseRowMapper(PersonMapper.class)
+            // @GetGeneratedKeys
+            // @UseRowMapper(PersonMapper.class)
         void createPersons(List<Long> ids, String... names);
 
         @SqlBatch("INSERT INTO party_group (party_id, group_name) VALUES(?, ?)")
-        // @GetGeneratedKeys
+            // @GetGeneratedKeys
         void createPartyGroups(List<Long> ids, String... names);
 
         @SqlBatch("INSERT INTO contact_mech (contact_mech_type_id) VALUES(?)")
@@ -57,7 +57,7 @@ public class StoreProcTest extends AbstractStoreProc {
         @SqlBatch("insert into postal_address (contact_mech_id, to_name, address1, address2) " +
                 "values (:id, :addr.toName, :addr.address1, :addr.address2)")
         void bulkInsertPostalAddress(@Bind("id") List<Long> ids,
-                        @BindBean("addr") List<PostalAddressData> addressData);
+                                     @BindBean("addr") List<PostalAddressData> addressData);
 
     }
 
@@ -112,9 +112,9 @@ public class StoreProcTest extends AbstractStoreProc {
     }
 
     private String[] times(String s, int total) {
-        String[] result=new String[total];
+        String[] result = new String[total];
         for (int j = 0; j < total; j++) {
-            result[j]=s;
+            result[j] = s;
         }
         return result;
     }
@@ -149,7 +149,7 @@ public class StoreProcTest extends AbstractStoreProc {
             assertEquals(total, ids.size());
             // insertParties(c, ids, "PARTY_GROUP");
 
-            PartyFlatData partyFlatData=dao.getFlat(ids.get(0));
+            PartyFlatData partyFlatData = dao.getFlat(ids.get(0));
             assertEquals("PARTY_GROUP", partyFlatData.getPartyTypeId().getValueId());
         });
     }
@@ -166,8 +166,8 @@ public class StoreProcTest extends AbstractStoreProc {
     public void testContactMech() {
         process(c -> {
             PartyDao dao = c.getHandle().attach(PartyDao.class);
-            List<Long> ids=dao.createContactMechs(times("POSTAL_ADDRESS", 2));
-            String oneName=faker.name().name();
+            List<Long> ids = dao.createContactMechs(times("POSTAL_ADDRESS", 2));
+            String oneName = faker.name().name();
             dao.bulkInsertPostalAddress(ids, Lists.newArrayList(
                     PostalAddressData.newBuilder()
                             .setToName(oneName)
@@ -191,7 +191,7 @@ public class StoreProcTest extends AbstractStoreProc {
         });
     }
 
-    Object getByFieldName(Map<String, Object> rec, String fieldName){
+    Object getByFieldName(Map<String, Object> rec, String fieldName) {
         return rec.get(Util.toSnakecase(fieldName));
     }
 
@@ -210,6 +210,30 @@ public class StoreProcTest extends AbstractStoreProc {
                 .bind("id", id)
                 .mapToMap().one();
         return rec;
+    }
+
+    @Test
+    public void testQueryWithTemplate() {
+        process(ctx -> {
+            truncate(ctx, "person");
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            int r = ctx.getHandle().createUpdate("insert into <table> (<columns>) values (<placers>)")
+                    .define("table", "person")
+                    .defineList("columns", "party_id", "last_name")
+                    .defineList("placers", ":party_id", ":last_name")
+                    .bind("party_id", 100)
+                    .bind("last_name", "tom")
+                    .execute();
+            System.out.println(r);
+
+            ctx.getHandle().createQuery("select <columns> from <table>")
+                    .define("table", "person")
+                    .defineList("columns", "party_id", "last_name")
+                    .mapToMap()
+                    .list()
+                    .forEach(e -> System.out.println(e));
+
+        });
     }
 }
 

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static com.bluecc.hubs.fund.MetaTypes.typeList;
 
 @Data
-@Builder
+// @Builder
 @Slf4j
 public class EntityMeta {
     @Data
@@ -190,6 +190,11 @@ public class EntityMeta {
         String relationEntity;
         List<String> fieldNames;
         boolean repeated;
+
+        public List<String> getTableFields(){
+            return fieldNames.stream().map(f -> Util.toSnakecase(f))
+                    .collect(Collectors.toList());
+        }
     }
 
     public List<RelationQueryMeta> getRelationQueries(){
