@@ -1,9 +1,6 @@
 {
   "shipment_id": "s_1",
-  "shipment_type_id": {
-    "type_name": "ShipmentType",
-    "value_id": "COMMON"
-  },
+  "shipment_type_id": "COMMON",
   "estimated_ship_cost": {"value": "18.95"},
   "origin_facility_id": "f_1",
   "destination_facility_id": "f_2",

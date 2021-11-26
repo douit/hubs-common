@@ -72,7 +72,7 @@ public class StoreProcTest extends AbstractStoreProc {
         public PartyFlatData map(ResultSet r, StatementContext ctx) throws SQLException {
             return PartyFlatData.newBuilder()
                     .setPartyId(String.valueOf(r.getLong("party_id")))
-                    .setPartyTypeId(getTypeSymbol(r.getString("party_type_id")))
+                    .setPartyTypeId(r.getString("party_type_id"))
                     .build();
         }
     }
@@ -163,7 +163,7 @@ public class StoreProcTest extends AbstractStoreProc {
             // insertParties(c, ids, "PARTY_GROUP");
 
             PartyFlatData partyFlatData = dao.getFlat(ids.get(0));
-            assertEquals("PARTY_GROUP", partyFlatData.getPartyTypeId().getValueId());
+            assertEquals("PARTY_GROUP", partyFlatData.getPartyTypeId());
         });
     }
 

@@ -100,17 +100,17 @@ message OrderHeaderFlatData {
     string order_type_id = 2;    
     string order_name = 3;    
     string external_id = 4;
-    routines.TypeSymbol sales_channel_enum_id = 5; // Enumeration    
+    string sales_channel_enum_id = 5; // Enumeration    
     google.protobuf.Timestamp order_date = 6;    
     routines.Indicator priority = 7;    
     google.protobuf.Timestamp entry_date = 8;    
     google.protobuf.Timestamp pick_sheet_printed_date = 9;    
     string visit_id = 10;
-    routines.TypeSymbol status_id = 11; // StatusItem    
+    string status_id = 11; // StatusItem    
     string created_by = 12;    
     string first_attempt_order_id = 13;
-    routines.TypeSymbol currency_uom = 14; // Uom
-    routines.TypeSymbol sync_status_id = 15; // StatusItem    
+    string currency_uom = 14; // Uom
+    string sync_status_id = 15; // StatusItem    
     string billing_account_id = 16;    
     string origin_facility_id = 17;    
     string web_site_id = 18;    
@@ -162,12 +162,12 @@ message OrderItemFlatData {
     routines.Currency unit_average_cost = 27;    
     routines.Currency unit_recurring_price = 28;    
     routines.Indicator is_modified_price = 29;
-    routines.TypeSymbol recurring_freq_uom_id = 30; // Uom    
+    string recurring_freq_uom_id = 30; // Uom    
     string item_description = 31;    
     string comments = 32;    
     string corresponding_po_id = 33;
-    routines.TypeSymbol status_id = 34; // StatusValidChange
-    routines.TypeSymbol sync_status_id = 35; // StatusItem    
+    string status_id = 34; // StatusValidChange
+    string sync_status_id = 35; // StatusItem    
     google.protobuf.Timestamp estimated_ship_date = 36;    
     google.protobuf.Timestamp estimated_delivery_date = 37;    
     google.protobuf.Timestamp auto_cancel_date = 38;    
@@ -189,23 +189,23 @@ message PaymentFlatData {
         
     string payment_id = 1;    
     string payment_type_id = 2;
-    routines.TypeSymbol payment_method_type_id = 3; // PaymentMethodType    
+    string payment_method_type_id = 3; // PaymentMethodType    
     string payment_method_id = 4;    
     string payment_gateway_response_id = 5;    
     string payment_preference_id = 6;    
     string party_id_from = 7;    
     string party_id_to = 8;
-    routines.TypeSymbol role_type_id_to = 9; // RoleType
-    routines.TypeSymbol status_id = 10; // StatusItem    
+    string role_type_id_to = 9; // RoleType
+    string status_id = 10; // StatusItem    
     google.protobuf.Timestamp effective_date = 11;    
     string payment_ref_num = 12;    
     routines.Currency amount = 13;
-    routines.TypeSymbol currency_uom_id = 14; // Uom    
+    string currency_uom_id = 14; // Uom    
     string comments = 15;    
     string fin_account_trans_id = 16;    
     string override_gl_account_id = 17;    
     routines.Currency actual_currency_amount = 18;
-    routines.TypeSymbol actual_currency_uom_id = 19; // Uom  
+    string actual_currency_uom_id = 19; // Uom  
 }
 
 // flat-ent: Invoice
@@ -217,8 +217,8 @@ message InvoiceFlatData {
     string invoice_type_id = 2;    
     string party_id_from = 3;    
     string party_id = 4;
-    routines.TypeSymbol role_type_id = 5; // RoleType
-    routines.TypeSymbol status_id = 6; // StatusItem    
+    string role_type_id = 5; // RoleType
+    string status_id = 6; // StatusItem    
     string billing_account_id = 7;    
     string contact_mech_id = 8;    
     google.protobuf.Timestamp invoice_date = 9;    
@@ -227,7 +227,7 @@ message InvoiceFlatData {
     string invoice_message = 12;    
     string reference_number = 13;    
     string description = 14;
-    routines.TypeSymbol currency_uom_id = 15; // Uom    
+    string currency_uom_id = 15; // Uom    
     string recurrence_info_id = 16;  
 }
 
@@ -259,30 +259,30 @@ message ProductFlatData {
     string original_image_url = 21;    
     string detail_screen = 22;    
     string inventory_message = 23;
-    routines.TypeSymbol inventory_item_type_id = 24; // InventoryItemType    
+    string inventory_item_type_id = 24; // InventoryItemType    
     routines.Indicator require_inventory = 25;
-    routines.TypeSymbol quantity_uom_id = 26; // Uom    
+    string quantity_uom_id = 26; // Uom    
     routines.FixedPoint quantity_included = 27;    
     int64 pieces_included = 28;    
     routines.Indicator require_amount = 29;    
     routines.Currency fixed_amount = 30;
-    routines.TypeSymbol amount_uom_type_id = 31; // UomType
-    routines.TypeSymbol weight_uom_id = 32; // Uom    
+    string amount_uom_type_id = 31; // UomType
+    string weight_uom_id = 32; // Uom    
     routines.FixedPoint shipping_weight = 33;    
     routines.FixedPoint product_weight = 34;
-    routines.TypeSymbol height_uom_id = 35; // Uom    
+    string height_uom_id = 35; // Uom    
     routines.FixedPoint product_height = 36;    
     routines.FixedPoint shipping_height = 37;
-    routines.TypeSymbol width_uom_id = 38; // Uom    
+    string width_uom_id = 38; // Uom    
     routines.FixedPoint product_width = 39;    
     routines.FixedPoint shipping_width = 40;
-    routines.TypeSymbol depth_uom_id = 41; // Uom    
+    string depth_uom_id = 41; // Uom    
     routines.FixedPoint product_depth = 42;    
     routines.FixedPoint shipping_depth = 43;
-    routines.TypeSymbol diameter_uom_id = 44; // Uom    
+    string diameter_uom_id = 44; // Uom    
     routines.FixedPoint product_diameter = 45;    
     routines.FixedPoint product_rating = 46;
-    routines.TypeSymbol rating_type_enum = 47; // Enumeration    
+    string rating_type_enum = 47; // Enumeration    
     routines.Indicator returnable = 48;    
     routines.Indicator taxable = 49;    
     routines.Indicator charge_shipping = 50;    
@@ -290,9 +290,9 @@ message ProductFlatData {
     routines.Indicator include_in_promotions = 52;    
     routines.Indicator is_virtual = 53;    
     routines.Indicator is_variant = 54;
-    routines.TypeSymbol virtual_variant_method_enum = 55; // Enumeration
-    routines.TypeSymbol origin_geo_id = 56; // Geo
-    routines.TypeSymbol requirement_method_enum_id = 57; // Enumeration    
+    string virtual_variant_method_enum = 55; // Enumeration
+    string origin_geo_id = 56; // Geo
+    string requirement_method_enum_id = 57; // Enumeration    
     int64 bill_of_material_level = 58;    
     routines.FixedPoint reserv_max_persons = 59;    
     routines.FixedPoint reserv2nd_p_p_perc = 60;    
@@ -315,7 +315,7 @@ message ShipmentFlatData {
         
     string shipment_id = 1;    
     string shipment_type_id = 2;
-    routines.TypeSymbol status_id = 3; // StatusItem    
+    string status_id = 3; // StatusItem    
     string primary_order_id = 4;    
     string primary_return_id = 5;    
     string primary_ship_group_seq_id = 6;    
@@ -327,7 +327,7 @@ message ShipmentFlatData {
     string estimated_arrival_work_eff_id = 12;    
     google.protobuf.Timestamp latest_cancel_date = 13;    
     routines.Currency estimated_ship_cost = 14;
-    routines.TypeSymbol currency_uom_id = 15; // Uom    
+    string currency_uom_id = 15; // Uom    
     string handling_instructions = 16;    
     string origin_facility_id = 17;    
     string destination_facility_id = 18;    
@@ -351,7 +351,7 @@ message ProductStoreFlatData {
     // keys: productStoreId
         
     string product_store_id = 1;
-    routines.TypeSymbol primary_store_group_id = 2; // ProductStoreGroup    
+    string primary_store_group_id = 2; // ProductStoreGroup    
     string store_name = 3;    
     string company_name = 4;    
     string title = 5;    
@@ -370,32 +370,32 @@ message ProductStoreFlatData {
     routines.Indicator one_inventory_facility = 18;    
     routines.Indicator check_inventory = 19;    
     routines.Indicator reserve_inventory = 20;
-    routines.TypeSymbol reserve_order_enum_id = 21; // Enumeration    
+    string reserve_order_enum_id = 21; // Enumeration    
     routines.Indicator require_inventory = 22;    
     routines.Indicator balance_res_on_order_creation = 23;
-    routines.TypeSymbol requirement_method_enum_id = 24; // Enumeration    
+    string requirement_method_enum_id = 24; // Enumeration    
     string order_number_prefix = 25;    
     string default_locale_string = 26;
-    routines.TypeSymbol default_currency_uom_id = 27; // Uom    
+    string default_currency_uom_id = 27; // Uom    
     string default_time_zone_string = 28;
-    routines.TypeSymbol default_sales_channel_enum_id = 29; // Enumeration    
+    string default_sales_channel_enum_id = 29; // Enumeration    
     routines.Indicator allow_password = 30;    
     string default_password = 31;    
     routines.Indicator explode_order_items = 32;    
     routines.Indicator check_gc_balance = 33;    
     routines.Indicator retry_failed_auths = 34;
-    routines.TypeSymbol header_approved_status = 35; // StatusItem
-    routines.TypeSymbol item_approved_status = 36; // StatusItem
-    routines.TypeSymbol digital_item_approved_status = 37; // StatusItem
-    routines.TypeSymbol header_declined_status = 38; // StatusItem
-    routines.TypeSymbol item_declined_status = 39; // StatusItem
-    routines.TypeSymbol header_cancel_status = 40; // StatusItem
-    routines.TypeSymbol item_cancel_status = 41; // StatusItem    
+    string header_approved_status = 35; // StatusItem
+    string item_approved_status = 36; // StatusItem
+    string digital_item_approved_status = 37; // StatusItem
+    string header_declined_status = 38; // StatusItem
+    string item_declined_status = 39; // StatusItem
+    string header_cancel_status = 40; // StatusItem
+    string item_cancel_status = 41; // StatusItem    
     string auth_declined_message = 42;    
     string auth_fraud_message = 43;    
     string auth_error_message = 44;    
     string visual_theme_id = 45;
-    routines.TypeSymbol store_credit_account_enum_id = 46; // Enumeration    
+    string store_credit_account_enum_id = 46; // Enumeration    
     routines.Indicator use_primary_email_username = 47;    
     routines.Indicator require_customer_role = 48;    
     routines.Indicator auto_invoice_digital_items = 49;    
@@ -438,14 +438,14 @@ message PartyFlatData {
     string party_id = 1;    
     string party_type_id = 2;    
     string external_id = 3;
-    routines.TypeSymbol preferred_currency_uom_id = 4; // Uom    
+    string preferred_currency_uom_id = 4; // Uom    
     string description = 5;
-    routines.TypeSymbol status_id = 6; // StatusItem    
+    string status_id = 6; // StatusItem    
     google.protobuf.Timestamp created_date = 7;    
     string created_by_user_login = 8;    
     google.protobuf.Timestamp last_modified_date = 9;    
     string last_modified_by_user_login = 10;
-    routines.TypeSymbol data_source_id = 11; // DataSource    
+    string data_source_id = 11; // DataSource    
     routines.Indicator is_unread = 12;  
 }
 
@@ -474,14 +474,14 @@ message PersonFlatData {
     double weight = 18;    
     string mothers_maiden_name = 19;    
     routines.Indicator old_marital_status = 20;
-    routines.TypeSymbol marital_status_enum_id = 21; // Enumeration    
+    string marital_status_enum_id = 21; // Enumeration    
     string social_security_number = 22;    
     string passport_number = 23;    
     google.protobuf.Timestamp passport_expire_date = 24;    
     double total_years_work_experience = 25;    
     string comments = 26;
-    routines.TypeSymbol employment_status_enum_id = 27; // Enumeration
-    routines.TypeSymbol residence_status_enum_id = 28; // Enumeration    
+    string employment_status_enum_id = 27; // Enumeration
+    string residence_status_enum_id = 28; // Enumeration    
     string occupation = 29;    
     int64 years_with_employer = 30;    
     int64 months_with_employer = 31;    
@@ -523,17 +523,17 @@ message ShipmentRouteSegmentData {
     string dest_telecom_number_id = 9;    
     string carrier_party_id = 10;    
     string shipment_method_type_id = 11;
-    routines.TypeSymbol carrier_service_status_id = 12; // StatusItem    
+    string carrier_service_status_id = 12; // StatusItem    
     string carrier_delivery_zone = 13;    
     string carrier_restriction_codes = 14;    
     string carrier_restriction_desc = 15;    
     routines.FixedPoint billing_weight = 16;
-    routines.TypeSymbol billing_weight_uom_id = 17; // Uom    
+    string billing_weight_uom_id = 17; // Uom    
     routines.Currency actual_transport_cost = 18;    
     routines.Currency actual_service_cost = 19;    
     routines.Currency actual_other_cost = 20;    
     routines.Currency actual_cost = 21;
-    routines.TypeSymbol currency_uom_id = 22; // Uom    
+    string currency_uom_id = 22; // Uom    
     google.protobuf.Timestamp actual_start_date = 23;    
     google.protobuf.Timestamp actual_arrival_date = 24;    
     google.protobuf.Timestamp estimated_start_date = 25;    
@@ -561,15 +561,15 @@ message InvoiceData {
     string invoice_id = 1;    
     string invoice_type_id = 2;    
     string party_id_from = 3;
-    routines.TypeSymbol role_type_id = 4; // RoleType
-    routines.TypeSymbol status_id = 5; // StatusItem    
+    string role_type_id = 4; // RoleType
+    string status_id = 5; // StatusItem    
     google.protobuf.Timestamp invoice_date = 6;    
     google.protobuf.Timestamp due_date = 7;    
     google.protobuf.Timestamp paid_date = 8;    
     string invoice_message = 9;    
     string reference_number = 10;    
     string description = 11;
-    routines.TypeSymbol currency_uom_id = 12; // Uom
+    string currency_uom_id = 12; // Uom
     
     // relations
     PartyRoleData party_role = 15; // ref: partyId + roleTypeId
@@ -612,8 +612,8 @@ message OrderAdjustmentData {
     string source_reference_id = 17;    
     routines.FixedPoint source_percentage = 18;    
     string customer_reference_id = 19;
-    routines.TypeSymbol primary_geo_id = 20; // Geo
-    routines.TypeSymbol secondary_geo_id = 21; // Geo    
+    string primary_geo_id = 20; // Geo
+    string secondary_geo_id = 21; // Geo    
     routines.Currency exempt_amount = 22;    
     string tax_auth_geo_id = 23;    
     string tax_auth_party_id = 24;    
@@ -658,30 +658,30 @@ message ProductData {
     string original_image_url = 20;    
     string detail_screen = 21;    
     string inventory_message = 22;
-    routines.TypeSymbol inventory_item_type_id = 23; // InventoryItemType    
+    string inventory_item_type_id = 23; // InventoryItemType    
     routines.Indicator require_inventory = 24;
-    routines.TypeSymbol quantity_uom_id = 25; // Uom    
+    string quantity_uom_id = 25; // Uom    
     routines.FixedPoint quantity_included = 26;    
     int64 pieces_included = 27;    
     routines.Indicator require_amount = 28;    
     routines.Currency fixed_amount = 29;
-    routines.TypeSymbol amount_uom_type_id = 30; // UomType
-    routines.TypeSymbol weight_uom_id = 31; // Uom    
+    string amount_uom_type_id = 30; // UomType
+    string weight_uom_id = 31; // Uom    
     routines.FixedPoint shipping_weight = 32;    
     routines.FixedPoint product_weight = 33;
-    routines.TypeSymbol height_uom_id = 34; // Uom    
+    string height_uom_id = 34; // Uom    
     routines.FixedPoint product_height = 35;    
     routines.FixedPoint shipping_height = 36;
-    routines.TypeSymbol width_uom_id = 37; // Uom    
+    string width_uom_id = 37; // Uom    
     routines.FixedPoint product_width = 38;    
     routines.FixedPoint shipping_width = 39;
-    routines.TypeSymbol depth_uom_id = 40; // Uom    
+    string depth_uom_id = 40; // Uom    
     routines.FixedPoint product_depth = 41;    
     routines.FixedPoint shipping_depth = 42;
-    routines.TypeSymbol diameter_uom_id = 43; // Uom    
+    string diameter_uom_id = 43; // Uom    
     routines.FixedPoint product_diameter = 44;    
     routines.FixedPoint product_rating = 45;
-    routines.TypeSymbol rating_type_enum = 46; // Enumeration    
+    string rating_type_enum = 46; // Enumeration    
     routines.Indicator returnable = 47;    
     routines.Indicator taxable = 48;    
     routines.Indicator charge_shipping = 49;    
@@ -689,9 +689,9 @@ message ProductData {
     routines.Indicator include_in_promotions = 51;    
     routines.Indicator is_virtual = 52;    
     routines.Indicator is_variant = 53;
-    routines.TypeSymbol virtual_variant_method_enum = 54; // Enumeration
-    routines.TypeSymbol origin_geo_id = 55; // Geo
-    routines.TypeSymbol requirement_method_enum_id = 56; // Enumeration    
+    string virtual_variant_method_enum = 54; // Enumeration
+    string origin_geo_id = 55; // Geo
+    string requirement_method_enum_id = 56; // Enumeration    
     int64 bill_of_material_level = 57;    
     routines.FixedPoint reserv_max_persons = 58;    
     routines.FixedPoint reserv2nd_p_p_perc = 59;    
@@ -766,9 +766,9 @@ message FixedAssetData {
     string fixed_asset_type_id = 2;    
     string parent_fixed_asset_id = 3;    
     string instance_of_product_id = 4;
-    routines.TypeSymbol class_enum_id = 5; // Enumeration    
+    string class_enum_id = 5; // Enumeration    
     string party_id = 6;
-    routines.TypeSymbol role_type_id = 7; // RoleType    
+    string role_type_id = 7; // RoleType    
     string fixed_asset_name = 8;    
     string acquire_order_id = 9;    
     string acquire_order_item_seq_id = 10;    
@@ -778,8 +778,8 @@ message FixedAssetData {
     google.protobuf.Timestamp expected_end_of_life = 14;    
     google.protobuf.Timestamp actual_end_of_life = 15;    
     routines.FixedPoint production_capacity = 16;
-    routines.TypeSymbol uom_id = 17; // Uom
-    routines.TypeSymbol calendar_id = 18; // TechDataCalendar    
+    string uom_id = 17; // Uom
+    string calendar_id = 18; // TechDataCalendar    
     string serial_number = 19;    
     string located_at_facility_id = 20;    
     string located_at_location_seq_id = 21;    
@@ -798,7 +798,7 @@ message WebAnalyticsConfigData {
     // fields
         
     string web_site_id = 1;
-    routines.TypeSymbol web_analytics_type_id = 2; // WebAnalyticsType    
+    string web_analytics_type_id = 2; // WebAnalyticsType    
     string web_analytics_code = 3;
     
 }
@@ -826,13 +826,13 @@ message PaymentGatewayResponseData {
     // fields
         
     string payment_gateway_response_id = 1;
-    routines.TypeSymbol payment_service_type_enum_id = 2; // Enumeration    
+    string payment_service_type_enum_id = 2; // Enumeration    
     string order_payment_preference_id = 3;
-    routines.TypeSymbol payment_method_type_id = 4; // PaymentMethodType    
+    string payment_method_type_id = 4; // PaymentMethodType    
     string payment_method_id = 5;
-    routines.TypeSymbol trans_code_enum_id = 6; // Enumeration    
+    string trans_code_enum_id = 6; // Enumeration    
     routines.Currency amount = 7;
-    routines.TypeSymbol currency_uom_id = 8; // Uom    
+    string currency_uom_id = 8; // Uom    
     string reference_num = 9;    
     string alt_reference = 10;    
     string sub_reference = 11;    
@@ -874,9 +874,9 @@ message ProductPromoActionData {
     string product_promo_id = 1;    
     string product_promo_rule_id = 2;    
     string product_promo_action_seq_id = 3;
-    routines.TypeSymbol product_promo_action_enum_id = 4; // Enumeration
-    routines.TypeSymbol custom_method_id = 5; // CustomMethod
-    routines.TypeSymbol order_adjustment_type_id = 6; // OrderAdjustmentType    
+    string product_promo_action_enum_id = 4; // Enumeration
+    string custom_method_id = 5; // CustomMethod
+    string order_adjustment_type_id = 6; // OrderAdjustmentType    
     string service_name = 7;    
     routines.FixedPoint quantity = 8;    
     routines.FixedPoint amount = 9;    
@@ -900,17 +900,17 @@ message ShipmentCostEstimateData {
     string product_store_ship_meth_id = 5;    
     string product_store_id = 6;    
     string party_id = 7;
-    routines.TypeSymbol role_type_id = 8; // RoleType
-    routines.TypeSymbol geo_id_to = 9; // Geo
-    routines.TypeSymbol geo_id_from = 10; // Geo    
+    string role_type_id = 8; // RoleType
+    string geo_id_to = 9; // Geo
+    string geo_id_from = 10; // Geo    
     string weight_break_id = 11;
-    routines.TypeSymbol weight_uom_id = 12; // Uom    
+    string weight_uom_id = 12; // Uom    
     routines.Currency weight_unit_price = 13;    
     string quantity_break_id = 14;
-    routines.TypeSymbol quantity_uom_id = 15; // Uom    
+    string quantity_uom_id = 15; // Uom    
     routines.Currency quantity_unit_price = 16;    
     string price_break_id = 17;
-    routines.TypeSymbol price_uom_id = 18; // Uom    
+    string price_uom_id = 18; // Uom    
     routines.Currency price_unit_price = 19;    
     routines.Currency order_flat_price = 20;    
     routines.FixedPoint order_price_percent = 21;    
@@ -932,7 +932,7 @@ message SecurityGroupPermissionData {
     // fields
         
     string group_id = 1;
-    routines.TypeSymbol permission_id = 2; // SecurityPermission    
+    string permission_id = 2; // SecurityPermission    
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;
     
@@ -950,7 +950,7 @@ message ProductStoreKeywordOvrdData {
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;    
     string target = 5;
-    routines.TypeSymbol target_type_enum_id = 6; // Enumeration
+    string target_type_enum_id = 6; // Enumeration
     
 }
 
@@ -963,7 +963,7 @@ message ProductAssocData {
         
     string product_id = 1;    
     string product_id_to = 2;
-    routines.TypeSymbol product_assoc_type_id = 3; // ProductAssocType    
+    string product_assoc_type_id = 3; // ProductAssocType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     int64 sequence_num = 6;    
@@ -972,7 +972,7 @@ message ProductAssocData {
     routines.FixedPoint scrap_factor = 9;    
     string instruction = 10;    
     string routing_work_effort_id = 11;
-    routines.TypeSymbol estimate_calc_method = 12; // CustomMethod    
+    string estimate_calc_method = 12; // CustomMethod    
     string recurrence_info_id = 13;
     
 }
@@ -986,13 +986,13 @@ message FixedAssetProductData {
         
     string fixed_asset_id = 1;    
     string product_id = 2;
-    routines.TypeSymbol fixed_asset_product_type_id = 3; // FixedAssetProductType    
+    string fixed_asset_product_type_id = 3; // FixedAssetProductType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     string comments = 6;    
     int64 sequence_num = 7;    
     routines.FixedPoint quantity = 8;
-    routines.TypeSymbol quantity_uom_id = 9; // Uom
+    string quantity_uom_id = 9; // Uom
     
 }
 
@@ -1010,7 +1010,7 @@ message PaymentApplicationData {
     string billing_account_id = 5;    
     string override_gl_account_id = 6;    
     string to_payment_id = 7;
-    routines.TypeSymbol tax_auth_geo_id = 8; // Geo    
+    string tax_auth_geo_id = 8; // Geo    
     routines.Currency amount_applied = 9;
     
 }
@@ -1025,18 +1025,18 @@ message CustRequestData {
     string cust_request_id = 1;    
     string cust_request_type_id = 2;    
     string cust_request_category_id = 3;
-    routines.TypeSymbol status_id = 4; // StatusItem    
+    string status_id = 4; // StatusItem    
     string from_party_id = 5;    
     int64 priority = 6;    
     google.protobuf.Timestamp cust_request_date = 7;    
     google.protobuf.Timestamp response_required_date = 8;    
     string cust_request_name = 9;    
     string description = 10;
-    routines.TypeSymbol maximum_amount_uom_id = 11; // Uom    
+    string maximum_amount_uom_id = 11; // Uom    
     string product_store_id = 12;
-    routines.TypeSymbol sales_channel_enum_id = 13; // Enumeration    
+    string sales_channel_enum_id = 13; // Enumeration    
     string fulfill_contact_mech_id = 14;
-    routines.TypeSymbol currency_uom_id = 15; // Uom    
+    string currency_uom_id = 15; // Uom    
     google.protobuf.Timestamp open_date_time = 16;    
     google.protobuf.Timestamp closed_date_time = 17;    
     string internal_comment = 18;    
@@ -1069,7 +1069,7 @@ message ShipmentReceiptData {
     string order_item_seq_id = 8;    
     string return_id = 9;    
     string return_item_seq_id = 10;
-    routines.TypeSymbol rejection_id = 11; // RejectionReason    
+    string rejection_id = 11; // RejectionReason    
     string received_by_user_login_id = 12;    
     google.protobuf.Timestamp datetime_received = 13;    
     string item_description = 14;    
@@ -1105,7 +1105,7 @@ message InventoryItemDetailData {
     string item_issuance_id = 18;    
     string receipt_id = 19;    
     string physical_inventory_id = 20;
-    routines.TypeSymbol reason_enum_id = 21; // Enumeration    
+    string reason_enum_id = 21; // Enumeration    
     string description = 22;
     
 }
@@ -1132,8 +1132,8 @@ message ProductFeaturePriceData {
     // fields
         
     string product_feature_id = 1;
-    routines.TypeSymbol product_price_type_id = 2; // ProductPriceType
-    routines.TypeSymbol currency_uom_id = 3; // Uom    
+    string product_price_type_id = 2; // ProductPriceType
+    string currency_uom_id = 3; // Uom    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     routines.Currency price = 6;    
@@ -1177,14 +1177,14 @@ message PostalAddressData {
     string house_number_ext = 7;    
     string directions = 8;    
     string city = 9;
-    routines.TypeSymbol city_geo_id = 10; // Geo    
+    string city_geo_id = 10; // Geo    
     string postal_code = 11;    
     string postal_code_ext = 12;
-    routines.TypeSymbol country_geo_id = 13; // Geo
-    routines.TypeSymbol state_province_geo_id = 14; // Geo
-    routines.TypeSymbol county_geo_id = 15; // Geo
-    routines.TypeSymbol municipality_geo_id = 16; // Geo
-    routines.TypeSymbol postal_code_geo_id = 17; // Geo    
+    string country_geo_id = 13; // Geo
+    string state_province_geo_id = 14; // Geo
+    string county_geo_id = 15; // Geo
+    string municipality_geo_id = 16; // Geo
+    string postal_code_geo_id = 17; // Geo    
     string geo_point_id = 18;
     
 }
@@ -1199,7 +1199,7 @@ message ProductFacilityAssocData {
     string product_id = 1;    
     string facility_id = 2;    
     string facility_id_to = 3;
-    routines.TypeSymbol facility_assoc_type_id = 4; // FacilityAssocType    
+    string facility_assoc_type_id = 4; // FacilityAssocType    
     google.protobuf.Timestamp from_date = 5;    
     google.protobuf.Timestamp thru_date = 6;    
     int64 sequence_num = 7;    
@@ -1234,10 +1234,10 @@ message WorkEffortGoodStandardData {
         
     string work_effort_id = 1;    
     string product_id = 2;
-    routines.TypeSymbol work_effort_good_std_type_id = 3; // WorkEffortGoodStandardType    
+    string work_effort_good_std_type_id = 3; // WorkEffortGoodStandardType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;
-    routines.TypeSymbol status_id = 6; // StatusItem    
+    string status_id = 6; // StatusItem    
     double estimated_quantity = 7;    
     routines.Currency estimated_cost = 8;
     
@@ -1270,14 +1270,14 @@ message PersonData {
     double weight = 18;    
     string mothers_maiden_name = 19;    
     routines.Indicator old_marital_status = 20;
-    routines.TypeSymbol marital_status_enum_id = 21; // Enumeration    
+    string marital_status_enum_id = 21; // Enumeration    
     string social_security_number = 22;    
     string passport_number = 23;    
     google.protobuf.Timestamp passport_expire_date = 24;    
     double total_years_work_experience = 25;    
     string comments = 26;
-    routines.TypeSymbol employment_status_enum_id = 27; // Enumeration
-    routines.TypeSymbol residence_status_enum_id = 28; // Enumeration    
+    string employment_status_enum_id = 27; // Enumeration
+    string residence_status_enum_id = 28; // Enumeration    
     string occupation = 29;    
     int64 years_with_employer = 30;    
     int64 months_with_employer = 31;    
@@ -1304,7 +1304,7 @@ message ProductStoreRoleData {
     // fields
         
     string party_id = 1;
-    routines.TypeSymbol role_type_id = 2; // RoleType    
+    string role_type_id = 2; // RoleType    
     string product_store_id = 3;    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
@@ -1323,7 +1323,7 @@ message PartyContactMechData {
     string contact_mech_id = 2;    
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;
-    routines.TypeSymbol role_type_id = 5; // RoleType    
+    string role_type_id = 5; // RoleType    
     routines.Indicator allow_solicitation = 6;    
     string extension = 7;    
     routines.Indicator verified = 8;    
@@ -1341,7 +1341,7 @@ message ProductStoreEmailSettingData {
     // fields
         
     string product_store_id = 1;
-    routines.TypeSymbol email_type = 2; // Enumeration    
+    string email_type = 2; // Enumeration    
     string body_screen_location = 3;    
     string xslfo_attach_screen_location = 4;    
     string from_address = 5;    
@@ -1428,7 +1428,7 @@ message ProductPromoProductData {
     string product_promo_action_seq_id = 3;    
     string product_promo_cond_seq_id = 4;    
     string product_id = 5;
-    routines.TypeSymbol product_promo_appl_enum_id = 6; // Enumeration
+    string product_promo_appl_enum_id = 6; // Enumeration
     
 }
 
@@ -1443,7 +1443,7 @@ message ProductReviewData {
     string product_store_id = 2;    
     string product_id = 3;    
     string user_login_id = 4;
-    routines.TypeSymbol status_id = 5; // StatusItem    
+    string status_id = 5; // StatusItem    
     routines.Indicator posted_anonymous = 6;    
     google.protobuf.Timestamp posted_date_time = 7;    
     routines.FixedPoint product_rating = 8;    
@@ -1462,8 +1462,8 @@ message OrderPaymentPreferenceData {
     string order_id = 2;    
     string order_item_seq_id = 3;    
     string ship_group_seq_id = 4;
-    routines.TypeSymbol product_price_purpose_id = 5; // ProductPricePurpose
-    routines.TypeSymbol payment_method_type_id = 6; // PaymentMethodType    
+    string product_price_purpose_id = 5; // ProductPricePurpose
+    string payment_method_type_id = 6; // PaymentMethodType    
     string payment_method_id = 7;    
     string fin_account_id = 8;    
     string security_code = 9;    
@@ -1476,7 +1476,7 @@ message OrderPaymentPreferenceData {
     string billing_postal_code = 16;    
     string manual_auth_code = 17;    
     string manual_ref_num = 18;
-    routines.TypeSymbol status_id = 19; // StatusItem    
+    string status_id = 19; // StatusItem    
     routines.Indicator needs_nsf_retry = 20;    
     google.protobuf.Timestamp created_date = 21;    
     string created_by_user_login = 22;    
@@ -1496,18 +1496,18 @@ message SupplierProductData {
     string party_id = 2;    
     google.protobuf.Timestamp available_from_date = 3;    
     google.protobuf.Timestamp available_thru_date = 4;
-    routines.TypeSymbol supplier_pref_order_id = 5; // SupplierPrefOrder    
+    string supplier_pref_order_id = 5; // SupplierPrefOrder    
     string supplier_rating_type_id = 6;    
     routines.FixedPoint standard_lead_time_days = 7;    
     routines.FixedPoint minimum_order_quantity = 8;    
     routines.FixedPoint order_qty_increments = 9;    
     routines.FixedPoint units_included = 10;
-    routines.TypeSymbol quantity_uom_id = 11; // Uom    
+    string quantity_uom_id = 11; // Uom    
     string agreement_id = 12;    
     string agreement_item_seq_id = 13;    
     routines.Currency last_price = 14;    
     routines.Currency shipping_price = 15;
-    routines.TypeSymbol currency_uom_id = 16; // Uom    
+    string currency_uom_id = 16; // Uom    
     string supplier_product_name = 17;    
     string supplier_product_id = 18;    
     routines.Indicator can_drop_ship = 19;    
@@ -1523,7 +1523,7 @@ message OrderStatusData {
     // fields
         
     string order_status_id = 1;
-    routines.TypeSymbol status_id = 2; // StatusItem    
+    string status_id = 2; // StatusItem    
     string order_id = 3;    
     string order_item_seq_id = 4;    
     string order_payment_preference_id = 5;    
@@ -1543,12 +1543,12 @@ message PartyData {
     string party_id = 1;    
     string party_type_id = 2;    
     string external_id = 3;
-    routines.TypeSymbol preferred_currency_uom_id = 4; // Uom    
+    string preferred_currency_uom_id = 4; // Uom    
     string description = 5;
-    routines.TypeSymbol status_id = 6; // StatusItem    
+    string status_id = 6; // StatusItem    
     google.protobuf.Timestamp created_date = 7;    
     google.protobuf.Timestamp last_modified_date = 8;
-    routines.TypeSymbol data_source_id = 9; // DataSource    
+    string data_source_id = 9; // DataSource    
     routines.Indicator is_unread = 10;
     
     // relations
@@ -1653,16 +1653,16 @@ message AcctgTransData {
     routines.Indicator is_posted = 5;    
     google.protobuf.Timestamp posted_date = 6;    
     google.protobuf.Timestamp scheduled_posting_date = 7;
-    routines.TypeSymbol gl_journal_id = 8; // GlJournal
-    routines.TypeSymbol gl_fiscal_type_id = 9; // GlFiscalType    
+    string gl_journal_id = 8; // GlJournal
+    string gl_fiscal_type_id = 9; // GlFiscalType    
     string voucher_ref = 10;    
     google.protobuf.Timestamp voucher_date = 11;
-    routines.TypeSymbol group_status_id = 12; // StatusItem    
+    string group_status_id = 12; // StatusItem    
     string fixed_asset_id = 13;    
     string inventory_item_id = 14;    
     string physical_inventory_id = 15;    
     string party_id = 16;
-    routines.TypeSymbol role_type_id = 17; // RoleType    
+    string role_type_id = 17; // RoleType    
     string invoice_id = 18;    
     string payment_id = 19;    
     string fin_account_trans_id = 20;    
@@ -1686,14 +1686,14 @@ message DataResourceData {
         
     string data_resource_id = 1;    
     string data_resource_type_id = 2;
-    routines.TypeSymbol data_template_type_id = 3; // DataTemplateType
-    routines.TypeSymbol data_category_id = 4; // DataCategory
-    routines.TypeSymbol data_source_id = 5; // DataSource
-    routines.TypeSymbol status_id = 6; // StatusItem    
+    string data_template_type_id = 3; // DataTemplateType
+    string data_category_id = 4; // DataCategory
+    string data_source_id = 5; // DataSource
+    string status_id = 6; // StatusItem    
     string data_resource_name = 7;    
     string locale_string = 8;
-    routines.TypeSymbol mime_type_id = 9; // MimeType
-    routines.TypeSymbol character_set_id = 10; // CharacterSet    
+    string mime_type_id = 9; // MimeType
+    string character_set_id = 10; // CharacterSet    
     string object_info = 11;    
     string survey_id = 12;    
     string survey_response_id = 13;    
@@ -1749,7 +1749,7 @@ message AgreementData {
     string party_id_from = 3;    
     string party_id_to = 4;    
     string role_type_id_from = 5;
-    routines.TypeSymbol role_type_id_to = 6; // RoleType    
+    string role_type_id_to = 6; // RoleType    
     string agreement_type_id = 7;    
     google.protobuf.Timestamp agreement_date = 8;    
     google.protobuf.Timestamp from_date = 9;    
@@ -1768,7 +1768,7 @@ message ProdCatalogCategoryData {
         
     string prod_catalog_id = 1;    
     string product_category_id = 2;
-    routines.TypeSymbol prod_catalog_category_type_id = 3; // ProdCatalogCategoryType    
+    string prod_catalog_category_type_id = 3; // ProdCatalogCategoryType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     int64 sequence_num = 6;
@@ -1784,7 +1784,7 @@ message ProductCategoryRoleData {
         
     string product_category_id = 1;    
     string party_id = 2;
-    routines.TypeSymbol role_type_id = 3; // RoleType    
+    string role_type_id = 3; // RoleType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     string comments = 6;
@@ -1824,12 +1824,12 @@ message OrderItemData {
     routines.Currency unit_average_cost = 24;    
     routines.Currency unit_recurring_price = 25;    
     routines.Indicator is_modified_price = 26;
-    routines.TypeSymbol recurring_freq_uom_id = 27; // Uom    
+    string recurring_freq_uom_id = 27; // Uom    
     string item_description = 28;    
     string comments = 29;    
     string corresponding_po_id = 30;
-    routines.TypeSymbol status_id = 31; // StatusValidChange
-    routines.TypeSymbol sync_status_id = 32; // StatusItem    
+    string status_id = 31; // StatusValidChange
+    string sync_status_id = 32; // StatusItem    
     google.protobuf.Timestamp estimated_ship_date = 33;    
     google.protobuf.Timestamp estimated_delivery_date = 34;    
     google.protobuf.Timestamp auto_cancel_date = 35;    
@@ -1872,12 +1872,12 @@ message ShipmentTimeEstimateData {
     string shipment_method_type_id = 1;    
     string party_id = 2;    
     string role_type_id = 3;
-    routines.TypeSymbol geo_id_to = 4; // Geo
-    routines.TypeSymbol geo_id_from = 5; // Geo    
+    string geo_id_to = 4; // Geo
+    string geo_id_from = 5; // Geo    
     google.protobuf.Timestamp from_date = 6;    
     google.protobuf.Timestamp thru_date = 7;    
     routines.FixedPoint lead_time = 8;
-    routines.TypeSymbol lead_time_uom_id = 9; // Uom    
+    string lead_time_uom_id = 9; // Uom    
     int64 sequence_number = 10;
     
 }
@@ -1891,7 +1891,7 @@ message ProductCategoryContentData {
         
     string product_category_id = 1;    
     string content_id = 2;
-    routines.TypeSymbol prod_cat_content_type_id = 3; // ProductCategoryContentType    
+    string prod_cat_content_type_id = 3; // ProductCategoryContentType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     google.protobuf.Timestamp purchase_from_date = 6;    
@@ -1925,11 +1925,11 @@ message ContentAssocData {
         
     string content_id = 1;    
     string content_id_to = 2;
-    routines.TypeSymbol content_assoc_type_id = 3; // ContentAssocType    
+    string content_assoc_type_id = 3; // ContentAssocType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;
-    routines.TypeSymbol content_assoc_predicate_id = 6; // ContentAssocPredicate
-    routines.TypeSymbol data_source_id = 7; // DataSource    
+    string content_assoc_predicate_id = 6; // ContentAssocPredicate
+    string data_source_id = 7; // DataSource    
     int64 sequence_num = 8;    
     string map_key = 9;    
     int64 upper_coordinate = 10;    
@@ -1954,7 +1954,7 @@ message QuoteItemData {
     string product_feature_id = 4;    
     string deliverable_type_id = 5;    
     string skill_type_id = 6;
-    routines.TypeSymbol uom_id = 7; // Uom    
+    string uom_id = 7; // Uom    
     string work_effort_id = 8;    
     string cust_request_id = 9;    
     string cust_request_item_seq_id = 10;    
@@ -2001,9 +2001,9 @@ message ProductPromoCondData {
     string product_promo_id = 1;    
     string product_promo_rule_id = 2;    
     string product_promo_cond_seq_id = 3;
-    routines.TypeSymbol custom_method_id = 4; // CustomMethod
-    routines.TypeSymbol input_param_enum_id = 5; // Enumeration
-    routines.TypeSymbol operator_enum_id = 6; // Enumeration    
+    string custom_method_id = 4; // CustomMethod
+    string input_param_enum_id = 5; // Enumeration
+    string operator_enum_id = 6; // Enumeration    
     string cond_value = 7;    
     string other_value = 8;
     
@@ -2018,7 +2018,7 @@ message FacilityLocationData {
         
     string facility_id = 1;    
     string location_seq_id = 2;
-    routines.TypeSymbol location_type_enum_id = 3; // Enumeration    
+    string location_type_enum_id = 3; // Enumeration    
     string area_id = 4;    
     string aisle_id = 5;    
     string section_id = 6;    
@@ -2041,7 +2041,7 @@ message ProductPromoCategoryData {
     string product_promo_cond_seq_id = 4;    
     string product_category_id = 5;    
     string and_group_id = 6;
-    routines.TypeSymbol product_promo_appl_enum_id = 7; // Enumeration    
+    string product_promo_appl_enum_id = 7; // Enumeration    
     routines.Indicator include_sub_categories = 8;
     
 }
@@ -2053,7 +2053,7 @@ message PartyStatusData {
 
     // fields
     
-    routines.TypeSymbol status_id = 1; // StatusItem    
+    string status_id = 1; // StatusItem    
     string party_id = 2;    
     google.protobuf.Timestamp status_date = 3;    
     string change_by_user_login_id = 4;
@@ -2084,11 +2084,11 @@ message ShipmentBoxTypeData {
         
     string shipment_box_type_id = 1;    
     string description = 2;
-    routines.TypeSymbol dimension_uom_id = 3; // Uom    
+    string dimension_uom_id = 3; // Uom    
     routines.FixedPoint box_length = 4;    
     routines.FixedPoint box_width = 5;    
     routines.FixedPoint box_height = 6;
-    routines.TypeSymbol weight_uom_id = 7; // Uom    
+    string weight_uom_id = 7; // Uom    
     routines.FixedPoint box_weight = 8;
     
 }
@@ -2115,7 +2115,7 @@ message ShipmentPackageRouteSegData {
     routines.Currency package_other_cost = 13;    
     routines.Currency cod_amount = 14;    
     routines.Currency insured_amount = 15;
-    routines.TypeSymbol currency_uom_id = 16; // Uom
+    string currency_uom_id = 16; // Uom
     
 }
 
@@ -2127,13 +2127,13 @@ message GeoPointData {
     // fields
         
     string geo_point_id = 1;
-    routines.TypeSymbol geo_point_type_enum_id = 2; // Enumeration    
+    string geo_point_type_enum_id = 2; // Enumeration    
     string description = 3;
-    routines.TypeSymbol data_source_id = 4; // DataSource    
+    string data_source_id = 4; // DataSource    
     string latitude = 5;    
     string longitude = 6;    
     routines.FixedPoint elevation = 7;
-    routines.TypeSymbol elevation_uom_id = 8; // Uom    
+    string elevation_uom_id = 8; // Uom    
     string information = 9;
     
 }
@@ -2163,7 +2163,7 @@ message ProductFeatureApplData {
         
     string product_id = 1;    
     string product_feature_id = 2;
-    routines.TypeSymbol product_feature_appl_type_id = 3; // ProductFeatureApplType    
+    string product_feature_appl_type_id = 3; // ProductFeatureApplType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     int64 sequence_num = 6;    
@@ -2181,7 +2181,7 @@ message PartyContactMechPurposeData {
         
     string party_id = 1;    
     string contact_mech_id = 2;
-    routines.TypeSymbol contact_mech_purpose_type_id = 3; // ContactMechPurposeType    
+    string contact_mech_purpose_type_id = 3; // ContactMechPurposeType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;
     
@@ -2327,9 +2327,9 @@ message ProductFacilityData {
     routines.FixedPoint minimum_stock = 3;    
     routines.FixedPoint reorder_quantity = 4;    
     int64 days_to_ship = 5;
-    routines.TypeSymbol replenish_method_enum_id = 6; // Enumeration    
+    string replenish_method_enum_id = 6; // Enumeration    
     routines.FixedPoint last_inventory_count = 7;
-    routines.TypeSymbol requirement_method_enum_id = 8; // Enumeration
+    string requirement_method_enum_id = 8; // Enumeration
     
 }
 
@@ -2358,16 +2358,16 @@ message OrderHeaderData {
     string order_type_id = 2;    
     string order_name = 3;    
     string external_id = 4;
-    routines.TypeSymbol sales_channel_enum_id = 5; // Enumeration    
+    string sales_channel_enum_id = 5; // Enumeration    
     google.protobuf.Timestamp order_date = 6;    
     routines.Indicator priority = 7;    
     google.protobuf.Timestamp entry_date = 8;    
     google.protobuf.Timestamp pick_sheet_printed_date = 9;    
     string visit_id = 10;
-    routines.TypeSymbol status_id = 11; // StatusItem    
+    string status_id = 11; // StatusItem    
     string first_attempt_order_id = 12;
-    routines.TypeSymbol currency_uom = 13; // Uom
-    routines.TypeSymbol sync_status_id = 14; // StatusItem    
+    string currency_uom = 13; // Uom
+    string sync_status_id = 14; // StatusItem    
     string origin_facility_id = 15;    
     string agreement_id = 16;    
     string terminal_id = 17;    
@@ -2429,7 +2429,7 @@ message ShipmentData {
         
     string shipment_id = 1;    
     string shipment_type_id = 2;
-    routines.TypeSymbol status_id = 3; // StatusItem    
+    string status_id = 3; // StatusItem    
     string primary_return_id = 4;    
     string primary_ship_group_seq_id = 5;    
     string picklist_bin_id = 6;    
@@ -2438,7 +2438,7 @@ message ShipmentData {
     google.protobuf.Timestamp estimated_arrival_date = 9;    
     google.protobuf.Timestamp latest_cancel_date = 10;    
     routines.Currency estimated_ship_cost = 11;
-    routines.TypeSymbol currency_uom_id = 12; // Uom    
+    string currency_uom_id = 12; // Uom    
     string handling_instructions = 13;    
     string origin_facility_id = 14;    
     string destination_facility_id = 15;    
@@ -2518,15 +2518,15 @@ message ProductContentData {
         
     string product_id = 1;    
     string content_id = 2;
-    routines.TypeSymbol product_content_type_id = 3; // ProductContentType    
+    string product_content_type_id = 3; // ProductContentType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
     google.protobuf.Timestamp purchase_from_date = 6;    
     google.protobuf.Timestamp purchase_thru_date = 7;    
     int64 use_count_limit = 8;    
     int64 use_time = 9;
-    routines.TypeSymbol use_time_uom_id = 10; // Uom
-    routines.TypeSymbol use_role_type_id = 11; // RoleType    
+    string use_time_uom_id = 10; // Uom
+    string use_role_type_id = 11; // RoleType    
     int64 sequence_num = 12;
     
 }
@@ -2540,15 +2540,15 @@ message PartyRelationshipData {
         
     string party_id_from = 1;    
     string party_id_to = 2;
-    routines.TypeSymbol role_type_id_from = 3; // RoleType
-    routines.TypeSymbol role_type_id_to = 4; // RoleType    
+    string role_type_id_from = 3; // RoleType
+    string role_type_id_to = 4; // RoleType    
     google.protobuf.Timestamp from_date = 5;    
     google.protobuf.Timestamp thru_date = 6;
-    routines.TypeSymbol status_id = 7; // StatusItem    
+    string status_id = 7; // StatusItem    
     string relationship_name = 8;    
     string security_group_id = 9;    
     string priority_type_id = 10;
-    routines.TypeSymbol party_relationship_type_id = 11; // PartyRelationshipType    
+    string party_relationship_type_id = 11; // PartyRelationshipType    
     string permissions_enum_id = 12;    
     string position_title = 13;    
     string comments = 14;
@@ -2581,12 +2581,12 @@ message ProductStoreShipmentMethData {
     routines.Indicator include_no_charge_items = 17;    
     string include_feature_group = 18;    
     string exclude_feature_group = 19;
-    routines.TypeSymbol include_geo_id = 20; // Geo
-    routines.TypeSymbol exclude_geo_id = 21; // Geo    
+    string include_geo_id = 20; // Geo
+    string exclude_geo_id = 21; // Geo    
     string service_name = 22;    
     string config_props = 23;
-    routines.TypeSymbol shipment_custom_method_id = 24; // CustomMethod
-    routines.TypeSymbol shipment_gateway_config_id = 25; // ShipmentGatewayConfig    
+    string shipment_custom_method_id = 24; // CustomMethod
+    string shipment_gateway_config_id = 25; // ShipmentGatewayConfig    
     int64 sequence_number = 26;    
     routines.FixedPoint allowance_percent = 27;    
     routines.Currency minimum_price = 28;
@@ -2602,18 +2602,18 @@ message PaymentData {
         
     string payment_id = 1;    
     string payment_type_id = 2;
-    routines.TypeSymbol payment_method_type_id = 3; // PaymentMethodType
-    routines.TypeSymbol role_type_id_to = 4; // RoleType
-    routines.TypeSymbol status_id = 5; // StatusItem    
+    string payment_method_type_id = 3; // PaymentMethodType
+    string role_type_id_to = 4; // RoleType
+    string status_id = 5; // StatusItem    
     google.protobuf.Timestamp effective_date = 6;    
     string payment_ref_num = 7;    
     routines.Currency amount = 8;
-    routines.TypeSymbol currency_uom_id = 9; // Uom    
+    string currency_uom_id = 9; // Uom    
     string comments = 10;    
     string fin_account_trans_id = 11;    
     string override_gl_account_id = 12;    
     routines.Currency actual_currency_amount = 13;
-    routines.TypeSymbol actual_currency_uom_id = 14; // Uom
+    string actual_currency_uom_id = 14; // Uom
     
     // relations
     PaymentMethodData payment_method = 15; // ref: paymentMethodId
@@ -2644,16 +2644,16 @@ message ContentData {
     string instance_of_content_id = 5;    
     string data_resource_id = 6;    
     string template_data_resource_id = 7;
-    routines.TypeSymbol data_source_id = 8; // DataSource
-    routines.TypeSymbol status_id = 9; // StatusItem
-    routines.TypeSymbol privilege_enum_id = 10; // Enumeration    
+    string data_source_id = 8; // DataSource
+    string status_id = 9; // StatusItem
+    string privilege_enum_id = 10; // Enumeration    
     string service_name = 11;
-    routines.TypeSymbol custom_method_id = 12; // CustomMethod    
+    string custom_method_id = 12; // CustomMethod    
     string content_name = 13;    
     string description = 14;    
     string locale_string = 15;
-    routines.TypeSymbol mime_type_id = 16; // MimeType
-    routines.TypeSymbol character_set_id = 17; // CharacterSet    
+    string mime_type_id = 16; // MimeType
+    string character_set_id = 17; // CharacterSet    
     int64 child_leaf_count = 18;    
     int64 child_branch_count = 19;    
     google.protobuf.Timestamp created_date = 20;    
@@ -2677,9 +2677,9 @@ message ShipmentPackageData {
     routines.FixedPoint box_length = 5;    
     routines.FixedPoint box_height = 6;    
     routines.FixedPoint box_width = 7;
-    routines.TypeSymbol dimension_uom_id = 8; // Uom    
+    string dimension_uom_id = 8; // Uom    
     routines.FixedPoint weight = 9;
-    routines.TypeSymbol weight_uom_id = 10; // Uom    
+    string weight_uom_id = 10; // Uom    
     routines.Currency insured_value = 11;
     
 }
@@ -2717,7 +2717,7 @@ message WebSiteData {
     string standard_content_prefix = 9;    
     string secure_content_prefix = 10;    
     string cookie_domain = 11;
-    routines.TypeSymbol visual_theme_set_id = 12; // VisualThemeSet    
+    string visual_theme_set_id = 12; // VisualThemeSet    
     string product_store_id = 13;    
     routines.Indicator allow_product_store_change = 14;    
     string hosted_path_alias = 15;    
@@ -2755,10 +2755,10 @@ message ProductStorePaymentSettingData {
     // fields
         
     string product_store_id = 1;
-    routines.TypeSymbol payment_method_type_id = 2; // PaymentMethodType
-    routines.TypeSymbol payment_service_type_enum_id = 3; // Enumeration    
+    string payment_method_type_id = 2; // PaymentMethodType
+    string payment_service_type_enum_id = 3; // Enumeration    
     string payment_service = 4;
-    routines.TypeSymbol payment_custom_method_id = 5; // CustomMethod    
+    string payment_custom_method_id = 5; // CustomMethod    
     string payment_gateway_config_id = 6;    
     string payment_properties_path = 7;    
     routines.Indicator apply_to_all_products = 8;
@@ -2773,7 +2773,7 @@ message PaymentMethodData {
     // fields
         
     string payment_method_id = 1;
-    routines.TypeSymbol payment_method_type_id = 2; // PaymentMethodType    
+    string payment_method_type_id = 2; // PaymentMethodType    
     string party_id = 3;    
     string gl_account_id = 4;    
     string fin_account_id = 5;    
@@ -2792,8 +2792,8 @@ message ProductPriceCondData {
         
     string product_price_rule_id = 1;    
     string product_price_cond_seq_id = 2;
-    routines.TypeSymbol input_param_enum_id = 3; // Enumeration
-    routines.TypeSymbol operator_enum_id = 4; // Enumeration    
+    string input_param_enum_id = 3; // Enumeration
+    string operator_enum_id = 4; // Enumeration    
     string cond_value = 5;
     
 }
@@ -2810,14 +2810,14 @@ message InventoryItemData {
     string product_id = 3;    
     string party_id = 4;    
     string owner_party_id = 5;
-    routines.TypeSymbol status_id = 6; // StatusItem    
+    string status_id = 6; // StatusItem    
     google.protobuf.Timestamp datetime_received = 7;    
     google.protobuf.Timestamp datetime_manufactured = 8;    
     google.protobuf.Timestamp expire_date = 9;    
     string facility_id = 10;    
     string container_id = 11;    
     string lot_id = 12;
-    routines.TypeSymbol uom_id = 13; // Uom    
+    string uom_id = 13; // Uom    
     string bin_number = 14;    
     string location_seq_id = 15;    
     string comments = 16;    
@@ -2831,7 +2831,7 @@ message InventoryItemData {
     string activation_number = 24;    
     google.protobuf.Timestamp activation_valid_thru = 25;    
     routines.FixedPoint unit_cost = 26;
-    routines.TypeSymbol currency_uom_id = 27; // Uom    
+    string currency_uom_id = 27; // Uom    
     string fixed_asset_id = 28;
     
 }
@@ -2845,7 +2845,7 @@ message BillingAccountRoleData {
         
     string billing_account_id = 1;    
     string party_id = 2;
-    routines.TypeSymbol role_type_id = 3; // RoleType    
+    string role_type_id = 3; // RoleType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;
     
@@ -2868,13 +2868,13 @@ message InvoiceItemData {
     string product_feature_id = 8;    
     string parent_invoice_id = 9;    
     string parent_invoice_item_seq_id = 10;
-    routines.TypeSymbol uom_id = 11; // Uom    
+    string uom_id = 11; // Uom    
     routines.Indicator taxable_flag = 12;    
     routines.FixedPoint quantity = 13;    
     routines.Currency amount = 14;    
     string description = 15;    
     string tax_auth_party_id = 16;
-    routines.TypeSymbol tax_auth_geo_id = 17; // Geo    
+    string tax_auth_geo_id = 17; // Geo    
     string tax_authority_rate_seq_id = 18;    
     string sales_opportunity_id = 19;
     
@@ -2933,10 +2933,10 @@ message ProductFeatureData {
     // fields
         
     string product_feature_id = 1;
-    routines.TypeSymbol product_feature_type_id = 2; // ProductFeatureType    
+    string product_feature_type_id = 2; // ProductFeatureType    
     string product_feature_category_id = 3;    
     string description = 4;
-    routines.TypeSymbol uom_id = 5; // Uom    
+    string uom_id = 5; // Uom    
     routines.FixedPoint number_specified = 6;    
     routines.Currency default_amount = 7;    
     int64 default_sequence_num = 8;    
@@ -2995,7 +2995,7 @@ message ProductStoreData {
     // fields
         
     string product_store_id = 1;
-    routines.TypeSymbol primary_store_group_id = 2; // ProductStoreGroup    
+    string primary_store_group_id = 2; // ProductStoreGroup    
     string store_name = 3;    
     string company_name = 4;    
     string title = 5;    
@@ -3014,32 +3014,32 @@ message ProductStoreData {
     routines.Indicator one_inventory_facility = 18;    
     routines.Indicator check_inventory = 19;    
     routines.Indicator reserve_inventory = 20;
-    routines.TypeSymbol reserve_order_enum_id = 21; // Enumeration    
+    string reserve_order_enum_id = 21; // Enumeration    
     routines.Indicator require_inventory = 22;    
     routines.Indicator balance_res_on_order_creation = 23;
-    routines.TypeSymbol requirement_method_enum_id = 24; // Enumeration    
+    string requirement_method_enum_id = 24; // Enumeration    
     string order_number_prefix = 25;    
     string default_locale_string = 26;
-    routines.TypeSymbol default_currency_uom_id = 27; // Uom    
+    string default_currency_uom_id = 27; // Uom    
     string default_time_zone_string = 28;
-    routines.TypeSymbol default_sales_channel_enum_id = 29; // Enumeration    
+    string default_sales_channel_enum_id = 29; // Enumeration    
     routines.Indicator allow_password = 30;    
     string default_password = 31;    
     routines.Indicator explode_order_items = 32;    
     routines.Indicator check_gc_balance = 33;    
     routines.Indicator retry_failed_auths = 34;
-    routines.TypeSymbol header_approved_status = 35; // StatusItem
-    routines.TypeSymbol item_approved_status = 36; // StatusItem
-    routines.TypeSymbol digital_item_approved_status = 37; // StatusItem
-    routines.TypeSymbol header_declined_status = 38; // StatusItem
-    routines.TypeSymbol item_declined_status = 39; // StatusItem
-    routines.TypeSymbol header_cancel_status = 40; // StatusItem
-    routines.TypeSymbol item_cancel_status = 41; // StatusItem    
+    string header_approved_status = 35; // StatusItem
+    string item_approved_status = 36; // StatusItem
+    string digital_item_approved_status = 37; // StatusItem
+    string header_declined_status = 38; // StatusItem
+    string item_declined_status = 39; // StatusItem
+    string header_cancel_status = 40; // StatusItem
+    string item_cancel_status = 41; // StatusItem    
     string auth_declined_message = 42;    
     string auth_fraud_message = 43;    
     string auth_error_message = 44;    
     string visual_theme_id = 45;
-    routines.TypeSymbol store_credit_account_enum_id = 46; // Enumeration    
+    string store_credit_account_enum_id = 46; // Enumeration    
     routines.Indicator use_primary_email_username = 47;    
     routines.Indicator require_customer_role = 48;    
     routines.Indicator auto_invoice_digital_items = 49;    
@@ -3098,21 +3098,21 @@ message ProductPriceData {
     // fields
         
     string product_id = 1;
-    routines.TypeSymbol product_price_type_id = 2; // ProductPriceType
-    routines.TypeSymbol product_price_purpose_id = 3; // ProductPricePurpose
-    routines.TypeSymbol currency_uom_id = 4; // Uom
-    routines.TypeSymbol product_store_group_id = 5; // ProductStoreGroup    
+    string product_price_type_id = 2; // ProductPriceType
+    string product_price_purpose_id = 3; // ProductPricePurpose
+    string currency_uom_id = 4; // Uom
+    string product_store_group_id = 5; // ProductStoreGroup    
     google.protobuf.Timestamp from_date = 6;    
     google.protobuf.Timestamp thru_date = 7;    
     routines.Currency price = 8;
-    routines.TypeSymbol term_uom_id = 9; // Uom
-    routines.TypeSymbol custom_price_calc_service = 10; // CustomMethod    
+    string term_uom_id = 9; // Uom
+    string custom_price_calc_service = 10; // CustomMethod    
     routines.Currency price_without_tax = 11;    
     routines.Currency price_with_tax = 12;    
     routines.Currency tax_amount = 13;    
     routines.FixedPoint tax_percentage = 14;    
     string tax_auth_party_id = 15;
-    routines.TypeSymbol tax_auth_geo_id = 16; // Geo    
+    string tax_auth_geo_id = 16; // Geo    
     routines.Indicator tax_in_price = 17;    
     google.protobuf.Timestamp created_date = 18;    
     string created_by_user_login = 19;    
@@ -3129,7 +3129,7 @@ message QuantityBreakData {
     // fields
         
     string quantity_break_id = 1;
-    routines.TypeSymbol quantity_break_type_id = 2; // QuantityBreakType    
+    string quantity_break_type_id = 2; // QuantityBreakType    
     routines.FixedPoint from_quantity = 3;    
     routines.FixedPoint thru_quantity = 4;
     
@@ -3208,7 +3208,7 @@ message OrderContactMechData {
     // fields
         
     string order_id = 1;
-    routines.TypeSymbol contact_mech_purpose_type_id = 2; // ContactMechPurposeType    
+    string contact_mech_purpose_type_id = 2; // ContactMechPurposeType    
     string contact_mech_id = 3;
     
 }
@@ -3222,11 +3222,11 @@ message WorkEffortData {
         
     string work_effort_id = 1;    
     string work_effort_type_id = 2;
-    routines.TypeSymbol current_status_id = 3; // StatusItem    
+    string current_status_id = 3; // StatusItem    
     google.protobuf.Timestamp last_status_update = 4;
-    routines.TypeSymbol work_effort_purpose_type_id = 5; // WorkEffortPurposeType    
+    string work_effort_purpose_type_id = 5; // WorkEffortPurposeType    
     string work_effort_parent_id = 6;
-    routines.TypeSymbol scope_enum_id = 7; // Enumeration    
+    string scope_enum_id = 7; // Enumeration    
     int64 priority = 8;    
     int64 percent_complete = 9;    
     string work_effort_name = 10;    
@@ -3240,12 +3240,12 @@ message WorkEffortData {
     google.protobuf.Timestamp actual_completion_date = 18;    
     double estimated_milli_seconds = 19;    
     double estimated_setup_millis = 20;
-    routines.TypeSymbol estimate_calc_method = 21; // CustomMethod    
+    string estimate_calc_method = 21; // CustomMethod    
     double actual_milli_seconds = 22;    
     double actual_setup_millis = 23;    
     double total_milli_seconds_allowed = 24;    
     routines.Currency total_money_allowed = 25;
-    routines.TypeSymbol money_uom_id = 26; // Uom    
+    string money_uom_id = 26; // Uom    
     string special_terms = 27;    
     int64 time_transparency = 28;    
     string universal_id = 29;    
@@ -3296,7 +3296,7 @@ message ShipmentStatusData {
 
     // fields
     
-    routines.TypeSymbol status_id = 1; // StatusItem    
+    string status_id = 1; // StatusItem    
     string shipment_id = 2;    
     google.protobuf.Timestamp status_date = 3;    
     string change_by_user_login_id = 4;
@@ -3312,7 +3312,7 @@ message BillingAccountData {
         
     string billing_account_id = 1;    
     routines.Currency account_limit = 2;
-    routines.TypeSymbol account_currency_uom_id = 3; // Uom    
+    string account_currency_uom_id = 3; // Uom    
     string contact_mech_id = 4;    
     google.protobuf.Timestamp from_date = 5;    
     google.protobuf.Timestamp thru_date = 6;    
@@ -3330,7 +3330,7 @@ message FacilityContactMechPurposeData {
         
     string facility_id = 1;    
     string contact_mech_id = 2;
-    routines.TypeSymbol contact_mech_purpose_type_id = 3; // ContactMechPurposeType    
+    string contact_mech_purpose_type_id = 3; // ContactMechPurposeType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;
     
@@ -3345,9 +3345,9 @@ message ProductKeywordData {
         
     string product_id = 1;    
     string keyword = 2;
-    routines.TypeSymbol keyword_type_id = 3; // Enumeration    
+    string keyword_type_id = 3; // Enumeration    
     int64 relevancy_weight = 4;
-    routines.TypeSymbol status_id = 5; // StatusItem
+    string status_id = 5; // StatusItem
     
 }
 
@@ -3360,8 +3360,8 @@ message CustRequestItemData {
         
     string cust_request_id = 1;    
     string cust_request_item_seq_id = 2;
-    routines.TypeSymbol cust_request_resolution_id = 3; // CustRequestResolution
-    routines.TypeSymbol status_id = 4; // StatusItem    
+    string cust_request_resolution_id = 3; // CustRequestResolution
+    string status_id = 4; // StatusItem    
     int64 priority = 5;    
     int64 sequence_num = 6;    
     google.protobuf.Timestamp required_by_date = 7;    
@@ -3399,7 +3399,7 @@ message OrderRoleData {
         
     string order_id = 1;    
     string party_id = 2;
-    routines.TypeSymbol role_type_id = 3; // RoleType
+    string role_type_id = 3; // RoleType
     
 }
 
@@ -3483,7 +3483,7 @@ message ProductPriceActionData {
         
     string product_price_rule_id = 1;    
     string product_price_action_seq_id = 2;
-    routines.TypeSymbol product_price_action_type_id = 3; // ProductPriceActionType    
+    string product_price_action_type_id = 3; // ProductPriceActionType    
     routines.FixedPoint amount = 4;    
     string rate_code = 5;
     
@@ -3529,28 +3529,28 @@ message AcctgTransEntryData {
         
     string acctg_trans_id = 1;    
     string acctg_trans_entry_seq_id = 2;
-    routines.TypeSymbol acctg_trans_entry_type_id = 3; // AcctgTransEntryType    
+    string acctg_trans_entry_type_id = 3; // AcctgTransEntryType    
     string description = 4;    
     string voucher_ref = 5;    
     string party_id = 6;
-    routines.TypeSymbol role_type_id = 7; // RoleType    
+    string role_type_id = 7; // RoleType    
     string their_party_id = 8;    
     string product_id = 9;    
     string their_product_id = 10;    
     string inventory_item_id = 11;
-    routines.TypeSymbol gl_account_type_id = 12; // GlAccountType    
+    string gl_account_type_id = 12; // GlAccountType    
     string gl_account_id = 13;    
     string organization_party_id = 14;    
     routines.Currency amount = 15;
-    routines.TypeSymbol currency_uom_id = 16; // Uom    
+    string currency_uom_id = 16; // Uom    
     routines.Currency orig_amount = 17;
-    routines.TypeSymbol orig_currency_uom_id = 18; // Uom    
+    string orig_currency_uom_id = 18; // Uom    
     routines.Indicator debit_credit_flag = 19;    
     google.protobuf.Timestamp due_date = 20;    
     string group_id = 21;    
     string tax_id = 22;
-    routines.TypeSymbol reconcile_status_id = 23; // StatusItem
-    routines.TypeSymbol settlement_term_id = 24; // SettlementTerm    
+    string reconcile_status_id = 23; // StatusItem
+    string settlement_term_id = 24; // SettlementTerm    
     routines.Indicator is_summary = 25;
     
 }
@@ -3646,18 +3646,18 @@ message ProductSubscriptionResourceData {
     google.protobuf.Timestamp purchase_from_date = 5;    
     google.protobuf.Timestamp purchase_thru_date = 6;    
     int64 max_life_time = 7;
-    routines.TypeSymbol max_life_time_uom_id = 8; // Uom    
+    string max_life_time_uom_id = 8; // Uom    
     int64 available_time = 9;
-    routines.TypeSymbol available_time_uom_id = 10; // Uom    
+    string available_time_uom_id = 10; // Uom    
     int64 use_count_limit = 11;    
     int64 use_time = 12;
-    routines.TypeSymbol use_time_uom_id = 13; // Uom
-    routines.TypeSymbol use_role_type_id = 14; // RoleType    
+    string use_time_uom_id = 13; // Uom
+    string use_role_type_id = 14; // RoleType    
     routines.Indicator automatic_extend = 15;    
     int64 cancl_autm_ext_time = 16;
-    routines.TypeSymbol cancl_autm_ext_time_uom_id = 17; // Uom    
+    string cancl_autm_ext_time_uom_id = 17; // Uom    
     int64 grace_period_on_expiry = 18;
-    routines.TypeSymbol grace_period_on_expiry_uom_id = 19; // Uom
+    string grace_period_on_expiry_uom_id = 19; // Uom
     
 }
 
@@ -3699,10 +3699,10 @@ message QuoteData {
     string quote_type_id = 2;    
     string party_id = 3;    
     google.protobuf.Timestamp issue_date = 4;
-    routines.TypeSymbol status_id = 5; // StatusItem
-    routines.TypeSymbol currency_uom_id = 6; // Uom    
+    string status_id = 5; // StatusItem
+    string currency_uom_id = 6; // Uom    
     string product_store_id = 7;
-    routines.TypeSymbol sales_channel_enum_id = 8; // Enumeration    
+    string sales_channel_enum_id = 8; // Enumeration    
     google.protobuf.Timestamp valid_from_date = 9;    
     google.protobuf.Timestamp valid_thru_date = 10;    
     string quote_name = 11;    
@@ -3760,10 +3760,10 @@ message AgreementTermData {
     // fields
         
     string agreement_term_id = 1;
-    routines.TypeSymbol term_type_id = 2; // TermType    
+    string term_type_id = 2; // TermType    
     string agreement_id = 3;    
     string agreement_item_seq_id = 4;
-    routines.TypeSymbol invoice_item_type_id = 5; // InvoiceItemType    
+    string invoice_item_type_id = 5; // InvoiceItemType    
     google.protobuf.Timestamp from_date = 6;    
     google.protobuf.Timestamp thru_date = 7;    
     routines.Currency term_value = 8;    
@@ -3792,7 +3792,7 @@ message ProductCategoryLinkData {
     string detail_text = 8;    
     string image_url = 9;    
     string image_two_url = 10;
-    routines.TypeSymbol link_type_enum_id = 11; // Enumeration    
+    string link_type_enum_id = 11; // Enumeration    
     string link_info = 12;    
     string detail_sub_screen = 13;
     
@@ -3807,7 +3807,7 @@ message ProductFeatureIactnData {
         
     string product_feature_id = 1;    
     string product_feature_id_to = 2;
-    routines.TypeSymbol product_feature_iactn_type_id = 3; // ProductFeatureIactnType    
+    string product_feature_iactn_type_id = 3; // ProductFeatureIactnType    
     string product_id = 4;
     
 }
@@ -3837,7 +3837,7 @@ message QuoteRoleData {
         
     string quote_id = 1;    
     string party_id = 2;
-    routines.TypeSymbol role_type_id = 3; // RoleType    
+    string role_type_id = 3; // RoleType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;
     

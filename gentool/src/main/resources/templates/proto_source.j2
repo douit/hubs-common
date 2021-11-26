@@ -6,7 +6,7 @@ message {{ent.name}}Data {
     // fields
     {% for f in ent.publicFields -%}
     {%- if digester.isRefField(f.name) %}
-    routines.TypeSymbol {{f.underscore}} = {{loop.index}}; // {{digester.getEntityRef(f.name)}}
+    {{f.protoType}} {{f.underscore}} = {{loop.index}}; // {{digester.getEntityRef(f.name)}}
     {%- else %}    
     {{f.protoType}} {{f.underscore}} = {{loop.index}};
     {%- endif -%}
