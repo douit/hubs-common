@@ -1,0 +1,163 @@
+{
+  "name": "PaymentContentType",
+  "title": "Payment Content Type",
+  "description": "None",
+  "tableName": "PAYMENT_CONTENT_TYPE",
+  "fields": [
+    {
+      "name": "paymentContentTypeId",
+      "type": "id",
+      "col": "PAYMENT_CONTENT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentPaymentContentType",
+      "type": "one",
+      "relEntityName": "PaymentContentType",
+      "fkName": "PAYCT_TYP_PARENT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "paymentContentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentContent",
+      "type": "many",
+      "relEntityName": "PaymentContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentContentTypeId",
+          "relFieldName": "paymentContentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildPaymentContentType",
+      "type": "many",
+      "relEntityName": "PaymentContentType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "paymentContentTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "paymentContentTypeId"
+  ],
+  "uniqueKey": "paymentContentTypeId",
+  "combine": false,
+  "isView": false
+}

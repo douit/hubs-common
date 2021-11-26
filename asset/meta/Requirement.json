@@ -1,0 +1,526 @@
+{
+  "name": "Requirement",
+  "title": "Requirement",
+  "description": "None",
+  "tableName": "REQUIREMENT",
+  "fields": [
+    {
+      "name": "requirementId",
+      "type": "id",
+      "col": "REQUIREMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requirementTypeId",
+      "type": "id",
+      "col": "REQUIREMENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilityId",
+      "type": "id",
+      "col": "FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "deliverableId",
+      "type": "id",
+      "col": "DELIVERABLE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "requirementStartDate",
+      "type": "date-time",
+      "col": "REQUIREMENT_START_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requiredByDate",
+      "type": "date-time",
+      "col": "REQUIRED_BY_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedBudget",
+      "type": "currency-amount",
+      "col": "ESTIMATED_BUDGET",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useCase",
+      "type": "very-long",
+      "col": "USE_CASE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "reason",
+      "type": "long-varchar",
+      "col": "REASON",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "facilityIdTo",
+      "type": "id",
+      "col": "FACILITY_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "RequirementType",
+      "type": "one",
+      "relEntityName": "RequirementType",
+      "fkName": "REQ_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementTypeId",
+          "relFieldName": "requirementTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RequirementTypeAttr",
+      "type": "many",
+      "relEntityName": "RequirementTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementTypeId",
+          "relFieldName": "requirementTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Facility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "REQ_FACILITY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Deliverable",
+      "type": "one",
+      "relEntityName": "Deliverable",
+      "fkName": "REQ_DELIVERABLE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "deliverableId",
+          "relFieldName": "deliverableId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAsset",
+      "type": "one",
+      "relEntityName": "FixedAsset",
+      "fkName": "REQ_FIXED_ASSET",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "REQ_PRODUCT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "REQ_STTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DesiredFeature",
+      "type": "many",
+      "relEntityName": "DesiredFeature",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderRequirementCommitment",
+      "type": "many",
+      "relEntityName": "OrderRequirementCommitment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementAttribute",
+      "type": "many",
+      "relEntityName": "RequirementAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementBudgetAllocation",
+      "type": "many",
+      "relEntityName": "RequirementBudgetAllocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementCustRequest",
+      "type": "many",
+      "relEntityName": "RequirementCustRequest",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementRole",
+      "type": "many",
+      "relEntityName": "RequirementRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementStatus",
+      "type": "many",
+      "relEntityName": "RequirementStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkRequirementFulfillment",
+      "type": "many",
+      "relEntityName": "WorkRequirementFulfillment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "requirementId"
+  ],
+  "uniqueKey": "requirementId",
+  "combine": false,
+  "isView": false
+}

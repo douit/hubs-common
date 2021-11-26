@@ -1,0 +1,231 @@
+{
+  "name": "ProductCategoryContent",
+  "title": "Product Category Data Object",
+  "description": "None",
+  "tableName": "PRODUCT_CATEGORY_CONTENT",
+  "fields": [
+    {
+      "name": "productCategoryId",
+      "type": "id",
+      "col": "PRODUCT_CATEGORY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentId",
+      "type": "id",
+      "col": "CONTENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "prodCatContentTypeId",
+      "type": "id",
+      "col": "PROD_CAT_CONTENT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "purchaseFromDate",
+      "type": "date-time",
+      "col": "PURCHASE_FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "purchaseThruDate",
+      "type": "date-time",
+      "col": "PURCHASE_THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useCountLimit",
+      "type": "numeric",
+      "col": "USE_COUNT_LIMIT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useDaysLimit",
+      "type": "fixed-point",
+      "col": "USE_DAYS_LIMIT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductCategory",
+      "type": "one",
+      "relEntityName": "ProductCategory",
+      "fkName": "PRDCAT_CNT_PRDCAT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productCategoryId",
+          "relFieldName": "productCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Content",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "PRDCAT_CNT_CNT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductCategoryContentType",
+      "type": "one",
+      "relEntityName": "ProductCategoryContentType",
+      "fkName": "PRDCAT_CNT_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "prodCatContentTypeId",
+          "relFieldName": "prodCatContentTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "productCategoryId",
+    "contentId",
+    "prodCatContentTypeId",
+    "fromDate"
+  ],
+  "uniqueKey": "productCategoryId, contentId, prodCatContentTypeId, fromDate",
+  "combine": true,
+  "isView": false
+}

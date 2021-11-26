@@ -1,0 +1,255 @@
+{
+  "name": "ReorderGuideline",
+  "title": "Reorder Guideline",
+  "description": "None",
+  "tableName": "REORDER_GUIDELINE",
+  "fields": [
+    {
+      "name": "reorderGuidelineId",
+      "type": "id",
+      "col": "REORDER_GUIDELINE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeId",
+      "type": "id",
+      "col": "ROLE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilityId",
+      "type": "id",
+      "col": "FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoId",
+      "type": "id",
+      "col": "GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "reorderQuantity",
+      "type": "fixed-point",
+      "col": "REORDER_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "reorderLevel",
+      "type": "fixed-point",
+      "col": "REORDER_LEVEL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "REORDER_GD_PROD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "REORDER_GD_PARTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Facility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "REORDER_GD_FAC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Geo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "REORDER_GD_GEO",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "reorderGuidelineId"
+  ],
+  "uniqueKey": "reorderGuidelineId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,243 @@
+{
+  "name": "UnemploymentClaim",
+  "title": "Unemployment Claim",
+  "description": "None",
+  "tableName": "UNEMPLOYMENT_CLAIM",
+  "fields": [
+    {
+      "name": "unemploymentClaimId",
+      "type": "id",
+      "col": "UNEMPLOYMENT_CLAIM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "unemploymentClaimDate",
+      "type": "date-time",
+      "col": "UNEMPLOYMENT_CLAIM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdFrom",
+      "type": "id",
+      "col": "PARTY_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdTo",
+      "type": "id",
+      "col": "PARTY_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdFrom",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdTo",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Employment",
+      "type": "one-nofk",
+      "relEntityName": "Employment",
+      "fkName": "UNMPL_CLM_EMPLMNT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeIdFrom"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeIdTo"
+        },
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyIdFrom"
+        },
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyIdTo"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one-nofk",
+      "relEntityName": "StatusItem",
+      "fkName": "UNMPL_CLM_STTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "unemploymentClaimId"
+  ],
+  "uniqueKey": "unemploymentClaimId",
+  "combine": false,
+  "isView": false
+}

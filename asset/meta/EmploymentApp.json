@@ -1,0 +1,284 @@
+{
+  "name": "EmploymentApp",
+  "title": "Employment Application",
+  "description": "None",
+  "tableName": "EMPLOYMENT_APP",
+  "fields": [
+    {
+      "name": "applicationId",
+      "type": "id",
+      "col": "APPLICATION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "emplPositionId",
+      "type": "id",
+      "col": "EMPL_POSITION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "employmentAppSourceTypeId",
+      "type": "id",
+      "col": "EMPLOYMENT_APP_SOURCE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "applyingPartyId",
+      "type": "id",
+      "col": "APPLYING_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "referredByPartyId",
+      "type": "id",
+      "col": "REFERRED_BY_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "applicationDate",
+      "type": "date-time",
+      "col": "APPLICATION_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "approverPartyId",
+      "type": "id",
+      "col": "APPROVER_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobRequisitionId",
+      "type": "id",
+      "col": "JOB_REQUISITION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "EmplPosition",
+      "type": "one-nofk",
+      "relEntityName": "EmplPosition",
+      "fkName": "EMPLMNT_APP_POS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionId",
+          "relFieldName": "emplPositionId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one-nofk",
+      "relEntityName": "StatusItem",
+      "fkName": "EMPLMNT_APP_STTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EmploymentAppSourceType",
+      "type": "one-nofk",
+      "relEntityName": "EmploymentAppSourceType",
+      "fkName": "EMPLMNT_APP_EAST",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "employmentAppSourceTypeId",
+          "relFieldName": "employmentAppSourceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ApplyingParty",
+      "type": "one-nofk",
+      "relEntityName": "Party",
+      "fkName": "EMPLMNT_APP_APTY",
+      "title": "Applying",
+      "keymaps": [
+        {
+          "fieldName": "applyingPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReferredByParty",
+      "type": "one-nofk",
+      "relEntityName": "Party",
+      "fkName": "EMPLMNT_APP_RBPTY",
+      "title": "ReferredBy",
+      "keymaps": [
+        {
+          "fieldName": "referredByPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ApproverParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "EMPLMNT_APP_APER",
+      "title": "Approver",
+      "keymaps": [
+        {
+          "fieldName": "approverPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "JobRequisition",
+      "type": "one",
+      "relEntityName": "JobRequisition",
+      "fkName": "EMPLMNT_APP_JBRQ",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "jobRequisitionId",
+          "relFieldName": "jobRequisitionId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "applicationId"
+  ],
+  "uniqueKey": "applicationId",
+  "combine": false,
+  "isView": false
+}

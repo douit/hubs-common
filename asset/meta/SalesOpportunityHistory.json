@@ -1,0 +1,281 @@
+{
+  "name": "SalesOpportunityHistory",
+  "title": "Tracks a history of sales opportunity information",
+  "description": "None",
+  "tableName": "SALES_OPPORTUNITY_HISTORY",
+  "fields": [
+    {
+      "name": "salesOpportunityHistoryId",
+      "type": "id",
+      "col": "SALES_OPPORTUNITY_HISTORY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "salesOpportunityId",
+      "type": "id",
+      "col": "SALES_OPPORTUNITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "very-long",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "nextStep",
+      "type": "very-long",
+      "col": "NEXT_STEP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "estimatedAmount",
+      "type": "currency-amount",
+      "col": "ESTIMATED_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedProbability",
+      "type": "fixed-point",
+      "col": "ESTIMATED_PROBABILITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedCloseDate",
+      "type": "date-time",
+      "col": "ESTIMATED_CLOSE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "opportunityStageId",
+      "type": "id",
+      "col": "OPPORTUNITY_STAGE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "changeNote",
+      "type": "very-long",
+      "col": "CHANGE_NOTE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "modifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "modifiedTimestamp",
+      "type": "date-time",
+      "col": "MODIFIED_TIMESTAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "SLOPHI_CRNCY_UOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SalesOpportunityStage",
+      "type": "one",
+      "relEntityName": "SalesOpportunityStage",
+      "fkName": "SLOPHI_STAGE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "opportunityStageId",
+          "relFieldName": "opportunityStageId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SalesOpportunity",
+      "type": "one",
+      "relEntityName": "SalesOpportunity",
+      "fkName": "SLOPHI_SLSOPP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "SLOPHI_USRLGN",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "modifiedByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "salesOpportunityHistoryId"
+  ],
+  "uniqueKey": "salesOpportunityHistoryId",
+  "combine": false,
+  "isView": false
+}

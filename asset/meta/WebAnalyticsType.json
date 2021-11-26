@@ -1,0 +1,163 @@
+{
+  "name": "WebAnalyticsType",
+  "title": "Web Analytics Type",
+  "description": "None",
+  "tableName": "WEB_ANALYTICS_TYPE",
+  "fields": [
+    {
+      "name": "webAnalyticsTypeId",
+      "type": "id",
+      "col": "WEB_ANALYTICS_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentWebAnalyticsType",
+      "type": "one",
+      "relEntityName": "WebAnalyticsType",
+      "fkName": "WANA_TYP_PARENT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "webAnalyticsTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WebAnalyticsConfig",
+      "type": "many",
+      "relEntityName": "WebAnalyticsConfig",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "webAnalyticsTypeId",
+          "relFieldName": "webAnalyticsTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildWebAnalyticsType",
+      "type": "many",
+      "relEntityName": "WebAnalyticsType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "webAnalyticsTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "webAnalyticsTypeId"
+  ],
+  "uniqueKey": "webAnalyticsTypeId",
+  "combine": false,
+  "isView": false
+}

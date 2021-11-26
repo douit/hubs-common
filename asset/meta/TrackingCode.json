@@ -1,0 +1,386 @@
+{
+  "name": "TrackingCode",
+  "title": "Tracking Code",
+  "description": "None",
+  "tableName": "TRACKING_CODE",
+  "fields": [
+    {
+      "name": "trackingCodeId",
+      "type": "id",
+      "col": "TRACKING_CODE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "trackingCodeTypeId",
+      "type": "id",
+      "col": "TRACKING_CODE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "marketingCampaignId",
+      "type": "id",
+      "col": "MARKETING_CAMPAIGN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "redirectUrl",
+      "type": "url",
+      "col": "REDIRECT_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(2000)",
+      "stringLength": 2000,
+      "validators": []
+    },
+    {
+      "name": "overrideLogo",
+      "type": "url",
+      "col": "OVERRIDE_LOGO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(2000)",
+      "stringLength": 2000,
+      "validators": []
+    },
+    {
+      "name": "overrideCss",
+      "type": "url",
+      "col": "OVERRIDE_CSS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(2000)",
+      "stringLength": 2000,
+      "validators": []
+    },
+    {
+      "name": "prodCatalogId",
+      "type": "id",
+      "col": "PROD_CATALOG_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "trackableLifetime",
+      "type": "numeric",
+      "col": "TRACKABLE_LIFETIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "billableLifetime",
+      "type": "numeric",
+      "col": "BILLABLE_LIFETIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "groupId",
+      "type": "id",
+      "col": "GROUP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "subgroupId",
+      "type": "id",
+      "col": "SUBGROUP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "MarketingCampaign",
+      "type": "one",
+      "relEntityName": "MarketingCampaign",
+      "fkName": "TKNG_COD_MKCMPN",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TrackingCodeType",
+      "type": "one",
+      "relEntityName": "TrackingCodeType",
+      "fkName": "TKNG_COD_TYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "trackingCodeTypeId",
+          "relFieldName": "trackingCodeTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TrackingCodeOrder",
+      "type": "many",
+      "relEntityName": "TrackingCodeOrder",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "trackingCodeId",
+          "relFieldName": "trackingCodeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TrackingCodeOrderReturn",
+      "type": "many",
+      "relEntityName": "TrackingCodeOrderReturn",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "trackingCodeId",
+          "relFieldName": "trackingCodeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TrackingCodeVisit",
+      "type": "many",
+      "relEntityName": "TrackingCodeVisit",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "trackingCodeId",
+          "relFieldName": "trackingCodeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "trackingCodeId"
+  ],
+  "uniqueKey": "trackingCodeId",
+  "combine": false,
+  "isView": false
+}

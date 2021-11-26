@@ -1,25 +1,34 @@
 {
   "entities": {
-    "OrderHeader": {},
+    "OrderHeader": {
+      "flatIds": []
+    },
     "OrderItem": {
       "flatIds": [
         "OrderHeader"
       ]
     },
-    "Payment": {},
+    "Payment": {
+      "flatIds": []
+    },
     "Invoice": {
       "flatIds": [
         "Party"
       ]
     },
     "Product": {
+      "flatIds": []
     },
     "Shipment": {
+      "flatIds": []
     },
     "ProductStore": {
       "flatIds": [
         "Party"
       ]
+    },
+    "Party": {
+      "flatIds": []
     },
     "Person": {
       "flatIds": [

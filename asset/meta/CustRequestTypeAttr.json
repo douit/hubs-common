@@ -1,0 +1,151 @@
+{
+  "name": "CustRequestTypeAttr",
+  "title": "Customer Request Type Attribute",
+  "description": "None",
+  "tableName": "CUST_REQUEST_TYPE_ATTR",
+  "fields": [
+    {
+      "name": "custRequestTypeId",
+      "type": "id",
+      "col": "CUST_REQUEST_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "attrName",
+      "type": "id-long",
+      "col": "ATTR_NAME",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CustRequestType",
+      "type": "one",
+      "relEntityName": "CustRequestType",
+      "fkName": "CUST_REQ_TYPE_ATTR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestTypeId",
+          "relFieldName": "custRequestTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequestAttribute",
+      "type": "many",
+      "relEntityName": "CustRequestAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "attrName",
+          "relFieldName": "attrName"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestTypeId",
+          "relFieldName": "custRequestTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "custRequestTypeId",
+    "attrName"
+  ],
+  "uniqueKey": "custRequestTypeId, attrName",
+  "combine": true,
+  "isView": false
+}

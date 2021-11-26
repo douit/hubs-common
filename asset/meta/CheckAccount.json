@@ -1,0 +1,228 @@
+{
+  "name": "CheckAccount",
+  "title": "Check Information",
+  "description": "None",
+  "tableName": "CHECK_ACCOUNT",
+  "fields": [
+    {
+      "name": "paymentMethodId",
+      "type": "id",
+      "col": "PAYMENT_METHOD_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "bankName",
+      "type": "name",
+      "col": "BANK_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "routingNumber",
+      "type": "short-varchar",
+      "col": "ROUTING_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "accountType",
+      "type": "short-varchar",
+      "col": "ACCOUNT_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "accountNumber",
+      "type": "long-varchar",
+      "col": "ACCOUNT_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "nameOnAccount",
+      "type": "name",
+      "col": "NAME_ON_ACCOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "companyNameOnAccount",
+      "type": "name",
+      "col": "COMPANY_NAME_ON_ACCOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "contactMechId",
+      "type": "id",
+      "col": "CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "branchCode",
+      "type": "short-varchar",
+      "col": "BRANCH_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PaymentMethod",
+      "type": "one",
+      "relEntityName": "PaymentMethod",
+      "fkName": "CACCT_PMETH",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "CACCT_CMECH",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PostalAddress",
+      "type": "one",
+      "relEntityName": "PostalAddress",
+      "fkName": "CACCT_PADDR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "paymentMethodId"
+  ],
+  "uniqueKey": "paymentMethodId",
+  "combine": false,
+  "isView": false
+}

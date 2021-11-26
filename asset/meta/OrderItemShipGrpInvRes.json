@@ -1,0 +1,418 @@
+{
+  "name": "OrderItemShipGrpInvRes",
+  "title": "Order Item Inventory Reservation",
+  "description": "None",
+  "tableName": "ORDER_ITEM_SHIP_GRP_INV_RES",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "shipGroupSeqId",
+      "type": "id",
+      "col": "SHIP_GROUP_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "inventoryItemId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "reserveOrderEnumId",
+      "type": "id",
+      "col": "RESERVE_ORDER_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quantityNotAvailable",
+      "type": "fixed-point",
+      "col": "QUANTITY_NOT_AVAILABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "reservedDatetime",
+      "type": "date-time",
+      "col": "RESERVED_DATETIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdDatetime",
+      "type": "date-time",
+      "col": "CREATED_DATETIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "promisedDatetime",
+      "type": "date-time",
+      "col": "PROMISED_DATETIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currentPromisedDate",
+      "type": "date-time",
+      "col": "CURRENT_PROMISED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "priority",
+      "type": "indicator",
+      "col": "PRIORITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "sequenceId",
+      "type": "numeric",
+      "col": "SEQUENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "oldPickStartDate",
+      "type": "date-time",
+      "col": "PICK_START_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderHeader",
+      "type": "one-nofk",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItem",
+      "type": "one",
+      "relEntityName": "OrderItem",
+      "fkName": "ORDER_ITIR_OITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemShipGroup",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemShipGroupAssoc",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroupAssoc",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InventoryItem",
+      "type": "one",
+      "relEntityName": "InventoryItem",
+      "fkName": "ORDER_ITIR_INVITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InventoryItemDetail",
+      "type": "many",
+      "relEntityName": "InventoryItemDetail",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ItemIssuance",
+      "type": "many",
+      "relEntityName": "ItemIssuance",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PicklistItem",
+      "type": "many",
+      "relEntityName": "PicklistItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "orderId",
+    "shipGroupSeqId",
+    "orderItemSeqId",
+    "inventoryItemId"
+  ],
+  "uniqueKey": "orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId",
+  "combine": true,
+  "isView": false
+}

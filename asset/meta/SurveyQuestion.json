@@ -1,0 +1,284 @@
+{
+  "name": "SurveyQuestion",
+  "title": "Survey Question",
+  "description": "None",
+  "tableName": "SURVEY_QUESTION",
+  "fields": [
+    {
+      "name": "surveyQuestionId",
+      "type": "id",
+      "col": "SURVEY_QUESTION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyQuestionCategoryId",
+      "type": "id",
+      "col": "SURVEY_QUESTION_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyQuestionTypeId",
+      "type": "id",
+      "col": "SURVEY_QUESTION_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "question",
+      "type": "very-long",
+      "col": "QUESTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "hint",
+      "type": "very-long",
+      "col": "HINT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "enumTypeId",
+      "type": "id",
+      "col": "ENUM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoId",
+      "type": "id",
+      "col": "GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "formatString",
+      "type": "value",
+      "col": "FORMAT_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SurveyQuestionType",
+      "type": "one",
+      "relEntityName": "SurveyQuestionType",
+      "fkName": "SRVYQST_SRVYQTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionTypeId",
+          "relFieldName": "surveyQuestionTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyQuestionCategory",
+      "type": "one",
+      "relEntityName": "SurveyQuestionCategory",
+      "fkName": "SRVYQST_SRVYQTCT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionCategoryId",
+          "relFieldName": "surveyQuestionCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Geo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "SRVYQST_GEO",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Enumeration",
+      "type": "many",
+      "relEntityName": "Enumeration",
+      "fkName": "SRVYQST_ENUM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "enumTypeId",
+          "relFieldName": "enumTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyQuestionAppl",
+      "type": "many",
+      "relEntityName": "SurveyQuestionAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionId",
+          "relFieldName": "surveyQuestionId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyQuestionOption",
+      "type": "many",
+      "relEntityName": "SurveyQuestionOption",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionId",
+          "relFieldName": "surveyQuestionId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyResponseAnswer",
+      "type": "many",
+      "relEntityName": "SurveyResponseAnswer",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionId",
+          "relFieldName": "surveyQuestionId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "surveyQuestionId"
+  ],
+  "uniqueKey": "surveyQuestionId",
+  "combine": false,
+  "isView": false
+}

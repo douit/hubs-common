@@ -1,0 +1,163 @@
+{
+  "name": "ProtectedView",
+  "title": "Security Component - Protected View",
+  "description": "Defines views protected from data leakage",
+  "tableName": "PROTECTED_VIEW",
+  "fields": [
+    {
+      "name": "groupId",
+      "type": "id",
+      "col": "GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "viewNameId",
+      "type": "id-long",
+      "col": "VIEW_NAME_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "maxHits",
+      "type": "numeric",
+      "col": "MAX_HITS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maxHitsDuration",
+      "type": "numeric",
+      "col": "MAX_HITS_DURATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "tarpitDuration",
+      "type": "numeric",
+      "col": "TARPIT_DURATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SecurityGroup",
+      "type": "one",
+      "relEntityName": "SecurityGroup",
+      "fkName": "VIEW_SECGRP_GRP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "groupId",
+          "relFieldName": "groupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SecurityGroupPermission",
+      "type": "many",
+      "relEntityName": "SecurityGroupPermission",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "groupId",
+          "relFieldName": "groupId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "groupId",
+    "viewNameId"
+  ],
+  "uniqueKey": "groupId, viewNameId",
+  "combine": true,
+  "isView": false
+}

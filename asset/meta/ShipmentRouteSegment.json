@@ -1,0 +1,794 @@
+{
+  "name": "ShipmentRouteSegment",
+  "title": "Shipment Route Segment",
+  "description": "None",
+  "tableName": "SHIPMENT_ROUTE_SEGMENT",
+  "fields": [
+    {
+      "name": "shipmentId",
+      "type": "id",
+      "col": "SHIPMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "shipmentRouteSegmentId",
+      "type": "id",
+      "col": "SHIPMENT_ROUTE_SEGMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "deliveryId",
+      "type": "id",
+      "col": "DELIVERY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "originFacilityId",
+      "type": "id",
+      "col": "ORIGIN_FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "destFacilityId",
+      "type": "id",
+      "col": "DEST_FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "originContactMechId",
+      "type": "id",
+      "col": "ORIGIN_CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "originTelecomNumberId",
+      "type": "id",
+      "col": "ORIGIN_TELECOM_NUMBER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "destContactMechId",
+      "type": "id",
+      "col": "DEST_CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "destTelecomNumberId",
+      "type": "id",
+      "col": "DEST_TELECOM_NUMBER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "carrierPartyId",
+      "type": "id",
+      "col": "CARRIER_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "shipmentMethodTypeId",
+      "type": "id",
+      "col": "SHIPMENT_METHOD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "carrierServiceStatusId",
+      "type": "id",
+      "col": "CARRIER_SERVICE_STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "carrierDeliveryZone",
+      "type": "short-varchar",
+      "col": "CARRIER_DELIVERY_ZONE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "carrierRestrictionCodes",
+      "type": "short-varchar",
+      "col": "CARRIER_RESTRICTION_CODES",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "carrierRestrictionDesc",
+      "type": "very-long",
+      "col": "CARRIER_RESTRICTION_DESC",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "billingWeight",
+      "type": "fixed-point",
+      "col": "BILLING_WEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "billingWeightUomId",
+      "type": "id",
+      "col": "BILLING_WEIGHT_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualTransportCost",
+      "type": "currency-amount",
+      "col": "ACTUAL_TRANSPORT_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualServiceCost",
+      "type": "currency-amount",
+      "col": "ACTUAL_SERVICE_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualOtherCost",
+      "type": "currency-amount",
+      "col": "ACTUAL_OTHER_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualCost",
+      "type": "currency-amount",
+      "col": "ACTUAL_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualStartDate",
+      "type": "date-time",
+      "col": "ACTUAL_START_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualArrivalDate",
+      "type": "date-time",
+      "col": "ACTUAL_ARRIVAL_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedStartDate",
+      "type": "date-time",
+      "col": "ESTIMATED_START_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedArrivalDate",
+      "type": "date-time",
+      "col": "ESTIMATED_ARRIVAL_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "trackingIdNumber",
+      "type": "short-varchar",
+      "col": "TRACKING_ID_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "trackingDigest",
+      "type": "very-long",
+      "col": "TRACKING_DIGEST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "updatedByUserLoginId",
+      "type": "id-vlong",
+      "col": "UPDATED_BY_USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedDate",
+      "type": "date-time",
+      "col": "LAST_UPDATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "homeDeliveryType",
+      "type": "id",
+      "col": "HOME_DELIVERY_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "homeDeliveryDate",
+      "type": "date-time",
+      "col": "HOME_DELIVERY_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thirdPartyAccountNumber",
+      "type": "id",
+      "col": "THIRD_PARTY_ACCOUNT_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thirdPartyPostalCode",
+      "type": "id",
+      "col": "THIRD_PARTY_POSTAL_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thirdPartyCountryGeoCode",
+      "type": "id",
+      "col": "THIRD_PARTY_COUNTRY_GEO_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "upsHighValueReport",
+      "type": "byte-array",
+      "col": "UPS_HIGH_VALUE_REPORT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "byte[]",
+      "sqlType": "BYTEA",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Shipment",
+      "type": "one",
+      "relEntityName": "Shipment",
+      "fkName": "SHPMT_RTSEG_SHPMT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Delivery",
+      "type": "one",
+      "relEntityName": "Delivery",
+      "fkName": "SHPMT_RTSEG_DEL",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "deliveryId",
+          "relFieldName": "deliveryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CarrierParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "SHPMT_RTSEG_CPTY",
+      "title": "Carrier",
+      "keymaps": [
+        {
+          "fieldName": "carrierPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CarrierPerson",
+      "type": "one-nofk",
+      "relEntityName": "Person",
+      "fkName": "",
+      "title": "Carrier",
+      "keymaps": [
+        {
+          "fieldName": "carrierPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CarrierPartyGroup",
+      "type": "one-nofk",
+      "relEntityName": "PartyGroup",
+      "fkName": "",
+      "title": "Carrier",
+      "keymaps": [
+        {
+          "fieldName": "carrierPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShipmentMethodType",
+      "type": "one",
+      "relEntityName": "ShipmentMethodType",
+      "fkName": "SHPMT_RTSEG_SHMT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OriginFacility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "SHPMT_RTSEG_OFAC",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "originFacilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DestFacility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "SHPMT_RTSEG_DFAC",
+      "title": "Dest",
+      "keymaps": [
+        {
+          "fieldName": "destFacilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OriginContactMech",
+      "type": "one-nofk",
+      "relEntityName": "ContactMech",
+      "fkName": "",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "originContactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DestContactMech",
+      "type": "one-nofk",
+      "relEntityName": "ContactMech",
+      "fkName": "",
+      "title": "Dest",
+      "keymaps": [
+        {
+          "fieldName": "destContactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OriginPostalAddress",
+      "type": "one",
+      "relEntityName": "PostalAddress",
+      "fkName": "SHPMT_RTSEG_OPAD",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "originContactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OriginTelecomNumber",
+      "type": "one",
+      "relEntityName": "TelecomNumber",
+      "fkName": "SHPMT_RTSEG_OTCN",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "originTelecomNumberId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DestPostalAddress",
+      "type": "one",
+      "relEntityName": "PostalAddress",
+      "fkName": "SHPMT_RTSEG_DPAD",
+      "title": "Dest",
+      "keymaps": [
+        {
+          "fieldName": "destContactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DestTelecomNumber",
+      "type": "one",
+      "relEntityName": "TelecomNumber",
+      "fkName": "SHPMT_RTSEG_DTCN",
+      "title": "Dest",
+      "keymaps": [
+        {
+          "fieldName": "destTelecomNumberId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CarrierServiceStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "SHPKRTSG_CSSTS",
+      "title": "CarrierService",
+      "keymaps": [
+        {
+          "fieldName": "carrierServiceStatusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CurrencyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "SHPMT_RTSEG_CUOM",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BillingWeightUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "SHPKRTSG_BWUOM",
+      "title": "BillingWeight",
+      "keymaps": [
+        {
+          "fieldName": "billingWeightUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShipmentPackageRouteSeg",
+      "type": "many",
+      "relEntityName": "ShipmentPackageRouteSeg",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentRouteSegmentId",
+          "relFieldName": "shipmentRouteSegmentId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "shipmentId",
+    "shipmentRouteSegmentId"
+  ],
+  "uniqueKey": "shipmentId, shipmentRouteSegmentId",
+  "combine": true,
+  "isView": false
+}

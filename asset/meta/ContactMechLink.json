@@ -1,0 +1,124 @@
+{
+  "name": "ContactMechLink",
+  "title": "Contact Mechanism Link",
+  "description": "None",
+  "tableName": "CONTACT_MECH_LINK",
+  "fields": [
+    {
+      "name": "contactMechIdFrom",
+      "type": "id",
+      "col": "CONTACT_MECH_ID_FROM",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contactMechIdTo",
+      "type": "id",
+      "col": "CONTACT_MECH_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "FromContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "CONT_MECH_FCMECH",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "contactMechIdFrom",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "CONT_MECH_TCMECH",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "contactMechIdTo",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "contactMechIdFrom",
+    "contactMechIdTo"
+  ],
+  "uniqueKey": "contactMechIdFrom, contactMechIdTo",
+  "combine": true,
+  "isView": false
+}

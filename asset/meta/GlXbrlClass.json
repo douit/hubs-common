@@ -1,0 +1,150 @@
+{
+  "name": "GlXbrlClass",
+  "title": "General Ledger XBRL Class",
+  "description": "None",
+  "tableName": "GL_XBRL_CLASS",
+  "fields": [
+    {
+      "name": "glXbrlClassId",
+      "type": "id",
+      "col": "GL_XBRL_CLASS_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentGlXbrlClassId",
+      "type": "id",
+      "col": "PARENT_GL_XBRL_CLASS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentGlXbrlClass",
+      "type": "one",
+      "relEntityName": "GlXbrlClass",
+      "fkName": "GL_XBRL_CLSPAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentGlXbrlClassId",
+          "relFieldName": "glXbrlClassId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlAccount",
+      "type": "many",
+      "relEntityName": "GlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glXbrlClassId",
+          "relFieldName": "glXbrlClassId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildGlXbrlClass",
+      "type": "many",
+      "relEntityName": "GlXbrlClass",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "glXbrlClassId",
+          "relFieldName": "parentGlXbrlClassId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "glXbrlClassId"
+  ],
+  "uniqueKey": "glXbrlClassId",
+  "combine": false,
+  "isView": false
+}

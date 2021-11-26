@@ -1,0 +1,232 @@
+{
+  "name": "WorkEffortAssoc",
+  "title": "Work Effort Association",
+  "description": "None",
+  "tableName": "WORK_EFFORT_ASSOC",
+  "fields": [
+    {
+      "name": "workEffortIdFrom",
+      "type": "id",
+      "col": "WORK_EFFORT_ID_FROM",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "workEffortIdTo",
+      "type": "id",
+      "col": "WORK_EFFORT_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "workEffortAssocTypeId",
+      "type": "id",
+      "col": "WORK_EFFORT_ASSOC_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "WorkEffortAssocType",
+      "type": "one",
+      "relEntityName": "WorkEffortAssocType",
+      "fkName": "WK_EFFRTASSC_TYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortAssocTypeId",
+          "relFieldName": "workEffortAssocTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffortAssocTypeAttr",
+      "type": "many",
+      "relEntityName": "WorkEffortAssocTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortAssocTypeId",
+          "relFieldName": "workEffortAssocTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromWorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "WK_EFFRTASSC_FWE",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "workEffortIdFrom",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToWorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "WK_EFFRTASSC_TWE",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "workEffortIdTo",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffortAssocAttribute",
+      "type": "many",
+      "relEntityName": "WorkEffortAssocAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortIdFrom",
+          "relFieldName": "workEffortIdFrom"
+        },
+        {
+          "fieldName": "workEffortIdTo",
+          "relFieldName": "workEffortIdTo"
+        },
+        {
+          "fieldName": "workEffortAssocTypeId",
+          "relFieldName": "workEffortAssocTypeId"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "workEffortIdFrom",
+    "workEffortIdTo",
+    "workEffortAssocTypeId",
+    "fromDate"
+  ],
+  "uniqueKey": "workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate",
+  "combine": true,
+  "isView": false
+}

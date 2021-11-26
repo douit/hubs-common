@@ -1,0 +1,191 @@
+{
+  "name": "SegmentGroup",
+  "title": "Segment Group",
+  "description": "None",
+  "tableName": "SEGMENT_GROUP",
+  "fields": [
+    {
+      "name": "segmentGroupId",
+      "type": "id",
+      "col": "SEGMENT_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "segmentGroupTypeId",
+      "type": "id",
+      "col": "SEGMENT_GROUP_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SegmentGroupType",
+      "type": "one",
+      "relEntityName": "SegmentGroupType",
+      "fkName": "SGMTGRP_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "segmentGroupTypeId",
+          "relFieldName": "segmentGroupTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductStore",
+      "type": "one",
+      "relEntityName": "ProductStore",
+      "fkName": "SGMTGRP_PRST",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SegmentGroupClassification",
+      "type": "many",
+      "relEntityName": "SegmentGroupClassification",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "segmentGroupId",
+          "relFieldName": "segmentGroupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SegmentGroupGeo",
+      "type": "many",
+      "relEntityName": "SegmentGroupGeo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "segmentGroupId",
+          "relFieldName": "segmentGroupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SegmentGroupRole",
+      "type": "many",
+      "relEntityName": "SegmentGroupRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "segmentGroupId",
+          "relFieldName": "segmentGroupId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "segmentGroupId"
+  ],
+  "uniqueKey": "segmentGroupId",
+  "combine": false,
+  "isView": false
+}

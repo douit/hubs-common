@@ -1,0 +1,550 @@
+{
+  "name": "PartyAcctgPreference",
+  "title": "Party (organization) accounting preferences",
+  "description": "None",
+  "tableName": "PARTY_ACCTG_PREFERENCE",
+  "fields": [
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fiscalYearStartMonth",
+      "type": "numeric",
+      "col": "FISCAL_YEAR_START_MONTH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fiscalYearStartDay",
+      "type": "numeric",
+      "col": "FISCAL_YEAR_START_DAY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxFormId",
+      "type": "id",
+      "col": "TAX_FORM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "cogsMethodId",
+      "type": "id",
+      "col": "COGS_METHOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "baseCurrencyUomId",
+      "type": "id",
+      "col": "BASE_CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceSeqCustMethId",
+      "type": "id",
+      "col": "INVOICE_SEQ_CUST_METH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceIdPrefix",
+      "type": "very-short",
+      "col": "INVOICE_ID_PREFIX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(10)",
+      "stringLength": 10,
+      "validators": []
+    },
+    {
+      "name": "lastInvoiceNumber",
+      "type": "numeric",
+      "col": "LAST_INVOICE_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastInvoiceRestartDate",
+      "type": "date-time",
+      "col": "LAST_INVOICE_RESTART_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useInvoiceIdForReturns",
+      "type": "indicator",
+      "col": "USE_INVOICE_ID_FOR_RETURNS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "quoteSeqCustMethId",
+      "type": "id",
+      "col": "QUOTE_SEQ_CUST_METH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quoteIdPrefix",
+      "type": "very-short",
+      "col": "QUOTE_ID_PREFIX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(10)",
+      "stringLength": 10,
+      "validators": []
+    },
+    {
+      "name": "lastQuoteNumber",
+      "type": "numeric",
+      "col": "LAST_QUOTE_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "orderSeqCustMethId",
+      "type": "id",
+      "col": "ORDER_SEQ_CUST_METH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "orderIdPrefix",
+      "type": "very-short",
+      "col": "ORDER_ID_PREFIX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(10)",
+      "stringLength": 10,
+      "validators": []
+    },
+    {
+      "name": "lastOrderNumber",
+      "type": "numeric",
+      "col": "LAST_ORDER_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "refundPaymentMethodId",
+      "type": "id",
+      "col": "REFUND_PAYMENT_METHOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "errorGlJournalId",
+      "type": "id",
+      "col": "ERROR_GL_JOURNAL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "enableAccounting",
+      "type": "indicator",
+      "col": "ENABLE_ACCOUNTING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "oldInvoiceSequenceEnumId",
+      "type": "id",
+      "col": "INVOICE_SEQUENCE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "oldOrderSequenceEnumId",
+      "type": "id",
+      "col": "ORDER_SEQUENCE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "oldQuoteSequenceEnumId",
+      "type": "id",
+      "col": "QUOTE_SEQUENCE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "ACTG_PREF_PTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxFormEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "ACTGPREF_TAXFORM",
+      "title": "TaxForm",
+      "keymaps": [
+        {
+          "fieldName": "taxFormId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CogsEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "ACTGPREF_COGS",
+      "title": "Cogs",
+      "keymaps": [
+        {
+          "fieldName": "cogsMethodId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "ACCTGPREF_CURNCY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "baseCurrencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InvoiceCustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "ACTGPREF_INVCM",
+      "title": "Invoice",
+      "keymaps": [
+        {
+          "fieldName": "invoiceSeqCustMethId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "QuoteCustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "ACTGPREF_QTECM",
+      "title": "Quote",
+      "keymaps": [
+        {
+          "fieldName": "quoteSeqCustMethId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderCustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "ACTGPREF_ODRCM",
+      "title": "Order",
+      "keymaps": [
+        {
+          "fieldName": "orderSeqCustMethId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentMethod",
+      "type": "one",
+      "relEntityName": "PaymentMethod",
+      "fkName": "ACTGPREF_PAYMTH",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "refundPaymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlJournal",
+      "type": "one",
+      "relEntityName": "GlJournal",
+      "fkName": "ACTGPREF_GLJRNL",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "errorGlJournalId",
+          "relFieldName": "glJournalId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InvoiceSequenceEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "ACTGPREF_INVSQ",
+      "title": "InvoiceSequence",
+      "keymaps": [
+        {
+          "fieldName": "oldInvoiceSequenceEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "QuoteSequenceEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "ACTGPREF_QTESQ",
+      "title": "QuoteSequence",
+      "keymaps": [
+        {
+          "fieldName": "oldQuoteSequenceEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderSequenceEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "ACTGPREF_ODRSQ",
+      "title": "OrderSequence",
+      "keymaps": [
+        {
+          "fieldName": "oldOrderSequenceEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyPrefDocTypeTpl",
+      "type": "many",
+      "relEntityName": "PartyPrefDocTypeTpl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "partyId"
+  ],
+  "uniqueKey": "partyId",
+  "combine": false,
+  "isView": false
+}

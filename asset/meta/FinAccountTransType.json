@@ -1,0 +1,177 @@
+{
+  "name": "FinAccountTransType",
+  "title": "Financial Account Transaction Type",
+  "description": "None",
+  "tableName": "FIN_ACCOUNT_TRANS_TYPE",
+  "fields": [
+    {
+      "name": "finAccountTransTypeId",
+      "type": "id",
+      "col": "FIN_ACCOUNT_TRANS_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentFinAccountTransType",
+      "type": "one",
+      "relEntityName": "FinAccountTransType",
+      "fkName": "FINACCT_TX_TYPPAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "finAccountTransTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FinAccountTrans",
+      "type": "many",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTransTypeId",
+          "relFieldName": "finAccountTransTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildFinAccountTransType",
+      "type": "many",
+      "relEntityName": "FinAccountTransType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTransTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountTransTypeAttr",
+      "type": "many",
+      "relEntityName": "FinAccountTransTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTransTypeId",
+          "relFieldName": "finAccountTransTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "finAccountTransTypeId"
+  ],
+  "uniqueKey": "finAccountTransTypeId",
+  "combine": false,
+  "isView": false
+}

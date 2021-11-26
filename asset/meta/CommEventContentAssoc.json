@@ -1,0 +1,191 @@
+{
+  "name": "CommEventContentAssoc",
+  "title": "CommunicationEvent Content Association",
+  "description": "None",
+  "tableName": "COMM_EVENT_CONTENT_ASSOC",
+  "fields": [
+    {
+      "name": "contentId",
+      "type": "id",
+      "col": "CONTENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "communicationEventId",
+      "type": "id",
+      "col": "COMMUNICATION_EVENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "commContentAssocTypeId",
+      "type": "id",
+      "col": "COMM_CONTENT_ASSOC_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "FromContent",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "COMMEV_CA_FROM",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CommunicationEvent",
+      "type": "one",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "COMMEV_CA_COMMEV",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CommContentAssocType",
+      "type": "one",
+      "relEntityName": "CommContentAssocType",
+      "fkName": "COMMEV_CA_TYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "commContentAssocTypeId",
+          "relFieldName": "commContentAssocTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "contentId",
+    "communicationEventId",
+    "fromDate"
+  ],
+  "uniqueKey": "contentId, communicationEventId, fromDate",
+  "combine": true,
+  "isView": false
+}

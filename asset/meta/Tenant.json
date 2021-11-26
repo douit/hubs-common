@@ -1,0 +1,177 @@
+{
+  "name": "Tenant",
+  "title": "Tenant",
+  "description": "None",
+  "tableName": "TENANT",
+  "fields": [
+    {
+      "name": "tenantId",
+      "type": "id",
+      "col": "TENANT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "tenantName",
+      "type": "name",
+      "col": "TENANT_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "initialPath",
+      "type": "value",
+      "col": "INITIAL_PATH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "disabled",
+      "type": "indicator",
+      "col": "DISABLED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "TenantComponent",
+      "type": "many",
+      "relEntityName": "TenantComponent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "tenantId",
+          "relFieldName": "tenantId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TenantDataSource",
+      "type": "many",
+      "relEntityName": "TenantDataSource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "tenantId",
+          "relFieldName": "tenantId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TenantDomainName",
+      "type": "many",
+      "relEntityName": "TenantDomainName",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "tenantId",
+          "relFieldName": "tenantId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TenantKeyEncryptingKey",
+      "type": "one-nofk",
+      "relEntityName": "TenantKeyEncryptingKey",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "tenantId",
+          "relFieldName": "tenantId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "tenantId"
+  ],
+  "uniqueKey": "tenantId",
+  "combine": false,
+  "isView": false
+}

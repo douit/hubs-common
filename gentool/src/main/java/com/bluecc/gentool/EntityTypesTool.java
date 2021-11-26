@@ -19,6 +19,9 @@ import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
 import static com.bluecc.hubs.fund.Util.*;
 import static java.util.Objects.requireNonNull;
 
+/**
+ * $ just gen EntityTypesTool
+ */
 public class EntityTypesTool {
     public static String seedDir = "dataset/seed";
     public static String commonDir = "dataset/common";
@@ -43,7 +46,7 @@ public class EntityTypesTool {
 
         for (String entityName : entityList) {
             File metaFile = getMetaFile(entityName);
-            System.out.println(metaFile.getName());
+            // System.out.println(metaFile.getName());
             genTool.genDDL(metaFile, writer);
         }
 
@@ -54,6 +57,7 @@ public class EntityTypesTool {
         writeJsonFile(MetaTypes.MetaList.builder()
                 .entities(entityList)
                 .build(), prependHubsHomeFile("asset/mysql/types.json"));
+        System.out.println("ok.");
     }
 
     static Set<String> collectFromFiles(File... metaDirs) {

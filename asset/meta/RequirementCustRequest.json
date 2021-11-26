@@ -1,0 +1,156 @@
+{
+  "name": "RequirementCustRequest",
+  "title": "Requirement Customer Request",
+  "description": "None",
+  "tableName": "REQUIREMENT_CUST_REQUEST",
+  "fields": [
+    {
+      "name": "custRequestId",
+      "type": "id",
+      "col": "CUST_REQUEST_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "custRequestItemSeqId",
+      "type": "id",
+      "col": "CUST_REQUEST_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requirementId",
+      "type": "id",
+      "col": "REQUIREMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CustRequest",
+      "type": "one-nofk",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequestItem",
+      "type": "one",
+      "relEntityName": "CustRequestItem",
+      "fkName": "REQ_CSREQ_CRITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        },
+        {
+          "fieldName": "custRequestItemSeqId",
+          "relFieldName": "custRequestItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Requirement",
+      "type": "one",
+      "relEntityName": "Requirement",
+      "fkName": "REQ_CSREQ_REQ",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "custRequestId",
+    "custRequestItemSeqId",
+    "requirementId"
+  ],
+  "uniqueKey": "custRequestId, custRequestItemSeqId, requirementId",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,138 @@
+{
+  "name": "PartyInvitationGroupAssoc",
+  "title": "Party Invitation Group Assoc",
+  "description": "None",
+  "tableName": "PARTY_INVITATION_GROUP_ASSOC",
+  "fields": [
+    {
+      "name": "partyInvitationId",
+      "type": "id",
+      "col": "PARTY_INVITATION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdTo",
+      "type": "id",
+      "col": "PARTY_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ToPartyGroup",
+      "type": "one",
+      "relEntityName": "PartyGroup",
+      "fkName": "PTYINVGA_PTYGRP",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PTYINVGA_PTYTO",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyInvitation",
+      "type": "one",
+      "relEntityName": "PartyInvitation",
+      "fkName": "PTYINVGA_PTYINV",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyInvitationId",
+          "relFieldName": "partyInvitationId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "partyInvitationId",
+    "partyIdTo"
+  ],
+  "uniqueKey": "partyInvitationId, partyIdTo",
+  "combine": true,
+  "isView": false
+}

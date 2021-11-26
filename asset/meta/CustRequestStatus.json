@@ -1,0 +1,207 @@
+{
+  "name": "CustRequestStatus",
+  "title": "Customer Request Status",
+  "description": "None",
+  "tableName": "CUST_REQUEST_STATUS",
+  "fields": [
+    {
+      "name": "custRequestStatusId",
+      "type": "id",
+      "col": "CUST_REQUEST_STATUS_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "custRequestId",
+      "type": "id",
+      "col": "CUST_REQUEST_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "custRequestItemSeqId",
+      "type": "id",
+      "col": "CUST_REQUEST_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusDate",
+      "type": "date-time",
+      "col": "STATUS_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "changeByUserLoginId",
+      "type": "id-vlong",
+      "col": "CHANGE_BY_USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "CUST_REQST_STTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequest",
+      "type": "one",
+      "relEntityName": "CustRequest",
+      "fkName": "CUST_REQ_STRQ",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequestItem",
+      "type": "one-nofk",
+      "relEntityName": "CustRequestItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        },
+        {
+          "fieldName": "custRequestItemSeqId",
+          "relFieldName": "custRequestItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ChangeByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "CUST_RQSTTS_USRLGN",
+      "title": "ChangeBy",
+      "keymaps": [
+        {
+          "fieldName": "changeByUserLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "custRequestStatusId"
+  ],
+  "uniqueKey": "custRequestStatusId",
+  "combine": false,
+  "isView": false
+}

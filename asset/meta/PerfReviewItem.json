@@ -1,0 +1,245 @@
+{
+  "name": "PerfReviewItem",
+  "title": "Performance Review Item",
+  "description": "None",
+  "tableName": "PERF_REVIEW_ITEM",
+  "fields": [
+    {
+      "name": "employeePartyId",
+      "type": "id",
+      "col": "EMPLOYEE_PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "employeeRoleTypeId",
+      "type": "id",
+      "col": "EMPLOYEE_ROLE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "perfReviewId",
+      "type": "id",
+      "col": "PERF_REVIEW_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "perfReviewItemSeqId",
+      "type": "id",
+      "col": "PERF_REVIEW_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "perfReviewItemTypeId",
+      "type": "id",
+      "col": "PERF_REVIEW_ITEM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "perfRatingTypeId",
+      "type": "id",
+      "col": "PERF_RATING_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PerfReview",
+      "type": "one",
+      "relEntityName": "PerfReview",
+      "fkName": "PERF_RVITM_PFRV",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "employeePartyId",
+          "relFieldName": "employeePartyId"
+        },
+        {
+          "fieldName": "employeeRoleTypeId",
+          "relFieldName": "employeeRoleTypeId"
+        },
+        {
+          "fieldName": "perfReviewId",
+          "relFieldName": "perfReviewId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EmployeeParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PERF_RVITM_EPTY",
+      "title": "Employee",
+      "keymaps": [
+        {
+          "fieldName": "employeePartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EmployeePartyRole",
+      "type": "one",
+      "relEntityName": "PartyRole",
+      "fkName": "PERF_RVITM_EPTRL",
+      "title": "Employee",
+      "keymaps": [
+        {
+          "fieldName": "employeePartyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "employeeRoleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PerfRatingType",
+      "type": "one-nofk",
+      "relEntityName": "PerfRatingType",
+      "fkName": "PERF_RVITM_PRTTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "perfRatingTypeId",
+          "relFieldName": "perfRatingTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PerfReviewItemType",
+      "type": "one-nofk",
+      "relEntityName": "PerfReviewItemType",
+      "fkName": "PERF_RVITM_PRITTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "perfReviewItemTypeId",
+          "relFieldName": "perfReviewItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "employeePartyId",
+    "employeeRoleTypeId",
+    "perfReviewId",
+    "perfReviewItemSeqId"
+  ],
+  "uniqueKey": "employeePartyId, employeeRoleTypeId, perfReviewId, perfReviewItemSeqId",
+  "combine": true,
+  "isView": false
+}

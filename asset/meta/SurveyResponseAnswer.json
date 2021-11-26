@@ -1,0 +1,365 @@
+{
+  "name": "SurveyResponseAnswer",
+  "title": "Survey Response Answer",
+  "description": "None",
+  "tableName": "SURVEY_RESPONSE_ANSWER",
+  "fields": [
+    {
+      "name": "surveyResponseId",
+      "type": "id",
+      "col": "SURVEY_RESPONSE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyQuestionId",
+      "type": "id",
+      "col": "SURVEY_QUESTION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyMultiRespColId",
+      "type": "id",
+      "col": "SURVEY_MULTI_RESP_COL_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyMultiRespId",
+      "type": "id",
+      "col": "SURVEY_MULTI_RESP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "booleanResponse",
+      "type": "indicator",
+      "col": "BOOLEAN_RESPONSE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "currencyResponse",
+      "type": "currency-amount",
+      "col": "CURRENCY_RESPONSE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "floatResponse",
+      "type": "floating-point",
+      "col": "FLOAT_RESPONSE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "numericResponse",
+      "type": "numeric",
+      "col": "NUMERIC_RESPONSE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "textResponse",
+      "type": "very-long",
+      "col": "TEXT_RESPONSE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "surveyOptionSeqId",
+      "type": "id",
+      "col": "SURVEY_OPTION_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentId",
+      "type": "id",
+      "col": "CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "answeredDate",
+      "type": "date-time",
+      "col": "ANSWERED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "amountBase",
+      "type": "currency-amount",
+      "col": "AMOUNT_BASE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "amountBaseUomId",
+      "type": "id",
+      "col": "AMOUNT_BASE_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "weightFactor",
+      "type": "floating-point",
+      "col": "WEIGHT_FACTOR",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "duration",
+      "type": "numeric",
+      "col": "DURATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "durationUomId",
+      "type": "id",
+      "col": "DURATION_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SurveyResponse",
+      "type": "one",
+      "relEntityName": "SurveyResponse",
+      "fkName": "SRVYRSPA_SVRSP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyResponseId",
+          "relFieldName": "surveyResponseId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyQuestion",
+      "type": "one",
+      "relEntityName": "SurveyQuestion",
+      "fkName": "SRVYRSPA_SVQU",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionId",
+          "relFieldName": "surveyQuestionId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyQuestionOption",
+      "type": "one",
+      "relEntityName": "SurveyQuestionOption",
+      "fkName": "SRVYRSPA_OPT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionId",
+          "relFieldName": "surveyQuestionId"
+        },
+        {
+          "fieldName": "surveyOptionSeqId",
+          "relFieldName": "surveyOptionSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Content",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "SRVYRSPA_CONT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "surveyResponseId",
+    "surveyQuestionId",
+    "surveyMultiRespColId"
+  ],
+  "uniqueKey": "surveyResponseId, surveyQuestionId, surveyMultiRespColId",
+  "combine": true,
+  "isView": false
+}

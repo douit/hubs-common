@@ -1,0 +1,151 @@
+{
+  "name": "InvoiceItemTypeMap",
+  "title": "Invoice Item Type Map",
+  "description": "None",
+  "tableName": "INVOICE_ITEM_TYPE_MAP",
+  "fields": [
+    {
+      "name": "invoiceItemMapKey",
+      "type": "id",
+      "col": "INVOICE_ITEM_MAP_KEY",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceTypeId",
+      "type": "id",
+      "col": "INVOICE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceItemTypeId",
+      "type": "id",
+      "col": "INVOICE_ITEM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "InvoiceItemType",
+      "type": "one",
+      "relEntityName": "InvoiceItemType",
+      "fkName": "INVOICE_ITEM_MAP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceItemTypeId",
+          "relFieldName": "invoiceItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InvoiceType",
+      "type": "one",
+      "relEntityName": "InvoiceType",
+      "fkName": "INVITMMAP_INVTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceTypeId",
+          "relFieldName": "invoiceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceItemTypeId",
+          "relFieldName": "invoiceItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "invoiceItemMapKey",
+    "invoiceTypeId"
+  ],
+  "uniqueKey": "invoiceItemMapKey, invoiceTypeId",
+  "combine": true,
+  "isView": false
+}

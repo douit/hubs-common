@@ -1,0 +1,137 @@
+{
+  "name": "BillingAccountTermAttr",
+  "title": "Billing Account Term Attribute",
+  "description": "None",
+  "tableName": "BILLING_ACCOUNT_TERM_ATTR",
+  "fields": [
+    {
+      "name": "billingAccountTermId",
+      "type": "id",
+      "col": "BILLING_ACCOUNT_TERM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "attrName",
+      "type": "id-long",
+      "col": "ATTR_NAME",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "attrValue",
+      "type": "value",
+      "col": "ATTR_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "BillingAccountTerm",
+      "type": "one",
+      "relEntityName": "BillingAccountTerm",
+      "fkName": "BILLACCT_TRM_ATTR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountTermId",
+          "relFieldName": "billingAccountTermId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TermTypeAttr",
+      "type": "many",
+      "relEntityName": "TermTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "attrName",
+          "relFieldName": "attrName"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "billingAccountTermId",
+    "attrName"
+  ],
+  "uniqueKey": "billingAccountTermId, attrName",
+  "combine": true,
+  "isView": false
+}

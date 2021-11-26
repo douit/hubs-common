@@ -1,0 +1,177 @@
+{
+  "name": "ProductPriceCond",
+  "title": "Product Price Condition",
+  "description": "None",
+  "tableName": "PRODUCT_PRICE_COND",
+  "fields": [
+    {
+      "name": "productPriceRuleId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_RULE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPriceCondSeqId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_COND_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "inputParamEnumId",
+      "type": "id",
+      "col": "INPUT_PARAM_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "operatorEnumId",
+      "type": "id",
+      "col": "OPERATOR_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "condValue",
+      "type": "long-varchar",
+      "col": "COND_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductPriceRule",
+      "type": "one",
+      "relEntityName": "ProductPriceRule",
+      "fkName": "PROD_PCCOND_RULE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InputParamEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PROD_PCCOND_INENUM",
+      "title": "InputParam",
+      "keymaps": [
+        {
+          "fieldName": "inputParamEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OperatorEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PROD_PCCOND_OPENUM",
+      "title": "Operator",
+      "keymaps": [
+        {
+          "fieldName": "operatorEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "productPriceRuleId",
+    "productPriceCondSeqId"
+  ],
+  "uniqueKey": "productPriceRuleId, productPriceCondSeqId",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,179 @@
+{
+  "name": "WebSiteContent",
+  "title": "Web Site Content Associations",
+  "description": "None",
+  "tableName": "WEB_SITE_CONTENT",
+  "fields": [
+    {
+      "name": "webSiteId",
+      "type": "id",
+      "col": "WEB_SITE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentId",
+      "type": "id",
+      "col": "CONTENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "webSiteContentTypeId",
+      "type": "id",
+      "col": "WEB_SITE_CONTENT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "WebSite",
+      "type": "one",
+      "relEntityName": "WebSite",
+      "fkName": "WSCTNT_WEBSITE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "webSiteId",
+          "relFieldName": "webSiteId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Content",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "WSCTNT_CONTENT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WebSiteContentType",
+      "type": "one",
+      "relEntityName": "WebSiteContentType",
+      "fkName": "WSCTNT_WSCTTYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "webSiteContentTypeId",
+          "relFieldName": "webSiteContentTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "webSiteId",
+    "contentId",
+    "webSiteContentTypeId",
+    "fromDate"
+  ],
+  "uniqueKey": "webSiteId, contentId, webSiteContentTypeId, fromDate",
+  "combine": true,
+  "isView": false
+}

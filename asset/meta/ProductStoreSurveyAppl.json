@@ -1,0 +1,309 @@
+{
+  "name": "ProductStoreSurveyAppl",
+  "title": "Product Store Survey Application",
+  "description": "None",
+  "tableName": "PRODUCT_STORE_SURVEY_APPL",
+  "fields": [
+    {
+      "name": "productStoreSurveyId",
+      "type": "id",
+      "col": "PRODUCT_STORE_SURVEY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyApplTypeId",
+      "type": "id",
+      "col": "SURVEY_APPL_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "groupName",
+      "type": "name",
+      "col": "GROUP_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "surveyId",
+      "type": "id",
+      "col": "SURVEY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productCategoryId",
+      "type": "id",
+      "col": "PRODUCT_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyTemplate",
+      "type": "long-varchar",
+      "col": "SURVEY_TEMPLATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "resultTemplate",
+      "type": "long-varchar",
+      "col": "RESULT_TEMPLATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductStore",
+      "type": "one",
+      "relEntityName": "ProductStore",
+      "fkName": "PRDSTRSVY_PRDS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Survey",
+      "type": "one",
+      "relEntityName": "Survey",
+      "fkName": "PRDSTRSVY_SRVY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyApplType",
+      "type": "one",
+      "relEntityName": "SurveyApplType",
+      "fkName": "PRDSTRSVY_SATP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyApplTypeId",
+          "relFieldName": "surveyApplTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Product",
+      "type": "one-nofk",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductCategory",
+      "type": "one-nofk",
+      "relEntityName": "ProductCategory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productCategoryId",
+          "relFieldName": "productCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffortSurveyAppl",
+      "type": "many",
+      "relEntityName": "WorkEffortSurveyAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreSurveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productStoreSurveyId"
+  ],
+  "uniqueKey": "productStoreSurveyId",
+  "combine": false,
+  "isView": false
+}

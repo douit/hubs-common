@@ -1,0 +1,292 @@
+{
+  "name": "CarrierShipmentMethod",
+  "title": "Carrier Shipment Method",
+  "description": "None",
+  "tableName": "CARRIER_SHIPMENT_METHOD",
+  "fields": [
+    {
+      "name": "shipmentMethodTypeId",
+      "type": "id",
+      "col": "SHIPMENT_METHOD_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeId",
+      "type": "id",
+      "col": "ROLE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNumber",
+      "type": "numeric",
+      "col": "SEQUENCE_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "carrierServiceCode",
+      "type": "short-varchar",
+      "col": "CARRIER_SERVICE_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ShipmentMethodType",
+      "type": "one",
+      "relEntityName": "ShipmentMethodType",
+      "fkName": "CARR_SHMETH_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "CARR_SHMETH_PARTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRole",
+      "type": "one",
+      "relEntityName": "PartyRole",
+      "fkName": "CARR_SHMETH_PROLE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FacilityCarrierShipment",
+      "type": "many",
+      "relEntityName": "FacilityCarrierShipment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        },
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemShipGroup",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        },
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "carrierRoleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        },
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "carrierRoleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentTimeEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentTimeEstimate",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        },
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingList",
+      "type": "many",
+      "relEntityName": "ShoppingList",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        },
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "carrierRoleTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "shipmentMethodTypeId",
+    "partyId",
+    "roleTypeId"
+  ],
+  "uniqueKey": "shipmentMethodTypeId, partyId, roleTypeId",
+  "combine": true,
+  "isView": false
+}

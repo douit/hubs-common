@@ -1,0 +1,712 @@
+{
+  "name": "Payment",
+  "title": "Payment",
+  "description": "None",
+  "tableName": "PAYMENT",
+  "fields": [
+    {
+      "name": "paymentId",
+      "type": "id",
+      "col": "PAYMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentTypeId",
+      "type": "id",
+      "col": "PAYMENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentMethodTypeId",
+      "type": "id",
+      "col": "PAYMENT_METHOD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentMethodId",
+      "type": "id",
+      "col": "PAYMENT_METHOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentGatewayResponseId",
+      "type": "id",
+      "col": "PAYMENT_GATEWAY_RESPONSE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentPreferenceId",
+      "type": "id",
+      "col": "PAYMENT_PREFERENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdFrom",
+      "type": "id",
+      "col": "PARTY_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdTo",
+      "type": "id",
+      "col": "PARTY_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdTo",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "effectiveDate",
+      "type": "date-time",
+      "col": "EFFECTIVE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentRefNum",
+      "type": "short-varchar",
+      "col": "PAYMENT_REF_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "amount",
+      "type": "currency-amount",
+      "col": "AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "finAccountTransId",
+      "type": "id",
+      "col": "FIN_ACCOUNT_TRANS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "overrideGlAccountId",
+      "type": "id",
+      "col": "OVERRIDE_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualCurrencyAmount",
+      "type": "currency-amount",
+      "col": "ACTUAL_CURRENCY_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualCurrencyUomId",
+      "type": "id",
+      "col": "ACTUAL_CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PaymentType",
+      "type": "one",
+      "relEntityName": "PaymentType",
+      "fkName": "PAYMENT_PMTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentTypeId",
+          "relFieldName": "paymentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentTypeAttr",
+      "type": "many",
+      "relEntityName": "PaymentTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentTypeId",
+          "relFieldName": "paymentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentMethodType",
+      "type": "one",
+      "relEntityName": "PaymentMethodType",
+      "fkName": "PAYMENT_PMETH_TP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentMethod",
+      "type": "one",
+      "relEntityName": "PaymentMethod",
+      "fkName": "PAYMENT_PMETH",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CurrencyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PAYMENT_CUOM",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ActualCurrencyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PAYMENT_ACUOM",
+      "title": "ActualCurrency",
+      "keymaps": [
+        {
+          "fieldName": "actualCurrencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreditCard",
+      "type": "one-nofk",
+      "relEntityName": "CreditCard",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EftAccount",
+      "type": "one-nofk",
+      "relEntityName": "EftAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GiftCard",
+      "type": "one-nofk",
+      "relEntityName": "GiftCard",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderPaymentPreference",
+      "type": "one",
+      "relEntityName": "OrderPaymentPreference",
+      "fkName": "PAYMENT_ORDPMPRF",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentPreferenceId",
+          "relFieldName": "orderPaymentPreferenceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentGatewayResponse",
+      "type": "one",
+      "relEntityName": "PaymentGatewayResponse",
+      "fkName": "PAYMENT_PAYGATR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayResponseId",
+          "relFieldName": "paymentGatewayResponseId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PAYMENT_FPTY",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PAYMENT_TPTY",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToRoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "PAYMENT_TRTP",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToPartyRole",
+      "type": "one-nofk",
+      "relEntityName": "PartyRole",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PAYMENT_STTSITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FinAccountTrans",
+      "type": "one",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "PAYMENT_FACTX",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTransId",
+          "relFieldName": "finAccountTransId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "PAYMENT_ORGLA",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "overrideGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Deduction",
+      "type": "many",
+      "relEntityName": "Deduction",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentApplication",
+      "type": "many",
+      "relEntityName": "PaymentApplication",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToPaymentApplication",
+      "type": "many",
+      "relEntityName": "PaymentApplication",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "toPaymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentAttribute",
+      "type": "many",
+      "relEntityName": "PaymentAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentBudgetAllocation",
+      "type": "many",
+      "relEntityName": "PaymentBudgetAllocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentContent",
+      "type": "many",
+      "relEntityName": "PaymentContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGroupMember",
+      "type": "many",
+      "relEntityName": "PaymentGroupMember",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PerfReview",
+      "type": "many",
+      "relEntityName": "PerfReview",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItemResponse",
+      "type": "many",
+      "relEntityName": "ReturnItemResponse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "paymentId"
+  ],
+  "uniqueKey": "paymentId",
+  "combine": false,
+  "isView": false
+}

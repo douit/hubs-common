@@ -1,0 +1,351 @@
+{
+  "name": "ProductPromoCode",
+  "title": "Product Promotion",
+  "description": "None",
+  "tableName": "PRODUCT_PROMO_CODE",
+  "fields": [
+    {
+      "name": "productPromoCodeId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_CODE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPromoId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "userEntered",
+      "type": "indicator",
+      "col": "USER_ENTERED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "requireEmailOrParty",
+      "type": "indicator",
+      "col": "REQUIRE_EMAIL_OR_PARTY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "useLimitPerCode",
+      "type": "numeric",
+      "col": "USE_LIMIT_PER_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useLimitPerCustomer",
+      "type": "numeric",
+      "col": "USE_LIMIT_PER_CUSTOMER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductPromo",
+      "type": "one",
+      "relEntityName": "ProductPromo",
+      "fkName": "PROD_PRCOD_PROMO",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreatedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PROD_PRCOD_CUL",
+      "title": "CreatedBy",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LastModifiedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PROD_PRCOD_LMCUL",
+      "title": "LastModifiedBy",
+      "keymaps": [
+        {
+          "fieldName": "lastModifiedByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OldProductPromoCodeEmail",
+      "type": "many",
+      "relEntityName": "OldProductPromoCodeEmail",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoCodeId",
+          "relFieldName": "productPromoCodeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderProductPromoCode",
+      "type": "many",
+      "relEntityName": "OrderProductPromoCode",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoCodeId",
+          "relFieldName": "productPromoCodeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdPromoCodeContactMech",
+      "type": "many",
+      "relEntityName": "ProdPromoCodeContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoCodeId",
+          "relFieldName": "productPromoCodeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoCodeParty",
+      "type": "many",
+      "relEntityName": "ProductPromoCodeParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoCodeId",
+          "relFieldName": "productPromoCodeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoUse",
+      "type": "many",
+      "relEntityName": "ProductPromoUse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoCodeId",
+          "relFieldName": "productPromoCodeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingList",
+      "type": "many",
+      "relEntityName": "ShoppingList",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoCodeId",
+          "relFieldName": "productPromoCodeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productPromoCodeId"
+  ],
+  "uniqueKey": "productPromoCodeId",
+  "combine": false,
+  "isView": false
+}

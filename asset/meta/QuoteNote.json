@@ -1,0 +1,124 @@
+{
+  "name": "QuoteNote",
+  "title": "Quote Note",
+  "description": "None",
+  "tableName": "QUOTE_NOTE",
+  "fields": [
+    {
+      "name": "quoteId",
+      "type": "id",
+      "col": "QUOTE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "noteId",
+      "type": "id",
+      "col": "NOTE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Quote",
+      "type": "one",
+      "relEntityName": "Quote",
+      "fkName": "QUOTE_NT_QTE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "NoteData",
+      "type": "one",
+      "relEntityName": "NoteData",
+      "fkName": "QUOTE_NT_NOTE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "quoteId",
+    "noteId"
+  ],
+  "uniqueKey": "quoteId, noteId",
+  "combine": true,
+  "isView": false
+}

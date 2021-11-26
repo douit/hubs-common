@@ -1,0 +1,193 @@
+{
+  "name": "ProductPromoProduct",
+  "title": "Product Promotion Category",
+  "description": "None",
+  "tableName": "PRODUCT_PROMO_PRODUCT",
+  "fields": [
+    {
+      "name": "productPromoId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPromoRuleId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_RULE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPromoActionSeqId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_ACTION_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPromoCondSeqId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_COND_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPromoApplEnumId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_APPL_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductPromo",
+      "type": "one",
+      "relEntityName": "ProductPromo",
+      "fkName": "PROD_PRPRD_PROMO",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "PROD_PRPRD_PROD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ApplEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PROD_PRPRD_ENUM",
+      "title": "Appl",
+      "keymaps": [
+        {
+          "fieldName": "productPromoApplEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 5,
+  "pks": [
+    "productPromoId",
+    "productPromoRuleId",
+    "productPromoActionSeqId",
+    "productPromoCondSeqId",
+    "productId"
+  ],
+  "uniqueKey": "productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productId",
+  "combine": true,
+  "isView": false
+}

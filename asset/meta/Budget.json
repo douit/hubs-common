@@ -1,0 +1,303 @@
+{
+  "name": "Budget",
+  "title": "Budget",
+  "description": "None",
+  "tableName": "BUDGET",
+  "fields": [
+    {
+      "name": "budgetId",
+      "type": "id",
+      "col": "BUDGET_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "budgetTypeId",
+      "type": "id",
+      "col": "BUDGET_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "customTimePeriodId",
+      "type": "id",
+      "col": "CUSTOM_TIME_PERIOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "BudgetType",
+      "type": "one",
+      "relEntityName": "BudgetType",
+      "fkName": "BUDGET_BGTTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetTypeId",
+          "relFieldName": "budgetTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomTimePeriod",
+      "type": "one",
+      "relEntityName": "CustomTimePeriod",
+      "fkName": "BUDGET_CTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "customTimePeriodId",
+          "relFieldName": "customTimePeriodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BudgetTypeAttr",
+      "type": "many",
+      "relEntityName": "BudgetTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetTypeId",
+          "relFieldName": "budgetTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BudgetAttribute",
+      "type": "many",
+      "relEntityName": "BudgetAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetItem",
+      "type": "many",
+      "relEntityName": "BudgetItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetReview",
+      "type": "many",
+      "relEntityName": "BudgetReview",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetRevision",
+      "type": "many",
+      "relEntityName": "BudgetRevision",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetRevisionImpact",
+      "type": "many",
+      "relEntityName": "BudgetRevisionImpact",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetRole",
+      "type": "many",
+      "relEntityName": "BudgetRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetScenarioApplication",
+      "type": "many",
+      "relEntityName": "BudgetScenarioApplication",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetStatus",
+      "type": "many",
+      "relEntityName": "BudgetStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentBudgetAllocation",
+      "type": "many",
+      "relEntityName": "PaymentBudgetAllocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementBudgetAllocation",
+      "type": "many",
+      "relEntityName": "RequirementBudgetAllocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "budgetId"
+  ],
+  "uniqueKey": "budgetId",
+  "combine": false,
+  "isView": false
+}

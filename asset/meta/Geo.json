@@ -1,0 +1,636 @@
+{
+  "name": "Geo",
+  "title": "Geographic Boundary",
+  "description": "None",
+  "tableName": "GEO",
+  "fields": [
+    {
+      "name": "geoId",
+      "type": "id",
+      "col": "GEO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoTypeId",
+      "type": "id",
+      "col": "GEO_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoName",
+      "type": "name",
+      "col": "GEO_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "geoCode",
+      "type": "short-varchar",
+      "col": "GEO_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "geoSecCode",
+      "type": "short-varchar",
+      "col": "GEO_SEC_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "abbreviation",
+      "type": "short-varchar",
+      "col": "ABBREVIATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "wellKnownText",
+      "type": "very-long",
+      "col": "WELL_KNOWN_TEXT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "GeoType",
+      "type": "one",
+      "relEntityName": "GeoType",
+      "fkName": "GEO_TO_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoTypeId",
+          "relFieldName": "geoTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementGeographicalApplic",
+      "type": "many",
+      "relEntityName": "AgreementGeographicalApplic",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CostComponent",
+      "type": "many",
+      "relEntityName": "CostComponent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CountryAddressFormat",
+      "type": "one-nofk",
+      "relEntityName": "CountryAddressFormat",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MainGeoAssoc",
+      "type": "many",
+      "relEntityName": "GeoAssoc",
+      "fkName": "",
+      "title": "Main",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AssocGeoAssoc",
+      "type": "many",
+      "relEntityName": "GeoAssoc",
+      "fkName": "",
+      "title": "Assoc",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxInvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "title": "Tax",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "taxAuthGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PrimaryOrderAdjustment",
+      "type": "many",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "",
+      "title": "Primary",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "primaryGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SecondaryOrderAdjustment",
+      "type": "many",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "",
+      "title": "Secondary",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "secondaryGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentApplication",
+      "type": "many",
+      "relEntityName": "PaymentApplication",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "taxAuthGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CountryPostalAddress",
+      "type": "many",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "title": "Country",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "countryGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "StateProvincePostalAddress",
+      "type": "many",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "title": "StateProvince",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "stateProvinceGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CountyPostalAddress",
+      "type": "many",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "title": "County",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "countyGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MunicipalityPostalAddress",
+      "type": "many",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "title": "Municipality",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "municipalityGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CityPostalAddress",
+      "type": "many",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "title": "City",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "cityGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PostalCodePostalAddress",
+      "type": "many",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "title": "PostalCode",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "postalCodeGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PostalAddressBoundary",
+      "type": "many",
+      "relEntityName": "PostalAddressBoundary",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "originGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductGeo",
+      "type": "many",
+      "relEntityName": "ProductGeo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityProductPrice",
+      "type": "many",
+      "relEntityName": "ProductPrice",
+      "fkName": "",
+      "title": "TaxAuthority",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "taxAuthGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "IncludeProductStoreShipmentMeth",
+      "type": "many",
+      "relEntityName": "ProductStoreShipmentMeth",
+      "fkName": "",
+      "title": "Include",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "includeGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ExcludeProductStoreShipmentMeth",
+      "type": "many",
+      "relEntityName": "ProductStoreShipmentMeth",
+      "fkName": "",
+      "title": "Exclude",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "excludeGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PrimaryQuoteAdjustment",
+      "type": "many",
+      "relEntityName": "QuoteAdjustment",
+      "fkName": "",
+      "title": "Primary",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "primaryGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SecondaryQuoteAdjustment",
+      "type": "many",
+      "relEntityName": "QuoteAdjustment",
+      "fkName": "",
+      "title": "Secondary",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "secondaryGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReorderGuideline",
+      "type": "many",
+      "relEntityName": "ReorderGuideline",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PrimaryReturnAdjustment",
+      "type": "many",
+      "relEntityName": "ReturnAdjustment",
+      "fkName": "",
+      "title": "Primary",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "primaryGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SecondaryReturnAdjustment",
+      "type": "many",
+      "relEntityName": "ReturnAdjustment",
+      "fkName": "",
+      "title": "Secondary",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "secondaryGeoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SegmentGroupGeo",
+      "type": "many",
+      "relEntityName": "SegmentGroupGeo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToShipmentTimeEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentTimeEstimate",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "fromShipmentTimeEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentTimeEstimate",
+      "fkName": "",
+      "title": "from",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyQuestion",
+      "type": "many",
+      "relEntityName": "SurveyQuestion",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthTaxAuthority",
+      "type": "many",
+      "relEntityName": "TaxAuthority",
+      "fkName": "",
+      "title": "TaxAuth",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "taxAuthGeoId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "geoId"
+  ],
+  "uniqueKey": "geoId",
+  "combine": false,
+  "isView": false
+}

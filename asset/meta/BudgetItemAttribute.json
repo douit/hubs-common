@@ -1,0 +1,168 @@
+{
+  "name": "BudgetItemAttribute",
+  "title": "Budget Item Attribute",
+  "description": "None",
+  "tableName": "BUDGET_ITEM_ATTRIBUTE",
+  "fields": [
+    {
+      "name": "budgetId",
+      "type": "id",
+      "col": "BUDGET_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "budgetItemSeqId",
+      "type": "id",
+      "col": "BUDGET_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "attrName",
+      "type": "id-long",
+      "col": "ATTR_NAME",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "attrValue",
+      "type": "value",
+      "col": "ATTR_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "attrDescription",
+      "type": "description",
+      "col": "ATTR_DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "BudgetItem",
+      "type": "one",
+      "relEntityName": "BudgetItem",
+      "fkName": "BUDGET_ITEM_ATTR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        },
+        {
+          "fieldName": "budgetItemSeqId",
+          "relFieldName": "budgetItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BudgetItemTypeAttr",
+      "type": "many",
+      "relEntityName": "BudgetItemTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "attrName",
+          "relFieldName": "attrName"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "budgetId",
+    "budgetItemSeqId",
+    "attrName"
+  ],
+  "uniqueKey": "budgetId, budgetItemSeqId, attrName",
+  "combine": true,
+  "isView": false
+}

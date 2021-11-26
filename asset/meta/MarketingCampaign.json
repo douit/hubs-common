@@ -1,0 +1,470 @@
+{
+  "name": "MarketingCampaign",
+  "title": "Marketing Campaign",
+  "description": "None",
+  "tableName": "MARKETING_CAMPAIGN",
+  "fields": [
+    {
+      "name": "marketingCampaignId",
+      "type": "id",
+      "col": "MARKETING_CAMPAIGN_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentCampaignId",
+      "type": "id",
+      "col": "PARENT_CAMPAIGN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "campaignName",
+      "type": "name",
+      "col": "CAMPAIGN_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "campaignSummary",
+      "type": "very-long",
+      "col": "CAMPAIGN_SUMMARY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "budgetedCost",
+      "type": "currency-amount",
+      "col": "BUDGETED_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualCost",
+      "type": "currency-amount",
+      "col": "ACTUAL_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedCost",
+      "type": "currency-amount",
+      "col": "ESTIMATED_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "isActive",
+      "type": "indicator",
+      "col": "IS_ACTIVE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "convertedLeads",
+      "type": "id",
+      "col": "CONVERTED_LEADS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "expectedResponsePercent",
+      "type": "floating-point",
+      "col": "EXPECTED_RESPONSE_PERCENT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "expectedRevenue",
+      "type": "currency-amount",
+      "col": "EXPECTED_REVENUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "numSent",
+      "type": "numeric",
+      "col": "NUM_SENT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "startDate",
+      "type": "date-time",
+      "col": "START_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentMarketingCampaign",
+      "type": "one",
+      "relEntityName": "MarketingCampaign",
+      "fkName": "MKTGCPN_PRNT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "MKTGCPN_STS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "MKTGCPN_CUOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContactList",
+      "type": "many",
+      "relEntityName": "ContactList",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildMarketingCampaign",
+      "type": "many",
+      "relEntityName": "MarketingCampaign",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "parentCampaignId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaignNote",
+      "type": "many",
+      "relEntityName": "MarketingCampaignNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaignPrice",
+      "type": "many",
+      "relEntityName": "MarketingCampaignPrice",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaignPromo",
+      "type": "many",
+      "relEntityName": "MarketingCampaignPromo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaignRole",
+      "type": "many",
+      "relEntityName": "MarketingCampaignRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunity",
+      "type": "many",
+      "relEntityName": "SalesOpportunity",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TrackingCode",
+      "type": "many",
+      "relEntityName": "TrackingCode",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "marketingCampaignId"
+  ],
+  "uniqueKey": "marketingCampaignId",
+  "combine": false,
+  "isView": false
+}

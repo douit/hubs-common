@@ -1,0 +1,163 @@
+{
+  "name": "EmploymentAppSourceType",
+  "title": "Employment Application Source Type",
+  "description": "None",
+  "tableName": "EMPLOYMENT_APP_SOURCE_TYPE",
+  "fields": [
+    {
+      "name": "employmentAppSourceTypeId",
+      "type": "id",
+      "col": "EMPLOYMENT_APP_SOURCE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentEmploymentAppSourceType",
+      "type": "one",
+      "relEntityName": "EmploymentAppSourceType",
+      "fkName": "EMPL_APP_SRC_TYP",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "employmentAppSourceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EmploymentApp",
+      "type": "many",
+      "relEntityName": "EmploymentApp",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "employmentAppSourceTypeId",
+          "relFieldName": "employmentAppSourceTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildEmploymentAppSourceType",
+      "type": "many",
+      "relEntityName": "EmploymentAppSourceType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "employmentAppSourceTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "employmentAppSourceTypeId"
+  ],
+  "uniqueKey": "employmentAppSourceTypeId",
+  "combine": false,
+  "isView": false
+}

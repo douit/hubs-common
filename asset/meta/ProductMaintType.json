@@ -1,0 +1,164 @@
+{
+  "name": "ProductMaintType",
+  "title": "Product Maintenance Type",
+  "description": "This is for both scheduled and unscheduled maintenance; use ProductMaint to track details for scheduled maintenance",
+  "tableName": "PRODUCT_MAINT_TYPE",
+  "fields": [
+    {
+      "name": "productMaintTypeId",
+      "type": "id",
+      "col": "PRODUCT_MAINT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentProductMaintType",
+      "type": "one",
+      "relEntityName": "ProductMaintType",
+      "fkName": "PRODMNT_TYPE_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "productMaintTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAssetMaint",
+      "type": "many",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productMaintTypeId",
+          "relFieldName": "productMaintTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductMaint",
+      "type": "many",
+      "relEntityName": "ProductMaint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productMaintTypeId",
+          "relFieldName": "productMaintTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildProductMaintType",
+      "type": "many",
+      "relEntityName": "ProductMaintType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "productMaintTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productMaintTypeId"
+  ],
+  "uniqueKey": "productMaintTypeId",
+  "combine": false,
+  "isView": false
+}

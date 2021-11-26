@@ -1,0 +1,124 @@
+{
+  "name": "SegmentGroupClassification",
+  "title": "Segment Group Classification",
+  "description": "None",
+  "tableName": "SEGMENT_GROUP_CLASSIFICATION",
+  "fields": [
+    {
+      "name": "segmentGroupId",
+      "type": "id",
+      "col": "SEGMENT_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyClassificationGroupId",
+      "type": "id",
+      "col": "PARTY_CLASSIFICATION_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SegmentGroup",
+      "type": "one",
+      "relEntityName": "SegmentGroup",
+      "fkName": "SGMTGRPCLS_SGGP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "segmentGroupId",
+          "relFieldName": "segmentGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyClassificationGroup",
+      "type": "one",
+      "relEntityName": "PartyClassificationGroup",
+      "fkName": "SGMTGRPCLS_PCGP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyClassificationGroupId",
+          "relFieldName": "partyClassificationGroupId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "segmentGroupId",
+    "partyClassificationGroupId"
+  ],
+  "uniqueKey": "segmentGroupId, partyClassificationGroupId",
+  "combine": true,
+  "isView": false
+}

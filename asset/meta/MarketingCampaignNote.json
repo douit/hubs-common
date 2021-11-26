@@ -1,0 +1,124 @@
+{
+  "name": "MarketingCampaignNote",
+  "title": "Marketing Campaign Note",
+  "description": "None",
+  "tableName": "MARKETING_CAMPAIGN_NOTE",
+  "fields": [
+    {
+      "name": "marketingCampaignId",
+      "type": "id",
+      "col": "MARKETING_CAMPAIGN_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "noteId",
+      "type": "id",
+      "col": "NOTE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "MarketingCampaign",
+      "type": "one",
+      "relEntityName": "MarketingCampaign",
+      "fkName": "MKTGCPN_NOTE_CMPN",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "NoteData",
+      "type": "one",
+      "relEntityName": "NoteData",
+      "fkName": "MKTGCPN_NOTE_NOTE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "marketingCampaignId",
+    "noteId"
+  ],
+  "uniqueKey": "marketingCampaignId, noteId",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,287 @@
+{
+  "name": "FixedAssetTypeGlAccount",
+  "title": "Gl Account Mapping For Fixed Asset Or Fixed Asset Types",
+  "description": "None",
+  "tableName": "FIXED_ASSET_TYPE_GL_ACCOUNT",
+  "fields": [
+    {
+      "name": "fixedAssetTypeId",
+      "type": "id",
+      "col": "FIXED_ASSET_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "organizationPartyId",
+      "type": "id",
+      "col": "ORGANIZATION_PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "assetGlAccountId",
+      "type": "id",
+      "col": "ASSET_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "accDepGlAccountId",
+      "type": "id",
+      "col": "ACC_DEP_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "depGlAccountId",
+      "type": "id",
+      "col": "DEP_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "profitGlAccountId",
+      "type": "id",
+      "col": "PROFIT_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lossGlAccountId",
+      "type": "id",
+      "col": "LOSS_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "FixedAssetType",
+      "type": "one-nofk",
+      "relEntityName": "FixedAssetType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetTypeId",
+          "relFieldName": "fixedAssetTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAsset",
+      "type": "one-nofk",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "FATGL_OP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "organizationPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AssetGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "FATGL_AGL",
+      "title": "Asset",
+      "keymaps": [
+        {
+          "fieldName": "assetGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AccumulatedDepreciationGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "FATGL_ACCDGL",
+      "title": "AccumulatedDepreciation",
+      "keymaps": [
+        {
+          "fieldName": "accDepGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DepreciationGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "FATGL_DGL",
+      "title": "Depreciation",
+      "keymaps": [
+        {
+          "fieldName": "depGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProfitGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "FATGL_PGL",
+      "title": "Profit",
+      "keymaps": [
+        {
+          "fieldName": "profitGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LossGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "FATGL_LGL",
+      "title": "Loss",
+      "keymaps": [
+        {
+          "fieldName": "lossGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "fixedAssetTypeId",
+    "fixedAssetId",
+    "organizationPartyId"
+  ],
+  "uniqueKey": "fixedAssetTypeId, fixedAssetId, organizationPartyId",
+  "combine": true,
+  "isView": false
+}

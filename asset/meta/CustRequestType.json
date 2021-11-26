@@ -1,0 +1,246 @@
+{
+  "name": "CustRequestType",
+  "title": "Customer Request Type",
+  "description": "None",
+  "tableName": "CUST_REQUEST_TYPE",
+  "fields": [
+    {
+      "name": "custRequestTypeId",
+      "type": "id",
+      "col": "CUST_REQUEST_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentCustRequestType",
+      "type": "one",
+      "relEntityName": "CustRequestType",
+      "fkName": "CUST_REQ_TYPE_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "custRequestTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "CUST_PTY_PARTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "CUST_PTY_RELAT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestTypeId",
+          "relFieldName": "custRequestTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestCategory",
+      "type": "many",
+      "relEntityName": "CustRequestCategory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestTypeId",
+          "relFieldName": "custRequestTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestResolution",
+      "type": "many",
+      "relEntityName": "CustRequestResolution",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestTypeId",
+          "relFieldName": "custRequestTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildCustRequestType",
+      "type": "many",
+      "relEntityName": "CustRequestType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "custRequestTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestTypeAttr",
+      "type": "many",
+      "relEntityName": "CustRequestTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestTypeId",
+          "relFieldName": "custRequestTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "custRequestTypeId"
+  ],
+  "uniqueKey": "custRequestTypeId",
+  "combine": false,
+  "isView": false
+}

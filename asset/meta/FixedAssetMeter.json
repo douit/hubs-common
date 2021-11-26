@@ -1,0 +1,194 @@
+{
+  "name": "FixedAssetMeter",
+  "title": "Fixed Asset Meter",
+  "description": "None",
+  "tableName": "FIXED_ASSET_METER",
+  "fields": [
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productMeterTypeId",
+      "type": "id",
+      "col": "PRODUCT_METER_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "readingDate",
+      "type": "date-time",
+      "col": "READING_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "meterValue",
+      "type": "fixed-point",
+      "col": "METER_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "readingReasonEnumId",
+      "type": "id",
+      "col": "READING_REASON_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maintHistSeqId",
+      "type": "id",
+      "col": "MAINT_HIST_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "workEffortId",
+      "type": "id",
+      "col": "WORK_EFFORT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "FixedAssetMaint",
+      "type": "one",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "FXDASTMTR_FAMNT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        },
+        {
+          "fieldName": "maintHistSeqId",
+          "relFieldName": "maintHistSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductMeterType",
+      "type": "one",
+      "relEntityName": "ProductMeterType",
+      "fkName": "FXDASTMTR_PMTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productMeterTypeId",
+          "relFieldName": "productMeterTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "fixedAssetId",
+    "productMeterTypeId",
+    "readingDate"
+  ],
+  "uniqueKey": "fixedAssetId, productMeterTypeId, readingDate",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,226 @@
+{
+  "name": "InventoryItemVariance",
+  "title": "Inventory Item Variance",
+  "description": "None",
+  "tableName": "INVENTORY_ITEM_VARIANCE",
+  "fields": [
+    {
+      "name": "inventoryItemId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "physicalInventoryId",
+      "type": "id",
+      "col": "PHYSICAL_INVENTORY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "varianceReasonId",
+      "type": "id",
+      "col": "VARIANCE_REASON_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "availableToPromiseVar",
+      "type": "fixed-point",
+      "col": "AVAILABLE_TO_PROMISE_VAR",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quantityOnHandVar",
+      "type": "fixed-point",
+      "col": "QUANTITY_ON_HAND_VAR",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PhysicalInventory",
+      "type": "one",
+      "relEntityName": "PhysicalInventory",
+      "fkName": "INV_ITEM_VAR_PINV",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "VarianceReason",
+      "type": "one",
+      "relEntityName": "VarianceReason",
+      "fkName": "INV_ITEM_VAR_RSN",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "varianceReasonId",
+          "relFieldName": "varianceReasonId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InventoryItem",
+      "type": "one",
+      "relEntityName": "InventoryItem",
+      "fkName": "INV_ITEM_VAR_ITEM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        },
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItemDetail",
+      "type": "many",
+      "relEntityName": "InventoryItemDetail",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        },
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "inventoryItemId",
+    "physicalInventoryId"
+  ],
+  "uniqueKey": "inventoryItemId, physicalInventoryId",
+  "combine": true,
+  "isView": false
+}

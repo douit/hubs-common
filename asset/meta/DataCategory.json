@@ -1,0 +1,164 @@
+{
+  "name": "DataCategory",
+  "title": "Data Category",
+  "description": "None",
+  "tableName": "DATA_CATEGORY",
+  "fields": [
+    {
+      "name": "dataCategoryId",
+      "type": "id",
+      "col": "DATA_CATEGORY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentCategoryId",
+      "type": "id",
+      "col": "PARENT_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "categoryName",
+      "type": "name",
+      "col": "CATEGORY_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentDataCategory",
+      "type": "one",
+      "relEntityName": "DataCategory",
+      "fkName": "DATA_CAT_PARENT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentCategoryId",
+          "relFieldName": "dataCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SiblingDataCategory",
+      "type": "many",
+      "relEntityName": "DataCategory",
+      "fkName": "",
+      "title": "Sibling",
+      "keymaps": [
+        {
+          "fieldName": "parentCategoryId",
+          "relFieldName": "parentCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ChildDataCategory",
+      "type": "many",
+      "relEntityName": "DataCategory",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "dataCategoryId",
+          "relFieldName": "parentCategoryId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DataResource",
+      "type": "many",
+      "relEntityName": "DataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataCategoryId",
+          "relFieldName": "dataCategoryId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "dataCategoryId"
+  ],
+  "uniqueKey": "dataCategoryId",
+  "combine": false,
+  "isView": false
+}

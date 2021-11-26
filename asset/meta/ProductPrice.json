@@ -1,0 +1,535 @@
+{
+  "name": "ProductPrice",
+  "title": "Product Price",
+  "description": "None",
+  "tableName": "PRODUCT_PRICE",
+  "fields": [
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPriceTypeId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPricePurposeId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_PURPOSE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productStoreGroupId",
+      "type": "id",
+      "col": "PRODUCT_STORE_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "price",
+      "type": "currency-precise",
+      "col": "PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,3)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "termUomId",
+      "type": "id",
+      "col": "TERM_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "customPriceCalcService",
+      "type": "id",
+      "col": "CUSTOM_PRICE_CALC_SERVICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "priceWithoutTax",
+      "type": "currency-precise",
+      "col": "PRICE_WITHOUT_TAX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,3)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "priceWithTax",
+      "type": "currency-precise",
+      "col": "PRICE_WITH_TAX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,3)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxAmount",
+      "type": "currency-precise",
+      "col": "TAX_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,3)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxPercentage",
+      "type": "fixed-point",
+      "col": "TAX_PERCENTAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxAuthPartyId",
+      "type": "id",
+      "col": "TAX_AUTH_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxAuthGeoId",
+      "type": "id",
+      "col": "TAX_AUTH_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxInPrice",
+      "type": "indicator",
+      "col": "TAX_IN_PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "PROD_PRICE_PROD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPriceType",
+      "type": "one",
+      "relEntityName": "ProductPriceType",
+      "fkName": "PROD_PRICE_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceTypeId",
+          "relFieldName": "productPriceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPricePurpose",
+      "type": "one",
+      "relEntityName": "ProductPricePurpose",
+      "fkName": "PROD_PRICE_PURP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPricePurposeId",
+          "relFieldName": "productPricePurposeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CurrencyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_PRICE_CUOM",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TermUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_PRICE_TUOM",
+      "title": "Term",
+      "keymaps": [
+        {
+          "fieldName": "termUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductStoreGroup",
+      "type": "one",
+      "relEntityName": "ProductStoreGroup",
+      "fkName": "PROD_PRICE_PSTG",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreGroupId",
+          "relFieldName": "productStoreGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "PROD_PRICE_CMET",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "customPriceCalcService",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxAuthorityParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PROD_PRC_TAXPTY",
+      "title": "TaxAuthority",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxAuthorityGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "PROD_PRC_TAXGEO",
+      "title": "TaxAuthority",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreatedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PROD_PRICE_CBUL",
+      "title": "CreatedBy",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LastModifiedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PROD_PRICE_LMBUL",
+      "title": "LastModifiedBy",
+      "keymaps": [
+        {
+          "fieldName": "lastModifiedByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPriceChange",
+      "type": "many",
+      "relEntityName": "ProductPriceChange",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        },
+        {
+          "fieldName": "productPriceTypeId",
+          "relFieldName": "productPriceTypeId"
+        },
+        {
+          "fieldName": "productPricePurposeId",
+          "relFieldName": "productPricePurposeId"
+        },
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "currencyUomId"
+        },
+        {
+          "fieldName": "productStoreGroupId",
+          "relFieldName": "productStoreGroupId"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 6,
+  "pks": [
+    "productId",
+    "productPriceTypeId",
+    "productPricePurposeId",
+    "currencyUomId",
+    "productStoreGroupId",
+    "fromDate"
+  ],
+  "uniqueKey": "productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate",
+  "combine": true,
+  "isView": false
+}

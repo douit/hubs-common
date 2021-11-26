@@ -1,0 +1,447 @@
+{
+  "name": "SalesOpportunity",
+  "title": "Main entity of information about sales opportunities",
+  "description": "None",
+  "tableName": "SALES_OPPORTUNITY",
+  "fields": [
+    {
+      "name": "salesOpportunityId",
+      "type": "id",
+      "col": "SALES_OPPORTUNITY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "opportunityName",
+      "type": "name",
+      "col": "OPPORTUNITY_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "very-long",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "nextStep",
+      "type": "very-long",
+      "col": "NEXT_STEP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "nextStepDate",
+      "type": "date-time",
+      "col": "NEXT_STEP_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedAmount",
+      "type": "currency-amount",
+      "col": "ESTIMATED_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedProbability",
+      "type": "fixed-point",
+      "col": "ESTIMATED_PROBABILITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "marketingCampaignId",
+      "type": "id",
+      "col": "MARKETING_CAMPAIGN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dataSourceId",
+      "type": "id",
+      "col": "DATA_SOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedCloseDate",
+      "type": "date-time",
+      "col": "ESTIMATED_CLOSE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "opportunityStageId",
+      "type": "id",
+      "col": "OPPORTUNITY_STAGE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "typeEnumId",
+      "type": "id",
+      "col": "TYPE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "SLSOPP_CRNCY_UOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SalesOpportunityStage",
+      "type": "one",
+      "relEntityName": "SalesOpportunityStage",
+      "fkName": "SLSOPP_STAGE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "opportunityStageId",
+          "relFieldName": "opportunityStageId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TypeEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "SLSOPP_TYP_ENUM",
+      "title": "Type",
+      "keymaps": [
+        {
+          "fieldName": "typeEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MarketingCampaign",
+      "type": "one",
+      "relEntityName": "MarketingCampaign",
+      "fkName": "SLSOPP_MKTGCMPG",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "SLSOPP_USRLGN",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataSource",
+      "type": "one",
+      "relEntityName": "DataSource",
+      "fkName": "SLSOPP_DTSRC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataSourceId",
+          "relFieldName": "dataSourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityCompetitor",
+      "type": "many",
+      "relEntityName": "SalesOpportunityCompetitor",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityHistory",
+      "type": "many",
+      "relEntityName": "SalesOpportunityHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityQuote",
+      "type": "many",
+      "relEntityName": "SalesOpportunityQuote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityRole",
+      "type": "many",
+      "relEntityName": "SalesOpportunityRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityTrckCode",
+      "type": "many",
+      "relEntityName": "SalesOpportunityTrckCode",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityWorkEffort",
+      "type": "many",
+      "relEntityName": "SalesOpportunityWorkEffort",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "salesOpportunityId"
+  ],
+  "uniqueKey": "salesOpportunityId",
+  "combine": false,
+  "isView": false
+}

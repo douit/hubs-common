@@ -1,0 +1,186 @@
+{
+  "name": "ContentRevision",
+  "title": "Content Revision",
+  "description": "None",
+  "tableName": "CONTENT_REVISION",
+  "fields": [
+    {
+      "name": "contentId",
+      "type": "id",
+      "col": "CONTENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentRevisionSeqId",
+      "type": "id",
+      "col": "CONTENT_REVISION_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "committedByPartyId",
+      "type": "id",
+      "col": "COMMITTED_BY_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Content",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "CNTNTREV_CNT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CommittedByParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "CNTNTREV_CBPTY",
+      "title": "CommittedBy",
+      "keymaps": [
+        {
+          "fieldName": "committedByPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContentApproval",
+      "type": "many",
+      "relEntityName": "ContentApproval",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        },
+        {
+          "fieldName": "contentRevisionSeqId",
+          "relFieldName": "contentRevisionSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentRevisionItem",
+      "type": "many",
+      "relEntityName": "ContentRevisionItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        },
+        {
+          "fieldName": "contentRevisionSeqId",
+          "relFieldName": "contentRevisionSeqId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "contentId",
+    "contentRevisionSeqId"
+  ],
+  "uniqueKey": "contentId, contentRevisionSeqId",
+  "combine": true,
+  "isView": false
+}

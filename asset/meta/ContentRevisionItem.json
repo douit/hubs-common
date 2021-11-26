@@ -1,0 +1,182 @@
+{
+  "name": "ContentRevisionItem",
+  "title": "Content Revision",
+  "description": "None",
+  "tableName": "CONTENT_REVISION_ITEM",
+  "fields": [
+    {
+      "name": "contentId",
+      "type": "id",
+      "col": "CONTENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentRevisionSeqId",
+      "type": "id",
+      "col": "CONTENT_REVISION_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "itemContentId",
+      "type": "id",
+      "col": "ITEM_CONTENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "oldDataResourceId",
+      "type": "id",
+      "col": "OLD_DATA_RESOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "newDataResourceId",
+      "type": "id",
+      "col": "NEW_DATA_RESOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ContentRevision",
+      "type": "one",
+      "relEntityName": "ContentRevision",
+      "fkName": "CNTNTREVIT_CNTREV",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        },
+        {
+          "fieldName": "contentRevisionSeqId",
+          "relFieldName": "contentRevisionSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OldDataResource",
+      "type": "one",
+      "relEntityName": "DataResource",
+      "fkName": "CNTNTREVIT_OLDDR",
+      "title": "Old",
+      "keymaps": [
+        {
+          "fieldName": "oldDataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "NewDataResource",
+      "type": "one",
+      "relEntityName": "DataResource",
+      "fkName": "CNTNTREVIT_NEWDR",
+      "title": "New",
+      "keymaps": [
+        {
+          "fieldName": "newDataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "contentId",
+    "contentRevisionSeqId",
+    "itemContentId"
+  ],
+  "uniqueKey": "contentId, contentRevisionSeqId, itemContentId",
+  "combine": true,
+  "isView": false
+}

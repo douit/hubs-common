@@ -1,0 +1,206 @@
+{
+  "name": "ProductStoreTelecomSetting",
+  "title": "Product Store Telecom Settings",
+  "description": "None",
+  "tableName": "PRODUCT_STORE_TELECOM_SETTING",
+  "fields": [
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "telecomMethodTypeId",
+      "type": "id",
+      "col": "TELECOM_METHOD_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "telecomMsgTypeEnumId",
+      "type": "id",
+      "col": "TELECOM_MSG_TYPE_ENUM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "telecomCustomMethodId",
+      "type": "id",
+      "col": "TELECOM_CUSTOM_METHOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "telecomGatewayConfigId",
+      "type": "id",
+      "col": "TELECOM_GATEWAY_CONFIG_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductStore",
+      "type": "one",
+      "relEntityName": "ProductStore",
+      "fkName": "PRDS_TS_PRDS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TelecomMethodType",
+      "type": "one",
+      "relEntityName": "TelecomMethodType",
+      "fkName": "PRDS_TS_TELTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "telecomMethodTypeId",
+          "relFieldName": "telecomMethodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Enumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PRDS_TS_ENUM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "telecomMsgTypeEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TelecomGatewayConfig",
+      "type": "one",
+      "relEntityName": "TelecomGatewayConfig",
+      "fkName": "PRDS_TS_PGC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "telecomGatewayConfigId",
+          "relFieldName": "telecomGatewayConfigId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "PRDS_TS_CUS_MET",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "telecomCustomMethodId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "productStoreId",
+    "telecomMethodTypeId",
+    "telecomMsgTypeEnumId"
+  ],
+  "uniqueKey": "productStoreId, telecomMethodTypeId, telecomMsgTypeEnumId",
+  "combine": true,
+  "isView": false
+}

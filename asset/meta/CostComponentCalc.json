@@ -1,0 +1,284 @@
+{
+  "name": "CostComponentCalc",
+  "title": "Cost Component Calculation",
+  "description": "None",
+  "tableName": "COST_COMPONENT_CALC",
+  "fields": [
+    {
+      "name": "costComponentCalcId",
+      "type": "id",
+      "col": "COST_COMPONENT_CALC_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "costGlAccountTypeId",
+      "type": "id",
+      "col": "COST_GL_ACCOUNT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "offsettingGlAccountTypeId",
+      "type": "id",
+      "col": "OFFSETTING_GL_ACCOUNT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fixedCost",
+      "type": "currency-amount",
+      "col": "FIXED_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "variableCost",
+      "type": "currency-amount",
+      "col": "VARIABLE_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "perMilliSecond",
+      "type": "numeric",
+      "col": "PER_MILLI_SECOND",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "costCustomMethodId",
+      "type": "id",
+      "col": "COST_CUSTOM_METHOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CostGlAccountType",
+      "type": "one",
+      "relEntityName": "GlAccountType",
+      "fkName": "COST_COM_CGLAT",
+      "title": "Cost",
+      "keymaps": [
+        {
+          "fieldName": "costGlAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OffsettingGlAccountType",
+      "type": "one",
+      "relEntityName": "GlAccountType",
+      "fkName": "COST_COM_OGLAT",
+      "title": "Offsetting",
+      "keymaps": [
+        {
+          "fieldName": "offsettingGlAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "COST_COM_CUOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "COST_COM_CMET",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "costCustomMethodId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CostComponent",
+      "type": "many",
+      "relEntityName": "CostComponent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "costComponentCalcId",
+          "relFieldName": "costComponentCalcId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductCostComponentCalc",
+      "type": "many",
+      "relEntityName": "ProductCostComponentCalc",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "costComponentCalcId",
+          "relFieldName": "costComponentCalcId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortCostCalc",
+      "type": "many",
+      "relEntityName": "WorkEffortCostCalc",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "costComponentCalcId",
+          "relFieldName": "costComponentCalcId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "costComponentCalcId"
+  ],
+  "uniqueKey": "costComponentCalcId",
+  "combine": false,
+  "isView": false
+}

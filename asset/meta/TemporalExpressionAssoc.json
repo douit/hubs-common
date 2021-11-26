@@ -1,0 +1,137 @@
+{
+  "name": "TemporalExpressionAssoc",
+  "title": "Temporal Expression Association",
+  "description": "None",
+  "tableName": "TEMPORAL_EXPRESSION_ASSOC",
+  "fields": [
+    {
+      "name": "fromTempExprId",
+      "type": "id",
+      "col": "FROM_TEMP_EXPR_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "toTempExprId",
+      "type": "id",
+      "col": "TO_TEMP_EXPR_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "exprAssocType",
+      "type": "id",
+      "col": "EXPR_ASSOC_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "FromTemporalExpression",
+      "type": "one",
+      "relEntityName": "TemporalExpression",
+      "fkName": "TEMP_EXPR_FROM",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "fromTempExprId",
+          "relFieldName": "tempExprId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToTemporalExpression",
+      "type": "one",
+      "relEntityName": "TemporalExpression",
+      "fkName": "TEMP_EXPR_TO",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "toTempExprId",
+          "relFieldName": "tempExprId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "fromTempExprId",
+    "toTempExprId"
+  ],
+  "uniqueKey": "fromTempExprId, toTempExprId",
+  "combine": true,
+  "isView": false
+}

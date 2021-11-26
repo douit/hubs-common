@@ -1,0 +1,187 @@
+{
+  "name": "ServerHitBin",
+  "title": "ServerHitBin",
+  "description": "None",
+  "tableName": "SERVER_HIT_BIN",
+  "fields": [
+    {
+      "name": "serverHitBinId",
+      "type": "id",
+      "col": "SERVER_HIT_BIN_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentId",
+      "type": "id-vlong",
+      "col": "CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "hitTypeId",
+      "type": "id",
+      "col": "HIT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "serverIpAddress",
+      "type": "id",
+      "col": "SERVER_IP_ADDRESS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "serverHostName",
+      "type": "long-varchar",
+      "col": "SERVER_HOST_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "binStartDateTime",
+      "type": "date-time",
+      "col": "BIN_START_DATE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "binEndDateTime",
+      "type": "date-time",
+      "col": "BIN_END_DATE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "numberHits",
+      "type": "numeric",
+      "col": "NUMBER_HITS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "totalTimeMillis",
+      "type": "numeric",
+      "col": "TOTAL_TIME_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "minTimeMillis",
+      "type": "numeric",
+      "col": "MIN_TIME_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maxTimeMillis",
+      "type": "numeric",
+      "col": "MAX_TIME_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "internalContentId",
+      "type": "id",
+      "col": "INTERNAL_CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ServerHitType",
+      "type": "one",
+      "relEntityName": "ServerHitType",
+      "fkName": "SERVER_HBIN_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "hitTypeId",
+          "relFieldName": "hitTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "serverHitBinId"
+  ],
+  "uniqueKey": "serverHitBinId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,164 @@
+{
+  "name": "TechDataCalendar",
+  "title": "Calendar",
+  "description": "Used to defined the availability of the machines, this entity define the Id and the week definition.\n      The Id is used in the exception calendar table as reference\n      ",
+  "tableName": "TECH_DATA_CALENDAR",
+  "fields": [
+    {
+      "name": "calendarId",
+      "type": "id",
+      "col": "CALENDAR_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "calendarWeekId",
+      "type": "id",
+      "col": "CALENDAR_WEEK_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "TechDataCalendarWeek",
+      "type": "one",
+      "relEntityName": "TechDataCalendarWeek",
+      "fkName": "CALENDAR_WEEK",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "calendarWeekId",
+          "relFieldName": "calendarWeekId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "calendarId",
+          "relFieldName": "calendarId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TechDataCalendarExcDay",
+      "type": "many",
+      "relEntityName": "TechDataCalendarExcDay",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "calendarId",
+          "relFieldName": "calendarId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TechDataCalendarExcWeek",
+      "type": "many",
+      "relEntityName": "TechDataCalendarExcWeek",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "calendarId",
+          "relFieldName": "calendarId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "calendarId"
+  ],
+  "uniqueKey": "calendarId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,326 @@
+{
+  "name": "GeoPoint",
+  "title": "Geographic Location",
+  "description": "None",
+  "tableName": "GEO_POINT",
+  "fields": [
+    {
+      "name": "geoPointId",
+      "type": "id",
+      "col": "GEO_POINT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoPointTypeEnumId",
+      "type": "id",
+      "col": "GEO_POINT_TYPE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "dataSourceId",
+      "type": "id",
+      "col": "DATA_SOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "latitude",
+      "type": "short-varchar",
+      "col": "LATITUDE",
+      "pk": false,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "longitude",
+      "type": "short-varchar",
+      "col": "LONGITUDE",
+      "pk": false,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "elevation",
+      "type": "fixed-point",
+      "col": "ELEVATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "elevationUomId",
+      "type": "id",
+      "col": "ELEVATION_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "information",
+      "type": "comment",
+      "col": "INFORMATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "DataSource",
+      "type": "one",
+      "relEntityName": "DataSource",
+      "fkName": "GEOPOINT_DTSRC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataSourceId",
+          "relFieldName": "dataSourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GeoPointTypeEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "GEOPOINT_TYPE",
+      "title": "GeoPointType",
+      "keymaps": [
+        {
+          "fieldName": "geoPointTypeEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ElevationUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "GPT_ELEV_UOM",
+      "title": "Elevation",
+      "keymaps": [
+        {
+          "fieldName": "elevationUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContainerGeoPoint",
+      "type": "many",
+      "relEntityName": "ContainerGeoPoint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Facility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityLocation",
+      "type": "many",
+      "relEntityName": "FacilityLocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityLocationGeoPoint",
+      "type": "many",
+      "relEntityName": "FacilityLocationGeoPoint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetGeoPoint",
+      "type": "many",
+      "relEntityName": "FixedAssetGeoPoint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyGeoPoint",
+      "type": "many",
+      "relEntityName": "PartyGeoPoint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PostalAddress",
+      "type": "many",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "geoPointId"
+  ],
+  "uniqueKey": "geoPointId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,205 @@
+{
+  "name": "Container",
+  "title": "Container",
+  "description": "None",
+  "tableName": "CONTAINER",
+  "fields": [
+    {
+      "name": "containerId",
+      "type": "id",
+      "col": "CONTAINER_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "containerTypeId",
+      "type": "id",
+      "col": "CONTAINER_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilityId",
+      "type": "id",
+      "col": "FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ContainerType",
+      "type": "one",
+      "relEntityName": "ContainerType",
+      "fkName": "CONTAINER_CTTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "containerTypeId",
+          "relFieldName": "containerTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Facility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "CONTAINER_FACILITY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContainerGeoPoint",
+      "type": "many",
+      "relEntityName": "ContainerGeoPoint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "containerId",
+          "relFieldName": "containerId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "containerId",
+          "relFieldName": "containerId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "containerId",
+          "relFieldName": "containerId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToInventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "containerId",
+          "relFieldName": "containerIdTo"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "containerId"
+  ],
+  "uniqueKey": "containerId",
+  "combine": false,
+  "isView": false
+}

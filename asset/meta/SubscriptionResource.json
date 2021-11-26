@@ -1,0 +1,231 @@
+{
+  "name": "SubscriptionResource",
+  "title": "Subscription Resource",
+  "description": "None",
+  "tableName": "SUBSCRIPTION_RESOURCE",
+  "fields": [
+    {
+      "name": "subscriptionResourceId",
+      "type": "id",
+      "col": "SUBSCRIPTION_RESOURCE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentResourceId",
+      "type": "id",
+      "col": "PARENT_RESOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "contentId",
+      "type": "id",
+      "col": "CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "webSiteId",
+      "type": "id",
+      "col": "WEB_SITE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "serviceNameOnExpiry",
+      "type": "long-varchar",
+      "col": "SERVICE_NAME_ON_EXPIRY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentSubscriptionResource",
+      "type": "one",
+      "relEntityName": "SubscriptionResource",
+      "fkName": "SUBSC_RES_PARENT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentResourceId",
+          "relFieldName": "subscriptionResourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Content",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "SUBSC_RES_CNTNT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WebSite",
+      "type": "one",
+      "relEntityName": "WebSite",
+      "fkName": "SUBSC_RES_WBSITE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "webSiteId",
+          "relFieldName": "webSiteId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductSubscriptionResource",
+      "type": "many",
+      "relEntityName": "ProductSubscriptionResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionResourceId",
+          "relFieldName": "subscriptionResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Subscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionResourceId",
+          "relFieldName": "subscriptionResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildSubscriptionResource",
+      "type": "many",
+      "relEntityName": "SubscriptionResource",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionResourceId",
+          "relFieldName": "parentResourceId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "subscriptionResourceId"
+  ],
+  "uniqueKey": "subscriptionResourceId",
+  "combine": false,
+  "isView": false
+}

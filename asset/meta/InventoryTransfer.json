@@ -1,0 +1,372 @@
+{
+  "name": "InventoryTransfer",
+  "title": "Inventory Transfer",
+  "description": "None",
+  "tableName": "INVENTORY_TRANSFER",
+  "fields": [
+    {
+      "name": "inventoryTransferId",
+      "type": "id",
+      "col": "INVENTORY_TRANSFER_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "inventoryItemId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilityId",
+      "type": "id",
+      "col": "FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "locationSeqId",
+      "type": "id",
+      "col": "LOCATION_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "containerId",
+      "type": "id",
+      "col": "CONTAINER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilityIdTo",
+      "type": "id",
+      "col": "FACILITY_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "locationSeqIdTo",
+      "type": "id",
+      "col": "LOCATION_SEQ_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "containerIdTo",
+      "type": "id",
+      "col": "CONTAINER_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "itemIssuanceId",
+      "type": "id",
+      "col": "ITEM_ISSUANCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sendDate",
+      "type": "date-time",
+      "col": "SEND_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "receiveDate",
+      "type": "date-time",
+      "col": "RECEIVE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "InventoryItem",
+      "type": "one",
+      "relEntityName": "InventoryItem",
+      "fkName": "INV_XFER_ITEM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "INV_XFER_STTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Facility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "INV_XFER_FAC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FacilityLocation",
+      "type": "one-nofk",
+      "relEntityName": "FacilityLocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locationSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Container",
+      "type": "one",
+      "relEntityName": "Container",
+      "fkName": "INV_XFER_CONT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "containerId",
+          "relFieldName": "containerId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToFacility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "INV_XFER_TFAC",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "facilityIdTo",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToFacilityLocation",
+      "type": "one-nofk",
+      "relEntityName": "FacilityLocation",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "facilityIdTo",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locationSeqIdTo",
+          "relFieldName": "locationSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToContainer",
+      "type": "one",
+      "relEntityName": "Container",
+      "fkName": "INV_XFER_TCNT",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "containerIdTo",
+          "relFieldName": "containerId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ItemIssuance",
+      "type": "one",
+      "relEntityName": "ItemIssuance",
+      "fkName": "INV_XFER_ISSU",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "itemIssuanceId",
+          "relFieldName": "itemIssuanceId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "inventoryTransferId"
+  ],
+  "uniqueKey": "inventoryTransferId",
+  "combine": false,
+  "isView": false
+}

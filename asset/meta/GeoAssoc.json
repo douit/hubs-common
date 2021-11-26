@@ -1,0 +1,151 @@
+{
+  "name": "GeoAssoc",
+  "title": "Geographic Boundary Association",
+  "description": "None",
+  "tableName": "GEO_ASSOC",
+  "fields": [
+    {
+      "name": "geoId",
+      "type": "id",
+      "col": "GEO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoIdTo",
+      "type": "id",
+      "col": "GEO_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoAssocTypeId",
+      "type": "id",
+      "col": "GEO_ASSOC_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "MainGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "GEO_ASSC_TO_MAIN",
+      "title": "Main",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AssocGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "GEO_ASSC_TO_ASSC",
+      "title": "Assoc",
+      "keymaps": [
+        {
+          "fieldName": "geoIdTo",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GeoAssocType",
+      "type": "one",
+      "relEntityName": "GeoAssocType",
+      "fkName": "GEO_ASSC_TO_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoAssocTypeId",
+          "relFieldName": "geoAssocTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "geoId",
+    "geoIdTo"
+  ],
+  "uniqueKey": "geoId, geoIdTo",
+  "combine": true,
+  "isView": false
+}

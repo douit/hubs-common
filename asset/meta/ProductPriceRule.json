@@ -1,0 +1,203 @@
+{
+  "name": "ProductPriceRule",
+  "title": "Product Pice Rule",
+  "description": "None",
+  "tableName": "PRODUCT_PRICE_RULE",
+  "fields": [
+    {
+      "name": "productPriceRuleId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_RULE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "ruleName",
+      "type": "name",
+      "col": "RULE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "isSale",
+      "type": "indicator",
+      "col": "IS_SALE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "MarketingCampaignPrice",
+      "type": "many",
+      "relEntityName": "MarketingCampaignPrice",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemPriceInfo",
+      "type": "many",
+      "relEntityName": "OrderItemPriceInfo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPriceAction",
+      "type": "many",
+      "relEntityName": "ProductPriceAction",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPriceCond",
+      "type": "many",
+      "relEntityName": "ProductPriceCond",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productPriceRuleId"
+  ],
+  "uniqueKey": "productPriceRuleId",
+  "combine": false,
+  "isView": false
+}

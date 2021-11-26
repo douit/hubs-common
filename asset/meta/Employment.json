@@ -1,0 +1,377 @@
+{
+  "name": "Employment",
+  "title": "Employment",
+  "description": "None",
+  "tableName": "EMPLOYMENT",
+  "fields": [
+    {
+      "name": "roleTypeIdFrom",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_FROM",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdTo",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdFrom",
+      "type": "id",
+      "col": "PARTY_ID_FROM",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdTo",
+      "type": "id",
+      "col": "PARTY_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "terminationReasonId",
+      "type": "id",
+      "col": "TERMINATION_REASON_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "terminationTypeId",
+      "type": "id",
+      "col": "TERMINATION_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ToParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "EMPLMNT_TPTY",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToPartyRole",
+      "type": "one",
+      "relEntityName": "PartyRole",
+      "fkName": "EMPLMNT_TPTRL",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "EMPLMNT_FPTY",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromPartyRole",
+      "type": "one",
+      "relEntityName": "PartyRole",
+      "fkName": "EMPLMNT_FPTRL",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TerminationReason",
+      "type": "one-nofk",
+      "relEntityName": "TerminationReason",
+      "fkName": "EMPLMNT_TNRN",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "terminationReasonId",
+          "relFieldName": "terminationReasonId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TerminationType",
+      "type": "one-nofk",
+      "relEntityName": "TerminationType",
+      "fkName": "EMPLMNT_TNTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "terminationTypeId",
+          "relFieldName": "terminationTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Agreement",
+      "type": "many",
+      "relEntityName": "Agreement",
+      "fkName": "EMPLMNT_AGR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementEmploymentAppl",
+      "type": "many",
+      "relEntityName": "AgreementEmploymentAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeIdFrom"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeIdTo"
+        },
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyIdFrom"
+        },
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyIdTo"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PayHistory",
+      "type": "many",
+      "relEntityName": "PayHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeIdFrom"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeIdTo"
+        },
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyIdFrom"
+        },
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyIdTo"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "emplFromDate"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UnemploymentClaim",
+      "type": "many",
+      "relEntityName": "UnemploymentClaim",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeIdFrom"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeIdTo"
+        },
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyIdFrom"
+        },
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyIdTo"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 5,
+  "pks": [
+    "roleTypeIdFrom",
+    "roleTypeIdTo",
+    "partyIdFrom",
+    "partyIdTo",
+    "fromDate"
+  ],
+  "uniqueKey": "roleTypeIdFrom, roleTypeIdTo, partyIdFrom, partyIdTo, fromDate",
+  "combine": true,
+  "isView": false
+}

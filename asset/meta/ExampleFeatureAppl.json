@@ -1,0 +1,191 @@
+{
+  "name": "ExampleFeatureAppl",
+  "title": "Example Feature Application Entity",
+  "description": "None",
+  "tableName": "EXAMPLE_FEATURE_APPL",
+  "fields": [
+    {
+      "name": "exampleId",
+      "type": "id",
+      "col": "EXAMPLE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "exampleFeatureId",
+      "type": "id",
+      "col": "EXAMPLE_FEATURE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "exampleFeatureApplTypeId",
+      "type": "id",
+      "col": "EXAMPLE_FEATURE_APPL_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Example",
+      "type": "one",
+      "relEntityName": "Example",
+      "fkName": "EXFTAP_EXPL",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "exampleId",
+          "relFieldName": "exampleId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ExampleFeature",
+      "type": "one",
+      "relEntityName": "ExampleFeature",
+      "fkName": "EXFTAP_EXFT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "exampleFeatureId",
+          "relFieldName": "exampleFeatureId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ExampleFeatureApplType",
+      "type": "one",
+      "relEntityName": "ExampleFeatureApplType",
+      "fkName": "EXFTAP_TYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "exampleFeatureApplTypeId",
+          "relFieldName": "exampleFeatureApplTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "exampleId",
+    "exampleFeatureId",
+    "fromDate"
+  ],
+  "uniqueKey": "exampleId, exampleFeatureId, fromDate",
+  "combine": true,
+  "isView": false
+}

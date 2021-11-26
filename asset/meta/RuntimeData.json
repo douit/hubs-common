@@ -1,0 +1,137 @@
+{
+  "name": "RuntimeData",
+  "title": "Runtime Data",
+  "description": "None",
+  "tableName": "RUNTIME_DATA",
+  "fields": [
+    {
+      "name": "runtimeDataId",
+      "type": "id",
+      "col": "RUNTIME_DATA_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "runtimeInfo",
+      "type": "very-long",
+      "col": "RUNTIME_INFO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ApplicationSandbox",
+      "type": "many",
+      "relEntityName": "ApplicationSandbox",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "runtimeDataId",
+          "relFieldName": "runtimeDataId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "JobSandbox",
+      "type": "many",
+      "relEntityName": "JobSandbox",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "runtimeDataId",
+          "relFieldName": "runtimeDataId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "runtimeDataId",
+          "relFieldName": "runtimeDataId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "runtimeDataId"
+  ],
+  "uniqueKey": "runtimeDataId",
+  "combine": false,
+  "isView": false
+}

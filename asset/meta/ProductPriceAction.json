@@ -1,0 +1,181 @@
+{
+  "name": "ProductPriceAction",
+  "title": "Product Price Action",
+  "description": "None",
+  "tableName": "PRODUCT_PRICE_ACTION",
+  "fields": [
+    {
+      "name": "productPriceRuleId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_RULE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPriceActionSeqId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_ACTION_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPriceActionTypeId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_ACTION_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "amount",
+      "type": "fixed-point",
+      "col": "AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "rateCode",
+      "type": "short-varchar",
+      "col": "RATE_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductPriceActionType",
+      "type": "one",
+      "relEntityName": "ProductPriceActionType",
+      "fkName": "PROD_PCACT_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceActionTypeId",
+          "relFieldName": "productPriceActionTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPriceRule",
+      "type": "one",
+      "relEntityName": "ProductPriceRule",
+      "fkName": "PROD_PCACT_RL",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemPriceInfo",
+      "type": "many",
+      "relEntityName": "OrderItemPriceInfo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        },
+        {
+          "fieldName": "productPriceActionSeqId",
+          "relFieldName": "productPriceActionSeqId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "productPriceRuleId",
+    "productPriceActionSeqId"
+  ],
+  "uniqueKey": "productPriceRuleId, productPriceActionSeqId",
+  "combine": true,
+  "isView": false
+}

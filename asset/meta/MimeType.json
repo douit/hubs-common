@@ -1,0 +1,165 @@
+{
+  "name": "MimeType",
+  "title": "Mime Type",
+  "description": "None",
+  "tableName": "MIME_TYPE",
+  "fields": [
+    {
+      "name": "mimeTypeId",
+      "type": "id-vlong",
+      "col": "MIME_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "mimeTypeId",
+          "relFieldName": "contentMimeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Content",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "mimeTypeId",
+          "relFieldName": "mimeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DataResource",
+      "type": "many",
+      "relEntityName": "DataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "mimeTypeId",
+          "relFieldName": "mimeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FileExtension",
+      "type": "many",
+      "relEntityName": "FileExtension",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "mimeTypeId",
+          "relFieldName": "mimeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MimeTypeHtmlTemplate",
+      "type": "one-nofk",
+      "relEntityName": "MimeTypeHtmlTemplate",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "mimeTypeId",
+          "relFieldName": "mimeTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "mimeTypeId"
+  ],
+  "uniqueKey": "mimeTypeId",
+  "combine": false,
+  "isView": false
+}

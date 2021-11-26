@@ -1,0 +1,206 @@
+{
+  "name": "FacilityGroupRollup",
+  "title": "Facility Group Rollup",
+  "description": "None",
+  "tableName": "FACILITY_GROUP_ROLLUP",
+  "fields": [
+    {
+      "name": "facilityGroupId",
+      "type": "id",
+      "col": "FACILITY_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentFacilityGroupId",
+      "type": "id",
+      "col": "PARENT_FACILITY_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CurrentFacilityGroup",
+      "type": "one",
+      "relEntityName": "FacilityGroup",
+      "fkName": "FGRP_FRLP_CURRENT",
+      "title": "Current",
+      "keymaps": [
+        {
+          "fieldName": "facilityGroupId",
+          "relFieldName": "facilityGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ParentFacilityGroup",
+      "type": "one",
+      "relEntityName": "FacilityGroup",
+      "fkName": "FGRP_FRLP_PARENT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentFacilityGroupId",
+          "relFieldName": "facilityGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ChildFacilityGroupRollup",
+      "type": "many",
+      "relEntityName": "FacilityGroupRollup",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "facilityGroupId",
+          "relFieldName": "parentFacilityGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ParentFacilityGroupRollup",
+      "type": "many",
+      "relEntityName": "FacilityGroupRollup",
+      "fkName": "",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentFacilityGroupId",
+          "relFieldName": "facilityGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SiblingFacilityGroupRollup",
+      "type": "many",
+      "relEntityName": "FacilityGroupRollup",
+      "fkName": "",
+      "title": "Sibling",
+      "keymaps": [
+        {
+          "fieldName": "parentFacilityGroupId",
+          "relFieldName": "parentFacilityGroupId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "facilityGroupId",
+    "parentFacilityGroupId",
+    "fromDate"
+  ],
+  "uniqueKey": "facilityGroupId, parentFacilityGroupId, fromDate",
+  "combine": true,
+  "isView": false
+}

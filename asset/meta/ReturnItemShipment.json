@@ -1,0 +1,201 @@
+{
+  "name": "ReturnItemShipment",
+  "title": "Return Item And Shipment Association",
+  "description": "None",
+  "tableName": "RETURN_ITEM_SHIPMENT",
+  "fields": [
+    {
+      "name": "returnId",
+      "type": "id",
+      "col": "RETURN_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "returnItemSeqId",
+      "type": "id",
+      "col": "RETURN_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "shipmentId",
+      "type": "id",
+      "col": "SHIPMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "shipmentItemSeqId",
+      "type": "id",
+      "col": "SHIPMENT_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ReturnHeader",
+      "type": "one",
+      "relEntityName": "ReturnHeader",
+      "fkName": "RIT_SHPMT_RHDR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "returnId",
+          "relFieldName": "returnId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReturnItem",
+      "type": "one",
+      "relEntityName": "ReturnItem",
+      "fkName": "RIT_SHPMT_RITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "returnId",
+          "relFieldName": "returnId"
+        },
+        {
+          "fieldName": "returnItemSeqId",
+          "relFieldName": "returnItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Shipment",
+      "type": "one",
+      "relEntityName": "Shipment",
+      "fkName": "RIT_SHPMT_SHPMT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShipmentItem",
+      "type": "one",
+      "relEntityName": "ShipmentItem",
+      "fkName": "RIT_SHPMT_SHPITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "returnId",
+    "returnItemSeqId",
+    "shipmentId",
+    "shipmentItemSeqId"
+  ],
+  "uniqueKey": "returnId, returnItemSeqId, shipmentId, shipmentItemSeqId",
+  "combine": true,
+  "isView": false
+}

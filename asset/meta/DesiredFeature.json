@@ -1,0 +1,150 @@
+{
+  "name": "DesiredFeature",
+  "title": "Desired Feature",
+  "description": "None",
+  "tableName": "DESIRED_FEATURE",
+  "fields": [
+    {
+      "name": "desiredFeatureId",
+      "type": "id",
+      "col": "DESIRED_FEATURE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requirementId",
+      "type": "id",
+      "col": "REQUIREMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productFeatureId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "optionalInd",
+      "type": "indicator",
+      "col": "OPTIONAL_IND",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Requirement",
+      "type": "one",
+      "relEntityName": "Requirement",
+      "fkName": "DES_FEAT_REQ",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "requirementId",
+          "relFieldName": "requirementId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductFeature",
+      "type": "one",
+      "relEntityName": "ProductFeature",
+      "fkName": "DES_FEAT_PFEAT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "desiredFeatureId",
+    "requirementId"
+  ],
+  "uniqueKey": "desiredFeatureId, requirementId",
+  "combine": true,
+  "isView": false
+}

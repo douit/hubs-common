@@ -1,0 +1,735 @@
+{
+  "name": "AcctgTrans",
+  "title": "Accounting Transaction",
+  "description": "None",
+  "tableName": "ACCTG_TRANS",
+  "fields": [
+    {
+      "name": "acctgTransId",
+      "type": "id",
+      "col": "ACCTG_TRANS_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "acctgTransTypeId",
+      "type": "id",
+      "col": "ACCTG_TRANS_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "transactionDate",
+      "type": "date-time",
+      "col": "TRANSACTION_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "isPosted",
+      "type": "indicator",
+      "col": "IS_POSTED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "postedDate",
+      "type": "date-time",
+      "col": "POSTED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "scheduledPostingDate",
+      "type": "date-time",
+      "col": "SCHEDULED_POSTING_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glJournalId",
+      "type": "id",
+      "col": "GL_JOURNAL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glFiscalTypeId",
+      "type": "id",
+      "col": "GL_FISCAL_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "voucherRef",
+      "type": "short-varchar",
+      "col": "VOUCHER_REF",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "voucherDate",
+      "type": "date-time",
+      "col": "VOUCHER_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "groupStatusId",
+      "type": "id",
+      "col": "GROUP_STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "inventoryItemId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "physicalInventoryId",
+      "type": "id",
+      "col": "PHYSICAL_INVENTORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeId",
+      "type": "id",
+      "col": "ROLE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceId",
+      "type": "id",
+      "col": "INVOICE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentId",
+      "type": "id",
+      "col": "PAYMENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "finAccountTransId",
+      "type": "id",
+      "col": "FIN_ACCOUNT_TRANS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "shipmentId",
+      "type": "id",
+      "col": "SHIPMENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "receiptId",
+      "type": "id",
+      "col": "RECEIPT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "workEffortId",
+      "type": "id",
+      "col": "WORK_EFFORT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "theirAcctgTransId",
+      "type": "id-long",
+      "col": "THEIR_ACCTG_TRANS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "AcctgTransType",
+      "type": "one",
+      "relEntityName": "AcctgTransType",
+      "fkName": "ACCTTX_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "acctgTransTypeId",
+          "relFieldName": "acctgTransTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlJournal",
+      "type": "one",
+      "relEntityName": "GlJournal",
+      "fkName": "ACCTTX_GLJRNL",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glJournalId",
+          "relFieldName": "glJournalId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlFiscalType",
+      "type": "one",
+      "relEntityName": "GlFiscalType",
+      "fkName": "ACCTTX_GLFST",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glFiscalTypeId",
+          "relFieldName": "glFiscalTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "ACCTTX_GRPSTTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "groupStatusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAsset",
+      "type": "one",
+      "relEntityName": "FixedAsset",
+      "fkName": "ACCTTX_FASSET",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PhysicalInventory",
+      "type": "one",
+      "relEntityName": "PhysicalInventory",
+      "fkName": "ACCTTX_PHS_INV",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InventoryItem",
+      "type": "one",
+      "relEntityName": "InventoryItem",
+      "fkName": "ACCTTX_INVITEM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InventoryItemVariance",
+      "type": "one",
+      "relEntityName": "InventoryItemVariance",
+      "fkName": "ACCTTX_INVITEMVAR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        },
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "ACCTTX_PARTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "ACCTTX_ROLETYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRole",
+      "type": "one-nofk",
+      "relEntityName": "PartyRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Invoice",
+      "type": "one",
+      "relEntityName": "Invoice",
+      "fkName": "ACCTTX_INVOICE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Payment",
+      "type": "one",
+      "relEntityName": "Payment",
+      "fkName": "ACCTTX_PAYMENT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FinAccountTrans",
+      "type": "one",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "ACCTTX_FNACTTR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTransId",
+          "relFieldName": "finAccountTransId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Shipment",
+      "type": "one",
+      "relEntityName": "Shipment",
+      "fkName": "ACCTTX_SHIPMENT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShipmentReceipt",
+      "type": "one",
+      "relEntityName": "ShipmentReceipt",
+      "fkName": "ACCTTX_SHIPRCPT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "receiptId",
+          "relFieldName": "receiptId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "ACCTTX_WEFF",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTransTypeAttr",
+      "type": "many",
+      "relEntityName": "AcctgTransTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "acctgTransTypeId",
+          "relFieldName": "acctgTransTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTransAttribute",
+      "type": "many",
+      "relEntityName": "AcctgTransAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "acctgTransId",
+          "relFieldName": "acctgTransId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "acctgTransId",
+          "relFieldName": "acctgTransId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlReconciliationEntry",
+      "type": "many",
+      "relEntityName": "GlReconciliationEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "acctgTransId",
+          "relFieldName": "acctgTransId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "acctgTransId"
+  ],
+  "uniqueKey": "acctgTransId",
+  "combine": false,
+  "isView": false
+}

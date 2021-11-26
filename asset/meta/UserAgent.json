@@ -1,0 +1,231 @@
+{
+  "name": "UserAgent",
+  "title": "User Agent",
+  "description": "None",
+  "tableName": "USER_AGENT",
+  "fields": [
+    {
+      "name": "userAgentId",
+      "type": "id",
+      "col": "USER_AGENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "browserTypeId",
+      "type": "id",
+      "col": "BROWSER_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "platformTypeId",
+      "type": "id",
+      "col": "PLATFORM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "protocolTypeId",
+      "type": "id",
+      "col": "PROTOCOL_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "userAgentTypeId",
+      "type": "id",
+      "col": "USER_AGENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "userAgentMethodTypeId",
+      "type": "id",
+      "col": "USER_AGENT_METHOD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "BrowserType",
+      "type": "one",
+      "relEntityName": "BrowserType",
+      "fkName": "UAGENT_BROWSER",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "browserTypeId",
+          "relFieldName": "browserTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PlatformType",
+      "type": "one",
+      "relEntityName": "PlatformType",
+      "fkName": "UAGENT_PLATFORM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "platformTypeId",
+          "relFieldName": "platformTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProtocolType",
+      "type": "one",
+      "relEntityName": "ProtocolType",
+      "fkName": "UAGENT_PROTOCOL",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "protocolTypeId",
+          "relFieldName": "protocolTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserAgentType",
+      "type": "one",
+      "relEntityName": "UserAgentType",
+      "fkName": "UAGENT_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "userAgentTypeId",
+          "relFieldName": "userAgentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserAgentMethodType",
+      "type": "one",
+      "relEntityName": "UserAgentMethodType",
+      "fkName": "UAGENT_METHOD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "userAgentMethodTypeId",
+          "relFieldName": "userAgentMethodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Visit",
+      "type": "many",
+      "relEntityName": "Visit",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "userAgentId",
+          "relFieldName": "userAgentId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "userAgentId"
+  ],
+  "uniqueKey": "userAgentId",
+  "combine": false,
+  "isView": false
+}

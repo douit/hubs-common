@@ -1,0 +1,1422 @@
+{
+  "name": "StatusItem",
+  "title": "Status",
+  "description": "None",
+  "tableName": "STATUS_ITEM",
+  "fields": [
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusTypeId",
+      "type": "id",
+      "col": "STATUS_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusCode",
+      "type": "short-varchar",
+      "col": "STATUS_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "sequenceId",
+      "type": "id",
+      "col": "SEQUENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "StatusType",
+      "type": "one",
+      "relEntityName": "StatusType",
+      "fkName": "STATUS_TO_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusTypeId",
+          "relFieldName": "statusTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "groupStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "reconcileStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Status IdAllocationPlanHeader",
+      "type": "many",
+      "relEntityName": "AllocationPlanHeader",
+      "fkName": "",
+      "title": "Status Id",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Plan Item Status IdAllocationPlanItem",
+      "type": "many",
+      "relEntityName": "AllocationPlanItem",
+      "fkName": "",
+      "title": "Plan Item Status Id",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetStatus",
+      "type": "many",
+      "relEntityName": "BudgetStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventRole",
+      "type": "many",
+      "relEntityName": "CommunicationEventRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactListCommStatus",
+      "type": "many",
+      "relEntityName": "ContactListCommStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactListParty",
+      "type": "many",
+      "relEntityName": "ContactListParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Content",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ApprovalContentApproval",
+      "type": "many",
+      "relEntityName": "ContentApproval",
+      "fkName": "",
+      "title": "Approval",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "approvalStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentPurposeOperation",
+      "type": "many",
+      "relEntityName": "ContentPurposeOperation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestItem",
+      "type": "many",
+      "relEntityName": "CustRequestItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestStatus",
+      "type": "many",
+      "relEntityName": "CustRequestStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DataResource",
+      "type": "many",
+      "relEntityName": "DataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmplLeave",
+      "type": "many",
+      "relEntityName": "EmplLeave",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "leaveStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmplPosition",
+      "type": "many",
+      "relEntityName": "EmplPosition",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmploymentApp",
+      "type": "many",
+      "relEntityName": "EmploymentApp",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Example",
+      "type": "many",
+      "relEntityName": "Example",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ExampleStatus",
+      "type": "many",
+      "relEntityName": "ExampleStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountStatus",
+      "type": "many",
+      "relEntityName": "FinAccountStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountTrans",
+      "type": "many",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetMaint",
+      "type": "many",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlReconciliation",
+      "type": "many",
+      "relEntityName": "GlReconciliation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItemStatus",
+      "type": "many",
+      "relEntityName": "InventoryItemStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Invoice",
+      "type": "many",
+      "relEntityName": "Invoice",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceStatus",
+      "type": "many",
+      "relEntityName": "InvoiceStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "JobSandbox",
+      "type": "many",
+      "relEntityName": "JobSandbox",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaign",
+      "type": "many",
+      "relEntityName": "MarketingCampaign",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OldPicklistStatusHistory",
+      "type": "many",
+      "relEntityName": "OldPicklistStatusHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToOldPicklistStatusHistory",
+      "type": "many",
+      "relEntityName": "OldPicklistStatusHistory",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderDeliverySchedule",
+      "type": "many",
+      "relEntityName": "OrderDeliverySchedule",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SyncOrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "title": "Sync",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "syncStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SyncOrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "title": "Sync",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "syncStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderPaymentPreference",
+      "type": "many",
+      "relEntityName": "OrderPaymentPreference",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderStatus",
+      "type": "many",
+      "relEntityName": "OrderStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Party",
+      "type": "many",
+      "relEntityName": "Party",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyFixedAssetAssignment",
+      "type": "many",
+      "relEntityName": "PartyFixedAssetAssignment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyInvitation",
+      "type": "many",
+      "relEntityName": "PartyInvitation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyQual",
+      "type": "many",
+      "relEntityName": "PartyQual",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VerificationPartyQual",
+      "type": "many",
+      "relEntityName": "PartyQual",
+      "fkName": "",
+      "title": "Verification",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "verifStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyStatus",
+      "type": "many",
+      "relEntityName": "PartyStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Payment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Picklist",
+      "type": "many",
+      "relEntityName": "Picklist",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PicklistItem",
+      "type": "many",
+      "relEntityName": "PicklistItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "itemStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PicklistStatus",
+      "type": "many",
+      "relEntityName": "PicklistStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToPicklistStatus",
+      "type": "many",
+      "relEntityName": "PicklistStatus",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PosTerminalLog",
+      "type": "many",
+      "relEntityName": "PosTerminalLog",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductGroupOrder",
+      "type": "many",
+      "relEntityName": "ProductGroupOrder",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductKeyword",
+      "type": "many",
+      "relEntityName": "ProductKeyword",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductReview",
+      "type": "many",
+      "relEntityName": "ProductReview",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "HeaderApprovedProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "HeaderApproved",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "headerApprovedStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ItemApprovedProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "ItemApproved",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "itemApprovedStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DigitalItemApprovedProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "DigitalItemApproved",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "digitalItemApprovedStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "HeaderDeclinedProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "HeaderDeclined",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "headerDeclinedStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ItemDeclinedProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "ItemDeclined",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "itemDeclinedStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "HeaderCancelProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "HeaderCancel",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "headerCancelStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ItemCancelProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "ItemCancel",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "itemCancelStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Quote",
+      "type": "many",
+      "relEntityName": "Quote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Requirement",
+      "type": "many",
+      "relEntityName": "Requirement",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementStatus",
+      "type": "many",
+      "relEntityName": "RequirementStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnHeader",
+      "type": "many",
+      "relEntityName": "ReturnHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItem",
+      "type": "many",
+      "relEntityName": "ReturnItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryReturnItem",
+      "type": "many",
+      "relEntityName": "ReturnItem",
+      "fkName": "",
+      "title": "Inventory",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "expectedItemStatus"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnStatus",
+      "type": "many",
+      "relEntityName": "ReturnStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Shipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CarrierServiceShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "CarrierService",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "carrierServiceStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentStatus",
+      "type": "many",
+      "relEntityName": "ShipmentStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MainStatusValidChange",
+      "type": "many",
+      "relEntityName": "StatusValidChange",
+      "fkName": "",
+      "title": "Main",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToStatusValidChange",
+      "type": "many",
+      "relEntityName": "StatusValidChange",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyResponse",
+      "type": "many",
+      "relEntityName": "SurveyResponse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TestingStatus",
+      "type": "many",
+      "relEntityName": "TestingStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Timesheet",
+      "type": "many",
+      "relEntityName": "Timesheet",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UnemploymentClaim",
+      "type": "many",
+      "relEntityName": "UnemploymentClaim",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrentWorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "title": "Current",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "currentStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortFixedAssetAssign",
+      "type": "many",
+      "relEntityName": "WorkEffortFixedAssetAssign",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AvailabilityWorkEffortFixedAssetAssign",
+      "type": "many",
+      "relEntityName": "WorkEffortFixedAssetAssign",
+      "fkName": "",
+      "title": "Availability",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "availabilityStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortGoodStandard",
+      "type": "many",
+      "relEntityName": "WorkEffortGoodStandard",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortInventoryAssign",
+      "type": "many",
+      "relEntityName": "WorkEffortInventoryAssign",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AssignmentWorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "title": "Assignment",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AvailabilityWorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "title": "Availability",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "availabilityStatusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortReview",
+      "type": "many",
+      "relEntityName": "WorkEffortReview",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortStatus",
+      "type": "many",
+      "relEntityName": "WorkEffortStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Workload",
+      "type": "many",
+      "relEntityName": "Workload",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkloadStatus",
+      "type": "many",
+      "relEntityName": "WorkloadStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "statusId"
+  ],
+  "uniqueKey": "statusId",
+  "combine": false,
+  "isView": false
+}

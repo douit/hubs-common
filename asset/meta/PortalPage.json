@@ -1,0 +1,270 @@
+{
+  "name": "PortalPage",
+  "title": "PortalPage",
+  "description": "None",
+  "tableName": "PORTAL_PAGE",
+  "fields": [
+    {
+      "name": "portalPageId",
+      "type": "id",
+      "col": "PORTAL_PAGE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "portalPageName",
+      "type": "name",
+      "col": "PORTAL_PAGE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "ownerUserLoginId",
+      "type": "id-vlong",
+      "col": "OWNER_USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "originalPortalPageId",
+      "type": "id",
+      "col": "ORIGINAL_PORTAL_PAGE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentPortalPageId",
+      "type": "id",
+      "col": "PARENT_PORTAL_PAGE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "securityGroupId",
+      "type": "id",
+      "col": "SECURITY_GROUP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "helpContentId",
+      "type": "id",
+      "col": "HELP_CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentPortalPage",
+      "type": "one",
+      "relEntityName": "PortalPage",
+      "fkName": "PortPage_PARENT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentPortalPageId",
+          "relFieldName": "portalPageId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SecurityGroup",
+      "type": "one",
+      "relEntityName": "SecurityGroup",
+      "fkName": "PORTPAGE_SECGRP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "securityGroupId",
+          "relFieldName": "groupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Content",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "PORTPAL_HELP_CONT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "helpContentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ChildPortalPage",
+      "type": "many",
+      "relEntityName": "PortalPage",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "portalPageId",
+          "relFieldName": "parentPortalPageId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PortalPageColumn",
+      "type": "many",
+      "relEntityName": "PortalPageColumn",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "portalPageId",
+          "relFieldName": "portalPageId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PortalPagePortlet",
+      "type": "many",
+      "relEntityName": "PortalPagePortlet",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "portalPageId",
+          "relFieldName": "portalPageId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "portalPageId"
+  ],
+  "uniqueKey": "portalPageId",
+  "combine": false,
+  "isView": false
+}

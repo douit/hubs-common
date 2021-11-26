@@ -1,0 +1,177 @@
+{
+  "name": "InventoryItemLabelType",
+  "title": "Inventory Item Label Type",
+  "description": "None",
+  "tableName": "INVENTORY_ITEM_LABEL_TYPE",
+  "fields": [
+    {
+      "name": "inventoryItemLabelTypeId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_LABEL_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentInventoryItemLabelType",
+      "type": "one",
+      "relEntityName": "InventoryItemLabelType",
+      "fkName": "INV_ITLT_TYPPAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "inventoryItemLabelTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InventoryItemLabel",
+      "type": "many",
+      "relEntityName": "InventoryItemLabel",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemLabelTypeId",
+          "relFieldName": "inventoryItemLabelTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItemLabelAppl",
+      "type": "many",
+      "relEntityName": "InventoryItemLabelAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemLabelTypeId",
+          "relFieldName": "inventoryItemLabelTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildInventoryItemLabelType",
+      "type": "many",
+      "relEntityName": "InventoryItemLabelType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemLabelTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "inventoryItemLabelTypeId"
+  ],
+  "uniqueKey": "inventoryItemLabelTypeId",
+  "combine": false,
+  "isView": false
+}

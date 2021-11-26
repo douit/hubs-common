@@ -1,0 +1,151 @@
+{
+  "name": "VarianceReasonGlAccount",
+  "title": "Defines GL Accounts for Inventory Variance Reasons",
+  "description": "None",
+  "tableName": "VARIANCE_REASON_GL_ACCOUNT",
+  "fields": [
+    {
+      "name": "varianceReasonId",
+      "type": "id",
+      "col": "VARIANCE_REASON_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "organizationPartyId",
+      "type": "id",
+      "col": "ORGANIZATION_PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glAccountId",
+      "type": "id",
+      "col": "GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "VarianceReason",
+      "type": "one",
+      "relEntityName": "VarianceReason",
+      "fkName": "VRGL_VREAS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "varianceReasonId",
+          "relFieldName": "varianceReasonId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrganizationParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "VRGL_PARTY",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "organizationPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "VRGL_GLACCT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "varianceReasonId",
+    "organizationPartyId"
+  ],
+  "uniqueKey": "varianceReasonId, organizationPartyId",
+  "combine": true,
+  "isView": false
+}

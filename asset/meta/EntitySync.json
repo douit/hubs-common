@@ -1,0 +1,325 @@
+{
+  "name": "EntitySync",
+  "title": "Entity Synchronization",
+  "description": "None",
+  "tableName": "ENTITY_SYNC",
+  "fields": [
+    {
+      "name": "entitySyncId",
+      "type": "id",
+      "col": "ENTITY_SYNC_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "runStatusId",
+      "type": "id",
+      "col": "RUN_STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastSuccessfulSynchTime",
+      "type": "date-time",
+      "col": "LAST_SUCCESSFUL_SYNCH_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastHistoryStartDate",
+      "type": "date-time",
+      "col": "LAST_HISTORY_START_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "preOfflineSynchTime",
+      "type": "date-time",
+      "col": "PRE_OFFLINE_SYNCH_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "offlineSyncSplitMillis",
+      "type": "numeric",
+      "col": "OFFLINE_SYNC_SPLIT_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "syncSplitMillis",
+      "type": "numeric",
+      "col": "SYNC_SPLIT_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "syncEndBufferMillis",
+      "type": "numeric",
+      "col": "SYNC_END_BUFFER_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maxRunningNoUpdateMillis",
+      "type": "numeric",
+      "col": "MAX_RUNNING_NO_UPDATE_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "targetServiceName",
+      "type": "long-varchar",
+      "col": "TARGET_SERVICE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "targetDelegatorName",
+      "type": "long-varchar",
+      "col": "TARGET_DELEGATOR_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "keepRemoveInfoHours",
+      "type": "floating-point",
+      "col": "KEEP_REMOVE_INFO_HOURS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "forPullOnly",
+      "type": "indicator",
+      "col": "FOR_PULL_ONLY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "forPushOnly",
+      "type": "indicator",
+      "col": "FOR_PUSH_ONLY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "EntitySyncInclGrpDetailView",
+      "type": "many",
+      "relEntityName": "EntitySyncInclGrpDetailView",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "entitySyncId",
+          "relFieldName": "entitySyncId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LastEntitySyncHistory",
+      "type": "one-nofk",
+      "relEntityName": "EntitySyncHistory",
+      "fkName": "",
+      "title": "Last",
+      "keymaps": [
+        {
+          "fieldName": "entitySyncId",
+          "relFieldName": "entitySyncId"
+        },
+        {
+          "fieldName": "lastHistoryStartDate",
+          "relFieldName": "startDate"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EntitySyncHistory",
+      "type": "many",
+      "relEntityName": "EntitySyncHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "entitySyncId",
+          "relFieldName": "entitySyncId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EntitySyncInclude",
+      "type": "many",
+      "relEntityName": "EntitySyncInclude",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "entitySyncId",
+          "relFieldName": "entitySyncId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EntitySyncIncludeGroup",
+      "type": "many",
+      "relEntityName": "EntitySyncIncludeGroup",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "entitySyncId",
+          "relFieldName": "entitySyncId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "entitySyncId"
+  ],
+  "uniqueKey": "entitySyncId",
+  "combine": false,
+  "isView": false
+}

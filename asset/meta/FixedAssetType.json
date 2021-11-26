@@ -1,0 +1,205 @@
+{
+  "name": "FixedAssetType",
+  "title": "Fixed Asset Type",
+  "description": "None",
+  "tableName": "FIXED_ASSET_TYPE",
+  "fields": [
+    {
+      "name": "fixedAssetTypeId",
+      "type": "id",
+      "col": "FIXED_ASSET_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentFixedAssetType",
+      "type": "one",
+      "relEntityName": "FixedAssetType",
+      "fkName": "FIXEDAST_TYPPAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "fixedAssetTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetTypeId",
+          "relFieldName": "fixedAssetTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildFixedAssetType",
+      "type": "many",
+      "relEntityName": "FixedAssetType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetTypeAttr",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetTypeId",
+          "relFieldName": "fixedAssetTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetTypeId",
+          "relFieldName": "fixedAssetTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortFixedAssetStd",
+      "type": "many",
+      "relEntityName": "WorkEffortFixedAssetStd",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetTypeId",
+          "relFieldName": "fixedAssetTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "fixedAssetTypeId"
+  ],
+  "uniqueKey": "fixedAssetTypeId",
+  "combine": false,
+  "isView": false
+}

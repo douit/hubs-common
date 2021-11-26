@@ -1,0 +1,124 @@
+{
+  "name": "SegmentGroupGeo",
+  "title": "Segment Group Geo",
+  "description": "None",
+  "tableName": "SEGMENT_GROUP_GEO",
+  "fields": [
+    {
+      "name": "segmentGroupId",
+      "type": "id",
+      "col": "SEGMENT_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoId",
+      "type": "id",
+      "col": "GEO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SegmentGroup",
+      "type": "one",
+      "relEntityName": "SegmentGroup",
+      "fkName": "SGMTGRPGEO_SGGP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "segmentGroupId",
+          "relFieldName": "segmentGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Geo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "SGMTGRPGEO_GEO",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "segmentGroupId",
+    "geoId"
+  ],
+  "uniqueKey": "segmentGroupId, geoId",
+  "combine": true,
+  "isView": false
+}

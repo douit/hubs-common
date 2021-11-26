@@ -1,0 +1,164 @@
+{
+  "name": "ProductFeatureCategory",
+  "title": "Product Feature Category",
+  "description": "None",
+  "tableName": "PRODUCT_FEATURE_CATEGORY",
+  "fields": [
+    {
+      "name": "productFeatureCategoryId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_CATEGORY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentCategoryId",
+      "type": "id",
+      "col": "PARENT_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentProductFeatureCategory",
+      "type": "one",
+      "relEntityName": "ProductFeatureCategory",
+      "fkName": "PROD_FEAT_CAT_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentCategoryId",
+          "relFieldName": "productFeatureCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductFeature",
+      "type": "many",
+      "relEntityName": "ProductFeature",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureCategoryId",
+          "relFieldName": "productFeatureCategoryId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildProductFeatureCategory",
+      "type": "many",
+      "relEntityName": "ProductFeatureCategory",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureCategoryId",
+          "relFieldName": "parentCategoryId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFeatureCategoryAppl",
+      "type": "many",
+      "relEntityName": "ProductFeatureCategoryAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureCategoryId",
+          "relFieldName": "productFeatureCategoryId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productFeatureCategoryId"
+  ],
+  "uniqueKey": "productFeatureCategoryId",
+  "combine": false,
+  "isView": false
+}

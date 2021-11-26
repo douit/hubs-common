@@ -1,4 +1,4 @@
-# just inst base
+# just inst fund
 inst mod:
     mvn install -DskipTests -f {{mod}}/pom.xml
 tree:
@@ -22,16 +22,24 @@ bang:
 model name:
 	just gen MetaTool {{name}}
 
-# 重新生成sql文件
+# 重新生成sql文件以及hubs.json,
+# 根据DataSetUtil.collectEntitiesFromResources中定义的数据文件
 regen:
 	just gen SqlGenTool
 
-# 重新建表和生成模型类
+# 重新建表(myql)和生成模型类(querydsl)
 recreate:
     mysql -uroot -proot hubs < asset/mysql/hubs.sql
-    cd domain && mvn compile
+    mvn compile -f domain/pom.xml
 
+# 重新生成types.json文件
+types:
+	just gen EntityTypesTool
+
+# 根据hubs.json和types.json来生成proto定义
 proto:
 	just gen ProtoTool -w
+
+# 生成proto文件对应的java类
 stub:
 	mvn compile -f stub/pom.xml

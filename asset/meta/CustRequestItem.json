@@ -1,0 +1,437 @@
+{
+  "name": "CustRequestItem",
+  "title": "Customer Request Item",
+  "description": "None",
+  "tableName": "CUST_REQUEST_ITEM",
+  "fields": [
+    {
+      "name": "custRequestId",
+      "type": "id",
+      "col": "CUST_REQUEST_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "custRequestItemSeqId",
+      "type": "id",
+      "col": "CUST_REQUEST_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "custRequestResolutionId",
+      "type": "id",
+      "col": "CUST_REQUEST_RESOLUTION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "priority",
+      "type": "numeric",
+      "col": "PRIORITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requiredByDate",
+      "type": "date-time",
+      "col": "REQUIRED_BY_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "selectedAmount",
+      "type": "fixed-point",
+      "col": "SELECTED_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maximumAmount",
+      "type": "currency-amount",
+      "col": "MAXIMUM_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "reservStart",
+      "type": "date-time",
+      "col": "RESERV_START",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "reservLength",
+      "type": "fixed-point",
+      "col": "RESERV_LENGTH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "reservPersons",
+      "type": "fixed-point",
+      "col": "RESERV_PERSONS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "configId",
+      "type": "id",
+      "col": "CONFIG_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "story",
+      "type": "very-long",
+      "col": "STORY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CustRequest",
+      "type": "one",
+      "relEntityName": "CustRequest",
+      "fkName": "CUST_REQITM_CREQ",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "CUST_REQITM_STTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequestResolution",
+      "type": "one",
+      "relEntityName": "CustRequestResolution",
+      "fkName": "CUST_REQITM_RES",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestResolutionId",
+          "relFieldName": "custRequestResolutionId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "CUST_REQITM_PRD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequestItemNote",
+      "type": "many",
+      "relEntityName": "CustRequestItemNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        },
+        {
+          "fieldName": "custRequestItemSeqId",
+          "relFieldName": "custRequestItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestItemWorkEffort",
+      "type": "many",
+      "relEntityName": "CustRequestItemWorkEffort",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        },
+        {
+          "fieldName": "custRequestItemSeqId",
+          "relFieldName": "custRequestItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestStatus",
+      "type": "many",
+      "relEntityName": "CustRequestStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        },
+        {
+          "fieldName": "custRequestItemSeqId",
+          "relFieldName": "custRequestItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteItem",
+      "type": "many",
+      "relEntityName": "QuoteItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        },
+        {
+          "fieldName": "custRequestItemSeqId",
+          "relFieldName": "custRequestItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementCustRequest",
+      "type": "many",
+      "relEntityName": "RequirementCustRequest",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "custRequestId",
+          "relFieldName": "custRequestId"
+        },
+        {
+          "fieldName": "custRequestItemSeqId",
+          "relFieldName": "custRequestItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "custRequestId",
+    "custRequestItemSeqId"
+  ],
+  "uniqueKey": "custRequestId, custRequestItemSeqId",
+  "combine": true,
+  "isView": false
+}

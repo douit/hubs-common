@@ -1,0 +1,257 @@
+{
+  "name": "ReturnItemResponse",
+  "title": "The Return Item Response",
+  "description": "Records what was done with a return: whether a replacement order, a payment, or a billing account credit was issued",
+  "tableName": "RETURN_ITEM_RESPONSE",
+  "fields": [
+    {
+      "name": "returnItemResponseId",
+      "type": "id",
+      "col": "RETURN_ITEM_RESPONSE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "orderPaymentPreferenceId",
+      "type": "id",
+      "col": "ORDER_PAYMENT_PREFERENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "replacementOrderId",
+      "type": "id",
+      "col": "REPLACEMENT_ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentId",
+      "type": "id",
+      "col": "PAYMENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "billingAccountId",
+      "type": "id",
+      "col": "BILLING_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "finAccountTransId",
+      "type": "id",
+      "col": "FIN_ACCOUNT_TRANS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "responseAmount",
+      "type": "currency-amount",
+      "col": "RESPONSE_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "responseDate",
+      "type": "date-time",
+      "col": "RESPONSE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderPaymentPreference",
+      "type": "one",
+      "relEntityName": "OrderPaymentPreference",
+      "fkName": "RTN_PAY_ORDPAYPF",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderPaymentPreferenceId",
+          "relFieldName": "orderPaymentPreferenceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReplacementOrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "RTN_RESP_NEWORD",
+      "title": "Replacement",
+      "keymaps": [
+        {
+          "fieldName": "replacementOrderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Payment",
+      "type": "one",
+      "relEntityName": "Payment",
+      "fkName": "RTN_PAY_PAYMENT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentId",
+          "relFieldName": "paymentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BillingAccount",
+      "type": "one",
+      "relEntityName": "BillingAccount",
+      "fkName": "RTN_PAY_BACT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FinAccountTrans",
+      "type": "one",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "RTN_PAY_FINACTTX",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTransId",
+          "relFieldName": "finAccountTransId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReturnItem",
+      "type": "many",
+      "relEntityName": "ReturnItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "returnItemResponseId",
+          "relFieldName": "returnItemResponseId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "returnItemResponseId"
+  ],
+  "uniqueKey": "returnItemResponseId",
+  "combine": false,
+  "isView": false
+}

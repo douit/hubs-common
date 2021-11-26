@@ -1,0 +1,169 @@
+{
+  "name": "OrderAdjustmentBilling",
+  "title": "Order Adjustment Billing",
+  "description": "None",
+  "tableName": "ORDER_ADJUSTMENT_BILLING",
+  "fields": [
+    {
+      "name": "orderAdjustmentId",
+      "type": "id",
+      "col": "ORDER_ADJUSTMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceId",
+      "type": "id",
+      "col": "INVOICE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceItemSeqId",
+      "type": "id",
+      "col": "INVOICE_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "amount",
+      "type": "currency-amount",
+      "col": "AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderAdjustment",
+      "type": "one",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "ORDER_ADJBLNG_OA",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderAdjustmentId",
+          "relFieldName": "orderAdjustmentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Invoice",
+      "type": "one-nofk",
+      "relEntityName": "Invoice",
+      "fkName": "ORDER_ADJBLNG_INV",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InvoiceItem",
+      "type": "one",
+      "relEntityName": "InvoiceItem",
+      "fkName": "ORDER_ADJBLNG_IITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        },
+        {
+          "fieldName": "invoiceItemSeqId",
+          "relFieldName": "invoiceItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "orderAdjustmentId",
+    "invoiceId",
+    "invoiceItemSeqId"
+  ],
+  "uniqueKey": "orderAdjustmentId, invoiceId, invoiceItemSeqId",
+  "combine": true,
+  "isView": false
+}

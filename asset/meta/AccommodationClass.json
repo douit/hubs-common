@@ -1,0 +1,164 @@
+{
+  "name": "AccommodationClass",
+  "title": "Accommodation Class",
+  "description": "None",
+  "tableName": "ACCOMMODATION_CLASS",
+  "fields": [
+    {
+      "name": "accommodationClassId",
+      "type": "id",
+      "col": "ACCOMMODATION_CLASS_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentClassId",
+      "type": "id",
+      "col": "PARENT_CLASS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentAccommodationClass",
+      "type": "one",
+      "relEntityName": "AccommodationClass",
+      "fkName": "ACCOMM_CLASS_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentClassId",
+          "relFieldName": "accommodationClassId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ChildAccommodationClass",
+      "type": "many",
+      "relEntityName": "AccommodationClass",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "accommodationClassId",
+          "relFieldName": "parentClassId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AccommodationMap",
+      "type": "many",
+      "relEntityName": "AccommodationMap",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "accommodationClassId",
+          "relFieldName": "accommodationClassId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AccommodationSpot",
+      "type": "many",
+      "relEntityName": "AccommodationSpot",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "accommodationClassId",
+          "relFieldName": "accommodationClassId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "accommodationClassId"
+  ],
+  "uniqueKey": "accommodationClassId",
+  "combine": false,
+  "isView": false
+}

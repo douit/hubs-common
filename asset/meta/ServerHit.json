@@ -1,0 +1,256 @@
+{
+  "name": "ServerHit",
+  "title": "ServerHit",
+  "description": "None",
+  "tableName": "SERVER_HIT",
+  "fields": [
+    {
+      "name": "visitId",
+      "type": "id",
+      "col": "VISIT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentId",
+      "type": "id-vlong",
+      "col": "CONTENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "hitStartDateTime",
+      "type": "date-time",
+      "col": "HIT_START_DATE_TIME",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hitTypeId",
+      "type": "id",
+      "col": "HIT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "numOfBytes",
+      "type": "numeric",
+      "col": "NUM_OF_BYTES",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "runningTimeMillis",
+      "type": "numeric",
+      "col": "RUNNING_TIME_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "userLoginId",
+      "type": "id-vlong",
+      "col": "USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requestUrl",
+      "type": "url",
+      "col": "REQUEST_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(2000)",
+      "stringLength": 2000,
+      "validators": []
+    },
+    {
+      "name": "referrerUrl",
+      "type": "url",
+      "col": "REFERRER_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(2000)",
+      "stringLength": 2000,
+      "validators": []
+    },
+    {
+      "name": "serverIpAddress",
+      "type": "id",
+      "col": "SERVER_IP_ADDRESS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "serverHostName",
+      "type": "long-varchar",
+      "col": "SERVER_HOST_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "internalContentId",
+      "type": "id",
+      "col": "INTERNAL_CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "idByIpContactMechId",
+      "type": "id",
+      "col": "ID_BY_IP_CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "refByWebContactMechId",
+      "type": "id",
+      "col": "REF_BY_WEB_CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ServerHitType",
+      "type": "one",
+      "relEntityName": "ServerHitType",
+      "fkName": "SERVER_HIT_SHTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "hitTypeId",
+          "relFieldName": "hitTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Visit",
+      "type": "one",
+      "relEntityName": "Visit",
+      "fkName": "SERVER_HIT_VISIT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "visitId",
+          "relFieldName": "visitId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "visitId",
+    "contentId",
+    "hitStartDateTime",
+    "hitTypeId"
+  ],
+  "uniqueKey": "visitId, contentId, hitStartDateTime, hitTypeId",
+  "combine": true,
+  "isView": false
+}

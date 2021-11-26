@@ -21,8 +21,12 @@ public class MetaTypes {
             return entities.contains(ent);
         }
     }
-    public static MetaList typeList=types();
+
     public static Map<String, FieldMappings.FieldTypeDef> types=getFieldTypes();
+
+    // $ just gen EntityTypesTool
+    public static MetaList typeList=types();
+    // $ just gen SqlGenTool
     public static MetaTypes.MetaList metaList=getAvailableEntities();
 
     public static MetaList types()  {

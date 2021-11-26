@@ -1,0 +1,203 @@
+{
+  "name": "BillingAccountTerm",
+  "title": "Billing Account Term",
+  "description": "None",
+  "tableName": "BILLING_ACCOUNT_TERM",
+  "fields": [
+    {
+      "name": "billingAccountTermId",
+      "type": "id",
+      "col": "BILLING_ACCOUNT_TERM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "billingAccountId",
+      "type": "id",
+      "col": "BILLING_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "termTypeId",
+      "type": "id",
+      "col": "TERM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "termValue",
+      "type": "currency-amount",
+      "col": "TERM_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "termDays",
+      "type": "numeric",
+      "col": "TERM_DAYS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "uomId",
+      "type": "id",
+      "col": "UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "BILLACCT_TRM_UOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TermType",
+      "type": "one",
+      "relEntityName": "TermType",
+      "fkName": "BILLACCT_TRM_TRM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BillingAccount",
+      "type": "one",
+      "relEntityName": "BillingAccount",
+      "fkName": "BILLACCT_TRM_BACT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BillingAccountTermAttr",
+      "type": "many",
+      "relEntityName": "BillingAccountTermAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountTermId",
+          "relFieldName": "billingAccountTermId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "billingAccountTermId"
+  ],
+  "uniqueKey": "billingAccountTermId",
+  "combine": false,
+  "isView": false
+}

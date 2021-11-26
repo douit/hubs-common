@@ -1,0 +1,343 @@
+{
+  "name": "TaxAuthority",
+  "title": "Tax Authority",
+  "description": "None",
+  "tableName": "TAX_AUTHORITY",
+  "fields": [
+    {
+      "name": "taxAuthGeoId",
+      "type": "id",
+      "col": "TAX_AUTH_GEO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxAuthPartyId",
+      "type": "id",
+      "col": "TAX_AUTH_PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requireTaxIdForExemption",
+      "type": "indicator",
+      "col": "REQUIRE_TAX_ID_FOR_EXEMPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "taxIdFormatPattern",
+      "type": "long-varchar",
+      "col": "TAX_ID_FORMAT_PATTERN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "includeTaxInPrice",
+      "type": "indicator",
+      "col": "INCLUDE_TAX_IN_PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "TaxAuthGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "TAXAUTH_TAGEO",
+      "title": "TaxAuth",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxAuthParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "TAXAUTH_TAPARTY",
+      "title": "TaxAuth",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderAdjustment",
+      "type": "many",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyTaxAuthInfo",
+      "type": "many",
+      "relEntityName": "PartyTaxAuthInfo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VatProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "Vat",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "vatTaxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "vatTaxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteAdjustment",
+      "type": "many",
+      "relEntityName": "QuoteAdjustment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnAdjustment",
+      "type": "many",
+      "relEntityName": "ReturnAdjustment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityAssoc",
+      "type": "many",
+      "relEntityName": "TaxAuthorityAssoc",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToTaxAuthorityAssoc",
+      "type": "many",
+      "relEntityName": "TaxAuthorityAssoc",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "toTaxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "toTaxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityCategory",
+      "type": "many",
+      "relEntityName": "TaxAuthorityCategory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityGlAccount",
+      "type": "many",
+      "relEntityName": "TaxAuthorityGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityRateProduct",
+      "type": "many",
+      "relEntityName": "TaxAuthorityRateProduct",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "taxAuthGeoId",
+    "taxAuthPartyId"
+  ],
+  "uniqueKey": "taxAuthGeoId, taxAuthPartyId",
+  "combine": true,
+  "isView": false
+}

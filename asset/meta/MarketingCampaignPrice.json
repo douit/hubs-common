@@ -1,0 +1,151 @@
+{
+  "name": "MarketingCampaignPrice",
+  "title": "Marketing Campaign Price",
+  "description": "None",
+  "tableName": "MARKETING_CAMPAIGN_PRICE",
+  "fields": [
+    {
+      "name": "marketingCampaignId",
+      "type": "id",
+      "col": "MARKETING_CAMPAIGN_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPriceRuleId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_RULE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "MarketingCampaign",
+      "type": "one",
+      "relEntityName": "MarketingCampaign",
+      "fkName": "MKTGCPN_PRICE_MC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "marketingCampaignId",
+          "relFieldName": "marketingCampaignId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPriceRule",
+      "type": "one",
+      "relEntityName": "ProductPriceRule",
+      "fkName": "MKTGCPN_PRICE_PP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "marketingCampaignId",
+    "productPriceRuleId",
+    "fromDate"
+  ],
+  "uniqueKey": "marketingCampaignId, productPriceRuleId, fromDate",
+  "combine": true,
+  "isView": false
+}

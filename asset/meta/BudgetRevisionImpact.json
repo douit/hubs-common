@@ -1,0 +1,199 @@
+{
+  "name": "BudgetRevisionImpact",
+  "title": "Budget Revision Impact",
+  "description": "None",
+  "tableName": "BUDGET_REVISION_IMPACT",
+  "fields": [
+    {
+      "name": "budgetId",
+      "type": "id",
+      "col": "BUDGET_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "budgetItemSeqId",
+      "type": "id",
+      "col": "BUDGET_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "revisionSeqId",
+      "type": "id",
+      "col": "REVISION_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "revisedAmount",
+      "type": "currency-amount",
+      "col": "REVISED_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "addDeleteFlag",
+      "type": "indicator",
+      "col": "ADD_DELETE_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "revisionReason",
+      "type": "long-varchar",
+      "col": "REVISION_REASON",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Budget",
+      "type": "one",
+      "relEntityName": "Budget",
+      "fkName": "BUDGET_RNIMP_BDGT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BudgetItem",
+      "type": "one",
+      "relEntityName": "BudgetItem",
+      "fkName": "BUDGET_RNIMP_BITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        },
+        {
+          "fieldName": "budgetItemSeqId",
+          "relFieldName": "budgetItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BudgetRevision",
+      "type": "one",
+      "relEntityName": "BudgetRevision",
+      "fkName": "BUDGET_RNIMP_REV",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        },
+        {
+          "fieldName": "revisionSeqId",
+          "relFieldName": "revisionSeqId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "budgetId",
+    "budgetItemSeqId",
+    "revisionSeqId"
+  ],
+  "uniqueKey": "budgetId, budgetItemSeqId, revisionSeqId",
+  "combine": true,
+  "isView": false
+}

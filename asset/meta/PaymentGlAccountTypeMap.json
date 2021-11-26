@@ -1,0 +1,151 @@
+{
+  "name": "PaymentGlAccountTypeMap",
+  "title": "Maps PaymentTypes to GlAccountTypes, allowing user to configure payments and gl accounts",
+  "description": "None",
+  "tableName": "PAYMENT_GL_ACCOUNT_TYPE_MAP",
+  "fields": [
+    {
+      "name": "paymentTypeId",
+      "type": "id",
+      "col": "PAYMENT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "organizationPartyId",
+      "type": "id",
+      "col": "ORGANIZATION_PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glAccountTypeId",
+      "type": "id",
+      "col": "GL_ACCOUNT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PaymentType",
+      "type": "one",
+      "relEntityName": "PaymentType",
+      "fkName": "PMTGLACCT_PMTTYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentTypeId",
+          "relFieldName": "paymentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PMTGLACCT_PARTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "organizationPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlAccountType",
+      "type": "one",
+      "relEntityName": "GlAccountType",
+      "fkName": "PMTGLACCT_GLACCT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "paymentTypeId",
+    "organizationPartyId"
+  ],
+  "uniqueKey": "paymentTypeId, organizationPartyId",
+  "combine": true,
+  "isView": false
+}

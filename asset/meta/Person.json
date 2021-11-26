@@ -1,0 +1,694 @@
+{
+  "name": "Person",
+  "title": "Person",
+  "description": "None",
+  "tableName": "PERSON",
+  "fields": [
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "salutation",
+      "type": "name",
+      "col": "SALUTATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "firstName",
+      "type": "name",
+      "col": "FIRST_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "middleName",
+      "type": "name",
+      "col": "MIDDLE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "lastName",
+      "type": "name",
+      "col": "LAST_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "personalTitle",
+      "type": "name",
+      "col": "PERSONAL_TITLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "suffix",
+      "type": "name",
+      "col": "SUFFIX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "nickname",
+      "type": "name",
+      "col": "NICKNAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "firstNameLocal",
+      "type": "name",
+      "col": "FIRST_NAME_LOCAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "middleNameLocal",
+      "type": "name",
+      "col": "MIDDLE_NAME_LOCAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "lastNameLocal",
+      "type": "name",
+      "col": "LAST_NAME_LOCAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "otherLocal",
+      "type": "name",
+      "col": "OTHER_LOCAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "memberId",
+      "type": "id",
+      "col": "MEMBER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "gender",
+      "type": "indicator",
+      "col": "GENDER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "birthDate",
+      "type": "date",
+      "col": "BIRTH_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Date",
+      "sqlType": "DATE",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "deceasedDate",
+      "type": "date",
+      "col": "DECEASED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Date",
+      "sqlType": "DATE",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "height",
+      "type": "floating-point",
+      "col": "HEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "weight",
+      "type": "floating-point",
+      "col": "WEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "mothersMaidenName",
+      "type": "long-varchar",
+      "col": "MOTHERS_MAIDEN_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "oldMaritalStatus",
+      "type": "indicator",
+      "col": "MARITAL_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "maritalStatusEnumId",
+      "type": "id",
+      "col": "MARITAL_STATUS_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "socialSecurityNumber",
+      "type": "long-varchar",
+      "col": "SOCIAL_SECURITY_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "passportNumber",
+      "type": "long-varchar",
+      "col": "PASSPORT_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "passportExpireDate",
+      "type": "date",
+      "col": "PASSPORT_EXPIRE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Date",
+      "sqlType": "DATE",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "totalYearsWorkExperience",
+      "type": "floating-point",
+      "col": "TOTAL_YEARS_WORK_EXPERIENCE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "employmentStatusEnumId",
+      "type": "id",
+      "col": "EMPLOYMENT_STATUS_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "residenceStatusEnumId",
+      "type": "id",
+      "col": "RESIDENCE_STATUS_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "occupation",
+      "type": "name",
+      "col": "OCCUPATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "yearsWithEmployer",
+      "type": "numeric",
+      "col": "YEARS_WITH_EMPLOYER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "monthsWithEmployer",
+      "type": "numeric",
+      "col": "MONTHS_WITH_EMPLOYER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "existingCustomer",
+      "type": "indicator",
+      "col": "EXISTING_CUSTOMER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "cardId",
+      "type": "id-long",
+      "col": "CARD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PERSON_PARTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EmploymentStatusEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PERSON_EMPS_ENUM",
+      "title": "EmploymentStatus",
+      "keymaps": [
+        {
+          "fieldName": "employmentStatusEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ResidenceStatusEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PERSON_RESS_ENUM",
+      "title": "ResidenceStatus",
+      "keymaps": [
+        {
+          "fieldName": "residenceStatusEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MaritalStatusEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PERSON_MARITAL",
+      "title": "MaritalStatus",
+      "keymaps": [
+        {
+          "fieldName": "maritalStatusEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyContactMech",
+      "type": "many",
+      "relEntityName": "PartyContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContactMechPurpose",
+      "type": "many",
+      "relEntityName": "PartyContactMechPurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ApproverPersonTraining",
+      "type": "many",
+      "relEntityName": "PersonTraining",
+      "fkName": "",
+      "title": "Approver",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "approverId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdCatalogRole",
+      "type": "many",
+      "relEntityName": "ProdCatalogRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreRole",
+      "type": "many",
+      "relEntityName": "ProductStoreRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CarrierShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "Carrier",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLogin",
+      "type": "many",
+      "relEntityName": "UserLogin",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebSiteRole",
+      "type": "many",
+      "relEntityName": "WebSiteRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "partyId"
+  ],
+  "uniqueKey": "partyId",
+  "combine": false,
+  "isView": false
+}

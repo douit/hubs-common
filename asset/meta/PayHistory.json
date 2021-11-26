@@ -1,0 +1,310 @@
+{
+  "name": "PayHistory",
+  "title": "Pay History",
+  "description": "None",
+  "tableName": "PAY_HISTORY",
+  "fields": [
+    {
+      "name": "roleTypeIdFrom",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_FROM",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdTo",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdFrom",
+      "type": "id",
+      "col": "PARTY_ID_FROM",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdTo",
+      "type": "id",
+      "col": "PARTY_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "emplFromDate",
+      "type": "date-time",
+      "col": "EMPL_FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "salaryStepSeqId",
+      "type": "id",
+      "col": "SALARY_STEP_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "payGradeId",
+      "type": "id",
+      "col": "PAY_GRADE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "periodTypeId",
+      "type": "id",
+      "col": "PERIOD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "amount",
+      "type": "currency-amount",
+      "col": "AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Employment",
+      "type": "one",
+      "relEntityName": "Employment",
+      "fkName": "PAY_HIST_EMPLMNT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeIdFrom"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeIdTo"
+        },
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyIdFrom"
+        },
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyIdTo"
+        },
+        {
+          "fieldName": "emplFromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PayGrade",
+      "type": "one",
+      "relEntityName": "PayGrade",
+      "fkName": "PAY_HIST_PGRD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "payGradeId",
+          "relFieldName": "payGradeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SalaryStep",
+      "type": "one-nofk",
+      "relEntityName": "SalaryStep",
+      "fkName": "PAY_HIST_SSTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salaryStepSeqId",
+          "relFieldName": "salaryStepSeqId"
+        },
+        {
+          "fieldName": "payGradeId",
+          "relFieldName": "payGradeId"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PeriodType",
+      "type": "one",
+      "relEntityName": "PeriodType",
+      "fkName": "PAY_HIST_PDTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "periodTypeId",
+          "relFieldName": "periodTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 6,
+  "pks": [
+    "roleTypeIdFrom",
+    "roleTypeIdTo",
+    "partyIdFrom",
+    "partyIdTo",
+    "emplFromDate",
+    "fromDate"
+  ],
+  "uniqueKey": "roleTypeIdFrom, roleTypeIdTo, partyIdFrom, partyIdTo, emplFromDate, fromDate",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,205 @@
+{
+  "name": "BudgetItemType",
+  "title": "Budget Item Type",
+  "description": "None",
+  "tableName": "BUDGET_ITEM_TYPE",
+  "fields": [
+    {
+      "name": "budgetItemTypeId",
+      "type": "id",
+      "col": "BUDGET_ITEM_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentBudgetItemType",
+      "type": "one",
+      "relEntityName": "BudgetItemType",
+      "fkName": "BUDGET_ITM_TYPPAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "budgetItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BudgetItem",
+      "type": "many",
+      "relEntityName": "BudgetItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetItemTypeId",
+          "relFieldName": "budgetItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildBudgetItemType",
+      "type": "many",
+      "relEntityName": "BudgetItemType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "budgetItemTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetItemTypeAttr",
+      "type": "many",
+      "relEntityName": "BudgetItemTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetItemTypeId",
+          "relFieldName": "budgetItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetScenarioRule",
+      "type": "many",
+      "relEntityName": "BudgetScenarioRule",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetItemTypeId",
+          "relFieldName": "budgetItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlBudgetXref",
+      "type": "many",
+      "relEntityName": "GlBudgetXref",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetItemTypeId",
+          "relFieldName": "budgetItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "budgetItemTypeId"
+  ],
+  "uniqueKey": "budgetItemTypeId",
+  "combine": false,
+  "isView": false
+}

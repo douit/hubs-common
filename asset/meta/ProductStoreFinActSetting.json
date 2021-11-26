@@ -1,0 +1,321 @@
+{
+  "name": "ProductStoreFinActSetting",
+  "title": "Allows financial account, such as gift certificate or calling cards, to be configured at store level",
+  "description": "None",
+  "tableName": "PRODUCT_STORE_FIN_ACT_SETTING",
+  "fields": [
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "finAccountTypeId",
+      "type": "id",
+      "col": "FIN_ACCOUNT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requirePinCode",
+      "type": "indicator",
+      "col": "REQUIRE_PIN_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "validateGCFinAcct",
+      "type": "indicator",
+      "col": "VALIDATE_G_C_FIN_ACCT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "accountCodeLength",
+      "type": "numeric",
+      "col": "ACCOUNT_CODE_LENGTH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "pinCodeLength",
+      "type": "numeric",
+      "col": "PIN_CODE_LENGTH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "accountValidDays",
+      "type": "numeric",
+      "col": "ACCOUNT_VALID_DAYS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "authValidDays",
+      "type": "numeric",
+      "col": "AUTH_VALID_DAYS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "purchaseSurveyId",
+      "type": "id",
+      "col": "PURCHASE_SURVEY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "purchSurveySendTo",
+      "type": "id",
+      "col": "PURCH_SURVEY_SEND_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "purchSurveyCopyMe",
+      "type": "id",
+      "col": "PURCH_SURVEY_COPY_ME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "allowAuthToNegative",
+      "type": "indicator",
+      "col": "ALLOW_AUTH_TO_NEGATIVE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "minBalance",
+      "type": "currency-amount",
+      "col": "MIN_BALANCE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "replenishThreshold",
+      "type": "currency-amount",
+      "col": "REPLENISH_THRESHOLD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "replenishMethodEnumId",
+      "type": "id",
+      "col": "REPLENISH_METHOD_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductStore",
+      "type": "one",
+      "relEntityName": "ProductStore",
+      "fkName": "PRSTFNAC_PRDS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FinAccountType",
+      "type": "one",
+      "relEntityName": "FinAccountType",
+      "fkName": "PRSTFNAC_FNACTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTypeId",
+          "relFieldName": "finAccountTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Survey",
+      "type": "one",
+      "relEntityName": "Survey",
+      "fkName": "PRSTFNAC_SRVY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "purchaseSurveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReplenishMethodEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PRSTFNAC_FARPMTD",
+      "title": "ReplenishMethod",
+      "keymaps": [
+        {
+          "fieldName": "replenishMethodEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "productStoreId",
+    "finAccountTypeId"
+  ],
+  "uniqueKey": "productStoreId, finAccountTypeId",
+  "combine": true,
+  "isView": false
+}

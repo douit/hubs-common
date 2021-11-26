@@ -1,0 +1,190 @@
+{
+  "name": "AccommodationMap",
+  "title": "Accommodation Map",
+  "description": "None",
+  "tableName": "ACCOMMODATION_MAP",
+  "fields": [
+    {
+      "name": "accommodationMapId",
+      "type": "id",
+      "col": "ACCOMMODATION_MAP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "accommodationClassId",
+      "type": "id",
+      "col": "ACCOMMODATION_CLASS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "accommodationMapTypeId",
+      "type": "id",
+      "col": "ACCOMMODATION_MAP_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "numberOfSpaces",
+      "type": "numeric",
+      "col": "NUMBER_OF_SPACES",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "AccommodationClass",
+      "type": "one",
+      "relEntityName": "AccommodationClass",
+      "fkName": "ACMD_MAP_CLASS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "accommodationClassId",
+          "relFieldName": "accommodationClassId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAsset",
+      "type": "one",
+      "relEntityName": "FixedAsset",
+      "fkName": "ACMD_MAP_FA",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AccommodationMapType",
+      "type": "one",
+      "relEntityName": "AccommodationMapType",
+      "fkName": "ACMD_MAP_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "accommodationMapTypeId",
+          "relFieldName": "accommodationMapTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "accommodationMapId",
+          "relFieldName": "accommodationMapId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "accommodationMapId"
+  ],
+  "uniqueKey": "accommodationMapId",
+  "combine": false,
+  "isView": false
+}

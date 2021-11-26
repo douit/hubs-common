@@ -1,0 +1,191 @@
+{
+  "name": "QuoteType",
+  "title": "Quote Type",
+  "description": "None",
+  "tableName": "QUOTE_TYPE",
+  "fields": [
+    {
+      "name": "quoteTypeId",
+      "type": "id",
+      "col": "QUOTE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentQuoteType",
+      "type": "one",
+      "relEntityName": "QuoteType",
+      "fkName": "QUOTE_TYPE_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "quoteTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyPrefDocTypeTpl",
+      "type": "many",
+      "relEntityName": "PartyPrefDocTypeTpl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteTypeId",
+          "relFieldName": "quoteTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Quote",
+      "type": "many",
+      "relEntityName": "Quote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteTypeId",
+          "relFieldName": "quoteTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildQuoteType",
+      "type": "many",
+      "relEntityName": "QuoteType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "quoteTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteTypeAttr",
+      "type": "many",
+      "relEntityName": "QuoteTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteTypeId",
+          "relFieldName": "quoteTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "quoteTypeId"
+  ],
+  "uniqueKey": "quoteTypeId",
+  "combine": false,
+  "isView": false
+}

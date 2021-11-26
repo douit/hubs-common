@@ -1,0 +1,594 @@
+{
+  "name": "QuoteAdjustment",
+  "title": "Quote Adjustment",
+  "description": "Note that both includeInTax and includeInShipping should default to true, except in the case where this adjustment is a tax or shipping adjustment then should be ignored.",
+  "tableName": "QUOTE_ADJUSTMENT",
+  "fields": [
+    {
+      "name": "quoteAdjustmentId",
+      "type": "id",
+      "col": "QUOTE_ADJUSTMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quoteAdjustmentTypeId",
+      "type": "id",
+      "col": "QUOTE_ADJUSTMENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quoteId",
+      "type": "id",
+      "col": "QUOTE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quoteItemSeqId",
+      "type": "id",
+      "col": "QUOTE_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "amount",
+      "type": "currency-amount",
+      "col": "AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPromoId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPromoRuleId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_RULE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productPromoActionSeqId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_ACTION_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productFeatureId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "correspondingProductId",
+      "type": "id",
+      "col": "CORRESPONDING_PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sourceReferenceId",
+      "type": "id-long",
+      "col": "SOURCE_REFERENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "sourcePercentage",
+      "type": "fixed-point",
+      "col": "SOURCE_PERCENTAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "customerReferenceId",
+      "type": "id-long",
+      "col": "CUSTOMER_REFERENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "primaryGeoId",
+      "type": "id",
+      "col": "PRIMARY_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "secondaryGeoId",
+      "type": "id",
+      "col": "SECONDARY_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "exemptAmount",
+      "type": "currency-amount",
+      "col": "EXEMPT_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxAuthGeoId",
+      "type": "id",
+      "col": "TAX_AUTH_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "taxAuthPartyId",
+      "type": "id",
+      "col": "TAX_AUTH_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "overrideGlAccountId",
+      "type": "id",
+      "col": "OVERRIDE_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "includeInTax",
+      "type": "indicator",
+      "col": "INCLUDE_IN_TAX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "includeInShipping",
+      "type": "indicator",
+      "col": "INCLUDE_IN_SHIPPING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderAdjustmentType",
+      "type": "one",
+      "relEntityName": "OrderAdjustmentType",
+      "fkName": "QUOTE_ADJ_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteAdjustmentTypeId",
+          "relFieldName": "orderAdjustmentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Quote",
+      "type": "one",
+      "relEntityName": "Quote",
+      "fkName": "QUOTE_ADJ_OHEAD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "QUOTE_ADJ_USERL",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "QuoteItem",
+      "type": "one-nofk",
+      "relEntityName": "QuoteItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        },
+        {
+          "fieldName": "quoteItemSeqId",
+          "relFieldName": "quoteItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPromo",
+      "type": "one",
+      "relEntityName": "ProductPromo",
+      "fkName": "QUOTE_ADJ_PROMO",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPromoRule",
+      "type": "one-nofk",
+      "relEntityName": "ProductPromoRule",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        },
+        {
+          "fieldName": "productPromoRuleId",
+          "relFieldName": "productPromoRuleId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPromoAction",
+      "type": "one-nofk",
+      "relEntityName": "ProductPromoAction",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        },
+        {
+          "fieldName": "productPromoRuleId",
+          "relFieldName": "productPromoRuleId"
+        },
+        {
+          "fieldName": "productPromoActionSeqId",
+          "relFieldName": "productPromoActionSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PrimaryGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "QUOTE_ADJ_PRGEO",
+      "title": "Primary",
+      "keymaps": [
+        {
+          "fieldName": "primaryGeoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SecondaryGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "QUOTE_ADJ_SCGEO",
+      "title": "Secondary",
+      "keymaps": [
+        {
+          "fieldName": "secondaryGeoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxAuthority",
+      "type": "one",
+      "relEntityName": "TaxAuthority",
+      "fkName": "QUOTE_ADJ_TXA",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OverrideGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "QUOTE_ADJ_OGLA",
+      "title": "Override",
+      "keymaps": [
+        {
+          "fieldName": "overrideGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "quoteAdjustmentId"
+  ],
+  "uniqueKey": "quoteAdjustmentId",
+  "combine": false,
+  "isView": false
+}

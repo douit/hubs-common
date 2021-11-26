@@ -1,0 +1,680 @@
+{
+  "name": "DataResource",
+  "title": "Data Object",
+  "description": "None",
+  "tableName": "DATA_RESOURCE",
+  "fields": [
+    {
+      "name": "dataResourceId",
+      "type": "id",
+      "col": "DATA_RESOURCE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dataResourceTypeId",
+      "type": "id",
+      "col": "DATA_RESOURCE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dataTemplateTypeId",
+      "type": "id",
+      "col": "DATA_TEMPLATE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dataCategoryId",
+      "type": "id",
+      "col": "DATA_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dataSourceId",
+      "type": "id",
+      "col": "DATA_SOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dataResourceName",
+      "type": "value",
+      "col": "DATA_RESOURCE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "localeString",
+      "type": "very-short",
+      "col": "LOCALE_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(10)",
+      "stringLength": 10,
+      "validators": []
+    },
+    {
+      "name": "mimeTypeId",
+      "type": "id-vlong",
+      "col": "MIME_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "characterSetId",
+      "type": "id-long",
+      "col": "CHARACTER_SET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "objectInfo",
+      "type": "long-varchar",
+      "col": "OBJECT_INFO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "surveyId",
+      "type": "id",
+      "col": "SURVEY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyResponseId",
+      "type": "id",
+      "col": "SURVEY_RESPONSE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "relatedDetailId",
+      "type": "id",
+      "col": "RELATED_DETAIL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "isPublic",
+      "type": "indicator",
+      "col": "IS_PUBLIC",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "DTRSRC_STATUS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataResourceType",
+      "type": "one",
+      "relEntityName": "DataResourceType",
+      "fkName": "DATA_REC_TO_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceTypeId",
+          "relFieldName": "dataResourceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataTemplateType",
+      "type": "one",
+      "relEntityName": "DataTemplateType",
+      "fkName": "DATA_REC_TO_TTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataTemplateTypeId",
+          "relFieldName": "dataTemplateTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataCategory",
+      "type": "one",
+      "relEntityName": "DataCategory",
+      "fkName": "DATA_REC_TO_CAT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataCategoryId",
+          "relFieldName": "dataCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataSource",
+      "type": "one",
+      "relEntityName": "DataSource",
+      "fkName": "DATA_REC_DTSRC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataSourceId",
+          "relFieldName": "dataSourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MimeType",
+      "type": "one-nofk",
+      "relEntityName": "MimeType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "mimeTypeId",
+          "relFieldName": "mimeTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CharacterSet",
+      "type": "one",
+      "relEntityName": "CharacterSet",
+      "fkName": "DATA_REC_CHST",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "characterSetId",
+          "relFieldName": "characterSetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataResourceTypeAttr",
+      "type": "many",
+      "relEntityName": "DataResourceTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceTypeId",
+          "relFieldName": "dataResourceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreatedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "DATA_REC_CB_ULGN",
+      "title": "CreatedBy",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LastModifiedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "DATA_REC_LMB_ULGN",
+      "title": "LastModifiedBy",
+      "keymaps": [
+        {
+          "fieldName": "lastModifiedByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Survey",
+      "type": "one",
+      "relEntityName": "Survey",
+      "fkName": "DATA_REC_SURVEY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyResponse",
+      "type": "one",
+      "relEntityName": "SurveyResponse",
+      "fkName": "DATA_REC_SVRSP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyResponseId",
+          "relFieldName": "surveyResponseId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AudioDataResource",
+      "type": "one-nofk",
+      "relEntityName": "AudioDataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Content",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TemplateContent",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "title": "Template",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "templateDataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OldContentRevisionItem",
+      "type": "many",
+      "relEntityName": "ContentRevisionItem",
+      "fkName": "",
+      "title": "Old",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "oldDataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "NewContentRevisionItem",
+      "type": "many",
+      "relEntityName": "ContentRevisionItem",
+      "fkName": "",
+      "title": "New",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "newDataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DataResourceAttribute",
+      "type": "many",
+      "relEntityName": "DataResourceAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DataResourceMetaData",
+      "type": "many",
+      "relEntityName": "DataResourceMetaData",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DataResourcePurpose",
+      "type": "many",
+      "relEntityName": "DataResourcePurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DataResourceRole",
+      "type": "many",
+      "relEntityName": "DataResourceRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ElectronicText",
+      "type": "one-nofk",
+      "relEntityName": "ElectronicText",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ImageDataResource",
+      "type": "one-nofk",
+      "relEntityName": "ImageDataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OtherDataResource",
+      "type": "one-nofk",
+      "relEntityName": "OtherDataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFeatureDataResource",
+      "type": "many",
+      "relEntityName": "ProductFeatureDataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VideoDataResource",
+      "type": "one-nofk",
+      "relEntityName": "VideoDataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "dataResourceId"
+  ],
+  "uniqueKey": "dataResourceId",
+  "combine": false,
+  "isView": false
+}

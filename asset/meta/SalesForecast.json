@@ -1,0 +1,404 @@
+{
+  "name": "SalesForecast",
+  "title": "Stores sales forecast data for sales opportunities.",
+  "description": "None",
+  "tableName": "SALES_FORECAST",
+  "fields": [
+    {
+      "name": "salesForecastId",
+      "type": "id",
+      "col": "SALES_FORECAST_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentSalesForecastId",
+      "type": "id",
+      "col": "PARENT_SALES_FORECAST_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "organizationPartyId",
+      "type": "id",
+      "col": "ORGANIZATION_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "internalPartyId",
+      "type": "id",
+      "col": "INTERNAL_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "customTimePeriodId",
+      "type": "id",
+      "col": "CUSTOM_TIME_PERIOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quotaAmount",
+      "type": "currency-amount",
+      "col": "QUOTA_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "forecastAmount",
+      "type": "currency-amount",
+      "col": "FORECAST_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "bestCaseAmount",
+      "type": "currency-amount",
+      "col": "BEST_CASE_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "closedAmount",
+      "type": "currency-amount",
+      "col": "CLOSED_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "percentOfQuotaForecast",
+      "type": "fixed-point",
+      "col": "PERCENT_OF_QUOTA_FORECAST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "percentOfQuotaClosed",
+      "type": "fixed-point",
+      "col": "PERCENT_OF_QUOTA_CLOSED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "pipelineAmount",
+      "type": "currency-amount",
+      "col": "PIPELINE_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLoginId",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "modifiedByUserLoginId",
+      "type": "id-vlong",
+      "col": "MODIFIED_BY_USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentSalesForecast",
+      "type": "one",
+      "relEntityName": "SalesForecast",
+      "fkName": "SALES4C_PARENT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentSalesForecastId",
+          "relFieldName": "salesForecastId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrganizationParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "SALES4C_ORG_PARTY",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "organizationPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InternalParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "SALES4C_INT_PARTY",
+      "title": "Internal",
+      "keymaps": [
+        {
+          "fieldName": "internalPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomTimePeriod",
+      "type": "one",
+      "relEntityName": "CustomTimePeriod",
+      "fkName": "SALES4C_TIME_PER",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "customTimePeriodId",
+          "relFieldName": "customTimePeriodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "SALES4C_CUR_UOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreatedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "SALES4C_CRT_USER",
+      "title": "CreatedBy",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ModifiedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "SALES4C_MOD_USER",
+      "title": "ModifiedBy",
+      "keymaps": [
+        {
+          "fieldName": "modifiedByUserLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ChildSalesForecast",
+      "type": "many",
+      "relEntityName": "SalesForecast",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "salesForecastId",
+          "relFieldName": "parentSalesForecastId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesForecastDetail",
+      "type": "many",
+      "relEntityName": "SalesForecastDetail",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesForecastId",
+          "relFieldName": "salesForecastId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesForecastHistory",
+      "type": "many",
+      "relEntityName": "SalesForecastHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salesForecastId",
+          "relFieldName": "salesForecastId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "salesForecastId"
+  ],
+  "uniqueKey": "salesForecastId",
+  "combine": false,
+  "isView": false
+}

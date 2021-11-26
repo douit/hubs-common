@@ -1,0 +1,2843 @@
+{
+  "name": "Party",
+  "title": "Party",
+  "description": "None",
+  "tableName": "PARTY",
+  "fields": [
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyTypeId",
+      "type": "id",
+      "col": "PARTY_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "externalId",
+      "type": "id",
+      "col": "EXTERNAL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "preferredCurrencyUomId",
+      "type": "id",
+      "col": "PREFERRED_CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "very-long",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "dataSourceId",
+      "type": "id",
+      "col": "DATA_SOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "isUnread",
+      "type": "indicator",
+      "col": "IS_UNREAD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PartyType",
+      "type": "one",
+      "relEntityName": "PartyType",
+      "fkName": "PARTY_PTY_TYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyTypeId",
+          "relFieldName": "partyTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreatedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PARTY_CUL",
+      "title": "CreatedBy",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LastModifiedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PARTY_LMCUL",
+      "title": "LastModifiedBy",
+      "keymaps": [
+        {
+          "fieldName": "lastModifiedByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PARTY_PREF_CRNCY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "preferredCurrencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PARTY_STATUSITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyTypeAttr",
+      "type": "many",
+      "relEntityName": "PartyTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyTypeId",
+          "relFieldName": "partyTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataSource",
+      "type": "one",
+      "relEntityName": "DataSource",
+      "fkName": "PARTY_DATSRC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataSourceId",
+          "relFieldName": "dataSourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Affiliate",
+      "type": "one-nofk",
+      "relEntityName": "Affiliate",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromAgreement",
+      "type": "many",
+      "relEntityName": "Agreement",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToAgreement",
+      "type": "many",
+      "relEntityName": "Agreement",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementPartyApplic",
+      "type": "many",
+      "relEntityName": "AgreementPartyApplic",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementRole",
+      "type": "many",
+      "relEntityName": "AgreementRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BillingAccountRole",
+      "type": "many",
+      "relEntityName": "BillingAccountRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetReview",
+      "type": "many",
+      "relEntityName": "BudgetReview",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BudgetRole",
+      "type": "many",
+      "relEntityName": "BudgetRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CarrierShipmentBoxType",
+      "type": "many",
+      "relEntityName": "CarrierShipmentBoxType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CarrierShipmentMethod",
+      "type": "many",
+      "relEntityName": "CarrierShipmentMethod",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToCommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromCommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventRole",
+      "type": "many",
+      "relEntityName": "CommunicationEventRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OwnerContactList",
+      "type": "many",
+      "relEntityName": "ContactList",
+      "fkName": "",
+      "title": "Owner",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "ownerPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactListCommStatus",
+      "type": "many",
+      "relEntityName": "ContactListCommStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactListParty",
+      "type": "many",
+      "relEntityName": "ContactListParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentApproval",
+      "type": "many",
+      "relEntityName": "ContentApproval",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommittedByContentRevision",
+      "type": "many",
+      "relEntityName": "ContentRevision",
+      "fkName": "",
+      "title": "CommittedBy",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "committedByPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentRole",
+      "type": "many",
+      "relEntityName": "ContentRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CostComponent",
+      "type": "many",
+      "relEntityName": "CostComponent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromCustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "fromPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestParty",
+      "type": "many",
+      "relEntityName": "CustRequestParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestType",
+      "type": "many",
+      "relEntityName": "CustRequestType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationCustomTimePeriod",
+      "type": "many",
+      "relEntityName": "CustomTimePeriod",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DataResourceRole",
+      "type": "many",
+      "relEntityName": "DataResourceRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EbayShippingMethod",
+      "type": "many",
+      "relEntityName": "EbayShippingMethod",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmplLeave",
+      "type": "many",
+      "relEntityName": "EmplLeave",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ApproverEmplLeave",
+      "type": "many",
+      "relEntityName": "EmplLeave",
+      "fkName": "",
+      "title": "Approver",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "approverPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmplPosition",
+      "type": "many",
+      "relEntityName": "EmplPosition",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmplPositionFulfillment",
+      "type": "many",
+      "relEntityName": "EmplPositionFulfillment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToEmployment",
+      "type": "many",
+      "relEntityName": "Employment",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromEmployment",
+      "type": "many",
+      "relEntityName": "Employment",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ApplyingEmploymentApp",
+      "type": "many",
+      "relEntityName": "EmploymentApp",
+      "fkName": "",
+      "title": "Applying",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "applyingPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReferredByEmploymentApp",
+      "type": "many",
+      "relEntityName": "EmploymentApp",
+      "fkName": "",
+      "title": "ReferredBy",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "referredByPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ApproverEmploymentApp",
+      "type": "many",
+      "relEntityName": "EmploymentApp",
+      "fkName": "",
+      "title": "Approver",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "approverPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OwnerFacility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "title": "Owner",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "ownerPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityCarrierShipment",
+      "type": "many",
+      "relEntityName": "FacilityCarrierShipment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityGroupRole",
+      "type": "many",
+      "relEntityName": "FacilityGroupRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityParty",
+      "type": "many",
+      "relEntityName": "FacilityParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationFinAccount",
+      "type": "many",
+      "relEntityName": "FinAccount",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OwnerFinAccount",
+      "type": "many",
+      "relEntityName": "FinAccount",
+      "fkName": "",
+      "title": "Owner",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "ownerPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountRole",
+      "type": "many",
+      "relEntityName": "FinAccountRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountTrans",
+      "type": "many",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PerformedByFinAccountTrans",
+      "type": "many",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "",
+      "title": "PerformedBy",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "performedByPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationFinAccountTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FinAccountTypeGlAccount",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GovAgencyFixedAssetRegistration",
+      "type": "many",
+      "relEntityName": "FixedAssetRegistration",
+      "fkName": "",
+      "title": "GovAgency",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "govAgencyPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GiftCardFulfillment",
+      "type": "many",
+      "relEntityName": "GiftCardFulfillment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountHistory",
+      "type": "many",
+      "relEntityName": "GlAccountHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountOrganization",
+      "type": "many",
+      "relEntityName": "GlAccountOrganization",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountRole",
+      "type": "many",
+      "relEntityName": "GlAccountRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationGlAccountTypeDefault",
+      "type": "many",
+      "relEntityName": "GlAccountTypeDefault",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlJournal",
+      "type": "many",
+      "relEntityName": "GlJournal",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlReconciliation",
+      "type": "many",
+      "relEntityName": "GlReconciliation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OwnerInventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "title": "Owner",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "ownerPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromInvoice",
+      "type": "many",
+      "relEntityName": "Invoice",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Invoice",
+      "type": "many",
+      "relEntityName": "Invoice",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityInvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "title": "TaxAuthority",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OverrideOrgInvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "title": "OverrideOrg",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "overrideOrgPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromInvoiceItemAssoc",
+      "type": "many",
+      "relEntityName": "InvoiceItemAssoc",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToInvoiceItemAssoc",
+      "type": "many",
+      "relEntityName": "InvoiceItemAssoc",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationInvoiceItemTypeGlAccount",
+      "type": "many",
+      "relEntityName": "InvoiceItemTypeGlAccount",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceRole",
+      "type": "many",
+      "relEntityName": "InvoiceRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ItemIssuanceRole",
+      "type": "many",
+      "relEntityName": "ItemIssuanceRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "IntervieweeJobInterview",
+      "type": "many",
+      "relEntityName": "JobInterview",
+      "fkName": "",
+      "title": "Interviewee",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "jobIntervieweePartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InterviewerJobInterview",
+      "type": "many",
+      "relEntityName": "JobInterview",
+      "fkName": "",
+      "title": "Interviewer",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "jobInterviewerPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaignRole",
+      "type": "many",
+      "relEntityName": "MarketingCampaignRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "NoteNoteData",
+      "type": "many",
+      "relEntityName": "NoteData",
+      "fkName": "",
+      "title": "Note",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "noteParty"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemRole",
+      "type": "many",
+      "relEntityName": "OrderItemRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SupplierOrderItemShipGroup",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "Supplier",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "supplierPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VendorOrderItemShipGroup",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "Vendor",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "vendorPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CarrierOrderItemShipGroup",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "Carrier",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderRole",
+      "type": "many",
+      "relEntityName": "OrderRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyAcctgPreference",
+      "type": "one-nofk",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyAttribute",
+      "type": "many",
+      "relEntityName": "PartyAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToPartyBenefit",
+      "type": "many",
+      "relEntityName": "PartyBenefit",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromPartyBenefit",
+      "type": "many",
+      "relEntityName": "PartyBenefit",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyCarrierAccount",
+      "type": "many",
+      "relEntityName": "PartyCarrierAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CarrierPartyCarrierAccount",
+      "type": "many",
+      "relEntityName": "PartyCarrierAccount",
+      "fkName": "",
+      "title": "Carrier",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyClassification",
+      "type": "many",
+      "relEntityName": "PartyClassification",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContactMech",
+      "type": "many",
+      "relEntityName": "PartyContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContactMechPurpose",
+      "type": "many",
+      "relEntityName": "PartyContactMechPurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContent",
+      "type": "many",
+      "relEntityName": "PartyContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyDataSource",
+      "type": "many",
+      "relEntityName": "PartyDataSource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyFixedAssetAssignment",
+      "type": "many",
+      "relEntityName": "PartyFixedAssetAssignment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyGeoPoint",
+      "type": "many",
+      "relEntityName": "PartyGeoPoint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationPartyGlAccount",
+      "type": "many",
+      "relEntityName": "PartyGlAccount",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyGlAccount",
+      "type": "many",
+      "relEntityName": "PartyGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyGroup",
+      "type": "one-nofk",
+      "relEntityName": "PartyGroup",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyIcsAvsOverride",
+      "type": "one-nofk",
+      "relEntityName": "PartyIcsAvsOverride",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyIdentification",
+      "type": "many",
+      "relEntityName": "PartyIdentification",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyInvitation",
+      "type": "many",
+      "relEntityName": "PartyInvitation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToPartyInvitationGroupAssoc",
+      "type": "many",
+      "relEntityName": "PartyInvitationGroupAssoc",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyNameHistory",
+      "type": "many",
+      "relEntityName": "PartyNameHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyNeed",
+      "type": "many",
+      "relEntityName": "PartyNeed",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyNote",
+      "type": "many",
+      "relEntityName": "PartyNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyPrefDocTypeTpl",
+      "type": "many",
+      "relEntityName": "PartyPrefDocTypeTpl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyProfileDefault",
+      "type": "many",
+      "relEntityName": "PartyProfileDefault",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyQual",
+      "type": "many",
+      "relEntityName": "PartyQual",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyRate",
+      "type": "many",
+      "relEntityName": "PartyRate",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromPartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToPartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyResume",
+      "type": "many",
+      "relEntityName": "PartyResume",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyRole",
+      "type": "many",
+      "relEntityName": "PartyRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartySkill",
+      "type": "many",
+      "relEntityName": "PartySkill",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyStatus",
+      "type": "many",
+      "relEntityName": "PartyStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyTaxAuthInfo",
+      "type": "many",
+      "relEntityName": "PartyTaxAuthInfo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromPayment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToPayment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGlAccountTypeMap",
+      "type": "many",
+      "relEntityName": "PaymentGlAccountTypeMap",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentMethod",
+      "type": "many",
+      "relEntityName": "PaymentMethod",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationPaymentMethodTypeGlAccount",
+      "type": "many",
+      "relEntityName": "PaymentMethodTypeGlAccount",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PayrollPreference",
+      "type": "many",
+      "relEntityName": "PayrollPreference",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmployeePerfReview",
+      "type": "many",
+      "relEntityName": "PerfReview",
+      "fkName": "",
+      "title": "Employee",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "employeePartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ManagerPerfReview",
+      "type": "many",
+      "relEntityName": "PerfReview",
+      "fkName": "",
+      "title": "Manager",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "managerPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmployeePerfReviewItem",
+      "type": "many",
+      "relEntityName": "PerfReviewItem",
+      "fkName": "",
+      "title": "Employee",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "employeePartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PerformanceNote",
+      "type": "many",
+      "relEntityName": "PerformanceNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Person",
+      "type": "one-nofk",
+      "relEntityName": "Person",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PersonTraining",
+      "type": "many",
+      "relEntityName": "PersonTraining",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdCatalogRole",
+      "type": "many",
+      "relEntityName": "ProdCatalogRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductAverageCost",
+      "type": "many",
+      "relEntityName": "ProductAverageCost",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductCategoryGlAccount",
+      "type": "many",
+      "relEntityName": "ProductCategoryGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductCategoryRole",
+      "type": "many",
+      "relEntityName": "ProductCategoryRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductGlAccount",
+      "type": "many",
+      "relEntityName": "ProductGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityProductPrice",
+      "type": "many",
+      "relEntityName": "ProductPrice",
+      "fkName": "",
+      "title": "TaxAuthority",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromo",
+      "type": "many",
+      "relEntityName": "ProductPromo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "overrideOrgPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoCodeParty",
+      "type": "many",
+      "relEntityName": "ProductPromoCodeParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoUse",
+      "type": "many",
+      "relEntityName": "ProductPromoUse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductRole",
+      "type": "many",
+      "relEntityName": "ProductRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "payToPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreGroupRole",
+      "type": "many",
+      "relEntityName": "ProductStoreGroupRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreRole",
+      "type": "many",
+      "relEntityName": "ProductStoreRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreShipmentMeth",
+      "type": "many",
+      "relEntityName": "ProductStoreShipmentMeth",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "companyPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VendorProductStoreVendorPayment",
+      "type": "many",
+      "relEntityName": "ProductStoreVendorPayment",
+      "fkName": "",
+      "title": "Vendor",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "vendorPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VendorProductStoreVendorShipment",
+      "type": "many",
+      "relEntityName": "ProductStoreVendorShipment",
+      "fkName": "",
+      "title": "Vendor",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "vendorPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CarrierProductStoreVendorShipment",
+      "type": "many",
+      "relEntityName": "ProductStoreVendorShipment",
+      "fkName": "",
+      "title": "Carrier",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Quote",
+      "type": "many",
+      "relEntityName": "Quote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteRole",
+      "type": "many",
+      "relEntityName": "QuoteRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RateAmount",
+      "type": "many",
+      "relEntityName": "RateAmount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReorderGuideline",
+      "type": "many",
+      "relEntityName": "ReorderGuideline",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementRole",
+      "type": "many",
+      "relEntityName": "RequirementRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RespondingParty",
+      "type": "many",
+      "relEntityName": "RespondingParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnHeader",
+      "type": "many",
+      "relEntityName": "ReturnHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "fromPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToReturnHeader",
+      "type": "many",
+      "relEntityName": "ReturnHeader",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "toPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationSalesForecast",
+      "type": "many",
+      "relEntityName": "SalesForecast",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InternalSalesForecast",
+      "type": "many",
+      "relEntityName": "SalesForecast",
+      "fkName": "",
+      "title": "Internal",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "internalPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationSalesForecastHistory",
+      "type": "many",
+      "relEntityName": "SalesForecastHistory",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InternalSalesForecastHistory",
+      "type": "many",
+      "relEntityName": "SalesForecastHistory",
+      "fkName": "",
+      "title": "Internal",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "internalPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityRole",
+      "type": "many",
+      "relEntityName": "SalesOpportunityRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SegmentGroupRole",
+      "type": "many",
+      "relEntityName": "SegmentGroupRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentReceiptRole",
+      "type": "many",
+      "relEntityName": "ShipmentReceiptRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CarrierShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "Carrier",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingList",
+      "type": "many",
+      "relEntityName": "ShoppingList",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Subscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginatedFromSubscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "OriginatedFrom",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "originatedFromPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SupplierProduct",
+      "type": "many",
+      "relEntityName": "SupplierProduct",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SupplierProductFeature",
+      "type": "many",
+      "relEntityName": "SupplierProductFeature",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyResponse",
+      "type": "many",
+      "relEntityName": "SurveyResponse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthTaxAuthority",
+      "type": "many",
+      "relEntityName": "TaxAuthority",
+      "fkName": "",
+      "title": "TaxAuth",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationTaxAuthorityGlAccount",
+      "type": "many",
+      "relEntityName": "TaxAuthorityGlAccount",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TimeEntry",
+      "type": "many",
+      "relEntityName": "TimeEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Timesheet",
+      "type": "many",
+      "relEntityName": "Timesheet",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ClientTimesheet",
+      "type": "many",
+      "relEntityName": "Timesheet",
+      "fkName": "",
+      "title": "Client",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "clientPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TimesheetRole",
+      "type": "many",
+      "relEntityName": "TimesheetRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLogin",
+      "type": "many",
+      "relEntityName": "UserLogin",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLoginHistory",
+      "type": "many",
+      "relEntityName": "UserLoginHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrganizationVarianceReasonGlAccount",
+      "type": "many",
+      "relEntityName": "VarianceReasonGlAccount",
+      "fkName": "",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "organizationPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Vendor",
+      "type": "one-nofk",
+      "relEntityName": "Vendor",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VendorVendorProduct",
+      "type": "many",
+      "relEntityName": "VendorProduct",
+      "fkName": "",
+      "title": "Vendor",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "vendorPartyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebSiteRole",
+      "type": "many",
+      "relEntityName": "WebSiteRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebUserPreference",
+      "type": "many",
+      "relEntityName": "WebUserPreference",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortEventReminder",
+      "type": "many",
+      "relEntityName": "WorkEffortEventReminder",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "partyId"
+  ],
+  "uniqueKey": "partyId",
+  "combine": false,
+  "isView": false
+}

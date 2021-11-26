@@ -1,0 +1,778 @@
+{
+  "name": "CommunicationEvent",
+  "title": "Communication Event",
+  "description": "None",
+  "tableName": "COMMUNICATION_EVENT",
+  "fields": [
+    {
+      "name": "communicationEventId",
+      "type": "id",
+      "col": "COMMUNICATION_EVENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "communicationEventTypeId",
+      "type": "id",
+      "col": "COMMUNICATION_EVENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "origCommEventId",
+      "type": "id",
+      "col": "ORIG_COMM_EVENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentCommEventId",
+      "type": "id",
+      "col": "PARENT_COMM_EVENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contactMechTypeId",
+      "type": "id",
+      "col": "CONTACT_MECH_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contactMechIdFrom",
+      "type": "id",
+      "col": "CONTACT_MECH_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contactMechIdTo",
+      "type": "id",
+      "col": "CONTACT_MECH_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdFrom",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdTo",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdFrom",
+      "type": "id",
+      "col": "PARTY_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdTo",
+      "type": "id",
+      "col": "PARTY_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "entryDate",
+      "type": "date-time",
+      "col": "ENTRY_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "datetimeStarted",
+      "type": "date-time",
+      "col": "DATETIME_STARTED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "datetimeEnded",
+      "type": "date-time",
+      "col": "DATETIME_ENDED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "subject",
+      "type": "long-varchar",
+      "col": "SUBJECT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "contentMimeTypeId",
+      "type": "id-vlong",
+      "col": "CONTENT_MIME_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "content",
+      "type": "very-long",
+      "col": "CONTENT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "note",
+      "type": "comment",
+      "col": "NOTE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "reasonEnumId",
+      "type": "id",
+      "col": "REASON_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contactListId",
+      "type": "id",
+      "col": "CONTACT_LIST_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "headerString",
+      "type": "very-long",
+      "col": "HEADER_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "fromText",
+      "type": "very-long",
+      "col": "FROM_TEXT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "toText",
+      "type": "very-long",
+      "col": "TO_TEXT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "ccString",
+      "type": "very-long",
+      "col": "CC_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "bccString",
+      "type": "very-long",
+      "col": "BCC_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "messageId",
+      "type": "value",
+      "col": "MESSAGE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CommunicationEventType",
+      "type": "one",
+      "relEntityName": "CommunicationEventType",
+      "fkName": "COM_EVNT_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventTypeId",
+          "relFieldName": "communicationEventTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "COM_EVNT_TPTY",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToRoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "COM_EVNT_TRTYP",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToPartyRole",
+      "type": "one-nofk",
+      "relEntityName": "PartyRole",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "COM_EVNT_FPTY",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromRoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "COM_EVNT_FRTYP",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromPartyRole",
+      "type": "one-nofk",
+      "relEntityName": "PartyRole",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "COM_EVNT_STTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContactMechType",
+      "type": "one",
+      "relEntityName": "ContactMechType",
+      "fkName": "COM_EVNT_CMTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "COM_EVNT_FCM",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "contactMechIdFrom",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "COM_EVNT_TCM",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "contactMechIdTo",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContactList",
+      "type": "one",
+      "relEntityName": "ContactList",
+      "fkName": "COM_EVNT_CLST",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactListId",
+          "relFieldName": "contactListId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MimeType",
+      "type": "one",
+      "relEntityName": "MimeType",
+      "fkName": "COM_EVNT_MIMETYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentMimeTypeId",
+          "relFieldName": "mimeTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Enumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "COM_EVNT_RESENUM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "reasonEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CommEventContentAssoc",
+      "type": "many",
+      "relEntityName": "CommEventContentAssoc",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventOrder",
+      "type": "many",
+      "relEntityName": "CommunicationEventOrder",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventProduct",
+      "type": "many",
+      "relEntityName": "CommunicationEventProduct",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventPurpose",
+      "type": "many",
+      "relEntityName": "CommunicationEventPurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventReturn",
+      "type": "many",
+      "relEntityName": "CommunicationEventReturn",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventRole",
+      "type": "many",
+      "relEntityName": "CommunicationEventRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventWorkEff",
+      "type": "many",
+      "relEntityName": "CommunicationEventWorkEff",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactListCommStatus",
+      "type": "many",
+      "relEntityName": "ContactListCommStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestCommEvent",
+      "type": "many",
+      "relEntityName": "CustRequestCommEvent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyNeed",
+      "type": "many",
+      "relEntityName": "PartyNeed",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SubscriptionCommEvent",
+      "type": "many",
+      "relEntityName": "SubscriptionCommEvent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventId",
+          "relFieldName": "communicationEventId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "communicationEventId"
+  ],
+  "uniqueKey": "communicationEventId",
+  "combine": false,
+  "isView": false
+}

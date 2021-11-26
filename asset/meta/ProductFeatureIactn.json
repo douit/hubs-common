@@ -1,0 +1,164 @@
+{
+  "name": "ProductFeatureIactn",
+  "title": "Product Feature Interaction",
+  "description": "None",
+  "tableName": "PRODUCT_FEATURE_IACTN",
+  "fields": [
+    {
+      "name": "productFeatureId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productFeatureIdTo",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productFeatureIactnTypeId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_IACTN_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductFeatureIactnType",
+      "type": "one",
+      "relEntityName": "ProductFeatureIactnType",
+      "fkName": "PROD_FICTN_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureIactnTypeId",
+          "relFieldName": "productFeatureIactnTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MainProductFeature",
+      "type": "one",
+      "relEntityName": "ProductFeature",
+      "fkName": "PROD_FICTN_MFEAT",
+      "title": "Main",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AssocProductFeature",
+      "type": "one",
+      "relEntityName": "ProductFeature",
+      "fkName": "PROD_FICTN_AFEAT",
+      "title": "Assoc",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureIdTo",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "productFeatureId",
+    "productFeatureIdTo"
+  ],
+  "uniqueKey": "productFeatureId, productFeatureIdTo",
+  "combine": true,
+  "isView": false
+}

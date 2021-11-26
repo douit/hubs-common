@@ -1,0 +1,710 @@
+{
+  "name": "ContactMech",
+  "title": "Contact Mechanism",
+  "description": "None",
+  "tableName": "CONTACT_MECH",
+  "fields": [
+    {
+      "name": "contactMechId",
+      "type": "id",
+      "col": "CONTACT_MECH_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contactMechTypeId",
+      "type": "id",
+      "col": "CONTACT_MECH_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "infoString",
+      "type": "long-varchar",
+      "col": "INFO_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ContactMechType",
+      "type": "one",
+      "relEntityName": "ContactMechType",
+      "fkName": "CONT_MECH_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContactMechTypeAttr",
+      "type": "many",
+      "relEntityName": "ContactMechTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BillingAccount",
+      "type": "many",
+      "relEntityName": "BillingAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CheckAccount",
+      "type": "many",
+      "relEntityName": "CheckAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromCommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToCommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventRole",
+      "type": "many",
+      "relEntityName": "CommunicationEventRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactListCommStatus",
+      "type": "many",
+      "relEntityName": "ContactListCommStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PreferredContactListParty",
+      "type": "many",
+      "relEntityName": "ContactListParty",
+      "fkName": "",
+      "title": "Preferred",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "preferredContactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactMechAttribute",
+      "type": "many",
+      "relEntityName": "ContactMechAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromContactMechLink",
+      "type": "many",
+      "relEntityName": "ContactMechLink",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToContactMechLink",
+      "type": "many",
+      "relEntityName": "ContactMechLink",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreditCard",
+      "type": "many",
+      "relEntityName": "CreditCard",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FulfillCustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "title": "Fulfill",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "fulfillContactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EftAccount",
+      "type": "many",
+      "relEntityName": "EftAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityContactMech",
+      "type": "many",
+      "relEntityName": "FacilityContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityContactMechPurpose",
+      "type": "many",
+      "relEntityName": "FacilityContactMechPurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FtpAddress",
+      "type": "one-nofk",
+      "relEntityName": "FtpAddress",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GiftCard",
+      "type": "many",
+      "relEntityName": "GiftCard",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Invoice",
+      "type": "many",
+      "relEntityName": "Invoice",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceContactMech",
+      "type": "many",
+      "relEntityName": "InvoiceContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderContactMech",
+      "type": "many",
+      "relEntityName": "OrderContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemContactMech",
+      "type": "many",
+      "relEntityName": "OrderItemContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemShipGroup",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TelecomOrderItemShipGroup",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "Telecom",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "telecomContactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContactMech",
+      "type": "many",
+      "relEntityName": "PartyContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContactMechPurpose",
+      "type": "many",
+      "relEntityName": "PartyContactMechPurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PayPalPaymentMethod",
+      "type": "many",
+      "relEntityName": "PayPalPaymentMethod",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PostalAddress",
+      "type": "one-nofk",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdPromoCodeContactMech",
+      "type": "many",
+      "relEntityName": "ProdPromoCodeContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RespondingParty",
+      "type": "many",
+      "relEntityName": "RespondingParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnContactMech",
+      "type": "many",
+      "relEntityName": "ReturnContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnHeader",
+      "type": "many",
+      "relEntityName": "ReturnHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "originContactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "originContactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DestShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "Dest",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "destinationContactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentContactMech",
+      "type": "many",
+      "relEntityName": "ShipmentContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "originContactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DestShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "Dest",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "destContactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingList",
+      "type": "many",
+      "relEntityName": "ShoppingList",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Subscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TelecomNumber",
+      "type": "one-nofk",
+      "relEntityName": "TelecomNumber",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortContactMech",
+      "type": "many",
+      "relEntityName": "WorkEffortContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortEventReminder",
+      "type": "many",
+      "relEntityName": "WorkEffortEventReminder",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "contactMechId"
+  ],
+  "uniqueKey": "contactMechId",
+  "combine": false,
+  "isView": false
+}

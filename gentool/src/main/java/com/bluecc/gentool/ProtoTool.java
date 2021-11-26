@@ -58,13 +58,13 @@ public class ProtoTool {
                 ImmutableMap.of("className", "DataProto",
                         "classPrefix", "DTP")));
 
-        for (String headEnt : EntityMeta.HEAD_ENTITIES.keySet()) {
+        for (String headEnt : HeadEntityResources.allHeads()) {
             EntityMeta meta= EntityMetaManager.getEntityMeta(headEnt, false);
             writer.write(TemplateUtil.build("templates/proto_service_source.j2",
                     ImmutableMap.of("ent", meta)));
         }
 
-        for (String headEnt : EntityMeta.HEAD_ENTITIES.keySet()) {
+        for (String headEnt : HeadEntityResources.allHeads()) {
             writer.write(flatSourceGen(headEnt));
         }
 

@@ -1,0 +1,313 @@
+{
+  "name": "BillingAccount",
+  "title": "Billing Account",
+  "description": "A BillingAccount Payment Method",
+  "tableName": "BILLING_ACCOUNT",
+  "fields": [
+    {
+      "name": "billingAccountId",
+      "type": "id",
+      "col": "BILLING_ACCOUNT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "accountLimit",
+      "type": "currency-amount",
+      "col": "ACCOUNT_LIMIT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "accountCurrencyUomId",
+      "type": "id",
+      "col": "ACCOUNT_CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contactMechId",
+      "type": "id",
+      "col": "CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "externalAccountId",
+      "type": "id",
+      "col": "EXTERNAL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "BILLACCT_CMECH",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "BILLACCT_CUOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "accountCurrencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PostalAddress",
+      "type": "one",
+      "relEntityName": "PostalAddress",
+      "fkName": "BILLACCT_PADDR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BillingAccountRole",
+      "type": "many",
+      "relEntityName": "BillingAccountRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BillingAccountTerm",
+      "type": "many",
+      "relEntityName": "BillingAccountTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Invoice",
+      "type": "many",
+      "relEntityName": "Invoice",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentApplication",
+      "type": "many",
+      "relEntityName": "PaymentApplication",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnHeader",
+      "type": "many",
+      "relEntityName": "ReturnHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItemResponse",
+      "type": "many",
+      "relEntityName": "ReturnItemResponse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "billingAccountId"
+  ],
+  "uniqueKey": "billingAccountId",
+  "combine": false,
+  "isView": false
+}

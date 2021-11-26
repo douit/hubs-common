@@ -1,0 +1,567 @@
+{
+  "name": "Agreement",
+  "title": "Agreement",
+  "description": "None",
+  "tableName": "AGREEMENT",
+  "fields": [
+    {
+      "name": "agreementId",
+      "type": "id",
+      "col": "AGREEMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdFrom",
+      "type": "id",
+      "col": "PARTY_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdTo",
+      "type": "id",
+      "col": "PARTY_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdFrom",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdTo",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "agreementTypeId",
+      "type": "id",
+      "col": "AGREEMENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "agreementDate",
+      "type": "date-time",
+      "col": "AGREEMENT_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "textData",
+      "type": "very-long",
+      "col": "TEXT_DATA",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "AGRMNT_PRODUCT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromParty",
+      "type": "one-nofk",
+      "relEntityName": "Party",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromRoleType",
+      "type": "one-nofk",
+      "relEntityName": "RoleType",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromPartyRole",
+      "type": "one",
+      "relEntityName": "PartyRole",
+      "fkName": "AGRMNT_FPRTYRLE",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToParty",
+      "type": "one-nofk",
+      "relEntityName": "Party",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToRoleType",
+      "type": "one-nofk",
+      "relEntityName": "RoleType",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToPartyRole",
+      "type": "one",
+      "relEntityName": "PartyRole",
+      "fkName": "AGRMNT_TPRTYRLE",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdFrom",
+          "relFieldName": "roleTypeIdFrom"
+        },
+        {
+          "fieldName": "roleTypeIdTo",
+          "relFieldName": "roleTypeIdTo"
+        },
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyIdFrom"
+        },
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyIdTo"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementType",
+      "type": "one",
+      "relEntityName": "AgreementType",
+      "fkName": "AGRMNT_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementTypeId",
+          "relFieldName": "agreementTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementTypeAttr",
+      "type": "many",
+      "relEntityName": "AgreementTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementTypeId",
+          "relFieldName": "agreementTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Addendum",
+      "type": "many",
+      "relEntityName": "Addendum",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementAttribute",
+      "type": "many",
+      "relEntityName": "AgreementAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementContent",
+      "type": "many",
+      "relEntityName": "AgreementContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementFacilityAppl",
+      "type": "many",
+      "relEntityName": "AgreementFacilityAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementGeographicalApplic",
+      "type": "many",
+      "relEntityName": "AgreementGeographicalApplic",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementItem",
+      "type": "many",
+      "relEntityName": "AgreementItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementPartyApplic",
+      "type": "many",
+      "relEntityName": "AgreementPartyApplic",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementProductAppl",
+      "type": "many",
+      "relEntityName": "AgreementProductAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementPromoAppl",
+      "type": "many",
+      "relEntityName": "AgreementPromoAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementRole",
+      "type": "many",
+      "relEntityName": "AgreementRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementTerm",
+      "type": "many",
+      "relEntityName": "AgreementTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementWorkEffortApplic",
+      "type": "many",
+      "relEntityName": "AgreementWorkEffortApplic",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SupplierOrderItemShipGroup",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "Supplier",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "supplierAgreementId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "agreementId"
+  ],
+  "uniqueKey": "agreementId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,659 @@
+{
+  "name": "Invoice",
+  "title": "Invoice",
+  "description": "None",
+  "tableName": "INVOICE",
+  "fields": [
+    {
+      "name": "invoiceId",
+      "type": "id",
+      "col": "INVOICE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceTypeId",
+      "type": "id",
+      "col": "INVOICE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyIdFrom",
+      "type": "id",
+      "col": "PARTY_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "roleTypeId",
+      "type": "id",
+      "col": "ROLE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "billingAccountId",
+      "type": "id",
+      "col": "BILLING_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contactMechId",
+      "type": "id",
+      "col": "CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceDate",
+      "type": "date-time",
+      "col": "INVOICE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dueDate",
+      "type": "date-time",
+      "col": "DUE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paidDate",
+      "type": "date-time",
+      "col": "PAID_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceMessage",
+      "type": "long-varchar",
+      "col": "INVOICE_MESSAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "referenceNumber",
+      "type": "short-varchar",
+      "col": "REFERENCE_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "recurrenceInfoId",
+      "type": "id",
+      "col": "RECURRENCE_INFO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "InvoiceType",
+      "type": "one",
+      "relEntityName": "InvoiceType",
+      "fkName": "INVOICE_INVTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceTypeId",
+          "relFieldName": "invoiceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InvoiceTypeAttr",
+      "type": "many",
+      "relEntityName": "InvoiceTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceTypeId",
+          "relFieldName": "invoiceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "INVOICE_PARTY_FRM",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "INVOICE_PARTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "INVOICE_ROLETYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRole",
+      "type": "one-nofk",
+      "relEntityName": "PartyRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "INVOICE_STTSITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BillingAccount",
+      "type": "one",
+      "relEntityName": "BillingAccount",
+      "fkName": "INVOICE_BILLACCT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "billingAccountId",
+          "relFieldName": "billingAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "INVOICE_CMECH",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CurrencyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "INVOICE_CUOM",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RecurrenceInfo",
+      "type": "one",
+      "relEntityName": "RecurrenceInfo",
+      "fkName": "INVOICE_RECINFO",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceAttribute",
+      "type": "many",
+      "relEntityName": "InvoiceAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceContactMech",
+      "type": "many",
+      "relEntityName": "InvoiceContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceContent",
+      "type": "many",
+      "relEntityName": "InvoiceContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceNote",
+      "type": "many",
+      "relEntityName": "InvoiceNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceRole",
+      "type": "many",
+      "relEntityName": "InvoiceRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceStatus",
+      "type": "many",
+      "relEntityName": "InvoiceStatus",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceTerm",
+      "type": "many",
+      "relEntityName": "InvoiceTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderAdjustmentBilling",
+      "type": "many",
+      "relEntityName": "OrderAdjustmentBilling",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemBilling",
+      "type": "many",
+      "relEntityName": "OrderItemBilling",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentApplication",
+      "type": "many",
+      "relEntityName": "PaymentApplication",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItemBilling",
+      "type": "many",
+      "relEntityName": "ReturnItemBilling",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentItemBilling",
+      "type": "many",
+      "relEntityName": "ShipmentItemBilling",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TimeEntry",
+      "type": "many",
+      "relEntityName": "TimeEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortBilling",
+      "type": "many",
+      "relEntityName": "WorkEffortBilling",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceId",
+          "relFieldName": "invoiceId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "invoiceId"
+  ],
+  "uniqueKey": "invoiceId",
+  "combine": false,
+  "isView": false
+}

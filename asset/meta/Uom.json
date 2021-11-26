@@ -1,0 +1,1408 @@
+{
+  "name": "Uom",
+  "title": "Unit Of Measure",
+  "description": "None",
+  "tableName": "UOM",
+  "fields": [
+    {
+      "name": "uomId",
+      "type": "id",
+      "col": "UOM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "uomTypeId",
+      "type": "id",
+      "col": "UOM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "abbreviation",
+      "type": "short-varchar",
+      "col": "ABBREVIATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "numericCode",
+      "type": "numeric",
+      "col": "NUMERIC_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "UomType",
+      "type": "one",
+      "relEntityName": "UomType",
+      "fkName": "UOM_TO_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomTypeId",
+          "relFieldName": "uomTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CurrencyAcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrigCurrencyAcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "title": "OrigCurrency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "origCurrencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BillingAccount",
+      "type": "many",
+      "relEntityName": "BillingAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "accountCurrencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BillingAccountTerm",
+      "type": "many",
+      "relEntityName": "BillingAccountTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyCostComponent",
+      "type": "many",
+      "relEntityName": "CostComponent",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "costUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CostComponentCalc",
+      "type": "many",
+      "relEntityName": "CostComponentCalc",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MaximumAmountCustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "title": "MaximumAmount",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "maximumAmountUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyCustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AmountExampleItem",
+      "type": "many",
+      "relEntityName": "ExampleItem",
+      "fkName": "",
+      "title": "Amount",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "amountUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DimensionFacility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "title": "Dimension",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "defaultDimensionUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WeightFacility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "title": "Weight",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "defaultWeightUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilitySizeFacility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "title": "FacilitySize",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "facilitySizeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyFinAccount",
+      "type": "many",
+      "relEntityName": "FinAccount",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "IntervalFixedAssetMaint",
+      "type": "many",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "",
+      "title": "Interval",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "intervalUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetProduct",
+      "type": "many",
+      "relEntityName": "FixedAssetProduct",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "quantityUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetStdCost",
+      "type": "many",
+      "relEntityName": "FixedAssetStdCost",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "amountUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ElevationGeoPoint",
+      "type": "many",
+      "relEntityName": "GeoPoint",
+      "fkName": "",
+      "title": "Elevation",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "elevationUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyInventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyInvoice",
+      "type": "many",
+      "relEntityName": "Invoice",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaign",
+      "type": "many",
+      "relEntityName": "MarketingCampaign",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TotalCubicOrderDeliverySchedule",
+      "type": "many",
+      "relEntityName": "OrderDeliverySchedule",
+      "fkName": "",
+      "title": "TotalCubic",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "totalCubicUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TotalWeightOrderDeliverySchedule",
+      "type": "many",
+      "relEntityName": "OrderDeliverySchedule",
+      "fkName": "",
+      "title": "TotalWeight",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "totalWeightUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RecurringFreqOrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "title": "RecurringFreq",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "recurringFreqUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderTerm",
+      "type": "many",
+      "relEntityName": "OrderTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Party",
+      "type": "many",
+      "relEntityName": "Party",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "preferredCurrencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "baseCurrencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyPayment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ActualCurrencyPayment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "title": "ActualCurrency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "actualCurrencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayResponse",
+      "type": "many",
+      "relEntityName": "PaymentGatewayResponse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PeriodType",
+      "type": "many",
+      "relEntityName": "PeriodType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuantityProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "Quantity",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "quantityUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WeightProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "Weight",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "weightUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "HeightProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "Height",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "heightUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WidthProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "Width",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "widthUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DepthProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "Depth",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "depthUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DiameterProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "Diameter",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "diameterUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UseTimeProductContent",
+      "type": "many",
+      "relEntityName": "ProductContent",
+      "fkName": "",
+      "title": "UseTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "useTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFeature",
+      "type": "many",
+      "relEntityName": "ProductFeature",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyProductFeaturePrice",
+      "type": "many",
+      "relEntityName": "ProductFeaturePrice",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "IntervalProductMaint",
+      "type": "many",
+      "relEntityName": "ProductMaint",
+      "fkName": "",
+      "title": "Interval",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "intervalUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MeterProductMeter",
+      "type": "many",
+      "relEntityName": "ProductMeter",
+      "fkName": "",
+      "title": "Meter",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "meterUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DefaultProductMeterType",
+      "type": "many",
+      "relEntityName": "ProductMeterType",
+      "fkName": "",
+      "title": "Default",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "defaultUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyProductPrice",
+      "type": "many",
+      "relEntityName": "ProductPrice",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TermProductPrice",
+      "type": "many",
+      "relEntityName": "ProductPrice",
+      "fkName": "",
+      "title": "Term",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "termUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "defaultCurrencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UseTimeProductSubscriptionResource",
+      "type": "many",
+      "relEntityName": "ProductSubscriptionResource",
+      "fkName": "",
+      "title": "UseTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "useTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CancelTimeProductSubscriptionResource",
+      "type": "many",
+      "relEntityName": "ProductSubscriptionResource",
+      "fkName": "",
+      "title": "CancelTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "canclAutmExtTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AvailableTimeProductSubscriptionResource",
+      "type": "many",
+      "relEntityName": "ProductSubscriptionResource",
+      "fkName": "",
+      "title": "AvailableTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "availableTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MaxLifeTimeProductSubscriptionResource",
+      "type": "many",
+      "relEntityName": "ProductSubscriptionResource",
+      "fkName": "",
+      "title": "MaxLifeTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "maxLifeTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GracePeriodProductSubscriptionResource",
+      "type": "many",
+      "relEntityName": "ProductSubscriptionResource",
+      "fkName": "",
+      "title": "GracePeriod",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "gracePeriodOnExpiryUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Quote",
+      "type": "many",
+      "relEntityName": "Quote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteItem",
+      "type": "many",
+      "relEntityName": "QuoteItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RateAmount",
+      "type": "many",
+      "relEntityName": "RateAmount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "rateCurrencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnHeader",
+      "type": "many",
+      "relEntityName": "ReturnHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesForecast",
+      "type": "many",
+      "relEntityName": "SalesForecast",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuantitySalesForecastDetail",
+      "type": "many",
+      "relEntityName": "SalesForecastDetail",
+      "fkName": "",
+      "title": "Quantity",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "quantityUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesForecastHistory",
+      "type": "many",
+      "relEntityName": "SalesForecastHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunity",
+      "type": "many",
+      "relEntityName": "SalesOpportunity",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityHistory",
+      "type": "many",
+      "relEntityName": "SalesOpportunityHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DimensionShipmentBoxType",
+      "type": "many",
+      "relEntityName": "ShipmentBoxType",
+      "fkName": "",
+      "title": "Dimension",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "dimensionUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WeightShipmentBoxType",
+      "type": "many",
+      "relEntityName": "ShipmentBoxType",
+      "fkName": "",
+      "title": "Weight",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "weightUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WeightShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "Weight",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "weightUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuantityShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "Quantity",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "quantityUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PriceShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "Price",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "priceUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DimensionShipmentPackage",
+      "type": "many",
+      "relEntityName": "ShipmentPackage",
+      "fkName": "",
+      "title": "Dimension",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "dimensionUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WeightShipmentPackage",
+      "type": "many",
+      "relEntityName": "ShipmentPackage",
+      "fkName": "",
+      "title": "Weight",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "weightUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyShipmentPackageRouteSeg",
+      "type": "many",
+      "relEntityName": "ShipmentPackageRouteSeg",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencyShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BillingWeightShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "BillingWeight",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "billingWeightUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Time unitShipmentTimeEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentTimeEstimate",
+      "fkName": "",
+      "title": "Time unit",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "leadTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UseTimeSubscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "UseTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "useTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CancelTimeSubscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "CancelTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "canclAutmExtTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AvailableTimeSubscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "AvailableTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "availableTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MaxLifeTimeSubscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "MaxLifeTime",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "maxLifeTimeUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GracePeriodSubscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "title": "GracePeriod",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "gracePeriodOnExpiryUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrencySupplierProduct",
+      "type": "many",
+      "relEntityName": "SupplierProduct",
+      "fkName": "",
+      "title": "Currency",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "currencyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuantitySupplierProduct",
+      "type": "many",
+      "relEntityName": "SupplierProduct",
+      "fkName": "",
+      "title": "Quantity",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "quantityUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SupplierProductFeature",
+      "type": "many",
+      "relEntityName": "SupplierProductFeature",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MainUomConversion",
+      "type": "many",
+      "relEntityName": "UomConversion",
+      "fkName": "",
+      "title": "Main",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ConvToUomConversion",
+      "type": "many",
+      "relEntityName": "UomConversion",
+      "fkName": "",
+      "title": "ConvTo",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DatedMainUomConversionDated",
+      "type": "many",
+      "relEntityName": "UomConversionDated",
+      "fkName": "",
+      "title": "DatedMain",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DatedConvToUomConversionDated",
+      "type": "many",
+      "relEntityName": "UomConversionDated",
+      "fkName": "",
+      "title": "DatedConvTo",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UomGroup",
+      "type": "many",
+      "relEntityName": "UomGroup",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MoneyWorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "title": "Money",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "moneyUomId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AmountWorkloadItem",
+      "type": "many",
+      "relEntityName": "WorkloadItem",
+      "fkName": "",
+      "title": "Amount",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "amountUomId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "uomId"
+  ],
+  "uniqueKey": "uomId",
+  "combine": false,
+  "isView": false
+}

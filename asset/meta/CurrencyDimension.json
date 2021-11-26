@@ -1,0 +1,150 @@
+{
+  "name": "CurrencyDimension",
+  "title": "Currency Dimension",
+  "description": "Currency dimension. The natural key is [currencyId]",
+  "tableName": "CURRENCY_DIMENSION",
+  "fields": [
+    {
+      "name": "dimensionId",
+      "type": "id",
+      "col": "DIMENSION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyId",
+      "type": "id",
+      "col": "CURRENCY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "InventoryItemFact",
+      "type": "many",
+      "relEntityName": "InventoryItemFact",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dimensionId",
+          "relFieldName": "origCurrencyDimId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesInvoiceItemFact",
+      "type": "many",
+      "relEntityName": "SalesInvoiceItemFact",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dimensionId",
+          "relFieldName": "origCurrencyDimId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOrderItemFact",
+      "type": "many",
+      "relEntityName": "SalesOrderItemFact",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dimensionId",
+          "relFieldName": "origCurrencyDimId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "dimensionId"
+  ],
+  "uniqueKey": "dimensionId",
+  "combine": false,
+  "isView": false
+}

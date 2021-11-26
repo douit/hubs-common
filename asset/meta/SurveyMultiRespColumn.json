@@ -1,0 +1,176 @@
+{
+  "name": "SurveyMultiRespColumn",
+  "title": "Survey Multi-Response Group Column/Category",
+  "description": "None",
+  "tableName": "SURVEY_MULTI_RESP_COLUMN",
+  "fields": [
+    {
+      "name": "surveyId",
+      "type": "id",
+      "col": "SURVEY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyMultiRespId",
+      "type": "id",
+      "col": "SURVEY_MULTI_RESP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyMultiRespColId",
+      "type": "id",
+      "col": "SURVEY_MULTI_RESP_COL_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "columnTitle",
+      "type": "name",
+      "col": "COLUMN_TITLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SurveyMultiResp",
+      "type": "one",
+      "relEntityName": "SurveyMultiResp",
+      "fkName": "SRVYMRSPCL_SMRESP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        },
+        {
+          "fieldName": "surveyMultiRespId",
+          "relFieldName": "surveyMultiRespId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyQuestionAppl",
+      "type": "many",
+      "relEntityName": "SurveyQuestionAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        },
+        {
+          "fieldName": "surveyMultiRespId",
+          "relFieldName": "surveyMultiRespId"
+        },
+        {
+          "fieldName": "surveyMultiRespColId",
+          "relFieldName": "surveyMultiRespColId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "surveyId",
+    "surveyMultiRespId",
+    "surveyMultiRespColId"
+  ],
+  "uniqueKey": "surveyId, surveyMultiRespId, surveyMultiRespColId",
+  "combine": true,
+  "isView": false
+}

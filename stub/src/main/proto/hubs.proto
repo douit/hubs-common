@@ -434,8 +434,8 @@ message ProductStoreFlatData {
 message PartyFlatData {
     option (routines.entity_type) = "Party";
     // keys: partyId
-        
-    string party_id = 1;
+    
+    routines.TypeSymbol party_id = 1; // VarianceReasonGlAccount
     routines.TypeSymbol party_type_id = 2; // PartyType    
     string external_id = 3;
     routines.TypeSymbol preferred_currency_uom_id = 4; // Uom    
@@ -1539,8 +1539,8 @@ message PartyData {
     // keys: partyId
 
     // fields
-        
-    string party_id = 1;
+    
+    routines.TypeSymbol party_id = 1; // VarianceReasonGlAccount
     routines.TypeSymbol party_type_id = 2; // PartyType    
     string external_id = 3;
     routines.TypeSymbol preferred_currency_uom_id = 4; // Uom    
@@ -1613,8 +1613,8 @@ message AgreementItemData {
     // fields
         
     string agreement_id = 1;    
-    string agreement_item_seq_id = 2;    
-    string agreement_item_type_id = 3;    
+    string agreement_item_seq_id = 2;
+    routines.TypeSymbol agreement_item_type_id = 3; // AgreementItemType    
     string currency_uom_id = 4;    
     string agreement_text = 5;    
     bytes agreement_image = 6;
@@ -1652,8 +1652,8 @@ message AcctgTransData {
     google.protobuf.Timestamp transaction_date = 4;    
     routines.Indicator is_posted = 5;    
     google.protobuf.Timestamp posted_date = 6;    
-    google.protobuf.Timestamp scheduled_posting_date = 7;    
-    string gl_journal_id = 8;
+    google.protobuf.Timestamp scheduled_posting_date = 7;
+    routines.TypeSymbol gl_journal_id = 8; // GlJournal
     routines.TypeSymbol gl_fiscal_type_id = 9; // GlFiscalType    
     string voucher_ref = 10;    
     google.protobuf.Timestamp voucher_date = 11;
@@ -1749,8 +1749,8 @@ message AgreementData {
     string party_id_from = 3;    
     string party_id_to = 4;
     routines.TypeSymbol role_type_id_from = 5; // RoleType
-    routines.TypeSymbol role_type_id_to = 6; // RoleType    
-    string agreement_type_id = 7;    
+    routines.TypeSymbol role_type_id_to = 6; // RoleType
+    routines.TypeSymbol agreement_type_id = 7; // AgreementType    
     google.protobuf.Timestamp agreement_date = 8;    
     google.protobuf.Timestamp from_date = 9;    
     google.protobuf.Timestamp thru_date = 10;    
@@ -2309,8 +2309,8 @@ message PartyRoleData {
     // keys: partyId, roleTypeId
 
     // fields
-        
-    string party_id = 1;
+    
+    routines.TypeSymbol party_id = 1; // GlAccountOrganization
     routines.TypeSymbol role_type_id = 2; // RoleType
     
 }
@@ -2771,8 +2771,8 @@ message PaymentMethodData {
     // keys: paymentMethodId
 
     // fields
-        
-    string payment_method_id = 1;
+    
+    routines.TypeSymbol payment_method_id = 1; // PartyAcctgPreference
     routines.TypeSymbol payment_method_type_id = 2; // PaymentMethodType    
     string party_id = 3;    
     string gl_account_id = 4;    
@@ -3538,8 +3538,8 @@ message AcctgTransEntryData {
     string product_id = 9;    
     string their_product_id = 10;    
     string inventory_item_id = 11;
-    routines.TypeSymbol gl_account_type_id = 12; // GlAccountType    
-    string gl_account_id = 13;    
+    routines.TypeSymbol gl_account_type_id = 12; // GlAccountType
+    routines.TypeSymbol gl_account_id = 13; // GlAccountOrganization    
     string organization_party_id = 14;    
     routines.Currency amount = 15;
     routines.TypeSymbol currency_uom_id = 16; // Uom    

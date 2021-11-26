@@ -1,0 +1,1030 @@
+{
+  "name": "Facility",
+  "title": "Facility",
+  "description": "None",
+  "tableName": "FACILITY",
+  "fields": [
+    {
+      "name": "facilityId",
+      "type": "id",
+      "col": "FACILITY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilityTypeId",
+      "type": "id",
+      "col": "FACILITY_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentFacilityId",
+      "type": "id",
+      "col": "PARENT_FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "ownerPartyId",
+      "type": "id",
+      "col": "OWNER_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "defaultInventoryItemTypeId",
+      "type": "id",
+      "col": "DEFAULT_INVENTORY_ITEM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilityName",
+      "type": "name",
+      "col": "FACILITY_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "primaryFacilityGroupId",
+      "type": "id",
+      "col": "PRIMARY_FACILITY_GROUP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "oldSquareFootage",
+      "type": "numeric",
+      "col": "SQUARE_FOOTAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilitySize",
+      "type": "fixed-point",
+      "col": "FACILITY_SIZE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilitySizeUomId",
+      "type": "id",
+      "col": "FACILITY_SIZE_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "defaultDaysToShip",
+      "type": "numeric",
+      "col": "DEFAULT_DAYS_TO_SHIP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "openedDate",
+      "type": "date-time",
+      "col": "OPENED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "closedDate",
+      "type": "date-time",
+      "col": "CLOSED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "defaultDimensionUomId",
+      "type": "id",
+      "col": "DEFAULT_DIMENSION_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "defaultWeightUomId",
+      "type": "id",
+      "col": "DEFAULT_WEIGHT_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoPointId",
+      "type": "id",
+      "col": "GEO_POINT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "facilityLevel",
+      "type": "numeric",
+      "col": "FACILITY_LEVEL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "FacilityType",
+      "type": "one",
+      "relEntityName": "FacilityType",
+      "fkName": "FACILITY_FCTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityTypeId",
+          "relFieldName": "facilityTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ParentFacility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "FACILITY_PARENT",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentFacilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FacilityGroup",
+      "type": "one",
+      "relEntityName": "FacilityGroup",
+      "fkName": "FACILITY_PGRP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "primaryFacilityGroupId",
+          "relFieldName": "facilityGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OwnerParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "FACILITY_OWNER",
+      "title": "Owner",
+      "keymaps": [
+        {
+          "fieldName": "ownerPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DefaultInventoryItemType",
+      "type": "one",
+      "relEntityName": "InventoryItemType",
+      "fkName": "FAC_INVITM_TYPE",
+      "title": "Default",
+      "keymaps": [
+        {
+          "fieldName": "defaultInventoryItemTypeId",
+          "relFieldName": "inventoryItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DimensionUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "FAC_DEF_DUOM",
+      "title": "Dimension",
+      "keymaps": [
+        {
+          "fieldName": "defaultDimensionUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WeightUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "FAC_DEF_WUOM",
+      "title": "Weight",
+      "keymaps": [
+        {
+          "fieldName": "defaultWeightUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductStore",
+      "type": "one-nofk",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FacilityTypeAttr",
+      "type": "many",
+      "relEntityName": "FacilityTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityTypeId",
+          "relFieldName": "facilityTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GeoPoint",
+      "type": "one",
+      "relEntityName": "GeoPoint",
+      "fkName": "FACILITY_GEOPT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FacilitySizeUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "FACILITY_SUOM",
+      "title": "FacilitySize",
+      "keymaps": [
+        {
+          "fieldName": "facilitySizeUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementFacilityAppl",
+      "type": "many",
+      "relEntityName": "AgreementFacilityAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Container",
+      "type": "many",
+      "relEntityName": "Container",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginDelivery",
+      "type": "many",
+      "relEntityName": "Delivery",
+      "fkName": "",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "originFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DestDelivery",
+      "type": "many",
+      "relEntityName": "Delivery",
+      "fkName": "",
+      "title": "Dest",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "destFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildFacility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "parentFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityAttribute",
+      "type": "many",
+      "relEntityName": "FacilityAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityCalendar",
+      "type": "many",
+      "relEntityName": "FacilityCalendar",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityCarrierShipment",
+      "type": "many",
+      "relEntityName": "FacilityCarrierShipment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityContactMech",
+      "type": "many",
+      "relEntityName": "FacilityContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityContactMechPurpose",
+      "type": "many",
+      "relEntityName": "FacilityContactMechPurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityContent",
+      "type": "many",
+      "relEntityName": "FacilityContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityGroupMember",
+      "type": "many",
+      "relEntityName": "FacilityGroupMember",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityLocation",
+      "type": "many",
+      "relEntityName": "FacilityLocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityParty",
+      "type": "many",
+      "relEntityName": "FacilityParty",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LocatedAtFixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "title": "LocatedAt",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "locatedAtFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToInventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MrpEvent",
+      "type": "many",
+      "relEntityName": "MrpEvent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginOrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "originFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemShipGroup",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderSummaryEntry",
+      "type": "many",
+      "relEntityName": "OrderSummaryEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Picklist",
+      "type": "many",
+      "relEntityName": "Picklist",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdCatalogInvFacility",
+      "type": "many",
+      "relEntityName": "ProdCatalogInvFacility",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Product",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductAverageCost",
+      "type": "many",
+      "relEntityName": "ProductAverageCost",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFacility",
+      "type": "many",
+      "relEntityName": "ProductFacility",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromProductFacilityAssoc",
+      "type": "many",
+      "relEntityName": "ProductFacilityAssoc",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToProductFacilityAssoc",
+      "type": "many",
+      "relEntityName": "ProductFacilityAssoc",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFacilityLocation",
+      "type": "many",
+      "relEntityName": "ProductFacilityLocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreFacility",
+      "type": "many",
+      "relEntityName": "ProductStoreFacility",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReorderGuideline",
+      "type": "many",
+      "relEntityName": "ReorderGuideline",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Requirement",
+      "type": "many",
+      "relEntityName": "Requirement",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnHeader",
+      "type": "many",
+      "relEntityName": "ReturnHeader",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "destinationFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "originFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DestinationShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "title": "Destination",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "destinationFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "Origin",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "originFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DestShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "title": "Dest",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "destFacilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "facilityId"
+  ],
+  "uniqueKey": "facilityId",
+  "combine": false,
+  "isView": false
+}

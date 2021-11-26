@@ -1,0 +1,164 @@
+{
+  "name": "DataResourceMetaData",
+  "title": "Data Resource Meta-Data Predicate",
+  "description": "None",
+  "tableName": "DATA_RESOURCE_META_DATA",
+  "fields": [
+    {
+      "name": "dataResourceId",
+      "type": "id",
+      "col": "DATA_RESOURCE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "metaDataPredicateId",
+      "type": "id",
+      "col": "META_DATA_PREDICATE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "metaDataValue",
+      "type": "value",
+      "col": "META_DATA_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "dataSourceId",
+      "type": "id",
+      "col": "DATA_SOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "DataResource",
+      "type": "one",
+      "relEntityName": "DataResource",
+      "fkName": "DATA_MD_DATREC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MetaDataPredicate",
+      "type": "one",
+      "relEntityName": "MetaDataPredicate",
+      "fkName": "DATA_MD_DMDPRD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "metaDataPredicateId",
+          "relFieldName": "metaDataPredicateId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataSource",
+      "type": "one",
+      "relEntityName": "DataSource",
+      "fkName": "DATA_MD_DTSRC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataSourceId",
+          "relFieldName": "dataSourceId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "dataResourceId",
+    "metaDataPredicateId"
+  ],
+  "uniqueKey": "dataResourceId, metaDataPredicateId",
+  "combine": true,
+  "isView": false
+}

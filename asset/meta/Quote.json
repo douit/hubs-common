@@ -1,0 +1,463 @@
+{
+  "name": "Quote",
+  "title": "Quote",
+  "description": "None",
+  "tableName": "QUOTE",
+  "fields": [
+    {
+      "name": "quoteId",
+      "type": "id",
+      "col": "QUOTE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quoteTypeId",
+      "type": "id",
+      "col": "QUOTE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "issueDate",
+      "type": "date-time",
+      "col": "ISSUE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "salesChannelEnumId",
+      "type": "id",
+      "col": "SALES_CHANNEL_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "validFromDate",
+      "type": "date-time",
+      "col": "VALID_FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "validThruDate",
+      "type": "date-time",
+      "col": "VALID_THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quoteName",
+      "type": "name",
+      "col": "QUOTE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "QuoteType",
+      "type": "one",
+      "relEntityName": "QuoteType",
+      "fkName": "QUOTE_QTTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteTypeId",
+          "relFieldName": "quoteTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "QuoteTypeAttr",
+      "type": "many",
+      "relEntityName": "QuoteTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteTypeId",
+          "relFieldName": "quoteTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "QUOTE_PRTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "QUOTE_STATUS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "QUOTE_CUOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductStore",
+      "type": "one",
+      "relEntityName": "ProductStore",
+      "fkName": "QUOTE_PRDS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SalesChannelEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "QUOTE_CHANNEL",
+      "title": "SalesChannel",
+      "keymaps": [
+        {
+          "fieldName": "salesChannelEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "QuoteNoteView",
+      "type": "many",
+      "relEntityName": "QuoteNoteView",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "QuoteAdjustment",
+      "type": "many",
+      "relEntityName": "QuoteAdjustment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteAttribute",
+      "type": "many",
+      "relEntityName": "QuoteAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteCoefficient",
+      "type": "many",
+      "relEntityName": "QuoteCoefficient",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteItem",
+      "type": "many",
+      "relEntityName": "QuoteItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteNote",
+      "type": "many",
+      "relEntityName": "QuoteNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteRole",
+      "type": "many",
+      "relEntityName": "QuoteRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteTerm",
+      "type": "many",
+      "relEntityName": "QuoteTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteWorkEffort",
+      "type": "many",
+      "relEntityName": "QuoteWorkEffort",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityQuote",
+      "type": "many",
+      "relEntityName": "SalesOpportunityQuote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "quoteId"
+  ],
+  "uniqueKey": "quoteId",
+  "combine": false,
+  "isView": false
+}

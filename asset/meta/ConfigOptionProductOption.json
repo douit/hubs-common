@@ -1,0 +1,212 @@
+{
+  "name": "ConfigOptionProductOption",
+  "title": "Config Option Product Options",
+  "description": "None",
+  "tableName": "CONFIG_OPTION_PRODUCT_OPTION",
+  "fields": [
+    {
+      "name": "configId",
+      "type": "id",
+      "col": "CONFIG_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "configItemId",
+      "type": "id",
+      "col": "CONFIG_ITEM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "configOptionId",
+      "type": "id",
+      "col": "CONFIG_OPTION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productOptionId",
+      "type": "id",
+      "col": "PRODUCT_OPTION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ConfigProductConfigConfig",
+      "type": "one",
+      "relEntityName": "ProductConfigConfig",
+      "fkName": "PROD_OPTN_CONF",
+      "title": "Config",
+      "keymaps": [
+        {
+          "fieldName": "configId",
+          "relFieldName": "configId"
+        },
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemId"
+        },
+        {
+          "fieldName": "configOptionId",
+          "relFieldName": "configOptionId"
+        },
+        {
+          "fieldName": "sequenceNum",
+          "relFieldName": "sequenceNum"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductProductConfigProduct",
+      "type": "one",
+      "relEntityName": "ProductConfigProduct",
+      "fkName": "PROD_OPTN_PROD",
+      "title": "Product",
+      "keymaps": [
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemId"
+        },
+        {
+          "fieldName": "configOptionId",
+          "relFieldName": "configOptionId"
+        },
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 5,
+  "pks": [
+    "configId",
+    "configItemId",
+    "configOptionId",
+    "sequenceNum",
+    "productId"
+  ],
+  "uniqueKey": "configId, configItemId, configOptionId, sequenceNum, productId",
+  "combine": true,
+  "isView": false
+}

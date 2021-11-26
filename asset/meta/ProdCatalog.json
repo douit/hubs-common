@@ -1,0 +1,256 @@
+{
+  "name": "ProdCatalog",
+  "title": "Catalog",
+  "description": "None",
+  "tableName": "PROD_CATALOG",
+  "fields": [
+    {
+      "name": "prodCatalogId",
+      "type": "id",
+      "col": "PROD_CATALOG_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "catalogName",
+      "type": "name",
+      "col": "CATALOG_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "useQuickAdd",
+      "type": "indicator",
+      "col": "USE_QUICK_ADD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "styleSheet",
+      "type": "url",
+      "col": "STYLE_SHEET",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(2000)",
+      "stringLength": 2000,
+      "validators": []
+    },
+    {
+      "name": "headerLogo",
+      "type": "url",
+      "col": "HEADER_LOGO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(2000)",
+      "stringLength": 2000,
+      "validators": []
+    },
+    {
+      "name": "contentPathPrefix",
+      "type": "long-varchar",
+      "col": "CONTENT_PATH_PREFIX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "templatePathPrefix",
+      "type": "long-varchar",
+      "col": "TEMPLATE_PATH_PREFIX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "viewAllowPermReqd",
+      "type": "indicator",
+      "col": "VIEW_ALLOW_PERM_REQD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "purchaseAllowPermReqd",
+      "type": "indicator",
+      "col": "PURCHASE_ALLOW_PERM_REQD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CartAbandonedLine",
+      "type": "many",
+      "relEntityName": "CartAbandonedLine",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "prodCatalogId",
+          "relFieldName": "prodCatalogId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdCatalogCategory",
+      "type": "many",
+      "relEntityName": "ProdCatalogCategory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "prodCatalogId",
+          "relFieldName": "prodCatalogId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdCatalogInvFacility",
+      "type": "many",
+      "relEntityName": "ProdCatalogInvFacility",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "prodCatalogId",
+          "relFieldName": "prodCatalogId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdCatalogRole",
+      "type": "many",
+      "relEntityName": "ProdCatalogRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "prodCatalogId",
+          "relFieldName": "prodCatalogId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreCatalog",
+      "type": "many",
+      "relEntityName": "ProductStoreCatalog",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "prodCatalogId",
+          "relFieldName": "prodCatalogId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "prodCatalogId"
+  ],
+  "uniqueKey": "prodCatalogId",
+  "combine": false,
+  "isView": false
+}

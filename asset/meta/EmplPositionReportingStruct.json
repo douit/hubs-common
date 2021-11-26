@@ -1,0 +1,177 @@
+{
+  "name": "EmplPositionReportingStruct",
+  "title": "EmplPosition Reporting Structure",
+  "description": "None",
+  "tableName": "EMPL_POSITION_REPORTING_STRUCT",
+  "fields": [
+    {
+      "name": "emplPositionIdReportingTo",
+      "type": "id",
+      "col": "EMPL_POSITION_ID_REPORTING_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "emplPositionIdManagedBy",
+      "type": "id",
+      "col": "EMPL_POSITION_ID_MANAGED_BY",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "primaryFlag",
+      "type": "indicator",
+      "col": "PRIMARY_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ReportingToEmplPosition",
+      "type": "one",
+      "relEntityName": "EmplPosition",
+      "fkName": "EMPL_PSRPS_EMPSR",
+      "title": "ReportingTo",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionIdReportingTo",
+          "relFieldName": "emplPositionId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ManagedByEmplPosition",
+      "type": "one",
+      "relEntityName": "EmplPosition",
+      "fkName": "EMPL_PSRPS_EMPSM",
+      "title": "ManagedBy",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionIdManagedBy",
+          "relFieldName": "emplPositionId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "emplPositionIdReportingTo",
+    "emplPositionIdManagedBy",
+    "fromDate"
+  ],
+  "uniqueKey": "emplPositionIdReportingTo, emplPositionIdManagedBy, fromDate",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,154 @@
+{
+  "name": "PortalPageColumn",
+  "title": "Defines a Portal Page",
+  "description": "None",
+  "tableName": "PORTAL_PAGE_COLUMN",
+  "fields": [
+    {
+      "name": "portalPageId",
+      "type": "id",
+      "col": "PORTAL_PAGE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "columnSeqId",
+      "type": "id",
+      "col": "COLUMN_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "columnWidthPixels",
+      "type": "numeric",
+      "col": "COLUMN_WIDTH_PIXELS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "columnWidthPercentage",
+      "type": "numeric",
+      "col": "COLUMN_WIDTH_PERCENTAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PortalPage",
+      "type": "one",
+      "relEntityName": "PortalPage",
+      "fkName": "PRTL_PGCOL_PAGE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "portalPageId",
+          "relFieldName": "portalPageId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PortalPagePortlet",
+      "type": "many",
+      "relEntityName": "PortalPagePortlet",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "portalPageId",
+          "relFieldName": "portalPageId"
+        },
+        {
+          "fieldName": "columnSeqId",
+          "relFieldName": "columnSeqId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "portalPageId",
+    "columnSeqId"
+  ],
+  "uniqueKey": "portalPageId, columnSeqId",
+  "combine": true,
+  "isView": false
+}

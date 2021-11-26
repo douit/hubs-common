@@ -1,0 +1,216 @@
+{
+  "name": "Document",
+  "title": "Document",
+  "description": "None",
+  "tableName": "DOCUMENT",
+  "fields": [
+    {
+      "name": "documentId",
+      "type": "id",
+      "col": "DOCUMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "documentTypeId",
+      "type": "id",
+      "col": "DOCUMENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dateCreated",
+      "type": "date-time",
+      "col": "DATE_CREATED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "documentLocation",
+      "type": "long-varchar",
+      "col": "DOCUMENT_LOCATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "documentText",
+      "type": "long-varchar",
+      "col": "DOCUMENT_TEXT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "imageData",
+      "type": "object",
+      "col": "IMAGE_DATA",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Object",
+      "sqlType": "BYTEA",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "DocumentType",
+      "type": "one",
+      "relEntityName": "DocumentType",
+      "fkName": "DOCUMENT_TO_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "documentTypeId",
+          "relFieldName": "documentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DocumentTypeAttr",
+      "type": "many",
+      "relEntityName": "DocumentTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "documentTypeId",
+          "relFieldName": "documentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DocumentAttribute",
+      "type": "many",
+      "relEntityName": "DocumentAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "documentId",
+          "relFieldName": "documentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShippingDocument",
+      "type": "one-nofk",
+      "relEntityName": "ShippingDocument",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "documentId",
+          "relFieldName": "documentId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "documentId"
+  ],
+  "uniqueKey": "documentId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,180 @@
+{
+  "name": "ProductStoreVendorPayment",
+  "title": "Product Store Vendor Payment",
+  "description": "Used to define payments that a vendor related to the store will accept (for multi-vendor stores)",
+  "tableName": "PRODUCT_STORE_VENDOR_PAYMENT",
+  "fields": [
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "vendorPartyId",
+      "type": "id",
+      "col": "VENDOR_PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentMethodTypeId",
+      "type": "id",
+      "col": "PAYMENT_METHOD_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "creditCardEnumId",
+      "type": "id",
+      "col": "CREDIT_CARD_ENUM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductStore",
+      "type": "one",
+      "relEntityName": "ProductStore",
+      "fkName": "PRDSTRVPM_PRDS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "VendorParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PRDSTRVPM_VPTY",
+      "title": "Vendor",
+      "keymaps": [
+        {
+          "fieldName": "vendorPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentMethodType",
+      "type": "one",
+      "relEntityName": "PaymentMethodType",
+      "fkName": "PRDSTRVPM_PMMT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreditCardEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PRDSTRVPM_CCEN",
+      "title": "CreditCard",
+      "keymaps": [
+        {
+          "fieldName": "creditCardEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "productStoreId",
+    "vendorPartyId",
+    "paymentMethodTypeId",
+    "creditCardEnumId"
+  ],
+  "uniqueKey": "productStoreId, vendorPartyId, paymentMethodTypeId, creditCardEnumId",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,124 @@
+{
+  "name": "PortletPortletCategory",
+  "title": "Defines Portlets included into Categories",
+  "description": "None",
+  "tableName": "PORTLET_PORTLET_CATEGORY",
+  "fields": [
+    {
+      "name": "portalPortletId",
+      "type": "id",
+      "col": "PORTAL_PORTLET_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "portletCategoryId",
+      "type": "id",
+      "col": "PORTLET_CATEGORY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PortalPortlet",
+      "type": "one",
+      "relEntityName": "PortalPortlet",
+      "fkName": "PPTLTCAT_PTPL",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "portalPortletId",
+          "relFieldName": "portalPortletId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PortletCategory",
+      "type": "one",
+      "relEntityName": "PortletCategory",
+      "fkName": "PPTLTCAT_PTLTCAT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "portletCategoryId",
+          "relFieldName": "portletCategoryId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "portalPortletId",
+    "portletCategoryId"
+  ],
+  "uniqueKey": "portalPortletId, portletCategoryId",
+  "combine": true,
+  "isView": false
+}

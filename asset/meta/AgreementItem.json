@@ -1,0 +1,388 @@
+{
+  "name": "AgreementItem",
+  "title": "Agreement Item",
+  "description": "None",
+  "tableName": "AGREEMENT_ITEM",
+  "fields": [
+    {
+      "name": "agreementId",
+      "type": "id",
+      "col": "AGREEMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "agreementItemSeqId",
+      "type": "id",
+      "col": "AGREEMENT_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "agreementItemTypeId",
+      "type": "id",
+      "col": "AGREEMENT_ITEM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "agreementText",
+      "type": "very-long",
+      "col": "AGREEMENT_TEXT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "agreementImage",
+      "type": "object",
+      "col": "AGREEMENT_IMAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Object",
+      "sqlType": "BYTEA",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Agreement",
+      "type": "one",
+      "relEntityName": "Agreement",
+      "fkName": "AGRMNT_ITEM_AGR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementItemType",
+      "type": "one",
+      "relEntityName": "AgreementItemType",
+      "fkName": "AGRMNT_ITEM_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementItemTypeId",
+          "relFieldName": "agreementItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementItemTypeAttr",
+      "type": "many",
+      "relEntityName": "AgreementItemTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementItemTypeId",
+          "relFieldName": "agreementItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Addendum",
+      "type": "many",
+      "relEntityName": "Addendum",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementEmploymentAppl",
+      "type": "many",
+      "relEntityName": "AgreementEmploymentAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementFacilityAppl",
+      "type": "many",
+      "relEntityName": "AgreementFacilityAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementGeographicalApplic",
+      "type": "many",
+      "relEntityName": "AgreementGeographicalApplic",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementItemAttribute",
+      "type": "many",
+      "relEntityName": "AgreementItemAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementPartyApplic",
+      "type": "many",
+      "relEntityName": "AgreementPartyApplic",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementProductAppl",
+      "type": "many",
+      "relEntityName": "AgreementProductAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementPromoAppl",
+      "type": "many",
+      "relEntityName": "AgreementPromoAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementTerm",
+      "type": "many",
+      "relEntityName": "AgreementTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementWorkEffortApplic",
+      "type": "many",
+      "relEntityName": "AgreementWorkEffortApplic",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SupplierProduct",
+      "type": "many",
+      "relEntityName": "SupplierProduct",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "agreementId",
+    "agreementItemSeqId"
+  ],
+  "uniqueKey": "agreementId, agreementItemSeqId",
+  "combine": true,
+  "isView": false
+}

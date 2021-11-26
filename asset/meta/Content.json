@@ -1,0 +1,1040 @@
+{
+  "name": "Content",
+  "title": "Content",
+  "description": "None",
+  "tableName": "CONTENT",
+  "fields": [
+    {
+      "name": "contentId",
+      "type": "id",
+      "col": "CONTENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentTypeId",
+      "type": "id",
+      "col": "CONTENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "ownerContentId",
+      "type": "id",
+      "col": "OWNER_CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "decoratorContentId",
+      "type": "id",
+      "col": "DECORATOR_CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "instanceOfContentId",
+      "type": "id",
+      "col": "INSTANCE_OF_CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dataResourceId",
+      "type": "id",
+      "col": "DATA_RESOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "templateDataResourceId",
+      "type": "id",
+      "col": "TEMPLATE_DATA_RESOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "dataSourceId",
+      "type": "id",
+      "col": "DATA_SOURCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "privilegeEnumId",
+      "type": "id",
+      "col": "PRIVILEGE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "serviceName",
+      "type": "long-varchar",
+      "col": "SERVICE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "customMethodId",
+      "type": "id",
+      "col": "CUSTOM_METHOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentName",
+      "type": "value",
+      "col": "CONTENT_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "localeString",
+      "type": "very-short",
+      "col": "LOCALE_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(10)",
+      "stringLength": 10,
+      "validators": []
+    },
+    {
+      "name": "mimeTypeId",
+      "type": "id-vlong",
+      "col": "MIME_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "characterSetId",
+      "type": "id-long",
+      "col": "CHARACTER_SET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "childLeafCount",
+      "type": "numeric",
+      "col": "CHILD_LEAF_COUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "childBranchCount",
+      "type": "numeric",
+      "col": "CHILD_BRANCH_COUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ContentType",
+      "type": "one",
+      "relEntityName": "ContentType",
+      "fkName": "CONTENT_TO_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentTypeId",
+          "relFieldName": "contentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataResource",
+      "type": "one",
+      "relEntityName": "DataResource",
+      "fkName": "CONTENT_TO_DATA",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TemplateDataResource",
+      "type": "one",
+      "relEntityName": "DataResource",
+      "fkName": "CONTENT_TO_TMPDATA",
+      "title": "Template",
+      "keymaps": [
+        {
+          "fieldName": "templateDataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "CONTENT_STATUS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PrivilegeEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "CONTENT_PRIVENM",
+      "title": "Privilege",
+      "keymaps": [
+        {
+          "fieldName": "privilegeEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "CONTENT_CUSTMET",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MimeType",
+      "type": "one-nofk",
+      "relEntityName": "MimeType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "mimeTypeId",
+          "relFieldName": "mimeTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CharacterSet",
+      "type": "one",
+      "relEntityName": "CharacterSet",
+      "fkName": "CONTENT_CHST",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "characterSetId",
+          "relFieldName": "characterSetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContentTypeAttr",
+      "type": "many",
+      "relEntityName": "ContentTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentTypeId",
+          "relFieldName": "contentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreatedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "CONTENT_CB_ULGN",
+      "title": "CreatedBy",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LastModifiedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "CONTENT_LMB_ULGN",
+      "title": "LastModifiedBy",
+      "keymaps": [
+        {
+          "fieldName": "lastModifiedByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductFeatureDataResource",
+      "type": "many",
+      "relEntityName": "ProductFeatureDataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DataSource",
+      "type": "one",
+      "relEntityName": "DataSource",
+      "fkName": "CONTENT_DTSRC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataSourceId",
+          "relFieldName": "dataSourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DecoratorContent",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "CONTENT_DCNTNT",
+      "title": "Decorator",
+      "keymaps": [
+        {
+          "fieldName": "decoratorContentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OwnerContent",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "CONTENT_PCNTNT",
+      "title": "Owner",
+      "keymaps": [
+        {
+          "fieldName": "ownerContentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InstanceOfContent",
+      "type": "one",
+      "relEntityName": "Content",
+      "fkName": "CONTENT_IOFCNT",
+      "title": "InstanceOf",
+      "keymaps": [
+        {
+          "fieldName": "instanceOfContentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContentAssocDataResourceViewFrom",
+      "type": "many",
+      "relEntityName": "ContentAssocDataResourceViewFrom",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentIdStart"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContentAssocDataResourceViewTo",
+      "type": "many",
+      "relEntityName": "ContentAssocDataResourceViewTo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentIdStart"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementContent",
+      "type": "many",
+      "relEntityName": "AgreementContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromCommEventContentAssoc",
+      "type": "many",
+      "relEntityName": "CommEventContentAssoc",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentApproval",
+      "type": "many",
+      "relEntityName": "ContentApproval",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromContentAssoc",
+      "type": "many",
+      "relEntityName": "ContentAssoc",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToContentAssoc",
+      "type": "many",
+      "relEntityName": "ContentAssoc",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentAttribute",
+      "type": "many",
+      "relEntityName": "ContentAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentKeyword",
+      "type": "many",
+      "relEntityName": "ContentKeyword",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentMetaData",
+      "type": "many",
+      "relEntityName": "ContentMetaData",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentPurpose",
+      "type": "many",
+      "relEntityName": "ContentPurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentRevision",
+      "type": "many",
+      "relEntityName": "ContentRevision",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentRole",
+      "type": "many",
+      "relEntityName": "ContentRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestContent",
+      "type": "many",
+      "relEntityName": "CustRequestContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityContent",
+      "type": "many",
+      "relEntityName": "FacilityContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceContent",
+      "type": "many",
+      "relEntityName": "InvoiceContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderContent",
+      "type": "many",
+      "relEntityName": "OrderContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContent",
+      "type": "many",
+      "relEntityName": "PartyContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyResume",
+      "type": "many",
+      "relEntityName": "PartyResume",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentContent",
+      "type": "many",
+      "relEntityName": "PaymentContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PortalPage",
+      "type": "many",
+      "relEntityName": "PortalPage",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "helpContentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdConfItemContent",
+      "type": "many",
+      "relEntityName": "ProdConfItemContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductCategoryContent",
+      "type": "many",
+      "relEntityName": "ProductCategoryContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductContent",
+      "type": "many",
+      "relEntityName": "ProductContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoContent",
+      "type": "many",
+      "relEntityName": "ProductPromoContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SubscriptionResource",
+      "type": "many",
+      "relEntityName": "SubscriptionResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyResponseAnswer",
+      "type": "many",
+      "relEntityName": "SurveyResponseAnswer",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebPage",
+      "type": "many",
+      "relEntityName": "WebPage",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebSiteContent",
+      "type": "many",
+      "relEntityName": "WebSiteContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebSitePathAlias",
+      "type": "many",
+      "relEntityName": "WebSitePathAlias",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebSitePublishPoint",
+      "type": "one-nofk",
+      "relEntityName": "WebSitePublishPoint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortContent",
+      "type": "many",
+      "relEntityName": "WorkEffortContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentId",
+          "relFieldName": "contentId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "contentId"
+  ],
+  "uniqueKey": "contentId",
+  "combine": false,
+  "isView": false
+}

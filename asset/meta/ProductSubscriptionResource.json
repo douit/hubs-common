@@ -1,0 +1,430 @@
+{
+  "name": "ProductSubscriptionResource",
+  "title": "Product Subscription Resource",
+  "description": "None",
+  "tableName": "PRODUCT_SUBSCRIPTION_RESOURCE",
+  "fields": [
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "subscriptionResourceId",
+      "type": "id",
+      "col": "SUBSCRIPTION_RESOURCE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "purchaseFromDate",
+      "type": "date-time",
+      "col": "PURCHASE_FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "purchaseThruDate",
+      "type": "date-time",
+      "col": "PURCHASE_THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maxLifeTime",
+      "type": "numeric",
+      "col": "MAX_LIFE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maxLifeTimeUomId",
+      "type": "id",
+      "col": "MAX_LIFE_TIME_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "availableTime",
+      "type": "numeric",
+      "col": "AVAILABLE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "availableTimeUomId",
+      "type": "id",
+      "col": "AVAILABLE_TIME_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useCountLimit",
+      "type": "numeric",
+      "col": "USE_COUNT_LIMIT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useTime",
+      "type": "numeric",
+      "col": "USE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useTimeUomId",
+      "type": "id",
+      "col": "USE_TIME_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useRoleTypeId",
+      "type": "id",
+      "col": "USE_ROLE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "automaticExtend",
+      "type": "indicator",
+      "col": "AUTOMATIC_EXTEND",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "canclAutmExtTime",
+      "type": "numeric",
+      "col": "CANCL_AUTM_EXT_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "canclAutmExtTimeUomId",
+      "type": "id",
+      "col": "CANCL_AUTM_EXT_TIME_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "gracePeriodOnExpiry",
+      "type": "numeric",
+      "col": "GRACE_PERIOD_ON_EXPIRY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "gracePeriodOnExpiryUomId",
+      "type": "id",
+      "col": "GRACE_PERIOD_ON_EXPIRY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "PROD_SBRS_PROD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SubscriptionResource",
+      "type": "one",
+      "relEntityName": "SubscriptionResource",
+      "fkName": "PROD_SBRS_SBRS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionResourceId",
+          "relFieldName": "subscriptionResourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UseRoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "PROD_SBRS_URT",
+      "title": "Use",
+      "keymaps": [
+        {
+          "fieldName": "useRoleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UseTimeUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_SBRS_UTU",
+      "title": "UseTime",
+      "keymaps": [
+        {
+          "fieldName": "useTimeUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CancelTimeUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_SBRS_CTU",
+      "title": "CancelTime",
+      "keymaps": [
+        {
+          "fieldName": "canclAutmExtTimeUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AvailableTimeUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_SBRS_ATU",
+      "title": "AvailableTime",
+      "keymaps": [
+        {
+          "fieldName": "availableTimeUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MaxLifeTimeUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_SBRS_MTU",
+      "title": "MaxLifeTime",
+      "keymaps": [
+        {
+          "fieldName": "maxLifeTimeUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GracePeriodUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_SBRS_GTU",
+      "title": "GracePeriod",
+      "keymaps": [
+        {
+          "fieldName": "gracePeriodOnExpiryUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "productId",
+    "subscriptionResourceId",
+    "fromDate"
+  ],
+  "uniqueKey": "productId, subscriptionResourceId, fromDate",
+  "combine": true,
+  "isView": false
+}

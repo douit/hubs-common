@@ -1,0 +1,325 @@
+{
+  "name": "Survey",
+  "title": "Survey",
+  "description": "None",
+  "tableName": "SURVEY",
+  "fields": [
+    {
+      "name": "surveyId",
+      "type": "id",
+      "col": "SURVEY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyName",
+      "type": "name",
+      "col": "SURVEY_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "submitCaption",
+      "type": "short-varchar",
+      "col": "SUBMIT_CAPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "responseService",
+      "type": "long-varchar",
+      "col": "RESPONSE_SERVICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "isAnonymous",
+      "type": "indicator",
+      "col": "IS_ANONYMOUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "allowMultiple",
+      "type": "indicator",
+      "col": "ALLOW_MULTIPLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "allowUpdate",
+      "type": "indicator",
+      "col": "ALLOW_UPDATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "acroFormContentId",
+      "type": "id",
+      "col": "ACRO_FORM_CONTENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "DataResource",
+      "type": "many",
+      "relEntityName": "DataResource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreFinActSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreFinActSetting",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "purchaseSurveyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreSurveyAppl",
+      "type": "many",
+      "relEntityName": "ProductStoreSurveyAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyMultiResp",
+      "type": "many",
+      "relEntityName": "SurveyMultiResp",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyPage",
+      "type": "many",
+      "relEntityName": "SurveyPage",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyQuestionAppl",
+      "type": "many",
+      "relEntityName": "SurveyQuestionAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyResponse",
+      "type": "many",
+      "relEntityName": "SurveyResponse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyTrigger",
+      "type": "many",
+      "relEntityName": "SurveyTrigger",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortSurveyAppl",
+      "type": "many",
+      "relEntityName": "WorkEffortSurveyAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "surveyId"
+  ],
+  "uniqueKey": "surveyId",
+  "combine": false,
+  "isView": false
+}

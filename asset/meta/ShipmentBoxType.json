@@ -1,0 +1,243 @@
+{
+  "name": "ShipmentBoxType",
+  "title": "Shipment Contact Mechanism Type",
+  "description": "None",
+  "tableName": "SHIPMENT_BOX_TYPE",
+  "fields": [
+    {
+      "name": "shipmentBoxTypeId",
+      "type": "id",
+      "col": "SHIPMENT_BOX_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "dimensionUomId",
+      "type": "id",
+      "col": "DIMENSION_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "boxLength",
+      "type": "fixed-point",
+      "col": "BOX_LENGTH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "boxWidth",
+      "type": "fixed-point",
+      "col": "BOX_WIDTH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "boxHeight",
+      "type": "fixed-point",
+      "col": "BOX_HEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "weightUomId",
+      "type": "id",
+      "col": "WEIGHT_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "boxWeight",
+      "type": "fixed-point",
+      "col": "BOX_WEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "DimensionUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "SHMT_BXTP_DUOM",
+      "title": "Dimension",
+      "keymaps": [
+        {
+          "fieldName": "dimensionUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WeightUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "SHMT_BXTP_WUOM",
+      "title": "Weight",
+      "keymaps": [
+        {
+          "fieldName": "weightUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CarrierShipmentBoxType",
+      "type": "many",
+      "relEntityName": "CarrierShipmentBoxType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentBoxTypeId",
+          "relFieldName": "shipmentBoxTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DefaultProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "title": "Default",
+      "keymaps": [
+        {
+          "fieldName": "shipmentBoxTypeId",
+          "relFieldName": "defaultShipmentBoxTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentPackage",
+      "type": "many",
+      "relEntityName": "ShipmentPackage",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentBoxTypeId",
+          "relFieldName": "shipmentBoxTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "shipmentBoxTypeId"
+  ],
+  "uniqueKey": "shipmentBoxTypeId",
+  "combine": false,
+  "isView": false
+}

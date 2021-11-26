@@ -1,0 +1,233 @@
+{
+  "name": "TermType",
+  "title": "Term Type",
+  "description": "None",
+  "tableName": "TERM_TYPE",
+  "fields": [
+    {
+      "name": "termTypeId",
+      "type": "id",
+      "col": "TERM_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentTermType",
+      "type": "one",
+      "relEntityName": "TermType",
+      "fkName": "TERM_TYPE_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementTerm",
+      "type": "many",
+      "relEntityName": "AgreementTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BillingAccountTerm",
+      "type": "many",
+      "relEntityName": "BillingAccountTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceTerm",
+      "type": "many",
+      "relEntityName": "InvoiceTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderTerm",
+      "type": "many",
+      "relEntityName": "OrderTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteTerm",
+      "type": "many",
+      "relEntityName": "QuoteTerm",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildTermType",
+      "type": "many",
+      "relEntityName": "TermType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TermTypeAttr",
+      "type": "many",
+      "relEntityName": "TermTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "termTypeId"
+  ],
+  "uniqueKey": "termTypeId",
+  "combine": false,
+  "isView": false
+}

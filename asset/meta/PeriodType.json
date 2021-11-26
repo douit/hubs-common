@@ -1,0 +1,205 @@
+{
+  "name": "PeriodType",
+  "title": "Period Type",
+  "description": "None",
+  "tableName": "PERIOD_TYPE",
+  "fields": [
+    {
+      "name": "periodTypeId",
+      "type": "id",
+      "col": "PERIOD_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "periodLength",
+      "type": "numeric",
+      "col": "PERIOD_LENGTH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "uomId",
+      "type": "id",
+      "col": "UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PER_TYPE_UOM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomTimePeriod",
+      "type": "many",
+      "relEntityName": "CustomTimePeriod",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "periodTypeId",
+          "relFieldName": "periodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyBenefit",
+      "type": "many",
+      "relEntityName": "PartyBenefit",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "periodTypeId",
+          "relFieldName": "periodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PayHistory",
+      "type": "many",
+      "relEntityName": "PayHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "periodTypeId",
+          "relFieldName": "periodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PayrollPreference",
+      "type": "many",
+      "relEntityName": "PayrollPreference",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "periodTypeId",
+          "relFieldName": "periodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RateAmount",
+      "type": "many",
+      "relEntityName": "RateAmount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "periodTypeId",
+          "relFieldName": "periodTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "periodTypeId"
+  ],
+  "uniqueKey": "periodTypeId",
+  "combine": false,
+  "isView": false
+}

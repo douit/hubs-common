@@ -1,0 +1,177 @@
+{
+  "name": "ReturnAdjustmentType",
+  "title": "Return Adjustment Type",
+  "description": "None",
+  "tableName": "RETURN_ADJUSTMENT_TYPE",
+  "fields": [
+    {
+      "name": "returnAdjustmentTypeId",
+      "type": "id",
+      "col": "RETURN_ADJUSTMENT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentReturnAdjustmentType",
+      "type": "one",
+      "relEntityName": "ReturnAdjustmentType",
+      "fkName": "RETURN_ADJ_TYPPAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "returnAdjustmentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReturnAdjustment",
+      "type": "many",
+      "relEntityName": "ReturnAdjustment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "returnAdjustmentTypeId",
+          "relFieldName": "returnAdjustmentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildReturnAdjustmentType",
+      "type": "many",
+      "relEntityName": "ReturnAdjustmentType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "returnAdjustmentTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItemTypeMap",
+      "type": "many",
+      "relEntityName": "ReturnItemTypeMap",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "returnAdjustmentTypeId",
+          "relFieldName": "returnItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "returnAdjustmentTypeId"
+  ],
+  "uniqueKey": "returnAdjustmentTypeId",
+  "combine": false,
+  "isView": false
+}

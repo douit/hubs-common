@@ -1,0 +1,247 @@
+{
+  "name": "ContactMechType",
+  "title": "Contact Mechanism Type",
+  "description": "None",
+  "tableName": "CONTACT_MECH_TYPE",
+  "fields": [
+    {
+      "name": "contactMechTypeId",
+      "type": "id",
+      "col": "CONTACT_MECH_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentContactMechType",
+      "type": "one",
+      "relEntityName": "ContactMechType",
+      "fkName": "CONT_MECH_TYP_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContacMechTypeCommunicationEventType",
+      "type": "many",
+      "relEntityName": "CommunicationEventType",
+      "fkName": "",
+      "title": "ContacMechType",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactList",
+      "type": "many",
+      "relEntityName": "ContactList",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactMech",
+      "type": "many",
+      "relEntityName": "ContactMech",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildContactMechType",
+      "type": "many",
+      "relEntityName": "ContactMechType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactMechTypeAttr",
+      "type": "many",
+      "relEntityName": "ContactMechTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContactMechTypePurpose",
+      "type": "many",
+      "relEntityName": "ContactMechTypePurpose",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ValidContactMechRole",
+      "type": "many",
+      "relEntityName": "ValidContactMechRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "contactMechTypeId"
+  ],
+  "uniqueKey": "contactMechTypeId",
+  "combine": false,
+  "isView": false
+}

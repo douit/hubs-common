@@ -1,0 +1,312 @@
+{
+  "name": "AgreementTerm",
+  "title": "Agreement Term",
+  "description": "None",
+  "tableName": "AGREEMENT_TERM",
+  "fields": [
+    {
+      "name": "agreementTermId",
+      "type": "id",
+      "col": "AGREEMENT_TERM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "termTypeId",
+      "type": "id",
+      "col": "TERM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "agreementId",
+      "type": "id",
+      "col": "AGREEMENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "agreementItemSeqId",
+      "type": "id",
+      "col": "AGREEMENT_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "invoiceItemTypeId",
+      "type": "id",
+      "col": "INVOICE_ITEM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "termValue",
+      "type": "currency-precise",
+      "col": "TERM_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,3)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "termDays",
+      "type": "numeric",
+      "col": "TERM_DAYS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "textValue",
+      "type": "description",
+      "col": "TEXT_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "minQuantity",
+      "type": "floating-point",
+      "col": "MIN_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maxQuantity",
+      "type": "floating-point",
+      "col": "MAX_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "TermType",
+      "type": "one",
+      "relEntityName": "TermType",
+      "fkName": "AGRMNT_TERM_TTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "termTypeId",
+          "relFieldName": "termTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Agreement",
+      "type": "one",
+      "relEntityName": "Agreement",
+      "fkName": "AGRMNT_TERM_AGR",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementItem",
+      "type": "one",
+      "relEntityName": "AgreementItem",
+      "fkName": "AGRMNT_TERM_AITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementId",
+          "relFieldName": "agreementId"
+        },
+        {
+          "fieldName": "agreementItemSeqId",
+          "relFieldName": "agreementItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InvoiceItemType",
+      "type": "one",
+      "relEntityName": "InvoiceItemType",
+      "fkName": "AGRMNT_TERM_IIT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "invoiceItemTypeId",
+          "relFieldName": "invoiceItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementTermAttribute",
+      "type": "many",
+      "relEntityName": "AgreementTermAttribute",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "agreementTermId",
+          "relFieldName": "agreementTermId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "agreementTermId"
+  ],
+  "uniqueKey": "agreementTermId",
+  "combine": false,
+  "isView": false
+}

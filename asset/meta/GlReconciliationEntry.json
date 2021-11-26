@@ -1,0 +1,169 @@
+{
+  "name": "GlReconciliationEntry",
+  "title": "General Ledger Reconciliation Entry",
+  "description": "None",
+  "tableName": "GL_RECONCILIATION_ENTRY",
+  "fields": [
+    {
+      "name": "glReconciliationId",
+      "type": "id",
+      "col": "GL_RECONCILIATION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "acctgTransId",
+      "type": "id",
+      "col": "ACCTG_TRANS_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "acctgTransEntrySeqId",
+      "type": "id",
+      "col": "ACCTG_TRANS_ENTRY_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "reconciledAmount",
+      "type": "currency-amount",
+      "col": "RECONCILED_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "GlReconciliation",
+      "type": "one",
+      "relEntityName": "GlReconciliation",
+      "fkName": "GL_RECENT_GLREC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glReconciliationId",
+          "relFieldName": "glReconciliationId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTransEntry",
+      "type": "one",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "GL_RECENT_ACTTXE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "acctgTransId",
+          "relFieldName": "acctgTransId"
+        },
+        {
+          "fieldName": "acctgTransEntrySeqId",
+          "relFieldName": "acctgTransEntrySeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "one-nofk",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "acctgTransId",
+          "relFieldName": "acctgTransId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "glReconciliationId",
+    "acctgTransId",
+    "acctgTransEntrySeqId"
+  ],
+  "uniqueKey": "glReconciliationId, acctgTransId, acctgTransEntrySeqId",
+  "combine": true,
+  "isView": false
+}

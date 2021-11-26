@@ -1,0 +1,243 @@
+{
+  "name": "JobInterview",
+  "title": "Entity for storing data about Interviews conducted",
+  "description": "None",
+  "tableName": "JOB_INTERVIEW",
+  "fields": [
+    {
+      "name": "jobInterviewId",
+      "type": "id",
+      "col": "JOB_INTERVIEW_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobIntervieweePartyId",
+      "type": "id",
+      "col": "JOB_INTERVIEWEE_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobRequisitionId",
+      "type": "id",
+      "col": "JOB_REQUISITION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobInterviewerPartyId",
+      "type": "id",
+      "col": "JOB_INTERVIEWER_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobInterviewTypeId",
+      "type": "id",
+      "col": "JOB_INTERVIEW_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "gradeSecuredEnumId",
+      "type": "id",
+      "col": "GRADE_SECURED_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobInterviewResult",
+      "type": "id",
+      "col": "JOB_INTERVIEW_RESULT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobInterviewDate",
+      "type": "date",
+      "col": "JOB_INTERVIEW_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Date",
+      "sqlType": "DATE",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "IntervieweeParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "JOB_INTW_IEPR",
+      "title": "Interviewee",
+      "keymaps": [
+        {
+          "fieldName": "jobIntervieweePartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InterviewerParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "JOB_INTW_IRPR",
+      "title": "Interviewer",
+      "keymaps": [
+        {
+          "fieldName": "jobInterviewerPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "JobInterviewType",
+      "type": "one",
+      "relEntityName": "JobInterviewType",
+      "fkName": "JOB_INTW_INTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "jobInterviewTypeId",
+          "relFieldName": "jobInterviewTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "JobRequisition",
+      "type": "one",
+      "relEntityName": "JobRequisition",
+      "fkName": "JOB_INTW_JBREQ",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "jobRequisitionId",
+          "relFieldName": "jobRequisitionId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Enumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "JOB_INTW_ENUM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "gradeSecuredEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "jobInterviewId"
+  ],
+  "uniqueKey": "jobInterviewId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,502 @@
+{
+  "name": "ProductPromo",
+  "title": "Product Promotion",
+  "description": "None",
+  "tableName": "PRODUCT_PROMO",
+  "fields": [
+    {
+      "name": "productPromoId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "promoName",
+      "type": "name",
+      "col": "PROMO_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "promoText",
+      "type": "description",
+      "col": "PROMO_TEXT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "userEntered",
+      "type": "indicator",
+      "col": "USER_ENTERED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "showToCustomer",
+      "type": "indicator",
+      "col": "SHOW_TO_CUSTOMER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "requireCode",
+      "type": "indicator",
+      "col": "REQUIRE_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "useLimitPerOrder",
+      "type": "numeric",
+      "col": "USE_LIMIT_PER_ORDER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useLimitPerCustomer",
+      "type": "numeric",
+      "col": "USE_LIMIT_PER_CUSTOMER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "useLimitPerPromotion",
+      "type": "numeric",
+      "col": "USE_LIMIT_PER_PROMOTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "billbackFactor",
+      "type": "fixed-point",
+      "col": "BILLBACK_FACTOR",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "overrideOrgPartyId",
+      "type": "id",
+      "col": "OVERRIDE_ORG_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PROD_PRMO_OPA",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "overrideOrgPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreatedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PROD_PRMO_CUL",
+      "title": "CreatedBy",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LastModifiedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PROD_PRMO_LMCUL",
+      "title": "LastModifiedBy",
+      "keymaps": [
+        {
+          "fieldName": "lastModifiedByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AgreementPromoAppl",
+      "type": "many",
+      "relEntityName": "AgreementPromoAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaignPromo",
+      "type": "many",
+      "relEntityName": "MarketingCampaignPromo",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderAdjustment",
+      "type": "many",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoAction",
+      "type": "many",
+      "relEntityName": "ProductPromoAction",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoCategory",
+      "type": "many",
+      "relEntityName": "ProductPromoCategory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoCode",
+      "type": "many",
+      "relEntityName": "ProductPromoCode",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoCond",
+      "type": "many",
+      "relEntityName": "ProductPromoCond",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoContent",
+      "type": "many",
+      "relEntityName": "ProductPromoContent",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoProduct",
+      "type": "many",
+      "relEntityName": "ProductPromoProduct",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoRule",
+      "type": "many",
+      "relEntityName": "ProductPromoRule",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoUse",
+      "type": "many",
+      "relEntityName": "ProductPromoUse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStorePromoAppl",
+      "type": "many",
+      "relEntityName": "ProductStorePromoAppl",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteAdjustment",
+      "type": "many",
+      "relEntityName": "QuoteAdjustment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnAdjustment",
+      "type": "many",
+      "relEntityName": "ReturnAdjustment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productPromoId"
+  ],
+  "uniqueKey": "productPromoId",
+  "combine": false,
+  "isView": false
+}

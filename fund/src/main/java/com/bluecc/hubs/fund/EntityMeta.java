@@ -17,16 +17,17 @@ import java.util.stream.Collectors;
 import static com.bluecc.hubs.fund.MetaTypes.typeList;
 
 @Data
-// @Builder
+@Builder
 @Slf4j
 public class EntityMeta {
     @Data
     @Builder
     public static class HeadEntity {
         @Singular
-        Set<String> flatIds;
+        private Set<String> flatIds;
     }
 
+    /* move to HeadEntity
     public static final Map<String, HeadEntity> HEAD_ENTITIES = ImmutableMap.of(
             "OrderHeader", HeadEntity.builder().build(),
             "OrderItem", HeadEntity.builder()
@@ -49,6 +50,7 @@ public class EntityMeta {
                     .flatId("Party")
                     .build()
     );
+    */
 
     String name;
     String title;
@@ -122,7 +124,7 @@ public class EntityMeta {
     }
 
     public boolean isHeadEntity() {
-        return HEAD_ENTITIES.containsKey(this.name);
+        return HeadEntityResources.contains(this.name);
     }
 
     static final Set<String> IGNORE_FIELDS = Sets.newHashSet("lastUpdatedTxStamp", "createdTxStamp");
@@ -303,7 +305,7 @@ public class EntityMeta {
         }
 
         public boolean hasProtoDef(String entityName){
-            HeadEntity headEntity=HEAD_ENTITIES.get(entityName);
+            HeadEntity headEntity=HeadEntityResources.get(entityName);
             if(headEntity!=null){
                 return !headEntity.flatIds.contains(this.relEntityName);
             }

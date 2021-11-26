@@ -1,0 +1,110 @@
+{
+  "name": "OldProductPromoCodeEmail",
+  "title": "Product Promotion Email",
+  "description": "Deprecated since branch release: Upcoming branch. Use ProdPromoCodeContactMech instead",
+  "tableName": "PRODUCT_PROMO_CODE_EMAIL",
+  "fields": [
+    {
+      "name": "productPromoCodeId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_CODE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "emailAddress",
+      "type": "email",
+      "col": "EMAIL_ADDRESS",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(320)",
+      "stringLength": 320,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductPromoCode",
+      "type": "one",
+      "relEntityName": "ProductPromoCode",
+      "fkName": "PROD_PRCDE_OPCD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoCodeId",
+          "relFieldName": "productPromoCodeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "productPromoCodeId",
+    "emailAddress"
+  ],
+  "uniqueKey": "productPromoCodeId, emailAddress",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,177 @@
+{
+  "name": "QuantityBreak",
+  "title": "Quantity Break",
+  "description": "None",
+  "tableName": "QUANTITY_BREAK",
+  "fields": [
+    {
+      "name": "quantityBreakId",
+      "type": "id",
+      "col": "QUANTITY_BREAK_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quantityBreakTypeId",
+      "type": "id",
+      "col": "QUANTITY_BREAK_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromQuantity",
+      "type": "fixed-point",
+      "col": "FROM_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruQuantity",
+      "type": "fixed-point",
+      "col": "THRU_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "QuantityBreakType",
+      "type": "one",
+      "relEntityName": "QuantityBreakType",
+      "fkName": "QUANT_BRK_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "quantityBreakTypeId",
+          "relFieldName": "quantityBreakTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WeightShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "Weight",
+      "keymaps": [
+        {
+          "fieldName": "quantityBreakId",
+          "relFieldName": "weightBreakId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuantityShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "Quantity",
+      "keymaps": [
+        {
+          "fieldName": "quantityBreakId",
+          "relFieldName": "quantityBreakId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PriceShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "title": "Price",
+      "keymaps": [
+        {
+          "fieldName": "quantityBreakId",
+          "relFieldName": "priceBreakId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "quantityBreakId"
+  ],
+  "uniqueKey": "quantityBreakId",
+  "combine": false,
+  "isView": false
+}

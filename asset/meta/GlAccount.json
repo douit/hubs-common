@@ -1,0 +1,758 @@
+{
+  "name": "GlAccount",
+  "title": "General Ledger Account",
+  "description": "None",
+  "tableName": "GL_ACCOUNT",
+  "fields": [
+    {
+      "name": "glAccountId",
+      "type": "id",
+      "col": "GL_ACCOUNT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glAccountTypeId",
+      "type": "id",
+      "col": "GL_ACCOUNT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glAccountClassId",
+      "type": "id",
+      "col": "GL_ACCOUNT_CLASS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glResourceTypeId",
+      "type": "id",
+      "col": "GL_RESOURCE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glXbrlClassId",
+      "type": "id",
+      "col": "GL_XBRL_CLASS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentGlAccountId",
+      "type": "id",
+      "col": "PARENT_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "accountCode",
+      "type": "name",
+      "col": "ACCOUNT_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "accountName",
+      "type": "name",
+      "col": "ACCOUNT_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "externalId",
+      "type": "id",
+      "col": "EXTERNAL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "GlAccountType",
+      "type": "one",
+      "relEntityName": "GlAccountType",
+      "fkName": "GLACCT_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlAccountClass",
+      "type": "one",
+      "relEntityName": "GlAccountClass",
+      "fkName": "GLACCT_CLSS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountClassId",
+          "relFieldName": "glAccountClassId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlResourceType",
+      "type": "one",
+      "relEntityName": "GlResourceType",
+      "fkName": "GLACCT_REC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glResourceTypeId",
+          "relFieldName": "glResourceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlXbrlClass",
+      "type": "one",
+      "relEntityName": "GlXbrlClass",
+      "fkName": "GLACCT_XBRLCLS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glXbrlClassId",
+          "relFieldName": "glXbrlClassId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ParentGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "GLACCT_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PostToFinAccount",
+      "type": "many",
+      "relEntityName": "FinAccount",
+      "fkName": "",
+      "title": "PostTo",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "postToGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FinAccountTypeGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AssetFixedAssetTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeGlAccount",
+      "fkName": "",
+      "title": "Asset",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "assetGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AccumulatedDepreciationFixedAssetTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeGlAccount",
+      "fkName": "",
+      "title": "AccumulatedDepreciation",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "accDepGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DepreciationFixedAssetTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeGlAccount",
+      "fkName": "",
+      "title": "Depreciation",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "depGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProfitFixedAssetTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeGlAccount",
+      "fkName": "",
+      "title": "Profit",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "profitGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LossFixedAssetTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeGlAccount",
+      "fkName": "",
+      "title": "Loss",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "lossGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildGlAccount",
+      "type": "many",
+      "relEntityName": "GlAccount",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "parentGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountCategoryMember",
+      "type": "many",
+      "relEntityName": "GlAccountCategoryMember",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountGroupMember",
+      "type": "many",
+      "relEntityName": "GlAccountGroupMember",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountHistory",
+      "type": "many",
+      "relEntityName": "GlAccountHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountOrganization",
+      "type": "many",
+      "relEntityName": "GlAccountOrganization",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountRole",
+      "type": "many",
+      "relEntityName": "GlAccountRole",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountTypeDefault",
+      "type": "many",
+      "relEntityName": "GlAccountTypeDefault",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlBudgetXref",
+      "type": "many",
+      "relEntityName": "GlBudgetXref",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlReconciliation",
+      "type": "many",
+      "relEntityName": "GlReconciliation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OverrideInvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "title": "Override",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "overrideGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DefaultInvoiceItemType",
+      "type": "many",
+      "relEntityName": "InvoiceItemType",
+      "fkName": "",
+      "title": "Default",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "defaultGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceItemTypeGlAccount",
+      "type": "many",
+      "relEntityName": "InvoiceItemTypeGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OverrideOrderAdjustment",
+      "type": "many",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "",
+      "title": "Override",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "overrideGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OverrideOrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "title": "Override",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "overrideGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyGlAccount",
+      "type": "many",
+      "relEntityName": "PartyGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Payment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "overrideGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentApplication",
+      "type": "many",
+      "relEntityName": "PaymentApplication",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "overrideGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentMethod",
+      "type": "many",
+      "relEntityName": "PaymentMethod",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DefaultPaymentMethodType",
+      "type": "many",
+      "relEntityName": "PaymentMethodType",
+      "fkName": "",
+      "title": "Default",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "defaultGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentMethodTypeGlAccount",
+      "type": "many",
+      "relEntityName": "PaymentMethodTypeGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductCategoryGlAccount",
+      "type": "many",
+      "relEntityName": "ProductCategoryGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductGlAccount",
+      "type": "many",
+      "relEntityName": "ProductGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OverrideQuoteAdjustment",
+      "type": "many",
+      "relEntityName": "QuoteAdjustment",
+      "fkName": "",
+      "title": "Override",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "overrideGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OverrideReturnAdjustment",
+      "type": "many",
+      "relEntityName": "ReturnAdjustment",
+      "fkName": "",
+      "title": "Override",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "overrideGlAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityGlAccount",
+      "type": "many",
+      "relEntityName": "TaxAuthorityGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VarianceReasonGlAccount",
+      "type": "many",
+      "relEntityName": "VarianceReasonGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "glAccountId"
+  ],
+  "uniqueKey": "glAccountId",
+  "combine": false,
+  "isView": false
+}

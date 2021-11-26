@@ -1,0 +1,337 @@
+{
+  "name": "FacilityLocation",
+  "title": "Facility Location",
+  "description": "None",
+  "tableName": "FACILITY_LOCATION",
+  "fields": [
+    {
+      "name": "facilityId",
+      "type": "id",
+      "col": "FACILITY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "locationSeqId",
+      "type": "id",
+      "col": "LOCATION_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "locationTypeEnumId",
+      "type": "id",
+      "col": "LOCATION_TYPE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "areaId",
+      "type": "id",
+      "col": "AREA_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "aisleId",
+      "type": "id",
+      "col": "AISLE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sectionId",
+      "type": "id",
+      "col": "SECTION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "levelId",
+      "type": "id",
+      "col": "LEVEL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "positionId",
+      "type": "id",
+      "col": "POSITION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "geoPointId",
+      "type": "id",
+      "col": "GEO_POINT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Facility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "FACILITY_LOC_FAC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TypeEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "FACILITY_LOC_TENM",
+      "title": "Type",
+      "keymaps": [
+        {
+          "fieldName": "locationTypeEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GeoPoint",
+      "type": "one",
+      "relEntityName": "GeoPoint",
+      "fkName": "FACILITY_LOC_GEOPT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "geoPointId",
+          "relFieldName": "geoPointId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FacilityLocationGeoPoint",
+      "type": "many",
+      "relEntityName": "FacilityLocationGeoPoint",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locationSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LocatedAtFixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "title": "LocatedAt",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "locatedAtFacilityId"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locatedAtLocationSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locationSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locationSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToInventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityIdTo"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locationSeqIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFacilityLocation",
+      "type": "many",
+      "relEntityName": "ProductFacilityLocation",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locationSeqId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "facilityId",
+    "locationSeqId"
+  ],
+  "uniqueKey": "facilityId, locationSeqId",
+  "combine": true,
+  "isView": false
+}

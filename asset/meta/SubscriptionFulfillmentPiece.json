@@ -1,0 +1,124 @@
+{
+  "name": "SubscriptionFulfillmentPiece",
+  "title": "Subscription Fulfillment Piece",
+  "description": "None",
+  "tableName": "SUBSCRIPTION_FULFILLMENT_PIECE",
+  "fields": [
+    {
+      "name": "subscriptionActivityId",
+      "type": "id",
+      "col": "SUBSCRIPTION_ACTIVITY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "subscriptionId",
+      "type": "id",
+      "col": "SUBSCRIPTION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Subscription",
+      "type": "one",
+      "relEntityName": "Subscription",
+      "fkName": "SUBSC_FP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionId",
+          "relFieldName": "subscriptionId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SubscriptionActivity",
+      "type": "one",
+      "relEntityName": "SubscriptionActivity",
+      "fkName": "SUBSC_FP_ACT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionActivityId",
+          "relFieldName": "subscriptionActivityId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "subscriptionActivityId",
+    "subscriptionId"
+  ],
+  "uniqueKey": "subscriptionActivityId, subscriptionId",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,151 @@
+{
+  "name": "GlAccountGroupMember",
+  "title": "General Ledger Account Group Member",
+  "description": "None",
+  "tableName": "GL_ACCOUNT_GROUP_MEMBER",
+  "fields": [
+    {
+      "name": "glAccountId",
+      "type": "id",
+      "col": "GL_ACCOUNT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glAccountGroupTypeId",
+      "type": "id",
+      "col": "GL_ACCOUNT_GROUP_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "glAccountGroupId",
+      "type": "id",
+      "col": "GL_ACCOUNT_GROUP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "GlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "GLACT_GPMBR_AC",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlAccountGroup",
+      "type": "one",
+      "relEntityName": "GlAccountGroup",
+      "fkName": "GLACT_GPMBR_GP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountGroupId",
+          "relFieldName": "glAccountGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GlAccountGroupType",
+      "type": "one",
+      "relEntityName": "GlAccountGroupType",
+      "fkName": "GLACT_GPMBR_TP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountGroupTypeId",
+          "relFieldName": "glAccountGroupTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "glAccountId",
+    "glAccountGroupTypeId"
+  ],
+  "uniqueKey": "glAccountId, glAccountGroupTypeId",
+  "combine": true,
+  "isView": false
+}

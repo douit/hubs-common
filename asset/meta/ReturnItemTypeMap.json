@@ -1,0 +1,151 @@
+{
+  "name": "ReturnItemTypeMap",
+  "title": "Return Item Type Map",
+  "description": "Mapping between productTypeId and returnItemTypeId for product order items, orderItemTypeId and returnItemTypeId for other\n          order items, or orderAdjustmentTypeId and returnAdjustmentTypeId.  Separate mappings for different types of returns (customer vs. vendor)",
+  "tableName": "RETURN_ITEM_TYPE_MAP",
+  "fields": [
+    {
+      "name": "returnItemMapKey",
+      "type": "id",
+      "col": "RETURN_ITEM_MAP_KEY",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "returnHeaderTypeId",
+      "type": "id",
+      "col": "RETURN_HEADER_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "returnItemTypeId",
+      "type": "id",
+      "col": "RETURN_ITEM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ReturnItemType",
+      "type": "one-nofk",
+      "relEntityName": "ReturnItemType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "returnItemTypeId",
+          "relFieldName": "returnItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReturnHeaderType",
+      "type": "one",
+      "relEntityName": "ReturnHeaderType",
+      "fkName": "RETITMMAP_RETTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "returnHeaderTypeId",
+          "relFieldName": "returnHeaderTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReturnAdjustmentType",
+      "type": "one-nofk",
+      "relEntityName": "ReturnAdjustmentType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "returnItemTypeId",
+          "relFieldName": "returnAdjustmentTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "returnItemMapKey",
+    "returnHeaderTypeId"
+  ],
+  "uniqueKey": "returnItemMapKey, returnHeaderTypeId",
+  "combine": true,
+  "isView": false
+}

@@ -1,0 +1,258 @@
+{
+  "name": "RecurrenceInfo",
+  "title": "Recurrence Info",
+  "description": "None",
+  "tableName": "RECURRENCE_INFO",
+  "fields": [
+    {
+      "name": "recurrenceInfoId",
+      "type": "id",
+      "col": "RECURRENCE_INFO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "startDateTime",
+      "type": "date-time",
+      "col": "START_DATE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "exceptionDateTimes",
+      "type": "very-long",
+      "col": "EXCEPTION_DATE_TIMES",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "recurrenceDateTimes",
+      "type": "very-long",
+      "col": "RECURRENCE_DATE_TIMES",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "exceptionRuleId",
+      "type": "id",
+      "col": "EXCEPTION_RULE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "recurrenceRuleId",
+      "type": "id",
+      "col": "RECURRENCE_RULE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "recurrenceCount",
+      "type": "numeric",
+      "col": "RECURRENCE_COUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "RecurrenceRule",
+      "type": "one",
+      "relEntityName": "RecurrenceRule",
+      "fkName": "REC_INFO_RCRLE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceRuleId",
+          "relFieldName": "recurrenceRuleId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ExceptionRecurrenceRule",
+      "type": "one",
+      "relEntityName": "RecurrenceRule",
+      "fkName": "REC_INFO_EX_RCRLE",
+      "title": "Exception",
+      "keymaps": [
+        {
+          "fieldName": "exceptionRuleId",
+          "relFieldName": "recurrenceRuleId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Invoice",
+      "type": "many",
+      "relEntityName": "Invoice",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "JobSandbox",
+      "type": "many",
+      "relEntityName": "JobSandbox",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductAssoc",
+      "type": "many",
+      "relEntityName": "ProductAssoc",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingList",
+      "type": "many",
+      "relEntityName": "ShoppingList",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "recurrenceInfoId"
+  ],
+  "uniqueKey": "recurrenceInfoId",
+  "combine": false,
+  "isView": false
+}

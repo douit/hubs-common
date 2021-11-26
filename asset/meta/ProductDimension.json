@@ -1,0 +1,176 @@
+{
+  "name": "ProductDimension",
+  "title": "Product Dimension",
+  "description": "Product dimension. The natural key is [productId]",
+  "tableName": "PRODUCT_DIMENSION",
+  "fields": [
+    {
+      "name": "dimensionId",
+      "type": "id",
+      "col": "DIMENSION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productType",
+      "type": "description",
+      "col": "PRODUCT_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "brandName",
+      "type": "name",
+      "col": "BRAND_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "internalName",
+      "type": "description",
+      "col": "INTERNAL_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMP",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "InventoryItemFact",
+      "type": "many",
+      "relEntityName": "InventoryItemFact",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dimensionId",
+          "relFieldName": "productDimId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesInvoiceItemFact",
+      "type": "many",
+      "relEntityName": "SalesInvoiceItemFact",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dimensionId",
+          "relFieldName": "productDimId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOrderItemFact",
+      "type": "many",
+      "relEntityName": "SalesOrderItemFact",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dimensionId",
+          "relFieldName": "productDimId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "dimensionId"
+  ],
+  "uniqueKey": "dimensionId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,194 @@
+{
+  "name": "BudgetScenarioApplication",
+  "title": "Budget Scenario Application",
+  "description": "None",
+  "tableName": "BUDGET_SCENARIO_APPLICATION",
+  "fields": [
+    {
+      "name": "budgetScenarioApplicId",
+      "type": "id",
+      "col": "BUDGET_SCENARIO_APPLIC_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "budgetScenarioId",
+      "type": "id",
+      "col": "BUDGET_SCENARIO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "budgetId",
+      "type": "id",
+      "col": "BUDGET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "budgetItemSeqId",
+      "type": "id",
+      "col": "BUDGET_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "amountChange",
+      "type": "currency-amount",
+      "col": "AMOUNT_CHANGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,2)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "percentageChange",
+      "type": "fixed-point",
+      "col": "PERCENTAGE_CHANGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "BudgetScenario",
+      "type": "one",
+      "relEntityName": "BudgetScenario",
+      "fkName": "BUDGET_SAPL_BSCN",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetScenarioId",
+          "relFieldName": "budgetScenarioId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Budget",
+      "type": "one",
+      "relEntityName": "Budget",
+      "fkName": "BUDGET_SAPL_BDGT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BudgetItem",
+      "type": "one",
+      "relEntityName": "BudgetItem",
+      "fkName": "BUDGET_SAPL_BITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        },
+        {
+          "fieldName": "budgetItemSeqId",
+          "relFieldName": "budgetItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "budgetScenarioApplicId",
+    "budgetScenarioId"
+  ],
+  "uniqueKey": "budgetScenarioApplicId, budgetScenarioId",
+  "combine": true,
+  "isView": false
+}

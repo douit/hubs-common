@@ -1,0 +1,290 @@
+{
+  "name": "PaymentGatewayConfig",
+  "title": "Payment Gateway Config",
+  "description": "None",
+  "tableName": "PAYMENT_GATEWAY_CONFIG",
+  "fields": [
+    {
+      "name": "paymentGatewayConfigId",
+      "type": "id",
+      "col": "PAYMENT_GATEWAY_CONFIG_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "paymentGatewayConfigTypeId",
+      "type": "id",
+      "col": "PAYMENT_GATEWAY_CONFIG_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PaymentGatewayConfigType",
+      "type": "one",
+      "relEntityName": "PaymentGatewayConfigType",
+      "fkName": "PGC_PGCT",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigTypeId",
+          "relFieldName": "paymentGatewayConfigTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentGatewayAuthorizeNet",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayAuthorizeNet",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayClearCommerce",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayClearCommerce",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayCyberSource",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayCyberSource",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayEway",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayEway",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayFirstData",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayFirstData",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayOrbital",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayOrbital",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayPayPal",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayPayPal",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayPayflowPro",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayPayflowPro",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewaySagePay",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewaySagePay",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewaySecurePay",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewaySecurePay",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayWorldPay",
+      "type": "one-nofk",
+      "relEntityName": "PaymentGatewayWorldPay",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStorePaymentSetting",
+      "type": "many",
+      "relEntityName": "ProductStorePaymentSetting",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentGatewayConfigId",
+          "relFieldName": "paymentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "paymentGatewayConfigId"
+  ],
+  "uniqueKey": "paymentGatewayConfigId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,305 @@
+{
+  "name": "TechDataCalendarWeek",
+  "title": "Week definition",
+  "description": "Used to defined the week definition disponibility for machine",
+  "tableName": "TECH_DATA_CALENDAR_WEEK",
+  "fields": [
+    {
+      "name": "calendarWeekId",
+      "type": "id",
+      "col": "CALENDAR_WEEK_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "mondayStartTime",
+      "type": "time",
+      "col": "MONDAY_START_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Time",
+      "sqlType": "TIME",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "mondayCapacity",
+      "type": "floating-point",
+      "col": "MONDAY_CAPACITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "tuesdayStartTime",
+      "type": "time",
+      "col": "TUESDAY_START_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Time",
+      "sqlType": "TIME",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "tuesdayCapacity",
+      "type": "floating-point",
+      "col": "TUESDAY_CAPACITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "wednesdayStartTime",
+      "type": "time",
+      "col": "WEDNESDAY_START_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Time",
+      "sqlType": "TIME",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "wednesdayCapacity",
+      "type": "floating-point",
+      "col": "WEDNESDAY_CAPACITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thursdayStartTime",
+      "type": "time",
+      "col": "THURSDAY_START_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Time",
+      "sqlType": "TIME",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thursdayCapacity",
+      "type": "floating-point",
+      "col": "THURSDAY_CAPACITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fridayStartTime",
+      "type": "time",
+      "col": "FRIDAY_START_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Time",
+      "sqlType": "TIME",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fridayCapacity",
+      "type": "floating-point",
+      "col": "FRIDAY_CAPACITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "saturdayStartTime",
+      "type": "time",
+      "col": "SATURDAY_START_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Time",
+      "sqlType": "TIME",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "saturdayCapacity",
+      "type": "floating-point",
+      "col": "SATURDAY_CAPACITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sundayStartTime",
+      "type": "time",
+      "col": "SUNDAY_START_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Time",
+      "sqlType": "TIME",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "sundayCapacity",
+      "type": "floating-point",
+      "col": "SUNDAY_CAPACITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Double",
+      "sqlType": "FLOAT8",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "TechDataCalendar",
+      "type": "many",
+      "relEntityName": "TechDataCalendar",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "calendarWeekId",
+          "relFieldName": "calendarWeekId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TechDataCalendarExcWeek",
+      "type": "many",
+      "relEntityName": "TechDataCalendarExcWeek",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "calendarWeekId",
+          "relFieldName": "calendarWeekId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "calendarWeekId"
+  ],
+  "uniqueKey": "calendarWeekId",
+  "combine": false,
+  "isView": false
+}

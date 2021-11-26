@@ -1,0 +1,248 @@
+{
+  "name": "PaymentMethodType",
+  "title": "PaymentMethodType",
+  "description": "None",
+  "tableName": "PAYMENT_METHOD_TYPE",
+  "fields": [
+    {
+      "name": "paymentMethodTypeId",
+      "type": "id",
+      "col": "PAYMENT_METHOD_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "defaultGlAccountId",
+      "type": "id",
+      "col": "DEFAULT_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "DefaultGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "PAYMENT_MTP_DGLAC",
+      "title": "Default",
+      "keymaps": [
+        {
+          "fieldName": "defaultGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderPaymentPreference",
+      "type": "many",
+      "relEntityName": "OrderPaymentPreference",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Payment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayResponse",
+      "type": "many",
+      "relEntityName": "PaymentGatewayResponse",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentMethod",
+      "type": "many",
+      "relEntityName": "PaymentMethod",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentMethodTypeGlAccount",
+      "type": "many",
+      "relEntityName": "PaymentMethodTypeGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PayrollPreference",
+      "type": "many",
+      "relEntityName": "PayrollPreference",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPaymentMethodType",
+      "type": "many",
+      "relEntityName": "ProductPaymentMethodType",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStorePaymentSetting",
+      "type": "many",
+      "relEntityName": "ProductStorePaymentSetting",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreVendorPayment",
+      "type": "many",
+      "relEntityName": "ProductStoreVendorPayment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "paymentMethodTypeId"
+  ],
+  "uniqueKey": "paymentMethodTypeId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,395 @@
+{
+  "name": "EmplPosition",
+  "title": "EmplPosition",
+  "description": "None",
+  "tableName": "EMPL_POSITION",
+  "fields": [
+    {
+      "name": "emplPositionId",
+      "type": "id",
+      "col": "EMPL_POSITION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "budgetId",
+      "type": "id",
+      "col": "BUDGET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "budgetItemSeqId",
+      "type": "id",
+      "col": "BUDGET_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "emplPositionTypeId",
+      "type": "id",
+      "col": "EMPL_POSITION_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedFromDate",
+      "type": "date-time",
+      "col": "ESTIMATED_FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "estimatedThruDate",
+      "type": "date-time",
+      "col": "ESTIMATED_THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "salaryFlag",
+      "type": "indicator",
+      "col": "SALARY_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "exemptFlag",
+      "type": "indicator",
+      "col": "EXEMPT_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "fulltimeFlag",
+      "type": "indicator",
+      "col": "FULLTIME_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "temporaryFlag",
+      "type": "indicator",
+      "col": "TEMPORARY_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "actualFromDate",
+      "type": "date-time",
+      "col": "ACTUAL_FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "actualThruDate",
+      "type": "date-time",
+      "col": "ACTUAL_THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "EMPL_POS_STTS",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "EMPL_POS_PRTY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "BudgetItem",
+      "type": "one-nofk",
+      "relEntityName": "BudgetItem",
+      "fkName": "EMPL_POS_BGTITM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "budgetId",
+          "relFieldName": "budgetId"
+        },
+        {
+          "fieldName": "budgetItemSeqId",
+          "relFieldName": "budgetItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EmplPositionType",
+      "type": "one-nofk",
+      "relEntityName": "EmplPositionType",
+      "fkName": "EMPL_POS_EPSTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionTypeId",
+          "relFieldName": "emplPositionTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EmplPositionFulfillment",
+      "type": "many",
+      "relEntityName": "EmplPositionFulfillment",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionId",
+          "relFieldName": "emplPositionId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReportingToEmplPositionReportingStruct",
+      "type": "many",
+      "relEntityName": "EmplPositionReportingStruct",
+      "fkName": "",
+      "title": "ReportingTo",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionId",
+          "relFieldName": "emplPositionIdReportingTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ManagedByEmplPositionReportingStruct",
+      "type": "many",
+      "relEntityName": "EmplPositionReportingStruct",
+      "fkName": "",
+      "title": "ManagedBy",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionId",
+          "relFieldName": "emplPositionIdManagedBy"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmplPositionResponsibility",
+      "type": "many",
+      "relEntityName": "EmplPositionResponsibility",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionId",
+          "relFieldName": "emplPositionId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmploymentApp",
+      "type": "many",
+      "relEntityName": "EmploymentApp",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionId",
+          "relFieldName": "emplPositionId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PerfReview",
+      "type": "many",
+      "relEntityName": "PerfReview",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionId",
+          "relFieldName": "emplPositionId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "emplPositionId"
+  ],
+  "uniqueKey": "emplPositionId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,298 @@
+{
+  "name": "CustomTimePeriod",
+  "title": "CustomTimePeriod",
+  "description": "None",
+  "tableName": "CUSTOM_TIME_PERIOD",
+  "fields": [
+    {
+      "name": "customTimePeriodId",
+      "type": "id",
+      "col": "CUSTOM_TIME_PERIOD_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentPeriodId",
+      "type": "id",
+      "col": "PARENT_PERIOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "periodTypeId",
+      "type": "id",
+      "col": "PERIOD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "periodNum",
+      "type": "numeric",
+      "col": "PERIOD_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "periodName",
+      "type": "name",
+      "col": "PERIOD_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "isClosed",
+      "type": "indicator",
+      "col": "IS_CLOSED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "organizationPartyId",
+      "type": "id",
+      "col": "ORGANIZATION_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentCustomTimePeriod",
+      "type": "one",
+      "relEntityName": "CustomTimePeriod",
+      "fkName": "ORG_PRD_PARPER",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentPeriodId",
+          "relFieldName": "customTimePeriodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PeriodType",
+      "type": "one",
+      "relEntityName": "PeriodType",
+      "fkName": "ORG_PRD_PERTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "periodTypeId",
+          "relFieldName": "periodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrganizationParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "ORG_PRD_PARTY",
+      "title": "Organization",
+      "keymaps": [
+        {
+          "fieldName": "organizationPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Budget",
+      "type": "many",
+      "relEntityName": "Budget",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "customTimePeriodId",
+          "relFieldName": "customTimePeriodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildCustomTimePeriod",
+      "type": "many",
+      "relEntityName": "CustomTimePeriod",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "customTimePeriodId",
+          "relFieldName": "parentPeriodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountHistory",
+      "type": "many",
+      "relEntityName": "GlAccountHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "customTimePeriodId",
+          "relFieldName": "customTimePeriodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesForecast",
+      "type": "many",
+      "relEntityName": "SalesForecast",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "customTimePeriodId",
+          "relFieldName": "customTimePeriodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesForecastHistory",
+      "type": "many",
+      "relEntityName": "SalesForecastHistory",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "customTimePeriodId",
+          "relFieldName": "customTimePeriodId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "customTimePeriodId"
+  ],
+  "uniqueKey": "customTimePeriodId",
+  "combine": false,
+  "isView": false
+}

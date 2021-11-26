@@ -1,0 +1,321 @@
+{
+  "name": "JobRequisition",
+  "title": "Entity for storing data about recruitment",
+  "description": "None",
+  "tableName": "JOB_REQUISITION",
+  "fields": [
+    {
+      "name": "jobRequisitionId",
+      "type": "id",
+      "col": "JOB_REQUISITION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "durationMonths",
+      "type": "numeric",
+      "col": "DURATION_MONTHS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "age",
+      "type": "numeric",
+      "col": "AGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "gender",
+      "type": "indicator",
+      "col": "GENDER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "experienceMonths",
+      "type": "numeric",
+      "col": "EXPERIENCE_MONTHS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "experienceYears",
+      "type": "numeric",
+      "col": "EXPERIENCE_YEARS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "qualification",
+      "type": "id-long",
+      "col": "QUALIFICATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(60)",
+      "stringLength": 60,
+      "validators": []
+    },
+    {
+      "name": "jobLocation",
+      "type": "id",
+      "col": "JOB_LOCATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "skillTypeId",
+      "type": "id",
+      "col": "SKILL_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "noOfResources",
+      "type": "numeric",
+      "col": "NO_OF_RESOURCES",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobPostingTypeEnumId",
+      "type": "id",
+      "col": "JOB_POSTING_TYPE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "jobRequisitionDate",
+      "type": "date",
+      "col": "JOB_REQUISITION_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Date",
+      "sqlType": "DATE",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "examTypeEnumId",
+      "type": "id",
+      "col": "EXAM_TYPE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requiredOnDate",
+      "type": "date",
+      "col": "REQUIRED_ON_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Date",
+      "sqlType": "DATE",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SkillType",
+      "type": "one",
+      "relEntityName": "SkillType",
+      "fkName": "JOB_REQ_SKTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "skillTypeId",
+          "relFieldName": "skillTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ExamTypeEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "JOB_REQ_ENUMEXM",
+      "title": "ExamType",
+      "keymaps": [
+        {
+          "fieldName": "examTypeEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "JobPostingTypeEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "JOB_REQ_ENUMJBP",
+      "title": "JobPostingType",
+      "keymaps": [
+        {
+          "fieldName": "jobPostingTypeEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EmploymentApp",
+      "type": "many",
+      "relEntityName": "EmploymentApp",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "jobRequisitionId",
+          "relFieldName": "jobRequisitionId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "JobInterview",
+      "type": "many",
+      "relEntityName": "JobInterview",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "jobRequisitionId",
+          "relFieldName": "jobRequisitionId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "jobRequisitionId"
+  ],
+  "uniqueKey": "jobRequisitionId",
+  "combine": false,
+  "isView": false
+}

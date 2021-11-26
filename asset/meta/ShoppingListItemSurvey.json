@@ -1,0 +1,156 @@
+{
+  "name": "ShoppingListItemSurvey",
+  "title": "Shopping List Item",
+  "description": "None",
+  "tableName": "SHOPPING_LIST_ITEM_SURVEY",
+  "fields": [
+    {
+      "name": "shoppingListId",
+      "type": "id",
+      "col": "SHOPPING_LIST_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "shoppingListItemSeqId",
+      "type": "id",
+      "col": "SHOPPING_LIST_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyResponseId",
+      "type": "id",
+      "col": "SURVEY_RESPONSE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ShoppingList",
+      "type": "one",
+      "relEntityName": "ShoppingList",
+      "fkName": "SHLIST_ITSUR_LIST",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "shoppingListId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShoppingListItem",
+      "type": "one",
+      "relEntityName": "ShoppingListItem",
+      "fkName": "SHLIST_ITSUR_ITEM",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "shoppingListId"
+        },
+        {
+          "fieldName": "shoppingListItemSeqId",
+          "relFieldName": "shoppingListItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyResponse",
+      "type": "one",
+      "relEntityName": "SurveyResponse",
+      "fkName": "SHLIST_ITSUR_RESP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyResponseId",
+          "relFieldName": "surveyResponseId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "shoppingListId",
+    "shoppingListItemSeqId",
+    "surveyResponseId"
+  ],
+  "uniqueKey": "shoppingListId, shoppingListItemSeqId, surveyResponseId",
+  "combine": true,
+  "isView": false
+}

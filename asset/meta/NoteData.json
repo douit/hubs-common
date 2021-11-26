@@ -1,0 +1,313 @@
+{
+  "name": "NoteData",
+  "title": "NoteData",
+  "description": "None",
+  "tableName": "NOTE_DATA",
+  "fields": [
+    {
+      "name": "noteId",
+      "type": "id",
+      "col": "NOTE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "noteName",
+      "type": "name",
+      "col": "NOTE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "noteInfo",
+      "type": "very-long",
+      "col": "NOTE_INFO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "TEXT",
+      "stringLength": 5000,
+      "validators": []
+    },
+    {
+      "name": "noteDateTime",
+      "type": "date-time",
+      "col": "NOTE_DATE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "noteParty",
+      "type": "id",
+      "col": "NOTE_PARTY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "moreInfoUrl",
+      "type": "value",
+      "col": "MORE_INFO_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "moreInfoItemId",
+      "type": "value",
+      "col": "MORE_INFO_ITEM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "moreInfoItemName",
+      "type": "value",
+      "col": "MORE_INFO_ITEM_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "NoteParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "NOTE_DATA_PTY",
+      "title": "Note",
+      "keymaps": [
+        {
+          "fieldName": "noteParty",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequestItemNote",
+      "type": "many",
+      "relEntityName": "CustRequestItemNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestNote",
+      "type": "many",
+      "relEntityName": "CustRequestNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceNote",
+      "type": "many",
+      "relEntityName": "InvoiceNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaignNote",
+      "type": "many",
+      "relEntityName": "MarketingCampaignNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderHeaderNote",
+      "type": "many",
+      "relEntityName": "OrderHeaderNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyNote",
+      "type": "many",
+      "relEntityName": "PartyNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteNote",
+      "type": "many",
+      "relEntityName": "QuoteNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortNote",
+      "type": "many",
+      "relEntityName": "WorkEffortNote",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "noteId"
+  ],
+  "uniqueKey": "noteId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,337 @@
+{
+  "name": "OrderItemAssoc",
+  "title": "Order Item Assoc",
+  "description": "None",
+  "tableName": "ORDER_ITEM_ASSOC",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "shipGroupSeqId",
+      "type": "id",
+      "col": "SHIP_GROUP_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "toOrderId",
+      "type": "id",
+      "col": "TO_ORDER_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "toOrderItemSeqId",
+      "type": "id",
+      "col": "TO_ORDER_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "toShipGroupSeqId",
+      "type": "id",
+      "col": "TO_SHIP_GROUP_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "orderItemAssocTypeId",
+      "type": "id",
+      "col": "ORDER_ITEM_ASSOC_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderItemAssocType",
+      "type": "one",
+      "relEntityName": "OrderItemAssocType",
+      "fkName": "ORDER_ITASS_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "orderItemAssocTypeId",
+          "relFieldName": "orderItemAssocTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromOrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "ORDER_ITASS_FRHD",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromOrderItem",
+      "type": "one-nofk",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromOrderItemShipGroupAssoc",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroupAssoc",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromOrderItemShipGroup",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "From",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToOrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "ORDER_ITASS_TOHD",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "toOrderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToOrderItem",
+      "type": "one-nofk",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "toOrderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "toOrderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToOrderItemShipGroupAssoc",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroupAssoc",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "toOrderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "toOrderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "toShipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToOrderItemShipGroup",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "title": "To",
+      "keymaps": [
+        {
+          "fieldName": "toOrderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "toShipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 7,
+  "pks": [
+    "orderId",
+    "orderItemSeqId",
+    "shipGroupSeqId",
+    "toOrderId",
+    "toOrderItemSeqId",
+    "toShipGroupSeqId",
+    "orderItemAssocTypeId"
+  ],
+  "uniqueKey": "orderId, orderItemSeqId, shipGroupSeqId, toOrderId, toOrderItemSeqId, toShipGroupSeqId, orderItemAssocTypeId",
+  "combine": true,
+  "isView": false
+}

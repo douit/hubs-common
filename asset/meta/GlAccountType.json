@@ -1,0 +1,275 @@
+{
+  "name": "GlAccountType",
+  "title": "General Ledger Account Type",
+  "description": "None",
+  "tableName": "GL_ACCOUNT_TYPE",
+  "fields": [
+    {
+      "name": "glAccountTypeId",
+      "type": "id",
+      "col": "GL_ACCOUNT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentGlAccountType",
+      "type": "one",
+      "relEntityName": "GlAccountType",
+      "fkName": "GLACTTY_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CostCostComponentCalc",
+      "type": "many",
+      "relEntityName": "CostComponentCalc",
+      "fkName": "",
+      "title": "Cost",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "costGlAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OffsettingCostComponentCalc",
+      "type": "many",
+      "relEntityName": "CostComponentCalc",
+      "fkName": "",
+      "title": "Offsetting",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "offsettingGlAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccount",
+      "type": "many",
+      "relEntityName": "GlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildGlAccountType",
+      "type": "many",
+      "relEntityName": "GlAccountType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountTypeDefault",
+      "type": "many",
+      "relEntityName": "GlAccountTypeDefault",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyGlAccount",
+      "type": "many",
+      "relEntityName": "PartyGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGlAccountTypeMap",
+      "type": "many",
+      "relEntityName": "PaymentGlAccountTypeMap",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductCategoryGlAccount",
+      "type": "many",
+      "relEntityName": "ProductCategoryGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductGlAccount",
+      "type": "many",
+      "relEntityName": "ProductGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "glAccountTypeId",
+          "relFieldName": "glAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "glAccountTypeId"
+  ],
+  "uniqueKey": "glAccountTypeId",
+  "combine": false,
+  "isView": false
+}

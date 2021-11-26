@@ -1,0 +1,245 @@
+{
+  "name": "FinAccountType",
+  "title": "Financial Account Type",
+  "description": "None",
+  "tableName": "FIN_ACCOUNT_TYPE",
+  "fields": [
+    {
+      "name": "finAccountTypeId",
+      "type": "id",
+      "col": "FIN_ACCOUNT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "replenishEnumId",
+      "type": "id",
+      "col": "REPLENISH_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "isRefundable",
+      "type": "indicator",
+      "col": "IS_REFUNDABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentFinAccountType",
+      "type": "one",
+      "relEntityName": "FinAccountType",
+      "fkName": "FINACCT_TYPE_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "finAccountTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReplenishEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "FINACCT_TYPE_RENUM",
+      "title": "Replenish",
+      "keymaps": [
+        {
+          "fieldName": "replenishEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FinAccount",
+      "type": "many",
+      "relEntityName": "FinAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTypeId",
+          "relFieldName": "finAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildFinAccountType",
+      "type": "many",
+      "relEntityName": "FinAccountType",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountTypeAttr",
+      "type": "many",
+      "relEntityName": "FinAccountTypeAttr",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTypeId",
+          "relFieldName": "finAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FinAccountTypeGlAccount",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTypeId",
+          "relFieldName": "finAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreFinActSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreFinActSetting",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "finAccountTypeId",
+          "relFieldName": "finAccountTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "finAccountTypeId"
+  ],
+  "uniqueKey": "finAccountTypeId",
+  "combine": false,
+  "isView": false
+}

@@ -1,0 +1,199 @@
+{
+  "name": "EmplPositionTypeRate",
+  "title": "EmplPosition Type Rate",
+  "description": "None",
+  "tableName": "EMPL_POSITION_TYPE_RATE_NEW",
+  "fields": [
+    {
+      "name": "emplPositionTypeId",
+      "type": "id",
+      "col": "EMPL_POSITION_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "rateTypeId",
+      "type": "id",
+      "col": "RATE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "payGradeId",
+      "type": "id",
+      "col": "PAY_GRADE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "salaryStepSeqId",
+      "type": "id",
+      "col": "SALARY_STEP_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "EmplPositionType",
+      "type": "one",
+      "relEntityName": "EmplPositionType",
+      "fkName": "EMPL_PTPRT_EPTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "emplPositionTypeId",
+          "relFieldName": "emplPositionTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SalaryStep",
+      "type": "one-nofk",
+      "relEntityName": "SalaryStep",
+      "fkName": "EMPL_PTPRT_SSTP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "salaryStepSeqId",
+          "relFieldName": "salaryStepSeqId"
+        },
+        {
+          "fieldName": "payGradeId",
+          "relFieldName": "payGradeId"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RateType",
+      "type": "one-nofk",
+      "relEntityName": "RateType",
+      "fkName": "EMPL_PTPRT_RTTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "rateTypeId",
+          "relFieldName": "rateTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "emplPositionTypeId",
+    "rateTypeId",
+    "fromDate"
+  ],
+  "uniqueKey": "emplPositionTypeId, rateTypeId, fromDate",
+  "combine": true,
+  "isView": false
+}

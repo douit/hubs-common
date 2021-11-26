@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "OrderHeader": {
+      "flatIds": []
+    },
+    "OrderItem": {
+      "flatIds": [
+        "OrderHeader"
+      ]
+    },
+    "Payment": {
+      "flatIds": []
+    },
+    "Invoice": {
+      "flatIds": [
+        "Party"
+      ]
+    },
+    "Product": {
+      "flatIds": []
+    },
+    "Shipment": {
+      "flatIds": []
+    },
+    "ProductStore": {
+      "flatIds": [
+        "Party"
+      ]
+    },
+    "Party": {
+      "flatIds": []
+    },
+    "Person": {
+      "flatIds": [
+        "Party"
+      ]
+    },
+    "PartyGroup": {
+      "flatIds": [
+        "Party"
+      ]
+    },
+    "FinAccount": {
+      "flatIds": []
+    }
+  }
+}

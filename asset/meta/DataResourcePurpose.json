@@ -1,0 +1,124 @@
+{
+  "name": "DataResourcePurpose",
+  "title": "Data Object Purpose",
+  "description": "None",
+  "tableName": "DATA_RESOURCE_PURPOSE",
+  "fields": [
+    {
+      "name": "dataResourceId",
+      "type": "id",
+      "col": "DATA_RESOURCE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "contentPurposeTypeId",
+      "type": "id",
+      "col": "CONTENT_PURPOSE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "DataResource",
+      "type": "one",
+      "relEntityName": "DataResource",
+      "fkName": "DATA_REC_PRP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "dataResourceId",
+          "relFieldName": "dataResourceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContentPurposeType",
+      "type": "one",
+      "relEntityName": "ContentPurposeType",
+      "fkName": "DATA_REC_PRP_TYPE",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "contentPurposeTypeId",
+          "relFieldName": "contentPurposeTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "dataResourceId",
+    "contentPurposeTypeId"
+  ],
+  "uniqueKey": "dataResourceId, contentPurposeTypeId",
+  "combine": true,
+  "isView": false
+}

@@ -1,6 +1,7 @@
 package com.bluecc.hubs.proto;
 
 import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.HeadEntityResources;
 import com.bluecc.hubs.stub.OrderItemData;
 import com.bluecc.hubs.stub.UserLoginData;
 import com.google.protobuf.Descriptors;
@@ -21,7 +22,7 @@ public class DataBuilder {
 
     public ProtoBuilder procData(String entityName, boolean disableHeadEntity) {
         String dataClass = null;
-        if (EntityMeta.HEAD_ENTITIES.containsKey(entityName) && disableHeadEntity) {
+        if (HeadEntityResources.contains(entityName) && disableHeadEntity) {
             dataClass = String.format("com.bluecc.hubs.stub.%sFlatData", entityName);
         } else {
             dataClass = String.format("com.bluecc.hubs.stub.%sData", entityName);

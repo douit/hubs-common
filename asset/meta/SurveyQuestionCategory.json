@@ -1,0 +1,150 @@
+{
+  "name": "SurveyQuestionCategory",
+  "title": "Survey Question Category",
+  "description": "None",
+  "tableName": "SURVEY_QUESTION_CATEGORY",
+  "fields": [
+    {
+      "name": "surveyQuestionCategoryId",
+      "type": "id",
+      "col": "SURVEY_QUESTION_CATEGORY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "parentCategoryId",
+      "type": "id",
+      "col": "PARENT_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentSurveyQuestionCategory",
+      "type": "one",
+      "relEntityName": "SurveyQuestionCategory",
+      "fkName": "SRVYQSTCT_PAR",
+      "title": "Parent",
+      "keymaps": [
+        {
+          "fieldName": "parentCategoryId",
+          "relFieldName": "surveyQuestionCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyQuestion",
+      "type": "many",
+      "relEntityName": "SurveyQuestion",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionCategoryId",
+          "relFieldName": "surveyQuestionCategoryId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildSurveyQuestionCategory",
+      "type": "many",
+      "relEntityName": "SurveyQuestionCategory",
+      "fkName": "",
+      "title": "Child",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionCategoryId",
+          "relFieldName": "parentCategoryId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "surveyQuestionCategoryId"
+  ],
+  "uniqueKey": "surveyQuestionCategoryId",
+  "combine": false,
+  "isView": false
+}

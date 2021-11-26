@@ -1,5 +1,6 @@
 package com.bluecc.gentool.common;
 
+import com.bluecc.hubs.fund.template.VarFilter;
 import com.google.common.collect.ImmutableMap;
 import com.hubspot.jinjava.Jinjava;
 import com.hubspot.jinjava.lib.fn.ELFunctionDefinition;
@@ -18,7 +19,7 @@ public class TemplateUtilTest {
     @Test
     public void build() {
         Jinjava jinjava = new Jinjava();
-        jinjava.getGlobalContext().registerFilter(new TemplateUtil.VarFilter());
+        jinjava.getGlobalContext().registerFilter(new VarFilter());
         jinjava.getGlobalContext().registerFunction(new ELFunctionDefinition(
                 "", "currentTimeMillis",
                 System.class, "currentTimeMillis"));

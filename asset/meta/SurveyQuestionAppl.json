@@ -1,0 +1,331 @@
+{
+  "name": "SurveyQuestionAppl",
+  "title": "Survey Question Application",
+  "description": "None",
+  "tableName": "SURVEY_QUESTION_APPL",
+  "fields": [
+    {
+      "name": "surveyId",
+      "type": "id",
+      "col": "SURVEY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyQuestionId",
+      "type": "id",
+      "col": "SURVEY_QUESTION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyPageSeqId",
+      "type": "id",
+      "col": "SURVEY_PAGE_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyMultiRespId",
+      "type": "id",
+      "col": "SURVEY_MULTI_RESP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "surveyMultiRespColId",
+      "type": "id",
+      "col": "SURVEY_MULTI_RESP_COL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "requiredField",
+      "type": "indicator",
+      "col": "REQUIRED_FIELD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "CHAR(1)",
+      "stringLength": 1,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "externalFieldRef",
+      "type": "long-varchar",
+      "col": "EXTERNAL_FIELD_REF",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(255)",
+      "stringLength": 255,
+      "validators": []
+    },
+    {
+      "name": "withSurveyQuestionId",
+      "type": "id",
+      "col": "WITH_SURVEY_QUESTION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "withSurveyOptionSeqId",
+      "type": "id",
+      "col": "WITH_SURVEY_OPTION_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Survey",
+      "type": "one",
+      "relEntityName": "Survey",
+      "fkName": "SRVYQSTAPL_SRVY",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyQuestion",
+      "type": "one",
+      "relEntityName": "SurveyQuestion",
+      "fkName": "SRVYQSTAPL_SRVYQ",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyQuestionId",
+          "relFieldName": "surveyQuestionId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WithSurveyQuestionOption",
+      "type": "one",
+      "relEntityName": "SurveyQuestionOption",
+      "fkName": "SRVYQSTAPL_SVQO",
+      "title": "With",
+      "keymaps": [
+        {
+          "fieldName": "withSurveyQuestionId",
+          "relFieldName": "surveyQuestionId"
+        },
+        {
+          "fieldName": "withSurveyOptionSeqId",
+          "relFieldName": "surveyOptionSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyPage",
+      "type": "one-nofk",
+      "relEntityName": "SurveyPage",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        },
+        {
+          "fieldName": "surveyPageSeqId",
+          "relFieldName": "surveyPageSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyMultiResp",
+      "type": "one-nofk",
+      "relEntityName": "SurveyMultiResp",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        },
+        {
+          "fieldName": "surveyMultiRespId",
+          "relFieldName": "surveyMultiRespId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SurveyMultiRespColumn",
+      "type": "one-nofk",
+      "relEntityName": "SurveyMultiRespColumn",
+      "fkName": "",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "surveyId",
+          "relFieldName": "surveyId"
+        },
+        {
+          "fieldName": "surveyMultiRespId",
+          "relFieldName": "surveyMultiRespId"
+        },
+        {
+          "fieldName": "surveyMultiRespColId",
+          "relFieldName": "surveyMultiRespColId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "surveyId",
+    "surveyQuestionId",
+    "fromDate"
+  ],
+  "uniqueKey": "surveyId, surveyQuestionId, fromDate",
+  "combine": true,
+  "isView": false
+}

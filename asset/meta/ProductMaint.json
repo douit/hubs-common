@@ -1,0 +1,275 @@
+{
+  "name": "ProductMaint",
+  "title": "Product Maintenance",
+  "description": "This is used to specify the details for scheduled maintenance.",
+  "tableName": "PRODUCT_MAINT",
+  "fields": [
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productMaintSeqId",
+      "type": "id",
+      "col": "PRODUCT_MAINT_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "productMaintTypeId",
+      "type": "id",
+      "col": "PRODUCT_MAINT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "maintName",
+      "type": "name",
+      "col": "MAINT_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(100)",
+      "stringLength": 100,
+      "validators": []
+    },
+    {
+      "name": "maintTemplateWorkEffortId",
+      "type": "id",
+      "col": "MAINT_TEMPLATE_WORK_EFFORT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "intervalQuantity",
+      "type": "fixed-point",
+      "col": "INTERVAL_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "java.math.BigDecimal",
+      "sqlType": "NUMERIC(18,6)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "intervalUomId",
+      "type": "id",
+      "col": "INTERVAL_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "intervalMeterTypeId",
+      "type": "id",
+      "col": "INTERVAL_METER_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "String",
+      "sqlType": "VARCHAR(20)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "repeatCount",
+      "type": "numeric",
+      "col": "REPEAT_COUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "javaType": "Long",
+      "sqlType": "NUMERIC(20,0)",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "javaType": "java.sql.Timestamp",
+      "sqlType": "TIMESTAMPTZ",
+      "stringLength": 20,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "PRODMNT_PROD",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductMaintType",
+      "type": "one",
+      "relEntityName": "ProductMaintType",
+      "fkName": "PRODMNT_MNTTYP",
+      "title": "",
+      "keymaps": [
+        {
+          "fieldName": "productMaintTypeId",
+          "relFieldName": "productMaintTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MaintTemplateWorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "PRODMNT_TPLHWE",
+      "title": "MaintTemplate",
+      "keymaps": [
+        {
+          "fieldName": "maintTemplateWorkEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "IntervalUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PRODMNT_INTUOM",
+      "title": "Interval",
+      "keymaps": [
+        {
+          "fieldName": "intervalUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "IntervalProductMeterType",
+      "type": "one",
+      "relEntityName": "ProductMeterType",
+      "fkName": "PRODMNT_PDMTTYP",
+      "title": "Interval",
+      "keymaps": [
+        {
+          "fieldName": "intervalMeterTypeId",
+          "relFieldName": "productMeterTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "IntervalProductMeter",
+      "type": "one-nofk",
+      "relEntityName": "ProductMeter",
+      "fkName": "",
+      "title": "Interval",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        },
+        {
+          "fieldName": "intervalMeterTypeId",
+          "relFieldName": "productMeterTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "productId",
+    "productMaintSeqId"
+  ],
+  "uniqueKey": "productId, productMaintSeqId",
+  "combine": true,
+  "isView": false
+}
