@@ -27,11 +27,10 @@ public class PersonProcs extends AbstractRepository {
     Sequence sequence;
 
     @Transactional
-    public Person findById(Long id) {
+    public Person findById(String id) {
         return selectFrom(person).where(person.partyId.eq(id)).fetchOne();
     }
 
-/*
     @Transactional
     public String save(Person entity) {
         if (entity.getPartyId() != null) {
@@ -60,23 +59,23 @@ public class PersonProcs extends AbstractRepository {
                 .executeWithKey(person.partyId);
         return entity.getPartyId();
     }
-*/
 
-    @Transactional
-    public Long save(Person entity) {
-        if (entity.getPartyId() != null) {
-            update(person).populate(entity).execute();
-            return entity.getPartyId();
-        }
+    //
+    // @Transactional
+    // public String save(Person entity) {
+    //     if (entity.getPartyId() != null) {
+    //         update(person).populate(entity).execute();
+    //         return entity.getPartyId();
+    //     }
+    //
+    //     return create(entity);
+    // }
 
-        return create(entity);
-    }
-
-    @Transactional
-    public Long create(Person entity) {
-        return insert(person).populate(entity)
-                .executeWithKey(person.partyId);
-    }
+    // @Transactional
+    // public String create(Person entity) {
+    //     return insert(person).populate(entity)
+    //             .executeWithKey(person.partyId);
+    // }
 
     @Transactional
     public List<Person> findAll(Predicate expr) {
@@ -94,7 +93,7 @@ public class PersonProcs extends AbstractRepository {
     @Data
     @Builder
     static class PersonDo {
-        Long partyId;
+        String partyId;
         String lastName;
         String fristName;
     }
@@ -112,7 +111,7 @@ public class PersonProcs extends AbstractRepository {
             Person p = new Person();
             p.setLastName(faker.name().lastName());
             p.setFirstName(faker.name().firstName());
-            Long pid = procs.save(p);
+            String pid = procs.save(p);
             System.out.println("save ok: " + pid);
         }
 

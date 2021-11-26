@@ -7,7 +7,9 @@ import com.bluecc.hubs.fund.*;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -26,20 +28,32 @@ import static java.util.Arrays.asList;
  */
 @Slf4j
 public class ProtoTool {
-    @Parameter
-    public List<String> entities = Lists.newArrayList("OrderHeader", "OrderItem");
-    @Parameter(names = {"--write-all", "-w"})
-    boolean writeAll=false;
-    public static void main(String[] args) throws IOException {
-        String tplName="proto";
 
-        ProtoTool main = new ProtoTool();
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class ProtoGenOpts {
+        @Parameter
+        public List<String> entities = Lists.newArrayList("OrderHeader", "OrderItem");
+        @Parameter(names = {"--write-all", "-w"})
+        boolean writeAll = false;
+    }
+    public static void main(String[] args) throws IOException {
+
+        ProtoGenOpts opts=new ProtoGenOpts();
         JCommander.newBuilder()
-                .addObject(main)
+                .addObject(opts)
                 .build()
                 .parse(args);
 
-        if(!main.writeAll) {
+        startGen(opts);
+
+    }
+
+    public static void startGen(ProtoGenOpts opts) throws IOException {
+        ProtoTool main = new ProtoTool(opts);
+        String tplName="proto";
+        if(!opts.writeAll) {
             main.genAll(tplName);
         }else{
             String protoDir= SystemDefs.prependHubsHome( "stub/src/main/proto");
@@ -48,10 +62,14 @@ public class ProtoTool {
             log.info(".. write to "+targetFile);
             main.writeProtos(targetFile);
         }
-
     }
 
     EntityMetaProcessors metaProcessors=new EntityMetaProcessors();
+    ProtoGenOpts opts;
+    public ProtoTool(ProtoGenOpts opts) {
+        this.opts=opts;
+    }
+
     void writeProtos(String protoFile) throws IOException {
         FileWriter writer=new FileWriter(protoFile);
         writer.write(TemplateUtil.build("templates/proto_header.j2",
@@ -75,7 +93,7 @@ public class ProtoTool {
     }
 
     public void genAll(String tplName) throws IOException {
-        for (String entName : entities) {
+        for (String entName : opts.entities) {
             gen(entName, tplName);
         }
     }

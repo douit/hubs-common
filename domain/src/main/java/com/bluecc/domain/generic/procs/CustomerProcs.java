@@ -62,7 +62,7 @@ public class CustomerProcs extends PartyRepository {
     );
 
     @Transactional
-    public Customer findCustomer(Long partyId) {
+    public Customer findCustomer(String partyId) {
         List<Customer> rs = selectFrom(person)
                 .innerJoin(party).on(person.partyId.eq(party.partyId))
                 .leftJoin(partyRole).on(person.partyId.eq(partyRole.partyId))
@@ -72,8 +72,8 @@ public class CustomerProcs extends PartyRepository {
     }
 
     @Transactional
-    public Long saveCustomer(CustomerParams params) {
-        Long partyId = save(params.party);
+    public String saveCustomer(CustomerParams params) {
+        String partyId = save(params.party);
 
         params.person.setPartyId(partyId);
         insert(person).populate(params.person)
@@ -96,7 +96,7 @@ public class CustomerProcs extends PartyRepository {
                 .executeWithKey(partyStatus.partyId);
 
         // insert combo
-        Long geoPointId = insert(geoPoint).populate(params.geoPoint)
+        String geoPointId = insert(geoPoint).populate(params.geoPoint)
                 .executeWithKey(geoPoint.geoPointId);
 
         params.partyGeoPoint.setPartyId(partyId);
@@ -108,7 +108,7 @@ public class CustomerProcs extends PartyRepository {
     }
 
     @Transactional
-    public void addRoles(Long partyId, PartyRole... roles){
+    public void addRoles(String partyId, PartyRole... roles){
         SQLInsertClause insert = insert(partyRole);
         for (PartyRole role : roles) {
             role.setPartyId(partyId);

@@ -58,6 +58,10 @@ public class EntityMetaDigester {
 
         // field entity type ref
         for (Map.Entry<String, Collection<FieldDigest>> entry : fieldDigestMap.asMap().entrySet()) {
+            if(entry.getValue().stream().anyMatch(f -> f.refType == RefType.ENTITY_REF)){
+                continue;
+            }
+
             for (FieldDigest fieldDigest : entry.getValue()) {
                 if (fieldDigest.getRefType() == RefType.TYPE_REF) {
                     // System.out.println("■■ " + entry.getKey() + ": " + fieldDigest.getTypeRef().getEntityType());
@@ -70,6 +74,7 @@ public class EntityMetaDigester {
     public boolean isRefField(String fieldName){
         return fieldRefTypes.containsKey(fieldName);
     }
+
     public String getEntityRef(String fieldName){
         return fieldRefTypes.get(fieldName);
     }

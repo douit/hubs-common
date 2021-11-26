@@ -22,9 +22,11 @@ public class InvoiceProcs extends InvoiceRepository {
     InvoiceItemRepository invoiceItemRepository;
 
     @Transactional
-    public void addInvoiceItems(Long invoiceId, InvoiceItem... items) {
+    public void addInvoiceItems(String invoiceId, InvoiceItem... items) {
         SQLInsertClause insert = insert(invoiceItem);
+        long autoId=System.currentTimeMillis();
         for (InvoiceItem item : items) {
+            item.setId(Long.toString(autoId++));
             item.setInvoiceId(invoiceId);
             item.setCreatedStamp(DateTime.now());
             insert.populate(item).addBatch();
@@ -33,7 +35,7 @@ public class InvoiceProcs extends InvoiceRepository {
     }
 
     @Transactional
-    public BigDecimal getInvoiceTotal(Long invoiceId) {
+    public BigDecimal getInvoiceTotal(String invoiceId) {
         BigDecimal invoiceTotal =
                 invoiceItemRepository.findAll(invoiceItem.invoiceId.eq(invoiceId))
                         .stream()

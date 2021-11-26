@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QOrderRole.orderRole;
 
 // Order Role
 public class OrderRoleRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<OrderRole> orderRoleBean = bean(OrderRole.class, orderRole.all());
 
     @Transactional
-    public Long save(OrderRole entity) {
+    public String save(OrderRole entity) {
         if (entity.getId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(orderRole).populate(entity).execute();
             return entity.getId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(orderRole).populate(entity)
-                .executeWithKey(orderRole.id);
+        String uid=sequence.nextStringId();
+        entity.setId(uid);
+        return create(entity);
+        // return insert(orderRole).populate(entity)
+        //        .executeWithKey(orderRole.id);
     }
 
     @Transactional
-    public OrderRole findById(Long id) {
+    public String create(OrderRole entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(orderRole).populate(entity)
+                .executeWithKey(orderRole.id);
+        return entity.getId();
+    }
+
+    @Transactional
+    public OrderRole findById(String id) {
         return selectFrom(orderRole).where(orderRole.id.eq(id)).fetchOne();
     }
 
@@ -59,8 +75,8 @@ public class OrderRoleRepository extends AbstractRepository {
 
 -- fields --
     
-    Long orderId
-    Long partyId
+    String orderId
+    String partyId
     String roleTypeId
 
 -- relations --

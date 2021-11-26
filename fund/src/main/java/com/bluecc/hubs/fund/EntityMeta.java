@@ -95,6 +95,9 @@ public class EntityMeta {
     public String getPkGetter() {
         return "get" + Util.toClassName(getPk());
     }
+    public String getPkSetter() {
+        return "set" + Util.toClassName(getPk());
+    }
 
     public String getPkCol() {
         if (combine) {
@@ -131,6 +134,8 @@ public class EntityMeta {
 
     public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types) {
         fields = fields.stream().filter(f -> !IGNORE_FIELDS.contains(f.getName())).collect(Collectors.toList());
+
+        // 修正对应的sql-type, 比如TIMESTAMPTZ类型
         fields.forEach(f -> {
             FieldMappings.FieldTypeDef typDef = types.get(f.type);
             f.setSqlType(typDef.getSqlType());
@@ -166,8 +171,10 @@ public class EntityMeta {
             getFields().add(FieldMeta.builder()
                     .name("id")
                     .type("id")
-                    .javaType("Long")
-                    .sqlType("BIGINT auto_increment")
+                    // .javaType("Long")
+                    // .sqlType("BIGINT auto_increment")
+                    .javaType("String")
+                    .sqlType("VARCHAR(20)")
                     .stringLength(20)
                     .col("ID")
                     .pk(true)
@@ -175,14 +182,14 @@ public class EntityMeta {
                     .autoCreatedInternal(true)
                     .autoInc(true)
                     .build());
-        } else {
-            fields.stream().filter(f -> f.pk).forEach(f -> {
-                f.setAutoInc(true);
-                f.setType("id");  // 修正唯一键的类型
-                f.setJavaType("Long");
-                f.setSqlType("BIGINT");
-            });
         }
+        //
+        // fields.stream().filter(f -> f.pk).forEach(f -> {
+        //     f.setAutoInc(true);
+        //     f.setType("id");  // 修正唯一键的类型
+        //     f.setJavaType("Long");
+        //     f.setSqlType("BIGINT");
+        // });
     }
 
     @Data
@@ -241,13 +248,13 @@ public class EntityMeta {
         FieldDigest fieldDigest;
 
         public String getFixSqlType() {
-            if (type.startsWith("id")) {
-                if (autoInc) {
-                    return "BIGINT auto_increment";
-                } else {
-                    return "BIGINT";
-                }
-            }
+            // if (type.startsWith("id")) {
+            //     if (autoInc) {
+            //         return "BIGINT auto_increment";
+            //     } else {
+            //         return "BIGINT";
+            //     }
+            // }
             return sqlType;
         }
 

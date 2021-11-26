@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QInvoice.invoice;
 
 // Invoice
 public class InvoiceRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<Invoice> invoiceBean = bean(Invoice.class, invoice.all());
 
     @Transactional
-    public Long save(Invoice entity) {
+    public String save(Invoice entity) {
         if (entity.getInvoiceId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(invoice).populate(entity).execute();
             return entity.getInvoiceId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(invoice).populate(entity)
-                .executeWithKey(invoice.invoiceId);
+        String uid=sequence.nextStringId();
+        entity.setInvoiceId(uid);
+        return create(entity);
+        // return insert(invoice).populate(entity)
+        //        .executeWithKey(invoice.invoiceId);
     }
 
     @Transactional
-    public Invoice findById(Long id) {
+    public String create(Invoice entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(invoice).populate(entity)
+                .executeWithKey(invoice.invoiceId);
+        return entity.getInvoiceId();
+    }
+
+    @Transactional
+    public Invoice findById(String id) {
         return selectFrom(invoice).where(invoice.invoiceId.eq(id)).fetchOne();
     }
 
@@ -59,14 +75,14 @@ public class InvoiceRepository extends AbstractRepository {
 
 -- fields --
     
-    Long invoiceId
+    String invoiceId
     String invoiceTypeId
-    Long partyIdFrom
-    Long partyId
+    String partyIdFrom
+    String partyId
     String roleTypeId
     String statusId
-    Long billingAccountId
-    Long contactMechId
+    String billingAccountId
+    String contactMechId
     java.sql.Timestamp invoiceDate
     java.sql.Timestamp dueDate
     java.sql.Timestamp paidDate
@@ -74,7 +90,7 @@ public class InvoiceRepository extends AbstractRepository {
     String referenceNumber
     String description
     String currencyUomId
-    Long recurrenceInfoId
+    String recurrenceInfoId
 
 -- relations --
     

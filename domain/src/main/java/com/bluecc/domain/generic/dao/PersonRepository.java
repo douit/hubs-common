@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QPerson.person;
 
 // Person
 public class PersonRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<Person> personBean = bean(Person.class, person.all());
 
     @Transactional
-    public Long save(Person entity) {
+    public String save(Person entity) {
         if (entity.getPartyId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(person).populate(entity).execute();
             return entity.getPartyId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(person).populate(entity)
-                .executeWithKey(person.partyId);
+        String uid=sequence.nextStringId();
+        entity.setPartyId(uid);
+        return create(entity);
+        // return insert(person).populate(entity)
+        //        .executeWithKey(person.partyId);
     }
 
     @Transactional
-    public Person findById(Long id) {
+    public String create(Person entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(person).populate(entity)
+                .executeWithKey(person.partyId);
+        return entity.getPartyId();
+    }
+
+    @Transactional
+    public Person findById(String id) {
         return selectFrom(person).where(person.partyId.eq(id)).fetchOne();
     }
 
@@ -59,7 +75,7 @@ public class PersonRepository extends AbstractRepository {
 
 -- fields --
     
-    Long partyId
+    String partyId
     String salutation
     String firstName
     String middleName
@@ -71,7 +87,7 @@ public class PersonRepository extends AbstractRepository {
     String middleNameLocal
     String lastNameLocal
     String otherLocal
-    Long memberId
+    String memberId
     String gender
     java.sql.Date birthDate
     java.sql.Date deceasedDate
@@ -91,7 +107,7 @@ public class PersonRepository extends AbstractRepository {
     Long yearsWithEmployer
     Long monthsWithEmployer
     String existingCustomer
-    Long cardId
+    String cardId
 
 -- relations --
     

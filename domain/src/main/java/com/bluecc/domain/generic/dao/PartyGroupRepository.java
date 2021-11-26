@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QPartyGroup.partyGroup;
 
 // Party Group
 public class PartyGroupRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<PartyGroup> partyGroupBean = bean(PartyGroup.class, partyGroup.all());
 
     @Transactional
-    public Long save(PartyGroup entity) {
+    public String save(PartyGroup entity) {
         if (entity.getPartyId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(partyGroup).populate(entity).execute();
             return entity.getPartyId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(partyGroup).populate(entity)
-                .executeWithKey(partyGroup.partyId);
+        String uid=sequence.nextStringId();
+        entity.setPartyId(uid);
+        return create(entity);
+        // return insert(partyGroup).populate(entity)
+        //        .executeWithKey(partyGroup.partyId);
     }
 
     @Transactional
-    public PartyGroup findById(Long id) {
+    public String create(PartyGroup entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(partyGroup).populate(entity)
+                .executeWithKey(partyGroup.partyId);
+        return entity.getPartyId();
+    }
+
+    @Transactional
+    public PartyGroup findById(String id) {
         return selectFrom(partyGroup).where(partyGroup.partyId.eq(id)).fetchOne();
     }
 
@@ -59,7 +75,7 @@ public class PartyGroupRepository extends AbstractRepository {
 
 -- fields --
     
-    Long partyId
+    String partyId
     String groupName
     String groupNameLocal
     String officeSiteName

@@ -44,7 +44,7 @@ public class CustomerProcsTest extends AbstractProcsTest{
                 .geoPoint(geoPoint())
                 .partyGeoPoint(custGeoPoint())
                 .build();
-        Long id=customerProcs.saveCustomer(params);
+        String id=customerProcs.saveCustomer(params);
         System.out.println(id);
 
         assertEquals(2L, partyRoleRepository.count());

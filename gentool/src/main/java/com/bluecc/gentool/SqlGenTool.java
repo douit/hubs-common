@@ -1,12 +1,17 @@
 package com.bluecc.gentool;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
 import com.bluecc.gentool.dummy.DummyTemplateProcs;
+import com.bluecc.hubs.fund.DataSetUtil;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.MetaTypes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.*;
 import java.util.*;
@@ -18,89 +23,125 @@ import static com.bluecc.hubs.fund.Util.writeJsonFile;
 import static java.util.Objects.requireNonNull;
 
 /**
- * $ just gen SqlGenTool
+ * $ just gen SqlGenTool -s
  */
 public class SqlGenTool {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class GenOpts {
+        @Parameter(names = {"--silent", "-s"})
+        boolean silent;
+    }
 
     public static void main(String[] args) throws IOException {
-        // List<String> entityNames= Lists.newArrayList("GeoPoint");
-        SqlGenTool genTool=new SqlGenTool("mysql");
-        // genTool.addAdditions(entityNames);
-        genTool.build("asset/mysql/hubs.sql",
+        GenOpts opts=new GenOpts();
+        JCommander.newBuilder()
+                .addObject(opts)
+                .build()
+                .parse(args);
+
+        startGen(opts);
+    }
+
+    public static void startGen(GenOpts opts) throws IOException {
+        SqlGenTool genMysql = new SqlGenTool(opts,"mysql",
+                "asset/mysql/hubs.sql",
                 "asset/mysql/hubs.json");
+        SqlGenTool genH2 = new SqlGenTool(opts,"h2",
+                "domain/src/main/sql/hubs_h2.sql", null);
 
-        genTool=new SqlGenTool("h2");
-        // genTool.addAdditions(entityNames);
-        genTool.build("domain/src/main/sql/hubs_h2.sql",null);
+
+        System.out.println("opt-silent: " + opts.silent);
+        genMysql.build();
+        genH2.build();
     }
 
-    public SqlGenTool(){
-        this("mysql");
-    }
+    // public static void start(SqlGenTool genTool) throws IOException {
+    //     // List<String> entityNames= Lists.newArrayList("GeoPoint");
+    //     // SqlGenTool genTool=new SqlGenTool("mysql");
+    //     // genTool.addAdditions(entityNames);
+    //     genTool.build("asset/mysql/hubs.sql",
+    //             "asset/mysql/hubs.json");
+    //
+    //     genTool=new SqlGenTool("h2");
+    //     // genTool.addAdditions(entityNames);
+    //     genTool.build("domain/src/main/sql/hubs_h2.sql",null);
+    // }
 
     String sqlMode;
-    Set<String> additions= Sets.newHashSet();
-    public SqlGenTool(String sqlMode){
-        this.sqlMode=sqlMode;
+    String outputSqlFile, outputJsonFile;
+    Set<String> additions = Sets.newHashSet();
+    GenOpts opts;
+    public SqlGenTool(GenOpts opts, String sqlMode, String outputSqlFile, String outputJsonFile) {
+        this.opts=opts;
+        this.sqlMode = sqlMode;
+        this.outputSqlFile = outputSqlFile;
+        this.outputJsonFile = outputJsonFile;
     }
 
-    public void addAdditions(List<String> entityNames){
+    public void addAdditions(List<String> entityNames) {
         additions.addAll(entityNames);
     }
-    public void build(String outputSqlFile, String outputJsonFile)  throws IOException{
-        Writer writer=new FileWriter(outputSqlFile);
+
+    public void build() throws IOException {
+        Writer writer = new FileWriter(outputSqlFile);
 
         // Set<String> entityList=SeedReader.collectEntityNames(dataFile);
         Set<String> entityList = collectEntitiesFromResources();
         entityList.addAll(this.additions);
-        if(sqlMode.equals("h2")){
+        if (sqlMode.equals("h2")) {
             writer.write("SET MODE MYSQL; /* another h2 way to set mode */\n" +
                     "CREATE SCHEMA IF NOT EXISTS \"public\";\n\n");
         }
         for (String entityName : entityList) {
             File metaFile = getMetaFile(entityName);
             // System.out.println(metaFile.getName());
-            String genCnt=genDDL(metaFile, writer);
-            System.out.println(genCnt);
+            String genCnt = genDDL(sqlMode, metaFile, writer);
+            if (!opts.silent) {
+                System.out.println(genCnt);
+            }
         }
 
-        writer.write(String.format("-- total entities %d, from %s\n",
-                entityList.size(), dataFile));
+        String info=String.format("-- total entities %d, from %s\n",
+                entityList.size(), Arrays.asList(DataSetUtil.DATA_SAMPLES));
+        System.out.println(info);
+        writer.write(info);
         writer.close();
 
-        if(outputJsonFile!=null) {
+        if (outputJsonFile != null) {
             writeJsonFile(MetaTypes.MetaList.builder()
                     .entities(entityList)
                     .build(), new File(outputJsonFile));
         }
     }
 
-    private  void buildAll() throws IOException {
-        File metaDir=new File("asset/meta");
-        Writer writer=new FileWriter("asset/mysql/hubs.sql");
+    private void buildAll() throws IOException {
+        File metaDir = new File("asset/meta");
+        Writer writer = new FileWriter("asset/mysql/hubs.sql");
         for (File metaFile : requireNonNull(metaDir.listFiles((dir, name)
                 -> name.toLowerCase().endsWith(".json")))) {
             // System.out.println(metaFile.getName());
-            genDDL(metaFile, writer);
+            genDDL(sqlMode, metaFile, writer);
         }
         writer.close();
     }
 
-    private  void genDDL(String entName) throws IOException {
+    private void genDDL(String entName) throws IOException {
         File file = getMetaFile(entName);
-        genDDL(file, null);
+        genDDL(sqlMode, file, null);
     }
 
-    public String genDDL(File file, Writer writer) throws IOException {
+    public static String genDDL(String sqlMode, File file, Writer writer) throws IOException {
         EntityMeta meta = getEntityMeta(file);
 
         // System.out.println(meta.getName());
         // meta.getFields().forEach(f -> pretty(f));
 
-        DummyTemplateProcs procs=new DummyTemplateProcs();
-        String cnt=procs.procSql(sqlMode, meta);
+        DummyTemplateProcs procs = new DummyTemplateProcs();
+        String cnt = procs.procSql(sqlMode, meta);
 
-        if(writer!=null){
+        if (writer != null) {
             writer.write(cnt);
             writer.write('\n');
         }

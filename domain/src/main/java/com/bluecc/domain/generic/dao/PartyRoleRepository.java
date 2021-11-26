@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QPartyRole.partyRole;
 
 // Party Role
 public class PartyRoleRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<PartyRole> partyRoleBean = bean(PartyRole.class, partyRole.all());
 
     @Transactional
-    public Long save(PartyRole entity) {
+    public String save(PartyRole entity) {
         if (entity.getId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(partyRole).populate(entity).execute();
             return entity.getId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(partyRole).populate(entity)
-                .executeWithKey(partyRole.id);
+        String uid=sequence.nextStringId();
+        entity.setId(uid);
+        return create(entity);
+        // return insert(partyRole).populate(entity)
+        //        .executeWithKey(partyRole.id);
     }
 
     @Transactional
-    public PartyRole findById(Long id) {
+    public String create(PartyRole entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(partyRole).populate(entity)
+                .executeWithKey(partyRole.id);
+        return entity.getId();
+    }
+
+    @Transactional
+    public PartyRole findById(String id) {
         return selectFrom(partyRole).where(partyRole.id.eq(id)).fetchOne();
     }
 
@@ -59,7 +75,7 @@ public class PartyRoleRepository extends AbstractRepository {
 
 -- fields --
     
-    Long partyId
+    String partyId
     String roleTypeId
 
 -- relations --

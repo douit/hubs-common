@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QParty.party;
 
 // Party
 public class PartyRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<Party> partyBean = bean(Party.class, party.all());
 
     @Transactional
-    public Long save(Party entity) {
+    public String save(Party entity) {
         if (entity.getPartyId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(party).populate(entity).execute();
             return entity.getPartyId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(party).populate(entity)
-                .executeWithKey(party.partyId);
+        String uid=sequence.nextStringId();
+        entity.setPartyId(uid);
+        return create(entity);
+        // return insert(party).populate(entity)
+        //        .executeWithKey(party.partyId);
     }
 
     @Transactional
-    public Party findById(Long id) {
+    public String create(Party entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(party).populate(entity)
+                .executeWithKey(party.partyId);
+        return entity.getPartyId();
+    }
+
+    @Transactional
+    public Party findById(String id) {
         return selectFrom(party).where(party.partyId.eq(id)).fetchOne();
     }
 
@@ -59,16 +75,16 @@ public class PartyRepository extends AbstractRepository {
 
 -- fields --
     
-    Long partyId
+    String partyId
     String partyTypeId
-    Long externalId
+    String externalId
     String preferredCurrencyUomId
     String description
     String statusId
     java.sql.Timestamp createdDate
-    Long createdByUserLogin
+    String createdByUserLogin
     java.sql.Timestamp lastModifiedDate
-    Long lastModifiedByUserLogin
+    String lastModifiedByUserLogin
     String dataSourceId
     String isUnread
 

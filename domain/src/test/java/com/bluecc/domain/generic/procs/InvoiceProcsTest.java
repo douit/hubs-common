@@ -27,7 +27,7 @@ public class InvoiceProcsTest extends AbstractProcsTest{
     public void getInvoiceTotal() {
         Invoice invoice=new Invoice();
         invoice.setDescription("a sample invoice");
-        Long invoiceId=invoiceProcs.save(invoice);
+        String invoiceId=invoiceProcs.save(invoice);
         invoiceProcs.addInvoiceItems(invoiceId,
                 invoiceItem(1, 11.3, 5),
                 invoiceItem(2, 12.3, 5),
@@ -38,9 +38,9 @@ public class InvoiceProcsTest extends AbstractProcsTest{
                 total.setScale(decimalScale, roundingMode));
     }
 
-    private InvoiceItem invoiceItem(int seq, double v, int i) {
+    private InvoiceItem invoiceItem(Integer seq, double v, int i) {
         InvoiceItem invoiceItem=new InvoiceItem();
-        invoiceItem.setInvoiceItemSeqId((long) seq);
+        invoiceItem.setInvoiceItemSeqId(seq.toString());
         invoiceItem.setQuantity(BigDecimal.valueOf(i));
         invoiceItem.setAmount(BigDecimal.valueOf(v));
         return invoiceItem;

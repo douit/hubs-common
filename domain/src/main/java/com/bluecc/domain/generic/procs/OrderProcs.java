@@ -39,9 +39,9 @@ public class OrderProcs extends OrderHeaderRepository {
     }
 
     @Transactional
-    public Long saveOrder(OrderAndItems orderAndItems) {
+    public String saveOrder(OrderAndItems orderAndItems) {
         // orderAndItems.header.setCreatedStamp(DateTime.now());
-        Long orderId = save(orderAndItems.header);
+        String orderId = save(orderAndItems.header);
 
         if (!orderAndItems.getItems().isEmpty()) {
             SQLInsertClause insertItems = insert(orderItem);
@@ -66,7 +66,7 @@ public class OrderProcs extends OrderHeaderRepository {
     @Transactional
     @Fire
     public OrderAndItems saveAndReturnOrder(OrderAndItems orderAndItems) {
-        Long orderId=saveOrder(orderAndItems);
+        String orderId=saveOrder(orderAndItems);
         return findWithItems(orderId);
     }
 
@@ -82,7 +82,7 @@ public class OrderProcs extends OrderHeaderRepository {
     );
 
     @Transactional
-    public OrderAndItems findWithItems(Long orderId) {
+    public OrderAndItems findWithItems(String orderId) {
         List<OrderAndItems> rs = selectFrom(orderHeader)
                 .innerJoin(orderItem).on(orderHeader.orderId.eq(orderItem.orderId))
                 .leftJoin(orderItemPriceInfo).on(orderHeader.orderId.eq(orderItemPriceInfo.orderId),
@@ -93,7 +93,7 @@ public class OrderProcs extends OrderHeaderRepository {
         return rs.isEmpty() ? null : rs.get(0);
     }
 
-    public String findWithItemsSql(Long orderId){
+    public String findWithItemsSql(String orderId){
         SQLBindings sql=selectFrom(orderHeader)
                 .innerJoin(orderItem).on(orderHeader.orderId.eq(orderItem.orderId))
                 .leftJoin(orderItemPriceInfo).on(orderHeader.orderId.eq(orderItemPriceInfo.orderId),

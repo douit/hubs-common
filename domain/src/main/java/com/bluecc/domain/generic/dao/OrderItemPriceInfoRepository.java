@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QOrderItemPriceInfo.orderItemPriceInfo
 
 // Order Item Price Info
 public class OrderItemPriceInfoRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<OrderItemPriceInfo> orderItemPriceInfoBean = bean(OrderItemPriceInfo.class, orderItemPriceInfo.all());
 
     @Transactional
-    public Long save(OrderItemPriceInfo entity) {
+    public String save(OrderItemPriceInfo entity) {
         if (entity.getOrderItemPriceInfoId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(orderItemPriceInfo).populate(entity).execute();
             return entity.getOrderItemPriceInfoId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(orderItemPriceInfo).populate(entity)
-                .executeWithKey(orderItemPriceInfo.orderItemPriceInfoId);
+        String uid=sequence.nextStringId();
+        entity.setOrderItemPriceInfoId(uid);
+        return create(entity);
+        // return insert(orderItemPriceInfo).populate(entity)
+        //        .executeWithKey(orderItemPriceInfo.orderItemPriceInfoId);
     }
 
     @Transactional
-    public OrderItemPriceInfo findById(Long id) {
+    public String create(OrderItemPriceInfo entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(orderItemPriceInfo).populate(entity)
+                .executeWithKey(orderItemPriceInfo.orderItemPriceInfoId);
+        return entity.getOrderItemPriceInfoId();
+    }
+
+    @Transactional
+    public OrderItemPriceInfo findById(String id) {
         return selectFrom(orderItemPriceInfo).where(orderItemPriceInfo.orderItemPriceInfoId.eq(id)).fetchOne();
     }
 
@@ -59,11 +75,11 @@ public class OrderItemPriceInfoRepository extends AbstractRepository {
 
 -- fields --
     
-    Long orderItemPriceInfoId
-    Long orderId
-    Long orderItemSeqId
-    Long productPriceRuleId
-    Long productPriceActionSeqId
+    String orderItemPriceInfoId
+    String orderId
+    String orderItemSeqId
+    String productPriceRuleId
+    String productPriceActionSeqId
     java.math.BigDecimal modifyAmount
     String description
     String rateCode

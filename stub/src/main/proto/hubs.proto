@@ -96,8 +96,8 @@ message OrderHeaderFlatData {
     option (routines.entity_type) = "OrderHeader";
     // keys: orderId
         
-    string order_id = 1;
-    routines.TypeSymbol order_type_id = 2; // OrderType    
+    string order_id = 1;    
+    string order_type_id = 2;    
     string order_name = 3;    
     string external_id = 4;
     routines.TypeSymbol sales_channel_enum_id = 5; // Enumeration    
@@ -135,8 +135,8 @@ message OrderItemFlatData {
         
     string order_id = 1;    
     string order_item_seq_id = 2;    
-    string external_id = 3;
-    routines.TypeSymbol order_item_type_id = 4; // OrderItemType    
+    string external_id = 3;    
+    string order_item_type_id = 4;    
     string order_item_group_seq_id = 5;    
     routines.Indicator is_item_group_primary = 6;    
     string from_inventory_item_id = 7;    
@@ -187,8 +187,8 @@ message PaymentFlatData {
     option (routines.entity_type) = "Payment";
     // keys: paymentId
         
-    string payment_id = 1;
-    routines.TypeSymbol payment_type_id = 2; // PaymentType
+    string payment_id = 1;    
+    string payment_type_id = 2;
     routines.TypeSymbol payment_method_type_id = 3; // PaymentMethodType    
     string payment_method_id = 4;    
     string payment_gateway_response_id = 5;    
@@ -213,8 +213,8 @@ message InvoiceFlatData {
     option (routines.entity_type) = "Invoice";
     // keys: invoiceId
         
-    string invoice_id = 1;
-    routines.TypeSymbol invoice_type_id = 2; // InvoiceType    
+    string invoice_id = 1;    
+    string invoice_type_id = 2;    
     string party_id_from = 3;    
     string party_id = 4;
     routines.TypeSymbol role_type_id = 5; // RoleType
@@ -236,8 +236,8 @@ message ProductFlatData {
     option (routines.entity_type) = "Product";
     // keys: productId
         
-    string product_id = 1;
-    routines.TypeSymbol product_type_id = 2; // ProductType    
+    string product_id = 1;    
+    string product_type_id = 2;    
     string primary_product_category_id = 3;    
     string facility_id = 4;    
     google.protobuf.Timestamp introduction_date = 5;    
@@ -313,8 +313,8 @@ message ShipmentFlatData {
     option (routines.entity_type) = "Shipment";
     // keys: shipmentId
         
-    string shipment_id = 1;
-    routines.TypeSymbol shipment_type_id = 2; // ShipmentType
+    string shipment_id = 1;    
+    string shipment_type_id = 2;
     routines.TypeSymbol status_id = 3; // StatusItem    
     string primary_order_id = 4;    
     string primary_return_id = 5;    
@@ -434,9 +434,9 @@ message ProductStoreFlatData {
 message PartyFlatData {
     option (routines.entity_type) = "Party";
     // keys: partyId
-    
-    routines.TypeSymbol party_id = 1; // VarianceReasonGlAccount
-    routines.TypeSymbol party_type_id = 2; // PartyType    
+        
+    string party_id = 1;    
+    string party_type_id = 2;    
     string external_id = 3;
     routines.TypeSymbol preferred_currency_uom_id = 4; // Uom    
     string description = 5;
@@ -558,8 +558,8 @@ message InvoiceData {
 
     // fields
         
-    string invoice_id = 1;
-    routines.TypeSymbol invoice_type_id = 2; // InvoiceType    
+    string invoice_id = 1;    
+    string invoice_type_id = 2;    
     string party_id_from = 3;
     routines.TypeSymbol role_type_id = 4; // RoleType
     routines.TypeSymbol status_id = 5; // StatusItem    
@@ -593,8 +593,8 @@ message OrderAdjustmentData {
 
     // fields
         
-    string order_adjustment_id = 1;
-    routines.TypeSymbol order_adjustment_type_id = 2; // OrderAdjustmentType    
+    string order_adjustment_id = 1;    
+    string order_adjustment_type_id = 2;    
     string order_id = 3;    
     string order_item_seq_id = 4;    
     string ship_group_seq_id = 5;    
@@ -636,8 +636,8 @@ message ProductData {
 
     // fields
         
-    string product_id = 1;
-    routines.TypeSymbol product_type_id = 2; // ProductType    
+    string product_id = 1;    
+    string product_type_id = 2;    
     string facility_id = 3;    
     google.protobuf.Timestamp introduction_date = 4;    
     google.protobuf.Timestamp release_date = 5;    
@@ -762,8 +762,8 @@ message FixedAssetData {
 
     // fields
         
-    string fixed_asset_id = 1;
-    routines.TypeSymbol fixed_asset_type_id = 2; // FixedAssetType    
+    string fixed_asset_id = 1;    
+    string fixed_asset_type_id = 2;    
     string parent_fixed_asset_id = 3;    
     string instance_of_product_id = 4;
     routines.TypeSymbol class_enum_id = 5; // Enumeration    
@@ -1539,9 +1539,9 @@ message PartyData {
     // keys: partyId
 
     // fields
-    
-    routines.TypeSymbol party_id = 1; // VarianceReasonGlAccount
-    routines.TypeSymbol party_type_id = 2; // PartyType    
+        
+    string party_id = 1;    
+    string party_type_id = 2;    
     string external_id = 3;
     routines.TypeSymbol preferred_currency_uom_id = 4; // Uom    
     string description = 5;
@@ -1613,8 +1613,8 @@ message AgreementItemData {
     // fields
         
     string agreement_id = 1;    
-    string agreement_item_seq_id = 2;
-    routines.TypeSymbol agreement_item_type_id = 3; // AgreementItemType    
+    string agreement_item_seq_id = 2;    
+    string agreement_item_type_id = 3;    
     string currency_uom_id = 4;    
     string agreement_text = 5;    
     bytes agreement_image = 6;
@@ -1646,8 +1646,8 @@ message AcctgTransData {
 
     // fields
         
-    string acctg_trans_id = 1;
-    routines.TypeSymbol acctg_trans_type_id = 2; // AcctgTransType    
+    string acctg_trans_id = 1;    
+    string acctg_trans_type_id = 2;    
     string description = 3;    
     google.protobuf.Timestamp transaction_date = 4;    
     routines.Indicator is_posted = 5;    
@@ -1684,8 +1684,8 @@ message DataResourceData {
 
     // fields
         
-    string data_resource_id = 1;
-    routines.TypeSymbol data_resource_type_id = 2; // DataResourceType
+    string data_resource_id = 1;    
+    string data_resource_type_id = 2;
     routines.TypeSymbol data_template_type_id = 3; // DataTemplateType
     routines.TypeSymbol data_category_id = 4; // DataCategory
     routines.TypeSymbol data_source_id = 5; // DataSource
@@ -1747,10 +1747,10 @@ message AgreementData {
     string agreement_id = 1;    
     string product_id = 2;    
     string party_id_from = 3;    
-    string party_id_to = 4;
-    routines.TypeSymbol role_type_id_from = 5; // RoleType
-    routines.TypeSymbol role_type_id_to = 6; // RoleType
-    routines.TypeSymbol agreement_type_id = 7; // AgreementType    
+    string party_id_to = 4;    
+    string role_type_id_from = 5;
+    routines.TypeSymbol role_type_id_to = 6; // RoleType    
+    string agreement_type_id = 7;    
     google.protobuf.Timestamp agreement_date = 8;    
     google.protobuf.Timestamp from_date = 9;    
     google.protobuf.Timestamp thru_date = 10;    
@@ -1800,8 +1800,8 @@ message OrderItemData {
         
     string order_id = 1;    
     string order_item_seq_id = 2;    
-    string external_id = 3;
-    routines.TypeSymbol order_item_type_id = 4; // OrderItemType    
+    string external_id = 3;    
+    string order_item_type_id = 4;    
     string order_item_group_seq_id = 5;    
     routines.Indicator is_item_group_primary = 6;    
     string budget_id = 7;    
@@ -2267,8 +2267,8 @@ message UserLoginData {
     // keys: userLoginId
 
     // fields
-    
-    routines.TypeSymbol user_login_id = 1; // UserPreference    
+        
+    string user_login_id = 1;    
     string current_password = 2;    
     string password_hint = 3;    
     routines.Indicator is_system = 4;    
@@ -2309,9 +2309,9 @@ message PartyRoleData {
     // keys: partyId, roleTypeId
 
     // fields
-    
-    routines.TypeSymbol party_id = 1; // GlAccountOrganization
-    routines.TypeSymbol role_type_id = 2; // RoleType
+        
+    string party_id = 1;    
+    string role_type_id = 2;
     
 }
 
@@ -2354,8 +2354,8 @@ message OrderHeaderData {
 
     // fields
         
-    string order_id = 1;
-    routines.TypeSymbol order_type_id = 2; // OrderType    
+    string order_id = 1;    
+    string order_type_id = 2;    
     string order_name = 3;    
     string external_id = 4;
     routines.TypeSymbol sales_channel_enum_id = 5; // Enumeration    
@@ -2427,8 +2427,8 @@ message ShipmentData {
 
     // fields
         
-    string shipment_id = 1;
-    routines.TypeSymbol shipment_type_id = 2; // ShipmentType
+    string shipment_id = 1;    
+    string shipment_type_id = 2;
     routines.TypeSymbol status_id = 3; // StatusItem    
     string primary_return_id = 4;    
     string primary_ship_group_seq_id = 5;    
@@ -2600,8 +2600,8 @@ message PaymentData {
 
     // fields
         
-    string payment_id = 1;
-    routines.TypeSymbol payment_type_id = 2; // PaymentType
+    string payment_id = 1;    
+    string payment_type_id = 2;
     routines.TypeSymbol payment_method_type_id = 3; // PaymentMethodType
     routines.TypeSymbol role_type_id_to = 4; // RoleType
     routines.TypeSymbol status_id = 5; // StatusItem    
@@ -2637,8 +2637,8 @@ message ContentData {
 
     // fields
         
-    string content_id = 1;
-    routines.TypeSymbol content_type_id = 2; // ContentType    
+    string content_id = 1;    
+    string content_type_id = 2;    
     string owner_content_id = 3;    
     string decorator_content_id = 4;    
     string instance_of_content_id = 5;    
@@ -2733,8 +2733,8 @@ message ProductCategoryData {
 
     // fields
         
-    string product_category_id = 1;
-    routines.TypeSymbol product_category_type_id = 2; // ProductCategoryType    
+    string product_category_id = 1;    
+    string product_category_type_id = 2;    
     string primary_parent_category_id = 3;    
     string category_name = 4;    
     string description = 5;    
@@ -2771,8 +2771,8 @@ message PaymentMethodData {
     // keys: paymentMethodId
 
     // fields
-    
-    routines.TypeSymbol payment_method_id = 1; // PartyAcctgPreference
+        
+    string payment_method_id = 1;
     routines.TypeSymbol payment_method_type_id = 2; // PaymentMethodType    
     string party_id = 3;    
     string gl_account_id = 4;    
@@ -2805,8 +2805,8 @@ message InventoryItemData {
 
     // fields
         
-    string inventory_item_id = 1;
-    routines.TypeSymbol inventory_item_type_id = 2; // InventoryItemType    
+    string inventory_item_id = 1;    
+    string inventory_item_type_id = 2;    
     string product_id = 3;    
     string party_id = 4;    
     string owner_party_id = 5;
@@ -2859,8 +2859,8 @@ message InvoiceItemData {
     // fields
         
     string invoice_id = 1;    
-    string invoice_item_seq_id = 2;
-    routines.TypeSymbol invoice_item_type_id = 3; // InvoiceItemType    
+    string invoice_item_seq_id = 2;    
+    string invoice_item_type_id = 3;    
     string override_gl_account_id = 4;    
     string override_org_party_id = 5;    
     string inventory_item_id = 6;    
@@ -3142,8 +3142,8 @@ message ContactMechData {
 
     // fields
         
-    string contact_mech_id = 1;
-    routines.TypeSymbol contact_mech_type_id = 2; // ContactMechType    
+    string contact_mech_id = 1;    
+    string contact_mech_type_id = 2;    
     string info_string = 3;
     
 }
@@ -3220,8 +3220,8 @@ message WorkEffortData {
 
     // fields
         
-    string work_effort_id = 1;
-    routines.TypeSymbol work_effort_type_id = 2; // WorkEffortType
+    string work_effort_id = 1;    
+    string work_effort_type_id = 2;
     routines.TypeSymbol current_status_id = 3; // StatusItem    
     google.protobuf.Timestamp last_status_update = 4;
     routines.TypeSymbol work_effort_purpose_type_id = 5; // WorkEffortPurposeType    
@@ -3508,8 +3508,8 @@ message QuoteTermData {
     // keys: termTypeId, quoteId, quoteItemSeqId
 
     // fields
-    
-    routines.TypeSymbol term_type_id = 1; // TermType    
+        
+    string term_type_id = 1;    
     string quote_id = 2;    
     string quote_item_seq_id = 3;    
     int64 term_value = 4;    
@@ -3538,8 +3538,8 @@ message AcctgTransEntryData {
     string product_id = 9;    
     string their_product_id = 10;    
     string inventory_item_id = 11;
-    routines.TypeSymbol gl_account_type_id = 12; // GlAccountType
-    routines.TypeSymbol gl_account_id = 13; // GlAccountOrganization    
+    routines.TypeSymbol gl_account_type_id = 12; // GlAccountType    
+    string gl_account_id = 13;    
     string organization_party_id = 14;    
     routines.Currency amount = 15;
     routines.TypeSymbol currency_uom_id = 16; // Uom    
@@ -3609,8 +3609,8 @@ message CustRequestTypeData {
     // keys: custRequestTypeId
 
     // fields
-    
-    routines.TypeSymbol cust_request_type_id = 1; // CustRequestResolution    
+        
+    string cust_request_type_id = 1;    
     string parent_type_id = 2;    
     routines.Indicator has_table = 3;    
     string description = 4;    
@@ -3695,8 +3695,8 @@ message QuoteData {
 
     // fields
         
-    string quote_id = 1;
-    routines.TypeSymbol quote_type_id = 2; // QuoteType    
+    string quote_id = 1;    
+    string quote_type_id = 2;    
     string party_id = 3;    
     google.protobuf.Timestamp issue_date = 4;
     routines.TypeSymbol status_id = 5; // StatusItem
@@ -3820,8 +3820,8 @@ message WorkEffortAssocData {
     // fields
         
     string work_effort_id_from = 1;    
-    string work_effort_id_to = 2;
-    routines.TypeSymbol work_effort_assoc_type_id = 3; // WorkEffortAssocType    
+    string work_effort_id_to = 2;    
+    string work_effort_assoc_type_id = 3;    
     int64 sequence_num = 4;    
     google.protobuf.Timestamp from_date = 5;    
     google.protobuf.Timestamp thru_date = 6;

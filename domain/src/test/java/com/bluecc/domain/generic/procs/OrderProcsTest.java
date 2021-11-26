@@ -37,7 +37,7 @@ public class OrderProcsTest  extends AbstractProcsTest {
     @Test
     public void testSaveOrderHeader(){
         OrderHeader header=new OrderHeader();
-        Long id=orderHeaderRepository.save(header);
+        String id=orderHeaderRepository.save(header);
         System.out.println(id);
     }
 
@@ -48,7 +48,7 @@ public class OrderProcsTest  extends AbstractProcsTest {
         for (int genN=0;genN<3;++genN) {
             OrderAndItems orderAndItems = getOrderAndItems(randomDate);
 
-            Long id = orderProcs.saveOrder(orderAndItems);
+            String id = orderProcs.saveOrder(orderAndItems);
             System.out.println(id);
 
             // List<OrderAndItems> result=orderProcs.findWithItems(id);
@@ -91,7 +91,7 @@ public class OrderProcsTest  extends AbstractProcsTest {
         for (int i = 0; i < 5; ++i) {
             OrderItem item = new OrderItem();
             // item.setProductId();
-            item.setOrderItemSeqId((long) i);
+            item.setOrderItemSeqId(Integer.toString(i));
             item.setQuantity(randDecimal(1, 10));
             item.setUnitPrice(randDecimal(1, 10000));
             item.setOrderItemTypeId("PRODUCT_ORDER_ITEM");
@@ -103,7 +103,7 @@ public class OrderProcsTest  extends AbstractProcsTest {
         List<OrderItemPriceInfo> orderItemPriceInfos=Lists.newArrayList();
         for(int i=0;i<3;++i){
             OrderItemPriceInfo orderItemPriceInfo=new OrderItemPriceInfo();
-            orderItemPriceInfo.setOrderItemSeqId((long) i);
+            orderItemPriceInfo.setOrderItemSeqId(Integer.toString(i));
             orderItemPriceInfo.setModifyAmount(randDecimal(0, 99));
             orderItemPriceInfos.add(orderItemPriceInfo);
         }
@@ -134,7 +134,7 @@ public class OrderProcsTest  extends AbstractProcsTest {
 
     @Test
     public void testSql(){
-        String sql=orderProcs.findWithItemsSql(1L);
+        String sql=orderProcs.findWithItemsSql("1");
         System.out.println(sql);
     }
 }

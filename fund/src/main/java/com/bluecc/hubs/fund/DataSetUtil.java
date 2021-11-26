@@ -7,11 +7,13 @@ import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
 import static com.bluecc.hubs.fund.Util.readJsonFile;
 
 public class DataSetUtil {
+    public static final String[] DATA_SAMPLES={
+            "dataset/OrderDemoData.xml",
+            "dataset/PartyGeoPointData.xml",
+            "dataset/AdminNewTenantData-MySQL.xml"
+    };
     public static Set<String> collectEntitiesFromResources() {
-        Set<String> entityList = SeedReader.collectEntityNames(
-                "dataset/OrderDemoData.xml",
-                "dataset/PartyGeoPointData.xml",
-                "dataset/AdminNewTenantData-MySQL.xml");
+        Set<String> entityList = SeedReader.collectEntityNames(DATA_SAMPLES);
         return entityList;
     }
 

@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QOrderHeader.orderHeader;
 
 // Order Header
 public class OrderHeaderRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<OrderHeader> orderHeaderBean = bean(OrderHeader.class, orderHeader.all());
 
     @Transactional
-    public Long save(OrderHeader entity) {
+    public String save(OrderHeader entity) {
         if (entity.getOrderId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(orderHeader).populate(entity).execute();
             return entity.getOrderId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(orderHeader).populate(entity)
-                .executeWithKey(orderHeader.orderId);
+        String uid=sequence.nextStringId();
+        entity.setOrderId(uid);
+        return create(entity);
+        // return insert(orderHeader).populate(entity)
+        //        .executeWithKey(orderHeader.orderId);
     }
 
     @Transactional
-    public OrderHeader findById(Long id) {
+    public String create(OrderHeader entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(orderHeader).populate(entity)
+                .executeWithKey(orderHeader.orderId);
+        return entity.getOrderId();
+    }
+
+    @Transactional
+    public OrderHeader findById(String id) {
         return selectFrom(orderHeader).where(orderHeader.orderId.eq(id)).fetchOne();
     }
 
@@ -59,32 +75,32 @@ public class OrderHeaderRepository extends AbstractRepository {
 
 -- fields --
     
-    Long orderId
+    String orderId
     String orderTypeId
     String orderName
-    Long externalId
+    String externalId
     String salesChannelEnumId
     java.sql.Timestamp orderDate
     String priority
     java.sql.Timestamp entryDate
     java.sql.Timestamp pickSheetPrintedDate
-    Long visitId
+    String visitId
     String statusId
-    Long createdBy
-    Long firstAttemptOrderId
+    String createdBy
+    String firstAttemptOrderId
     String currencyUom
     String syncStatusId
-    Long billingAccountId
-    Long originFacilityId
-    Long webSiteId
-    Long productStoreId
-    Long agreementId
-    Long terminalId
-    Long transactionId
-    Long autoOrderShoppingListId
+    String billingAccountId
+    String originFacilityId
+    String webSiteId
+    String productStoreId
+    String agreementId
+    String terminalId
+    String transactionId
+    String autoOrderShoppingListId
     String needsInventoryIssuance
     String isRushOrder
-    Long internalCode
+    String internalCode
     java.math.BigDecimal remainingSubTotal
     java.math.BigDecimal grandTotal
     String isViewed

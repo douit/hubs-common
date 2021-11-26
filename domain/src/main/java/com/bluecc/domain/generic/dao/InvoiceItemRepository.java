@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QInvoiceItem.invoiceItem;
 
 // Invoice Item
 public class InvoiceItemRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<InvoiceItem> invoiceItemBean = bean(InvoiceItem.class, invoiceItem.all());
 
     @Transactional
-    public Long save(InvoiceItem entity) {
+    public String save(InvoiceItem entity) {
         if (entity.getId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(invoiceItem).populate(entity).execute();
             return entity.getId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(invoiceItem).populate(entity)
-                .executeWithKey(invoiceItem.id);
+        String uid=sequence.nextStringId();
+        entity.setId(uid);
+        return create(entity);
+        // return insert(invoiceItem).populate(entity)
+        //        .executeWithKey(invoiceItem.id);
     }
 
     @Transactional
-    public InvoiceItem findById(Long id) {
+    public String create(InvoiceItem entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(invoiceItem).populate(entity)
+                .executeWithKey(invoiceItem.id);
+        return entity.getId();
+    }
+
+    @Transactional
+    public InvoiceItem findById(String id) {
         return selectFrom(invoiceItem).where(invoiceItem.id.eq(id)).fetchOne();
     }
 
@@ -59,25 +75,25 @@ public class InvoiceItemRepository extends AbstractRepository {
 
 -- fields --
     
-    Long invoiceId
-    Long invoiceItemSeqId
+    String invoiceId
+    String invoiceItemSeqId
     String invoiceItemTypeId
-    Long overrideGlAccountId
-    Long overrideOrgPartyId
-    Long inventoryItemId
-    Long productId
-    Long productFeatureId
-    Long parentInvoiceId
-    Long parentInvoiceItemSeqId
+    String overrideGlAccountId
+    String overrideOrgPartyId
+    String inventoryItemId
+    String productId
+    String productFeatureId
+    String parentInvoiceId
+    String parentInvoiceItemSeqId
     String uomId
     String taxableFlag
     java.math.BigDecimal quantity
     java.math.BigDecimal amount
     String description
-    Long taxAuthPartyId
+    String taxAuthPartyId
     String taxAuthGeoId
-    Long taxAuthorityRateSeqId
-    Long salesOpportunityId
+    String taxAuthorityRateSeqId
+    String salesOpportunityId
 
 -- relations --
     

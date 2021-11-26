@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QProductPrice.productPrice;
 
 // Product Price
 public class ProductPriceRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<ProductPrice> productPriceBean = bean(ProductPrice.class, productPrice.all());
 
     @Transactional
-    public Long save(ProductPrice entity) {
+    public String save(ProductPrice entity) {
         if (entity.getId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(productPrice).populate(entity).execute();
             return entity.getId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(productPrice).populate(entity)
-                .executeWithKey(productPrice.id);
+        String uid=sequence.nextStringId();
+        entity.setId(uid);
+        return create(entity);
+        // return insert(productPrice).populate(entity)
+        //        .executeWithKey(productPrice.id);
     }
 
     @Transactional
-    public ProductPrice findById(Long id) {
+    public String create(ProductPrice entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(productPrice).populate(entity)
+                .executeWithKey(productPrice.id);
+        return entity.getId();
+    }
+
+    @Transactional
+    public ProductPrice findById(String id) {
         return selectFrom(productPrice).where(productPrice.id.eq(id)).fetchOne();
     }
 
@@ -59,7 +75,7 @@ public class ProductPriceRepository extends AbstractRepository {
 
 -- fields --
     
-    Long productId
+    String productId
     String productPriceTypeId
     String productPricePurposeId
     String currencyUomId
@@ -73,13 +89,13 @@ public class ProductPriceRepository extends AbstractRepository {
     java.math.BigDecimal priceWithTax
     java.math.BigDecimal taxAmount
     java.math.BigDecimal taxPercentage
-    Long taxAuthPartyId
+    String taxAuthPartyId
     String taxAuthGeoId
     String taxInPrice
     java.sql.Timestamp createdDate
-    Long createdByUserLogin
+    String createdByUserLogin
     java.sql.Timestamp lastModifiedDate
-    Long lastModifiedByUserLogin
+    String lastModifiedByUserLogin
 
 -- relations --
     

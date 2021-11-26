@@ -1,5 +1,8 @@
 package com.bluecc.domain.generic.dao;
 
+import com.bluecc.domain.util.Sequence;
+import com.google.inject.Inject;
+
 import com.querydsl.core.types.Predicate;
 import com.bluecc.domain.guice.Transactional;
 import com.querydsl.sql.dml.SQLInsertClause;
@@ -16,22 +19,35 @@ import static com.bluecc.domain.sql.model.QOrderItem.orderItem;
 
 // Order Item
 public class OrderItemRepository extends AbstractRepository {
+    @Inject Sequence sequence;
+
     public static final QBean<OrderItem> orderItemBean = bean(OrderItem.class, orderItem.all());
 
     @Transactional
-    public Long save(OrderItem entity) {
+    public String save(OrderItem entity) {
         if (entity.getId() != null) {
             entity.setLastUpdatedStamp(DateTime.now());
             update(orderItem).populate(entity).execute();
             return entity.getId();
         }
         entity.setCreatedStamp(DateTime.now());
-        return insert(orderItem).populate(entity)
-                .executeWithKey(orderItem.id);
+        String uid=sequence.nextStringId();
+        entity.setId(uid);
+        return create(entity);
+        // return insert(orderItem).populate(entity)
+        //        .executeWithKey(orderItem.id);
     }
 
     @Transactional
-    public OrderItem findById(Long id) {
+    public String create(OrderItem entity){
+        // 因为没有自增键, 所以ps.getGeneratedKeys()没有返回值
+        insert(orderItem).populate(entity)
+                .executeWithKey(orderItem.id);
+        return entity.getId();
+    }
+
+    @Transactional
+    public OrderItem findById(String id) {
         return selectFrom(orderItem).where(orderItem.id.eq(id)).fetchOne();
     }
 
@@ -59,27 +75,27 @@ public class OrderItemRepository extends AbstractRepository {
 
 -- fields --
     
-    Long orderId
-    Long orderItemSeqId
-    Long externalId
+    String orderId
+    String orderItemSeqId
+    String externalId
     String orderItemTypeId
-    Long orderItemGroupSeqId
+    String orderItemGroupSeqId
     String isItemGroupPrimary
-    Long fromInventoryItemId
-    Long budgetId
-    Long budgetItemSeqId
-    Long productId
-    Long supplierProductId
-    Long productFeatureId
-    Long prodCatalogId
-    Long productCategoryId
+    String fromInventoryItemId
+    String budgetId
+    String budgetItemSeqId
+    String productId
+    String supplierProductId
+    String productFeatureId
+    String prodCatalogId
+    String productCategoryId
     String isPromo
-    Long quoteId
-    Long quoteItemSeqId
-    Long shoppingListId
-    Long shoppingListItemSeqId
-    Long subscriptionId
-    Long deploymentId
+    String quoteId
+    String quoteItemSeqId
+    String shoppingListId
+    String shoppingListItemSeqId
+    String subscriptionId
+    String deploymentId
     java.math.BigDecimal quantity
     java.math.BigDecimal cancelQuantity
     java.math.BigDecimal selectedAmount
@@ -91,21 +107,21 @@ public class OrderItemRepository extends AbstractRepository {
     String recurringFreqUomId
     String itemDescription
     String comments
-    Long correspondingPoId
+    String correspondingPoId
     String statusId
     String syncStatusId
     java.sql.Timestamp estimatedShipDate
     java.sql.Timestamp estimatedDeliveryDate
     java.sql.Timestamp autoCancelDate
     java.sql.Timestamp dontCancelSetDate
-    Long dontCancelSetUserLogin
+    String dontCancelSetUserLogin
     java.sql.Timestamp shipBeforeDate
     java.sql.Timestamp shipAfterDate
     java.sql.Timestamp reserveAfterDate
     java.sql.Timestamp cancelBackOrderDate
-    Long overrideGlAccountId
-    Long salesOpportunityId
-    Long changeByUserLoginId
+    String overrideGlAccountId
+    String salesOpportunityId
+    String changeByUserLoginId
 
 -- relations --
     

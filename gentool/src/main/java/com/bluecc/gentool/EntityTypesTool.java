@@ -27,6 +27,10 @@ public class EntityTypesTool {
     public static String commonDir = "dataset/common";
 
     public static void main(String[] args) throws IOException {
+        startGen();
+    }
+
+    public static void startGen() throws IOException {
         Writer writer = new FileWriter(prependHubsHomeFile("asset/mysql/types.sql"));
         Set<String> entityList = collectFromFiles(prependHubsHomeFile(seedDir),
                 prependHubsHomeFile(commonDir));
@@ -42,12 +46,10 @@ public class EntityTypesTool {
 
         entityList.removeAll(hubsEntities.getEntities());
 
-        SqlGenTool genTool=new SqlGenTool();
-
         for (String entityName : entityList) {
             File metaFile = getMetaFile(entityName);
             // System.out.println(metaFile.getName());
-            genTool.genDDL(metaFile, writer);
+            SqlGenTool.genDDL("mysql", metaFile, writer);
         }
 
         writer.write(String.format("-- collect entities %d, from %s; total %d\n",
