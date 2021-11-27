@@ -1,10 +1,7 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.fund;
 
-import com.bluecc.hubs.fund.EntityMeta;
-import com.bluecc.hubs.fund.EntityMetaManager;
 import com.google.common.collect.Maps;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +10,10 @@ import java.util.Map;
 @Singleton
 public class ProtoMeta {
     Map<String, EntityMeta> metaMap= Maps.newHashMap();
+
+    public Map<String, EntityMeta> getMetaMap() {
+        return metaMap;
+    }
 
     public EntityMeta getEntityMeta(String entityName){
         EntityMeta meta=metaMap.get(entityName);

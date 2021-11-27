@@ -72,9 +72,7 @@ public class ProtoTool {
 
     void writeProtos(String protoFile) throws IOException {
         FileWriter writer=new FileWriter(protoFile);
-        writer.write(TemplateUtil.build("templates/proto_header.j2",
-                ImmutableMap.of("className", "DataProto",
-                        "classPrefix", "DTP")));
+        writeProtoFileHeader(writer);
 
         for (String headEnt : HeadEntityResources.allHeads()) {
             EntityMeta meta= EntityMetaManager.getEntityMeta(headEnt, false);
@@ -83,13 +81,19 @@ public class ProtoTool {
         }
 
         for (String headEnt : HeadEntityResources.allHeads()) {
-            writer.write(flatSourceGen(headEnt));
+            writer.write(flatSourceGen(headEnt, "FlatData"));
         }
 
         for (String entity : metaList.getEntities()) {
             writer.write(sourceGen(entity, "proto"));
         }
         writer.close();
+    }
+
+    private void writeProtoFileHeader(FileWriter writer) throws IOException {
+        writer.write(TemplateUtil.build("templates/proto_header.j2",
+                ImmutableMap.of("className", "DataProto",
+                        "classPrefix", "DTP")));
     }
 
     public void genAll(String tplName) throws IOException {
@@ -114,11 +118,14 @@ public class ProtoTool {
                 ImmutableMap.of("ent", meta, "digester", digester));
     }
 
-    String flatSourceGen(String entName) throws IOException {
+    public static String flatSourceGen(String entName, String suffix) throws IOException {
         EntityMeta meta= EntityMetaManager.getEntityMeta(entName, false);
         EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
         return TemplateUtil.build("templates/proto_flat_source.j2",
-                ImmutableMap.of("ent", meta, "digester", digester));
+                ImmutableMap.of("ent", meta,
+                        "digester", digester,
+                        "suffix", suffix
+                        ));
     }
 }
 

@@ -7,5 +7,6 @@ public class GeneratorMain {
         SqlGenTool.startGen(new SqlGenTool.GenOpts(true));
         EntityTypesTool.startGen();
         ProtoTool.startGen(new ProtoTool.ProtoGenOpts(null, true));
+        ProtoTypeTool.startGen();
     }
 }

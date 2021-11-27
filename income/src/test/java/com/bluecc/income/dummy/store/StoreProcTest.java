@@ -95,7 +95,10 @@ public class StoreProcTest extends AbstractStoreProc {
     public void testPartyDao() {
         process(ctx -> {
             // ctx.getHandle().execute("insert into party (party_type_id) values ('PERSON')");
-            int result = ctx.getHandle().createUpdate("insert into party (party_type_id) values (:type)")
+            int result = ctx.getHandle().createUpdate(
+                    "insert into party (party_id, party_type_id) " +
+                            "values (:id, :type)")
+                    .bind("id", System.currentTimeMillis())
                     .bind("type", "PERSON")
                     .execute();
             System.out.println("result: " + result);
@@ -140,12 +143,6 @@ public class StoreProcTest extends AbstractStoreProc {
             result[i] = faker.company().name();
         }
         return result;
-    }
-
-    void truncate(IProc.ProcContext ctx, String... tableNames) {
-        for (String tableName : tableNames) {
-            ctx.getHandle().execute("truncate " + tableName);
-        }
     }
 
     @Test

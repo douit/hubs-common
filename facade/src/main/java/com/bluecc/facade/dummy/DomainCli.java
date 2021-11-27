@@ -1,22 +1,7 @@
 package com.bluecc.facade.dummy;
 
-import com.bluecc.domain.dummy.procs.PersonProcs;
-import com.bluecc.domain.guice.ServiceModule;
-import com.bluecc.domain.sql.model.Person;
-import com.bluecc.hubs.ProtoJsonUtils;
-import com.bluecc.hubs.stub.PersonObject;
-import com.bluecc.hubs.stub.PersonObjects;
-import com.github.javafaker.Faker;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
-import static com.bluecc.domain.util.JsonUtil.GSON;
-
 public class DomainCli {
+    /*
     private static final Injector injector = Guice
             .createInjector(new ServiceModule());
 
@@ -57,6 +42,8 @@ public class DomainCli {
             System.out.println("save ok: " + pid);
         }
     }
+
+     */
 }
 
 

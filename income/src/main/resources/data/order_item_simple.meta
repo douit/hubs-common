@@ -1,0 +1,10 @@
+{
+  "head": "OrderItem",
+  "embed": ["order_header", "product", "from_inventory_item"],
+  "details": {
+    "acquire_fixed_asset": "pk",
+    "item_issuance": "protobuf",
+    "quote_item": ["avg(quantity)", "avg(quote_unit_price)"],
+    "order_adjustment": ["sum(amount)", "sum(exempt_amount)"]
+  }
+}

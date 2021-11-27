@@ -8,24 +8,16 @@ import com.google.common.collect.Sets;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.MetaTypes.typeList;
+import static java.lang.String.format;
 
 @Data
 @Builder
 @Slf4j
 public class EntityMeta {
-    @Data
-    @Builder
-    public static class HeadEntity {
-        @Singular
-        private Set<String> flatIds;
-    }
 
     /* move to HeadEntity
     public static final Map<String, HeadEntity> HEAD_ENTITIES = ImmutableMap.of(
@@ -79,6 +71,9 @@ public class EntityMeta {
     public String getKeyNames() {
         return String.join(", ", pks);
     }
+    public String getUnderscoreKeys(){
+        return getUniqueCols().toLowerCase(Locale.ROOT);
+    }
 
     public Set<String> getFieldNames(){
         return fields.stream().map(f -> f.name).collect(Collectors.toSet());
@@ -130,6 +125,40 @@ public class EntityMeta {
         return HeadEntityResources.contains(this.name);
     }
 
+    public String getUpdateClause(){
+        String sid=getPk();
+        return fields.stream()
+                .filter(f -> !f.getName().equals(sid)
+                        && !f.isCreateTs()
+                        && !IGNORE_FIELDS.contains(f.name))
+                .map(f -> {
+                    if(f.isUpdateTs()){
+                        return format("%s=:now", f.getUnderscore());
+                    }else {
+                        return format("%s=:%s", f.getUnderscore(), f.name);
+                    }
+                })
+                .collect(Collectors.joining(", "));
+    }
+
+    public String getInsertClause(){
+        String cols= fields.stream()
+                .filter(f -> !f.isUpdateTs() && !IGNORE_FIELDS.contains(f.name))
+                .map(f -> f.getUnderscore())
+                .collect(Collectors.joining(", "));
+        String vals= fields.stream()
+                .filter(f -> !f.isUpdateTs() && !IGNORE_FIELDS.contains(f.name))
+                .map(f -> {
+                    if(f.isCreateTs()){
+                        return ":now";
+                    }else {
+                        return format(":%s", f.getName());
+                    }
+                })
+                .collect(Collectors.joining(", "));
+        return format("(%s) values (%s)", cols, vals);
+    }
+
     static final Set<String> IGNORE_FIELDS = Sets.newHashSet("lastUpdatedTxStamp", "createdTxStamp");
 
     public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types) {
@@ -140,6 +169,7 @@ public class EntityMeta {
             FieldMappings.FieldTypeDef typDef = types.get(f.type);
             f.setSqlType(typDef.getSqlType());
             f.setJavaType(typDef.getJavaType());
+            f.setClickhouseType(typDef.getClickhouseType());
         });
 
         // process entity types
@@ -231,6 +261,8 @@ public class EntityMeta {
          * The sql-type of the Field
          */
         private String sqlType;
+        private String clickhouseType;
+
         /**
          * The sql-type-alias of the Field, this is optional
          */
@@ -266,12 +298,22 @@ public class EntityMeta {
             }
         }
 
+        // public String getUnderscore() {
+        //     return Util.toSnakecase(this.name);
+        // }
         public String getUnderscore() {
-            return Util.toSnakecase(this.name);
+            return col.toLowerCase(Locale.ROOT);
         }
 
         public String getProtoType() {
             return MetaTypeUtil.getProtoType(this.type);
+        }
+
+        public boolean isCreateTs(){
+            return name.equals("createdStamp");
+        }
+        public boolean isUpdateTs(){
+            return name.equals("lastUpdatedStamp");
         }
     }
 
@@ -293,7 +335,7 @@ public class EntityMeta {
                         if (r.fieldName.equals(r.relFieldName)) {
                             return r.fieldName;
                         } else {
-                            return String.format("%s -> %s", r.fieldName, r.relFieldName);
+                            return format("%s -> %s", r.fieldName, r.relFieldName);
                         }
                     })
                     .collect(Collectors.joining(", "));
@@ -303,7 +345,7 @@ public class EntityMeta {
             String prefix = this.type.equals("many") ? "repeated " : "";
             // return String.format("%s %sData %s", prefix, relEntityName,
             //         Util.toSnakecase(title) + "_" + Util.toSnakecase(name));
-            return String.format("%s%sData %s", prefix, relEntityName,
+            return format("%s%sData %s", prefix, relEntityName,
                     Util.toSnakecase(name));
         }
 
@@ -314,7 +356,7 @@ public class EntityMeta {
         public boolean hasProtoDef(String entityName){
             HeadEntity headEntity=HeadEntityResources.get(entityName);
             if(headEntity!=null){
-                return !headEntity.flatIds.contains(this.relEntityName);
+                return !headEntity.getFlatIds().contains(this.relEntityName);
             }
             return false; // not head-entity
         }

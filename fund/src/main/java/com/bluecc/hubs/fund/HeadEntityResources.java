@@ -11,7 +11,7 @@ import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
 public class HeadEntityResources {
     @Data
     public static class HeadEntities{
-        Map<String, EntityMeta.HeadEntity> entities;
+        Map<String, HeadEntity> entities;
     }
 
     private static HeadEntities headEntities;
@@ -29,11 +29,12 @@ public class HeadEntityResources {
         return headEntities;
     }
 
+    // Check if the entity is a head-entity
     public static boolean contains(String entityName){
         return getHeadEntities().getEntities().containsKey(entityName);
     }
 
-    public static EntityMeta.HeadEntity get(String entityName){
+    public static HeadEntity get(String entityName){
         return getHeadEntities().getEntities().get(entityName);
     }
 

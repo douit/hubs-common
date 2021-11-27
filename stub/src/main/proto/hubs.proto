@@ -94,6 +94,8 @@ service PartyGroupService {
 // flat-ent: Order Header
 message OrderHeaderFlatData {
     option (routines.entity_type) = "OrderHeader";
+    option (routines.keys).keys = "order_id";
+    option (routines.keys).combine = false;
     // keys: orderId
         
     string order_id = 1;    
@@ -131,6 +133,8 @@ message OrderHeaderFlatData {
 // flat-ent: Order Item
 message OrderItemFlatData {
     option (routines.entity_type) = "OrderItem";
+    option (routines.keys).keys = "order_id, order_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: orderId, orderItemSeqId
         
     string order_id = 1;    
@@ -185,6 +189,8 @@ message OrderItemFlatData {
 // flat-ent: Payment
 message PaymentFlatData {
     option (routines.entity_type) = "Payment";
+    option (routines.keys).keys = "payment_id";
+    option (routines.keys).combine = false;
     // keys: paymentId
         
     string payment_id = 1;    
@@ -211,6 +217,8 @@ message PaymentFlatData {
 // flat-ent: Invoice
 message InvoiceFlatData {
     option (routines.entity_type) = "Invoice";
+    option (routines.keys).keys = "invoice_id";
+    option (routines.keys).combine = false;
     // keys: invoiceId
         
     string invoice_id = 1;    
@@ -234,6 +242,8 @@ message InvoiceFlatData {
 // flat-ent: Product
 message ProductFlatData {
     option (routines.entity_type) = "Product";
+    option (routines.keys).keys = "product_id";
+    option (routines.keys).combine = false;
     // keys: productId
         
     string product_id = 1;    
@@ -311,6 +321,8 @@ message ProductFlatData {
 // flat-ent: Shipment
 message ShipmentFlatData {
     option (routines.entity_type) = "Shipment";
+    option (routines.keys).keys = "shipment_id";
+    option (routines.keys).combine = false;
     // keys: shipmentId
         
     string shipment_id = 1;    
@@ -348,6 +360,8 @@ message ShipmentFlatData {
 // flat-ent: Product Store
 message ProductStoreFlatData {
     option (routines.entity_type) = "ProductStore";
+    option (routines.keys).keys = "product_store_id";
+    option (routines.keys).combine = false;
     // keys: productStoreId
         
     string product_store_id = 1;
@@ -433,6 +447,8 @@ message ProductStoreFlatData {
 // flat-ent: Party
 message PartyFlatData {
     option (routines.entity_type) = "Party";
+    option (routines.keys).keys = "party_id";
+    option (routines.keys).combine = false;
     // keys: partyId
         
     string party_id = 1;    
@@ -452,6 +468,8 @@ message PartyFlatData {
 // flat-ent: Person
 message PersonFlatData {
     option (routines.entity_type) = "Person";
+    option (routines.keys).keys = "party_id";
+    option (routines.keys).combine = false;
     // keys: partyId
         
     string party_id = 1;    
@@ -492,6 +510,8 @@ message PersonFlatData {
 // flat-ent: Party Group
 message PartyGroupFlatData {
     option (routines.entity_type) = "PartyGroup";
+    option (routines.keys).keys = "party_id";
+    option (routines.keys).combine = false;
     // keys: partyId
         
     string party_id = 1;    
@@ -508,6 +528,8 @@ message PartyGroupFlatData {
 // Shipment Route Segment
 message ShipmentRouteSegmentData {
     option (routines.entity_type) = "ShipmentRouteSegment";
+    option (routines.keys).keys = "shipment_id, shipment_route_segment_id";
+    option (routines.keys).combine = true;
     // keys: shipmentId, shipmentRouteSegmentId
 
     // fields
@@ -554,6 +576,8 @@ message ShipmentRouteSegmentData {
 // Invoice
 message InvoiceData {
     option (routines.entity_type) = "Invoice";
+    option (routines.keys).keys = "invoice_id";
+    option (routines.keys).combine = false;
     // keys: invoiceId
 
     // fields
@@ -589,6 +613,8 @@ message InvoiceData {
 // Order Adjustment
 message OrderAdjustmentData {
     option (routines.entity_type) = "OrderAdjustment";
+    option (routines.keys).keys = "order_adjustment_id";
+    option (routines.keys).combine = false;
     // keys: orderAdjustmentId
 
     // fields
@@ -632,6 +658,8 @@ message OrderAdjustmentData {
 // Product
 message ProductData {
     option (routines.entity_type) = "Product";
+    option (routines.keys).keys = "product_id";
+    option (routines.keys).combine = false;
     // keys: productId
 
     // fields
@@ -744,6 +772,8 @@ message ProductData {
 // Carrier Shipment Method
 message CarrierShipmentBoxTypeData {
     option (routines.entity_type) = "CarrierShipmentBoxType";
+    option (routines.keys).keys = "shipment_box_type_id, party_id";
+    option (routines.keys).combine = true;
     // keys: shipmentBoxTypeId, partyId
 
     // fields
@@ -758,6 +788,8 @@ message CarrierShipmentBoxTypeData {
 // Fixed Asset
 message FixedAssetData {
     option (routines.entity_type) = "FixedAsset";
+    option (routines.keys).keys = "fixed_asset_id";
+    option (routines.keys).combine = false;
     // keys: fixedAssetId
 
     // fields
@@ -793,6 +825,8 @@ message FixedAssetData {
 // Web Analytics Configuration
 message WebAnalyticsConfigData {
     option (routines.entity_type) = "WebAnalyticsConfig";
+    option (routines.keys).keys = "web_site_id, web_analytics_type_id";
+    option (routines.keys).combine = true;
     // keys: webSiteId, webAnalyticsTypeId
 
     // fields
@@ -806,6 +840,8 @@ message WebAnalyticsConfigData {
 // Product Category Rollup
 message ProductCategoryRollupData {
     option (routines.entity_type) = "ProductCategoryRollup";
+    option (routines.keys).keys = "product_category_id, parent_product_category_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productCategoryId, parentProductCategoryId, fromDate
 
     // fields
@@ -821,6 +857,8 @@ message ProductCategoryRollupData {
 // Payment Gateway Response
 message PaymentGatewayResponseData {
     option (routines.entity_type) = "PaymentGatewayResponse";
+    option (routines.keys).keys = "payment_gateway_response_id";
+    option (routines.keys).combine = false;
     // keys: paymentGatewayResponseId
 
     // fields
@@ -853,6 +891,8 @@ message PaymentGatewayResponseData {
 // Shipment Item Billing
 message ShipmentItemBillingData {
     option (routines.entity_type) = "ShipmentItemBilling";
+    option (routines.keys).keys = "shipment_id, shipment_item_seq_id, invoice_id, invoice_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: shipmentId, shipmentItemSeqId, invoiceId, invoiceItemSeqId
 
     // fields
@@ -867,6 +907,8 @@ message ShipmentItemBillingData {
 // Product Promotion Action
 message ProductPromoActionData {
     option (routines.entity_type) = "ProductPromoAction";
+    option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id";
+    option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId
 
     // fields
@@ -889,6 +931,8 @@ message ProductPromoActionData {
 // Shipment Cost Estimate
 message ShipmentCostEstimateData {
     option (routines.entity_type) = "ShipmentCostEstimate";
+    option (routines.keys).keys = "shipment_cost_estimate_id";
+    option (routines.keys).combine = false;
     // keys: shipmentCostEstimateId
 
     // fields
@@ -927,6 +971,8 @@ message ShipmentCostEstimateData {
 // Security Component - Security Group Permission
 message SecurityGroupPermissionData {
     option (routines.entity_type) = "SecurityGroupPermission";
+    option (routines.keys).keys = "group_id, permission_id, from_date";
+    option (routines.keys).combine = true;
     // keys: groupId, permissionId, fromDate
 
     // fields
@@ -941,6 +987,8 @@ message SecurityGroupPermissionData {
 // Product Store Inventory Facility Applicability
 message ProductStoreKeywordOvrdData {
     option (routines.entity_type) = "ProductStoreKeywordOvrd";
+    option (routines.keys).keys = "product_store_id, keyword, from_date";
+    option (routines.keys).combine = true;
     // keys: productStoreId, keyword, fromDate
 
     // fields
@@ -957,6 +1005,8 @@ message ProductStoreKeywordOvrdData {
 // Product Association
 message ProductAssocData {
     option (routines.entity_type) = "ProductAssoc";
+    option (routines.keys).keys = "product_id, product_id_to, product_assoc_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productId, productIdTo, productAssocTypeId, fromDate
 
     // fields
@@ -980,6 +1030,8 @@ message ProductAssocData {
 // Fixed Asset Product Representation
 message FixedAssetProductData {
     option (routines.entity_type) = "FixedAssetProduct";
+    option (routines.keys).keys = "fixed_asset_id, product_id, fixed_asset_product_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: fixedAssetId, productId, fixedAssetProductTypeId, fromDate
 
     // fields
@@ -999,6 +1051,8 @@ message FixedAssetProductData {
 // Payment Application
 message PaymentApplicationData {
     option (routines.entity_type) = "PaymentApplication";
+    option (routines.keys).keys = "payment_application_id";
+    option (routines.keys).combine = false;
     // keys: paymentApplicationId
 
     // fields
@@ -1018,6 +1072,8 @@ message PaymentApplicationData {
 // CustRequest
 message CustRequestData {
     option (routines.entity_type) = "CustRequest";
+    option (routines.keys).keys = "cust_request_id";
+    option (routines.keys).combine = false;
     // keys: custRequestId
 
     // fields
@@ -1055,6 +1111,8 @@ message CustRequestData {
 // Shipment Receipt
 message ShipmentReceiptData {
     option (routines.entity_type) = "ShipmentReceipt";
+    option (routines.keys).keys = "receipt_id";
+    option (routines.keys).combine = false;
     // keys: receiptId
 
     // fields
@@ -1081,6 +1139,8 @@ message ShipmentReceiptData {
 // Inventory Item Detail
 message InventoryItemDetailData {
     option (routines.entity_type) = "InventoryItemDetail";
+    option (routines.keys).keys = "inventory_item_id, inventory_item_detail_seq_id";
+    option (routines.keys).combine = true;
     // keys: inventoryItemId, inventoryItemDetailSeqId
 
     // fields
@@ -1113,6 +1173,8 @@ message InventoryItemDetailData {
 // Order Adjustment Billing
 message OrderAdjustmentBillingData {
     option (routines.entity_type) = "OrderAdjustmentBilling";
+    option (routines.keys).keys = "order_adjustment_id, invoice_id, invoice_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: orderAdjustmentId, invoiceId, invoiceItemSeqId
 
     // fields
@@ -1127,6 +1189,8 @@ message OrderAdjustmentBillingData {
 // Product Feature Price
 message ProductFeaturePriceData {
     option (routines.entity_type) = "ProductFeaturePrice";
+    option (routines.keys).keys = "product_feature_id, product_price_type_id, currency_uom_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productFeatureId, productPriceTypeId, currencyUomId, fromDate
 
     // fields
@@ -1147,6 +1211,8 @@ message ProductFeaturePriceData {
 // Product Configuration Options
 message ProductConfigOptionData {
     option (routines.entity_type) = "ProductConfigOption";
+    option (routines.keys).keys = "config_item_id, config_option_id";
+    option (routines.keys).combine = true;
     // keys: configItemId, configOptionId
 
     // fields
@@ -1164,6 +1230,8 @@ message ProductConfigOptionData {
 // Postal Address
 message PostalAddressData {
     option (routines.entity_type) = "PostalAddress";
+    option (routines.keys).keys = "contact_mech_id";
+    option (routines.keys).combine = false;
     // keys: contactMechId
 
     // fields
@@ -1192,6 +1260,8 @@ message PostalAddressData {
 // Define associations between Product facilities
 message ProductFacilityAssocData {
     option (routines.entity_type) = "ProductFacilityAssoc";
+    option (routines.keys).keys = "product_id, facility_id, facility_id_to, facility_assoc_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productId, facilityId, facilityIdTo, facilityAssocTypeId, fromDate
 
     // fields
@@ -1210,6 +1280,8 @@ message ProductFacilityAssocData {
 // Order Item Price Info
 message OrderItemPriceInfoData {
     option (routines.entity_type) = "OrderItemPriceInfo";
+    option (routines.keys).keys = "order_item_price_info_id";
+    option (routines.keys).combine = false;
     // keys: orderItemPriceInfoId
 
     // fields
@@ -1228,6 +1300,8 @@ message OrderItemPriceInfoData {
 // Work Effort Good Standard
 message WorkEffortGoodStandardData {
     option (routines.entity_type) = "WorkEffortGoodStandard";
+    option (routines.keys).keys = "work_effort_id, product_id, work_effort_good_std_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: workEffortId, productId, workEffortGoodStdTypeId, fromDate
 
     // fields
@@ -1246,6 +1320,8 @@ message WorkEffortGoodStandardData {
 // Person
 message PersonData {
     option (routines.entity_type) = "Person";
+    option (routines.keys).keys = "party_id";
+    option (routines.keys).combine = false;
     // keys: partyId
 
     // fields
@@ -1299,6 +1375,8 @@ message PersonData {
 // Product Store Role Association
 message ProductStoreRoleData {
     option (routines.entity_type) = "ProductStoreRole";
+    option (routines.keys).keys = "party_id, role_type_id, product_store_id, from_date";
+    option (routines.keys).combine = true;
     // keys: partyId, roleTypeId, productStoreId, fromDate
 
     // fields
@@ -1315,6 +1393,8 @@ message ProductStoreRoleData {
 // Party Contact Mechanism
 message PartyContactMechData {
     option (routines.entity_type) = "PartyContactMech";
+    option (routines.keys).keys = "party_id, contact_mech_id, from_date";
+    option (routines.keys).combine = true;
     // keys: partyId, contactMechId, fromDate
 
     // fields
@@ -1336,6 +1416,8 @@ message PartyContactMechData {
 // Product Store Email Settings
 message ProductStoreEmailSettingData {
     option (routines.entity_type) = "ProductStoreEmailSetting";
+    option (routines.keys).keys = "product_store_id, email_type";
+    option (routines.keys).combine = true;
     // keys: productStoreId, emailType
 
     // fields
@@ -1355,6 +1437,8 @@ message ProductStoreEmailSettingData {
 // Electronic Text
 message ElectronicTextData {
     option (routines.entity_type) = "ElectronicText";
+    option (routines.keys).keys = "data_resource_id";
+    option (routines.keys).combine = false;
     // keys: dataResourceId
 
     // fields
@@ -1367,6 +1451,8 @@ message ElectronicTextData {
 // Item Issuance
 message ItemIssuanceData {
     option (routines.entity_type) = "ItemIssuance";
+    option (routines.keys).keys = "item_issuance_id";
+    option (routines.keys).combine = false;
     // keys: itemIssuanceId
 
     // fields
@@ -1390,6 +1476,8 @@ message ItemIssuanceData {
 // Party Group
 message PartyGroupData {
     option (routines.entity_type) = "PartyGroup";
+    option (routines.keys).keys = "party_id";
+    option (routines.keys).combine = false;
     // keys: partyId
 
     // fields
@@ -1419,6 +1507,8 @@ message PartyGroupData {
 // Product Promotion Category
 message ProductPromoProductData {
     option (routines.entity_type) = "ProductPromoProduct";
+    option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id, product_promo_cond_seq_id, product_id";
+    option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productId
 
     // fields
@@ -1435,6 +1525,8 @@ message ProductPromoProductData {
 // Product Review
 message ProductReviewData {
     option (routines.entity_type) = "ProductReview";
+    option (routines.keys).keys = "product_review_id";
+    option (routines.keys).combine = false;
     // keys: productReviewId
 
     // fields
@@ -1454,6 +1546,8 @@ message ProductReviewData {
 // The Order Payment Preference
 message OrderPaymentPreferenceData {
     option (routines.entity_type) = "OrderPaymentPreference";
+    option (routines.keys).keys = "order_payment_preference_id";
+    option (routines.keys).combine = false;
     // keys: orderPaymentPreferenceId
 
     // fields
@@ -1488,6 +1582,8 @@ message OrderPaymentPreferenceData {
 // Supplier Product
 message SupplierProductData {
     option (routines.entity_type) = "SupplierProduct";
+    option (routines.keys).keys = "product_id, party_id, available_from_date, minimum_order_quantity, currency_uom_id";
+    option (routines.keys).combine = true;
     // keys: productId, partyId, currencyUomId, minimumOrderQuantity, availableFromDate
 
     // fields
@@ -1518,6 +1614,8 @@ message SupplierProductData {
 // Order Status
 message OrderStatusData {
     option (routines.entity_type) = "OrderStatus";
+    option (routines.keys).keys = "order_status_id";
+    option (routines.keys).combine = false;
     // keys: orderStatusId
 
     // fields
@@ -1536,6 +1634,8 @@ message OrderStatusData {
 // Party
 message PartyData {
     option (routines.entity_type) = "Party";
+    option (routines.keys).keys = "party_id";
+    option (routines.keys).combine = false;
     // keys: partyId
 
     // fields
@@ -1608,6 +1708,8 @@ message PartyData {
 // Agreement Item
 message AgreementItemData {
     option (routines.entity_type) = "AgreementItem";
+    option (routines.keys).keys = "agreement_id, agreement_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: agreementId, agreementItemSeqId
 
     // fields
@@ -1624,6 +1726,8 @@ message AgreementItemData {
 // Party Tax Information
 message PartyTaxAuthInfoData {
     option (routines.entity_type) = "PartyTaxAuthInfo";
+    option (routines.keys).keys = "party_id, tax_auth_geo_id, tax_auth_party_id, from_date";
+    option (routines.keys).combine = true;
     // keys: partyId, taxAuthGeoId, taxAuthPartyId, fromDate
 
     // fields
@@ -1642,6 +1746,8 @@ message PartyTaxAuthInfoData {
 // Accounting Transaction
 message AcctgTransData {
     option (routines.entity_type) = "AcctgTrans";
+    option (routines.keys).keys = "acctg_trans_id";
+    option (routines.keys).combine = false;
     // keys: acctgTransId
 
     // fields
@@ -1680,6 +1786,8 @@ message AcctgTransData {
 // Data Object
 message DataResourceData {
     option (routines.entity_type) = "DataResource";
+    option (routines.keys).keys = "data_resource_id";
+    option (routines.keys).combine = false;
     // keys: dataResourceId
 
     // fields
@@ -1709,6 +1817,8 @@ message DataResourceData {
 // Shipment Item
 message ShipmentItemData {
     option (routines.entity_type) = "ShipmentItem";
+    option (routines.keys).keys = "shipment_id, shipment_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: shipmentId, shipmentItemSeqId
 
     // fields
@@ -1724,6 +1834,8 @@ message ShipmentItemData {
 // Facility Contact Mechanism
 message FacilityContactMechData {
     option (routines.entity_type) = "FacilityContactMech";
+    option (routines.keys).keys = "facility_id, contact_mech_id, from_date";
+    option (routines.keys).combine = true;
     // keys: facilityId, contactMechId, fromDate
 
     // fields
@@ -1740,6 +1852,8 @@ message FacilityContactMechData {
 // Agreement
 message AgreementData {
     option (routines.entity_type) = "Agreement";
+    option (routines.keys).keys = "agreement_id";
+    option (routines.keys).combine = false;
     // keys: agreementId
 
     // fields
@@ -1762,6 +1876,8 @@ message AgreementData {
 // Catalog Category Association
 message ProdCatalogCategoryData {
     option (routines.entity_type) = "ProdCatalogCategory";
+    option (routines.keys).keys = "prod_catalog_id, product_category_id, prod_catalog_category_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: prodCatalogId, productCategoryId, prodCatalogCategoryTypeId, fromDate
 
     // fields
@@ -1778,6 +1894,8 @@ message ProdCatalogCategoryData {
 // Product Category Role
 message ProductCategoryRoleData {
     option (routines.entity_type) = "ProductCategoryRole";
+    option (routines.keys).keys = "product_category_id, party_id, role_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productCategoryId, partyId, roleTypeId, fromDate
 
     // fields
@@ -1794,6 +1912,8 @@ message ProductCategoryRoleData {
 // Order Item
 message OrderItemData {
     option (routines.entity_type) = "OrderItem";
+    option (routines.keys).keys = "order_id, order_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: orderId, orderItemSeqId
 
     // fields
@@ -1842,6 +1962,7 @@ message OrderItemData {
     string sales_opportunity_id = 42;
     
     // relations
+    OrderHeaderData order_header = 43; // ref: orderId
     ProductData product = 44; // ref: productId
     InventoryItemData from_inventory_item = 45; // ref: fromInventoryItemId
     repeated ProductFacilityLocationData product_facility_location = 46; // ref: productId
@@ -1865,6 +1986,8 @@ message OrderItemData {
 // Shipment Time Estimation Entity
 message ShipmentTimeEstimateData {
     option (routines.entity_type) = "ShipmentTimeEstimate";
+    option (routines.keys).keys = "shipment_method_type_id, party_id, role_type_id, geo_id_to, geo_id_from, from_date";
+    option (routines.keys).combine = true;
     // keys: shipmentMethodTypeId, partyId, roleTypeId, geoIdTo, geoIdFrom, fromDate
 
     // fields
@@ -1885,6 +2008,8 @@ message ShipmentTimeEstimateData {
 // Product Category Data Object
 message ProductCategoryContentData {
     option (routines.entity_type) = "ProductCategoryContent";
+    option (routines.keys).keys = "product_category_id, content_id, prod_cat_content_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productCategoryId, contentId, prodCatContentTypeId, fromDate
 
     // fields
@@ -1904,6 +2029,8 @@ message ProductCategoryContentData {
 // Order Item Package Association
 message OrderItemShipGroupAssocData {
     option (routines.entity_type) = "OrderItemShipGroupAssoc";
+    option (routines.keys).keys = "order_id, order_item_seq_id, ship_group_seq_id";
+    option (routines.keys).combine = true;
     // keys: orderId, orderItemSeqId, shipGroupSeqId
 
     // fields
@@ -1919,6 +2046,8 @@ message OrderItemShipGroupAssocData {
 // Content Association
 message ContentAssocData {
     option (routines.entity_type) = "ContentAssoc";
+    option (routines.keys).keys = "content_id, content_id_to, content_assoc_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: contentId, contentIdTo, contentAssocTypeId, fromDate
 
     // fields
@@ -1944,6 +2073,8 @@ message ContentAssocData {
 // Quote Item
 message QuoteItemData {
     option (routines.entity_type) = "QuoteItem";
+    option (routines.keys).keys = "quote_id, quote_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: quoteId, quoteItemSeqId
 
     // fields
@@ -1975,6 +2106,8 @@ message QuoteItemData {
 // Catalog
 message ProdCatalogData {
     option (routines.entity_type) = "ProdCatalog";
+    option (routines.keys).keys = "prod_catalog_id";
+    option (routines.keys).combine = false;
     // keys: prodCatalogId
 
     // fields
@@ -1994,6 +2127,8 @@ message ProdCatalogData {
 // Product Promotion Condition
 message ProductPromoCondData {
     option (routines.entity_type) = "ProductPromoCond";
+    option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_cond_seq_id";
+    option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId, productPromoCondSeqId
 
     // fields
@@ -2012,6 +2147,8 @@ message ProductPromoCondData {
 // Facility Location
 message FacilityLocationData {
     option (routines.entity_type) = "FacilityLocation";
+    option (routines.keys).keys = "facility_id, location_seq_id";
+    option (routines.keys).combine = true;
     // keys: facilityId, locationSeqId
 
     // fields
@@ -2031,6 +2168,8 @@ message FacilityLocationData {
 // Product Promotion Category
 message ProductPromoCategoryData {
     option (routines.entity_type) = "ProductPromoCategory";
+    option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id, product_promo_cond_seq_id, product_category_id, and_group_id";
+    option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productCategoryId, andGroupId
 
     // fields
@@ -2049,6 +2188,8 @@ message ProductPromoCategoryData {
 // Tracks a history of the status of a Party
 message PartyStatusData {
     option (routines.entity_type) = "PartyStatus";
+    option (routines.keys).keys = "status_id, party_id, status_date";
+    option (routines.keys).combine = true;
     // keys: statusId, partyId, statusDate
 
     // fields
@@ -2063,6 +2204,8 @@ message PartyStatusData {
 // Product Facility
 message ProductFacilityLocationData {
     option (routines.entity_type) = "ProductFacilityLocation";
+    option (routines.keys).keys = "product_id, facility_id, location_seq_id";
+    option (routines.keys).combine = true;
     // keys: productId, facilityId, locationSeqId
 
     // fields
@@ -2078,6 +2221,8 @@ message ProductFacilityLocationData {
 // Shipment Contact Mechanism Type
 message ShipmentBoxTypeData {
     option (routines.entity_type) = "ShipmentBoxType";
+    option (routines.keys).keys = "shipment_box_type_id";
+    option (routines.keys).combine = false;
     // keys: shipmentBoxTypeId
 
     // fields
@@ -2096,6 +2241,8 @@ message ShipmentBoxTypeData {
 // Shipment Package Route Segment
 message ShipmentPackageRouteSegData {
     option (routines.entity_type) = "ShipmentPackageRouteSeg";
+    option (routines.keys).keys = "shipment_id, shipment_package_seq_id, shipment_route_segment_id";
+    option (routines.keys).combine = true;
     // keys: shipmentId, shipmentPackageSeqId, shipmentRouteSegmentId
 
     // fields
@@ -2122,6 +2269,8 @@ message ShipmentPackageRouteSegData {
 // Geographic Location
 message GeoPointData {
     option (routines.entity_type) = "GeoPoint";
+    option (routines.keys).keys = "geo_point_id";
+    option (routines.keys).combine = false;
     // keys: geoPointId
 
     // fields
@@ -2141,6 +2290,8 @@ message GeoPointData {
 // Subscription Resource
 message SubscriptionResourceData {
     option (routines.entity_type) = "SubscriptionResource";
+    option (routines.keys).keys = "subscription_resource_id";
+    option (routines.keys).combine = false;
     // keys: subscriptionResourceId
 
     // fields
@@ -2157,6 +2308,8 @@ message SubscriptionResourceData {
 // Product Feature Applicability
 message ProductFeatureApplData {
     option (routines.entity_type) = "ProductFeatureAppl";
+    option (routines.keys).keys = "product_id, product_feature_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productId, productFeatureId, fromDate
 
     // fields
@@ -2175,6 +2328,8 @@ message ProductFeatureApplData {
 // Party Contact Mechanism Purpose
 message PartyContactMechPurposeData {
     option (routines.entity_type) = "PartyContactMechPurpose";
+    option (routines.keys).keys = "party_id, contact_mech_id, contact_mech_purpose_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: partyId, contactMechId, contactMechPurposeTypeId, fromDate
 
     // fields
@@ -2190,6 +2345,8 @@ message PartyContactMechPurposeData {
 // Recurrence Info
 message RecurrenceInfoData {
     option (routines.entity_type) = "RecurrenceInfo";
+    option (routines.keys).keys = "recurrence_info_id";
+    option (routines.keys).combine = false;
     // keys: recurrenceInfoId
 
     // fields
@@ -2207,6 +2364,8 @@ message RecurrenceInfoData {
 // Product Feature Category
 message ProductFeatureCategoryData {
     option (routines.entity_type) = "ProductFeatureCategory";
+    option (routines.keys).keys = "product_feature_category_id";
+    option (routines.keys).combine = false;
     // keys: productFeatureCategoryId
 
     // fields
@@ -2220,6 +2379,8 @@ message ProductFeatureCategoryData {
 // Facility Location Geo Location with history
 message FacilityLocationGeoPointData {
     option (routines.entity_type) = "FacilityLocationGeoPoint";
+    option (routines.keys).keys = "facility_id, location_seq_id, geo_point_id, from_date";
+    option (routines.keys).combine = true;
     // keys: facilityId, locationSeqId, geoPointId, fromDate
 
     // fields
@@ -2235,6 +2396,8 @@ message FacilityLocationGeoPointData {
 // Security Component - User Login Security Group
 message UserLoginSecurityGroupData {
     option (routines.entity_type) = "UserLoginSecurityGroup";
+    option (routines.keys).keys = "user_login_id, group_id, from_date";
+    option (routines.keys).combine = true;
     // keys: userLoginId, groupId, fromDate
 
     // fields
@@ -2249,6 +2412,8 @@ message UserLoginSecurityGroupData {
 // Product Store Catalog Association
 message ProductStoreCatalogData {
     option (routines.entity_type) = "ProductStoreCatalog";
+    option (routines.keys).keys = "product_store_id, prod_catalog_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productStoreId, prodCatalogId, fromDate
 
     // fields
@@ -2264,6 +2429,8 @@ message ProductStoreCatalogData {
 // UserLogin
 message UserLoginData {
     option (routines.entity_type) = "UserLogin";
+    option (routines.keys).keys = "user_login_id";
+    option (routines.keys).combine = false;
     // keys: userLoginId
 
     // fields
@@ -2290,6 +2457,8 @@ message UserLoginData {
 // Product Pice Rule
 message ProductPriceRuleData {
     option (routines.entity_type) = "ProductPriceRule";
+    option (routines.keys).keys = "product_price_rule_id";
+    option (routines.keys).combine = false;
     // keys: productPriceRuleId
 
     // fields
@@ -2306,6 +2475,8 @@ message ProductPriceRuleData {
 // Party Role
 message PartyRoleData {
     option (routines.entity_type) = "PartyRole";
+    option (routines.keys).keys = "party_id, role_type_id";
+    option (routines.keys).combine = true;
     // keys: partyId, roleTypeId
 
     // fields
@@ -2318,6 +2489,8 @@ message PartyRoleData {
 // Product Facility
 message ProductFacilityData {
     option (routines.entity_type) = "ProductFacility";
+    option (routines.keys).keys = "product_id, facility_id";
+    option (routines.keys).combine = true;
     // keys: productId, facilityId
 
     // fields
@@ -2336,6 +2509,8 @@ message ProductFacilityData {
 // Party Geo Location with history
 message PartyGeoPointData {
     option (routines.entity_type) = "PartyGeoPoint";
+    option (routines.keys).keys = "party_id, geo_point_id, from_date";
+    option (routines.keys).combine = true;
     // keys: partyId, geoPointId, fromDate
 
     // fields
@@ -2350,6 +2525,8 @@ message PartyGeoPointData {
 // Order Header
 message OrderHeaderData {
     option (routines.entity_type) = "OrderHeader";
+    option (routines.keys).keys = "order_id";
+    option (routines.keys).combine = false;
     // keys: orderId
 
     // fields
@@ -2408,6 +2585,8 @@ message OrderHeaderData {
 // Carrier Shipment Method
 message CarrierShipmentMethodData {
     option (routines.entity_type) = "CarrierShipmentMethod";
+    option (routines.keys).keys = "shipment_method_type_id, party_id, role_type_id";
+    option (routines.keys).combine = true;
     // keys: shipmentMethodTypeId, partyId, roleTypeId
 
     // fields
@@ -2423,6 +2602,8 @@ message CarrierShipmentMethodData {
 // Shipment
 message ShipmentData {
     option (routines.entity_type) = "Shipment";
+    option (routines.keys).keys = "shipment_id";
+    option (routines.keys).combine = false;
     // keys: shipmentId
 
     // fields
@@ -2483,6 +2664,8 @@ message ShipmentData {
 // Shipment Package Content
 message ShipmentPackageContentData {
     option (routines.entity_type) = "ShipmentPackageContent";
+    option (routines.keys).keys = "shipment_id, shipment_package_seq_id, shipment_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: shipmentId, shipmentPackageSeqId, shipmentItemSeqId
 
     // fields
@@ -2499,6 +2682,8 @@ message ShipmentPackageContentData {
 // Security Component - Security Group
 message SecurityGroupData {
     option (routines.entity_type) = "SecurityGroup";
+    option (routines.keys).keys = "group_id";
+    option (routines.keys).combine = false;
     // keys: groupId
 
     // fields
@@ -2512,6 +2697,8 @@ message SecurityGroupData {
 // Product Data Object
 message ProductContentData {
     option (routines.entity_type) = "ProductContent";
+    option (routines.keys).keys = "product_id, content_id, product_content_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productId, contentId, productContentTypeId, fromDate
 
     // fields
@@ -2534,6 +2721,8 @@ message ProductContentData {
 // Party Relationship
 message PartyRelationshipData {
     option (routines.entity_type) = "PartyRelationship";
+    option (routines.keys).keys = "party_id_from, party_id_to, role_type_id_from, role_type_id_to, from_date";
+    option (routines.keys).combine = true;
     // keys: partyIdFrom, partyIdTo, roleTypeIdFrom, roleTypeIdTo, fromDate
 
     // fields
@@ -2558,6 +2747,8 @@ message PartyRelationshipData {
 // Product Store Carrier Shipment Method
 message ProductStoreShipmentMethData {
     option (routines.entity_type) = "ProductStoreShipmentMeth";
+    option (routines.keys).keys = "product_store_ship_meth_id";
+    option (routines.keys).combine = false;
     // keys: productStoreShipMethId
 
     // fields
@@ -2596,6 +2787,8 @@ message ProductStoreShipmentMethData {
 // Payment
 message PaymentData {
     option (routines.entity_type) = "Payment";
+    option (routines.keys).keys = "payment_id";
+    option (routines.keys).combine = false;
     // keys: paymentId
 
     // fields
@@ -2633,6 +2826,8 @@ message PaymentData {
 // Content
 message ContentData {
     option (routines.entity_type) = "Content";
+    option (routines.keys).keys = "content_id";
+    option (routines.keys).combine = false;
     // keys: contentId
 
     // fields
@@ -2666,6 +2861,8 @@ message ContentData {
 // Shipment Package
 message ShipmentPackageData {
     option (routines.entity_type) = "ShipmentPackage";
+    option (routines.keys).keys = "shipment_id, shipment_package_seq_id";
+    option (routines.keys).combine = true;
     // keys: shipmentId, shipmentPackageSeqId
 
     // fields
@@ -2687,6 +2884,8 @@ message ShipmentPackageData {
 // Product Store Inventory Facility Applicability
 message ProductStoreFacilityData {
     option (routines.entity_type) = "ProductStoreFacility";
+    option (routines.keys).keys = "product_store_id, facility_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productStoreId, facilityId, fromDate
 
     // fields
@@ -2702,6 +2901,8 @@ message ProductStoreFacilityData {
 // WebSite
 message WebSiteData {
     option (routines.entity_type) = "WebSite";
+    option (routines.keys).keys = "web_site_id";
+    option (routines.keys).combine = false;
     // keys: webSiteId
 
     // fields
@@ -2729,6 +2930,8 @@ message WebSiteData {
 // Product Category
 message ProductCategoryData {
     option (routines.entity_type) = "ProductCategory";
+    option (routines.keys).keys = "product_category_id";
+    option (routines.keys).combine = false;
     // keys: productCategoryId
 
     // fields
@@ -2750,6 +2953,8 @@ message ProductCategoryData {
 // Product Store Payment Settings
 message ProductStorePaymentSettingData {
     option (routines.entity_type) = "ProductStorePaymentSetting";
+    option (routines.keys).keys = "product_store_id, payment_method_type_id, payment_service_type_enum_id";
+    option (routines.keys).combine = true;
     // keys: productStoreId, paymentMethodTypeId, paymentServiceTypeEnumId
 
     // fields
@@ -2768,6 +2973,8 @@ message ProductStorePaymentSettingData {
 // Payment Method
 message PaymentMethodData {
     option (routines.entity_type) = "PaymentMethod";
+    option (routines.keys).keys = "payment_method_id";
+    option (routines.keys).combine = false;
     // keys: paymentMethodId
 
     // fields
@@ -2786,6 +2993,8 @@ message PaymentMethodData {
 // Product Price Condition
 message ProductPriceCondData {
     option (routines.entity_type) = "ProductPriceCond";
+    option (routines.keys).keys = "product_price_rule_id, product_price_cond_seq_id";
+    option (routines.keys).combine = true;
     // keys: productPriceRuleId, productPriceCondSeqId
 
     // fields
@@ -2801,6 +3010,8 @@ message ProductPriceCondData {
 // Inventory Item
 message InventoryItemData {
     option (routines.entity_type) = "InventoryItem";
+    option (routines.keys).keys = "inventory_item_id";
+    option (routines.keys).combine = false;
     // keys: inventoryItemId
 
     // fields
@@ -2839,6 +3050,8 @@ message InventoryItemData {
 // Billing Account Role
 message BillingAccountRoleData {
     option (routines.entity_type) = "BillingAccountRole";
+    option (routines.keys).keys = "billing_account_id, party_id, role_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: billingAccountId, partyId, roleTypeId, fromDate
 
     // fields
@@ -2854,6 +3067,8 @@ message BillingAccountRoleData {
 // Invoice Item
 message InvoiceItemData {
     option (routines.entity_type) = "InvoiceItem";
+    option (routines.keys).keys = "invoice_id, invoice_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: invoiceId, invoiceItemSeqId
 
     // fields
@@ -2883,6 +3098,8 @@ message InvoiceItemData {
 // Product Feature Category Application
 message ProductFeatureCategoryApplData {
     option (routines.entity_type) = "ProductFeatureCategoryAppl";
+    option (routines.keys).keys = "product_category_id, product_feature_category_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productCategoryId, productFeatureCategoryId, fromDate
 
     // fields
@@ -2897,6 +3114,8 @@ message ProductFeatureCategoryApplData {
 // Product Configuration Question
 message ProductConfigItemData {
     option (routines.entity_type) = "ProductConfigItem";
+    option (routines.keys).keys = "config_item_id";
+    option (routines.keys).combine = false;
     // keys: configItemId
 
     // fields
@@ -2913,6 +3132,8 @@ message ProductConfigItemData {
 // Telecommunications Number
 message TelecomNumberData {
     option (routines.entity_type) = "TelecomNumber";
+    option (routines.keys).keys = "contact_mech_id";
+    option (routines.keys).combine = false;
     // keys: contactMechId
 
     // fields
@@ -2928,6 +3149,8 @@ message TelecomNumberData {
 // Product Feature
 message ProductFeatureData {
     option (routines.entity_type) = "ProductFeature";
+    option (routines.keys).keys = "product_feature_id";
+    option (routines.keys).combine = false;
     // keys: productFeatureId
 
     // fields
@@ -2948,6 +3171,8 @@ message ProductFeatureData {
 // Product Configuration Templates
 message ProductConfigData {
     option (routines.entity_type) = "ProductConfig";
+    option (routines.keys).keys = "product_id, config_item_id, sequence_num, from_date";
+    option (routines.keys).combine = true;
     // keys: productId, configItemId, sequenceNum, fromDate
 
     // fields
@@ -2968,6 +3193,8 @@ message ProductConfigData {
 // Product Promotion
 message ProductPromoCodeData {
     option (routines.entity_type) = "ProductPromoCode";
+    option (routines.keys).keys = "product_promo_code_id";
+    option (routines.keys).combine = false;
     // keys: productPromoCodeId
 
     // fields
@@ -2990,6 +3217,8 @@ message ProductPromoCodeData {
 // Product Store
 message ProductStoreData {
     option (routines.entity_type) = "ProductStore";
+    option (routines.keys).keys = "product_store_id";
+    option (routines.keys).combine = false;
     // keys: productStoreId
 
     // fields
@@ -3093,6 +3322,8 @@ message ProductStoreData {
 // Product Price
 message ProductPriceData {
     option (routines.entity_type) = "ProductPrice";
+    option (routines.keys).keys = "product_id, product_price_type_id, product_price_purpose_id, currency_uom_id, product_store_group_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate
 
     // fields
@@ -3124,6 +3355,8 @@ message ProductPriceData {
 // Quantity Break
 message QuantityBreakData {
     option (routines.entity_type) = "QuantityBreak";
+    option (routines.keys).keys = "quantity_break_id";
+    option (routines.keys).combine = false;
     // keys: quantityBreakId
 
     // fields
@@ -3138,6 +3371,8 @@ message QuantityBreakData {
 // Contact Mechanism
 message ContactMechData {
     option (routines.entity_type) = "ContactMech";
+    option (routines.keys).keys = "contact_mech_id";
+    option (routines.keys).combine = false;
     // keys: contactMechId
 
     // fields
@@ -3151,6 +3386,8 @@ message ContactMechData {
 // Order Item Inventory Reservation
 message OrderItemShipGrpInvResData {
     option (routines.entity_type) = "OrderItemShipGrpInvRes";
+    option (routines.keys).keys = "order_id, ship_group_seq_id, order_item_seq_id, inventory_item_id";
+    option (routines.keys).combine = true;
     // keys: orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId
 
     // fields
@@ -3175,6 +3412,8 @@ message OrderItemShipGrpInvResData {
 // TenantDataSource
 message TenantDataSourceData {
     option (routines.entity_type) = "TenantDataSource";
+    option (routines.keys).keys = "tenant_id, entity_group_name";
+    option (routines.keys).combine = true;
     // keys: tenantId, entityGroupName
 
     // fields
@@ -3190,6 +3429,8 @@ message TenantDataSourceData {
 // Product Promotion Rule
 message ProductPromoRuleData {
     option (routines.entity_type) = "ProductPromoRule";
+    option (routines.keys).keys = "product_promo_id, product_promo_rule_id";
+    option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId
 
     // fields
@@ -3203,6 +3444,8 @@ message ProductPromoRuleData {
 // Order Contact Mechanism
 message OrderContactMechData {
     option (routines.entity_type) = "OrderContactMech";
+    option (routines.keys).keys = "order_id, contact_mech_purpose_type_id, contact_mech_id";
+    option (routines.keys).combine = true;
     // keys: orderId, contactMechPurposeTypeId, contactMechId
 
     // fields
@@ -3216,6 +3459,8 @@ message OrderContactMechData {
 // WorkEffort
 message WorkEffortData {
     option (routines.entity_type) = "WorkEffort";
+    option (routines.keys).keys = "work_effort_id";
+    option (routines.keys).combine = false;
     // keys: workEffortId
 
     // fields
@@ -3278,6 +3523,8 @@ message WorkEffortData {
 // Tenant
 message TenantData {
     option (routines.entity_type) = "Tenant";
+    option (routines.keys).keys = "tenant_id";
+    option (routines.keys).combine = false;
     // keys: tenantId
 
     // fields
@@ -3292,6 +3539,8 @@ message TenantData {
 // Shipment Status
 message ShipmentStatusData {
     option (routines.entity_type) = "ShipmentStatus";
+    option (routines.keys).keys = "status_id, shipment_id";
+    option (routines.keys).combine = true;
     // keys: statusId, shipmentId
 
     // fields
@@ -3306,6 +3555,8 @@ message ShipmentStatusData {
 // Billing Account
 message BillingAccountData {
     option (routines.entity_type) = "BillingAccount";
+    option (routines.keys).keys = "billing_account_id";
+    option (routines.keys).combine = false;
     // keys: billingAccountId
 
     // fields
@@ -3324,6 +3575,8 @@ message BillingAccountData {
 // Facility Contact Mechanism Purpose
 message FacilityContactMechPurposeData {
     option (routines.entity_type) = "FacilityContactMechPurpose";
+    option (routines.keys).keys = "facility_id, contact_mech_id, contact_mech_purpose_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: facilityId, contactMechId, contactMechPurposeTypeId, fromDate
 
     // fields
@@ -3339,6 +3592,8 @@ message FacilityContactMechPurposeData {
 // Product Keyword
 message ProductKeywordData {
     option (routines.entity_type) = "ProductKeyword";
+    option (routines.keys).keys = "product_id, keyword, keyword_type_id";
+    option (routines.keys).combine = true;
     // keys: productId, keyword, keywordTypeId
 
     // fields
@@ -3354,6 +3609,8 @@ message ProductKeywordData {
 // Customer Request Item
 message CustRequestItemData {
     option (routines.entity_type) = "CustRequestItem";
+    option (routines.keys).keys = "cust_request_id, cust_request_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: custRequestId, custRequestItemSeqId
 
     // fields
@@ -3381,6 +3638,8 @@ message CustRequestItemData {
 // Tenant and its Domain Name
 message TenantDomainNameData {
     option (routines.entity_type) = "TenantDomainName";
+    option (routines.keys).keys = "domain_name";
+    option (routines.keys).combine = false;
     // keys: domainName
 
     // fields
@@ -3393,6 +3652,8 @@ message TenantDomainNameData {
 // Order Role
 message OrderRoleData {
     option (routines.entity_type) = "OrderRole";
+    option (routines.keys).keys = "order_id, party_id, role_type_id";
+    option (routines.keys).combine = true;
     // keys: orderId, partyId, roleTypeId
 
     // fields
@@ -3406,6 +3667,8 @@ message OrderRoleData {
 // Fixed Asset Geo Location with history
 message FixedAssetGeoPointData {
     option (routines.entity_type) = "FixedAssetGeoPoint";
+    option (routines.keys).keys = "fixed_asset_id, geo_point_id, from_date";
+    option (routines.keys).combine = true;
     // keys: fixedAssetId, geoPointId, fromDate
 
     // fields
@@ -3420,6 +3683,8 @@ message FixedAssetGeoPointData {
 // Recurrence Rule
 message RecurrenceRuleData {
     option (routines.entity_type) = "RecurrenceRule";
+    option (routines.keys).keys = "recurrence_rule_id";
+    option (routines.keys).combine = false;
     // keys: recurrenceRuleId
 
     // fields
@@ -3446,6 +3711,8 @@ message RecurrenceRuleData {
 // Product Store Promotion Applicability
 message ProductStorePromoApplData {
     option (routines.entity_type) = "ProductStorePromoAppl";
+    option (routines.keys).keys = "product_store_id, product_promo_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productStoreId, productPromoId, fromDate
 
     // fields
@@ -3462,6 +3729,8 @@ message ProductStorePromoApplData {
 // Product Configuration Option to Products
 message ProductConfigProductData {
     option (routines.entity_type) = "ProductConfigProduct";
+    option (routines.keys).keys = "config_item_id, config_option_id, product_id";
+    option (routines.keys).combine = true;
     // keys: configItemId, configOptionId, productId
 
     // fields
@@ -3477,6 +3746,8 @@ message ProductConfigProductData {
 // Product Price Action
 message ProductPriceActionData {
     option (routines.entity_type) = "ProductPriceAction";
+    option (routines.keys).keys = "product_price_rule_id, product_price_action_seq_id";
+    option (routines.keys).combine = true;
     // keys: productPriceRuleId, productPriceActionSeqId
 
     // fields
@@ -3492,6 +3763,8 @@ message ProductPriceActionData {
 // Shipment Method Type
 message ShipmentMethodTypeData {
     option (routines.entity_type) = "ShipmentMethodType";
+    option (routines.keys).keys = "shipment_method_type_id";
+    option (routines.keys).combine = false;
     // keys: shipmentMethodTypeId
 
     // fields
@@ -3505,6 +3778,8 @@ message ShipmentMethodTypeData {
 // Quote Term
 message QuoteTermData {
     option (routines.entity_type) = "QuoteTerm";
+    option (routines.keys).keys = "term_type_id, quote_id, quote_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: termTypeId, quoteId, quoteItemSeqId
 
     // fields
@@ -3523,6 +3798,8 @@ message QuoteTermData {
 // Transaction Entry
 message AcctgTransEntryData {
     option (routines.entity_type) = "AcctgTransEntry";
+    option (routines.keys).keys = "acctg_trans_id, acctg_trans_entry_seq_id";
+    option (routines.keys).combine = true;
     // keys: acctgTransId, acctgTransEntrySeqId
 
     // fields
@@ -3558,6 +3835,8 @@ message AcctgTransEntryData {
 // Order Item Billing
 message OrderItemBillingData {
     option (routines.entity_type) = "OrderItemBilling";
+    option (routines.keys).keys = "order_id, order_item_seq_id, invoice_id, invoice_item_seq_id";
+    option (routines.keys).combine = true;
     // keys: orderId, orderItemSeqId, invoiceId, invoiceItemSeqId
 
     // fields
@@ -3576,6 +3855,8 @@ message OrderItemBillingData {
 // Order Item Ship Group
 message OrderItemShipGroupData {
     option (routines.entity_type) = "OrderItemShipGroup";
+    option (routines.keys).keys = "order_id, ship_group_seq_id";
+    option (routines.keys).combine = true;
     // keys: orderId, shipGroupSeqId
 
     // fields
@@ -3606,6 +3887,8 @@ message OrderItemShipGroupData {
 // Customer Request Type
 message CustRequestTypeData {
     option (routines.entity_type) = "CustRequestType";
+    option (routines.keys).keys = "cust_request_type_id";
+    option (routines.keys).combine = false;
     // keys: custRequestTypeId
 
     // fields
@@ -3621,6 +3904,8 @@ message CustRequestTypeData {
 // Agreement Product Application
 message AgreementProductApplData {
     option (routines.entity_type) = "AgreementProductAppl";
+    option (routines.keys).keys = "agreement_id, agreement_item_seq_id, product_id";
+    option (routines.keys).combine = true;
     // keys: agreementId, agreementItemSeqId, productId
 
     // fields
@@ -3635,6 +3920,8 @@ message AgreementProductApplData {
 // Product Subscription Resource
 message ProductSubscriptionResourceData {
     option (routines.entity_type) = "ProductSubscriptionResource";
+    option (routines.keys).keys = "product_id, subscription_resource_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productId, subscriptionResourceId, fromDate
 
     // fields
@@ -3664,6 +3951,8 @@ message ProductSubscriptionResourceData {
 // Credit Card Information
 message CreditCardData {
     option (routines.entity_type) = "CreditCard";
+    option (routines.keys).keys = "payment_method_id";
+    option (routines.keys).combine = false;
     // keys: paymentMethodId
 
     // fields
@@ -3691,6 +3980,8 @@ message CreditCardData {
 // Quote
 message QuoteData {
     option (routines.entity_type) = "Quote";
+    option (routines.keys).keys = "quote_id";
+    option (routines.keys).combine = false;
     // keys: quoteId
 
     // fields
@@ -3713,6 +4004,8 @@ message QuoteData {
 // Product Promotion
 message ProductPromoData {
     option (routines.entity_type) = "ProductPromo";
+    option (routines.keys).keys = "product_promo_id";
+    option (routines.keys).combine = false;
     // keys: productPromoId
 
     // fields
@@ -3738,6 +4031,8 @@ message ProductPromoData {
 // Product Category Member
 message ProductCategoryMemberData {
     option (routines.entity_type) = "ProductCategoryMember";
+    option (routines.keys).keys = "product_category_id, product_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productCategoryId, productId, fromDate
 
     // fields
@@ -3755,6 +4050,8 @@ message ProductCategoryMemberData {
 // Agreement Term
 message AgreementTermData {
     option (routines.entity_type) = "AgreementTerm";
+    option (routines.keys).keys = "agreement_term_id";
+    option (routines.keys).combine = false;
     // keys: agreementTermId
 
     // fields
@@ -3778,6 +4075,8 @@ message AgreementTermData {
 // Product Category Link
 message ProductCategoryLinkData {
     option (routines.entity_type) = "ProductCategoryLink";
+    option (routines.keys).keys = "product_category_id, link_seq_id, from_date";
+    option (routines.keys).combine = true;
     // keys: productCategoryId, linkSeqId, fromDate
 
     // fields
@@ -3801,6 +4100,8 @@ message ProductCategoryLinkData {
 // Product Feature Interaction
 message ProductFeatureIactnData {
     option (routines.entity_type) = "ProductFeatureIactn";
+    option (routines.keys).keys = "product_feature_id, product_feature_id_to";
+    option (routines.keys).combine = true;
     // keys: productFeatureId, productFeatureIdTo
 
     // fields
@@ -3815,6 +4116,8 @@ message ProductFeatureIactnData {
 // Work Effort Association
 message WorkEffortAssocData {
     option (routines.entity_type) = "WorkEffortAssoc";
+    option (routines.keys).keys = "work_effort_id_from, work_effort_id_to, work_effort_assoc_type_id, from_date";
+    option (routines.keys).combine = true;
     // keys: workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate
 
     // fields
@@ -3831,6 +4134,8 @@ message WorkEffortAssocData {
 // Quote Role
 message QuoteRoleData {
     option (routines.entity_type) = "QuoteRole";
+    option (routines.keys).keys = "quote_id, party_id, role_type_id";
+    option (routines.keys).combine = true;
     // keys: quoteId, partyId, roleTypeId
 
     // fields

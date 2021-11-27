@@ -17,5 +17,12 @@ public class AbstractStoreProc {
            return null;
         });
     }
+
+    protected void truncate(IProc.ProcContext ctx, String... tableNames) {
+        for (String tableName : tableNames) {
+            ctx.getHandle().execute("truncate " + tableName);
+        }
+    }
+
 }
 

@@ -4,9 +4,7 @@
       "flatIds": []
     },
     "OrderItem": {
-      "flatIds": [
-        "OrderHeader"
-      ]
+      "flatIds": []
     },
     "Payment": {
       "flatIds": []

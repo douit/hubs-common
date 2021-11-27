@@ -14,6 +14,7 @@ public class FieldMappings {
         String type;
         String sqlType;
         String javaType;
+        String clickhouseType;
     }
 
     public static void main(String[] args) {
@@ -37,6 +38,9 @@ public class FieldMappings {
                     case "type": fld.setType(node.getNodeValue()); break;
                     case "sql-type": fld.setSqlType(node.getNodeValue()); break;
                     case "java-type": fld.setJavaType(node.getNodeValue()); break;
+                    case "clickhouse-type":
+                        fld.setClickhouseType(node.getNodeValue());
+                        break;
                     default:
                         throw new RuntimeException("Cannot process attribute "+node.getNodeName());
                 }
@@ -55,7 +59,7 @@ public class FieldMappings {
 
             // Build Document
             // Document document = builder.parse(new ByteArrayInputStream(xmlContent.getBytes(StandardCharsets.UTF_8)));
-            Document document = builder.parse(Util.dataSource("fieldtypemysql.xml"));
+            Document document = builder.parse(Util.dataSource("fieldtypes.xml"));
 
             // Normalize the XML Structure; It's just too important !!
             document.getDocumentElement().normalize();

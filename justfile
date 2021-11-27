@@ -13,6 +13,12 @@ gen program +FLAGS='':
 rpc program +FLAGS='':
 	mvn compile exec:java -Dexec.mainClass="com.bluecc.facade.{{program}}" -Dexec.args="{{FLAGS}}" -f facade/pom.xml
 
+i program +FLAGS='':
+	mvn compile exec:java -Dexec.mainClass="com.bluecc.income.{{program}}" -Dexec.args="{{FLAGS}}" -f income/pom.xml
+
+s program +FLAGS='':
+	mvn exec:java -Dexec.mainClass="com.bluecc.hubs.{{program}}" -Dexec.args="{{FLAGS}}" -f stub/pom.xml
+
 bang:
     just gen CrudGenTool Person Party PartyRole PartyGroup \
         OrderHeader OrderItem OrderRole OrderItemPriceInfo \
@@ -43,3 +49,14 @@ proto:
 # 生成proto文件对应的java类
 stub:
 	mvn compile -f stub/pom.xml
+
+build:
+	just inst fund
+	just inst stub
+	mvn compile -f income/pom.xml
+
+income:
+	mvn compile -f income/pom.xml
+
+template tpl ent:
+	just gen TemplateGen -t {{tpl}} -e {{ent}}

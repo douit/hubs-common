@@ -1,6 +1,8 @@
 // {{ent.title}}
 message {{ent.name}}Data {
     option (routines.entity_type) = "{{ent.name}}";
+    option (routines.keys).keys = "{{ent.underscoreKeys}}";
+    option (routines.keys).combine = {{ent.combine}};
     // keys: {{ent.keyNames}}
 
     // fields

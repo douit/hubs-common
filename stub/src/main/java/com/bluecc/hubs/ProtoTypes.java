@@ -1,15 +1,19 @@
 package com.bluecc.hubs;
 
 import com.bluecc.hubs.stub.*;
+import com.google.common.collect.Lists;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import com.google.type.Money;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
+import java.util.List;
 
+@Slf4j
 public class ProtoTypes {
     public static java.math.BigDecimal getBigDecimal(DecimalValue serialized){
         java.math.MathContext mc = new java.math.MathContext(serialized.getPrecision());
@@ -71,11 +75,30 @@ public class ProtoTypes {
         return ' ';
     }
 
-
     public static String getEntityTypeByMessage(GeneratedMessageV3 msg){
         Descriptors.Descriptor descriptor = msg.getDescriptorForType();
         String entityType=descriptor.getOptions().getExtension(RoutinesProto.entityType);
         return entityType;
+    }
+
+    public static String[] getEntityKeys(Message msg) {
+        EntityKey keys=msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
+        return keys.getKeys().split(", ");
+    }
+    public static String[] getEntityKeys(Descriptors.Descriptor descriptor) {
+        EntityKey keys=descriptor.getOptions().getExtension(RoutinesProto.keys);
+        return keys.getKeys().split(", ");
+    }
+
+    public static String getEntityIden(Message msg, String delimiter) {
+        Descriptors.Descriptor descriptor = msg.getDescriptorForType();
+        List<String> result= Lists.newArrayList();
+        for (String entityKey : getEntityKeys(msg)) {
+            // log.info(".. entity-iden "+entityKey);
+            Object val=msg.getField(descriptor.findFieldByName(entityKey));
+            result.add(val.toString());
+        }
+        return String.join(delimiter, result);
     }
 }
 

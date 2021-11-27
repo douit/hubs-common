@@ -10,12 +10,14 @@ import java.lang.reflect.Method;
 
 public class UseHubsEngineImpl implements Configurer {
     @Override
-    public void configureForType(ConfigRegistry registry, Annotation annotation, Class<?> sqlObjectType) {
+    public void configureForType(ConfigRegistry registry, Annotation annotation,
+                                 Class<?> sqlObjectType) {
         registry.get(SqlStatements.class).setTemplateEngine(new JinjaTemplateEngine());
     }
 
     @Override
-    public void configureForMethod(ConfigRegistry registry, Annotation annotation, Class<?> sqlObjectType, Method method) {
+    public void configureForMethod(ConfigRegistry registry, Annotation annotation,
+                                   Class<?> sqlObjectType, Method method) {
         configureForType(registry, annotation, sqlObjectType);
     }
 }

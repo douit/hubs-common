@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS `{{table.tableName}}`;
-CREATE TABLE {{table.tableName}} (
-    {% for f in table.fields -%}
+DROP TABLE IF EXISTS `{{ent.tableName}}`;
+CREATE TABLE {{ent.tableName}} (
+    {% for f in ent.fields -%}
     {{f.col}} {{f.fixSqlType}} {% if f.notNull %}NOT NULL{% endif %} COMMENT '{{f.comment}}',
     {% endfor %}
-    PRIMARY KEY (`{{table.pkCol}}`) {% if table.combine %}, UNIQUE KEY unique_{{table.tableName}} ({{table.uniqueCols}}) {% endif %}
+    PRIMARY KEY (`{{ent.pkCol}}`) {% if ent.combine %}, UNIQUE KEY unique_{{ent.tableName}} ({{ent.uniqueCols}}) {% endif %}
 ) {{engine}};
 

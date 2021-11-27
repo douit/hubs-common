@@ -2,7 +2,7 @@ package com.bluecc.income.exchange;
 
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
-import com.bluecc.hubs.proto.ProtoMeta;
+import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.stub.ShipmentData;
 
 import java.io.IOException;

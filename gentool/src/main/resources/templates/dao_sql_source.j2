@@ -1,0 +1,22 @@
+public class {{ent.name}}Delegator extends AbstractDelegator {
+    @RegisterBeanMapper(value={{ent.name}}Bean.class)
+    public interface {{ent.name}}Dao {
+        @SqlUpdate("update {{ent.underscore}} set {{ent.updateClause}} where {{ent.pkCol}}=:id")
+        @Timestamped
+        void update(@Bind("id") String id, @BindMap Map<Object, Object> map);
+
+        @SqlUpdate("insert into {{ent.underscore}} {{ent.insertClause}}")
+        void insert(@BindMap Map<Object, Object> map);
+        
+        @SqlQuery("select * from {{ent.underscore}} where {{ent.pkCol}}=:id")
+        {{ent.name}}Bean get(@Bind("id") String id);
+    }
+
+    @Data
+    public static class {{ent.name}}Bean {
+        {% for f in ent.fields -%}
+        private {{f.javaType}} {{f.name}};
+        {% endfor %}
+    }
+}
+

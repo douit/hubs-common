@@ -1,6 +1,7 @@
 package com.bluecc.hubs.proto;
 
 import com.bluecc.hubs.fund.EntityMeta;
+import com.bluecc.hubs.fund.ProtoMeta;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -45,7 +45,7 @@ public class DummyTemplateProcs {
     public String procSql(String sqlMode, EntityMeta table) throws IOException {
         Jinjava jinjava = new Jinjava();
         Map<String, Object> context = Maps.newHashMap();
-        context.put("table", table);
+        context.put("ent", table);
         if(sqlMode.equals("mysql")) {
             context.put("engine", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
         }else{

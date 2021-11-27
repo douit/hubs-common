@@ -22,5 +22,9 @@ public class SharedData {
         return client;
     }
 
+    public void shutdown(){
+        client.shutdown();
+    }
+
 }
 

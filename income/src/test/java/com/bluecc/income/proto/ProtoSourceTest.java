@@ -13,6 +13,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
+import static com.bluecc.income.exchange.SeedResources.printResource;
 import static java.util.Objects.requireNonNull;
 
 public class ProtoSourceTest {
@@ -37,13 +38,6 @@ public class ProtoSourceTest {
         printResource("order_head_simple", OrderHeaderData.newBuilder());
         printResource("order_head_product", OrderHeaderData.newBuilder());
         printResource("shipment_simple", ShipmentData.newBuilder());
-    }
-
-    void printResource(String jsonName, GeneratedMessageV3.Builder<?> builder) throws IOException {
-        String json= IOUtils.toString(requireNonNull(ProtoSourceTest.class.getResource(
-                "/data/" + jsonName + ".json")), StandardCharsets.UTF_8);
-        JsonFormat.parser().merge(json, builder);
-        System.out.println(builder.build());
     }
 
     @Test

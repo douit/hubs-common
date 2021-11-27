@@ -91,6 +91,16 @@ public class Util {
         return GSON.fromJson(cnt, clz);
     }
 
+    public static <T> T readJsonResource(Class<T> clz, String location) throws IOException {
+        String cnt=IOUtils.toString(dataSource(location), StandardCharsets.UTF_8);
+        return GSON.fromJson(cnt, clz);
+    }
+
+    public static <T> T readJson(Class<T> clz, InputStream stream) throws IOException {
+        String cnt=IOUtils.toString(stream, StandardCharsets.UTF_8);
+        return GSON.fromJson(cnt, clz);
+    }
+
     public static String getCurrentDirectory(){
         return System.getProperty("user.dir");
     }

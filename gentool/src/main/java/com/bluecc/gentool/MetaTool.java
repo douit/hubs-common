@@ -61,6 +61,7 @@ public class MetaTool {
                         System.out.print("▒▒ " + entry.getKey() + ": "
                                 + entityName
                                 +"("+ (fieldDigest.getRelType().equals("many") ?"*":"1")+")");
+                        System.out.format(" {%s} ", String.join(" + ", fieldDigest.getUnionFields()));
                         if(!fieldDigest.getTitle().isEmpty()) {
                             System.out.format(" [%s]", fieldDigest.getTitle());
                         }

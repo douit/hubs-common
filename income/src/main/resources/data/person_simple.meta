@@ -1,0 +1,4 @@
+{
+  "head": "Party",
+  "embed": ["Person"]
+}

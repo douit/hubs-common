@@ -11,6 +11,12 @@ import "google/protobuf/any.proto";
 
 extend google.protobuf.MessageOptions {
   optional string entity_type = 51234;
+  optional EntityKey keys = 51235;
+}
+
+message EntityKey{
+  string keys=1;
+  bool combine=2;
 }
 
 // Interface exported by the server.
@@ -20,23 +26,23 @@ service Routines {
 }
 
 message Identity{
-  int64 value=1;
+  int64 value = 1;
 }
 message ConfigItem{
-  string item=1;
-  string key=2;
+  string item = 1;
+  string key = 2;
 }
 
 message StringValue{
-  string value=1;
+  string value = 1;
 }
 
 message Filter{
   message Value {
     oneof value {
-      string string_value=2;
-      int64 int_value=3;
-      double real_value=4;
+      string string_value = 2;
+      int64 int_value = 3;
+      double real_value = 4;
     }
   }
 
@@ -46,12 +52,12 @@ message Filter{
 message ValueObject {
   message Value {
     oneof value {
-      string string_value=2;
-      int64 int_value=3;
-      double real_value=4;
-      bytes blob=5;
-      Strings strings=6;
-      ValueObject object=7;
+      string string_value = 2;
+      int64 int_value = 3;
+      double real_value = 4;
+      bytes blob = 5;
+      Strings strings = 6;
+      ValueObject object = 7;
     }
   }
 
@@ -59,31 +65,31 @@ message ValueObject {
 }
 
 message ValueObjects{
-  repeated ValueObject values=1;
+  repeated ValueObject values = 1;
 }
 
 message EmptyMessage {}
 
 message Response{
   enum Result{
-    OK=0;
-    ERR=1;
+    OK = 0;
+    ERR = 1;
   }
-  string message=2;
+  string message = 2;
 }
 
 message PipeResponse{
-  string tag=1;
+  string tag = 1;
   oneof value {
-    string string_value=2;
-    int64 int_value=3;
-    double real_value=4;
-    Strings strings=5;
+    string string_value = 2;
+    int64 int_value = 3;
+    double real_value = 4;
+    Strings strings = 5;
   }
 }
 
 message Strings{
-  repeated string value=1;
+  repeated string value = 1;
 }
 
 message HeadersMessage {
@@ -94,19 +100,19 @@ message HeadersMessage {
 }
 
 message TypeValue{
-  string id=1;
-  string description=2;
-  map<string, string> metadata=3;
+  string id = 1;
+  string description = 2;
+  map<string, string> metadata = 3;
 }
 
 message TypeList{
-  string type_name=1;
-  repeated TypeValue values=2;
+  string type_name = 1;
+  repeated TypeValue values = 2;
 }
 
 message TypeSymbol{
-  string type_name=1;
-  string value_id=2;
+  string type_name = 1;
+  string value_id = 2;
 }
 
 message PeriodData{
@@ -115,9 +121,9 @@ message PeriodData{
 }
 
 enum Indicator{
-  NO=0;
-  YES=1;
-  UNKNOWN=2;
+  NO = 0;
+  YES = 1;
+  UNKNOWN = 2;
 }
 
 message DecimalValue {
@@ -127,17 +133,17 @@ message DecimalValue {
 }
 
 message Envelope{
-  string data_type=1;
-  repeated string tags=2;
+  string data_type = 1;
+  repeated string tags = 2;
   google.protobuf.Any data = 5;
 }
 
 message Currency{
-  string currency_uom_id=1;
+  string currency_uom_id = 1;
   string value = 2;
 }
 
 message FixedPoint{
-  int64 value=1;
-  int32 scaling_position=2;
+  int64 value = 1;
+  int32 scaling_position = 2;
 }
