@@ -83,7 +83,7 @@ public class ProtoTypes {
         return ' ';
     }
 
-    public static String getEntityTypeByMessage(GeneratedMessageV3 msg){
+    public static String getEntityTypeByMessage(Message msg){
         Descriptors.Descriptor descriptor = msg.getDescriptorForType();
         String entityType=descriptor.getOptions().getExtension(RoutinesProto.entityType);
         return entityType;

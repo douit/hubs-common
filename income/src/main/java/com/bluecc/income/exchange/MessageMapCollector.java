@@ -3,20 +3,20 @@ package com.bluecc.income.exchange;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.stub.*;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.JsonElement;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.ProtoTypes.getFixedPoint;
 
@@ -24,27 +24,44 @@ import static com.bluecc.hubs.ProtoTypes.getFixedPoint;
 public class MessageMapCollector {
     private static final Logger log = LoggerFactory.getLogger(MessageMapCollector.class);
 
-    // private List<IProc> procs= Lists.newArrayList();
-    IMapDataCollector collector;
-    public MessageMapCollector(IMapDataCollector collector) {
-        this.collector=collector;
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResultData{
+        List<String> relatedFields;
+        String childId;
     }
 
-    public static MessageMapCollector collect(IMapDataCollector collector){
+    public Map<String, ResultData> getResultContext() {
+        return resultContext;
+    }
+
+    private final Map<String, ResultData> resultContext=Maps.newConcurrentMap();
+
+    // private List<IProc> procs= Lists.newArrayList();
+    IMapDataCollector collector;
+
+    public MessageMapCollector(IMapDataCollector collector) {
+        this.collector = collector;
+    }
+
+    public static MessageMapCollector collect(IMapDataCollector collector) {
         return new MessageMapCollector(collector);
     }
 
-    public void fillMap(GeneratedMessageV3 msg) {
+    public Map<String, ResultData> fillMap(Message msg) {
         fillMap(null, null, msg);
+        return resultContext;
     }
-    public void fillMap(GeneratedMessageV3 parentMsg,
+
+    public void fillMap(Message parentMsg,
                         Descriptors.FieldDescriptor parentFld,
-                        GeneratedMessageV3 msg) {
-        Map<String, Object> dataMap= Maps.newHashMap();
+                        Message msg) {
+        Map<String, Object> dataMap = Maps.newHashMap();
         Descriptors.Descriptor descriptor = msg.getDescriptorForType();
-        String entityType=descriptor.getOptions().getExtension(RoutinesProto.entityType);
-        EntityNames symbol=EntityNames.valueOfType(entityType);
-        String resultFld=parentFld==null?"_":parentFld.getName();
+        String entityType = descriptor.getOptions().getExtension(RoutinesProto.entityType);
+        EntityNames symbol = EntityNames.valueOfType(entityType);
+        String resultFld = parentFld == null ? "_" : parentFld.getName();
         log.info("** process {}({}) => {}, {}", entityType, resultFld, symbol, symbol.getTableKeys());
 
         Map<Descriptors.FieldDescriptor, Object> allFields = msg.getAllFields();
@@ -75,12 +92,12 @@ public class MessageMapCollector {
                             + fld.getName());
             }
         }
-        this.collector.collect(new IMapDataCollector.CollectorContext(
-                symbol, parentMsg, parentFld),
+        this.collector.collect(new IMapDataCollector.CollectorContext(this,
+                        symbol, parentMsg, parentFld),
                 dataMap);
     }
 
-    private void getMessageField(GeneratedMessageV3 msg,
+    private void getMessageField(Message msg,
                                  Descriptors.FieldDescriptor fld,
                                  Object fldVal,
                                  Map<String, Object> dataMap) {
@@ -111,7 +128,7 @@ public class MessageMapCollector {
         }
     }
 
-    private void getEnumField(GeneratedMessageV3 msg,
+    private void getEnumField(Message msg,
                               Descriptors.FieldDescriptor fld,
                               Object fldVal,
                               Map<String, Object> dataMap) {
@@ -128,11 +145,16 @@ public class MessageMapCollector {
         }
     }
 
-    private void getEntityField(GeneratedMessageV3 parentMsg,
+    private void getEntityField(Message parentMsg,
                                 Descriptors.FieldDescriptor fld,
                                 Object fldVal) {
-        MessageMapCollector messageMapCollector=new MessageMapCollector(this.collector);
-        messageMapCollector.fillMap(parentMsg, fld, (GeneratedMessageV3)fldVal);
+        MessageMapCollector messageMapCollector = new MessageMapCollector(this.collector);
+        messageMapCollector.fillMap(parentMsg, fld, (GeneratedMessageV3) fldVal);
+        resultContext.putAll(messageMapCollector.getResultContext());
+    }
+
+    public void putResult(String name, List<String> tableFields, String idval) {
+        resultContext.put(name, new ResultData(tableFields, idval));
     }
 }
 

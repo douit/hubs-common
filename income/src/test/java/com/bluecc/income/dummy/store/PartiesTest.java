@@ -169,7 +169,7 @@ public class PartiesTest extends AbstractStoreProc {
                 List<String> placers = names.stream().map(name -> ":"+name)
                         .collect(Collectors.toList());
                 int total = ctx.getHandle().createUpdate("insert into <table> (<columns>) values (<placers>)")
-                        .define("table", "person")
+                        .define("table", c.getSymbol().getTable())
                         .defineList("columns", names)
                         .defineList("placers", placers)
                         .bindMap(e)
