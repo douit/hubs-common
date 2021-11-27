@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Slf4j
@@ -54,6 +55,13 @@ public class ProtoTypes {
 
     public static DateTime getDateTime(Timestamp ts){
         return new DateTime(ts.getSeconds()*1000);
+    }
+
+    public static java.time.LocalDateTime getLocalDateTime(Timestamp ts){
+        return java.time.LocalDateTime.ofEpochSecond(ts.getSeconds(), ts.getNanos(), ZoneOffset.UTC);
+    }
+    public static java.time.LocalDate getLocalDate(Timestamp ts){
+        return getLocalDateTime(ts).toLocalDate();
     }
 
     public static Indicator castIndicator(String c) {

@@ -5,14 +5,22 @@ import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.stub.ShipmentData;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
+import static com.bluecc.income.dummy.store.StoreModule.startup;
 import static com.bluecc.income.exchange.ResourceHelper.readResource;
 
 public class CollectorMain {
     public static void main(String[] args) throws IOException {
-        ProtoMeta protoMeta=new ProtoMeta();
+        CollectorMain main=startup(CollectorMain.class);
+        main.execute();
+        // new CollectorMain().execute();
+    }
 
+    @Inject
+    ProtoMeta protoMeta;
+    public void execute() throws IOException {
         MessageMapCollector collector=new MessageMapCollector((c, e) -> {
             System.out.println("Ⓜ️ "+c.symbol+" -> "+e);
             if(c.parentFld!=null){

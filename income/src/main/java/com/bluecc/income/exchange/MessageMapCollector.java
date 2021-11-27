@@ -26,8 +26,12 @@ public class MessageMapCollector {
 
     // private List<IProc> procs= Lists.newArrayList();
     IMapDataCollector collector;
-    MessageMapCollector(IMapDataCollector collector) {
+    public MessageMapCollector(IMapDataCollector collector) {
         this.collector=collector;
+    }
+
+    public static MessageMapCollector collect(IMapDataCollector collector){
+        return new MessageMapCollector(collector);
     }
 
     public void fillMap(GeneratedMessageV3 msg) {
@@ -44,7 +48,8 @@ public class MessageMapCollector {
         log.info("** process {}({}) => {}, {}", entityType, resultFld, symbol, symbol.getTableKeys());
 
         Map<Descriptors.FieldDescriptor, Object> allFields = msg.getAllFields();
-        System.out.println(allFields.keySet().stream().map(f -> f.getName()).collect(Collectors.toList()));
+        // System.out.println(allFields.keySet().stream().map(f -> f.getName())
+        //         .collect(Collectors.toList()));
         for (Map.Entry<Descriptors.FieldDescriptor, Object> objectEntry : allFields.entrySet()) {
             Descriptors.FieldDescriptor fld = objectEntry.getKey();
             Object fldVal = objectEntry.getValue();

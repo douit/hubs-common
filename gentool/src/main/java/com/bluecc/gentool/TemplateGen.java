@@ -21,7 +21,7 @@ public class TemplateGen {
                 .addObject(main)
                 .build()
                 .parse(args);
-        String cnt= TemplateUtil.sourceGen(main.entity, main.template);
+        String cnt= TemplateUtil.sourceGen(main.entity, main.template, true);
         System.out.println(cnt);
     }
 }

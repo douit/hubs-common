@@ -1,5 +1,6 @@
 package com.bluecc.income;
 
+import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.income.dummy.store.HubsStore;
 import com.bluecc.income.exchange.IProc;
 import org.junit.runner.RunWith;
@@ -10,6 +11,8 @@ import javax.inject.Inject;
 public class AbstractStoreProc {
     @Inject
     protected HubsStore hubsStore;
+    @Inject
+    protected Sequence sequence;
 
     protected void process(IProc proc){
         hubsStore.getJdbi().withHandle(handle -> {

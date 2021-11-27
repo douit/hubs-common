@@ -33,4 +33,10 @@ public class TemplateUtil {
         return TemplateUtil.build("templates/"+ tplName +"_source.j2",
                 ImmutableMap.of("ent", meta));
     }
+
+    public static String sourceGen(String entName, String tplName, boolean remap) throws IOException {
+        EntityMeta meta= EntityMetaManager.getEntityMeta(entName, remap);
+        return TemplateUtil.build("templates/"+ tplName +"_source.j2",
+                ImmutableMap.of("ent", meta));
+    }
 }
