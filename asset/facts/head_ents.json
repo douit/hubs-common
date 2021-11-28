@@ -37,6 +37,7 @@
       "flatIds": [
         "Party"
       ]
-    }
+    },
+    "UserLogin": {}
   }
 }

@@ -3,7 +3,9 @@ package com.bluecc.income.exchange;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.stub.*;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.Message;
@@ -15,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +35,19 @@ public class MessageMapCollector {
         String childId;
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SlaveData{
+        Map<String, Object> keys;
+    }
+
     public Map<String, ResultData> getResultContext() {
         return resultContext;
     }
 
     private final Map<String, ResultData> resultContext=Maps.newConcurrentMap();
+    private Multimap<String, SlaveData> slaveContext= ArrayListMultimap.create();
 
     // private List<IProc> procs= Lists.newArrayList();
     IMapDataCollector collector;
@@ -148,13 +159,30 @@ public class MessageMapCollector {
     private void getEntityField(Message parentMsg,
                                 Descriptors.FieldDescriptor fld,
                                 Object fldVal) {
-        MessageMapCollector messageMapCollector = new MessageMapCollector(this.collector);
-        messageMapCollector.fillMap(parentMsg, fld, (GeneratedMessageV3) fldVal);
-        resultContext.putAll(messageMapCollector.getResultContext());
+        log.info("field value type is {}, message type is{}, and repeated: {}",
+                fldVal.getClass().getName(),
+                fld.getMessageType().getName(),
+                fld.isRepeated());
+        if(fld.isRepeated()){
+            for(GeneratedMessageV3 val:(Collection<GeneratedMessageV3>)fldVal){
+                MessageMapCollector messageMapCollector =
+                        new MessageMapCollector(this.collector);
+                messageMapCollector.fillMap(parentMsg, fld, val);
+                slaveContext.putAll(messageMapCollector.slaveContext);
+            }
+        }else {
+            MessageMapCollector messageMapCollector = new MessageMapCollector(this.collector);
+            messageMapCollector.fillMap(parentMsg, fld, (GeneratedMessageV3) fldVal);
+            resultContext.putAll(messageMapCollector.getResultContext());
+        }
     }
 
     public void putResult(String name, List<String> tableFields, String idval) {
         resultContext.put(name, new ResultData(tableFields, idval));
+    }
+
+    public void putSlave(String name, Map<String, Object> keys){
+        this.slaveContext.put(name, new SlaveData(keys));
     }
 }
 

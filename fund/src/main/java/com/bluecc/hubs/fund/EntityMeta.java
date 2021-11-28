@@ -345,8 +345,11 @@ public class EntityMeta {
             String prefix = this.type.equals("many") ? "repeated " : "";
             // return String.format("%s %sData %s", prefix, relEntityName,
             //         Util.toSnakecase(title) + "_" + Util.toSnakecase(name));
-            return format("%s%sData %s", prefix, relEntityName,
-                    Util.toSnakecase(name));
+            return format("%s%sData %s", prefix, relEntityName, getProtoName());
+        }
+
+        public String getProtoName(){
+            return Util.toSnakecase(name);
         }
 
         public boolean isRepeated(){
@@ -373,6 +376,10 @@ public class EntityMeta {
             return keymaps.stream().map(k -> k.fieldName)
                     .collect(Collectors.toList());
         }
+        public List<String> getTargetFieldList(){
+            return keymaps.stream().map(k -> k.relFieldName)
+                    .collect(Collectors.toList());
+        }
     }
 
     @Data
@@ -380,5 +387,13 @@ public class EntityMeta {
     public static class KeymapMeta {
         String fieldName;
         String relFieldName;
+
+        public String getProtoField(){
+            return Util.toSnakecase(fieldName);
+        }
+        public String getProtoRelField(){
+            return Util.toSnakecase(relFieldName);
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 package com.bluecc.income.dummy.store;
 
-import com.bluecc.income.AbstractMemStoreProc;
+import com.bluecc.income.AbstractMemStoreProcTest;
 import com.bluecc.income.values.ColumnValues.DatabaseLongValue;
 import com.bluecc.income.values.ColumnValues.DatabaseValue;
 import com.bluecc.income.values.NumberArguments.BigIntNumberArgumentFactory;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CustomBinderTest extends AbstractMemStoreProc {
+public class CustomBinderTest extends AbstractMemStoreProcTest {
 
     @Test
     public void testPairRowDao() {

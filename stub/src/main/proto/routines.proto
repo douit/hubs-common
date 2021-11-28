@@ -26,7 +26,7 @@ service Routines {
 }
 
 message Identity{
-  int64 value = 1;
+  string value = 1;
 }
 message ConfigItem{
   string item = 1;

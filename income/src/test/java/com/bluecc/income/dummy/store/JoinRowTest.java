@@ -1,6 +1,6 @@
 package com.bluecc.income.dummy.store;
 
-import com.bluecc.income.AbstractMemStoreProc;
+import com.bluecc.income.AbstractMemStoreProcTest;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import org.assertj.core.api.Assertions;
@@ -9,7 +9,6 @@ import org.jdbi.v3.core.mapper.JoinRow;
 import org.jdbi.v3.core.mapper.JoinRowMapper;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
-import org.jdbi.v3.sqlobject.GenerateSqlObject;
 import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -29,7 +28,7 @@ import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.guava.api.Assertions.assertThat;
 
 
-public class JoinRowTest extends AbstractMemStoreProc {
+public class JoinRowTest extends AbstractMemStoreProcTest {
     @Test
     public void testJoinRowProc() {
         process(c -> {

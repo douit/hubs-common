@@ -1,17 +1,13 @@
 package com.bluecc.income.dummy.store;
 
-import com.bluecc.income.AbstractMemStoreProc;
-import com.bluecc.income.AbstractStoreProc;
-import com.bluecc.income.exchange.IProc;
+import com.bluecc.income.AbstractMemStoreProcTest;
 import lombok.Data;
 import org.jdbi.v3.core.Handle;
-import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindMap;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
-import org.jdbi.v3.sqlobject.statement.UseRowMapper;
 import org.junit.Test;
 import org.testcontainers.shaded.com.google.common.collect.ImmutableMap;
 
@@ -19,7 +15,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class MapStoreTest extends AbstractMemStoreProc {
+public class MapStoreTest extends AbstractMemStoreProcTest {
     @RegisterBeanMapper(value=Something.class)
     public interface Dao {
         @SqlUpdate("update something set name=:name where id=:id")

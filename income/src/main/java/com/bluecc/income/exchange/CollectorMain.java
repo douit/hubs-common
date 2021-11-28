@@ -3,7 +3,9 @@ package com.bluecc.income.exchange;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.stub.OrderHeaderData;
 import com.bluecc.hubs.stub.ShipmentData;
+import com.google.protobuf.Message;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -16,14 +18,20 @@ import static com.bluecc.income.exchange.ResourceHelper.readResource;
 public class CollectorMain {
     public static void main(String[] args) throws IOException {
         CollectorMain main = startup(CollectorMain.class);
-        main.execute();
+        // main.execute("shipment_simple");
+        // main.execute(readResource("shipment_simple",
+        //         ShipmentData.newBuilder())
+        //         .build());
+        main.execute(readResource("order_head_simple",
+                OrderHeaderData.newBuilder())
+                .build());
         // new CollectorMain().execute();
     }
 
     @Inject
     ProtoMeta protoMeta;
 
-    public void execute() throws IOException {
+    public void execute(Message msg) throws IOException {
         collect((c, e) -> {
             System.out.println("Ⓜ️ " + c.symbol + " -> " + e);
             if (c.parentFld != null) {
@@ -58,9 +66,7 @@ public class CollectorMain {
                 c.getCollector().putResult("_id_",
                         c.getSymbol().getTableKeys(), idval);
             }
-        }).fillMap(readResource("shipment_simple",
-                        ShipmentData.newBuilder())
-                        .build())
+        }).fillMap(msg)
                 .forEach((k, v) -> {
                     System.out.println(k+": "+v);
                 });

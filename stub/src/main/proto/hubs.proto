@@ -16,7 +16,7 @@ service OrderHeaderService {
     rpc Create(OrderHeaderData) returns (routines.Response) {}
     rpc Update(OrderHeaderData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (OrderHeaderData) {}
+    rpc FindById(routines.Identity) returns (OrderHeaderFlatData) {}
 }
 
 // The Order Item service definition.
@@ -24,7 +24,7 @@ service OrderItemService {
     rpc Create(OrderItemData) returns (routines.Response) {}
     rpc Update(OrderItemData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (OrderItemData) {}
+    rpc FindById(routines.Identity) returns (OrderItemFlatData) {}
 }
 
 // The Payment service definition.
@@ -32,7 +32,7 @@ service PaymentService {
     rpc Create(PaymentData) returns (routines.Response) {}
     rpc Update(PaymentData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (PaymentData) {}
+    rpc FindById(routines.Identity) returns (PaymentFlatData) {}
 }
 
 // The Invoice service definition.
@@ -40,7 +40,7 @@ service InvoiceService {
     rpc Create(InvoiceData) returns (routines.Response) {}
     rpc Update(InvoiceData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (InvoiceData) {}
+    rpc FindById(routines.Identity) returns (InvoiceFlatData) {}
 }
 
 // The Product service definition.
@@ -48,7 +48,7 @@ service ProductService {
     rpc Create(ProductData) returns (routines.Response) {}
     rpc Update(ProductData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (ProductData) {}
+    rpc FindById(routines.Identity) returns (ProductFlatData) {}
 }
 
 // The Shipment service definition.
@@ -56,7 +56,7 @@ service ShipmentService {
     rpc Create(ShipmentData) returns (routines.Response) {}
     rpc Update(ShipmentData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (ShipmentData) {}
+    rpc FindById(routines.Identity) returns (ShipmentFlatData) {}
 }
 
 // The Product Store service definition.
@@ -64,7 +64,7 @@ service ProductStoreService {
     rpc Create(ProductStoreData) returns (routines.Response) {}
     rpc Update(ProductStoreData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (ProductStoreData) {}
+    rpc FindById(routines.Identity) returns (ProductStoreFlatData) {}
 }
 
 // The Party service definition.
@@ -72,7 +72,7 @@ service PartyService {
     rpc Create(PartyData) returns (routines.Response) {}
     rpc Update(PartyData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (PartyData) {}
+    rpc FindById(routines.Identity) returns (PartyFlatData) {}
 }
 
 // The Person service definition.
@@ -80,7 +80,7 @@ service PersonService {
     rpc Create(PersonData) returns (routines.Response) {}
     rpc Update(PersonData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (PersonData) {}
+    rpc FindById(routines.Identity) returns (PersonFlatData) {}
 }
 
 // The Party Group service definition.
@@ -88,7 +88,15 @@ service PartyGroupService {
     rpc Create(PartyGroupData) returns (routines.Response) {}
     rpc Update(PartyGroupData) returns (routines.Response) {}
     rpc Delete(routines.Identity) returns (routines.Response) {}
-    rpc FindById(routines.Identity) returns (PartyGroupData) {}
+    rpc FindById(routines.Identity) returns (PartyGroupFlatData) {}
+}
+
+// The UserLogin service definition.
+service UserLoginService {
+    rpc Create(UserLoginData) returns (routines.Response) {}
+    rpc Update(UserLoginData) returns (routines.Response) {}
+    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (UserLoginFlatData) {}
 }
 
 // flat-ent: Order Header
@@ -491,7 +499,7 @@ message PersonFlatData {
     double height = 17;    
     double weight = 18;    
     string mothers_maiden_name = 19;    
-    routines.Indicator old_marital_status = 20;
+    routines.Indicator marital_status = 20;
     string marital_status_enum_id = 21; // Enumeration    
     string social_security_number = 22;    
     string passport_number = 23;    
@@ -523,6 +531,31 @@ message PartyGroupFlatData {
     string ticker_symbol = 7;    
     string comments = 8;    
     string logo_image_url = 9;  
+}
+
+// flat-ent: UserLogin
+message UserLoginFlatData {
+    option (routines.entity_type) = "UserLogin";
+    option (routines.keys).keys = "user_login_id";
+    option (routines.keys).combine = false;
+    // keys: userLoginId
+        
+    string user_login_id = 1;    
+    string current_password = 2;    
+    string password_hint = 3;    
+    routines.Indicator is_system = 4;    
+    routines.Indicator enabled = 5;    
+    routines.Indicator has_logged_out = 6;    
+    routines.Indicator require_password_change = 7;    
+    string last_currency_uom = 8;    
+    string last_locale = 9;    
+    string last_time_zone = 10;    
+    google.protobuf.Timestamp disabled_date_time = 11;    
+    int64 successive_failed_logins = 12;    
+    string external_auth_id = 13;    
+    string user_ldap_dn = 14;    
+    string disabled_by = 15;    
+    string party_id = 16;  
 }
 
 // Shipment Route Segment
@@ -1345,7 +1378,7 @@ message PersonData {
     double height = 17;    
     double weight = 18;    
     string mothers_maiden_name = 19;    
-    routines.Indicator old_marital_status = 20;
+    routines.Indicator marital_status = 20;
     string marital_status_enum_id = 21; // Enumeration    
     string social_security_number = 22;    
     string passport_number = 23;    
@@ -2449,8 +2482,43 @@ message UserLoginData {
     int64 successive_failed_logins = 12;    
     string external_auth_id = 13;    
     string user_ldap_dn = 14;    
-    string disabled_by = 15;    
-    string party_id = 16;
+    string disabled_by = 15;
+    
+    // relations
+    PartyData party = 16; // ref: partyId
+    PersonData person = 17; // ref: partyId
+    PartyGroupData party_group = 18; // ref: partyId
+    repeated ContentData created_by_content = 19; // ref: userLoginId
+    repeated ContentData last_modified_by_content = 20; // ref: userLoginId
+    repeated ContentAssocData created_by_content_assoc = 21; // ref: userLoginId
+    repeated ContentAssocData last_modified_by_content_assoc = 22; // ref: userLoginId
+    repeated DataResourceData created_by_data_resource = 23; // ref: userLoginId
+    repeated DataResourceData last_modified_by_data_resource = 24; // ref: userLoginId
+    repeated ItemIssuanceData issued_by_item_issuance = 25; // ref: userLoginId
+    repeated OrderAdjustmentData order_adjustment = 26; // ref: userLoginId
+    repeated OrderHeaderData created_by_order_header = 27; // ref: userLoginId
+    repeated OrderItemData dont_cancel_set_order_item = 28; // ref: userLoginId
+    repeated OrderItemData change_by_order_item = 29; // ref: userLoginId
+    repeated OrderPaymentPreferenceData order_payment_preference = 30; // ref: userLoginId
+    repeated OrderStatusData order_status = 31; // ref: userLoginId
+    repeated PartyData created_by_party = 32; // ref: userLoginId
+    repeated PartyData last_modified_by_party = 33; // ref: userLoginId
+    repeated PartyStatusData change_by_party_status = 34; // ref: userLoginId
+    repeated ProductData created_by_product = 35; // ref: userLoginId
+    repeated ProductData last_modified_by_product = 36; // ref: userLoginId
+    repeated ProductFeaturePriceData created_by_product_feature_price = 37; // ref: userLoginId
+    repeated ProductFeaturePriceData last_modified_by_product_feature_price = 38; // ref: userLoginId
+    repeated ProductPriceData created_by_product_price = 39; // ref: userLoginId
+    repeated ProductPriceData last_modified_by_product_price = 40; // ref: userLoginId
+    repeated ProductPromoData created_by_product_promo = 41; // ref: userLoginId
+    repeated ProductPromoData last_modified_by_product_promo = 42; // ref: userLoginId
+    repeated ProductPromoCodeData created_by_product_promo_code = 43; // ref: userLoginId
+    repeated ProductPromoCodeData last_modified_by_product_promo_code = 44; // ref: userLoginId
+    repeated ProductReviewData product_review = 45; // ref: userLoginId
+    repeated ShipmentReceiptData shipment_receipt = 46; // ref: userLoginId
+    repeated ShipmentStatusData change_by_shipment_status = 47; // ref: userLoginId
+    repeated UserLoginSecurityGroupData user_login_security_group = 48; // ref: userLoginId
+    
     
 }
 
@@ -3035,8 +3103,8 @@ message InventoryItemData {
     routines.FixedPoint quantity_on_hand_total = 17;    
     routines.FixedPoint available_to_promise_total = 18;    
     routines.FixedPoint accounting_quantity_total = 19;    
-    routines.FixedPoint old_quantity_on_hand = 20;    
-    routines.FixedPoint old_available_to_promise = 21;    
+    routines.FixedPoint quantity_on_hand = 20;    
+    routines.FixedPoint available_to_promise = 21;    
     string serial_number = 22;    
     string soft_identifier = 23;    
     string activation_number = 24;    
@@ -3405,7 +3473,7 @@ message OrderItemShipGrpInvResData {
     google.protobuf.Timestamp current_promised_date = 11;    
     routines.Indicator priority = 12;    
     int64 sequence_id = 13;    
-    google.protobuf.Timestamp old_pick_start_date = 14;
+    google.protobuf.Timestamp pick_start_date = 14;
     
 }
 

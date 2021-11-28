@@ -99,14 +99,19 @@ public class ProtoTypes {
     }
 
     public static String getEntityIden(Message msg, String delimiter) {
+        List<String> result = getEntityIdenValues(msg);
+        return String.join(delimiter, result);
+    }
+
+    public static List<String> getEntityIdenValues(Message msg) {
         Descriptors.Descriptor descriptor = msg.getDescriptorForType();
         List<String> result= Lists.newArrayList();
         for (String entityKey : getEntityKeys(msg)) {
             // log.info(".. entity-iden "+entityKey);
-            Object val=msg.getField(descriptor.findFieldByName(entityKey));
+            Object val= msg.getField(descriptor.findFieldByName(entityKey));
             result.add(val.toString());
         }
-        return String.join(delimiter, result);
+        return result;
     }
 }
 

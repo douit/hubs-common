@@ -2,12 +2,11 @@ package com.bluecc.income.dummy.store;
 
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
-import com.bluecc.hubs.fund.descriptor.INameSymbol;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.hubs.stub.PostalAddressData;
 import com.bluecc.hubs.stub.TypeSymbol;
-import com.bluecc.income.AbstractStoreProc;
+import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.IProc;
 import com.github.javafaker.Faker;
 import com.google.common.collect.Lists;
@@ -33,7 +32,7 @@ import static com.bluecc.income.exchange.DataStoreHelper.queryMap;
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 
-public class StoreProcTest extends AbstractStoreProc {
+public class StoreProcTest extends AbstractStoreProcTest {
     @RegisterRowMapper(PersonMapper.class)
     public interface PartyDao {
         @SqlQuery("select * from party where party_id=:id")

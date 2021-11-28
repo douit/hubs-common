@@ -2,17 +2,11 @@ package com.bluecc.income.dummy.store;
 
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
-import com.bluecc.hubs.fund.descriptor.INameSymbol;
 import com.bluecc.hubs.stub.ShipmentData;
-import com.bluecc.income.AbstractStoreProc;
+import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.MessageMapCollector;
-import com.bluecc.income.procs.Shipments;
 import com.bluecc.income.procs.Shipments.*;
 import com.bluecc.income.template.TemplateGlobalContext;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlLogger;
 import org.jdbi.v3.core.statement.StatementContext;
@@ -23,7 +17,6 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.Serializable;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +30,7 @@ import static com.bluecc.income.procs.AbstractProcs.getPk;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ShipmentsTest extends AbstractStoreProc {
+public class ShipmentsTest extends AbstractStoreProcTest {
     @RegisterBeanMapper(Shipment.class)
     public interface ShipmentDao {
         @SqlQuery("select * from shipment")

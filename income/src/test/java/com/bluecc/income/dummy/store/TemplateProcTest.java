@@ -1,7 +1,6 @@
 package com.bluecc.income.dummy.store;
 
-import com.bluecc.income.AbstractMemStoreProc;
-import com.bluecc.income.AbstractStoreProc;
+import com.bluecc.income.AbstractMemStoreProcTest;
 import com.bluecc.income.template.UseHubsTemplateEngine;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlLogger;
@@ -14,13 +13,12 @@ import org.jdbi.v3.stringtemplate4.UseStringTemplateSqlLocator;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TemplateProcTest extends AbstractMemStoreProc {
+public class TemplateProcTest extends AbstractMemStoreProcTest {
     public interface Dao {
         @SqlQuery
         @UseStringTemplateSqlLocator

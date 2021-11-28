@@ -1,16 +1,10 @@
 package com.bluecc.income.dummy.store;
 
-import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.PersonFlatData;
-import com.bluecc.income.AbstractStoreProc;
-import com.bluecc.income.procs.Parties;
+import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.procs.Parties.Person;
 import com.bluecc.income.template.TemplateGlobalContext;
 import com.bluecc.income.template.UseHubsTemplateEngine;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlLogger;
 import org.jdbi.v3.core.statement.StatementContext;
@@ -21,21 +15,18 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.bluecc.hubs.ProtoTypes.*;
 import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static org.junit.Assert.assertEquals;
 
-public class PartiesTest extends AbstractStoreProc {
+public class PartiesTest extends AbstractStoreProcTest {
     @RegisterBeanMapper(value= Person.class)
     public interface PartyDao {
         @SqlQuery("select * from person")
