@@ -245,6 +245,12 @@
             <artifactId>jinjava</artifactId>
         </dependency>
 
+        <!-- http server -->
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria</artifactId>
+        </dependency>
+
         <!-- clickhouse driver and pool provider -->
         <dependency>
             <groupId>com.github.housepower</groupId>

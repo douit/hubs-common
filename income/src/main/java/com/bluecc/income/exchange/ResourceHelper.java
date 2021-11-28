@@ -10,7 +10,8 @@ import java.nio.charset.StandardCharsets;
 import static java.util.Objects.requireNonNull;
 
 public class ResourceHelper {
-    public static GeneratedMessageV3.Builder<?> readResource(String jsonName, GeneratedMessageV3.Builder<?> builder) {
+    public static GeneratedMessageV3.Builder<?> readResource(
+            String jsonName, GeneratedMessageV3.Builder<?> builder) {
         String json = null;
         try {
             json = IOUtils.toString(requireNonNull(ResourceHelper.class.getResource(

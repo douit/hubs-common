@@ -93,6 +93,13 @@ public class ProtoTypes {
         EntityKey keys=msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
         return keys.getKeys().split(", ");
     }
+
+    public static void setEntityKey(Message.Builder builder, String idVal){
+        Descriptors.Descriptor descriptor =builder.getDescriptorForType();
+        String fldName=getEntityKeys(descriptor)[0];
+        builder.setField(descriptor.findFieldByName(fldName), idVal);
+    }
+
     public static String[] getEntityKeys(Descriptors.Descriptor descriptor) {
         EntityKey keys=descriptor.getOptions().getExtension(RoutinesProto.keys);
         return keys.getKeys().split(", ");

@@ -70,6 +70,10 @@ public class Util {
         System.out.println(GSON.toJson(o));
     }
 
+    public static String prettyJson(Object o){
+        return GSON.toJson(o);
+    }
+
     public static InputStream dataSource(String src) throws IOException {
         return Resources.getResource(src).openStream();
     }

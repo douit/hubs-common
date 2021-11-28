@@ -4,18 +4,24 @@ import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.Sequence;
+import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.descriptor.INameSymbol;
 import com.bluecc.hubs.stub.ShipmentData;
 import com.bluecc.income.dummy.store.HubsStore;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.exchange.MessageMapCollector;
+import com.bluecc.income.template.TemplateGlobalContext;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
+import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.statement.SqlLogger;
+import org.jdbi.v3.core.statement.StatementContext;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,10 +43,14 @@ public class AbstractProcs {
         });
     }
 
-    protected void truncate(IProc.ProcContext ctx, String... tableNames) {
+    protected void truncate(IProc.ProcContext ctx, List<String> tableNames) {
         for (String tableName : tableNames) {
             ctx.getHandle().execute("truncate " + tableName);
         }
+    }
+
+    protected void truncate(IProc.ProcContext ctx, String... tableNames) {
+        truncate(ctx, Arrays.asList(tableNames));
     }
 
     public static String getPk(INameSymbol symbol) {
@@ -163,6 +173,24 @@ public class AbstractProcs {
                     }
                 });
         return values;
+    }
+
+    protected void setupEntities(String...entities){
+        final Jdbi db = hubsStore.getJdbi();
+        db.setSqlLogger(new SqlLogger() {
+            @Override
+            public void logBeforeExecution(StatementContext ctx) {
+                System.out.println("sql -> " + ctx.getRawSql());
+                System.out.println("\t" + ctx.getParsedSql().getSql());
+                System.out.println("\t"+ctx.getBinding().toString());
+            }
+        });
+
+        TemplateGlobalContext.getContext().preload(entities);
+        process(c -> {
+            truncate(c, Arrays.stream(entities).map(e ->
+                    Util.toSnakecase(e)).collect(Collectors.toList()));
+        });
     }
 }
 
