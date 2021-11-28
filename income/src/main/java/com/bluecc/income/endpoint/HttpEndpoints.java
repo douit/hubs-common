@@ -3,6 +3,7 @@ package com.bluecc.income.endpoint;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.proto.DataBuilder;
 import com.bluecc.hubs.stub.OrderHeaderData;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.procs.AbstractProcs;
@@ -69,10 +70,10 @@ public class HttpEndpoints extends AbstractProcs {
         });
 
         sb.annotatedService(new Object() {
-            @Post("/order/store")
-            public HttpResponse greet(String body){
-                System.out.println(body);
-                Message.Builder builder =OrderHeaderData.newBuilder();
+            @Post("/store")
+            public HttpResponse greet(@Param("name") String name, String body){
+                System.out.println(name+": "+body);
+                Message.Builder builder = builderFor(name);
                 try {
                     JsonFormat.parser().merge(body, builder);
                     String newId=sequence.nextStringId();
@@ -101,4 +102,37 @@ public class HttpEndpoints extends AbstractProcs {
         CompletableFuture<Void> future = server.start();
         future.join();
     }
+
+    DataBuilder dataBuilder=new DataBuilder();
+    private Message.Builder builderFor(String name) {
+        // return OrderHeaderData.newBuilder();
+        return dataBuilder.procData(name, false).getBuilder();
+    }
 }
+
+/*
+POST http://localhost:4940/store?name=Shipment
+{
+  "shipment_id": "s_1",
+  "shipment_type_id": "COMMON",
+  "estimated_ship_cost": {"value": "18.95"},
+  "origin_facility_id": "f_1",
+  "destination_facility_id": "f_2",
+  "origin_postal_address": {
+    "to_name": "joe",
+    "city": "beijing",
+    "address1": "123 Main St",
+    "address2": "Apt B",
+    "postal_code": "90210"
+  },
+  "destination_postal_address": {
+    "to_name": "frank",
+    "city": "beijing",
+    "address1": "234 Main St",
+    "address2": "Apt B",
+    "postal_code": "90210"
+  }
+}
+
+
+ */
