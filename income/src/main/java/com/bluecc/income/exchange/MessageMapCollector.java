@@ -49,18 +49,31 @@ public class MessageMapCollector {
     private final Map<String, ResultData> resultContext=Maps.newConcurrentMap();
     private Multimap<String, SlaveData> slaveContext= ArrayListMultimap.create();
 
+    @Data
+    public static class TravelContext{
+        private String headId;
+    }
+
     // private List<IProc> procs= Lists.newArrayList();
     IMapDataCollector collector;
 
-    public MessageMapCollector(IMapDataCollector collector) {
+    public TravelContext getTravelContext() {
+        return travelContext;
+    }
+
+    TravelContext travelContext;
+
+    public MessageMapCollector(IMapDataCollector collector, TravelContext travelContext) {
         this.collector = collector;
+        this.travelContext=travelContext;
     }
 
     public static MessageMapCollector collect(IMapDataCollector collector) {
-        return new MessageMapCollector(collector);
+        return new MessageMapCollector(collector, new TravelContext());
     }
 
     public Map<String, ResultData> fillMap(Message msg) {
+        travelContext.setHeadId(ProtoTypes.getEntityIden(msg,":"));
         fillMap(null, null, msg);
         return resultContext;
     }
@@ -104,8 +117,7 @@ public class MessageMapCollector {
             }
         }
         this.collector.collect(new IMapDataCollector.CollectorContext(this,
-                        symbol, parentMsg, parentFld),
-                dataMap);
+                        symbol, parentMsg, parentFld), dataMap);
     }
 
     private void getMessageField(Message msg,
@@ -166,12 +178,13 @@ public class MessageMapCollector {
         if(fld.isRepeated()){
             for(GeneratedMessageV3 val:(Collection<GeneratedMessageV3>)fldVal){
                 MessageMapCollector messageMapCollector =
-                        new MessageMapCollector(this.collector);
+                        new MessageMapCollector(this.collector, travelContext);
                 messageMapCollector.fillMap(parentMsg, fld, val);
                 slaveContext.putAll(messageMapCollector.slaveContext);
             }
         }else {
-            MessageMapCollector messageMapCollector = new MessageMapCollector(this.collector);
+            MessageMapCollector messageMapCollector =
+                    new MessageMapCollector(this.collector, travelContext);
             messageMapCollector.fillMap(parentMsg, fld, (GeneratedMessageV3) fldVal);
             resultContext.putAll(messageMapCollector.getResultContext());
         }

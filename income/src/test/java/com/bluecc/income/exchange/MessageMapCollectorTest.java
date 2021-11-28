@@ -14,7 +14,7 @@ public class MessageMapCollectorTest {
 
     @Test
     public void fillMap() throws IOException {
-        MessageMapCollector collector=new MessageMapCollector((symbol, e) -> {
+        MessageMapCollector collector=MessageMapCollector.collect((symbol, e) -> {
             System.out.println(e);
         });
         // Map<String, Object> values= Maps.newHashMap();

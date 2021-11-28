@@ -94,6 +94,12 @@ public class AbstractProcs {
                 idval = e.get(c.getSymbol().getTableKeys().get(0)).toString();
             }
 
+            e.forEach((k,v) -> {
+                if(v!=null && v.equals(ValueConstants.PLACER_HEAD_ID)){
+                    e.put(k, c.getCollector().getTravelContext().getHeadId());
+                }
+            });
+
             String mark=persist?"Ⓜ️ ":"☑️ ";
             System.out.println(mark + c.getSymbol() + " -> " + e);
 
@@ -149,7 +155,10 @@ public class AbstractProcs {
                         Descriptors.FieldDescriptor fldDesc = descriptor.findFieldByName(keymap.getProtoField());
                         if (fldDesc != null) {
                             Object val = from.getField(fldDesc);
-                            values.put(keymap.getProtoRelField(), val);
+                            if(val!=null && !val.toString().isEmpty()) {
+                                System.out.format("\t..transfer %s: %s\n", fldDesc.getName(), val);
+                                values.put(keymap.getProtoRelField(), val);
+                            }
                         }
                     }
                 });

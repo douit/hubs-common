@@ -1,5 +1,5 @@
 {
-  "order_id": "o_123",
+  "order_id": "o_124",
   "order_type_id": "SALES_ORDER",
   "order_item": [
     {
@@ -34,6 +34,7 @@
       },
       "order_status": [
         {
+          "order_id": "<head_id>",
           "status_id": "CREATED"
         }
       ]
