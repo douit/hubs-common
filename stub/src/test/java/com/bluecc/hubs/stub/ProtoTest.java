@@ -4,6 +4,7 @@ import com.bluecc.hubs.ProtoJsonUtils;
 import com.bluecc.hubs.proto.DataFill;
 import com.bluecc.hubs.ProtoTypes;
 import com.google.protobuf.*;
+import com.google.protobuf.util.JsonFormat;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
@@ -164,12 +165,30 @@ public class ProtoTest {
     }
 
     @Test
-    public void testProcessMessageByFindField(){
+    public void testProcessMessageByFindField() throws IOException {
         ShipmentTimeEstimateData estimateData=createShipmentTime();
         GeneratedMessageV3 msg=estimateData;
         Descriptors.FieldDescriptor fld=msg.getDescriptorForType().findFieldByName("thru_date");
         Timestamp ts=(Timestamp)msg.getField(fld);
         System.out.println(ts);
+        System.out.println(ProtoJsonUtils.toJson(ts));
+        // "2021-11-28T16:43:49.358Z"
+        // "2017-01-15T01:30:15.01Z"
+        Timestamp tsr=(Timestamp) ProtoJsonUtils.toProtoBean(
+                Timestamp.newBuilder(), "\"2021-11-28T16:43:49.358Z\"");
+        System.out.println(tsr);
+        tsr=(Timestamp) ProtoJsonUtils.toProtoBean(
+                Timestamp.newBuilder(), "'2021-11-28T16:43:49.358Z'");
+        System.out.println(tsr);
+
+        TypeRegistry registry = TypeRegistry.newBuilder()
+                .add(Timestamp.getDescriptor()).build();
+        JsonFormat.Printer jPrinter = JsonFormat.printer();
+        JsonFormat.Parser jParser = JsonFormat.parser();
+        // String result = jPrinter.usingTypeRegistry(registry).print(msg);
+        Timestamp.Builder tsb=Timestamp.newBuilder();
+        jParser.usingTypeRegistry(registry).merge("\"2021-11-28T16:43:49.358Z\"", tsb);
+        System.out.println(tsb.build());
     }
 
     private ShipmentTimeEstimateData createShipmentTime() {

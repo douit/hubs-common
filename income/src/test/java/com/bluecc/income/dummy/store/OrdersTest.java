@@ -23,7 +23,7 @@ public class OrdersTest extends AbstractStoreProcTest {
 
     @Before
     public void setUp() throws Exception {
-        setupEntities("OrderItem", "OrderHeader");
+        setupEntities("OrderItem", "OrderHeader", "ProductPrice");
     }
 
     @Test
@@ -35,6 +35,23 @@ public class OrdersTest extends AbstractStoreProcTest {
                             readResource("order_head_simple",
                             OrderHeaderData.newBuilder())
                             .build());
+
+            resultMap.forEach((k, v) -> {
+                System.out.println(k + ": " + v);
+            });
+        });
+    }
+
+
+    @Test
+    public void testStoreCompound2() {
+        process(ctx -> {
+            // Dao dao = c.getHandle().attach(Dao.class);
+            Map<String, MessageMapCollector.ResultData> resultMap=
+                    genericProcs.storeCompoundObject(ctx,
+                            readResource("order_head_product",
+                                    OrderHeaderData.newBuilder())
+                                    .build());
 
             resultMap.forEach((k, v) -> {
                 System.out.println(k + ": " + v);

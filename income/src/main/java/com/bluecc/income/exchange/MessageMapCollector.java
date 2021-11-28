@@ -121,7 +121,7 @@ public class MessageMapCollector {
                 break;
             case "Timestamp": {
                 Timestamp val = (Timestamp) fldVal;
-                dataMap.put(fldName, ProtoTypes.getDateTime(val));
+                dataMap.put(fldName, ProtoTypes.getLocalDateTime(val));
                 break;
             }
             case "Currency": {

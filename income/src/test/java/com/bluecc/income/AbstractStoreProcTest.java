@@ -52,6 +52,7 @@ public class AbstractStoreProcTest {
             public void logBeforeExecution(StatementContext ctx) {
                 System.out.println("sql -> " + ctx.getRawSql());
                 System.out.println("\t" + ctx.getParsedSql().getSql());
+                System.out.println("\t"+ctx.getBinding().toString());
             }
         });
 

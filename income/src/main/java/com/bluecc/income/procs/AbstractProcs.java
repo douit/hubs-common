@@ -52,46 +52,64 @@ public class AbstractProcs {
                 "Expect %s, but %s", o1, o2);
     }
 
-    protected static void assertNotNull(Object o){
+    protected static void assertNotNull(Object o) {
         Preconditions.checkNotNull(o, "Object is null");
     }
 
-    public Map<String, MessageMapCollector.ResultData> storeCompoundObject(IProc.ProcContext ctx, Message messageData){
+    public Map<String, MessageMapCollector.ResultData> storeCompoundObject(IProc.ProcContext ctx, Message messageData) {
         Map<String, MessageMapCollector.ResultData> resultMap = collect((c, e) -> {
-            System.out.println("Ⓜ️ " + c.getSymbol() + " -> " + e);
-
             String idval = null;
 
             // 将子实体的id作为父实体的关联字段保存
             c.getCollector().getResultContext().forEach((k, v) -> {
-                if(!k.startsWith("_")) {
+                if (!k.startsWith("_")) {
                     e.put(v.getRelatedFields().get(0), v.getChildId());
                 }
             });
 
+            boolean persist = true;
             if (c.getParentFld() != null) {
-                idval = sequence.nextStringId();
-                e.put(getPk(c.getSymbol()), idval);
+                // 如果不是复合键, 且键有值, 则表示已经存在该实体实例, 不用保存
+                if (!c.getSymbol().hasCombineKeys()) {
+                    Object pval = e.get(c.getSymbol().getTableKeys().get(0));
+                    if (pval != null) {
+                        persist = false;
+                        idval = pval.toString();
+                        System.out.println("\tdon't persist " + c.getSymbol().getTable()
+                                + ", with id value " + idval);
+                    }
+                }
+
+                if (idval == null) {
+                    idval = sequence.nextStringId();
+                    e.put(getPk(c.getSymbol()), idval);
+                }
 
                 // transfer parent entity related field values to current entity
                 Map<String, Object> values = transferRelations(c.getParentMsg(),
                         c.getParentFld().getName(), c.getSymbol().getEntityName());
                 e.putAll(values);
-            }else{
-                idval=e.get(c.getSymbol().getTableKeys().get(0)).toString();
+            } else {
+                // is head-entity
+                idval = e.get(c.getSymbol().getTableKeys().get(0)).toString();
             }
 
-            List<String> names = new ArrayList<>(e.keySet());
-            List<String> placers = names.stream().map(name -> ":" + name)
-                    .collect(Collectors.toList());
+            String mark=persist?"Ⓜ️ ":"☑️ ";
+            System.out.println(mark + c.getSymbol() + " -> " + e);
 
-            int total = ctx.getHandle().createUpdate("insert into <table> (<columns>) values (<placers>)")
-                    .define("table", c.getSymbol().getTable())
-                    .defineList("columns", names)
-                    .defineList("placers", placers)
-                    .bindMap(e)
-                    .execute();
-            assertEquals(1, total);
+            if (persist) {
+                List<String> names = new ArrayList<>(e.keySet());
+                List<String> placers = names.stream().map(name -> ":" + name)
+                        .collect(Collectors.toList());
+
+                int total = ctx.getHandle().createUpdate("insert into <table> (<columns>) values (<placers>)")
+                        .define("table", c.getSymbol().getTable())
+                        .defineList("columns", names)
+                        .defineList("placers", placers)
+                        .bindMap(e)
+                        .execute();
+                assertEquals(1, total);
+            }
 
             if (c.getParentFld() != null) {
                 String entityType = ProtoTypes.getEntityTypeByMessage(c.getParentMsg());
@@ -100,12 +118,12 @@ public class AbstractProcs {
                 System.out.format("\tresult to: %s -> %s\n",
                         c.getParentFld().getName(),
                         queryMeta.getTableFields());
-                if(queryMeta.isRepeated()){
-                    Map<String, Object> keyValues= Maps.newHashMap();
+                if (queryMeta.isRepeated()) {
+                    Map<String, Object> keyValues = Maps.newHashMap();
                     c.getSymbol().getTableKeys().forEach(key ->
                             keyValues.put(key, e.get(key)));
                     c.getCollector().putSlave(c.getParentFld().getName(), keyValues);
-                }else {
+                } else {
                     c.getCollector().putResult(c.getParentFld().getName(),
                             queryMeta.getTableFields(), idval);
                 }
@@ -128,8 +146,8 @@ public class AbstractProcs {
                                 && r.getRelEntityName().equals(toEntity))
                 .forEach(r -> {
                     for (EntityMeta.KeymapMeta keymap : r.getKeymaps()) {
-                        Descriptors.FieldDescriptor fldDesc=descriptor.findFieldByName(keymap.getProtoField());
-                        if(fldDesc!=null) {
+                        Descriptors.FieldDescriptor fldDesc = descriptor.findFieldByName(keymap.getProtoField());
+                        if (fldDesc != null) {
                             Object val = from.getField(fldDesc);
                             values.put(keymap.getProtoRelField(), val);
                         }
