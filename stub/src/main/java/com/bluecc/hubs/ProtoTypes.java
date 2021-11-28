@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 public class ProtoTypes {
-    public static java.math.BigDecimal getBigDecimal(DecimalValue serialized){
+    public static java.math.BigDecimal getBigDecimal(DecimalValue serialized) {
         java.math.MathContext mc = new java.math.MathContext(serialized.getPrecision());
         java.math.BigDecimal deserialized = new java.math.BigDecimal(
                 new java.math.BigInteger(serialized.getValue().toByteArray()),
@@ -24,7 +24,8 @@ public class ProtoTypes {
                 mc);
         return deserialized;
     }
-    public static java.math.BigDecimal getBigDecimal(Currency serialized){
+
+    public static java.math.BigDecimal getBigDecimal(Currency serialized) {
         return new BigDecimal(serialized.getValue());
     }
 
@@ -37,30 +38,39 @@ public class ProtoTypes {
     }
 
     public static BigDecimal getBigDecimal(FixedPoint fixedPoint) {
-        BigDecimal val=new BigDecimal(fixedPoint.getValue())
+        BigDecimal val = new BigDecimal(fixedPoint.getValue())
                 .movePointLeft(fixedPoint.getScalingPosition());
         return val;
     }
 
-    public static FixedPoint getFixedPoint(BigDecimal val){
+    public static FixedPoint getFixedPoint(BigDecimal val) {
         return FixedPoint.newBuilder()
                 .setValue(val.longValue())
                 .setScalingPosition(val.scale())
                 .build();
     }
 
-    public static FixedPoint getFixedPoint(String val){
+    public static FixedPoint getFixedPoint(String val) {
         return getFixedPoint(new BigDecimal(val));
     }
 
-    public static DateTime getDateTime(Timestamp ts){
-        return new DateTime(ts.getSeconds()*1000);
+    public static DateTime getDateTime(Timestamp ts) {
+        return new DateTime(ts.getSeconds() * 1000);
     }
 
-    public static java.time.LocalDateTime getLocalDateTime(Timestamp ts){
-        return java.time.LocalDateTime.ofEpochSecond(ts.getSeconds(), ts.getNanos(), ZoneOffset.UTC);
+    public static java.time.LocalDateTime getLocalDateTime(Timestamp ts) {
+        return java.time.LocalDateTime.ofEpochSecond(ts.getSeconds(),
+                ts.getNanos(), ZoneOffset.UTC);
     }
-    public static java.time.LocalDate getLocalDate(Timestamp ts){
+
+    public static Timestamp now() {
+        long millis = System.currentTimeMillis();
+        Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+                .setNanos((int) ((millis % 1000) * 1000000)).build();
+        return timestamp;
+    }
+
+    public static java.time.LocalDate getLocalDate(Timestamp ts) {
         return getLocalDateTime(ts).toLocalDate();
     }
 
@@ -75,33 +85,35 @@ public class ProtoTypes {
         }
     }
 
-    public static char getIndicatorChar(Indicator indicator){
-        switch (indicator){
-            case YES: return 'Y';
-            case NO: return 'N';
+    public static char getIndicatorChar(Indicator indicator) {
+        switch (indicator) {
+            case YES:
+                return 'Y';
+            case NO:
+                return 'N';
         }
         return ' ';
     }
 
-    public static String getEntityTypeByMessage(Message msg){
+    public static String getEntityTypeByMessage(Message msg) {
         Descriptors.Descriptor descriptor = msg.getDescriptorForType();
-        String entityType=descriptor.getOptions().getExtension(RoutinesProto.entityType);
+        String entityType = descriptor.getOptions().getExtension(RoutinesProto.entityType);
         return entityType;
     }
 
     public static String[] getEntityKeys(Message msg) {
-        EntityKey keys=msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
+        EntityKey keys = msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
         return keys.getKeys().split(", ");
     }
 
-    public static void setEntityKey(Message.Builder builder, String idVal){
-        Descriptors.Descriptor descriptor =builder.getDescriptorForType();
-        String fldName=getEntityKeys(descriptor)[0];
+    public static void setEntityKey(Message.Builder builder, String idVal) {
+        Descriptors.Descriptor descriptor = builder.getDescriptorForType();
+        String fldName = getEntityKeys(descriptor)[0];
         builder.setField(descriptor.findFieldByName(fldName), idVal);
     }
 
     public static String[] getEntityKeys(Descriptors.Descriptor descriptor) {
-        EntityKey keys=descriptor.getOptions().getExtension(RoutinesProto.keys);
+        EntityKey keys = descriptor.getOptions().getExtension(RoutinesProto.keys);
         return keys.getKeys().split(", ");
     }
 
@@ -112,10 +124,10 @@ public class ProtoTypes {
 
     public static List<String> getEntityIdenValues(Message msg) {
         Descriptors.Descriptor descriptor = msg.getDescriptorForType();
-        List<String> result= Lists.newArrayList();
+        List<String> result = Lists.newArrayList();
         for (String entityKey : getEntityKeys(msg)) {
             // log.info(".. entity-iden "+entityKey);
-            Object val= msg.getField(descriptor.findFieldByName(entityKey));
+            Object val = msg.getField(descriptor.findFieldByName(entityKey));
             result.add(val.toString());
         }
         return result;

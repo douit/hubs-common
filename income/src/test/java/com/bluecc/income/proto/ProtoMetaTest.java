@@ -34,6 +34,13 @@ public class ProtoMetaTest {
         collect((c, e) -> {
             System.out.println("Ⓜ️ " + c.getSymbol() + " -> " + e);
         }).fillMap(flatData);
+
+        // new with proto-instance
+        PersonFlatData.Builder builder=PersonFlatData.newBuilder(flatData);
+        builder.setBirthDate(ProtoTypes.now());
+        collect((c, e) -> {
+            System.out.println("Ⓜ️ " + c.getSymbol() + " -> " + e);
+        }).fillMap(builder.build());
     }
 
     ProtoMeta protoMeta = new ProtoMeta();

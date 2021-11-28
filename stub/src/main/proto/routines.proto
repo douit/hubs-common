@@ -23,6 +23,7 @@ message EntityKey{
 service Routines {
   rpc GetConfig(ConfigItem) returns (ValueObject) {}
   rpc CheckValue(ValueObject) returns (stream ValueObject) {}
+  rpc StoreValue(Envelope) returns (Response) {}
 }
 
 message Identity{
@@ -75,6 +76,8 @@ message Response{
     OK = 0;
     ERR = 1;
   }
+
+  Result result=1;
   string message = 2;
 }
 
