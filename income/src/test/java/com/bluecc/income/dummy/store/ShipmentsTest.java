@@ -6,6 +6,8 @@ import com.bluecc.hubs.fund.descriptor.INameSymbol;
 import com.bluecc.hubs.stub.ShipmentData;
 import com.bluecc.income.AbstractStoreProc;
 import com.bluecc.income.exchange.MessageMapCollector;
+import com.bluecc.income.procs.Shipments;
+import com.bluecc.income.procs.Shipments.*;
 import com.bluecc.income.template.TemplateGlobalContext;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
 import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static com.bluecc.income.exchange.ResourceHelper.readResource;
+import static com.bluecc.income.procs.AbstractProcs.getPk;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -44,7 +47,7 @@ public class ShipmentsTest extends AbstractStoreProc {
         Shipment getShipment(@Bind("id") String id);
 
         @RegisterBeanMapper(PostalAddress.class)
-        @SqlQuery("select * from postal_address where contact_mech_id in " +
+        @SqlQuery("select * from postal_address where contact_mech_id = " +
                 "(select origin_contact_mech_id from shipment " +
                 "where shipment_id=:id)")
         PostalAddress getShipmentOriginContactMech(@Bind("id") String id);
@@ -65,10 +68,6 @@ public class ShipmentsTest extends AbstractStoreProc {
         });
 
         TemplateGlobalContext.getContext().preload("Shipment", "PostalAddress");
-    }
-
-    String getPk(INameSymbol symbol) {
-        return symbol.getTableKeys().size() > 1 ? "id" : symbol.getTableKeys().get(0);
     }
 
     @Test
@@ -126,79 +125,9 @@ public class ShipmentsTest extends AbstractStoreProc {
             PostalAddress postalAddress = dao.getShipmentOriginContactMech(shipmentId);
             assertNotNull(postalAddress);
             pretty(postalAddress);
+            assertEquals(postalAddress.getContactMechId(),
+                    resultMap.get("origin_postal_address").getChildId());
         });
-    }
-
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Shipment implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        String shipmentId;
-        String shipmentTypeId;
-        String statusId;
-        String primaryOrderId;
-        String primaryReturnId;
-        String primaryShipGroupSeqId;
-        String picklistBinId;
-        java.time.LocalDateTime estimatedReadyDate;
-        java.time.LocalDateTime estimatedShipDate;
-        String estimatedShipWorkEffId;
-        java.time.LocalDateTime estimatedArrivalDate;
-        String estimatedArrivalWorkEffId;
-        java.time.LocalDateTime latestCancelDate;
-        java.math.BigDecimal estimatedShipCost;
-        String currencyUomId;
-        String handlingInstructions;
-        String originFacilityId;
-        String destinationFacilityId;
-        String originContactMechId;
-        String originTelecomNumberId;
-        String destinationContactMechId;
-        String destinationTelecomNumberId;
-        String partyIdTo;
-        String partyIdFrom;
-        java.math.BigDecimal additionalShippingCharge;
-        String addtlShippingChargeDesc;
-        java.time.LocalDateTime createdDate;
-        String createdByUserLogin;
-        java.time.LocalDateTime lastModifiedDate;
-        String lastModifiedByUserLogin;
-        java.time.LocalDateTime lastUpdatedStamp;
-        java.time.LocalDateTime createdStamp;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class PostalAddress implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        String contactMechId;
-        String toName;
-        String attnName;
-        String address1;
-        String address2;
-        Long houseNumber;
-        String houseNumberExt;
-        String directions;
-        String city;
-        String cityGeoId;
-        String postalCode;
-        String postalCodeExt;
-        String countryGeoId;
-        String stateProvinceGeoId;
-        String countyGeoId;
-        String municipalityGeoId;
-        String postalCodeGeoId;
-        String geoPointId;
-        java.time.LocalDateTime lastUpdatedStamp;
-        java.time.LocalDateTime createdStamp;
-
     }
 
 }

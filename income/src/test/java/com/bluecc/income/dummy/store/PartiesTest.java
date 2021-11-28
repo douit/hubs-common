@@ -3,6 +3,8 @@ package com.bluecc.income.dummy.store;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.income.AbstractStoreProc;
+import com.bluecc.income.procs.Parties;
+import com.bluecc.income.procs.Parties.Person;
 import com.bluecc.income.template.TemplateGlobalContext;
 import com.bluecc.income.template.UseHubsTemplateEngine;
 import lombok.AllArgsConstructor;
@@ -34,7 +36,7 @@ import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static org.junit.Assert.assertEquals;
 
 public class PartiesTest extends AbstractStoreProc {
-    @RegisterBeanMapper(value=Person.class)
+    @RegisterBeanMapper(value= Person.class)
     public interface PartyDao {
         @SqlQuery("select * from person")
         List<Person> listPersons();
@@ -178,73 +180,6 @@ public class PartiesTest extends AbstractStoreProc {
                 assertEquals("samlet", dao.getPerson(newId).getLastName());
             }).fillMap(flatData);
         });
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Person implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        String partyId;
-        String salutation;
-        String firstName;
-        String middleName;
-        String lastName;
-        String personalTitle;
-        String suffix;
-        String nickname;
-        String firstNameLocal;
-        String middleNameLocal;
-        String lastNameLocal;
-        String otherLocal;
-        String memberId;
-        Character gender;
-        java.time.LocalDate birthDate;
-        java.sql.Date deceasedDate;
-        Double height;
-        Double weight;
-        String mothersMaidenName;
-        String oldMaritalStatus;
-        String maritalStatusEnumId;
-        String socialSecurityNumber;
-        String passportNumber;
-        java.time.LocalDateTime passportExpireDate;
-        Double totalYearsWorkExperience;
-        String comments;
-        String employmentStatusEnumId;
-        String residenceStatusEnumId;
-        String occupation;
-        Long yearsWithEmployer;
-        Long monthsWithEmployer;
-        String existingCustomer;
-        String cardId;
-        // java.sql.Timestamp lastUpdatedStamp;
-        // java.sql.Timestamp lastUpdatedTxStamp;
-        // java.sql.Timestamp createdStamp;
-        // java.sql.Timestamp createdTxStamp;
-        private java.time.LocalDateTime lastUpdatedStamp;
-        private java.time.LocalDateTime createdStamp;
-
-        public PersonFlatData toFlatData(){
-            return PersonFlatData.newBuilder()
-                    .setPartyId(partyId)
-                    .setLastName(lastName)
-                    .setFirstName(firstName)
-                    .build();
-        }
-
-        public static Person fromFlatData(PersonFlatData data){
-            return Person.builder()
-                    .partyId(data.getPartyId())
-                    .lastName(data.getLastName())
-                    .firstName(data.getFirstName())
-                    .birthDate(getLocalDate(data.getBirthDate()))
-                    .passportExpireDate(getLocalDateTime(data.getPassportExpireDate()))
-                    .gender(getIndicatorChar(data.getGender()))
-                    .build();
-        }
     }
 
 }
