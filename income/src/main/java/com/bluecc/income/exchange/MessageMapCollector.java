@@ -86,7 +86,7 @@ public class MessageMapCollector {
         String entityType = descriptor.getOptions().getExtension(RoutinesProto.entityType);
         EntityNames symbol = EntityNames.valueOfType(entityType);
         String resultFld = parentFld == null ? "_" : parentFld.getName();
-        log.info("** process {}({}) => {}, {}", entityType, resultFld, symbol, symbol.getTableKeys());
+        log.debug("** process {}({}) => {}, {}", entityType, resultFld, symbol, symbol.getTableKeys());
 
         Map<Descriptors.FieldDescriptor, Object> allFields = msg.getAllFields();
         // System.out.println(allFields.keySet().stream().map(f -> f.getName())
