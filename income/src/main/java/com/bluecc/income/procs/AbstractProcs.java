@@ -15,6 +15,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlLogger;
 import org.jdbi.v3.core.statement.StatementContext;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 
+@Slf4j
 public class AbstractProcs {
     @Inject
     protected HubsStore hubsStore;
@@ -166,7 +168,7 @@ public class AbstractProcs {
                         if (fldDesc != null) {
                             Object val = from.getField(fldDesc);
                             if(val!=null && !val.toString().isEmpty()) {
-                                System.out.format("\t..transfer %s: %s\n", fldDesc.getName(), val);
+                                log.debug("\t..transfer {}: {}\n", fldDesc.getName(), val);
                                 values.put(keymap.getProtoRelField(), val);
                             }
                         }

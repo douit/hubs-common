@@ -8,9 +8,15 @@
         </layout>
     </appender>
 
+    <logger name="com.bluecc.income" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="stdout"/>
+    </logger>
+
     <root>
 <!--        <level value="DEBUG"/>-->
         <level value="INFO"/>
         <appender-ref ref="stdout"/>
     </root>
+
 </log4j:configuration>
