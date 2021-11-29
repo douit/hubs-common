@@ -1,0 +1,3 @@
+modelDir: income/src/main/java/com/bluecc/income/model
+daoDir: income/src/main/java/com/bluecc/income/dao
+daoTestDir: income/src/test/java/com/bluecc/income/dao

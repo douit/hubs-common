@@ -1,0 +1,40 @@
+package com.bluecc.income.dao;
+
+import com.bluecc.hubs.stub.{{ent.name}}FlatData;
+import com.bluecc.income.AbstractStoreProcTest;
+import com.github.javafaker.Faker;
+import org.junit.Before;
+import org.junit.Test;
+
+import javax.inject.Inject;
+import java.util.Locale;
+
+import static org.junit.Assert.assertEquals;
+
+public class {{ent.name}}DelegatorTest extends AbstractStoreProcTest {
+    @Inject {{ent.name}}Delegator {{ent.varName}}s;
+
+    @Before
+    public void setUp() throws Exception {
+        setupEntities("{{ent.name}}");
+    }
+
+    Faker faker = new Faker(new Locale("zh-CN"));
+
+    @Test
+    public void crud() {
+        process(ctx -> {
+            String newId=sequence.nextStringId();
+            {{ent.name}}FlatData flatData= {{ent.name}}FlatData.newBuilder()
+                    .{{ent.pkSetter}}(newId)
+                    // .setDescription(faker.hipster().word())
+                    .build();
+            assertEquals(1, {{ent.varName}}s.create(ctx, flatData));
+            assertEquals(1, {{ent.varName}}s.update(ctx, flatData));
+            assertEquals(1, {{ent.varName}}s.find(ctx, flatData).size());
+            assertEquals(1, {{ent.varName}}s.findById(ctx, flatData).size());
+            assertEquals(1, {{ent.varName}}s.delete(ctx, flatData));
+            assertEquals(0, {{ent.varName}}s.find(ctx, flatData).size());
+        });
+    }
+}

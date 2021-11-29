@@ -239,7 +239,7 @@ public class AbstractProcs {
                 .build();
     }
 
-    int create(IProc.ProcContext ctx, Message flatData){
+    public int create(IProc.ProcContext ctx, Message flatData){
         ExtractedTableInfo tableInfo=extract(flatData);
         int total = ctx.getHandle().createUpdate("insert into <table> (<columns>) values (<placers>)")
                 .define("table", tableInfo.table)
@@ -251,7 +251,7 @@ public class AbstractProcs {
         return total;
     }
 
-    int update(IProc.ProcContext ctx, Message flatData) {
+    public int update(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
         List<String> fieldsCond = tableInfo.names.stream()
                 .map(name -> name+" = :" + name)
@@ -267,7 +267,7 @@ public class AbstractProcs {
         return total;
     }
 
-    int delete(IProc.ProcContext ctx, Message flatData) {
+    public int delete(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
         int total = ctx.getHandle().createUpdate("delete from <table> where <id_cond>")
                 .define("table", tableInfo.table)
@@ -278,7 +278,7 @@ public class AbstractProcs {
         return total;
     }
 
-    List<Map<String, Object>> findById(IProc.ProcContext ctx, Message flatData) {
+    public List<Map<String, Object>> findById(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
         List<Map<String, Object>> rs = ctx.getHandle().createQuery("select * from <table> where <id_cond>")
                 .define("table", tableInfo.table)
@@ -289,7 +289,7 @@ public class AbstractProcs {
         return rs;
     }
 
-    List<Map<String, Object>> find(IProc.ProcContext ctx, Message flatData) {
+    public List<Map<String, Object>> find(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
         List<Map<String, Object>> rs = ctx.getHandle().createQuery("select * from <table> where <fields_cond>")
                 .define("table", tableInfo.table)

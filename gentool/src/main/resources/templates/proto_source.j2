@@ -4,9 +4,9 @@ message {{ent.name}}Data {
     option (routines.keys).keys = "{{ent.underscoreKeys}}";
     option (routines.keys).combine = {{ent.combine}};
     // keys: {{ent.keyNames}}
-
+    {% if ent.combine %}string id = 200; {% endif %}
     // fields
-    {% for f in ent.publicFields -%}
+    {% for f in ent.messageFields -%}
     {%- if digester.isRefField(f.name) %}
     {{f.protoType}} {{f.underscore}} = {{loop.index}}; // {{digester.getEntityRef(f.name)}}
     {%- else %}    
@@ -17,9 +17,9 @@ message {{ent.name}}Data {
     // relations
     {% for r in ent.relations -%}
     {% if r.hasProtoDef(ent.name) -%}
-    {{r.protoDef}} = {{loop.index+ent.publicFieldNumber}}; // ref: {{r.relFields}}
+    {{r.protoDef}} = {{loop.index+ent.messageFieldNumber}}; // ref: {{r.relFields}}
     {% endif -%}
     {% endfor %}
-    {% endif %}
+    {% endif %}    
 }
 

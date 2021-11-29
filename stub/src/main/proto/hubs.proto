@@ -14,88 +14,110 @@ import "routines.proto";
 // The Order Header service definition.
 service OrderHeaderService {
     rpc Create(OrderHeaderData) returns (routines.Response) {}
-    rpc Update(OrderHeaderData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(OrderHeaderFlatData) returns (routines.Response) {}
+    rpc Delete(OrderHeaderFlatData) returns (routines.Response) {}
+    rpc Find(OrderHeaderFlatData) returns (OrderHeaderFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (OrderHeaderFlatData) {}
 }
 
 // The Order Item service definition.
 service OrderItemService {
     rpc Create(OrderItemData) returns (routines.Response) {}
-    rpc Update(OrderItemData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(OrderItemFlatData) returns (routines.Response) {}
+    rpc Delete(OrderItemFlatData) returns (routines.Response) {}
+    rpc Find(OrderItemFlatData) returns (OrderItemFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (OrderItemFlatData) {}
 }
 
 // The Payment service definition.
 service PaymentService {
     rpc Create(PaymentData) returns (routines.Response) {}
-    rpc Update(PaymentData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(PaymentFlatData) returns (routines.Response) {}
+    rpc Delete(PaymentFlatData) returns (routines.Response) {}
+    rpc Find(PaymentFlatData) returns (PaymentFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (PaymentFlatData) {}
 }
 
 // The Invoice service definition.
 service InvoiceService {
     rpc Create(InvoiceData) returns (routines.Response) {}
-    rpc Update(InvoiceData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(InvoiceFlatData) returns (routines.Response) {}
+    rpc Delete(InvoiceFlatData) returns (routines.Response) {}
+    rpc Find(InvoiceFlatData) returns (InvoiceFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (InvoiceFlatData) {}
 }
 
 // The Product service definition.
 service ProductService {
     rpc Create(ProductData) returns (routines.Response) {}
-    rpc Update(ProductData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(ProductFlatData) returns (routines.Response) {}
+    rpc Delete(ProductFlatData) returns (routines.Response) {}
+    rpc Find(ProductFlatData) returns (ProductFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (ProductFlatData) {}
 }
 
 // The Shipment service definition.
 service ShipmentService {
     rpc Create(ShipmentData) returns (routines.Response) {}
-    rpc Update(ShipmentData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(ShipmentFlatData) returns (routines.Response) {}
+    rpc Delete(ShipmentFlatData) returns (routines.Response) {}
+    rpc Find(ShipmentFlatData) returns (ShipmentFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (ShipmentFlatData) {}
 }
 
 // The Product Store service definition.
 service ProductStoreService {
     rpc Create(ProductStoreData) returns (routines.Response) {}
-    rpc Update(ProductStoreData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(ProductStoreFlatData) returns (routines.Response) {}
+    rpc Delete(ProductStoreFlatData) returns (routines.Response) {}
+    rpc Find(ProductStoreFlatData) returns (ProductStoreFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (ProductStoreFlatData) {}
 }
 
 // The Party service definition.
 service PartyService {
     rpc Create(PartyData) returns (routines.Response) {}
-    rpc Update(PartyData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(PartyFlatData) returns (routines.Response) {}
+    rpc Delete(PartyFlatData) returns (routines.Response) {}
+    rpc Find(PartyFlatData) returns (PartyFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (PartyFlatData) {}
 }
 
 // The Person service definition.
 service PersonService {
     rpc Create(PersonData) returns (routines.Response) {}
-    rpc Update(PersonData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(PersonFlatData) returns (routines.Response) {}
+    rpc Delete(PersonFlatData) returns (routines.Response) {}
+    rpc Find(PersonFlatData) returns (PersonFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (PersonFlatData) {}
 }
 
 // The Party Group service definition.
 service PartyGroupService {
     rpc Create(PartyGroupData) returns (routines.Response) {}
-    rpc Update(PartyGroupData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(PartyGroupFlatData) returns (routines.Response) {}
+    rpc Delete(PartyGroupFlatData) returns (routines.Response) {}
+    rpc Find(PartyGroupFlatData) returns (PartyGroupFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (PartyGroupFlatData) {}
 }
 
 // The UserLogin service definition.
 service UserLoginService {
     rpc Create(UserLoginData) returns (routines.Response) {}
-    rpc Update(UserLoginData) returns (routines.Response) {}
-    rpc Delete(routines.Identity) returns (routines.Response) {}
+    rpc Update(UserLoginFlatData) returns (routines.Response) {}
+    rpc Delete(UserLoginFlatData) returns (routines.Response) {}
+    rpc Find(UserLoginFlatData) returns (UserLoginFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (UserLoginFlatData) {}
 }
 
@@ -146,7 +168,7 @@ message OrderItemFlatData {
     option (routines.keys).keys = "order_id, order_item_seq_id";
     option (routines.keys).combine = true;
     // keys: orderId, orderItemSeqId
-        
+    string id = 150;     
     string order_id = 1;    
     string order_item_seq_id = 2;    
     string external_id = 3;    
@@ -586,7 +608,7 @@ message ShipmentRouteSegmentData {
     option (routines.keys).keys = "shipment_id, shipment_route_segment_id";
     option (routines.keys).combine = true;
     // keys: shipmentId, shipmentRouteSegmentId
-
+    string id = 200; 
     // fields
         
     string shipment_id = 1;    
@@ -624,8 +646,10 @@ message ShipmentRouteSegmentData {
     string third_party_account_number = 33;    
     string third_party_postal_code = 34;    
     string third_party_country_geo_code = 35;    
-    bytes ups_high_value_report = 36;
-    
+    bytes ups_high_value_report = 36;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 37;    
+    google.protobuf.Timestamp created_tx_stamp = 38;
+        
 }
 
 // Invoice
@@ -634,7 +658,7 @@ message InvoiceData {
     option (routines.keys).keys = "invoice_id";
     option (routines.keys).combine = false;
     // keys: invoiceId
-
+    
     // fields
         
     string invoice_id = 1;    
@@ -648,21 +672,23 @@ message InvoiceData {
     string invoice_message = 9;    
     string reference_number = 10;    
     string description = 11;
-    string currency_uom_id = 12; // Uom
+    string currency_uom_id = 12; // Uom    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
     
     // relations
-    PartyRoleData party_role = 15; // ref: partyId + roleTypeId
-    BillingAccountData billing_account = 16; // ref: billingAccountId
-    ContactMechData contact_mech = 17; // ref: contactMechId
-    RecurrenceInfoData recurrence_info = 18; // ref: recurrenceInfoId
-    repeated AcctgTransData acctg_trans = 19; // ref: invoiceId
-    repeated InvoiceItemData invoice_item = 20; // ref: invoiceId
-    repeated OrderAdjustmentBillingData order_adjustment_billing = 21; // ref: invoiceId
-    repeated OrderItemBillingData order_item_billing = 22; // ref: invoiceId
-    repeated PaymentApplicationData payment_application = 23; // ref: invoiceId
-    repeated ShipmentItemBillingData shipment_item_billing = 24; // ref: invoiceId
+    PartyRoleData party_role = 17; // ref: partyId + roleTypeId
+    BillingAccountData billing_account = 18; // ref: billingAccountId
+    ContactMechData contact_mech = 19; // ref: contactMechId
+    RecurrenceInfoData recurrence_info = 20; // ref: recurrenceInfoId
+    repeated AcctgTransData acctg_trans = 21; // ref: invoiceId
+    repeated InvoiceItemData invoice_item = 22; // ref: invoiceId
+    repeated OrderAdjustmentBillingData order_adjustment_billing = 23; // ref: invoiceId
+    repeated OrderItemBillingData order_item_billing = 24; // ref: invoiceId
+    repeated PaymentApplicationData payment_application = 25; // ref: invoiceId
+    repeated ShipmentItemBillingData shipment_item_billing = 26; // ref: invoiceId
     
-    
+        
 }
 
 // Order Adjustment
@@ -671,7 +697,7 @@ message OrderAdjustmentData {
     option (routines.keys).keys = "order_adjustment_id";
     option (routines.keys).combine = false;
     // keys: orderAdjustmentId
-
+    
     // fields
         
     string order_adjustment_id = 1;    
@@ -706,8 +732,10 @@ message OrderAdjustmentData {
     string created_by_user_login = 30;    
     google.protobuf.Timestamp last_modified_date = 31;    
     string last_modified_by_user_login = 32;    
-    string original_adjustment_id = 33;
-    
+    string original_adjustment_id = 33;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 34;    
+    google.protobuf.Timestamp created_tx_stamp = 35;
+        
 }
 
 // Product
@@ -716,7 +744,7 @@ message ProductData {
     option (routines.keys).keys = "product_id";
     option (routines.keys).combine = false;
     // keys: productId
-
+    
     // fields
         
     string product_id = 1;    
@@ -784,44 +812,46 @@ message ProductData {
     google.protobuf.Timestamp last_modified_date = 63;    
     routines.Indicator in_shipping_box = 64;    
     string lot_id_filled_in = 65;    
-    routines.Indicator order_decimal_quantity = 66;
+    routines.Indicator order_decimal_quantity = 66;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 67;    
+    google.protobuf.Timestamp created_tx_stamp = 68;
     
     // relations
-    ProductCategoryData primary_product_category = 67; // ref: primaryProductCategoryId
-    UserLoginData created_by_user_login = 68; // ref: createdByUserLogin
-    UserLoginData last_modified_by_user_login = 69; // ref: lastModifiedByUserLogin
-    ShipmentBoxTypeData default_shipment_box_type = 70; // ref: defaultShipmentBoxTypeId
-    repeated AgreementData agreement = 71; // ref: productId
-    repeated AgreementProductApplData agreement_product_appl = 72; // ref: productId
-    repeated CustRequestItemData cust_request_item = 73; // ref: productId
-    repeated FixedAssetData instance_of_fixed_asset = 74; // ref: productId
-    repeated FixedAssetProductData fixed_asset_product = 75; // ref: productId
-    repeated InventoryItemData inventory_item = 76; // ref: productId
-    repeated InvoiceItemData invoice_item = 77; // ref: productId
-    repeated OrderItemData order_item = 78; // ref: productId
-    repeated ProductAssocData main_product_assoc = 79; // ref: productId
-    repeated ProductAssocData assoc_product_assoc = 80; // ref: productId
-    repeated ProductCategoryMemberData product_category_member = 81; // ref: productId
-    repeated ProductConfigData product_product_config = 82; // ref: productId
-    repeated ProductConfigProductData product_product_config_product = 83; // ref: productId
-    repeated ProductContentData product_content = 84; // ref: productId
-    repeated ProductFacilityData product_facility = 85; // ref: productId
-    repeated ProductFacilityAssocData product_facility_assoc = 86; // ref: productId
-    repeated ProductFacilityLocationData product_facility_location = 87; // ref: productId
-    repeated ProductFeatureApplData product_feature_appl = 88; // ref: productId
-    repeated ProductKeywordData product_keyword = 89; // ref: productId
-    repeated ProductPriceData product_price = 90; // ref: productId
-    repeated ProductPromoProductData product_promo_product = 91; // ref: productId
-    repeated ProductReviewData product_review = 92; // ref: productId
-    repeated ProductSubscriptionResourceData product_subscription_resource = 93; // ref: productId
-    repeated QuoteItemData quote_item = 94; // ref: productId
-    repeated ShipmentItemData shipment_item = 95; // ref: productId
-    repeated ShipmentPackageContentData sub_shipment_package_content = 96; // ref: productId
-    repeated ShipmentReceiptData shipment_receipt = 97; // ref: productId
-    repeated SupplierProductData supplier_product = 98; // ref: productId
-    repeated WorkEffortGoodStandardData work_effort_good_standard = 99; // ref: productId
+    ProductCategoryData primary_product_category = 69; // ref: primaryProductCategoryId
+    UserLoginData created_by_user_login = 70; // ref: createdByUserLogin
+    UserLoginData last_modified_by_user_login = 71; // ref: lastModifiedByUserLogin
+    ShipmentBoxTypeData default_shipment_box_type = 72; // ref: defaultShipmentBoxTypeId
+    repeated AgreementData agreement = 73; // ref: productId
+    repeated AgreementProductApplData agreement_product_appl = 74; // ref: productId
+    repeated CustRequestItemData cust_request_item = 75; // ref: productId
+    repeated FixedAssetData instance_of_fixed_asset = 76; // ref: productId
+    repeated FixedAssetProductData fixed_asset_product = 77; // ref: productId
+    repeated InventoryItemData inventory_item = 78; // ref: productId
+    repeated InvoiceItemData invoice_item = 79; // ref: productId
+    repeated OrderItemData order_item = 80; // ref: productId
+    repeated ProductAssocData main_product_assoc = 81; // ref: productId
+    repeated ProductAssocData assoc_product_assoc = 82; // ref: productId
+    repeated ProductCategoryMemberData product_category_member = 83; // ref: productId
+    repeated ProductConfigData product_product_config = 84; // ref: productId
+    repeated ProductConfigProductData product_product_config_product = 85; // ref: productId
+    repeated ProductContentData product_content = 86; // ref: productId
+    repeated ProductFacilityData product_facility = 87; // ref: productId
+    repeated ProductFacilityAssocData product_facility_assoc = 88; // ref: productId
+    repeated ProductFacilityLocationData product_facility_location = 89; // ref: productId
+    repeated ProductFeatureApplData product_feature_appl = 90; // ref: productId
+    repeated ProductKeywordData product_keyword = 91; // ref: productId
+    repeated ProductPriceData product_price = 92; // ref: productId
+    repeated ProductPromoProductData product_promo_product = 93; // ref: productId
+    repeated ProductReviewData product_review = 94; // ref: productId
+    repeated ProductSubscriptionResourceData product_subscription_resource = 95; // ref: productId
+    repeated QuoteItemData quote_item = 96; // ref: productId
+    repeated ShipmentItemData shipment_item = 97; // ref: productId
+    repeated ShipmentPackageContentData sub_shipment_package_content = 98; // ref: productId
+    repeated ShipmentReceiptData shipment_receipt = 99; // ref: productId
+    repeated SupplierProductData supplier_product = 100; // ref: productId
+    repeated WorkEffortGoodStandardData work_effort_good_standard = 101; // ref: productId
     
-    
+        
 }
 
 // Carrier Shipment Method
@@ -830,14 +860,16 @@ message CarrierShipmentBoxTypeData {
     option (routines.keys).keys = "shipment_box_type_id, party_id";
     option (routines.keys).combine = true;
     // keys: shipmentBoxTypeId, partyId
-
+    string id = 200; 
     // fields
         
     string shipment_box_type_id = 1;    
     string party_id = 2;    
     string packaging_type_code = 3;    
-    string oversize_code = 4;
-    
+    string oversize_code = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Fixed Asset
@@ -846,7 +878,7 @@ message FixedAssetData {
     option (routines.keys).keys = "fixed_asset_id";
     option (routines.keys).combine = false;
     // keys: fixedAssetId
-
+    
     // fields
         
     string fixed_asset_id = 1;    
@@ -873,8 +905,10 @@ message FixedAssetData {
     routines.Currency salvage_value = 22;    
     routines.Currency depreciation = 23;    
     routines.Currency purchase_cost = 24;    
-    string purchase_cost_uom_id = 25;
-    
+    string purchase_cost_uom_id = 25;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 26;    
+    google.protobuf.Timestamp created_tx_stamp = 27;
+        
 }
 
 // Web Analytics Configuration
@@ -883,13 +917,15 @@ message WebAnalyticsConfigData {
     option (routines.keys).keys = "web_site_id, web_analytics_type_id";
     option (routines.keys).combine = true;
     // keys: webSiteId, webAnalyticsTypeId
-
+    string id = 200; 
     // fields
         
     string web_site_id = 1;
     string web_analytics_type_id = 2; // WebAnalyticsType    
-    string web_analytics_code = 3;
-    
+    string web_analytics_code = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
 }
 
 // Product Category Rollup
@@ -898,15 +934,17 @@ message ProductCategoryRollupData {
     option (routines.keys).keys = "product_category_id, parent_product_category_id, from_date";
     option (routines.keys).combine = true;
     // keys: productCategoryId, parentProductCategoryId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_category_id = 1;    
     string parent_product_category_id = 2;    
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;    
-    int64 sequence_num = 5;
-    
+    int64 sequence_num = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Payment Gateway Response
@@ -915,7 +953,7 @@ message PaymentGatewayResponseData {
     option (routines.keys).keys = "payment_gateway_response_id";
     option (routines.keys).combine = false;
     // keys: paymentGatewayResponseId
-
+    
     // fields
         
     string payment_gateway_response_id = 1;
@@ -939,8 +977,10 @@ message PaymentGatewayResponseData {
     routines.Indicator result_declined = 19;    
     routines.Indicator result_nsf = 20;    
     routines.Indicator result_bad_expire = 21;    
-    routines.Indicator result_bad_card_number = 22;
-    
+    routines.Indicator result_bad_card_number = 22;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 23;    
+    google.protobuf.Timestamp created_tx_stamp = 24;
+        
 }
 
 // Shipment Item Billing
@@ -949,14 +989,16 @@ message ShipmentItemBillingData {
     option (routines.keys).keys = "shipment_id, shipment_item_seq_id, invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     // keys: shipmentId, shipmentItemSeqId, invoiceId, invoiceItemSeqId
-
+    string id = 200; 
     // fields
         
     string shipment_id = 1;    
     string shipment_item_seq_id = 2;    
     string invoice_id = 3;    
-    string invoice_item_seq_id = 4;
-    
+    string invoice_item_seq_id = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Product Promotion Action
@@ -965,7 +1007,7 @@ message ProductPromoActionData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id";
     option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId
-
+    string id = 200; 
     // fields
         
     string product_promo_id = 1;    
@@ -979,8 +1021,10 @@ message ProductPromoActionData {
     routines.FixedPoint amount = 9;    
     string product_id = 10;    
     string party_id = 11;    
-    routines.Indicator use_cart_quantity = 12;
-    
+    routines.Indicator use_cart_quantity = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
+        
 }
 
 // Shipment Cost Estimate
@@ -989,7 +1033,7 @@ message ShipmentCostEstimateData {
     option (routines.keys).keys = "shipment_cost_estimate_id";
     option (routines.keys).combine = false;
     // keys: shipmentCostEstimateId
-
+    
     // fields
         
     string shipment_cost_estimate_id = 1;    
@@ -1019,8 +1063,10 @@ message ShipmentCostEstimateData {
     routines.FixedPoint oversize_unit = 25;    
     routines.Currency oversize_price = 26;    
     routines.FixedPoint feature_percent = 27;    
-    routines.Currency feature_price = 28;
-    
+    routines.Currency feature_price = 28;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 29;    
+    google.protobuf.Timestamp created_tx_stamp = 30;
+        
 }
 
 // Security Component - Security Group Permission
@@ -1029,14 +1075,16 @@ message SecurityGroupPermissionData {
     option (routines.keys).keys = "group_id, permission_id, from_date";
     option (routines.keys).combine = true;
     // keys: groupId, permissionId, fromDate
-
+    string id = 200; 
     // fields
         
     string group_id = 1;
     string permission_id = 2; // SecurityPermission    
     google.protobuf.Timestamp from_date = 3;    
-    google.protobuf.Timestamp thru_date = 4;
-    
+    google.protobuf.Timestamp thru_date = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Product Store Inventory Facility Applicability
@@ -1045,7 +1093,7 @@ message ProductStoreKeywordOvrdData {
     option (routines.keys).keys = "product_store_id, keyword, from_date";
     option (routines.keys).combine = true;
     // keys: productStoreId, keyword, fromDate
-
+    string id = 200; 
     // fields
         
     string product_store_id = 1;    
@@ -1053,8 +1101,10 @@ message ProductStoreKeywordOvrdData {
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;    
     string target = 5;
-    string target_type_enum_id = 6; // Enumeration
-    
+    string target_type_enum_id = 6; // Enumeration    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Product Association
@@ -1063,7 +1113,7 @@ message ProductAssocData {
     option (routines.keys).keys = "product_id, product_id_to, product_assoc_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: productId, productIdTo, productAssocTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
@@ -1078,8 +1128,10 @@ message ProductAssocData {
     string instruction = 10;    
     string routing_work_effort_id = 11;
     string estimate_calc_method = 12; // CustomMethod    
-    string recurrence_info_id = 13;
-    
+    string recurrence_info_id = 13;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 14;    
+    google.protobuf.Timestamp created_tx_stamp = 15;
+        
 }
 
 // Fixed Asset Product Representation
@@ -1088,7 +1140,7 @@ message FixedAssetProductData {
     option (routines.keys).keys = "fixed_asset_id, product_id, fixed_asset_product_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: fixedAssetId, productId, fixedAssetProductTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string fixed_asset_id = 1;    
@@ -1099,8 +1151,10 @@ message FixedAssetProductData {
     string comments = 6;    
     int64 sequence_num = 7;    
     routines.FixedPoint quantity = 8;
-    string quantity_uom_id = 9; // Uom
-    
+    string quantity_uom_id = 9; // Uom    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
+        
 }
 
 // Payment Application
@@ -1109,7 +1163,7 @@ message PaymentApplicationData {
     option (routines.keys).keys = "payment_application_id";
     option (routines.keys).combine = false;
     // keys: paymentApplicationId
-
+    
     // fields
         
     string payment_application_id = 1;    
@@ -1120,8 +1174,10 @@ message PaymentApplicationData {
     string override_gl_account_id = 6;    
     string to_payment_id = 7;
     string tax_auth_geo_id = 8; // Geo    
-    routines.Currency amount_applied = 9;
-    
+    routines.Currency amount_applied = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
+        
 }
 
 // CustRequest
@@ -1130,7 +1186,7 @@ message CustRequestData {
     option (routines.keys).keys = "cust_request_id";
     option (routines.keys).combine = false;
     // keys: custRequestId
-
+    
     // fields
         
     string cust_request_id = 1;    
@@ -1156,11 +1212,13 @@ message CustRequestData {
     string created_by_user_login = 21;    
     google.protobuf.Timestamp last_modified_date = 22;    
     string last_modified_by_user_login = 23;    
-    double cust_estimated_milli_seconds = 24;    
-    int64 cust_sequence_num = 25;    
-    string parent_cust_request_id = 26;    
-    routines.Indicator billed = 27;
-    
+    google.protobuf.Timestamp last_updated_tx_stamp = 24;    
+    google.protobuf.Timestamp created_tx_stamp = 25;    
+    double cust_estimated_milli_seconds = 26;    
+    int64 cust_sequence_num = 27;    
+    string parent_cust_request_id = 28;    
+    routines.Indicator billed = 29;
+        
 }
 
 // Shipment Receipt
@@ -1169,7 +1227,7 @@ message ShipmentReceiptData {
     option (routines.keys).keys = "receipt_id";
     option (routines.keys).combine = false;
     // keys: receiptId
-
+    
     // fields
         
     string receipt_id = 1;    
@@ -1187,8 +1245,10 @@ message ShipmentReceiptData {
     google.protobuf.Timestamp datetime_received = 13;    
     string item_description = 14;    
     routines.FixedPoint quantity_accepted = 15;    
-    routines.FixedPoint quantity_rejected = 16;
-    
+    routines.FixedPoint quantity_rejected = 16;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 17;    
+    google.protobuf.Timestamp created_tx_stamp = 18;
+        
 }
 
 // Inventory Item Detail
@@ -1197,7 +1257,7 @@ message InventoryItemDetailData {
     option (routines.keys).keys = "inventory_item_id, inventory_item_detail_seq_id";
     option (routines.keys).combine = true;
     // keys: inventoryItemId, inventoryItemDetailSeqId
-
+    string id = 200; 
     // fields
         
     string inventory_item_id = 1;    
@@ -1221,8 +1281,10 @@ message InventoryItemDetailData {
     string receipt_id = 19;    
     string physical_inventory_id = 20;
     string reason_enum_id = 21; // Enumeration    
-    string description = 22;
-    
+    string description = 22;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 23;    
+    google.protobuf.Timestamp created_tx_stamp = 24;
+        
 }
 
 // Order Adjustment Billing
@@ -1231,14 +1293,16 @@ message OrderAdjustmentBillingData {
     option (routines.keys).keys = "order_adjustment_id, invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     // keys: orderAdjustmentId, invoiceId, invoiceItemSeqId
-
+    string id = 200; 
     // fields
         
     string order_adjustment_id = 1;    
     string invoice_id = 2;    
     string invoice_item_seq_id = 3;    
-    routines.Currency amount = 4;
-    
+    routines.Currency amount = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Product Feature Price
@@ -1247,7 +1311,7 @@ message ProductFeaturePriceData {
     option (routines.keys).keys = "product_feature_id, product_price_type_id, currency_uom_id, from_date";
     option (routines.keys).combine = true;
     // keys: productFeatureId, productPriceTypeId, currencyUomId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_feature_id = 1;
@@ -1259,8 +1323,10 @@ message ProductFeaturePriceData {
     google.protobuf.Timestamp created_date = 7;    
     string created_by_user_login = 8;    
     google.protobuf.Timestamp last_modified_date = 9;    
-    string last_modified_by_user_login = 10;
-    
+    string last_modified_by_user_login = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
+        
 }
 
 // Product Configuration Options
@@ -1269,7 +1335,7 @@ message ProductConfigOptionData {
     option (routines.keys).keys = "config_item_id, config_option_id";
     option (routines.keys).combine = true;
     // keys: configItemId, configOptionId
-
+    string id = 200; 
     // fields
         
     string config_item_id = 1;    
@@ -1278,8 +1344,10 @@ message ProductConfigOptionData {
     google.protobuf.Timestamp thru_date = 4;    
     string config_option_name = 5;    
     string description = 6;    
-    int64 sequence_num = 7;
-    
+    int64 sequence_num = 7;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 8;    
+    google.protobuf.Timestamp created_tx_stamp = 9;
+        
 }
 
 // Postal Address
@@ -1288,7 +1356,7 @@ message PostalAddressData {
     option (routines.keys).keys = "contact_mech_id";
     option (routines.keys).combine = false;
     // keys: contactMechId
-
+    
     // fields
         
     string contact_mech_id = 1;    
@@ -1308,8 +1376,10 @@ message PostalAddressData {
     string county_geo_id = 15; // Geo
     string municipality_geo_id = 16; // Geo
     string postal_code_geo_id = 17; // Geo    
-    string geo_point_id = 18;
-    
+    string geo_point_id = 18;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 19;    
+    google.protobuf.Timestamp created_tx_stamp = 20;
+        
 }
 
 // Define associations between Product facilities
@@ -1318,7 +1388,7 @@ message ProductFacilityAssocData {
     option (routines.keys).keys = "product_id, facility_id, facility_id_to, facility_assoc_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: productId, facilityId, facilityIdTo, facilityAssocTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
@@ -1328,8 +1398,10 @@ message ProductFacilityAssocData {
     google.protobuf.Timestamp from_date = 5;    
     google.protobuf.Timestamp thru_date = 6;    
     int64 sequence_num = 7;    
-    int64 transit_time = 8;
-    
+    int64 transit_time = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Order Item Price Info
@@ -1338,7 +1410,7 @@ message OrderItemPriceInfoData {
     option (routines.keys).keys = "order_item_price_info_id";
     option (routines.keys).combine = false;
     // keys: orderItemPriceInfoId
-
+    
     // fields
         
     string order_item_price_info_id = 1;    
@@ -1348,8 +1420,10 @@ message OrderItemPriceInfoData {
     string product_price_action_seq_id = 5;    
     routines.Currency modify_amount = 6;    
     string description = 7;    
-    string rate_code = 8;
-    
+    string rate_code = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Work Effort Good Standard
@@ -1358,7 +1432,7 @@ message WorkEffortGoodStandardData {
     option (routines.keys).keys = "work_effort_id, product_id, work_effort_good_std_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: workEffortId, productId, workEffortGoodStdTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string work_effort_id = 1;    
@@ -1368,8 +1442,10 @@ message WorkEffortGoodStandardData {
     google.protobuf.Timestamp thru_date = 5;
     string status_id = 6; // StatusItem    
     double estimated_quantity = 7;    
-    routines.Currency estimated_cost = 8;
-    
+    routines.Currency estimated_cost = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Person
@@ -1378,7 +1454,7 @@ message PersonData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     // keys: partyId
-
+    
     // fields
         
     string party_id = 1;    
@@ -1413,18 +1489,20 @@ message PersonData {
     int64 years_with_employer = 30;    
     int64 months_with_employer = 31;    
     routines.Indicator existing_customer = 32;    
-    string card_id = 33;
+    string card_id = 33;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 34;    
+    google.protobuf.Timestamp created_tx_stamp = 35;
     
     // relations
-    repeated PartyContactMechData party_contact_mech = 35; // ref: partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 36; // ref: partyId
-    repeated ProductStoreRoleData product_store_role = 37; // ref: partyId
-    repeated ShipmentData to_shipment = 38; // ref: partyId
-    repeated ShipmentData from_shipment = 39; // ref: partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 40; // ref: partyId
-    repeated UserLoginData user_login = 41; // ref: partyId
+    repeated PartyContactMechData party_contact_mech = 37; // ref: partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 38; // ref: partyId
+    repeated ProductStoreRoleData product_store_role = 39; // ref: partyId
+    repeated ShipmentData to_shipment = 40; // ref: partyId
+    repeated ShipmentData from_shipment = 41; // ref: partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 42; // ref: partyId
+    repeated UserLoginData user_login = 43; // ref: partyId
     
-    
+        
 }
 
 // Product Store Role Association
@@ -1433,7 +1511,7 @@ message ProductStoreRoleData {
     option (routines.keys).keys = "party_id, role_type_id, product_store_id, from_date";
     option (routines.keys).combine = true;
     // keys: partyId, roleTypeId, productStoreId, fromDate
-
+    string id = 200; 
     // fields
         
     string party_id = 1;
@@ -1441,8 +1519,10 @@ message ProductStoreRoleData {
     string product_store_id = 3;    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
-    int64 sequence_num = 6;
-    
+    int64 sequence_num = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Party Contact Mechanism
@@ -1451,7 +1531,7 @@ message PartyContactMechData {
     option (routines.keys).keys = "party_id, contact_mech_id, from_date";
     option (routines.keys).combine = true;
     // keys: partyId, contactMechId, fromDate
-
+    string id = 200; 
     // fields
         
     string party_id = 1;    
@@ -1464,8 +1544,10 @@ message PartyContactMechData {
     routines.Indicator verified = 8;    
     string comments = 9;    
     int64 years_with_contact_mech = 10;    
-    int64 months_with_contact_mech = 11;
-    
+    int64 months_with_contact_mech = 11;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 12;    
+    google.protobuf.Timestamp created_tx_stamp = 13;
+        
 }
 
 // Product Store Email Settings
@@ -1474,7 +1556,7 @@ message ProductStoreEmailSettingData {
     option (routines.keys).keys = "product_store_id, email_type";
     option (routines.keys).combine = true;
     // keys: productStoreId, emailType
-
+    string id = 200; 
     // fields
         
     string product_store_id = 1;
@@ -1485,8 +1567,10 @@ message ProductStoreEmailSettingData {
     string cc_address = 6;    
     string bcc_address = 7;    
     string subject = 8;    
-    string content_type = 9;
-    
+    string content_type = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
+        
 }
 
 // Electronic Text
@@ -1495,12 +1579,14 @@ message ElectronicTextData {
     option (routines.keys).keys = "data_resource_id";
     option (routines.keys).combine = false;
     // keys: dataResourceId
-
+    
     // fields
         
     string data_resource_id = 1;    
-    string text_data = 2;
-    
+    string text_data = 2;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 3;    
+    google.protobuf.Timestamp created_tx_stamp = 4;
+        
 }
 
 // Item Issuance
@@ -1509,7 +1595,7 @@ message ItemIssuanceData {
     option (routines.keys).keys = "item_issuance_id";
     option (routines.keys).combine = false;
     // keys: itemIssuanceId
-
+    
     // fields
         
     string item_issuance_id = 1;    
@@ -1524,8 +1610,10 @@ message ItemIssuanceData {
     google.protobuf.Timestamp issued_date_time = 10;    
     string issued_by_user_login_id = 11;    
     routines.FixedPoint quantity = 12;    
-    routines.FixedPoint cancel_quantity = 13;
-    
+    routines.FixedPoint cancel_quantity = 13;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 14;    
+    google.protobuf.Timestamp created_tx_stamp = 15;
+        
 }
 
 // Party Group
@@ -1534,7 +1622,7 @@ message PartyGroupData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     // keys: partyId
-
+    
     // fields
         
     string party_id = 1;    
@@ -1545,18 +1633,20 @@ message PartyGroupData {
     int64 num_employees = 6;    
     string ticker_symbol = 7;    
     string comments = 8;    
-    string logo_image_url = 9;
+    string logo_image_url = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
     
     // relations
-    repeated PartyContactMechData party_contact_mech = 11; // ref: partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 12; // ref: partyId
-    repeated ProductStoreRoleData product_store_role = 13; // ref: partyId
-    repeated ShipmentData to_shipment = 14; // ref: partyId
-    repeated ShipmentData from_shipment = 15; // ref: partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 16; // ref: partyId
-    repeated UserLoginData user_login = 17; // ref: partyId
+    repeated PartyContactMechData party_contact_mech = 13; // ref: partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 14; // ref: partyId
+    repeated ProductStoreRoleData product_store_role = 15; // ref: partyId
+    repeated ShipmentData to_shipment = 16; // ref: partyId
+    repeated ShipmentData from_shipment = 17; // ref: partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 18; // ref: partyId
+    repeated UserLoginData user_login = 19; // ref: partyId
     
-    
+        
 }
 
 // Product Promotion Category
@@ -1565,7 +1655,7 @@ message ProductPromoProductData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id, product_promo_cond_seq_id, product_id";
     option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productId
-
+    string id = 200; 
     // fields
         
     string product_promo_id = 1;    
@@ -1573,8 +1663,10 @@ message ProductPromoProductData {
     string product_promo_action_seq_id = 3;    
     string product_promo_cond_seq_id = 4;    
     string product_id = 5;
-    string product_promo_appl_enum_id = 6; // Enumeration
-    
+    string product_promo_appl_enum_id = 6; // Enumeration    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Product Review
@@ -1583,7 +1675,7 @@ message ProductReviewData {
     option (routines.keys).keys = "product_review_id";
     option (routines.keys).combine = false;
     // keys: productReviewId
-
+    
     // fields
         
     string product_review_id = 1;    
@@ -1594,8 +1686,10 @@ message ProductReviewData {
     routines.Indicator posted_anonymous = 6;    
     google.protobuf.Timestamp posted_date_time = 7;    
     routines.FixedPoint product_rating = 8;    
-    string product_review = 9;
-    
+    string product_review = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
+        
 }
 
 // The Order Payment Preference
@@ -1604,7 +1698,7 @@ message OrderPaymentPreferenceData {
     option (routines.keys).keys = "order_payment_preference_id";
     option (routines.keys).combine = false;
     // keys: orderPaymentPreferenceId
-
+    
     // fields
         
     string order_payment_preference_id = 1;    
@@ -1630,8 +1724,10 @@ message OrderPaymentPreferenceData {
     google.protobuf.Timestamp created_date = 21;    
     string created_by_user_login = 22;    
     google.protobuf.Timestamp last_modified_date = 23;    
-    string last_modified_by_user_login = 24;
-    
+    string last_modified_by_user_login = 24;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 25;    
+    google.protobuf.Timestamp created_tx_stamp = 26;
+        
 }
 
 // Supplier Product
@@ -1640,7 +1736,7 @@ message SupplierProductData {
     option (routines.keys).keys = "product_id, party_id, available_from_date, minimum_order_quantity, currency_uom_id";
     option (routines.keys).combine = true;
     // keys: productId, partyId, currencyUomId, minimumOrderQuantity, availableFromDate
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
@@ -1662,8 +1758,10 @@ message SupplierProductData {
     string supplier_product_name = 17;    
     string supplier_product_id = 18;    
     routines.Indicator can_drop_ship = 19;    
-    string comments = 20;
-    
+    string comments = 20;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 21;    
+    google.protobuf.Timestamp created_tx_stamp = 22;
+        
 }
 
 // Order Status
@@ -1672,7 +1770,7 @@ message OrderStatusData {
     option (routines.keys).keys = "order_status_id";
     option (routines.keys).combine = false;
     // keys: orderStatusId
-
+    
     // fields
         
     string order_status_id = 1;
@@ -1682,8 +1780,10 @@ message OrderStatusData {
     string order_payment_preference_id = 5;    
     google.protobuf.Timestamp status_datetime = 6;    
     string status_user_login = 7;    
-    string change_reason = 8;
-    
+    string change_reason = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Party
@@ -1692,7 +1792,7 @@ message PartyData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     // keys: partyId
-
+    
     // fields
         
     string party_id = 1;    
@@ -1704,60 +1804,62 @@ message PartyData {
     google.protobuf.Timestamp created_date = 7;    
     google.protobuf.Timestamp last_modified_date = 8;
     string data_source_id = 9; // DataSource    
-    routines.Indicator is_unread = 10;
+    routines.Indicator is_unread = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
     
     // relations
-    UserLoginData created_by_user_login = 11; // ref: createdByUserLogin
-    UserLoginData last_modified_by_user_login = 12; // ref: lastModifiedByUserLogin
-    repeated AcctgTransData acctg_trans = 13; // ref: partyId
-    repeated AcctgTransEntryData acctg_trans_entry = 14; // ref: partyId
-    repeated AgreementData from_agreement = 15; // ref: partyId
-    repeated AgreementData to_agreement = 16; // ref: partyId
-    repeated BillingAccountRoleData billing_account_role = 17; // ref: partyId
-    repeated CarrierShipmentBoxTypeData carrier_shipment_box_type = 18; // ref: partyId
-    repeated CarrierShipmentMethodData carrier_shipment_method = 19; // ref: partyId
-    repeated CustRequestData from_cust_request = 20; // ref: partyId
-    repeated CustRequestTypeData cust_request_type = 21; // ref: partyId
-    repeated FixedAssetData fixed_asset = 22; // ref: partyId
-    repeated InventoryItemData inventory_item = 23; // ref: partyId
-    repeated InventoryItemData owner_inventory_item = 24; // ref: partyId
-    repeated InvoiceData from_invoice = 25; // ref: partyId
-    repeated InvoiceData invoice = 26; // ref: partyId
-    repeated InvoiceItemData tax_authority_invoice_item = 27; // ref: partyId
-    repeated InvoiceItemData override_org_invoice_item = 28; // ref: partyId
-    repeated OrderItemShipGroupData supplier_order_item_ship_group = 29; // ref: partyId
-    repeated OrderItemShipGroupData vendor_order_item_ship_group = 30; // ref: partyId
-    repeated OrderItemShipGroupData carrier_order_item_ship_group = 31; // ref: partyId
-    repeated OrderRoleData order_role = 32; // ref: partyId
-    repeated PartyContactMechData party_contact_mech = 33; // ref: partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 34; // ref: partyId
-    repeated PartyGeoPointData party_geo_point = 35; // ref: partyId
-    PartyGroupData party_group = 36; // ref: partyId
-    repeated PartyRelationshipData from_party_relationship = 37; // ref: partyId
-    repeated PartyRelationshipData to_party_relationship = 38; // ref: partyId
-    repeated PartyRoleData party_role = 39; // ref: partyId
-    repeated PartyStatusData party_status = 40; // ref: partyId
-    repeated PartyTaxAuthInfoData party_tax_auth_info = 41; // ref: partyId
-    repeated PaymentData from_payment = 42; // ref: partyId
-    repeated PaymentData to_payment = 43; // ref: partyId
-    repeated PaymentMethodData payment_method = 44; // ref: partyId
-    PersonData person = 45; // ref: partyId
-    repeated ProductCategoryRoleData product_category_role = 46; // ref: partyId
-    repeated ProductPriceData tax_authority_product_price = 47; // ref: partyId
-    repeated ProductPromoData product_promo = 48; // ref: partyId
-    repeated ProductStoreData product_store = 49; // ref: partyId
-    repeated ProductStoreRoleData product_store_role = 50; // ref: partyId
-    repeated ProductStoreShipmentMethData product_store_shipment_meth = 51; // ref: partyId
-    repeated QuoteData quote = 52; // ref: partyId
-    repeated QuoteRoleData quote_role = 53; // ref: partyId
-    repeated ShipmentData to_shipment = 54; // ref: partyId
-    repeated ShipmentData from_shipment = 55; // ref: partyId
-    repeated ShipmentCostEstimateData shipment_cost_estimate = 56; // ref: partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 57; // ref: partyId
-    repeated SupplierProductData supplier_product = 58; // ref: partyId
-    repeated UserLoginData user_login = 59; // ref: partyId
+    UserLoginData created_by_user_login = 13; // ref: createdByUserLogin
+    UserLoginData last_modified_by_user_login = 14; // ref: lastModifiedByUserLogin
+    repeated AcctgTransData acctg_trans = 15; // ref: partyId
+    repeated AcctgTransEntryData acctg_trans_entry = 16; // ref: partyId
+    repeated AgreementData from_agreement = 17; // ref: partyId
+    repeated AgreementData to_agreement = 18; // ref: partyId
+    repeated BillingAccountRoleData billing_account_role = 19; // ref: partyId
+    repeated CarrierShipmentBoxTypeData carrier_shipment_box_type = 20; // ref: partyId
+    repeated CarrierShipmentMethodData carrier_shipment_method = 21; // ref: partyId
+    repeated CustRequestData from_cust_request = 22; // ref: partyId
+    repeated CustRequestTypeData cust_request_type = 23; // ref: partyId
+    repeated FixedAssetData fixed_asset = 24; // ref: partyId
+    repeated InventoryItemData inventory_item = 25; // ref: partyId
+    repeated InventoryItemData owner_inventory_item = 26; // ref: partyId
+    repeated InvoiceData from_invoice = 27; // ref: partyId
+    repeated InvoiceData invoice = 28; // ref: partyId
+    repeated InvoiceItemData tax_authority_invoice_item = 29; // ref: partyId
+    repeated InvoiceItemData override_org_invoice_item = 30; // ref: partyId
+    repeated OrderItemShipGroupData supplier_order_item_ship_group = 31; // ref: partyId
+    repeated OrderItemShipGroupData vendor_order_item_ship_group = 32; // ref: partyId
+    repeated OrderItemShipGroupData carrier_order_item_ship_group = 33; // ref: partyId
+    repeated OrderRoleData order_role = 34; // ref: partyId
+    repeated PartyContactMechData party_contact_mech = 35; // ref: partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 36; // ref: partyId
+    repeated PartyGeoPointData party_geo_point = 37; // ref: partyId
+    PartyGroupData party_group = 38; // ref: partyId
+    repeated PartyRelationshipData from_party_relationship = 39; // ref: partyId
+    repeated PartyRelationshipData to_party_relationship = 40; // ref: partyId
+    repeated PartyRoleData party_role = 41; // ref: partyId
+    repeated PartyStatusData party_status = 42; // ref: partyId
+    repeated PartyTaxAuthInfoData party_tax_auth_info = 43; // ref: partyId
+    repeated PaymentData from_payment = 44; // ref: partyId
+    repeated PaymentData to_payment = 45; // ref: partyId
+    repeated PaymentMethodData payment_method = 46; // ref: partyId
+    PersonData person = 47; // ref: partyId
+    repeated ProductCategoryRoleData product_category_role = 48; // ref: partyId
+    repeated ProductPriceData tax_authority_product_price = 49; // ref: partyId
+    repeated ProductPromoData product_promo = 50; // ref: partyId
+    repeated ProductStoreData product_store = 51; // ref: partyId
+    repeated ProductStoreRoleData product_store_role = 52; // ref: partyId
+    repeated ProductStoreShipmentMethData product_store_shipment_meth = 53; // ref: partyId
+    repeated QuoteData quote = 54; // ref: partyId
+    repeated QuoteRoleData quote_role = 55; // ref: partyId
+    repeated ShipmentData to_shipment = 56; // ref: partyId
+    repeated ShipmentData from_shipment = 57; // ref: partyId
+    repeated ShipmentCostEstimateData shipment_cost_estimate = 58; // ref: partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 59; // ref: partyId
+    repeated SupplierProductData supplier_product = 60; // ref: partyId
+    repeated UserLoginData user_login = 61; // ref: partyId
     
-    
+        
 }
 
 // Agreement Item
@@ -1766,7 +1868,7 @@ message AgreementItemData {
     option (routines.keys).keys = "agreement_id, agreement_item_seq_id";
     option (routines.keys).combine = true;
     // keys: agreementId, agreementItemSeqId
-
+    string id = 200; 
     // fields
         
     string agreement_id = 1;    
@@ -1774,8 +1876,10 @@ message AgreementItemData {
     string agreement_item_type_id = 3;    
     string currency_uom_id = 4;    
     string agreement_text = 5;    
-    bytes agreement_image = 6;
-    
+    bytes agreement_image = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Party Tax Information
@@ -1784,7 +1888,7 @@ message PartyTaxAuthInfoData {
     option (routines.keys).keys = "party_id, tax_auth_geo_id, tax_auth_party_id, from_date";
     option (routines.keys).combine = true;
     // keys: partyId, taxAuthGeoId, taxAuthPartyId, fromDate
-
+    string id = 200; 
     // fields
         
     string party_id = 1;    
@@ -1794,8 +1898,10 @@ message PartyTaxAuthInfoData {
     google.protobuf.Timestamp thru_date = 5;    
     string party_tax_id = 6;    
     routines.Indicator is_exempt = 7;    
-    routines.Indicator is_nexus = 8;
-    
+    routines.Indicator is_nexus = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Accounting Transaction
@@ -1804,7 +1910,7 @@ message AcctgTransData {
     option (routines.keys).keys = "acctg_trans_id";
     option (routines.keys).combine = false;
     // keys: acctgTransId
-
+    
     // fields
         
     string acctg_trans_id = 1;    
@@ -1834,8 +1940,10 @@ message AcctgTransData {
     google.protobuf.Timestamp created_date = 25;    
     string created_by_user_login = 26;    
     google.protobuf.Timestamp last_modified_date = 27;    
-    string last_modified_by_user_login = 28;
-    
+    string last_modified_by_user_login = 28;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 29;    
+    google.protobuf.Timestamp created_tx_stamp = 30;
+        
 }
 
 // Data Object
@@ -1844,7 +1952,7 @@ message DataResourceData {
     option (routines.keys).keys = "data_resource_id";
     option (routines.keys).combine = false;
     // keys: dataResourceId
-
+    
     // fields
         
     string data_resource_id = 1;    
@@ -1865,8 +1973,10 @@ message DataResourceData {
     google.protobuf.Timestamp created_date = 16;    
     string created_by_user_login = 17;    
     google.protobuf.Timestamp last_modified_date = 18;    
-    string last_modified_by_user_login = 19;
-    
+    string last_modified_by_user_login = 19;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 20;    
+    google.protobuf.Timestamp created_tx_stamp = 21;
+        
 }
 
 // Shipment Item
@@ -1875,15 +1985,17 @@ message ShipmentItemData {
     option (routines.keys).keys = "shipment_id, shipment_item_seq_id";
     option (routines.keys).combine = true;
     // keys: shipmentId, shipmentItemSeqId
-
+    string id = 200; 
     // fields
         
     string shipment_id = 1;    
     string shipment_item_seq_id = 2;    
     string product_id = 3;    
     routines.FixedPoint quantity = 4;    
-    string shipment_content_description = 5;
-    
+    string shipment_content_description = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Facility Contact Mechanism
@@ -1892,7 +2004,7 @@ message FacilityContactMechData {
     option (routines.keys).keys = "facility_id, contact_mech_id, from_date";
     option (routines.keys).combine = true;
     // keys: facilityId, contactMechId, fromDate
-
+    string id = 200; 
     // fields
         
     string facility_id = 1;    
@@ -1900,8 +2012,10 @@ message FacilityContactMechData {
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;    
     string extension = 5;    
-    string comments = 6;
-    
+    string comments = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Agreement
@@ -1910,7 +2024,7 @@ message AgreementData {
     option (routines.keys).keys = "agreement_id";
     option (routines.keys).combine = false;
     // keys: agreementId
-
+    
     // fields
         
     string agreement_id = 1;    
@@ -1924,8 +2038,10 @@ message AgreementData {
     google.protobuf.Timestamp from_date = 9;    
     google.protobuf.Timestamp thru_date = 10;    
     string description = 11;    
-    string text_data = 12;
-    
+    string text_data = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
+        
 }
 
 // Catalog Category Association
@@ -1934,7 +2050,7 @@ message ProdCatalogCategoryData {
     option (routines.keys).keys = "prod_catalog_id, product_category_id, prod_catalog_category_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: prodCatalogId, productCategoryId, prodCatalogCategoryTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string prod_catalog_id = 1;    
@@ -1942,8 +2058,10 @@ message ProdCatalogCategoryData {
     string prod_catalog_category_type_id = 3; // ProdCatalogCategoryType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
-    int64 sequence_num = 6;
-    
+    int64 sequence_num = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Product Category Role
@@ -1952,7 +2070,7 @@ message ProductCategoryRoleData {
     option (routines.keys).keys = "product_category_id, party_id, role_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: productCategoryId, partyId, roleTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_category_id = 1;    
@@ -1960,8 +2078,10 @@ message ProductCategoryRoleData {
     string role_type_id = 3; // RoleType    
     google.protobuf.Timestamp from_date = 4;    
     google.protobuf.Timestamp thru_date = 5;    
-    string comments = 6;
-    
+    string comments = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Order Item
@@ -1970,7 +2090,7 @@ message OrderItemData {
     option (routines.keys).keys = "order_id, order_item_seq_id";
     option (routines.keys).combine = true;
     // keys: orderId, orderItemSeqId
-
+    string id = 200; 
     // fields
         
     string order_id = 1;    
@@ -2014,28 +2134,30 @@ message OrderItemData {
     google.protobuf.Timestamp reserve_after_date = 39;    
     google.protobuf.Timestamp cancel_back_order_date = 40;    
     string override_gl_account_id = 41;    
-    string sales_opportunity_id = 42;
+    string sales_opportunity_id = 42;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 43;    
+    google.protobuf.Timestamp created_tx_stamp = 44;
     
     // relations
-    OrderHeaderData order_header = 43; // ref: orderId
-    ProductData product = 44; // ref: productId
-    InventoryItemData from_inventory_item = 45; // ref: fromInventoryItemId
-    repeated ProductFacilityLocationData product_facility_location = 46; // ref: productId
-    UserLoginData dont_cancel_set_user_login = 47; // ref: dontCancelSetUserLogin
-    QuoteItemData quote_item = 48; // ref: quoteId + quoteItemSeqId
-    UserLoginData change_by_user_login = 49; // ref: changeByUserLoginId
-    repeated FixedAssetData acquire_fixed_asset = 50; // ref: orderId + orderItemSeqId
-    repeated ItemIssuanceData item_issuance = 51; // ref: orderId + orderItemSeqId
-    repeated OrderAdjustmentData order_adjustment = 52; // ref: orderId + orderItemSeqId
-    repeated OrderItemBillingData order_item_billing = 53; // ref: orderId + orderItemSeqId
-    repeated OrderItemPriceInfoData order_item_price_info = 54; // ref: orderId + orderItemSeqId
-    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 55; // ref: orderId + orderItemSeqId
-    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 56; // ref: orderId + orderItemSeqId
-    repeated OrderPaymentPreferenceData order_payment_preference = 57; // ref: orderId + orderItemSeqId
-    repeated OrderStatusData order_status = 58; // ref: orderId + orderItemSeqId
-    repeated ShipmentReceiptData shipment_receipt = 59; // ref: orderId + orderItemSeqId
+    OrderHeaderData order_header = 45; // ref: orderId
+    ProductData product = 46; // ref: productId
+    InventoryItemData from_inventory_item = 47; // ref: fromInventoryItemId
+    repeated ProductFacilityLocationData product_facility_location = 48; // ref: productId
+    UserLoginData dont_cancel_set_user_login = 49; // ref: dontCancelSetUserLogin
+    QuoteItemData quote_item = 50; // ref: quoteId + quoteItemSeqId
+    UserLoginData change_by_user_login = 51; // ref: changeByUserLoginId
+    repeated FixedAssetData acquire_fixed_asset = 52; // ref: orderId + orderItemSeqId
+    repeated ItemIssuanceData item_issuance = 53; // ref: orderId + orderItemSeqId
+    repeated OrderAdjustmentData order_adjustment = 54; // ref: orderId + orderItemSeqId
+    repeated OrderItemBillingData order_item_billing = 55; // ref: orderId + orderItemSeqId
+    repeated OrderItemPriceInfoData order_item_price_info = 56; // ref: orderId + orderItemSeqId
+    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 57; // ref: orderId + orderItemSeqId
+    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 58; // ref: orderId + orderItemSeqId
+    repeated OrderPaymentPreferenceData order_payment_preference = 59; // ref: orderId + orderItemSeqId
+    repeated OrderStatusData order_status = 60; // ref: orderId + orderItemSeqId
+    repeated ShipmentReceiptData shipment_receipt = 61; // ref: orderId + orderItemSeqId
     
-    
+        
 }
 
 // Shipment Time Estimation Entity
@@ -2044,7 +2166,7 @@ message ShipmentTimeEstimateData {
     option (routines.keys).keys = "shipment_method_type_id, party_id, role_type_id, geo_id_to, geo_id_from, from_date";
     option (routines.keys).combine = true;
     // keys: shipmentMethodTypeId, partyId, roleTypeId, geoIdTo, geoIdFrom, fromDate
-
+    string id = 200; 
     // fields
         
     string shipment_method_type_id = 1;    
@@ -2056,8 +2178,10 @@ message ShipmentTimeEstimateData {
     google.protobuf.Timestamp thru_date = 7;    
     routines.FixedPoint lead_time = 8;
     string lead_time_uom_id = 9; // Uom    
-    int64 sequence_number = 10;
-    
+    int64 sequence_number = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
+        
 }
 
 // Product Category Data Object
@@ -2066,7 +2190,7 @@ message ProductCategoryContentData {
     option (routines.keys).keys = "product_category_id, content_id, prod_cat_content_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: productCategoryId, contentId, prodCatContentTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_category_id = 1;    
@@ -2077,8 +2201,10 @@ message ProductCategoryContentData {
     google.protobuf.Timestamp purchase_from_date = 6;    
     google.protobuf.Timestamp purchase_thru_date = 7;    
     int64 use_count_limit = 8;    
-    routines.FixedPoint use_days_limit = 9;
-    
+    routines.FixedPoint use_days_limit = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
+        
 }
 
 // Order Item Package Association
@@ -2087,15 +2213,17 @@ message OrderItemShipGroupAssocData {
     option (routines.keys).keys = "order_id, order_item_seq_id, ship_group_seq_id";
     option (routines.keys).combine = true;
     // keys: orderId, orderItemSeqId, shipGroupSeqId
-
+    string id = 200; 
     // fields
         
     string order_id = 1;    
     string order_item_seq_id = 2;    
     string ship_group_seq_id = 3;    
     routines.FixedPoint quantity = 4;    
-    routines.FixedPoint cancel_quantity = 5;
-    
+    routines.FixedPoint cancel_quantity = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Content Association
@@ -2104,7 +2232,7 @@ message ContentAssocData {
     option (routines.keys).keys = "content_id, content_id_to, content_assoc_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: contentId, contentIdTo, contentAssocTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string content_id = 1;    
@@ -2121,8 +2249,10 @@ message ContentAssocData {
     google.protobuf.Timestamp created_date = 12;    
     string created_by_user_login = 13;    
     google.protobuf.Timestamp last_modified_date = 14;    
-    string last_modified_by_user_login = 15;
-    
+    string last_modified_by_user_login = 15;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 16;    
+    google.protobuf.Timestamp created_tx_stamp = 17;
+        
 }
 
 // Quote Item
@@ -2131,7 +2261,7 @@ message QuoteItemData {
     option (routines.keys).keys = "quote_id, quote_item_seq_id";
     option (routines.keys).combine = true;
     // keys: quoteId, quoteItemSeqId
-
+    string id = 200; 
     // fields
         
     string quote_id = 1;    
@@ -2154,8 +2284,10 @@ message QuoteItemData {
     google.protobuf.Timestamp estimated_delivery_date = 18;    
     string comments = 19;    
     routines.Indicator is_promo = 20;    
-    int64 lead_time_days = 21;
-    
+    int64 lead_time_days = 21;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 22;    
+    google.protobuf.Timestamp created_tx_stamp = 23;
+        
 }
 
 // Catalog
@@ -2164,7 +2296,7 @@ message ProdCatalogData {
     option (routines.keys).keys = "prod_catalog_id";
     option (routines.keys).combine = false;
     // keys: prodCatalogId
-
+    
     // fields
         
     string prod_catalog_id = 1;    
@@ -2175,8 +2307,10 @@ message ProdCatalogData {
     string content_path_prefix = 6;    
     string template_path_prefix = 7;    
     routines.Indicator view_allow_perm_reqd = 8;    
-    routines.Indicator purchase_allow_perm_reqd = 9;
-    
+    routines.Indicator purchase_allow_perm_reqd = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
+        
 }
 
 // Product Promotion Condition
@@ -2185,7 +2319,7 @@ message ProductPromoCondData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_cond_seq_id";
     option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId, productPromoCondSeqId
-
+    string id = 200; 
     // fields
         
     string product_promo_id = 1;    
@@ -2195,8 +2329,10 @@ message ProductPromoCondData {
     string input_param_enum_id = 5; // Enumeration
     string operator_enum_id = 6; // Enumeration    
     string cond_value = 7;    
-    string other_value = 8;
-    
+    string other_value = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Facility Location
@@ -2205,7 +2341,7 @@ message FacilityLocationData {
     option (routines.keys).keys = "facility_id, location_seq_id";
     option (routines.keys).combine = true;
     // keys: facilityId, locationSeqId
-
+    string id = 200; 
     // fields
         
     string facility_id = 1;    
@@ -2216,8 +2352,10 @@ message FacilityLocationData {
     string section_id = 6;    
     string level_id = 7;    
     string position_id = 8;    
-    string geo_point_id = 9;
-    
+    string geo_point_id = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
+        
 }
 
 // Product Promotion Category
@@ -2226,7 +2364,7 @@ message ProductPromoCategoryData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id, product_promo_cond_seq_id, product_category_id, and_group_id";
     option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productCategoryId, andGroupId
-
+    string id = 200; 
     // fields
         
     string product_promo_id = 1;    
@@ -2236,8 +2374,10 @@ message ProductPromoCategoryData {
     string product_category_id = 5;    
     string and_group_id = 6;
     string product_promo_appl_enum_id = 7; // Enumeration    
-    routines.Indicator include_sub_categories = 8;
-    
+    routines.Indicator include_sub_categories = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Tracks a history of the status of a Party
@@ -2246,14 +2386,16 @@ message PartyStatusData {
     option (routines.keys).keys = "status_id, party_id, status_date";
     option (routines.keys).combine = true;
     // keys: statusId, partyId, statusDate
-
+    string id = 200; 
     // fields
     
     string status_id = 1; // StatusItem    
     string party_id = 2;    
     google.protobuf.Timestamp status_date = 3;    
-    string change_by_user_login_id = 4;
-    
+    string change_by_user_login_id = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Product Facility
@@ -2262,15 +2404,17 @@ message ProductFacilityLocationData {
     option (routines.keys).keys = "product_id, facility_id, location_seq_id";
     option (routines.keys).combine = true;
     // keys: productId, facilityId, locationSeqId
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
     string facility_id = 2;    
     string location_seq_id = 3;    
     routines.FixedPoint minimum_stock = 4;    
-    routines.FixedPoint move_quantity = 5;
-    
+    routines.FixedPoint move_quantity = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Shipment Contact Mechanism Type
@@ -2279,7 +2423,7 @@ message ShipmentBoxTypeData {
     option (routines.keys).keys = "shipment_box_type_id";
     option (routines.keys).combine = false;
     // keys: shipmentBoxTypeId
-
+    
     // fields
         
     string shipment_box_type_id = 1;    
@@ -2289,8 +2433,10 @@ message ShipmentBoxTypeData {
     routines.FixedPoint box_width = 5;    
     routines.FixedPoint box_height = 6;
     string weight_uom_id = 7; // Uom    
-    routines.FixedPoint box_weight = 8;
-    
+    routines.FixedPoint box_weight = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Shipment Package Route Segment
@@ -2299,7 +2445,7 @@ message ShipmentPackageRouteSegData {
     option (routines.keys).keys = "shipment_id, shipment_package_seq_id, shipment_route_segment_id";
     option (routines.keys).combine = true;
     // keys: shipmentId, shipmentPackageSeqId, shipmentRouteSegmentId
-
+    string id = 200; 
     // fields
         
     string shipment_id = 1;    
@@ -2317,8 +2463,10 @@ message ShipmentPackageRouteSegData {
     routines.Currency package_other_cost = 13;    
     routines.Currency cod_amount = 14;    
     routines.Currency insured_amount = 15;
-    string currency_uom_id = 16; // Uom
-    
+    string currency_uom_id = 16; // Uom    
+    google.protobuf.Timestamp last_updated_tx_stamp = 17;    
+    google.protobuf.Timestamp created_tx_stamp = 18;
+        
 }
 
 // Geographic Location
@@ -2327,7 +2475,7 @@ message GeoPointData {
     option (routines.keys).keys = "geo_point_id";
     option (routines.keys).combine = false;
     // keys: geoPointId
-
+    
     // fields
         
     string geo_point_id = 1;
@@ -2338,8 +2486,10 @@ message GeoPointData {
     string longitude = 6;    
     routines.FixedPoint elevation = 7;
     string elevation_uom_id = 8; // Uom    
-    string information = 9;
-    
+    string information = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
+        
 }
 
 // Subscription Resource
@@ -2348,7 +2498,7 @@ message SubscriptionResourceData {
     option (routines.keys).keys = "subscription_resource_id";
     option (routines.keys).combine = false;
     // keys: subscriptionResourceId
-
+    
     // fields
         
     string subscription_resource_id = 1;    
@@ -2356,8 +2506,10 @@ message SubscriptionResourceData {
     string description = 3;    
     string content_id = 4;    
     string web_site_id = 5;    
-    string service_name_on_expiry = 6;
-    
+    string service_name_on_expiry = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Product Feature Applicability
@@ -2366,7 +2518,7 @@ message ProductFeatureApplData {
     option (routines.keys).keys = "product_id, product_feature_id, from_date";
     option (routines.keys).combine = true;
     // keys: productId, productFeatureId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
@@ -2376,8 +2528,10 @@ message ProductFeatureApplData {
     google.protobuf.Timestamp thru_date = 5;    
     int64 sequence_num = 6;    
     routines.Currency amount = 7;    
-    routines.Currency recurring_amount = 8;
-    
+    routines.Currency recurring_amount = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Party Contact Mechanism Purpose
@@ -2386,15 +2540,17 @@ message PartyContactMechPurposeData {
     option (routines.keys).keys = "party_id, contact_mech_id, contact_mech_purpose_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: partyId, contactMechId, contactMechPurposeTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string party_id = 1;    
     string contact_mech_id = 2;
     string contact_mech_purpose_type_id = 3; // ContactMechPurposeType    
     google.protobuf.Timestamp from_date = 4;    
-    google.protobuf.Timestamp thru_date = 5;
-    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Recurrence Info
@@ -2403,7 +2559,7 @@ message RecurrenceInfoData {
     option (routines.keys).keys = "recurrence_info_id";
     option (routines.keys).combine = false;
     // keys: recurrenceInfoId
-
+    
     // fields
         
     string recurrence_info_id = 1;    
@@ -2412,8 +2568,10 @@ message RecurrenceInfoData {
     string recurrence_date_times = 4;    
     string exception_rule_id = 5;    
     string recurrence_rule_id = 6;    
-    int64 recurrence_count = 7;
-    
+    int64 recurrence_count = 7;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 8;    
+    google.protobuf.Timestamp created_tx_stamp = 9;
+        
 }
 
 // Product Feature Category
@@ -2422,13 +2580,15 @@ message ProductFeatureCategoryData {
     option (routines.keys).keys = "product_feature_category_id";
     option (routines.keys).combine = false;
     // keys: productFeatureCategoryId
-
+    
     // fields
         
     string product_feature_category_id = 1;    
     string parent_category_id = 2;    
-    string description = 3;
-    
+    string description = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
 }
 
 // Facility Location Geo Location with history
@@ -2437,15 +2597,17 @@ message FacilityLocationGeoPointData {
     option (routines.keys).keys = "facility_id, location_seq_id, geo_point_id, from_date";
     option (routines.keys).combine = true;
     // keys: facilityId, locationSeqId, geoPointId, fromDate
-
+    string id = 200; 
     // fields
         
     string facility_id = 1;    
     string location_seq_id = 2;    
     string geo_point_id = 3;    
     google.protobuf.Timestamp from_date = 4;    
-    google.protobuf.Timestamp thru_date = 5;
-    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Security Component - User Login Security Group
@@ -2454,14 +2616,16 @@ message UserLoginSecurityGroupData {
     option (routines.keys).keys = "user_login_id, group_id, from_date";
     option (routines.keys).combine = true;
     // keys: userLoginId, groupId, fromDate
-
+    string id = 200; 
     // fields
         
     string user_login_id = 1;    
     string group_id = 2;    
     google.protobuf.Timestamp from_date = 3;    
-    google.protobuf.Timestamp thru_date = 4;
-    
+    google.protobuf.Timestamp thru_date = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Product Store Catalog Association
@@ -2470,15 +2634,17 @@ message ProductStoreCatalogData {
     option (routines.keys).keys = "product_store_id, prod_catalog_id, from_date";
     option (routines.keys).combine = true;
     // keys: productStoreId, prodCatalogId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_store_id = 1;    
     string prod_catalog_id = 2;    
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;    
-    int64 sequence_num = 5;
-    
+    int64 sequence_num = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // UserLogin
@@ -2487,7 +2653,7 @@ message UserLoginData {
     option (routines.keys).keys = "user_login_id";
     option (routines.keys).combine = false;
     // keys: userLoginId
-
+    
     // fields
         
     string user_login_id = 1;    
@@ -2504,44 +2670,46 @@ message UserLoginData {
     int64 successive_failed_logins = 12;    
     string external_auth_id = 13;    
     string user_ldap_dn = 14;    
-    string disabled_by = 15;
+    string disabled_by = 15;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 16;    
+    google.protobuf.Timestamp created_tx_stamp = 17;
     
     // relations
-    PartyData party = 16; // ref: partyId
-    PersonData person = 17; // ref: partyId
-    PartyGroupData party_group = 18; // ref: partyId
-    repeated ContentData created_by_content = 19; // ref: userLoginId
-    repeated ContentData last_modified_by_content = 20; // ref: userLoginId
-    repeated ContentAssocData created_by_content_assoc = 21; // ref: userLoginId
-    repeated ContentAssocData last_modified_by_content_assoc = 22; // ref: userLoginId
-    repeated DataResourceData created_by_data_resource = 23; // ref: userLoginId
-    repeated DataResourceData last_modified_by_data_resource = 24; // ref: userLoginId
-    repeated ItemIssuanceData issued_by_item_issuance = 25; // ref: userLoginId
-    repeated OrderAdjustmentData order_adjustment = 26; // ref: userLoginId
-    repeated OrderHeaderData created_by_order_header = 27; // ref: userLoginId
-    repeated OrderItemData dont_cancel_set_order_item = 28; // ref: userLoginId
-    repeated OrderItemData change_by_order_item = 29; // ref: userLoginId
-    repeated OrderPaymentPreferenceData order_payment_preference = 30; // ref: userLoginId
-    repeated OrderStatusData order_status = 31; // ref: userLoginId
-    repeated PartyData created_by_party = 32; // ref: userLoginId
-    repeated PartyData last_modified_by_party = 33; // ref: userLoginId
-    repeated PartyStatusData change_by_party_status = 34; // ref: userLoginId
-    repeated ProductData created_by_product = 35; // ref: userLoginId
-    repeated ProductData last_modified_by_product = 36; // ref: userLoginId
-    repeated ProductFeaturePriceData created_by_product_feature_price = 37; // ref: userLoginId
-    repeated ProductFeaturePriceData last_modified_by_product_feature_price = 38; // ref: userLoginId
-    repeated ProductPriceData created_by_product_price = 39; // ref: userLoginId
-    repeated ProductPriceData last_modified_by_product_price = 40; // ref: userLoginId
-    repeated ProductPromoData created_by_product_promo = 41; // ref: userLoginId
-    repeated ProductPromoData last_modified_by_product_promo = 42; // ref: userLoginId
-    repeated ProductPromoCodeData created_by_product_promo_code = 43; // ref: userLoginId
-    repeated ProductPromoCodeData last_modified_by_product_promo_code = 44; // ref: userLoginId
-    repeated ProductReviewData product_review = 45; // ref: userLoginId
-    repeated ShipmentReceiptData shipment_receipt = 46; // ref: userLoginId
-    repeated ShipmentStatusData change_by_shipment_status = 47; // ref: userLoginId
-    repeated UserLoginSecurityGroupData user_login_security_group = 48; // ref: userLoginId
+    PartyData party = 18; // ref: partyId
+    PersonData person = 19; // ref: partyId
+    PartyGroupData party_group = 20; // ref: partyId
+    repeated ContentData created_by_content = 21; // ref: userLoginId
+    repeated ContentData last_modified_by_content = 22; // ref: userLoginId
+    repeated ContentAssocData created_by_content_assoc = 23; // ref: userLoginId
+    repeated ContentAssocData last_modified_by_content_assoc = 24; // ref: userLoginId
+    repeated DataResourceData created_by_data_resource = 25; // ref: userLoginId
+    repeated DataResourceData last_modified_by_data_resource = 26; // ref: userLoginId
+    repeated ItemIssuanceData issued_by_item_issuance = 27; // ref: userLoginId
+    repeated OrderAdjustmentData order_adjustment = 28; // ref: userLoginId
+    repeated OrderHeaderData created_by_order_header = 29; // ref: userLoginId
+    repeated OrderItemData dont_cancel_set_order_item = 30; // ref: userLoginId
+    repeated OrderItemData change_by_order_item = 31; // ref: userLoginId
+    repeated OrderPaymentPreferenceData order_payment_preference = 32; // ref: userLoginId
+    repeated OrderStatusData order_status = 33; // ref: userLoginId
+    repeated PartyData created_by_party = 34; // ref: userLoginId
+    repeated PartyData last_modified_by_party = 35; // ref: userLoginId
+    repeated PartyStatusData change_by_party_status = 36; // ref: userLoginId
+    repeated ProductData created_by_product = 37; // ref: userLoginId
+    repeated ProductData last_modified_by_product = 38; // ref: userLoginId
+    repeated ProductFeaturePriceData created_by_product_feature_price = 39; // ref: userLoginId
+    repeated ProductFeaturePriceData last_modified_by_product_feature_price = 40; // ref: userLoginId
+    repeated ProductPriceData created_by_product_price = 41; // ref: userLoginId
+    repeated ProductPriceData last_modified_by_product_price = 42; // ref: userLoginId
+    repeated ProductPromoData created_by_product_promo = 43; // ref: userLoginId
+    repeated ProductPromoData last_modified_by_product_promo = 44; // ref: userLoginId
+    repeated ProductPromoCodeData created_by_product_promo_code = 45; // ref: userLoginId
+    repeated ProductPromoCodeData last_modified_by_product_promo_code = 46; // ref: userLoginId
+    repeated ProductReviewData product_review = 47; // ref: userLoginId
+    repeated ShipmentReceiptData shipment_receipt = 48; // ref: userLoginId
+    repeated ShipmentStatusData change_by_shipment_status = 49; // ref: userLoginId
+    repeated UserLoginSecurityGroupData user_login_security_group = 50; // ref: userLoginId
     
-    
+        
 }
 
 // Product Pice Rule
@@ -2550,7 +2718,7 @@ message ProductPriceRuleData {
     option (routines.keys).keys = "product_price_rule_id";
     option (routines.keys).combine = false;
     // keys: productPriceRuleId
-
+    
     // fields
         
     string product_price_rule_id = 1;    
@@ -2558,8 +2726,10 @@ message ProductPriceRuleData {
     string description = 3;    
     routines.Indicator is_sale = 4;    
     google.protobuf.Timestamp from_date = 5;    
-    google.protobuf.Timestamp thru_date = 6;
-    
+    google.protobuf.Timestamp thru_date = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Party Role
@@ -2568,12 +2738,14 @@ message PartyRoleData {
     option (routines.keys).keys = "party_id, role_type_id";
     option (routines.keys).combine = true;
     // keys: partyId, roleTypeId
-
+    string id = 200; 
     // fields
         
     string party_id = 1;    
-    string role_type_id = 2;
-    
+    string role_type_id = 2;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 3;    
+    google.protobuf.Timestamp created_tx_stamp = 4;
+        
 }
 
 // Product Facility
@@ -2582,7 +2754,7 @@ message ProductFacilityData {
     option (routines.keys).keys = "product_id, facility_id";
     option (routines.keys).combine = true;
     // keys: productId, facilityId
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
@@ -2592,8 +2764,10 @@ message ProductFacilityData {
     int64 days_to_ship = 5;
     string replenish_method_enum_id = 6; // Enumeration    
     routines.FixedPoint last_inventory_count = 7;
-    string requirement_method_enum_id = 8; // Enumeration
-    
+    string requirement_method_enum_id = 8; // Enumeration    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Party Geo Location with history
@@ -2602,14 +2776,16 @@ message PartyGeoPointData {
     option (routines.keys).keys = "party_id, geo_point_id, from_date";
     option (routines.keys).combine = true;
     // keys: partyId, geoPointId, fromDate
-
+    string id = 200; 
     // fields
         
     string party_id = 1;    
     string geo_point_id = 2;    
     google.protobuf.Timestamp from_date = 3;    
-    google.protobuf.Timestamp thru_date = 4;
-    
+    google.protobuf.Timestamp thru_date = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Order Header
@@ -2618,7 +2794,7 @@ message OrderHeaderData {
     option (routines.keys).keys = "order_id";
     option (routines.keys).combine = false;
     // keys: orderId
-
+    
     // fields
         
     string order_id = 1;    
@@ -2646,30 +2822,32 @@ message OrderHeaderData {
     routines.Currency remaining_sub_total = 23;    
     routines.Currency grand_total = 24;    
     routines.Indicator is_viewed = 25;    
-    routines.Indicator invoice_per_shipment = 26;
+    routines.Indicator invoice_per_shipment = 26;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 27;    
+    google.protobuf.Timestamp created_tx_stamp = 28;
     
     // relations
-    BillingAccountData billing_account = 27; // ref: billingAccountId
-    ProductStoreData product_store = 28; // ref: productStoreId
-    UserLoginData created_by_user_login = 29; // ref: createdBy
-    WebSiteData web_site = 30; // ref: webSiteId
-    repeated FixedAssetData acquire_fixed_asset = 31; // ref: orderId
-    repeated ItemIssuanceData item_issuance = 32; // ref: orderId
-    repeated OrderAdjustmentData order_adjustment = 33; // ref: orderId
-    repeated OrderContactMechData order_contact_mech = 34; // ref: orderId
-    repeated OrderItemData order_item = 35; // ref: orderId
-    repeated OrderItemBillingData order_item_billing = 36; // ref: orderId
-    repeated OrderItemPriceInfoData order_item_price_info = 37; // ref: orderId
-    repeated OrderItemShipGroupData order_item_ship_group = 38; // ref: orderId
-    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 39; // ref: orderId
-    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 40; // ref: orderId
-    repeated OrderPaymentPreferenceData order_payment_preference = 41; // ref: orderId
-    repeated OrderRoleData order_role = 42; // ref: orderId
-    repeated OrderStatusData order_status = 43; // ref: orderId
-    repeated ShipmentData primary_shipment = 44; // ref: orderId
-    repeated ShipmentReceiptData shipment_receipt = 45; // ref: orderId
+    BillingAccountData billing_account = 29; // ref: billingAccountId
+    ProductStoreData product_store = 30; // ref: productStoreId
+    UserLoginData created_by_user_login = 31; // ref: createdBy
+    WebSiteData web_site = 32; // ref: webSiteId
+    repeated FixedAssetData acquire_fixed_asset = 33; // ref: orderId
+    repeated ItemIssuanceData item_issuance = 34; // ref: orderId
+    repeated OrderAdjustmentData order_adjustment = 35; // ref: orderId
+    repeated OrderContactMechData order_contact_mech = 36; // ref: orderId
+    repeated OrderItemData order_item = 37; // ref: orderId
+    repeated OrderItemBillingData order_item_billing = 38; // ref: orderId
+    repeated OrderItemPriceInfoData order_item_price_info = 39; // ref: orderId
+    repeated OrderItemShipGroupData order_item_ship_group = 40; // ref: orderId
+    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 41; // ref: orderId
+    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 42; // ref: orderId
+    repeated OrderPaymentPreferenceData order_payment_preference = 43; // ref: orderId
+    repeated OrderRoleData order_role = 44; // ref: orderId
+    repeated OrderStatusData order_status = 45; // ref: orderId
+    repeated ShipmentData primary_shipment = 46; // ref: orderId
+    repeated ShipmentReceiptData shipment_receipt = 47; // ref: orderId
     
-    
+        
 }
 
 // Carrier Shipment Method
@@ -2678,15 +2856,17 @@ message CarrierShipmentMethodData {
     option (routines.keys).keys = "shipment_method_type_id, party_id, role_type_id";
     option (routines.keys).combine = true;
     // keys: shipmentMethodTypeId, partyId, roleTypeId
-
+    string id = 200; 
     // fields
         
     string shipment_method_type_id = 1;    
     string party_id = 2;    
     string role_type_id = 3;    
     int64 sequence_number = 4;    
-    string carrier_service_code = 5;
-    
+    string carrier_service_code = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Shipment
@@ -2695,7 +2875,7 @@ message ShipmentData {
     option (routines.keys).keys = "shipment_id";
     option (routines.keys).combine = false;
     // keys: shipmentId
-
+    
     // fields
         
     string shipment_id = 1;    
@@ -2718,37 +2898,39 @@ message ShipmentData {
     google.protobuf.Timestamp created_date = 18;    
     string created_by_user_login = 19;    
     google.protobuf.Timestamp last_modified_date = 20;    
-    string last_modified_by_user_login = 21;
+    string last_modified_by_user_login = 21;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 22;    
+    google.protobuf.Timestamp created_tx_stamp = 23;
     
     // relations
-    WorkEffortData estimated_ship_work_effort = 22; // ref: estimatedShipWorkEffId
-    WorkEffortData estimated_arrival_work_effort = 23; // ref: estimatedArrivalWorkEffId
-    ContactMechData origin_contact_mech = 24; // ref: originContactMechId
-    ContactMechData dest_contact_mech = 25; // ref: destinationContactMechId
-    PostalAddressData origin_postal_address = 26; // ref: originContactMechId
-    TelecomNumberData origin_telecom_number = 27; // ref: originTelecomNumberId
-    PostalAddressData destination_postal_address = 28; // ref: destinationContactMechId
-    TelecomNumberData destination_telecom_number = 29; // ref: destinationTelecomNumberId
-    OrderHeaderData primary_order_header = 30; // ref: primaryOrderId
-    OrderItemShipGroupData primary_order_item_ship_group = 31; // ref: primaryOrderId + primaryShipGroupSeqId
-    PartyData to_party = 32; // ref: partyIdTo
-    PersonData to_person = 33; // ref: partyIdTo
-    PartyGroupData to_party_group = 34; // ref: partyIdTo
-    PartyData from_party = 35; // ref: partyIdFrom
-    PersonData from_person = 36; // ref: partyIdFrom
-    PartyGroupData from_party_group = 37; // ref: partyIdFrom
-    repeated AcctgTransData acctg_trans = 38; // ref: shipmentId
-    repeated ItemIssuanceData item_issuance = 39; // ref: shipmentId
-    repeated ShipmentItemData shipment_item = 40; // ref: shipmentId
-    repeated ShipmentItemBillingData shipment_item_billing = 41; // ref: shipmentId
-    repeated ShipmentPackageData shipment_package = 42; // ref: shipmentId
-    repeated ShipmentPackageContentData shipment_package_content = 43; // ref: shipmentId
-    repeated ShipmentPackageRouteSegData shipment_package_route_seg = 44; // ref: shipmentId
-    repeated ShipmentReceiptData shipment_receipt = 45; // ref: shipmentId
-    repeated ShipmentRouteSegmentData shipment_route_segment = 46; // ref: shipmentId
-    repeated ShipmentStatusData shipment_status = 47; // ref: shipmentId
+    WorkEffortData estimated_ship_work_effort = 24; // ref: estimatedShipWorkEffId
+    WorkEffortData estimated_arrival_work_effort = 25; // ref: estimatedArrivalWorkEffId
+    ContactMechData origin_contact_mech = 26; // ref: originContactMechId
+    ContactMechData dest_contact_mech = 27; // ref: destinationContactMechId
+    PostalAddressData origin_postal_address = 28; // ref: originContactMechId
+    TelecomNumberData origin_telecom_number = 29; // ref: originTelecomNumberId
+    PostalAddressData destination_postal_address = 30; // ref: destinationContactMechId
+    TelecomNumberData destination_telecom_number = 31; // ref: destinationTelecomNumberId
+    OrderHeaderData primary_order_header = 32; // ref: primaryOrderId
+    OrderItemShipGroupData primary_order_item_ship_group = 33; // ref: primaryOrderId + primaryShipGroupSeqId
+    PartyData to_party = 34; // ref: partyIdTo
+    PersonData to_person = 35; // ref: partyIdTo
+    PartyGroupData to_party_group = 36; // ref: partyIdTo
+    PartyData from_party = 37; // ref: partyIdFrom
+    PersonData from_person = 38; // ref: partyIdFrom
+    PartyGroupData from_party_group = 39; // ref: partyIdFrom
+    repeated AcctgTransData acctg_trans = 40; // ref: shipmentId
+    repeated ItemIssuanceData item_issuance = 41; // ref: shipmentId
+    repeated ShipmentItemData shipment_item = 42; // ref: shipmentId
+    repeated ShipmentItemBillingData shipment_item_billing = 43; // ref: shipmentId
+    repeated ShipmentPackageData shipment_package = 44; // ref: shipmentId
+    repeated ShipmentPackageContentData shipment_package_content = 45; // ref: shipmentId
+    repeated ShipmentPackageRouteSegData shipment_package_route_seg = 46; // ref: shipmentId
+    repeated ShipmentReceiptData shipment_receipt = 47; // ref: shipmentId
+    repeated ShipmentRouteSegmentData shipment_route_segment = 48; // ref: shipmentId
+    repeated ShipmentStatusData shipment_status = 49; // ref: shipmentId
     
-    
+        
 }
 
 // Shipment Package Content
@@ -2757,7 +2939,7 @@ message ShipmentPackageContentData {
     option (routines.keys).keys = "shipment_id, shipment_package_seq_id, shipment_item_seq_id";
     option (routines.keys).combine = true;
     // keys: shipmentId, shipmentPackageSeqId, shipmentItemSeqId
-
+    string id = 200; 
     // fields
         
     string shipment_id = 1;    
@@ -2765,8 +2947,10 @@ message ShipmentPackageContentData {
     string shipment_item_seq_id = 3;    
     routines.FixedPoint quantity = 4;    
     string sub_product_id = 5;    
-    routines.FixedPoint sub_product_quantity = 6;
-    
+    routines.FixedPoint sub_product_quantity = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Security Component - Security Group
@@ -2775,13 +2959,15 @@ message SecurityGroupData {
     option (routines.keys).keys = "group_id";
     option (routines.keys).combine = false;
     // keys: groupId
-
+    
     // fields
         
     string group_id = 1;    
     string group_name = 2;    
-    string description = 3;
-    
+    string description = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
 }
 
 // Product Data Object
@@ -2790,7 +2976,7 @@ message ProductContentData {
     option (routines.keys).keys = "product_id, content_id, product_content_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: productId, contentId, productContentTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
@@ -2804,8 +2990,10 @@ message ProductContentData {
     int64 use_time = 9;
     string use_time_uom_id = 10; // Uom
     string use_role_type_id = 11; // RoleType    
-    int64 sequence_num = 12;
-    
+    int64 sequence_num = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
+        
 }
 
 // Party Relationship
@@ -2814,7 +3002,7 @@ message PartyRelationshipData {
     option (routines.keys).keys = "party_id_from, party_id_to, role_type_id_from, role_type_id_to, from_date";
     option (routines.keys).combine = true;
     // keys: partyIdFrom, partyIdTo, roleTypeIdFrom, roleTypeIdTo, fromDate
-
+    string id = 200; 
     // fields
         
     string party_id_from = 1;    
@@ -2830,8 +3018,10 @@ message PartyRelationshipData {
     string party_relationship_type_id = 11; // PartyRelationshipType    
     string permissions_enum_id = 12;    
     string position_title = 13;    
-    string comments = 14;
-    
+    string comments = 14;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 15;    
+    google.protobuf.Timestamp created_tx_stamp = 16;
+        
 }
 
 // Product Store Carrier Shipment Method
@@ -2840,7 +3030,7 @@ message ProductStoreShipmentMethData {
     option (routines.keys).keys = "product_store_ship_meth_id";
     option (routines.keys).combine = false;
     // keys: productStoreShipMethId
-
+    
     // fields
         
     string product_store_ship_meth_id = 1;    
@@ -2870,8 +3060,10 @@ message ProductStoreShipmentMethData {
     string shipment_gateway_config_id = 25; // ShipmentGatewayConfig    
     int64 sequence_number = 26;    
     routines.FixedPoint allowance_percent = 27;    
-    routines.Currency minimum_price = 28;
-    
+    routines.Currency minimum_price = 28;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 29;    
+    google.protobuf.Timestamp created_tx_stamp = 30;
+        
 }
 
 // Payment
@@ -2880,7 +3072,7 @@ message PaymentData {
     option (routines.keys).keys = "payment_id";
     option (routines.keys).combine = false;
     // keys: paymentId
-
+    
     // fields
         
     string payment_id = 1;    
@@ -2896,21 +3088,23 @@ message PaymentData {
     string fin_account_trans_id = 11;    
     string override_gl_account_id = 12;    
     routines.Currency actual_currency_amount = 13;
-    string actual_currency_uom_id = 14; // Uom
+    string actual_currency_uom_id = 14; // Uom    
+    google.protobuf.Timestamp last_updated_tx_stamp = 15;    
+    google.protobuf.Timestamp created_tx_stamp = 16;
     
     // relations
-    PaymentMethodData payment_method = 15; // ref: paymentMethodId
-    CreditCardData credit_card = 16; // ref: paymentMethodId
-    OrderPaymentPreferenceData order_payment_preference = 17; // ref: paymentPreferenceId
-    PaymentGatewayResponseData payment_gateway_response = 18; // ref: paymentGatewayResponseId
-    PartyData from_party = 19; // ref: partyIdFrom
-    PartyData to_party = 20; // ref: partyIdTo
-    PartyRoleData to_party_role = 21; // ref: partyIdTo + roleTypeIdTo
-    repeated AcctgTransData acctg_trans = 22; // ref: paymentId
-    repeated PaymentApplicationData payment_application = 23; // ref: paymentId
-    repeated PaymentApplicationData to_payment_application = 24; // ref: paymentId
+    PaymentMethodData payment_method = 17; // ref: paymentMethodId
+    CreditCardData credit_card = 18; // ref: paymentMethodId
+    OrderPaymentPreferenceData order_payment_preference = 19; // ref: paymentPreferenceId
+    PaymentGatewayResponseData payment_gateway_response = 20; // ref: paymentGatewayResponseId
+    PartyData from_party = 21; // ref: partyIdFrom
+    PartyData to_party = 22; // ref: partyIdTo
+    PartyRoleData to_party_role = 23; // ref: partyIdTo + roleTypeIdTo
+    repeated AcctgTransData acctg_trans = 24; // ref: paymentId
+    repeated PaymentApplicationData payment_application = 25; // ref: paymentId
+    repeated PaymentApplicationData to_payment_application = 26; // ref: paymentId
     
-    
+        
 }
 
 // Content
@@ -2919,7 +3113,7 @@ message ContentData {
     option (routines.keys).keys = "content_id";
     option (routines.keys).combine = false;
     // keys: contentId
-
+    
     // fields
         
     string content_id = 1;    
@@ -2944,8 +3138,10 @@ message ContentData {
     google.protobuf.Timestamp created_date = 20;    
     string created_by_user_login = 21;    
     google.protobuf.Timestamp last_modified_date = 22;    
-    string last_modified_by_user_login = 23;
-    
+    string last_modified_by_user_login = 23;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 24;    
+    google.protobuf.Timestamp created_tx_stamp = 25;
+        
 }
 
 // Shipment Package
@@ -2954,7 +3150,7 @@ message ShipmentPackageData {
     option (routines.keys).keys = "shipment_id, shipment_package_seq_id";
     option (routines.keys).combine = true;
     // keys: shipmentId, shipmentPackageSeqId
-
+    string id = 200; 
     // fields
         
     string shipment_id = 1;    
@@ -2967,8 +3163,10 @@ message ShipmentPackageData {
     string dimension_uom_id = 8; // Uom    
     routines.FixedPoint weight = 9;
     string weight_uom_id = 10; // Uom    
-    routines.Currency insured_value = 11;
-    
+    routines.Currency insured_value = 11;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 12;    
+    google.protobuf.Timestamp created_tx_stamp = 13;
+        
 }
 
 // Product Store Inventory Facility Applicability
@@ -2977,15 +3175,17 @@ message ProductStoreFacilityData {
     option (routines.keys).keys = "product_store_id, facility_id, from_date";
     option (routines.keys).combine = true;
     // keys: productStoreId, facilityId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_store_id = 1;    
     string facility_id = 2;    
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;    
-    int64 sequence_num = 5;
-    
+    int64 sequence_num = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // WebSite
@@ -2994,7 +3194,7 @@ message WebSiteData {
     option (routines.keys).keys = "web_site_id";
     option (routines.keys).combine = false;
     // keys: webSiteId
-
+    
     // fields
         
     string web_site_id = 1;    
@@ -3009,12 +3209,14 @@ message WebSiteData {
     string secure_content_prefix = 10;    
     string cookie_domain = 11;
     string visual_theme_set_id = 12; // VisualThemeSet    
-    string product_store_id = 13;    
-    routines.Indicator allow_product_store_change = 14;    
-    string hosted_path_alias = 15;    
-    routines.Indicator is_default = 16;    
-    routines.Indicator display_maintenance_page = 17;
-    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;    
+    string product_store_id = 15;    
+    routines.Indicator allow_product_store_change = 16;    
+    string hosted_path_alias = 17;    
+    routines.Indicator is_default = 18;    
+    routines.Indicator display_maintenance_page = 19;
+        
 }
 
 // Product Category
@@ -3023,7 +3225,7 @@ message ProductCategoryData {
     option (routines.keys).keys = "product_category_id";
     option (routines.keys).combine = false;
     // keys: productCategoryId
-
+    
     // fields
         
     string product_category_id = 1;    
@@ -3036,8 +3238,10 @@ message ProductCategoryData {
     string link_one_image_url = 8;    
     string link_two_image_url = 9;    
     string detail_screen = 10;    
-    routines.Indicator show_in_select = 11;
-    
+    routines.Indicator show_in_select = 11;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 12;    
+    google.protobuf.Timestamp created_tx_stamp = 13;
+        
 }
 
 // Product Store Payment Settings
@@ -3046,7 +3250,7 @@ message ProductStorePaymentSettingData {
     option (routines.keys).keys = "product_store_id, payment_method_type_id, payment_service_type_enum_id";
     option (routines.keys).combine = true;
     // keys: productStoreId, paymentMethodTypeId, paymentServiceTypeEnumId
-
+    string id = 200; 
     // fields
         
     string product_store_id = 1;
@@ -3056,8 +3260,10 @@ message ProductStorePaymentSettingData {
     string payment_custom_method_id = 5; // CustomMethod    
     string payment_gateway_config_id = 6;    
     string payment_properties_path = 7;    
-    routines.Indicator apply_to_all_products = 8;
-    
+    routines.Indicator apply_to_all_products = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Payment Method
@@ -3066,7 +3272,7 @@ message PaymentMethodData {
     option (routines.keys).keys = "payment_method_id";
     option (routines.keys).combine = false;
     // keys: paymentMethodId
-
+    
     // fields
         
     string payment_method_id = 1;
@@ -3076,8 +3282,10 @@ message PaymentMethodData {
     string fin_account_id = 5;    
     string description = 6;    
     google.protobuf.Timestamp from_date = 7;    
-    google.protobuf.Timestamp thru_date = 8;
-    
+    google.protobuf.Timestamp thru_date = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Product Price Condition
@@ -3086,15 +3294,17 @@ message ProductPriceCondData {
     option (routines.keys).keys = "product_price_rule_id, product_price_cond_seq_id";
     option (routines.keys).combine = true;
     // keys: productPriceRuleId, productPriceCondSeqId
-
+    string id = 200; 
     // fields
         
     string product_price_rule_id = 1;    
     string product_price_cond_seq_id = 2;
     string input_param_enum_id = 3; // Enumeration
     string operator_enum_id = 4; // Enumeration    
-    string cond_value = 5;
-    
+    string cond_value = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Inventory Item
@@ -3103,7 +3313,7 @@ message InventoryItemData {
     option (routines.keys).keys = "inventory_item_id";
     option (routines.keys).combine = false;
     // keys: inventoryItemId
-
+    
     // fields
         
     string inventory_item_id = 1;    
@@ -3133,8 +3343,10 @@ message InventoryItemData {
     google.protobuf.Timestamp activation_valid_thru = 25;    
     routines.FixedPoint unit_cost = 26;
     string currency_uom_id = 27; // Uom    
-    string fixed_asset_id = 28;
-    
+    string fixed_asset_id = 28;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 29;    
+    google.protobuf.Timestamp created_tx_stamp = 30;
+        
 }
 
 // Billing Account Role
@@ -3143,15 +3355,17 @@ message BillingAccountRoleData {
     option (routines.keys).keys = "billing_account_id, party_id, role_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: billingAccountId, partyId, roleTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string billing_account_id = 1;    
     string party_id = 2;
     string role_type_id = 3; // RoleType    
     google.protobuf.Timestamp from_date = 4;    
-    google.protobuf.Timestamp thru_date = 5;
-    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Invoice Item
@@ -3160,7 +3374,7 @@ message InvoiceItemData {
     option (routines.keys).keys = "invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     // keys: invoiceId, invoiceItemSeqId
-
+    string id = 200; 
     // fields
         
     string invoice_id = 1;    
@@ -3181,8 +3395,10 @@ message InvoiceItemData {
     string tax_auth_party_id = 16;
     string tax_auth_geo_id = 17; // Geo    
     string tax_authority_rate_seq_id = 18;    
-    string sales_opportunity_id = 19;
-    
+    string sales_opportunity_id = 19;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 20;    
+    google.protobuf.Timestamp created_tx_stamp = 21;
+        
 }
 
 // Product Feature Category Application
@@ -3191,14 +3407,16 @@ message ProductFeatureCategoryApplData {
     option (routines.keys).keys = "product_category_id, product_feature_category_id, from_date";
     option (routines.keys).combine = true;
     // keys: productCategoryId, productFeatureCategoryId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_category_id = 1;    
     string product_feature_category_id = 2;    
     google.protobuf.Timestamp from_date = 3;    
-    google.protobuf.Timestamp thru_date = 4;
-    
+    google.protobuf.Timestamp thru_date = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Product Configuration Question
@@ -3207,7 +3425,7 @@ message ProductConfigItemData {
     option (routines.keys).keys = "config_item_id";
     option (routines.keys).combine = false;
     // keys: configItemId
-
+    
     // fields
         
     string config_item_id = 1;    
@@ -3215,8 +3433,10 @@ message ProductConfigItemData {
     string config_item_name = 3;    
     string description = 4;    
     string long_description = 5;    
-    string image_url = 6;
-    
+    string image_url = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Telecommunications Number
@@ -3225,15 +3445,17 @@ message TelecomNumberData {
     option (routines.keys).keys = "contact_mech_id";
     option (routines.keys).combine = false;
     // keys: contactMechId
-
+    
     // fields
         
     string contact_mech_id = 1;    
     string country_code = 2;    
     string area_code = 3;    
     string contact_number = 4;    
-    string ask_for_name = 5;
-    
+    string ask_for_name = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Product Feature
@@ -3242,7 +3464,7 @@ message ProductFeatureData {
     option (routines.keys).keys = "product_feature_id";
     option (routines.keys).combine = false;
     // keys: productFeatureId
-
+    
     // fields
         
     string product_feature_id = 1;
@@ -3254,8 +3476,10 @@ message ProductFeatureData {
     routines.Currency default_amount = 7;    
     int64 default_sequence_num = 8;    
     string abbrev = 9;    
-    string id_code = 10;
-    
+    string id_code = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
+        
 }
 
 // Product Configuration Templates
@@ -3264,7 +3488,7 @@ message ProductConfigData {
     option (routines.keys).keys = "product_id, config_item_id, sequence_num, from_date";
     option (routines.keys).combine = true;
     // keys: productId, configItemId, sequenceNum, fromDate
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
@@ -3276,8 +3500,10 @@ message ProductConfigData {
     string config_type_id = 7;    
     string default_config_option_id = 8;    
     google.protobuf.Timestamp thru_date = 9;    
-    routines.Indicator is_mandatory = 10;
-    
+    routines.Indicator is_mandatory = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
+        
 }
 
 // Product Promotion
@@ -3286,7 +3512,7 @@ message ProductPromoCodeData {
     option (routines.keys).keys = "product_promo_code_id";
     option (routines.keys).combine = false;
     // keys: productPromoCodeId
-
+    
     // fields
         
     string product_promo_code_id = 1;    
@@ -3300,8 +3526,10 @@ message ProductPromoCodeData {
     google.protobuf.Timestamp created_date = 9;    
     string created_by_user_login = 10;    
     google.protobuf.Timestamp last_modified_date = 11;    
-    string last_modified_by_user_login = 12;
-    
+    string last_modified_by_user_login = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
+        
 }
 
 // Product Store
@@ -3310,7 +3538,7 @@ message ProductStoreData {
     option (routines.keys).keys = "product_store_id";
     option (routines.keys).combine = false;
     // keys: productStoreId
-
+    
     // fields
         
     string product_store_id = 1;
@@ -3390,23 +3618,25 @@ message ProductStoreData {
     routines.Indicator show_out_of_stock_products = 75;    
     routines.Indicator order_decimal_quantity = 76;    
     routines.Indicator allow_comment = 77;    
-    routines.Indicator allocate_inventory = 78;
+    routines.Indicator allocate_inventory = 78;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 79;    
+    google.protobuf.Timestamp created_tx_stamp = 80;
     
     // relations
-    repeated CustRequestData cust_request = 80; // ref: productStoreId
-    repeated OrderHeaderData order_header = 81; // ref: productStoreId
-    repeated ProductReviewData product_review = 82; // ref: productStoreId
-    repeated ProductStoreCatalogData product_store_catalog = 83; // ref: productStoreId
-    repeated ProductStoreEmailSettingData product_store_email_setting = 84; // ref: productStoreId
-    repeated ProductStoreFacilityData product_store_facility = 85; // ref: productStoreId
-    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 86; // ref: productStoreId
-    repeated ProductStorePaymentSettingData product_store_payment_setting = 87; // ref: productStoreId
-    repeated ProductStorePromoApplData product_store_promo_appl = 88; // ref: productStoreId
-    repeated ProductStoreRoleData product_store_role = 89; // ref: productStoreId
-    repeated QuoteData quote = 90; // ref: productStoreId
-    repeated WebSiteData web_site = 91; // ref: productStoreId
+    repeated CustRequestData cust_request = 82; // ref: productStoreId
+    repeated OrderHeaderData order_header = 83; // ref: productStoreId
+    repeated ProductReviewData product_review = 84; // ref: productStoreId
+    repeated ProductStoreCatalogData product_store_catalog = 85; // ref: productStoreId
+    repeated ProductStoreEmailSettingData product_store_email_setting = 86; // ref: productStoreId
+    repeated ProductStoreFacilityData product_store_facility = 87; // ref: productStoreId
+    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 88; // ref: productStoreId
+    repeated ProductStorePaymentSettingData product_store_payment_setting = 89; // ref: productStoreId
+    repeated ProductStorePromoApplData product_store_promo_appl = 90; // ref: productStoreId
+    repeated ProductStoreRoleData product_store_role = 91; // ref: productStoreId
+    repeated QuoteData quote = 92; // ref: productStoreId
+    repeated WebSiteData web_site = 93; // ref: productStoreId
     
-    
+        
 }
 
 // Product Price
@@ -3415,7 +3645,7 @@ message ProductPriceData {
     option (routines.keys).keys = "product_id, product_price_type_id, product_price_purpose_id, currency_uom_id, product_store_group_id, from_date";
     option (routines.keys).combine = true;
     // keys: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_id = 1;
@@ -3438,8 +3668,10 @@ message ProductPriceData {
     google.protobuf.Timestamp created_date = 18;    
     string created_by_user_login = 19;    
     google.protobuf.Timestamp last_modified_date = 20;    
-    string last_modified_by_user_login = 21;
-    
+    string last_modified_by_user_login = 21;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 22;    
+    google.protobuf.Timestamp created_tx_stamp = 23;
+        
 }
 
 // Quantity Break
@@ -3448,14 +3680,16 @@ message QuantityBreakData {
     option (routines.keys).keys = "quantity_break_id";
     option (routines.keys).combine = false;
     // keys: quantityBreakId
-
+    
     // fields
         
     string quantity_break_id = 1;
     string quantity_break_type_id = 2; // QuantityBreakType    
     routines.FixedPoint from_quantity = 3;    
-    routines.FixedPoint thru_quantity = 4;
-    
+    routines.FixedPoint thru_quantity = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Contact Mechanism
@@ -3464,13 +3698,15 @@ message ContactMechData {
     option (routines.keys).keys = "contact_mech_id";
     option (routines.keys).combine = false;
     // keys: contactMechId
-
+    
     // fields
         
     string contact_mech_id = 1;    
     string contact_mech_type_id = 2;    
-    string info_string = 3;
-    
+    string info_string = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
 }
 
 // Order Item Inventory Reservation
@@ -3479,7 +3715,7 @@ message OrderItemShipGrpInvResData {
     option (routines.keys).keys = "order_id, ship_group_seq_id, order_item_seq_id, inventory_item_id";
     option (routines.keys).combine = true;
     // keys: orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId
-
+    string id = 200; 
     // fields
         
     string order_id = 1;    
@@ -3495,8 +3731,10 @@ message OrderItemShipGrpInvResData {
     google.protobuf.Timestamp current_promised_date = 11;    
     routines.Indicator priority = 12;    
     int64 sequence_id = 13;    
-    google.protobuf.Timestamp pick_start_date = 14;
-    
+    google.protobuf.Timestamp pick_start_date = 14;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 15;    
+    google.protobuf.Timestamp created_tx_stamp = 16;
+        
 }
 
 // TenantDataSource
@@ -3505,15 +3743,17 @@ message TenantDataSourceData {
     option (routines.keys).keys = "tenant_id, entity_group_name";
     option (routines.keys).combine = true;
     // keys: tenantId, entityGroupName
-
+    string id = 200; 
     // fields
         
     string tenant_id = 1;    
     string entity_group_name = 2;    
     string jdbc_uri = 3;    
     string jdbc_username = 4;    
-    string jdbc_password = 5;
-    
+    string jdbc_password = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Product Promotion Rule
@@ -3522,13 +3762,15 @@ message ProductPromoRuleData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id";
     option (routines.keys).combine = true;
     // keys: productPromoId, productPromoRuleId
-
+    string id = 200; 
     // fields
         
     string product_promo_id = 1;    
     string product_promo_rule_id = 2;    
-    string rule_name = 3;
-    
+    string rule_name = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
 }
 
 // Order Contact Mechanism
@@ -3537,13 +3779,15 @@ message OrderContactMechData {
     option (routines.keys).keys = "order_id, contact_mech_purpose_type_id, contact_mech_id";
     option (routines.keys).combine = true;
     // keys: orderId, contactMechPurposeTypeId, contactMechId
-
+    string id = 200; 
     // fields
         
     string order_id = 1;
     string contact_mech_purpose_type_id = 2; // ContactMechPurposeType    
-    string contact_mech_id = 3;
-    
+    string contact_mech_id = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
 }
 
 // WorkEffort
@@ -3552,7 +3796,7 @@ message WorkEffortData {
     option (routines.keys).keys = "work_effort_id";
     option (routines.keys).combine = false;
     // keys: workEffortId
-
+    
     // fields
         
     string work_effort_id = 1;    
@@ -3606,8 +3850,10 @@ message WorkEffortData {
     string created_by_user_login = 49;    
     google.protobuf.Timestamp last_modified_date = 50;    
     string last_modified_by_user_login = 51;    
-    int64 sequence_num = 52;
-    
+    google.protobuf.Timestamp last_updated_tx_stamp = 52;    
+    google.protobuf.Timestamp created_tx_stamp = 53;    
+    int64 sequence_num = 54;
+        
 }
 
 // Tenant
@@ -3616,14 +3862,16 @@ message TenantData {
     option (routines.keys).keys = "tenant_id";
     option (routines.keys).combine = false;
     // keys: tenantId
-
+    
     // fields
         
     string tenant_id = 1;    
     string tenant_name = 2;    
     string initial_path = 3;    
-    routines.Indicator disabled = 4;
-    
+    routines.Indicator disabled = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Shipment Status
@@ -3632,14 +3880,16 @@ message ShipmentStatusData {
     option (routines.keys).keys = "status_id, shipment_id";
     option (routines.keys).combine = true;
     // keys: statusId, shipmentId
-
+    string id = 200; 
     // fields
     
     string status_id = 1; // StatusItem    
     string shipment_id = 2;    
     google.protobuf.Timestamp status_date = 3;    
-    string change_by_user_login_id = 4;
-    
+    string change_by_user_login_id = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Billing Account
@@ -3648,7 +3898,7 @@ message BillingAccountData {
     option (routines.keys).keys = "billing_account_id";
     option (routines.keys).combine = false;
     // keys: billingAccountId
-
+    
     // fields
         
     string billing_account_id = 1;    
@@ -3658,8 +3908,10 @@ message BillingAccountData {
     google.protobuf.Timestamp from_date = 5;    
     google.protobuf.Timestamp thru_date = 6;    
     string description = 7;    
-    string external_account_id = 8;
-    
+    string external_account_id = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Facility Contact Mechanism Purpose
@@ -3668,15 +3920,17 @@ message FacilityContactMechPurposeData {
     option (routines.keys).keys = "facility_id, contact_mech_id, contact_mech_purpose_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: facilityId, contactMechId, contactMechPurposeTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string facility_id = 1;    
     string contact_mech_id = 2;
     string contact_mech_purpose_type_id = 3; // ContactMechPurposeType    
     google.protobuf.Timestamp from_date = 4;    
-    google.protobuf.Timestamp thru_date = 5;
-    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Product Keyword
@@ -3685,15 +3939,17 @@ message ProductKeywordData {
     option (routines.keys).keys = "product_id, keyword, keyword_type_id";
     option (routines.keys).combine = true;
     // keys: productId, keyword, keywordTypeId
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
     string keyword = 2;
     string keyword_type_id = 3; // Enumeration    
     int64 relevancy_weight = 4;
-    string status_id = 5; // StatusItem
-    
+    string status_id = 5; // StatusItem    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Customer Request Item
@@ -3702,7 +3958,7 @@ message CustRequestItemData {
     option (routines.keys).keys = "cust_request_id, cust_request_item_seq_id";
     option (routines.keys).combine = true;
     // keys: custRequestId, custRequestItemSeqId
-
+    string id = 200; 
     // fields
         
     string cust_request_id = 1;    
@@ -3721,8 +3977,10 @@ message CustRequestItemData {
     routines.FixedPoint reserv_persons = 14;    
     string config_id = 15;    
     string description = 16;    
-    string story = 17;
-    
+    string story = 17;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 18;    
+    google.protobuf.Timestamp created_tx_stamp = 19;
+        
 }
 
 // Tenant and its Domain Name
@@ -3731,12 +3989,14 @@ message TenantDomainNameData {
     option (routines.keys).keys = "domain_name";
     option (routines.keys).combine = false;
     // keys: domainName
-
+    
     // fields
         
     string tenant_id = 1;    
-    string domain_name = 2;
-    
+    string domain_name = 2;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 3;    
+    google.protobuf.Timestamp created_tx_stamp = 4;
+        
 }
 
 // Order Role
@@ -3745,13 +4005,15 @@ message OrderRoleData {
     option (routines.keys).keys = "order_id, party_id, role_type_id";
     option (routines.keys).combine = true;
     // keys: orderId, partyId, roleTypeId
-
+    string id = 200; 
     // fields
         
     string order_id = 1;    
     string party_id = 2;
-    string role_type_id = 3; // RoleType
-    
+    string role_type_id = 3; // RoleType    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
 }
 
 // Fixed Asset Geo Location with history
@@ -3760,14 +4022,16 @@ message FixedAssetGeoPointData {
     option (routines.keys).keys = "fixed_asset_id, geo_point_id, from_date";
     option (routines.keys).combine = true;
     // keys: fixedAssetId, geoPointId, fromDate
-
+    string id = 200; 
     // fields
         
     string fixed_asset_id = 1;    
     string geo_point_id = 2;    
     google.protobuf.Timestamp from_date = 3;    
-    google.protobuf.Timestamp thru_date = 4;
-    
+    google.protobuf.Timestamp thru_date = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Recurrence Rule
@@ -3776,7 +4040,7 @@ message RecurrenceRuleData {
     option (routines.keys).keys = "recurrence_rule_id";
     option (routines.keys).combine = false;
     // keys: recurrenceRuleId
-
+    
     // fields
         
     string recurrence_rule_id = 1;    
@@ -3794,8 +4058,10 @@ message RecurrenceRuleData {
     string by_month_list = 13;    
     string by_set_pos_list = 14;    
     string week_start = 15;    
-    string x_name = 16;
-    
+    string x_name = 16;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 17;    
+    google.protobuf.Timestamp created_tx_stamp = 18;
+        
 }
 
 // Product Store Promotion Applicability
@@ -3804,7 +4070,7 @@ message ProductStorePromoApplData {
     option (routines.keys).keys = "product_store_id, product_promo_id, from_date";
     option (routines.keys).combine = true;
     // keys: productStoreId, productPromoId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_store_id = 1;    
@@ -3812,8 +4078,10 @@ message ProductStorePromoApplData {
     google.protobuf.Timestamp from_date = 3;    
     google.protobuf.Timestamp thru_date = 4;    
     int64 sequence_num = 5;    
-    routines.Indicator manual_only = 6;
-    
+    routines.Indicator manual_only = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Product Configuration Option to Products
@@ -3822,15 +4090,17 @@ message ProductConfigProductData {
     option (routines.keys).keys = "config_item_id, config_option_id, product_id";
     option (routines.keys).combine = true;
     // keys: configItemId, configOptionId, productId
-
+    string id = 200; 
     // fields
         
     string config_item_id = 1;    
     string config_option_id = 2;    
     string product_id = 3;    
     routines.FixedPoint quantity = 4;    
-    int64 sequence_num = 5;
-    
+    int64 sequence_num = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Product Price Action
@@ -3839,15 +4109,17 @@ message ProductPriceActionData {
     option (routines.keys).keys = "product_price_rule_id, product_price_action_seq_id";
     option (routines.keys).combine = true;
     // keys: productPriceRuleId, productPriceActionSeqId
-
+    string id = 200; 
     // fields
         
     string product_price_rule_id = 1;    
     string product_price_action_seq_id = 2;
     string product_price_action_type_id = 3; // ProductPriceActionType    
     routines.FixedPoint amount = 4;    
-    string rate_code = 5;
-    
+    string rate_code = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Shipment Method Type
@@ -3856,13 +4128,15 @@ message ShipmentMethodTypeData {
     option (routines.keys).keys = "shipment_method_type_id";
     option (routines.keys).combine = false;
     // keys: shipmentMethodTypeId
-
+    
     // fields
         
     string shipment_method_type_id = 1;    
     string description = 2;    
-    int64 sequence_num = 3;
-    
+    int64 sequence_num = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
 }
 
 // Quote Term
@@ -3871,7 +4145,7 @@ message QuoteTermData {
     option (routines.keys).keys = "term_type_id, quote_id, quote_item_seq_id";
     option (routines.keys).combine = true;
     // keys: termTypeId, quoteId, quoteItemSeqId
-
+    string id = 200; 
     // fields
         
     string term_type_id = 1;    
@@ -3881,8 +4155,10 @@ message QuoteTermData {
     string uom_id = 5;    
     int64 term_days = 6;    
     string text_value = 7;    
-    string description = 8;
-    
+    string description = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Transaction Entry
@@ -3891,7 +4167,7 @@ message AcctgTransEntryData {
     option (routines.keys).keys = "acctg_trans_id, acctg_trans_entry_seq_id";
     option (routines.keys).combine = true;
     // keys: acctgTransId, acctgTransEntrySeqId
-
+    string id = 200; 
     // fields
         
     string acctg_trans_id = 1;    
@@ -3918,8 +4194,10 @@ message AcctgTransEntryData {
     string tax_id = 22;
     string reconcile_status_id = 23; // StatusItem
     string settlement_term_id = 24; // SettlementTerm    
-    routines.Indicator is_summary = 25;
-    
+    routines.Indicator is_summary = 25;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 26;    
+    google.protobuf.Timestamp created_tx_stamp = 27;
+        
 }
 
 // Order Item Billing
@@ -3928,7 +4206,7 @@ message OrderItemBillingData {
     option (routines.keys).keys = "order_id, order_item_seq_id, invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     // keys: orderId, orderItemSeqId, invoiceId, invoiceItemSeqId
-
+    string id = 200; 
     // fields
         
     string order_id = 1;    
@@ -3938,8 +4216,10 @@ message OrderItemBillingData {
     string item_issuance_id = 5;    
     string shipment_receipt_id = 6;    
     routines.FixedPoint quantity = 7;    
-    routines.Currency amount = 8;
-    
+    routines.Currency amount = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;
+        
 }
 
 // Order Item Ship Group
@@ -3948,7 +4228,7 @@ message OrderItemShipGroupData {
     option (routines.keys).keys = "order_id, ship_group_seq_id";
     option (routines.keys).combine = true;
     // keys: orderId, shipGroupSeqId
-
+    string id = 200; 
     // fields
         
     string order_id = 1;    
@@ -3970,8 +4250,10 @@ message OrderItemShipGroupData {
     google.protobuf.Timestamp ship_after_date = 17;    
     google.protobuf.Timestamp ship_by_date = 18;    
     google.protobuf.Timestamp estimated_ship_date = 19;    
-    google.protobuf.Timestamp estimated_delivery_date = 20;
-    
+    google.protobuf.Timestamp estimated_delivery_date = 20;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 21;    
+    google.protobuf.Timestamp created_tx_stamp = 22;
+        
 }
 
 // Customer Request Type
@@ -3980,15 +4262,17 @@ message CustRequestTypeData {
     option (routines.keys).keys = "cust_request_type_id";
     option (routines.keys).combine = false;
     // keys: custRequestTypeId
-
+    
     // fields
         
     string cust_request_type_id = 1;    
     string parent_type_id = 2;    
     routines.Indicator has_table = 3;    
     string description = 4;    
-    string party_id = 5;
-    
+    string party_id = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 
 // Agreement Product Application
@@ -3997,14 +4281,16 @@ message AgreementProductApplData {
     option (routines.keys).keys = "agreement_id, agreement_item_seq_id, product_id";
     option (routines.keys).combine = true;
     // keys: agreementId, agreementItemSeqId, productId
-
+    string id = 200; 
     // fields
         
     string agreement_id = 1;    
     string agreement_item_seq_id = 2;    
     string product_id = 3;    
-    routines.Currency price = 4;
-    
+    routines.Currency price = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Product Subscription Resource
@@ -4013,7 +4299,7 @@ message ProductSubscriptionResourceData {
     option (routines.keys).keys = "product_id, subscription_resource_id, from_date";
     option (routines.keys).combine = true;
     // keys: productId, subscriptionResourceId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_id = 1;    
@@ -4034,8 +4320,10 @@ message ProductSubscriptionResourceData {
     int64 cancl_autm_ext_time = 16;
     string cancl_autm_ext_time_uom_id = 17; // Uom    
     int64 grace_period_on_expiry = 18;
-    string grace_period_on_expiry_uom_id = 19; // Uom
-    
+    string grace_period_on_expiry_uom_id = 19; // Uom    
+    google.protobuf.Timestamp last_updated_tx_stamp = 20;    
+    google.protobuf.Timestamp created_tx_stamp = 21;
+        
 }
 
 // Credit Card Information
@@ -4044,7 +4332,7 @@ message CreditCardData {
     option (routines.keys).keys = "payment_method_id";
     option (routines.keys).combine = false;
     // keys: paymentMethodId
-
+    
     // fields
         
     string payment_method_id = 1;    
@@ -4063,8 +4351,10 @@ message CreditCardData {
     int64 consecutive_failed_auths = 14;    
     google.protobuf.Timestamp last_failed_auth_date = 15;    
     int64 consecutive_failed_nsf = 16;    
-    google.protobuf.Timestamp last_failed_nsf_date = 17;
-    
+    google.protobuf.Timestamp last_failed_nsf_date = 17;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 18;    
+    google.protobuf.Timestamp created_tx_stamp = 19;
+        
 }
 
 // Quote
@@ -4073,7 +4363,7 @@ message QuoteData {
     option (routines.keys).keys = "quote_id";
     option (routines.keys).combine = false;
     // keys: quoteId
-
+    
     // fields
         
     string quote_id = 1;    
@@ -4087,8 +4377,10 @@ message QuoteData {
     google.protobuf.Timestamp valid_from_date = 9;    
     google.protobuf.Timestamp valid_thru_date = 10;    
     string quote_name = 11;    
-    string description = 12;
-    
+    string description = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
+        
 }
 
 // Product Promotion
@@ -4097,7 +4389,7 @@ message ProductPromoData {
     option (routines.keys).keys = "product_promo_id";
     option (routines.keys).combine = false;
     // keys: productPromoId
-
+    
     // fields
         
     string product_promo_id = 1;    
@@ -4114,8 +4406,10 @@ message ProductPromoData {
     google.protobuf.Timestamp created_date = 12;    
     string created_by_user_login = 13;    
     google.protobuf.Timestamp last_modified_date = 14;    
-    string last_modified_by_user_login = 15;
-    
+    string last_modified_by_user_login = 15;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 16;    
+    google.protobuf.Timestamp created_tx_stamp = 17;
+        
 }
 
 // Product Category Member
@@ -4124,7 +4418,7 @@ message ProductCategoryMemberData {
     option (routines.keys).keys = "product_category_id, product_id, from_date";
     option (routines.keys).combine = true;
     // keys: productCategoryId, productId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_category_id = 1;    
@@ -4133,8 +4427,10 @@ message ProductCategoryMemberData {
     google.protobuf.Timestamp thru_date = 4;    
     string comments = 5;    
     int64 sequence_num = 6;    
-    routines.FixedPoint quantity = 7;
-    
+    routines.FixedPoint quantity = 7;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 8;    
+    google.protobuf.Timestamp created_tx_stamp = 9;
+        
 }
 
 // Agreement Term
@@ -4143,7 +4439,7 @@ message AgreementTermData {
     option (routines.keys).keys = "agreement_term_id";
     option (routines.keys).combine = false;
     // keys: agreementTermId
-
+    
     // fields
         
     string agreement_term_id = 1;
@@ -4158,8 +4454,10 @@ message AgreementTermData {
     string text_value = 10;    
     double min_quantity = 11;    
     double max_quantity = 12;    
-    string description = 13;
-    
+    string description = 13;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 14;    
+    google.protobuf.Timestamp created_tx_stamp = 15;
+        
 }
 
 // Product Category Link
@@ -4168,7 +4466,7 @@ message ProductCategoryLinkData {
     option (routines.keys).keys = "product_category_id, link_seq_id, from_date";
     option (routines.keys).combine = true;
     // keys: productCategoryId, linkSeqId, fromDate
-
+    string id = 200; 
     // fields
         
     string product_category_id = 1;    
@@ -4183,8 +4481,10 @@ message ProductCategoryLinkData {
     string image_two_url = 10;
     string link_type_enum_id = 11; // Enumeration    
     string link_info = 12;    
-    string detail_sub_screen = 13;
-    
+    string detail_sub_screen = 13;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 14;    
+    google.protobuf.Timestamp created_tx_stamp = 15;
+        
 }
 
 // Product Feature Interaction
@@ -4193,14 +4493,16 @@ message ProductFeatureIactnData {
     option (routines.keys).keys = "product_feature_id, product_feature_id_to";
     option (routines.keys).combine = true;
     // keys: productFeatureId, productFeatureIdTo
-
+    string id = 200; 
     // fields
         
     string product_feature_id = 1;    
     string product_feature_id_to = 2;
     string product_feature_iactn_type_id = 3; // ProductFeatureIactnType    
-    string product_id = 4;
-    
+    string product_id = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
 }
 
 // Work Effort Association
@@ -4209,7 +4511,7 @@ message WorkEffortAssocData {
     option (routines.keys).keys = "work_effort_id_from, work_effort_id_to, work_effort_assoc_type_id, from_date";
     option (routines.keys).combine = true;
     // keys: workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate
-
+    string id = 200; 
     // fields
         
     string work_effort_id_from = 1;    
@@ -4217,8 +4519,10 @@ message WorkEffortAssocData {
     string work_effort_assoc_type_id = 3;    
     int64 sequence_num = 4;    
     google.protobuf.Timestamp from_date = 5;    
-    google.protobuf.Timestamp thru_date = 6;
-    
+    google.protobuf.Timestamp thru_date = 6;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 7;    
+    google.protobuf.Timestamp created_tx_stamp = 8;
+        
 }
 
 // Quote Role
@@ -4227,14 +4531,16 @@ message QuoteRoleData {
     option (routines.keys).keys = "quote_id, party_id, role_type_id";
     option (routines.keys).combine = true;
     // keys: quoteId, partyId, roleTypeId
-
+    string id = 200; 
     // fields
         
     string quote_id = 1;    
     string party_id = 2;
     string role_type_id = 3; // RoleType    
     google.protobuf.Timestamp from_date = 4;    
-    google.protobuf.Timestamp thru_date = 5;
-    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
 }
 

@@ -71,8 +71,8 @@ public class EntityMeta {
                 .collect(Collectors.toList());
     }
 
-    public int getPublicFieldNumber() {
-        return getPublicFields().size();
+    public int getMessageFieldNumber() {
+        return getMessageFields().size();
     }
 
     public String getKeyNames() {

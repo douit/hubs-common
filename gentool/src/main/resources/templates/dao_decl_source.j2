@@ -1,3 +1,14 @@
+package com.bluecc.income.dao;
+
+import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.model.{{ent.name}};
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
+
+import java.util.List;
+
+public class {{ent.name}}Delegator extends AbstractProcs{
 
     @RegisterBeanMapper(value = {{ent.name}}.class)
     public interface {{ent.name}}Dao {
@@ -9,3 +20,5 @@
         @SqlQuery("select count(*) from {{ent.underscore}}")
         int count{{ent.name}}();
     }
+
+}
