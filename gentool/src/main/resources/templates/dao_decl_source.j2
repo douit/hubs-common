@@ -1,0 +1,11 @@
+
+    @RegisterBeanMapper(value = {{ent.name}}.class)
+    public interface {{ent.name}}Dao {
+        @SqlQuery("select * from {{ent.underscore}}")
+        List<{{ent.name}}> list{{ent.name}}();
+        @SqlQuery("select * from {{ent.underscore}} where {{ent.underscorePk}}=:id")
+        {{ent.name}} get{{ent.name}}(@Bind("id") String id);
+
+        @SqlQuery("select count(*) from {{ent.underscore}}")
+        int count{{ent.name}}();
+    }

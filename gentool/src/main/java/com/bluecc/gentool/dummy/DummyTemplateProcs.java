@@ -24,7 +24,7 @@ public class DummyTemplateProcs {
     }
 
     Map<Tuple2<String, String>, String> templateRepos = Maps.newHashMap();
-    Set<String> ignoreFields = Sets.newHashSet("last_updated_tx_stamp", "created_tx_stamp");
+    // Set<String> ignoreFields = Sets.newHashSet("last_updated_tx_stamp", "created_tx_stamp");
 
     public String procBean(EntityMeta table, String template) throws IOException {
         Jinjava jinjava = new Jinjava();

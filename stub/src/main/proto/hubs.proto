@@ -135,7 +135,9 @@ message OrderHeaderFlatData {
     routines.Currency remaining_sub_total = 27;    
     routines.Currency grand_total = 28;    
     routines.Indicator is_viewed = 29;    
-    routines.Indicator invoice_per_shipment = 30;  
+    routines.Indicator invoice_per_shipment = 30;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 31;    
+    google.protobuf.Timestamp created_tx_stamp = 32;  
 }
 
 // flat-ent: Order Item
@@ -191,7 +193,9 @@ message OrderItemFlatData {
     google.protobuf.Timestamp cancel_back_order_date = 44;    
     string override_gl_account_id = 45;    
     string sales_opportunity_id = 46;    
-    string change_by_user_login_id = 47;  
+    string change_by_user_login_id = 47;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 48;    
+    google.protobuf.Timestamp created_tx_stamp = 49;  
 }
 
 // flat-ent: Payment
@@ -219,7 +223,9 @@ message PaymentFlatData {
     string fin_account_trans_id = 16;    
     string override_gl_account_id = 17;    
     routines.Currency actual_currency_amount = 18;
-    string actual_currency_uom_id = 19; // Uom  
+    string actual_currency_uom_id = 19; // Uom    
+    google.protobuf.Timestamp last_updated_tx_stamp = 20;    
+    google.protobuf.Timestamp created_tx_stamp = 21;  
 }
 
 // flat-ent: Invoice
@@ -244,7 +250,9 @@ message InvoiceFlatData {
     string reference_number = 13;    
     string description = 14;
     string currency_uom_id = 15; // Uom    
-    string recurrence_info_id = 16;  
+    string recurrence_info_id = 16;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 17;    
+    google.protobuf.Timestamp created_tx_stamp = 18;  
 }
 
 // flat-ent: Product
@@ -323,7 +331,9 @@ message ProductFlatData {
     routines.Indicator in_shipping_box = 67;    
     string default_shipment_box_type_id = 68;    
     string lot_id_filled_in = 69;    
-    routines.Indicator order_decimal_quantity = 70;  
+    routines.Indicator order_decimal_quantity = 70;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 71;    
+    google.protobuf.Timestamp created_tx_stamp = 72;  
 }
 
 // flat-ent: Shipment
@@ -362,7 +372,9 @@ message ShipmentFlatData {
     google.protobuf.Timestamp created_date = 27;    
     string created_by_user_login = 28;    
     google.protobuf.Timestamp last_modified_date = 29;    
-    string last_modified_by_user_login = 30;  
+    string last_modified_by_user_login = 30;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 31;    
+    google.protobuf.Timestamp created_tx_stamp = 32;  
 }
 
 // flat-ent: Product Store
@@ -449,7 +461,9 @@ message ProductStoreFlatData {
     routines.Indicator show_out_of_stock_products = 75;    
     routines.Indicator order_decimal_quantity = 76;    
     routines.Indicator allow_comment = 77;    
-    routines.Indicator allocate_inventory = 78;  
+    routines.Indicator allocate_inventory = 78;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 79;    
+    google.protobuf.Timestamp created_tx_stamp = 80;  
 }
 
 // flat-ent: Party
@@ -470,7 +484,9 @@ message PartyFlatData {
     google.protobuf.Timestamp last_modified_date = 9;    
     string last_modified_by_user_login = 10;
     string data_source_id = 11; // DataSource    
-    routines.Indicator is_unread = 12;  
+    routines.Indicator is_unread = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;  
 }
 
 // flat-ent: Person
@@ -512,7 +528,9 @@ message PersonFlatData {
     int64 years_with_employer = 30;    
     int64 months_with_employer = 31;    
     routines.Indicator existing_customer = 32;    
-    string card_id = 33;  
+    string card_id = 33;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 34;    
+    google.protobuf.Timestamp created_tx_stamp = 35;  
 }
 
 // flat-ent: Party Group
@@ -530,7 +548,9 @@ message PartyGroupFlatData {
     int64 num_employees = 6;    
     string ticker_symbol = 7;    
     string comments = 8;    
-    string logo_image_url = 9;  
+    string logo_image_url = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;  
 }
 
 // flat-ent: UserLogin
@@ -555,7 +575,9 @@ message UserLoginFlatData {
     string external_auth_id = 13;    
     string user_ldap_dn = 14;    
     string disabled_by = 15;    
-    string party_id = 16;  
+    google.protobuf.Timestamp last_updated_tx_stamp = 16;    
+    google.protobuf.Timestamp created_tx_stamp = 17;    
+    string party_id = 18;  
 }
 
 // Shipment Route Segment

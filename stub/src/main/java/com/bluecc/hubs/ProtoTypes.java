@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.List;
 
@@ -68,6 +69,12 @@ public class ProtoTypes {
         long millis = System.currentTimeMillis();
         Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
                 .setNanos((int) ((millis % 1000) * 1000000)).build();
+        return timestamp;
+    }
+
+    public static Timestamp getTimestamp(Instant ts) {
+        Timestamp timestamp = Timestamp.newBuilder().setSeconds(ts.getEpochSecond())
+                .setNanos(ts.getNano()).build();
         return timestamp;
     }
 

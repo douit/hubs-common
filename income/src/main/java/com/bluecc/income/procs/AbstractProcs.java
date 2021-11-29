@@ -6,15 +6,18 @@ import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.descriptor.INameSymbol;
-import com.bluecc.hubs.stub.ShipmentData;
 import com.bluecc.income.dummy.store.HubsStore;
+import com.bluecc.income.exchange.FlatMessageCollector;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.template.TemplateGlobalContext;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
+import lombok.Builder;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlLogger;
@@ -28,6 +31,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
+import static org.junit.Assert.assertEquals;
 
 @Slf4j
 public class AbstractProcs {
@@ -193,6 +197,107 @@ public class AbstractProcs {
             truncate(c, Arrays.stream(entities).map(e ->
                     Util.toSnakecase(e)).collect(Collectors.toList()));
         });
+    }
+
+    @Data
+    @Builder
+    static class ExtractedTableInfo{
+        String table;
+        List<String> names;
+        List<String> placers;
+        Map<String, Object> e;
+        String idCond;
+        String fieldsCondition;
+    }
+
+    ExtractedTableInfo extract(Message flatData){
+        Map<String, Object> e= FlatMessageCollector.extract(flatData);
+
+        List<String> names = new ArrayList<>(e.keySet());
+        List<String> placers = names.stream().map(name -> ":" + name)
+                .collect(Collectors.toList());
+
+        String fieldsCond = names.stream().map(name ->
+                        String.format("%s=:%s", name, name))
+                .collect(Collectors.joining(" and "));
+
+        String table= ProtoTypes.getTableByMessage(flatData);
+
+        List<String> idCondList= Lists.newArrayList();
+        for (String entityKey : ProtoTypes.getEntityKeys(flatData)) {
+            idCondList.add(String.format("%s=:%s", entityKey, entityKey));
+        }
+        String idCond=String.join(" and ", idCondList);
+
+        return ExtractedTableInfo.builder()
+                .table(table)
+                .names(names)
+                .placers(placers)
+                .e(e)
+                .idCond(idCond)
+                .fieldsCondition(fieldsCond)
+                .build();
+    }
+
+    int create(IProc.ProcContext ctx, Message flatData){
+        ExtractedTableInfo tableInfo=extract(flatData);
+        int total = ctx.getHandle().createUpdate("insert into <table> (<columns>) values (<placers>)")
+                .define("table", tableInfo.table)
+                .defineList("columns", tableInfo.names)
+                .defineList("placers", tableInfo.placers)
+                .bindMap(tableInfo.e)
+                .execute();
+        assertEquals(1, total);
+        return total;
+    }
+
+    int update(IProc.ProcContext ctx, Message flatData) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        List<String> fieldsCond = tableInfo.names.stream()
+                .map(name -> name+" = :" + name)
+                .collect(Collectors.toList());
+
+        int total = ctx.getHandle().createUpdate("update <table> set <fields_cond> where <id_cond>")
+                .define("table", tableInfo.table)
+                .defineList("fields_cond", fieldsCond)
+                .define("id_cond", tableInfo.idCond)
+                .bindMap(tableInfo.e)
+                .execute();
+        assertEquals(1, total);
+        return total;
+    }
+
+    int delete(IProc.ProcContext ctx, Message flatData) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        int total = ctx.getHandle().createUpdate("delete from <table> where <id_cond>")
+                .define("table", tableInfo.table)
+                .define("id_cond", tableInfo.idCond)
+                .bindMap(tableInfo.e)
+                .execute();
+        assertEquals(1, total);
+        return total;
+    }
+
+    List<Map<String, Object>> findById(IProc.ProcContext ctx, Message flatData) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        List<Map<String, Object>> rs = ctx.getHandle().createQuery("select * from <table> where <id_cond>")
+                .define("table", tableInfo.table)
+                .define("id_cond", tableInfo.idCond)
+                .bindMap(tableInfo.e)
+                .mapToMap()
+                .list();
+        return rs;
+    }
+
+    List<Map<String, Object>> find(IProc.ProcContext ctx, Message flatData) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        List<Map<String, Object>> rs = ctx.getHandle().createQuery("select * from <table> where <fields_cond>")
+                .define("table", tableInfo.table)
+                .define("fields_cond", tableInfo.fieldsCondition)
+                .bindMap(tableInfo.e)
+                .mapToMap()
+                .list();
+        return rs;
     }
 }
 

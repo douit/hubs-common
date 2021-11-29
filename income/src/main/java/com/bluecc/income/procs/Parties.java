@@ -1,9 +1,14 @@
 package com.bluecc.income.procs;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.income.helper.ISO8601TimestampConverter;
 import com.bluecc.income.template.UseHubsTemplateEngine;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +21,7 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,10 +31,80 @@ import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.income.dummy.store.StoreModule.startup;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 
+/**
+ * $ just i procs.Parties sample
+ * $ just i procs.Parties create --last-name wu --first-name samlet --timestamp 2019-10-03T10:58:00
+ * $ just i procs.Parties find --last-name wu --first-name samlet
+ */
 public class Parties extends AbstractProcs {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class Opts {
+        @Parameter(names = {"--silent", "-s"})
+        boolean silent;
+        @Parameter
+        public List<String> commands = Lists.newArrayList("sample");
+
+        @Parameter(
+                names = { "--timestamp" },
+                converter = ISO8601TimestampConverter.class
+        )
+        private Instant timestamp;
+
+
+        @Parameter(names = { "--last-name" })
+        String lastName;
+        @Parameter(names = { "--first-name" })
+        String firstName;
+
+    }
+
     public static void main(String[] args) {
+        Opts opts = new Opts();
+        JCommander.newBuilder()
+                .addObject(opts)
+                .build()
+                .parse(args);
         Parties parties = startup(Parties.class);
-        parties.crudSample();
+        for (String command : opts.commands) {
+            switch (command) {
+                case "sample":
+                    parties.crudSample();
+                    break;
+                case "create":
+                    parties.create(opts);
+                    break;
+                case "find":
+                    parties.find(opts);
+                    break;
+                default:
+                    System.out.println(".. ignore command "+command);
+            }
+        }
+    }
+
+    void create(Opts opts){
+        process(ctx -> {
+            create(ctx, PersonFlatData.newBuilder()
+                    .setPartyId(sequence.nextStringId())
+                    .setFirstName(opts.firstName)
+                    .setLastName(opts.lastName)
+                    .setLastUpdatedTxStamp(ProtoTypes.getTimestamp(opts.getTimestamp()))
+                    .build());
+            System.out.println("ok.");
+        });
+    }
+
+    void find(Opts opts){
+        process(ctx -> {
+            find(ctx, PersonFlatData.newBuilder()
+                    .setFirstName(opts.firstName)
+                    .setLastName(opts.lastName)
+                    .build())
+                    .forEach(e -> pretty(e));
+            System.out.println("ok.");
+        });
     }
 
     void crudSample() {

@@ -64,6 +64,13 @@ public class EntityMeta {
                 .collect(Collectors.toList());
     }
 
+    static final Set<String> MESSAGE_IGNORE_FIELDS =
+            Sets.newHashSet("lastUpdatedStamp", "createdStamp");
+    public List<FieldMeta> getMessageFields() {
+        return fields.stream().filter(f -> !MESSAGE_IGNORE_FIELDS.contains(f.getName()))
+                .collect(Collectors.toList());
+    }
+
     public int getPublicFieldNumber() {
         return getPublicFields().size();
     }
@@ -102,6 +109,10 @@ public class EntityMeta {
         }
     }
 
+    public String getUnderscorePk(){
+        return getPkCol().toLowerCase(Locale.ROOT);
+    }
+
     public List<String> pkCols() {
         return fields.stream()
                 .filter(f -> f.pk && !f.getName().equals("id"))
@@ -117,8 +128,11 @@ public class EntityMeta {
         return Util.toVarName(this.name);
     }
 
+    // public String getUnderscore() {
+    //     return Util.toSnakecase(this.name);
+    // }
     public String getUnderscore() {
-        return Util.toSnakecase(this.name);
+        return this.tableName.toLowerCase(Locale.ROOT);
     }
 
     public boolean isHeadEntity() {
@@ -162,7 +176,8 @@ public class EntityMeta {
     static final Set<String> IGNORE_FIELDS = Sets.newHashSet("lastUpdatedTxStamp", "createdTxStamp");
 
     public void setupFieldMappings(Map<String, FieldMappings.FieldTypeDef> types) {
-        fields = fields.stream().filter(f -> !IGNORE_FIELDS.contains(f.getName())).collect(Collectors.toList());
+        // fields = fields.stream().filter(f ->
+        //         !IGNORE_FIELDS.contains(f.getName())).collect(Collectors.toList());
 
         // 修正对应的sql-type, 比如TIMESTAMPTZ类型
         fields.forEach(f -> {
