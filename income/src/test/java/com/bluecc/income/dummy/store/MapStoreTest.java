@@ -1,6 +1,7 @@
 package com.bluecc.income.dummy.store;
 
 import com.bluecc.income.AbstractMemStoreProcTest;
+import com.google.common.collect.ImmutableMap;
 import lombok.Data;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -9,7 +10,6 @@ import org.jdbi.v3.sqlobject.customizer.BindMap;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.junit.Test;
-import org.testcontainers.shaded.com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 

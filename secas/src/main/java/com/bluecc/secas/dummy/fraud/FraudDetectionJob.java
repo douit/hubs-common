@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.bluecc.income.dummy.fraud;
+package com.bluecc.secas.dummy.fraud;
 
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;

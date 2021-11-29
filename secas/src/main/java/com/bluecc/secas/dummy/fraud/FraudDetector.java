@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.bluecc.income.dummy.fraud;
+package com.bluecc.secas.dummy.fraud;
 
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;

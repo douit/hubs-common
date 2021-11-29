@@ -3,9 +3,9 @@ package com.bluecc.income.dummy.store;
 import com.bluecc.hubs.ProtoJsonUtils;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.income.GuiceTestRunner;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testcontainers.shaded.com.google.common.collect.ImmutableMap;
 
 import javax.inject.Inject;
 
