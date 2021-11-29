@@ -13,6 +13,7 @@ import com.google.protobuf.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +24,8 @@ import java.util.Map;
 
 import static com.bluecc.hubs.ProtoTypes.getFixedPoint;
 
-// @Slf4j
+@Slf4j
 public class MessageMapCollector {
-    private static final Logger log = LoggerFactory.getLogger(MessageMapCollector.class);
-
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -55,7 +54,7 @@ public class MessageMapCollector {
     }
 
     // private List<IProc> procs= Lists.newArrayList();
-    IMapDataCollector collector;
+    protected IMapDataCollector collector;
 
     public TravelContext getTravelContext() {
         return travelContext;
@@ -88,6 +87,12 @@ public class MessageMapCollector {
         String resultFld = parentFld == null ? "_" : parentFld.getName();
         log.debug("** process {}({}) => {}, {}", entityType, resultFld, symbol, symbol.getTableKeys());
 
+        extractToMap(msg, dataMap);
+        this.collector.collect(new IMapDataCollector.CollectorContext(this,
+                        symbol, parentMsg, parentFld), dataMap);
+    }
+
+    protected void extractToMap(Message msg, Map<String, Object> dataMap) {
         Map<Descriptors.FieldDescriptor, Object> allFields = msg.getAllFields();
         // System.out.println(allFields.keySet().stream().map(f -> f.getName())
         //         .collect(Collectors.toList()));
@@ -116,8 +121,6 @@ public class MessageMapCollector {
                             + fld.getName());
             }
         }
-        this.collector.collect(new IMapDataCollector.CollectorContext(this,
-                        symbol, parentMsg, parentFld), dataMap);
     }
 
     private void getMessageField(Message msg,
@@ -168,7 +171,7 @@ public class MessageMapCollector {
         }
     }
 
-    private void getEntityField(Message parentMsg,
+    protected void getEntityField(Message parentMsg,
                                 Descriptors.FieldDescriptor fld,
                                 Object fldVal) {
         log.info("field value type is {}, message type is{}, and repeated: {}",

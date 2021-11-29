@@ -1,5 +1,6 @@
 package com.bluecc.hubs;
 
+import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.stub.*;
 import com.google.common.collect.Lists;
 import com.google.protobuf.Descriptors;
@@ -93,6 +94,10 @@ public class ProtoTypes {
                 return 'N';
         }
         return ' ';
+    }
+
+    public static String getTableByMessage(Message msg) {
+        return Util.toSnakecase(getEntityTypeByMessage(msg));
     }
 
     public static String getEntityTypeByMessage(Message msg) {
