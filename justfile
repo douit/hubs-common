@@ -68,3 +68,7 @@ income:
 
 template tpl ent:
 	just gen TemplateGen -t {{tpl}} -e {{ent}}
+
+package:
+	mvn package -DskipTests
+

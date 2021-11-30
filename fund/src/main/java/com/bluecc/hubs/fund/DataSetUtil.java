@@ -18,7 +18,7 @@ public class DataSetUtil {
     }
 
     public static MetaTypes.MetaList getAvailableEntities()  {
-        MetaTypes.MetaList hubsEntities = null;
+        MetaTypes.MetaList hubsEntities;
         try {
             hubsEntities = readJsonFile(MetaTypes.MetaList.class,
                     prependHubsHomeFile("asset/mysql/hubs.json"));
@@ -29,4 +29,5 @@ public class DataSetUtil {
         }
     }
 }
+
 

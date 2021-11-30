@@ -3,6 +3,7 @@ message {{ent.name}}Data {
     option (routines.entity_type) = "{{ent.name}}";
     option (routines.keys).keys = "{{ent.underscoreKeys}}";
     option (routines.keys).combine = {{ent.combine}};
+    option (routines.flat) = {{!ent.headEntity}};
     // keys: {{ent.keyNames}}
     {% if ent.combine %}string id = 200; {% endif %}
     // fields

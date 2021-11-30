@@ -1,7 +1,10 @@
 package com.bluecc.hubs;
 
+import com.bluecc.hubs.proto.ProtoStuffs;
 import com.bluecc.hubs.stub.Currency;
 import com.bluecc.hubs.stub.FixedPoint;
+import com.bluecc.hubs.stub.PersonFlatData;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.type.Money;
 import org.junit.Test;
 
@@ -50,6 +53,15 @@ public class ProtoTypesTest {
 
         System.out.println(curr + ", " + curr.longValue() + ", "
                 + curr.precision() + ", " + curr.scale());
+    }
+
+    @Test
+    public void testEntitySerializer() throws InvalidProtocolBufferException {
+        PersonFlatData flatData=ProtoStuffs.personFlatData();
+        byte[] bytes=ProtoTypes.serializeEntityWithEnvelope(flatData);
+        PersonFlatData resultData=(PersonFlatData) ProtoTypes.deserializeEntityWithEnvelope(bytes);
+        assertEquals(flatData.getLastName(), resultData.getLastName());
+
     }
 
 }

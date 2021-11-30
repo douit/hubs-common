@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static com.bluecc.hubs.ProtoTypes.extractEnvelopeData;
 import static com.bluecc.income.dummy.store.StoreModule.startup;
 
 /**
@@ -135,13 +136,4 @@ public class RpcEndpoints {
         }
     }
 
-    private static Message.Builder extractEnvelopeData(Envelope request) throws InvalidProtocolBufferException {
-        Any any=request.getData();
-        Class<? extends Message> entityClass=
-                DataBuilder.getEntityClass(request.getDataType(), false);
-        Message msg= any.unpack(entityClass);
-        Message.Builder builder=DataBuilder.procData(request.getDataType(),
-                false, msg).getBuilder();
-        return builder;
-    }
 }

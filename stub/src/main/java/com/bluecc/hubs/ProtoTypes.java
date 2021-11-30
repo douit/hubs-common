@@ -1,12 +1,10 @@
 package com.bluecc.hubs;
 
 import com.bluecc.hubs.fund.Util;
+import com.bluecc.hubs.proto.DataBuilder;
 import com.bluecc.hubs.stub.*;
 import com.google.common.collect.Lists;
-import com.google.protobuf.Descriptors;
-import com.google.protobuf.GeneratedMessageV3;
-import com.google.protobuf.Message;
-import com.google.protobuf.Timestamp;
+import com.google.protobuf.*;
 import com.google.type.Money;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -113,6 +111,12 @@ public class ProtoTypes {
         return entityType;
     }
 
+    public static boolean isFlatMessage(Message msg) {
+        Descriptors.Descriptor descriptor = msg.getDescriptorForType();
+        boolean flat = descriptor.getOptions().getExtension(RoutinesProto.flat);
+        return flat;
+    }
+
     public static String[] getEntityKeys(Message msg) {
         EntityKey keys = msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
         return keys.getKeys().split(", ");
@@ -143,6 +147,47 @@ public class ProtoTypes {
             result.add(val.toString());
         }
         return result;
+    }
+
+    public static Envelope packGeneral(String dataType, Message protoMess){
+        Envelope envelope= Envelope.newBuilder()
+                .setDataType(dataType)
+                .setData(Any.pack(protoMess))
+                .build();
+        return envelope;
+    }
+
+    public static Envelope packEntity(Message protoMess){
+        Envelope envelope= Envelope.newBuilder()
+                .setDataType(getEntityTypeByMessage(protoMess))
+                .setData(Any.pack(protoMess))
+                .setFlat(isFlatMessage(protoMess))
+                .build();
+        return envelope;
+    }
+
+    public static byte[] serializeEntityWithEnvelope(Message protoMess){
+        return packEntity(protoMess).toByteArray();
+    }
+
+    public static Message.Builder extractEnvelopeData(Envelope request) throws InvalidProtocolBufferException {
+        Message msg=unpackEntity(request);
+        Message.Builder builder=DataBuilder.procData(request.getDataType(),
+                false, msg).getBuilder();
+        return builder;
+    }
+
+    public static Message unpackEntity(Envelope request) throws InvalidProtocolBufferException {
+        Any any=request.getData();
+        Class<? extends Message> entityClass=
+                DataBuilder.getEntityClass(request.getDataType(), request.getFlat());
+        Message msg= any.unpack(entityClass);
+        return msg;
+    }
+
+    public static Message deserializeEntityWithEnvelope(byte[] cnt) throws InvalidProtocolBufferException {
+        Envelope envelope=Envelope.parseFrom(cnt);
+        return unpackEntity(envelope);
     }
 }
 

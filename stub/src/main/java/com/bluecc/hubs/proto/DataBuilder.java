@@ -50,9 +50,10 @@ public class DataBuilder {
         }
     }
 
-    public static Class<? extends com.google.protobuf.Message> getEntityClass(String entityName, boolean disableHeadEntity){
+    @SuppressWarnings("unchecked")
+    public static Class<? extends com.google.protobuf.Message> getEntityClass(String entityName, boolean flat){
         String dataClass;
-        if (HeadEntityResources.contains(entityName) && disableHeadEntity) {
+        if (HeadEntityResources.contains(entityName) && flat) {
             dataClass = String.format("com.bluecc.hubs.stub.%sFlatData", entityName);
         } else {
             dataClass = String.format("com.bluecc.hubs.stub.%sData", entityName);
