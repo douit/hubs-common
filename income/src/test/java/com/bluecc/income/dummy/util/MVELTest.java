@@ -1,6 +1,7 @@
 package com.bluecc.income.dummy.util;
 
 import com.bluecc.hubs.stub.ShipmentData;
+import com.bluecc.hubs.stub.StringValue;
 import com.google.common.collect.Maps;
 import com.google.protobuf.Message;
 import org.junit.Test;
@@ -44,7 +45,11 @@ public class MVELTest {
         assertFalse((boolean)object);
     }
 
-
+    @Test
+    public void testEvalStringMessage(){
+        StringValue val=StringValue.newBuilder().setValue("hi").build();
+        assertTrue((boolean)MVEL.eval("value!=empty", val));
+    }
 }
 
 /*
