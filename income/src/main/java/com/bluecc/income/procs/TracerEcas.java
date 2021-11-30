@@ -14,7 +14,7 @@ import java.util.function.Function;
 @Ecas
 public class TracerEcas {
     @Eca("receiveEvent")
-    @Condition("value!=empty")
+    @Condition("value!=empty && value!='hello'")
     public Function<Message, Envelope> info(){
         return e -> {
             System.out.println("receive -> "+e);
