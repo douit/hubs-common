@@ -19,10 +19,10 @@ public class CliMain {
             commandNames = { "ping" },
             commandDescription = "检测服务端是否启动"
     )
-    static class PingCommand {
+    static class PingCommand implements ICmd{
         @Parameter(names = {"--info", "-i"})
         private String info="hi";
-        void execute() throws InterruptedException {
+        public void execute() throws InterruptedException {
             System.out.println(".. ping cmd");
             RpcClient.ping(info);
         }
@@ -32,10 +32,10 @@ public class CliMain {
             commandNames = { "store" },
             commandDescription = "提交指定的资源文件"
     )
-    static class StoreCommand {
+    static class StoreCommand implements ICmd{
         @Parameter(names = {"--resource", "-r"})
         private String resource="order_head_simple";
-        void execute() throws InterruptedException {
+        public void execute() throws InterruptedException {
             System.out.println(".. store cmd");
             RpcClient.storeEntity(resource);
         }
@@ -50,6 +50,7 @@ public class CliMain {
         @Parameter(names = "--help", help = true)
         private boolean help;
     }
+
     public static void main(String[] args) throws InterruptedException {
         Opts opts = new Opts();
         PingCommand pingCommand=new PingCommand();
@@ -67,18 +68,18 @@ public class CliMain {
         jc.parse(args);
         String parsedCmdStr = jc.getParsedCommand();
         if(parsedCmdStr!=null) {
-            switch (parsedCmdStr) {
-                case "ping":
-                    pingCommand.execute();
-                    break;
+            JCommander cmdWrapper=jc.findCommandByAlias(parsedCmdStr);
+            // System.out.println(cmd.getObjects().get(0).getClass().getName());
+            ICmd cmd=(ICmd) cmdWrapper.getObjects().get(0);
+            cmd.execute();
 
-                case "store":
-                    storeCommand.execute();
-                    break;
-
-                default:
-                    System.err.println("Invalid command: " + parsedCmdStr);
-            }
+            // switch (parsedCmdStr) {
+            //     case "ping":
+            //         pingCommand.execute();
+            //         break;
+            //     default:
+            //         System.err.println("Invalid command: " + parsedCmdStr);
+            // }
         }else{
             jc.usage();
         }

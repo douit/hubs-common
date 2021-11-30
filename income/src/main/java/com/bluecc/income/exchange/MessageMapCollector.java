@@ -171,6 +171,7 @@ public class MessageMapCollector {
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void getEntityField(Message parentMsg,
                                 Descriptors.FieldDescriptor fld,
                                 Object fldVal) {
