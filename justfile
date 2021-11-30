@@ -16,6 +16,9 @@ rpc program +FLAGS='':
 i program +FLAGS='':
 	mvn compile exec:java -Dexec.mainClass="com.bluecc.income.{{program}}" -Dexec.args="{{FLAGS}}" -f income/pom.xml
 
+cli +FLAGS='':
+	mvn compile exec:java -Dexec.mainClass="com.bluecc.income.cli.CliMain" -Dexec.args="{{FLAGS}}" -f income/pom.xml
+
 s program +FLAGS='':
 	mvn exec:java -Dexec.mainClass="com.bluecc.hubs.{{program}}" -Dexec.args="{{FLAGS}}" -f stub/pom.xml
 

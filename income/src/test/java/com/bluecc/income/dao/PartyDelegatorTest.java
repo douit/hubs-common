@@ -12,7 +12,7 @@ import java.util.Locale;
 import static org.junit.Assert.assertEquals;
 
 public class PartyDelegatorTest extends AbstractStoreProcTest {
-    @Inject PartyDelegator partys;
+    @Inject PartyDelegator partyDelegator;
 
     @Before
     public void setUp() throws Exception {
@@ -27,14 +27,14 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
             String newId=sequence.nextStringId();
             PartyFlatData flatData= PartyFlatData.newBuilder()
                     .setPartyId(newId)
-                    // .setDescription(faker.hipster().word())
+                    .setDescription(faker.hipster().word())
                     .build();
-            assertEquals(1, partys.create(ctx, flatData));
-            assertEquals(1, partys.update(ctx, flatData));
-            assertEquals(1, partys.find(ctx, flatData).size());
-            assertEquals(1, partys.findById(ctx, flatData).size());
-            assertEquals(1, partys.delete(ctx, flatData));
-            assertEquals(0, partys.find(ctx, flatData).size());
+            assertEquals(1, partyDelegator.create(ctx, flatData));
+            assertEquals(1, partyDelegator.update(ctx, flatData));
+            assertEquals(1, partyDelegator.find(ctx, flatData).size());
+            assertEquals(1, partyDelegator.findById(ctx, flatData).size());
+            assertEquals(1, partyDelegator.delete(ctx, flatData));
+            assertEquals(0, partyDelegator.find(ctx, flatData).size());
         });
     }
 }

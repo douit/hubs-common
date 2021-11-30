@@ -27,6 +27,7 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
             String newId=sequence.nextStringId();
             ProductFlatData flatData= ProductFlatData.newBuilder()
                     .setProductId(newId)
+                    .setProductName(faker.commerce().productName())
                     // .setDescription(faker.hipster().word())
                     .build();
             assertEquals(1, products.create(ctx, flatData));

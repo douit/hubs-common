@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import static com.bluecc.income.dummy.store.StoreModule.startup;
 
 /**
- * $ just rpc RpcEndpoints
+ * $ just i endpoint.RpcEndpoints
  */
 @Slf4j
 public class RpcEndpoints {
@@ -114,10 +114,8 @@ public class RpcEndpoints {
                     responseObserver.onCompleted();
 
                 }else{
-                    Class<? extends com.google.protobuf.Message> entityClass=
-                            DataBuilder.getEntityClass(request.getDataType(), false);
-                    Message msg=any.unpack(entityClass);
-                    Message.Builder builder=DataBuilder.procData(request.getDataType(), false, msg).getBuilder();
+                    Message.Builder builder = extractEnvelopeData(request);
+
                     String newId=sequence.nextStringId();
                     ProtoTypes.setEntityKey(builder, newId);
 
@@ -135,5 +133,15 @@ public class RpcEndpoints {
             }
 
         }
+    }
+
+    private static Message.Builder extractEnvelopeData(Envelope request) throws InvalidProtocolBufferException {
+        Any any=request.getData();
+        Class<? extends Message> entityClass=
+                DataBuilder.getEntityClass(request.getDataType(), false);
+        Message msg= any.unpack(entityClass);
+        Message.Builder builder=DataBuilder.procData(request.getDataType(),
+                false, msg).getBuilder();
+        return builder;
     }
 }

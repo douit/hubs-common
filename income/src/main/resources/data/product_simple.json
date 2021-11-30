@@ -1,0 +1,18 @@
+{
+  "product_id": "p_1",
+  "product_name": "sample prod",
+  "introduction_date": "2021-11-29T16:43:49.358Z",
+  "product_price": [
+    {
+      "product_price_type_id": "DEFAULT",
+      "product_price_purpose_id": "SALES",
+      "currency_uom_id": "CNY",
+      "product_store_group_id": "DEFAULT",
+      "from_date": "2021-11-28T16:43:49.358Z",
+      "price": {
+        "currency_uom_id": "CNY",
+        "value": "8.9"
+      }
+    }
+  ]
+}

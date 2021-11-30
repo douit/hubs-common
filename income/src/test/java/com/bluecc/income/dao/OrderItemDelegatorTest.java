@@ -26,8 +26,10 @@ public class OrderItemDelegatorTest extends AbstractStoreProcTest {
         process(ctx -> {
             String newId=sequence.nextStringId();
             OrderItemFlatData flatData= OrderItemFlatData.newBuilder()
-                    // .setId(newId)
-                    // .setDescription(faker.hipster().word())
+                    .setId(newId)
+                    .setOrderId("o_123")
+                    .setOrderItemSeqId("001")
+                    .setComments(faker.hipster().word())
                     .build();
             assertEquals(1, orderItems.create(ctx, flatData));
             assertEquals(1, orderItems.update(ctx, flatData));

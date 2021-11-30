@@ -19,7 +19,7 @@ public class GenericProcs extends AbstractProcs{
             Response reply = null;
             reply = Response.newBuilder()
                     .setResult(Response.Result.OK)
-                    .setMessage(result.get("_id_").toString())
+                    .setMessage(result.get("_id_").getChildId())
                     .build();
 
             responseObserver.onNext(reply);

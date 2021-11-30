@@ -2,6 +2,7 @@ package com.bluecc.income.proto;
 
 import com.bluecc.hubs.stub.OrderHeaderData;
 import com.bluecc.hubs.stub.PersonFlatData;
+import com.bluecc.hubs.stub.ProductData;
 import com.bluecc.hubs.stub.ShipmentData;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.util.JsonFormat;
@@ -38,6 +39,7 @@ public class ProtoSourceTest {
         printResource("order_head_simple", OrderHeaderData.newBuilder());
         printResource("order_head_product", OrderHeaderData.newBuilder());
         printResource("shipment_simple", ShipmentData.newBuilder());
+        printResource("product_simple", ProductData.newBuilder());
     }
 
     @Test

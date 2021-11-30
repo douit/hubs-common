@@ -12,16 +12,15 @@ import static com.bluecc.income.exchange.ResourceHelper.readResource;
 
 public class RpcClient {
 
+    static final String target = "localhost:50056";
     public static void main(String[] args) throws InterruptedException {
-        String target = "localhost:50056";
-
-        // ping(target);
-        storeEntity(target);
+        // ping("hi");
+        storeEntity("order_head_simple");
     }
 
-    private static void storeEntity(String target) throws InterruptedException {
+    public static void storeEntity(String source) throws InterruptedException {
         // StringValue protoMess=StringValue.newBuilder().setValue("hi").build();
-        Message protoMess=readResource("order_head_simple",
+        Message protoMess=readResource(source,
                 OrderHeaderData.newBuilder())
                 .build();
         Envelope envelope= Envelope.newBuilder()
@@ -32,8 +31,8 @@ public class RpcClient {
         System.out.println(response);
     }
 
-    private static void ping(String target) throws InterruptedException {
-        StringValue protoMess=StringValue.newBuilder().setValue("hi").build();
+    public static void ping(String info) throws InterruptedException {
+        StringValue protoMess=StringValue.newBuilder().setValue(info).build();
         Envelope envelope= Envelope.newBuilder()
                 .setDataType("string")
                 .setData(Any.pack(protoMess))
