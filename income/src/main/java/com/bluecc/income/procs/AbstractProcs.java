@@ -30,7 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.bluecc.hubs.ProtoTypes.getTableByMessage;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
+import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
@@ -218,14 +220,14 @@ public class AbstractProcs {
                 .collect(Collectors.toList());
 
         String fieldsCond = names.stream().map(name ->
-                        String.format("%s=:%s", name, name))
+                        format("%s=:%s", name, name))
                 .collect(Collectors.joining(" and "));
 
-        String table= ProtoTypes.getTableByMessage(flatData);
+        String table= getTableByMessage(flatData);
 
         List<String> idCondList= Lists.newArrayList();
         for (String entityKey : ProtoTypes.getEntityKeys(flatData)) {
-            idCondList.add(String.format("%s=:%s", entityKey, entityKey));
+            idCondList.add(format("%s=:%s", entityKey, entityKey));
         }
         String idCond=String.join(" and ", idCondList);
 
@@ -241,6 +243,13 @@ public class AbstractProcs {
 
     public int create(IProc.ProcContext ctx, Message flatData){
         ExtractedTableInfo tableInfo=extract(flatData);
+        if(ProtoTypes.isCombine(flatData)){
+            String uid=sequence.nextStringId();
+            tableInfo.names.add("id");
+            tableInfo.placers.add(":id");
+            tableInfo.e.put("id", uid);
+        }
+
         int total = ctx.getHandle().createUpdate("insert into <table> (<columns>) values (<placers>)")
                 .define("table", tableInfo.table)
                 .defineList("columns", tableInfo.names)
@@ -280,7 +289,8 @@ public class AbstractProcs {
 
     public List<Map<String, Object>> findById(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
-        List<Map<String, Object>> rs = ctx.getHandle().createQuery("select * from <table> where <id_cond>")
+        List<Map<String, Object>> rs = ctx.getHandle().createQuery(
+                "select * from <table> where <id_cond>")
                 .define("table", tableInfo.table)
                 .define("id_cond", tableInfo.idCond)
                 .bindMap(tableInfo.e)
@@ -297,6 +307,19 @@ public class AbstractProcs {
                 .bindMap(tableInfo.e)
                 .mapToMap()
                 .list();
+        return rs;
+    }
+
+    public List<Map<String, Object>> all(IProc.ProcContext c, Message flatData) {
+        return all(c, flatData, 0);
+    }
+
+    public List<Map<String, Object>> all(IProc.ProcContext c, Message flatData, int limit) {
+        List<Map<String,Object>> rs= c.getHandle().createQuery(
+                format("select * from %s %s",
+                        getTableByMessage(flatData),
+                        limit==0?":":"limit "+limit))
+                .mapToMap().list();
         return rs;
     }
 }

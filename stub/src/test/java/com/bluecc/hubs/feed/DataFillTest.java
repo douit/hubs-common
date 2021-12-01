@@ -1,23 +1,30 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.feed;
 
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.EntityMetaDigester;
 import com.bluecc.hubs.fund.EntityMetaManager;
+import com.bluecc.hubs.fund.SystemDefs;
 import com.bluecc.hubs.stub.PersonData;
 import com.bluecc.hubs.stub.PersonFlatData;
-import com.google.protobuf.Descriptors;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.gson.JsonObject;
 import com.google.protobuf.Descriptors.FieldDescriptor.Type;
 
 import java.io.IOException;
 import java.util.Locale;
+
+import com.google.protobuf.Message;
 import org.junit.Test;
+
+import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static org.junit.Assert.*;
 import static com.bluecc.hubs.fund.MetaTypes.typeList;
 
-class DataFillTest {
+public class DataFillTest {
 
     @Test
-    void fillData() throws IOException {
+    public void fillData() throws IOException {
         String entName="Person";
         EntityMeta meta= EntityMetaManager.getEntityMeta(entName, false);
         EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
@@ -38,4 +45,23 @@ class DataFillTest {
         // person.setField()
     }
 
+    @Test
+    public void getSeedData(){
+        String source= SystemDefs.prependHubsHome( "dataset/sample/sales_order.xml");
+        Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
+        collectEntityData(dataList, source, false);
+        assertTrue(dataList.get("Party").size()>0);
+    }
+
+    @Test
+    public void getSeedProtoData(){
+        String source= SystemDefs.prependHubsHome( "dataset/sample/sales_order.xml");
+        Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
+        collectEntityData(dataList, source, false);
+        assertTrue(dataList.get("Party").size()>0);
+
+        DataFill dataFill=new DataFill();
+        Multimap<String, Message> dataMap=dataFill.setupData(dataList);
+        dataMap.get("Party").forEach(e -> System.out.println(e));
+    }
 }

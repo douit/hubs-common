@@ -1,19 +1,13 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.feed;
 
 import com.bluecc.hubs.ProtoTypes;
-import com.bluecc.hubs.fund.EntityMeta;
-import com.bluecc.hubs.fund.MetaTypes;
-import com.bluecc.hubs.fund.Tuple2;
 import com.bluecc.hubs.stub.Envelope;
-import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import org.redisson.api.RMap;
 
 import javax.inject.Inject;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class FactBag {
     public SharedData getSharedData() {

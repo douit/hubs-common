@@ -18,6 +18,17 @@
     </properties>
     <dependencies>
 
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
         <!-- cassandra -->
         <dependency>
             <groupId>com.datastax.oss</groupId>
@@ -36,6 +47,35 @@
             <artifactId>java-driver-mapper-runtime</artifactId>
             <version>${driver.version}</version>
         </dependency>
+
+        <!-- es -->
+        <!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch -->
+<!--        <dependency>-->
+<!--            <groupId>org.elasticsearch</groupId>-->
+<!--            <artifactId>elasticsearch</artifactId>-->
+<!--            <version>7.15.2</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.elasticsearch.client</groupId>-->
+<!--            <artifactId>elasticsearch-rest-client</artifactId>-->
+<!--            <version>7.15.2</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-high-level-client -->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+<!--            <version>7.15.2</version>-->
+            <version>7.13.1</version>
+        </dependency>
+
+        <!-- FAIL: current license is non-compliant for [jdbc] -->
+<!--        <dependency>-->
+<!--            <groupId>org.elasticsearch.plugin</groupId>-->
+<!--            <artifactId>x-pack-sql-jdbc</artifactId>-->
+<!--&lt;!&ndash;            <version>7.15.2</version>&ndash;&gt;-->
+<!--            <version>7.13.1</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>

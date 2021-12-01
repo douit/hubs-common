@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.bluecc.hubs.fund.Util.pretty;
-import static com.bluecc.hubs.proto.ProtoModule.startup;
+import static com.bluecc.hubs.feed.ProtoModule.startup;
 
 public class WideTables {
     @Data

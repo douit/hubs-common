@@ -1,6 +1,6 @@
 package com.bluecc.hubs;
 
-import com.bluecc.hubs.proto.ProtoStuffs;
+import com.bluecc.hubs.feed.ProtoStuffs;
 import com.bluecc.hubs.stub.Currency;
 import com.bluecc.hubs.stub.FixedPoint;
 import com.bluecc.hubs.stub.PersonFlatData;

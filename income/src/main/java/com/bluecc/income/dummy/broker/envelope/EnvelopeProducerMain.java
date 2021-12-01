@@ -1,8 +1,7 @@
 package com.bluecc.income.dummy.broker.envelope;
 
-import com.bluecc.hubs.proto.ProtoStuffs;
+import com.bluecc.hubs.feed.ProtoStuffs;
 import com.bluecc.hubs.stub.PersonFlatData;
-import com.bluecc.income.dummy.broker.serdes.MessageDto;
 import com.google.protobuf.Message;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

@@ -1,4 +1,4 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.feed;
 
 import com.bluecc.hubs.stub.RoutinesProto;
 import com.bluecc.hubs.stub.ShipmentPackageRouteSegData;
@@ -10,10 +10,10 @@ import java.util.Base64;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-class DataBuilderTest {
+public class DataBuilderTest {
 
     @Test
-    void procData() {
+    public void procData() {
         DataBuilder dataBuilder=new DataBuilder();
         DataBuilder.ProtoBuilder protoBuilder=dataBuilder.procData("OrderItem", true);
 
@@ -24,7 +24,7 @@ class DataBuilderTest {
     }
 
     @Test
-    void procBinaryData(){
+    public void procBinaryData(){
         String originalInput = "上海磐石";
         String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
         ByteString bval=ByteString.copyFromUtf8(encodedString);

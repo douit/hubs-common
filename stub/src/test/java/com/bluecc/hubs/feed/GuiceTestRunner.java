@@ -1,4 +1,4 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.feed;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

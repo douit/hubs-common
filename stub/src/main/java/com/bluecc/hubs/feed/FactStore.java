@@ -1,4 +1,4 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.feed;
 
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.Tuple2;

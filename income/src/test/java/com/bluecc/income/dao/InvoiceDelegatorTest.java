@@ -1,14 +1,21 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.InvoiceFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
+import com.bluecc.income.dao.InvoiceDelegator.InvoiceDao;
+import com.bluecc.income.exchange.IProc;
 import com.github.javafaker.Faker;
+import com.google.protobuf.Message;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import static com.bluecc.hubs.fund.Util.pretty;
 import static org.junit.Assert.assertEquals;
 
 public class InvoiceDelegatorTest extends AbstractStoreProcTest {
@@ -37,4 +44,27 @@ public class InvoiceDelegatorTest extends AbstractStoreProcTest {
             assertEquals(0, invoices.find(ctx, flatData).size());
         });
     }
+
+    @Test
+    public void testCount() {
+        process(c -> {
+            InvoiceDao dao = c.getHandle().attach(InvoiceDao.class);
+            System.out.println(dao.countInvoice());
+        });
+    }
+
+    @Test
+    public void testListAll() {
+        process(c -> {
+            //Dao dao = c.getHandle().attach(Dao.class);
+            InvoiceFlatData flatData=InvoiceFlatData.newBuilder()
+                    .setInvoiceId(sequence.nextStringId())
+                    .build();
+            genericProcs.create(c, flatData);
+            List<Map<String, Object>> rs = genericProcs.all(c, flatData, 5);
+            rs.forEach(e -> pretty(e));
+        });
+    }
+
+
 }

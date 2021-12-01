@@ -1,7 +1,7 @@
 package com.bluecc.hubs.stub;
 
 import com.bluecc.hubs.ProtoJsonUtils;
-import com.bluecc.hubs.proto.DataFill;
+import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.ProtoTypes;
 import com.google.protobuf.*;
 import com.google.protobuf.util.JsonFormat;

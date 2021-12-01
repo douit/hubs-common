@@ -1,4 +1,4 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.feed;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

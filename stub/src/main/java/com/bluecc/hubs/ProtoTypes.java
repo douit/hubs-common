@@ -1,7 +1,7 @@
 package com.bluecc.hubs;
 
 import com.bluecc.hubs.fund.Util;
-import com.bluecc.hubs.proto.DataBuilder;
+import com.bluecc.hubs.feed.DataBuilder;
 import com.bluecc.hubs.stub.*;
 import com.google.common.collect.Lists;
 import com.google.protobuf.*;
@@ -115,6 +115,11 @@ public class ProtoTypes {
         Descriptors.Descriptor descriptor = msg.getDescriptorForType();
         boolean flat = descriptor.getOptions().getExtension(RoutinesProto.flat);
         return flat;
+    }
+
+    public static boolean isCombine(Message msg) {
+        EntityKey keys = msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
+        return keys.getCombine();
     }
 
     public static String[] getEntityKeys(Message msg) {

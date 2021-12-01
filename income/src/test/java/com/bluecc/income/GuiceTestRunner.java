@@ -1,6 +1,6 @@
 package com.bluecc.income;
 
-import com.bluecc.hubs.proto.ProtoModule;
+import com.bluecc.hubs.feed.ProtoModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.runners.BlockJUnit4ClassRunner;

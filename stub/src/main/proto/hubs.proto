@@ -121,6 +121,26 @@ service UserLoginService {
     rpc FindById(routines.Identity) returns (UserLoginFlatData) {}
 }
 
+// The Product Category service definition.
+service ProductCategoryService {
+    rpc Create(ProductCategoryData) returns (routines.Response) {}
+    rpc Update(ProductCategoryFlatData) returns (routines.Response) {}
+    rpc Delete(ProductCategoryFlatData) returns (routines.Response) {}
+    rpc Find(ProductCategoryFlatData) returns (ProductCategoryFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (ProductCategoryFlatData) {}
+}
+
+// The Catalog service definition.
+service ProdCatalogService {
+    rpc Create(ProdCatalogData) returns (routines.Response) {}
+    rpc Update(ProdCatalogFlatData) returns (routines.Response) {}
+    rpc Delete(ProdCatalogFlatData) returns (routines.Response) {}
+    rpc Find(ProdCatalogFlatData) returns (ProdCatalogFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (ProdCatalogFlatData) {}
+}
+
 // flat-ent: Order Header
 message OrderHeaderFlatData {
     option (routines.entity_type) = "OrderHeader";
@@ -611,6 +631,50 @@ message UserLoginFlatData {
     google.protobuf.Timestamp last_updated_tx_stamp = 16;    
     google.protobuf.Timestamp created_tx_stamp = 17;    
     string party_id = 18;  
+}
+
+// flat-ent: Product Category
+message ProductCategoryFlatData {
+    option (routines.entity_type) = "ProductCategory";
+    option (routines.keys).keys = "product_category_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    // keys: productCategoryId
+        
+    string product_category_id = 1;    
+    string product_category_type_id = 2;    
+    string primary_parent_category_id = 3;    
+    string category_name = 4;    
+    string description = 5;    
+    string long_description = 6;    
+    string category_image_url = 7;    
+    string link_one_image_url = 8;    
+    string link_two_image_url = 9;    
+    string detail_screen = 10;    
+    routines.Indicator show_in_select = 11;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 12;    
+    google.protobuf.Timestamp created_tx_stamp = 13;  
+}
+
+// flat-ent: Catalog
+message ProdCatalogFlatData {
+    option (routines.entity_type) = "ProdCatalog";
+    option (routines.keys).keys = "prod_catalog_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    // keys: prodCatalogId
+        
+    string prod_catalog_id = 1;    
+    string catalog_name = 2;    
+    routines.Indicator use_quick_add = 3;    
+    string style_sheet = 4;    
+    string header_logo = 5;    
+    string content_path_prefix = 6;    
+    string template_path_prefix = 7;    
+    routines.Indicator view_allow_perm_reqd = 8;    
+    routines.Indicator purchase_allow_perm_reqd = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;  
 }
 
 // Shipment Route Segment
@@ -2361,7 +2425,7 @@ message ProdCatalogData {
     option (routines.entity_type) = "ProdCatalog";
     option (routines.keys).keys = "prod_catalog_id";
     option (routines.keys).combine = false;
-    option (routines.flat) = true;
+    option (routines.flat) = false;
     // keys: prodCatalogId
     
     // fields
@@ -2377,6 +2441,11 @@ message ProdCatalogData {
     routines.Indicator purchase_allow_perm_reqd = 9;    
     google.protobuf.Timestamp last_updated_tx_stamp = 10;    
     google.protobuf.Timestamp created_tx_stamp = 11;
+    
+    // relations
+    repeated ProdCatalogCategoryData prod_catalog_category = 12; // ref: prodCatalogId
+    repeated ProductStoreCatalogData product_store_catalog = 13; // ref: prodCatalogId
+    
         
 }
 
@@ -3325,24 +3394,38 @@ message ProductCategoryData {
     option (routines.entity_type) = "ProductCategory";
     option (routines.keys).keys = "product_category_id";
     option (routines.keys).combine = false;
-    option (routines.flat) = true;
+    option (routines.flat) = false;
     // keys: productCategoryId
     
     // fields
         
     string product_category_id = 1;    
     string product_category_type_id = 2;    
-    string primary_parent_category_id = 3;    
-    string category_name = 4;    
-    string description = 5;    
-    string long_description = 6;    
-    string category_image_url = 7;    
-    string link_one_image_url = 8;    
-    string link_two_image_url = 9;    
-    string detail_screen = 10;    
-    routines.Indicator show_in_select = 11;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 12;    
-    google.protobuf.Timestamp created_tx_stamp = 13;
+    string category_name = 3;    
+    string description = 4;    
+    string long_description = 5;    
+    string category_image_url = 6;    
+    string link_one_image_url = 7;    
+    string link_two_image_url = 8;    
+    string detail_screen = 9;    
+    routines.Indicator show_in_select = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
+    
+    // relations
+    ProductCategoryData primary_parent_product_category = 13; // ref: primaryParentCategoryId
+    repeated ProductCategoryData primary_child_product_category = 14; // ref: productCategoryId
+    repeated ProdCatalogCategoryData prod_catalog_category = 15; // ref: productCategoryId
+    repeated ProductData primary_product = 16; // ref: productCategoryId
+    repeated ProductCategoryContentData product_category_content = 17; // ref: productCategoryId
+    repeated ProductCategoryLinkData product_category_link = 18; // ref: productCategoryId
+    repeated ProductCategoryMemberData product_category_member = 19; // ref: productCategoryId
+    repeated ProductCategoryRoleData product_category_role = 20; // ref: productCategoryId
+    repeated ProductCategoryRollupData current_product_category_rollup = 21; // ref: productCategoryId
+    repeated ProductCategoryRollupData parent_product_category_rollup = 22; // ref: productCategoryId
+    repeated ProductFeatureCategoryApplData product_feature_category_appl = 23; // ref: productCategoryId
+    repeated ProductPromoCategoryData product_promo_category = 24; // ref: productCategoryId
+    
         
 }
 

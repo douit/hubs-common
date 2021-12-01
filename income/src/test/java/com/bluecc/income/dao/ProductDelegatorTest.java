@@ -1,18 +1,29 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.feed.DataFill;
+import com.bluecc.hubs.fund.SystemDefs;
+import com.bluecc.hubs.stub.Indicator;
 import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.github.javafaker.Faker;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.gson.JsonObject;
+import com.google.protobuf.Descriptors;
+import com.google.protobuf.Message;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.inject.Inject;
 import java.util.Locale;
 
+import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ProductDelegatorTest extends AbstractStoreProcTest {
-    @Inject ProductDelegator products;
+    @Inject
+    ProductDelegator products;
 
     @Before
     public void setUp() throws Exception {
@@ -24,8 +35,8 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
     @Test
     public void crud() {
         process(ctx -> {
-            String newId=sequence.nextStringId();
-            ProductFlatData flatData= ProductFlatData.newBuilder()
+            String newId = sequence.nextStringId();
+            ProductFlatData flatData = ProductFlatData.newBuilder()
                     .setProductId(newId)
                     .setProductName(faker.commerce().productName())
                     // .setDescription(faker.hipster().word())
@@ -37,5 +48,30 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
             assertEquals(1, products.delete(ctx, flatData));
             assertEquals(0, products.find(ctx, flatData).size());
         });
+    }
+
+    @Test
+    public void storeProtoData() {
+        String source = SystemDefs.prependHubsHome("dataset/sample/sales_order.xml");
+        Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
+        collectEntityData(dataList, source, false);
+
+        DataFill dataFill = new DataFill();
+        Multimap<String, Message> dataMap = dataFill.setupData(dataList);
+        dataMap.get("Product").forEach(e -> {
+            System.out.println(e);
+            e.getAllFields().forEach((f, o) -> {
+                System.out.println(f.getName());
+                System.out.println(o);
+            });
+
+            Descriptors.FieldDescriptor fieldDescriptor=e.getDescriptorForType().findFieldByName("taxable");
+            Object val=e.getField(fieldDescriptor);
+            System.out.println(val.getClass().getName());
+            Descriptors.EnumValueDescriptor enumVal=( Descriptors.EnumValueDescriptor)val;
+            Indicator indicator=Indicator.valueOf(enumVal);
+            System.out.println(indicator);
+        });
+
     }
 }

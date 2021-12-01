@@ -2,7 +2,6 @@ package com.bluecc.income.endpoint;
 
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.Sequence;
-import com.bluecc.hubs.proto.DataBuilder;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.procs.GenericProcs;
 import com.google.protobuf.Any;

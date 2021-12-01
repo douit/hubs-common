@@ -1,11 +1,10 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.feed;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.*;
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -22,14 +21,12 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import javax.inject.Inject;
 import java.util.Base64;
-import java.util.List;
 
 import static com.bluecc.hubs.ProtoTypes.castIndicator;
 import static com.bluecc.hubs.ProtoTypes.getFixedPoint;
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
-import static com.bluecc.hubs.proto.ProtoModule.startup;
+import static com.bluecc.hubs.feed.ProtoModule.startup;
 
 /**
  * $ just s proto.DataFill -f sample --source dataset/sample/sales_order.xml --sink redis
@@ -109,7 +106,7 @@ public class DataFill {
     }
 
     private static void pushToRedis(Multimap<String, JsonObject> dataList, DataFill dataFill) {
-        FactBag factBag = startup(FactBag.class);
+        FactBag factBag = ProtoModule.startup(FactBag.class);
 
         dataFill.setupData(dataList).asMap()
                 .forEach((key, msgs) -> {
@@ -127,11 +124,14 @@ public class DataFill {
     DataBuilder dataBuilder = new DataBuilder();
     Opts opts;
 
+    public DataFill(){
+        this(new Opts());
+    }
     DataFill(Opts opts) {
         this.opts = opts;
     }
 
-    Multimap<String, Message> setupData(Multimap<String, JsonObject> dataList) {
+    public Multimap<String, Message> setupData(Multimap<String, JsonObject> dataList) {
         Multimap<String, Message> result = ArrayListMultimap.create();
         for (String key : dataList.keySet()) {
             // System.out.println(key + ":");

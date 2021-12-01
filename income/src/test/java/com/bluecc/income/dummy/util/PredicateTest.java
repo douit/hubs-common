@@ -1,5 +1,6 @@
 package com.bluecc.income.dummy.util;
 
+import com.bluecc.hubs.stub.PersonData;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -33,4 +34,5 @@ public class PredicateTest {
         List<Integer> nameLength = names.stream().map(nameMappingFunction).collect(Collectors.toList());
         System.out.println(nameLength);
     }
+
 }

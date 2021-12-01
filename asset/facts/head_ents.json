@@ -38,6 +38,8 @@
         "Party"
       ]
     },
-    "UserLogin": {}
+    "UserLogin": {},
+    "ProductCategory": {},
+    "ProdCatalog": {}
   }
 }

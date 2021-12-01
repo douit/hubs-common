@@ -1,6 +1,6 @@
 package com.bluecc.income.exchange;
 
-import com.bluecc.hubs.proto.ProtoModule;
+import com.bluecc.hubs.feed.ProtoModule;
 import com.bluecc.income.dummy.store.HubsStore;
 import com.google.inject.Guice;
 import com.google.inject.Injector;

@@ -1,4 +1,4 @@
-package com.bluecc.hubs.proto;
+package com.bluecc.hubs.feed;
 
 import com.bluecc.hubs.stub.Envelope;
 import com.bluecc.hubs.stub.ShipmentTimeEstimateData;
@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import static com.bluecc.hubs.proto.DataFill.getTimestamp;
+import static com.bluecc.hubs.feed.DataFill.getTimestamp;
 import static org.junit.Assert.*;
 
 @RunWith(GuiceTestRunner.class)

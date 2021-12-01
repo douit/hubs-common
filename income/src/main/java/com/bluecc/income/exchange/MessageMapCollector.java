@@ -161,8 +161,10 @@ public class MessageMapCollector {
         String msgType = fld.getEnumType().getName();
         switch (msgType) {
             case "Indicator":
+                log.info("cast indicator field: {}", fld.getName());
                 dataMap.put(fld.getName(),
-                        ProtoTypes.getIndicatorChar((Indicator) fldVal));
+                        ProtoTypes.getIndicatorChar(
+                                Indicator.valueOf((Descriptors.EnumValueDescriptor)fldVal)));
                 break;
 
             default:
