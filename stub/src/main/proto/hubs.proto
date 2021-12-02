@@ -8,6 +8,8 @@ option objc_class_prefix = "DTP";
 package domain;
 
 import "google/protobuf/timestamp.proto";
+import "date.proto";
+import "timeofday.proto";
 import "routines.proto";
 
 
@@ -368,7 +370,7 @@ message ProductFlatData {
     string requirement_method_enum_id = 57; // Enumeration    
     int64 bill_of_material_level = 58;    
     routines.FixedPoint reserv_max_persons = 59;    
-    routines.FixedPoint reserv2nd_p_p_perc = 60;    
+    routines.FixedPoint reserv_2nd_p_p_perc = 60;    
     routines.FixedPoint reserv_nth_p_p_perc = 61;    
     string config_id = 62;    
     google.protobuf.Timestamp created_date = 63;    
@@ -561,27 +563,26 @@ message PersonFlatData {
     string other_local = 12;    
     string member_id = 13;    
     routines.Indicator gender = 14;    
-    google.protobuf.Timestamp birth_date = 15;    
-    google.protobuf.Timestamp deceased_date = 16;    
+    google.type.Date birth_date = 15;    
+    google.type.Date deceased_date = 16;    
     double height = 17;    
     double weight = 18;    
-    string mothers_maiden_name = 19;    
-    routines.Indicator marital_status = 20;
-    string marital_status_enum_id = 21; // Enumeration    
-    string social_security_number = 22;    
-    string passport_number = 23;    
-    google.protobuf.Timestamp passport_expire_date = 24;    
-    double total_years_work_experience = 25;    
-    string comments = 26;
-    string employment_status_enum_id = 27; // Enumeration
-    string residence_status_enum_id = 28; // Enumeration    
-    string occupation = 29;    
-    int64 years_with_employer = 30;    
-    int64 months_with_employer = 31;    
-    routines.Indicator existing_customer = 32;    
-    string card_id = 33;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 34;    
-    google.protobuf.Timestamp created_tx_stamp = 35;  
+    string mothers_maiden_name = 19;
+    string marital_status_enum_id = 20; // Enumeration    
+    string social_security_number = 21;    
+    string passport_number = 22;    
+    google.type.Date passport_expire_date = 23;    
+    double total_years_work_experience = 24;    
+    string comments = 25;
+    string employment_status_enum_id = 26; // Enumeration
+    string residence_status_enum_id = 27; // Enumeration    
+    string occupation = 28;    
+    int64 years_with_employer = 29;    
+    int64 months_with_employer = 30;    
+    routines.Indicator existing_customer = 31;    
+    string card_id = 32;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 33;    
+    google.protobuf.Timestamp created_tx_stamp = 34;  
 }
 
 // flat-ent: Party Group
@@ -884,7 +885,7 @@ message ProductData {
     string requirement_method_enum_id = 56; // Enumeration    
     int64 bill_of_material_level = 57;    
     routines.FixedPoint reserv_max_persons = 58;    
-    routines.FixedPoint reserv2nd_p_p_perc = 59;    
+    routines.FixedPoint reserv_2nd_p_p_perc = 59;    
     routines.FixedPoint reserv_nth_p_p_perc = 60;    
     string config_id = 61;    
     google.protobuf.Timestamp created_date = 62;    
@@ -975,8 +976,8 @@ message FixedAssetData {
     google.protobuf.Timestamp date_acquired = 11;    
     google.protobuf.Timestamp date_last_serviced = 12;    
     google.protobuf.Timestamp date_next_service = 13;    
-    google.protobuf.Timestamp expected_end_of_life = 14;    
-    google.protobuf.Timestamp actual_end_of_life = 15;    
+    google.type.Date expected_end_of_life = 14;    
+    google.type.Date actual_end_of_life = 15;    
     routines.FixedPoint production_capacity = 16;
     string uom_id = 17; // Uom
     string calendar_id = 18; // TechDataCalendar    
@@ -1574,36 +1575,35 @@ message PersonData {
     string other_local = 12;    
     string member_id = 13;    
     routines.Indicator gender = 14;    
-    google.protobuf.Timestamp birth_date = 15;    
-    google.protobuf.Timestamp deceased_date = 16;    
+    google.type.Date birth_date = 15;    
+    google.type.Date deceased_date = 16;    
     double height = 17;    
     double weight = 18;    
-    string mothers_maiden_name = 19;    
-    routines.Indicator marital_status = 20;
-    string marital_status_enum_id = 21; // Enumeration    
-    string social_security_number = 22;    
-    string passport_number = 23;    
-    google.protobuf.Timestamp passport_expire_date = 24;    
-    double total_years_work_experience = 25;    
-    string comments = 26;
-    string employment_status_enum_id = 27; // Enumeration
-    string residence_status_enum_id = 28; // Enumeration    
-    string occupation = 29;    
-    int64 years_with_employer = 30;    
-    int64 months_with_employer = 31;    
-    routines.Indicator existing_customer = 32;    
-    string card_id = 33;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 34;    
-    google.protobuf.Timestamp created_tx_stamp = 35;
+    string mothers_maiden_name = 19;
+    string marital_status_enum_id = 20; // Enumeration    
+    string social_security_number = 21;    
+    string passport_number = 22;    
+    google.type.Date passport_expire_date = 23;    
+    double total_years_work_experience = 24;    
+    string comments = 25;
+    string employment_status_enum_id = 26; // Enumeration
+    string residence_status_enum_id = 27; // Enumeration    
+    string occupation = 28;    
+    int64 years_with_employer = 29;    
+    int64 months_with_employer = 30;    
+    routines.Indicator existing_customer = 31;    
+    string card_id = 32;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 33;    
+    google.protobuf.Timestamp created_tx_stamp = 34;
     
     // relations
-    repeated PartyContactMechData party_contact_mech = 37; // ref: partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 38; // ref: partyId
-    repeated ProductStoreRoleData product_store_role = 39; // ref: partyId
-    repeated ShipmentData to_shipment = 40; // ref: partyId
-    repeated ShipmentData from_shipment = 41; // ref: partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 42; // ref: partyId
-    repeated UserLoginData user_login = 43; // ref: partyId
+    repeated PartyContactMechData party_contact_mech = 36; // ref: partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 37; // ref: partyId
+    repeated ProductStoreRoleData product_store_role = 38; // ref: partyId
+    repeated ShipmentData to_shipment = 39; // ref: partyId
+    repeated ShipmentData from_shipment = 40; // ref: partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 41; // ref: partyId
+    repeated UserLoginData user_login = 42; // ref: partyId
     
         
 }
@@ -4047,7 +4047,7 @@ message WorkEffortData {
     routines.FixedPoint quantity_produced = 40;    
     routines.FixedPoint quantity_rejected = 41;    
     routines.FixedPoint reserv_persons = 42;    
-    routines.FixedPoint reserv2nd_p_p_perc = 43;    
+    routines.FixedPoint reserv_2nd_p_p_perc = 43;    
     routines.FixedPoint reserv_nth_p_p_perc = 44;    
     string accommodation_map_id = 45;    
     string accommodation_spot_id = 46;    
@@ -4411,7 +4411,7 @@ message AcctgTransEntryData {
     routines.Currency orig_amount = 17;
     string orig_currency_uom_id = 18; // Uom    
     routines.Indicator debit_credit_flag = 19;    
-    google.protobuf.Timestamp due_date = 20;    
+    google.type.Date due_date = 20;    
     string group_id = 21;    
     string tax_id = 22;
     string reconcile_status_id = 23; // StatusItem

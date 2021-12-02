@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 
+import static com.bluecc.hubs.ProtoTypes.*;
+import com.bluecc.hubs.stub.{{ent.flatMessageType}};
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,4 +19,6 @@ public class {{ent.name}} implements Serializable {
     {% for f in ent.fields -%}
     {{f.javaType}} {{f.name}};
     {% endfor %}
+
+    {{conv_part}}
 }

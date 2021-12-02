@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 
+import static com.bluecc.hubs.ProtoTypes.*;
+import com.bluecc.hubs.stub.PartyGroupFlatData;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,10 +24,68 @@ public class PartyGroup implements Serializable {
     Long numEmployees;
     String tickerSymbol;
     String comments;
-    java.net.URI logoImageUrl;
+    String logoImageUrl;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     
+
+        
+    public PartyGroupFlatData toData() {
+        PartyGroupFlatData.Builder builder = PartyGroupFlatData.newBuilder();
+        if (partyId != null) {
+            builder.setPartyId(partyId);
+        }
+        if (groupName != null) {
+            builder.setGroupName(groupName);
+        }
+        if (groupNameLocal != null) {
+            builder.setGroupNameLocal(groupNameLocal);
+        }
+        if (officeSiteName != null) {
+            builder.setOfficeSiteName(officeSiteName);
+        }
+        if (annualRevenue != null) {
+            builder.setAnnualRevenue(getCurrency(annualRevenue));
+        }
+        if (numEmployees != null) {
+            builder.setNumEmployees(numEmployees);
+        }
+        if (tickerSymbol != null) {
+            builder.setTickerSymbol(tickerSymbol);
+        }
+        if (comments != null) {
+            builder.setComments(comments);
+        }
+        if (logoImageUrl != null) {
+            builder.setLogoImageUrl(logoImageUrl);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return builder.build();
+    }
+
+    public static PartyGroup fromData(PartyGroupFlatData data) {
+        return PartyGroup.builder()
+                .partyId(data.getPartyId())
+                .groupName(data.getGroupName())
+                .groupNameLocal(data.getGroupNameLocal())
+                .officeSiteName(data.getOfficeSiteName())
+                .annualRevenue(getBigDecimal(data.getAnnualRevenue()))
+                .numEmployees(data.getNumEmployees())
+                .tickerSymbol(data.getTickerSymbol())
+                .comments(data.getComments())
+                .logoImageUrl(data.getLogoImageUrl())
+                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
+                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                
+                .build();
+    }
+
 }

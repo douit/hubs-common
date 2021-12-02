@@ -1,0 +1,18 @@
+    
+    public {{ent.flatMessageType}} toData() {
+        {{ent.flatMessageType}}.Builder builder = {{ent.flatMessageType}}.newBuilder();
+        {% for f in ent.messageFields -%}
+        if ({{f.name}} != null) {
+            builder.{{f.protoSetter}};
+        }
+        {% endfor %}            
+        return builder.build();
+    }
+
+    public static {{ent.name}} fromData({{ent.flatMessageType}} data) {
+        return {{ent.name}}.builder()
+                {% for f in ent.messageFields -%}
+                .{{f.name}}({{f.protoGetter}})
+                {% endfor %}
+                .build();
+    }

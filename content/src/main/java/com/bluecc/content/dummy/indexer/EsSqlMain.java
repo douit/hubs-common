@@ -1,6 +1,6 @@
 package com.bluecc.content.dummy.indexer;
 
-import org.elasticsearch.xpack.sql.jdbc.EsDataSource;
+// import org.elasticsearch.xpack.sql.jdbc.EsDataSource;
 
 import java.sql.*;
 import java.util.Properties;

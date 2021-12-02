@@ -37,6 +37,6 @@
     <field-type-def type="credit-card-number" sql-type="VARCHAR(255)" java-type="String" clickhouse-type="String"/>
     <field-type-def type="credit-card-date" sql-type="VARCHAR(7)" java-type="String" clickhouse-type="String"/>
     <field-type-def type="email" sql-type="VARCHAR(320)" java-type="String" clickhouse-type="String"/>
-    <field-type-def type="url" sql-type="VARCHAR(2000)" java-type="java.net.URI" clickhouse-type="String"/>
+    <field-type-def type="url" sql-type="VARCHAR(2000)" java-type="String" clickhouse-type="String"/>
     <field-type-def type="tel-number" sql-type="VARCHAR(60)" java-type="String" clickhouse-type="String"/>
 </fieldtypemodel>

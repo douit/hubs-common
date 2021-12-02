@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 
+import static com.bluecc.hubs.ProtoTypes.*;
+import com.bluecc.hubs.stub.PersonFlatData;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -32,7 +35,6 @@ public class Person implements Serializable {
     Double height;
     Double weight;
     String mothersMaidenName;
-    Character oldMaritalStatus;
     String maritalStatusEnumId;
     String socialSecurityNumber;
     String passportNumber;
@@ -51,4 +53,154 @@ public class Person implements Serializable {
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     
+
+        
+    public PersonFlatData toData() {
+        PersonFlatData.Builder builder = PersonFlatData.newBuilder();
+        if (partyId != null) {
+            builder.setPartyId(partyId);
+        }
+        if (salutation != null) {
+            builder.setSalutation(salutation);
+        }
+        if (firstName != null) {
+            builder.setFirstName(firstName);
+        }
+        if (middleName != null) {
+            builder.setMiddleName(middleName);
+        }
+        if (lastName != null) {
+            builder.setLastName(lastName);
+        }
+        if (personalTitle != null) {
+            builder.setPersonalTitle(personalTitle);
+        }
+        if (suffix != null) {
+            builder.setSuffix(suffix);
+        }
+        if (nickname != null) {
+            builder.setNickname(nickname);
+        }
+        if (firstNameLocal != null) {
+            builder.setFirstNameLocal(firstNameLocal);
+        }
+        if (middleNameLocal != null) {
+            builder.setMiddleNameLocal(middleNameLocal);
+        }
+        if (lastNameLocal != null) {
+            builder.setLastNameLocal(lastNameLocal);
+        }
+        if (otherLocal != null) {
+            builder.setOtherLocal(otherLocal);
+        }
+        if (memberId != null) {
+            builder.setMemberId(memberId);
+        }
+        if (gender != null) {
+            builder.setGender(getIndicator(gender));
+        }
+        if (birthDate != null) {
+            builder.setBirthDate(getDate(birthDate));
+        }
+        if (deceasedDate != null) {
+            builder.setDeceasedDate(getDate(deceasedDate));
+        }
+        if (height != null) {
+            builder.setHeight(height);
+        }
+        if (weight != null) {
+            builder.setWeight(weight);
+        }
+        if (mothersMaidenName != null) {
+            builder.setMothersMaidenName(mothersMaidenName);
+        }
+        if (maritalStatusEnumId != null) {
+            builder.setMaritalStatusEnumId(maritalStatusEnumId);
+        }
+        if (socialSecurityNumber != null) {
+            builder.setSocialSecurityNumber(socialSecurityNumber);
+        }
+        if (passportNumber != null) {
+            builder.setPassportNumber(passportNumber);
+        }
+        if (passportExpireDate != null) {
+            builder.setPassportExpireDate(getDate(passportExpireDate));
+        }
+        if (totalYearsWorkExperience != null) {
+            builder.setTotalYearsWorkExperience(totalYearsWorkExperience);
+        }
+        if (comments != null) {
+            builder.setComments(comments);
+        }
+        if (employmentStatusEnumId != null) {
+            builder.setEmploymentStatusEnumId(employmentStatusEnumId);
+        }
+        if (residenceStatusEnumId != null) {
+            builder.setResidenceStatusEnumId(residenceStatusEnumId);
+        }
+        if (occupation != null) {
+            builder.setOccupation(occupation);
+        }
+        if (yearsWithEmployer != null) {
+            builder.setYearsWithEmployer(yearsWithEmployer);
+        }
+        if (monthsWithEmployer != null) {
+            builder.setMonthsWithEmployer(monthsWithEmployer);
+        }
+        if (existingCustomer != null) {
+            builder.setExistingCustomer(getIndicator(existingCustomer));
+        }
+        if (cardId != null) {
+            builder.setCardId(cardId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return builder.build();
+    }
+
+    public static Person fromData(PersonFlatData data) {
+        return Person.builder()
+                .partyId(data.getPartyId())
+                .salutation(data.getSalutation())
+                .firstName(data.getFirstName())
+                .middleName(data.getMiddleName())
+                .lastName(data.getLastName())
+                .personalTitle(data.getPersonalTitle())
+                .suffix(data.getSuffix())
+                .nickname(data.getNickname())
+                .firstNameLocal(data.getFirstNameLocal())
+                .middleNameLocal(data.getMiddleNameLocal())
+                .lastNameLocal(data.getLastNameLocal())
+                .otherLocal(data.getOtherLocal())
+                .memberId(data.getMemberId())
+                .gender(getIndicatorChar(data.getGender()))
+                .birthDate(getLocalDate(data.getBirthDate()))
+                .deceasedDate(getLocalDate(data.getDeceasedDate()))
+                .height(data.getHeight())
+                .weight(data.getWeight())
+                .mothersMaidenName(data.getMothersMaidenName())
+                .maritalStatusEnumId(data.getMaritalStatusEnumId())
+                .socialSecurityNumber(data.getSocialSecurityNumber())
+                .passportNumber(data.getPassportNumber())
+                .passportExpireDate(getLocalDate(data.getPassportExpireDate()))
+                .totalYearsWorkExperience(data.getTotalYearsWorkExperience())
+                .comments(data.getComments())
+                .employmentStatusEnumId(data.getEmploymentStatusEnumId())
+                .residenceStatusEnumId(data.getResidenceStatusEnumId())
+                .occupation(data.getOccupation())
+                .yearsWithEmployer(data.getYearsWithEmployer())
+                .monthsWithEmployer(data.getMonthsWithEmployer())
+                .existingCustomer(getIndicatorChar(data.getExistingCustomer()))
+                .cardId(data.getCardId())
+                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
+                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                
+                .build();
+    }
+
 }

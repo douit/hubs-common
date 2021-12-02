@@ -5,13 +5,14 @@ import com.bluecc.hubs.feed.DataBuilder;
 import com.bluecc.hubs.stub.*;
 import com.google.common.collect.Lists;
 import com.google.protobuf.*;
+import com.google.type.Date;
 import com.google.type.Money;
+import com.google.type.TimeOfDay;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.List;
 
 @Slf4j
@@ -28,6 +29,19 @@ public class ProtoTypes {
     public static java.math.BigDecimal getBigDecimal(Currency serialized) {
         return new BigDecimal(serialized.getValue());
     }
+
+    public static Currency getCurrency(java.math.BigDecimal val){
+        return Currency.newBuilder()
+                .setCurrencyUomId("CNY")
+                .setValue(val.toString())
+                .build();
+    }
+
+    // public static FixedPoint getFixedPoint(java.math.BigDecimal val){
+    //     return FixedPoint.newBuilder()
+    //             .setValue(val.toString())
+    //             .build();
+    // }
 
     protected static Money toGoogleMoney(final BigDecimal decimal) {
         return Money.newBuilder()
@@ -58,9 +72,20 @@ public class ProtoTypes {
         return new DateTime(ts.getSeconds() * 1000);
     }
 
+    public static java.time.LocalTime getTime(TimeOfDay timeOfDay) {
+        return LocalTime.of(timeOfDay.getHours(),
+                timeOfDay.getMinutes(),
+                timeOfDay.getSeconds(),
+                timeOfDay.getNanos());
+    }
+
     public static java.time.LocalDateTime getLocalDateTime(Timestamp ts) {
         return java.time.LocalDateTime.ofEpochSecond(ts.getSeconds(),
                 ts.getNanos(), ZoneOffset.UTC);
+    }
+
+    public static Date nowDate(){
+        return getDate(LocalDate.now());
     }
 
     public static Timestamp now() {
@@ -70,6 +95,37 @@ public class ProtoTypes {
         return timestamp;
     }
 
+    // public static Timestamp getTimestamp(LocalDate dt) {
+    //     return getTimestamp()
+    // }
+
+    public static com.google.type.Date getDate(LocalDate localDate){
+        if(localDate!=null) {
+            return Date.newBuilder()
+                    .setYear(localDate.getYear())
+                    .setMonth(localDate.getMonthValue())
+                    .setDay(localDate.getDayOfMonth())
+                    .build();
+        }
+        return null;
+    }
+
+    public static TimeOfDay getTimeOfDay(LocalTime localTime) {
+        if(localTime!=null) {
+            TimeOfDay timeOfDay = TimeOfDay.newBuilder()
+                    .setHours(localTime.getHour())
+                    .setMinutes(localTime.getMinute())
+                    .setSeconds(localTime.getSecond())
+                    .setNanos(localTime.getNano())
+                    .build();
+            return timeOfDay;
+        }
+        return null;
+    }
+
+    public static Timestamp getTimestamp(LocalDateTime dt){
+        return getTimestamp(dt.toInstant(ZoneOffset.UTC));
+    }
     public static Timestamp getTimestamp(Instant ts) {
         Timestamp timestamp = Timestamp.newBuilder().setSeconds(ts.getEpochSecond())
                 .setNanos(ts.getNano()).build();
@@ -80,6 +136,13 @@ public class ProtoTypes {
         return getLocalDateTime(ts).toLocalDate();
     }
 
+    public static java.time.LocalDate getLocalDate(com.google.type.Date dt) {
+        return java.time.LocalDate.of(dt.getYear(), dt.getMonth(), dt.getDay());
+    }
+
+    public static Indicator getIndicator(Character c){
+        return castIndicator(c.toString());
+    }
     public static Indicator castIndicator(String c) {
         switch (c.toUpperCase()) {
             case "Y":

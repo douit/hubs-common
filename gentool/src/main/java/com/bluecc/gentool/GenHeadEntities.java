@@ -1,9 +1,8 @@
 package com.bluecc.gentool;
 
 import com.bluecc.gentool.common.TemplateUtil;
-import com.bluecc.hubs.fund.HeadEntityResources;
-import com.bluecc.hubs.fund.MetaTypes;
-import com.bluecc.hubs.fund.Util;
+import com.bluecc.hubs.fund.*;
+import com.google.common.collect.ImmutableMap;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -25,7 +24,11 @@ public class GenHeadEntities {
     void startGen(){
         HeadEntityResources.allHeads().forEach(e -> {
             try {
-                String cnt= TemplateUtil.sourceGen(e, "bean", true);
+                String conv_part= TemplateUtil.sourceGen(e, "bean_conv", true);
+                // String cnt= TemplateUtil.sourceGen(e, "bean", true);
+                EntityMeta meta= EntityMetaManager.getEntityMeta(e, true);
+                String cnt= TemplateUtil.build("templates/bean_source.j2",
+                        ImmutableMap.of("ent", meta, "conv_part", conv_part));
                 Util.writeFile(cnt, conf.prependModelFile(e+".java"));
 
                 cnt= TemplateUtil.sourceGen(e, "dao_decl", true);

@@ -3,15 +3,21 @@ package com.bluecc.hubs;
 import com.bluecc.hubs.feed.ProtoStuffs;
 import com.bluecc.hubs.stub.Currency;
 import com.bluecc.hubs.stub.FixedPoint;
+import com.bluecc.hubs.stub.PeriodData;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.type.Date;
 import com.google.type.Money;
+import com.google.type.TimeOfDay;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static com.bluecc.hubs.ProtoTypes.getBigDecimal;
+import static com.bluecc.hubs.ProtoTypes.getTimeOfDay;
 import static org.junit.Assert.*;
 
 public class ProtoTypesTest {
@@ -64,4 +70,20 @@ public class ProtoTypesTest {
 
     }
 
+    @Test
+    public void testPeriod(){
+        PeriodData periodData=PeriodData.newBuilder()
+                .setFromDate(Date.newBuilder().setYear(1997).build())
+                .setFromDate(Date.newBuilder().setYear(1998).build())
+                .build();
+        System.out.println(periodData);
+    }
+
+    @Test
+    public void testTime(){
+        LocalTime localTime=LocalTime.now();
+        System.out.println(localTime);
+        TimeOfDay timeOfDay = getTimeOfDay(localTime);
+        System.out.println(timeOfDay);
+    }
 }

@@ -10,6 +10,7 @@ import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
+import com.google.type.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -137,6 +138,11 @@ public class MessageMapCollector {
             case "Timestamp": {
                 Timestamp val = (Timestamp) fldVal;
                 dataMap.put(fldName, ProtoTypes.getLocalDateTime(val));
+                break;
+            }
+            case "Date": {
+                Date val = (Date) fldVal;
+                dataMap.put(fldName, ProtoTypes.getLocalDate(val));
                 break;
             }
             case "Currency": {

@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 
+import static com.bluecc.hubs.ProtoTypes.*;
+import com.bluecc.hubs.stub.ProdCatalogFlatData;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,8 +19,8 @@ public class ProdCatalog implements Serializable {
     String prodCatalogId;
     String catalogName;
     Character useQuickAdd;
-    java.net.URI styleSheet;
-    java.net.URI headerLogo;
+    String styleSheet;
+    String headerLogo;
     String contentPathPrefix;
     String templatePathPrefix;
     Character viewAllowPermReqd;
@@ -27,4 +30,62 @@ public class ProdCatalog implements Serializable {
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     
+
+        
+    public ProdCatalogFlatData toData() {
+        ProdCatalogFlatData.Builder builder = ProdCatalogFlatData.newBuilder();
+        if (prodCatalogId != null) {
+            builder.setProdCatalogId(prodCatalogId);
+        }
+        if (catalogName != null) {
+            builder.setCatalogName(catalogName);
+        }
+        if (useQuickAdd != null) {
+            builder.setUseQuickAdd(getIndicator(useQuickAdd));
+        }
+        if (styleSheet != null) {
+            builder.setStyleSheet(styleSheet);
+        }
+        if (headerLogo != null) {
+            builder.setHeaderLogo(headerLogo);
+        }
+        if (contentPathPrefix != null) {
+            builder.setContentPathPrefix(contentPathPrefix);
+        }
+        if (templatePathPrefix != null) {
+            builder.setTemplatePathPrefix(templatePathPrefix);
+        }
+        if (viewAllowPermReqd != null) {
+            builder.setViewAllowPermReqd(getIndicator(viewAllowPermReqd));
+        }
+        if (purchaseAllowPermReqd != null) {
+            builder.setPurchaseAllowPermReqd(getIndicator(purchaseAllowPermReqd));
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return builder.build();
+    }
+
+    public static ProdCatalog fromData(ProdCatalogFlatData data) {
+        return ProdCatalog.builder()
+                .prodCatalogId(data.getProdCatalogId())
+                .catalogName(data.getCatalogName())
+                .useQuickAdd(getIndicatorChar(data.getUseQuickAdd()))
+                .styleSheet(data.getStyleSheet())
+                .headerLogo(data.getHeaderLogo())
+                .contentPathPrefix(data.getContentPathPrefix())
+                .templatePathPrefix(data.getTemplatePathPrefix())
+                .viewAllowPermReqd(getIndicatorChar(data.getViewAllowPermReqd()))
+                .purchaseAllowPermReqd(getIndicatorChar(data.getPurchaseAllowPermReqd()))
+                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
+                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                
+                .build();
+    }
+
 }

@@ -47,15 +47,15 @@ public class Parties extends AbstractProcs {
         public List<String> commands = Lists.newArrayList("sample");
 
         @Parameter(
-                names = { "--timestamp" },
+                names = {"--timestamp"},
                 converter = ISO8601TimestampConverter.class
         )
         private Instant timestamp;
 
 
-        @Parameter(names = { "--last-name" })
+        @Parameter(names = {"--last-name"})
         String lastName;
-        @Parameter(names = { "--first-name" })
+        @Parameter(names = {"--first-name"})
         String firstName;
 
     }
@@ -79,12 +79,12 @@ public class Parties extends AbstractProcs {
                     parties.find(opts);
                     break;
                 default:
-                    System.out.println(".. ignore command "+command);
+                    System.out.println(".. ignore command " + command);
             }
         }
     }
 
-    void create(Opts opts){
+    void create(Opts opts) {
         process(ctx -> {
             create(ctx, PersonFlatData.newBuilder()
                     .setPartyId(sequence.nextStringId())
@@ -96,7 +96,7 @@ public class Parties extends AbstractProcs {
         });
     }
 
-    void find(Opts opts){
+    void find(Opts opts) {
         process(ctx -> {
             find(ctx, PersonFlatData.newBuilder()
                     .setFirstName(opts.firstName)
@@ -121,7 +121,7 @@ public class Parties extends AbstractProcs {
                     .build();
             storePerson(ctx, flatData);
 
-            Person person=dao.getPerson(newId);
+            Person person = dao.getPerson(newId);
             Preconditions.checkNotNull(person);
             pretty(person);
         });
@@ -203,7 +203,7 @@ public class Parties extends AbstractProcs {
         String maritalStatusEnumId;
         String socialSecurityNumber;
         String passportNumber;
-        java.time.LocalDateTime passportExpireDate;
+        java.time.LocalDate passportExpireDate;
         Double totalYearsWorkExperience;
         String comments;
         String employmentStatusEnumId;
@@ -221,11 +221,24 @@ public class Parties extends AbstractProcs {
         private java.time.LocalDateTime createdStamp;
 
         public PersonFlatData toFlatData() {
-            return PersonFlatData.newBuilder()
-                    .setPartyId(partyId)
-                    .setLastName(lastName)
-                    .setFirstName(firstName)
-                    .build();
+            PersonFlatData.Builder builder = PersonFlatData.newBuilder();
+            if (partyId != null) {
+                builder.setPartyId(partyId);
+            }
+            if (lastName != null) {
+                builder.setLastName(lastName);
+            }
+            if (firstName != null) {
+                builder.setFirstName(firstName);
+            }
+            if (birthDate != null) {
+                builder.setBirthDate(getDate(birthDate));
+            }
+            if (passportExpireDate != null) {
+                builder.setPassportExpireDate(getDate(passportExpireDate));
+            }
+            // builder.setGender()
+            return builder.build();
         }
 
         public static Person fromFlatData(PersonFlatData data) {
@@ -234,7 +247,7 @@ public class Parties extends AbstractProcs {
                     .lastName(data.getLastName())
                     .firstName(data.getFirstName())
                     .birthDate(getLocalDate(data.getBirthDate()))
-                    .passportExpireDate(getLocalDateTime(data.getPassportExpireDate()))
+                    .passportExpireDate(getLocalDate(data.getPassportExpireDate()))
                     .gender(getIndicatorChar(data.getGender()))
                     .build();
         }

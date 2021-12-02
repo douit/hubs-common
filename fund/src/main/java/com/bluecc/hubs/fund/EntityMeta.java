@@ -237,6 +237,13 @@ public class EntityMeta {
         // });
     }
 
+    public String getFlatMessageType(){
+        if(HeadEntityResources.contains(name)){
+            return name+"FlatData";
+        }
+        return name+"Data";
+    }
+
     @Data
     @Builder
     public static class RelationQueryMeta{
@@ -329,6 +336,71 @@ public class EntityMeta {
         }
         public boolean isUpdateTs(){
             return name.equals("lastUpdatedStamp");
+        }
+
+        public String getProtoSetter(){
+            String valuePart;
+            switch (type){
+                case "date-time":
+                    valuePart= format("getTimestamp(%s)", name);
+                    break;
+                case "date":
+                    valuePart= format("getDate(%s)", name);
+                    break;
+                case "time":
+                    valuePart= format("getTimeOfDay(%s)", name);
+                    break;
+                case "indicator":
+                    valuePart= format("getIndicator(%s)", name);
+                    break;
+                case "currency-amount":
+                case "currency-precise":
+                    valuePart= format("getCurrency(%s)", name);
+                    break;
+                case "fixed-point":
+                    valuePart= format("getFixedPoint(%s)", name);
+                    break;
+                // case "url":
+                //     valuePart= format("%s.toString()", name);
+                //     break;
+                default:
+                    valuePart=name;
+            }
+            return format("set%s(%s)", fixedClassName(), valuePart);
+        }
+
+        public String getProtoGetter(){
+            // data.getLastName()
+            // getLocalDate(data.getBirthDate())
+            String getter= format("data.get%s()", fixedClassName());
+            switch (type){
+                case "date-time":
+                    return format("getLocalDateTime(%s)", getter);
+                case "date":
+                    return format("getLocalDate(%s)", getter);
+                case "time":
+                    return format("getTime(%s)", getter);
+                case "indicator":
+                    return format("getIndicatorChar(%s)", getter);
+                case "currency-amount":
+                case "currency-precise":
+                case "fixed-point":
+                    return format("getBigDecimal(%s)", getter);
+                // case "url":
+                //     return format("new URI(%s)", getter);
+                default:
+                    return getter;
+            }
+        }
+
+        static final Map<String, String> FIXTURES=ImmutableMap.of(
+                "reserv2ndPPPerc", "Reserv2NdPPPerc");
+        String fixedClassName(){
+            // reserv2ndPPPerc
+            if(FIXTURES.containsKey(this.name)){
+                return FIXTURES.get(name);
+            }
+            return Util.toClassName(name);
         }
     }
 

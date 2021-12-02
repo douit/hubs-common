@@ -2,6 +2,7 @@ package com.bluecc.income;
 
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.Sequence;
+import com.bluecc.hubs.fund.SystemDefs;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.income.dummy.store.HubsStore;
 import com.bluecc.income.exchange.IProc;
@@ -27,6 +28,9 @@ public class AbstractStoreProcTest {
     protected ProtoMeta protoMeta;
     @Inject
     protected GenericProcs genericProcs;
+
+    public static final String sourceSalesOrder= SystemDefs
+            .prependHubsHome( "dataset/sample/sales_order.xml");
 
     protected void process(IProc proc){
         hubsStore.getJdbi().withHandle(handle -> {

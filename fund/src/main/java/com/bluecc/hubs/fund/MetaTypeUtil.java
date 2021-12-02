@@ -11,8 +11,8 @@ public class MetaTypeUtil {
             "floating-point", "double", "integer", "int32",
             "numeric", "int64",
             "date-time", "google.protobuf.Timestamp",
-            "date", "google.protobuf.Timestamp",
-            "time", "google.protobuf.Timestamp"
+            "date", "google.type.Date",
+            "time", "google.type.TimeOfDay"
     );
     public static final Map<String, String> PROTO_CUSTOM_MAP = ImmutableMap.of(
             "indicator", "routines.Indicator",
@@ -27,4 +27,7 @@ public class MetaTypeUtil {
                         "string"));
     }
 
+    // public static final Map<String, String[]> IGNORE_FIELDS=ImmutableMap.of(
+    //         "Person", new String[]{"oldMaritalStatus"}
+    // );
 }

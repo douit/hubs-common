@@ -2,15 +2,16 @@ package com.bluecc.income.dummy.store;
 
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
-import com.bluecc.hubs.stub.PartyFlatData;
-import com.bluecc.hubs.stub.PersonFlatData;
-import com.bluecc.hubs.stub.PostalAddressData;
-import com.bluecc.hubs.stub.TypeSymbol;
+import com.bluecc.hubs.stub.*;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.IProc;
 import com.github.javafaker.Faker;
 import com.google.common.collect.Lists;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jdbi.v3.core.mapper.RowMapper;
+import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.core.statement.PreparedBatch;
 import org.jdbi.v3.core.statement.StatementContext;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
@@ -70,7 +71,7 @@ public class StoreProcTest extends AbstractStoreProcTest {
         @Override
         public PartyFlatData map(ResultSet r, StatementContext ctx) throws SQLException {
             return PartyFlatData.newBuilder()
-                    .setPartyId(String.valueOf(r.getLong("party_id")))
+                    .setPartyId(r.getString("party_id"))
                     .setPartyTypeId(r.getString("party_type_id"))
                     .build();
         }
@@ -80,7 +81,7 @@ public class StoreProcTest extends AbstractStoreProcTest {
         @Override
         public PersonFlatData map(ResultSet r, StatementContext ctx) throws SQLException {
             return PersonFlatData.newBuilder()
-                    .setPartyId(String.valueOf(r.getLong("party_id")))
+                    .setPartyId(r.getString("party_id"))
                     .setLastName(r.getString("last_name"))
                     .build();
         }
@@ -234,6 +235,43 @@ public class StoreProcTest extends AbstractStoreProcTest {
                     .forEach(e -> System.out.println(e));
 
         });
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class User{
+        String id;
+        String name;
+    }
+    @Test
+    public void testResultSetToMessage() {
+        hubsStore.getJdbi().registerRowMapper(User.class,
+                (rs, ctx) -> new User(rs.getString("party_id"),
+                        rs.getString("last_name")));
+        hubsStore.getJdbi().registerRowMapper(BeanMapper.factory(PersonData.Builder.class));
+
+        process(c -> {
+            // Dao dao = c.getHandle().attach(Dao.class);
+            List<User> users = c.getHandle().createQuery(
+                    "SELECT party_id, last_name FROM person ORDER BY party_id ASC")
+                    .mapTo(User.class)
+                    .list();
+            System.out.println(users);
+
+            List<PersonData.Builder> persons = c.getHandle().createQuery(
+                            "SELECT party_id, last_name FROM person ORDER BY party_id ASC")
+                    .mapTo(PersonData.Builder.class)
+                    .list();
+            System.out.println(persons);
+        });
+    }
+
+    void mapToMessage(Map<String, Object> result){
+    }
+
+    public void testBuilder(){
+        PersonData.Builder person=PersonData.newBuilder();
     }
 }
 

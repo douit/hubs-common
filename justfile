@@ -75,3 +75,5 @@ template tpl ent:
 package:
 	mvn package -DskipTests
 
+heads:
+	just gen GenHeadEntities

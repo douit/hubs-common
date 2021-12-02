@@ -23,8 +23,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Base64;
 
-import static com.bluecc.hubs.ProtoTypes.castIndicator;
-import static com.bluecc.hubs.ProtoTypes.getFixedPoint;
+import static com.bluecc.hubs.ProtoTypes.*;
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static com.bluecc.hubs.feed.ProtoModule.startup;
 
@@ -295,6 +294,9 @@ public class DataFill {
             case "Timestamp":
                 msg.setField(fld, getTimestamp(val.getAsString()));
                 break;
+            // case "Date":
+            //     msg.setField(fld, getDate(val.getAsString()));
+            //     break;
             case "DecimalValue":
                 DecimalValue serialized = getDecimalValue(val);
                 msg.setField(fld, serialized);

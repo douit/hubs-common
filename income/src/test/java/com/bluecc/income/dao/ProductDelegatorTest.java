@@ -15,11 +15,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ProductDelegatorTest extends AbstractStoreProcTest {
     @Inject
@@ -52,9 +53,9 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
 
     @Test
     public void storeProtoData() {
-        String source = SystemDefs.prependHubsHome("dataset/sample/sales_order.xml");
+        // String source = SystemDefs.prependHubsHome("dataset/sample/sales_order.xml");
         Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
-        collectEntityData(dataList, source, false);
+        collectEntityData(dataList, sourceSalesOrder, false);
 
         DataFill dataFill = new DataFill();
         Multimap<String, Message> dataMap = dataFill.setupData(dataList);
@@ -73,5 +74,17 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
             System.out.println(indicator);
         });
 
+    }
+
+    @Test
+    public void testGetRelatedMany() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(Dao.class);
+            genericProcs.storeDataFile(c, sourceSalesOrder);
+            List<Map<String, Object>> rs= genericProcs.find(c, ProductFlatData.newBuilder()
+                    .setProductId("GZ-1001")
+                    .build());
+            assertFalse(rs.isEmpty());
+        });
     }
 }

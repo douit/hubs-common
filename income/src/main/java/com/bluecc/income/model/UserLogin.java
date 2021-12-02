@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 
+import static com.bluecc.hubs.ProtoTypes.*;
+import com.bluecc.hubs.stub.UserLoginFlatData;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -34,4 +37,90 @@ public class UserLogin implements Serializable {
     java.time.LocalDateTime createdTxStamp;
     String partyId;
     
+
+        
+    public UserLoginFlatData toData() {
+        UserLoginFlatData.Builder builder = UserLoginFlatData.newBuilder();
+        if (userLoginId != null) {
+            builder.setUserLoginId(userLoginId);
+        }
+        if (currentPassword != null) {
+            builder.setCurrentPassword(currentPassword);
+        }
+        if (passwordHint != null) {
+            builder.setPasswordHint(passwordHint);
+        }
+        if (isSystem != null) {
+            builder.setIsSystem(getIndicator(isSystem));
+        }
+        if (enabled != null) {
+            builder.setEnabled(getIndicator(enabled));
+        }
+        if (hasLoggedOut != null) {
+            builder.setHasLoggedOut(getIndicator(hasLoggedOut));
+        }
+        if (requirePasswordChange != null) {
+            builder.setRequirePasswordChange(getIndicator(requirePasswordChange));
+        }
+        if (lastCurrencyUom != null) {
+            builder.setLastCurrencyUom(lastCurrencyUom);
+        }
+        if (lastLocale != null) {
+            builder.setLastLocale(lastLocale);
+        }
+        if (lastTimeZone != null) {
+            builder.setLastTimeZone(lastTimeZone);
+        }
+        if (disabledDateTime != null) {
+            builder.setDisabledDateTime(getTimestamp(disabledDateTime));
+        }
+        if (successiveFailedLogins != null) {
+            builder.setSuccessiveFailedLogins(successiveFailedLogins);
+        }
+        if (externalAuthId != null) {
+            builder.setExternalAuthId(externalAuthId);
+        }
+        if (userLdapDn != null) {
+            builder.setUserLdapDn(userLdapDn);
+        }
+        if (disabledBy != null) {
+            builder.setDisabledBy(disabledBy);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+        if (partyId != null) {
+            builder.setPartyId(partyId);
+        }
+                    
+        return builder.build();
+    }
+
+    public static UserLogin fromData(UserLoginFlatData data) {
+        return UserLogin.builder()
+                .userLoginId(data.getUserLoginId())
+                .currentPassword(data.getCurrentPassword())
+                .passwordHint(data.getPasswordHint())
+                .isSystem(getIndicatorChar(data.getIsSystem()))
+                .enabled(getIndicatorChar(data.getEnabled()))
+                .hasLoggedOut(getIndicatorChar(data.getHasLoggedOut()))
+                .requirePasswordChange(getIndicatorChar(data.getRequirePasswordChange()))
+                .lastCurrencyUom(data.getLastCurrencyUom())
+                .lastLocale(data.getLastLocale())
+                .lastTimeZone(data.getLastTimeZone())
+                .disabledDateTime(getLocalDateTime(data.getDisabledDateTime()))
+                .successiveFailedLogins(data.getSuccessiveFailedLogins())
+                .externalAuthId(data.getExternalAuthId())
+                .userLdapDn(data.getUserLdapDn())
+                .disabledBy(data.getDisabledBy())
+                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
+                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .partyId(data.getPartyId())
+                
+                .build();
+    }
+
 }

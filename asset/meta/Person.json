@@ -252,19 +252,6 @@
       "validators": []
     },
     {
-      "name": "oldMaritalStatus",
-      "type": "indicator",
-      "col": "MARITAL_STATUS",
-      "pk": false,
-      "notNull": false,
-      "encrypt": false,
-      "autoCreatedInternal": false,
-      "javaType": "String",
-      "sqlType": "CHAR(1)",
-      "stringLength": 1,
-      "validators": []
-    },
-    {
       "name": "maritalStatusEnumId",
       "type": "id",
       "col": "MARITAL_STATUS_ENUM_ID",

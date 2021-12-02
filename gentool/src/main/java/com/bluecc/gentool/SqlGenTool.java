@@ -49,7 +49,7 @@ public class SqlGenTool {
                 "asset/mysql/hubs.sql",
                 "asset/mysql/hubs.json");
         SqlGenTool genH2 = new SqlGenTool(opts,"h2",
-                "domain/src/main/sql/hubs_h2.sql", null);
+                "domain/src/main/sql/hubs_h2_full.sql", null);
 
 
         System.out.println("opt-silent: " + opts.silent);

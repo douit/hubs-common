@@ -1,9 +1,13 @@
 package com.bluecc.income.procs;
 
 import com.bluecc.hubs.stub.PersonFlatData;
+import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -28,6 +32,19 @@ public class GenericProcsTest extends AbstractStoreProcTest {
             assertEquals(1, genericProcs.findById(ctx, flatData).size());
             assertEquals(1, genericProcs.delete(ctx, flatData));
             assertEquals(0, genericProcs.find(ctx, flatData).size());
+        });
+    }
+
+
+    @Test
+    public void testStoreDataFile() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(Dao.class);
+            genericProcs.storeDataFile(c, sourceSalesOrder);
+            List<Map<String, Object>> rs= genericProcs.find(c, ProductFlatData.newBuilder()
+                    .setProductId("GZ-1001")
+                    .build());
+            assertFalse(rs.isEmpty());
         });
     }
 }

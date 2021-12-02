@@ -8,6 +8,8 @@ option objc_class_prefix = "RTP";
 package routines;
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/any.proto";
+import "date.proto";
+import "timeofday.proto";
 
 extend google.protobuf.MessageOptions {
   optional string entity_type = 51234;
@@ -120,8 +122,13 @@ message TypeSymbol{
 }
 
 message PeriodData{
-  string from_date = 1;
-  string thru_date = 2;
+  google.type.Date from_date = 1;
+  google.type.Date thru_date = 2;
+}
+
+message PeriodTimeData{
+  google.type.TimeOfDay from_time = 1;
+  google.type.TimeOfDay thru_time = 2;
 }
 
 enum Indicator{

@@ -37,7 +37,7 @@ public class ProtoMetaTest {
 
         // new with proto-instance
         PersonFlatData.Builder builder=PersonFlatData.newBuilder(flatData);
-        builder.setBirthDate(ProtoTypes.now());
+        builder.setBirthDate(ProtoTypes.nowDate());
         collect((c, e) -> {
             System.out.println("Ⓜ️ " + c.getSymbol() + " -> " + e);
         }).fillMap(builder.build());

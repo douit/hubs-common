@@ -774,7 +774,7 @@
     {
       "name": "reserv2ndPPPerc",
       "type": "fixed-point",
-      "col": "RESERV2ND_P_P_PERC",
+      "col": "RESERV_2ND_P_P_PERC",
       "pk": false,
       "notNull": false,
       "encrypt": false,

@@ -98,7 +98,7 @@ public class PartiesTest extends AbstractStoreProcTest {
                     .lastName("samlet")
                     .firstName("wu")
                     .birthDate(date)
-                    .passportExpireDate(LocalDateTime.now())
+                    .passportExpireDate(LocalDate.now())
                     .gender('Y')
                     .build();
             dao.insertPerson(flatData);
@@ -173,4 +173,28 @@ public class PartiesTest extends AbstractStoreProcTest {
         });
     }
 
+    @Test
+    public void testBeanToMessage() {
+        process(c -> {
+            PartyDao dao = c.getHandle().attach(PartyDao.class);
+            String id=sequence.nextStringId();
+            LocalDate date = LocalDate.of(2001, 2, 1);
+
+            Person flatData= Person.builder()
+                    .partyId(id)
+                    .lastName("samlet")
+                    .firstName("wu")
+                    .birthDate(date)
+                    .passportExpireDate(LocalDate.now())
+                    .gender('Y')
+                    .build();
+            dao.insertPerson(flatData);
+
+            for (Person person : dao.listPersons()) {
+                pretty(person);
+                PersonFlatData flat=person.toFlatData();
+                System.out.println("-> flat = "+flat);
+            }
+        });
+    }
 }

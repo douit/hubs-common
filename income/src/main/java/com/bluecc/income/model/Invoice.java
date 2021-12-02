@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 
+import static com.bluecc.hubs.ProtoTypes.*;
+import com.bluecc.hubs.stub.InvoiceFlatData;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -34,4 +37,90 @@ public class Invoice implements Serializable {
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     
+
+        
+    public InvoiceFlatData toData() {
+        InvoiceFlatData.Builder builder = InvoiceFlatData.newBuilder();
+        if (invoiceId != null) {
+            builder.setInvoiceId(invoiceId);
+        }
+        if (invoiceTypeId != null) {
+            builder.setInvoiceTypeId(invoiceTypeId);
+        }
+        if (partyIdFrom != null) {
+            builder.setPartyIdFrom(partyIdFrom);
+        }
+        if (partyId != null) {
+            builder.setPartyId(partyId);
+        }
+        if (roleTypeId != null) {
+            builder.setRoleTypeId(roleTypeId);
+        }
+        if (statusId != null) {
+            builder.setStatusId(statusId);
+        }
+        if (billingAccountId != null) {
+            builder.setBillingAccountId(billingAccountId);
+        }
+        if (contactMechId != null) {
+            builder.setContactMechId(contactMechId);
+        }
+        if (invoiceDate != null) {
+            builder.setInvoiceDate(getTimestamp(invoiceDate));
+        }
+        if (dueDate != null) {
+            builder.setDueDate(getTimestamp(dueDate));
+        }
+        if (paidDate != null) {
+            builder.setPaidDate(getTimestamp(paidDate));
+        }
+        if (invoiceMessage != null) {
+            builder.setInvoiceMessage(invoiceMessage);
+        }
+        if (referenceNumber != null) {
+            builder.setReferenceNumber(referenceNumber);
+        }
+        if (description != null) {
+            builder.setDescription(description);
+        }
+        if (currencyUomId != null) {
+            builder.setCurrencyUomId(currencyUomId);
+        }
+        if (recurrenceInfoId != null) {
+            builder.setRecurrenceInfoId(recurrenceInfoId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return builder.build();
+    }
+
+    public static Invoice fromData(InvoiceFlatData data) {
+        return Invoice.builder()
+                .invoiceId(data.getInvoiceId())
+                .invoiceTypeId(data.getInvoiceTypeId())
+                .partyIdFrom(data.getPartyIdFrom())
+                .partyId(data.getPartyId())
+                .roleTypeId(data.getRoleTypeId())
+                .statusId(data.getStatusId())
+                .billingAccountId(data.getBillingAccountId())
+                .contactMechId(data.getContactMechId())
+                .invoiceDate(getLocalDateTime(data.getInvoiceDate()))
+                .dueDate(getLocalDateTime(data.getDueDate()))
+                .paidDate(getLocalDateTime(data.getPaidDate()))
+                .invoiceMessage(data.getInvoiceMessage())
+                .referenceNumber(data.getReferenceNumber())
+                .description(data.getDescription())
+                .currencyUomId(data.getCurrencyUomId())
+                .recurrenceInfoId(data.getRecurrenceInfoId())
+                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
+                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                
+                .build();
+    }
+
 }
