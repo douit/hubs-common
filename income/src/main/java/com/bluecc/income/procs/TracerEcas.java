@@ -6,6 +6,7 @@ import com.bluecc.hubs.fund.pubs.Ecas;
 import com.bluecc.hubs.stub.Envelope;
 import com.bluecc.income.exchange.IProc;
 import com.google.protobuf.Message;
+import reactor.core.publisher.Flux;
 import reactor.util.function.Tuple2;
 
 import java.util.function.Consumer;
@@ -30,7 +31,7 @@ public class TracerEcas {
     }
 
     @Eca
-    public Function<Tuple2<IProc.ProcContext, Message>, Envelope> store(){
+    public Function<Message, Flux<Envelope>> store(){
         return e -> {
             return null;
         };

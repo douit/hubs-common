@@ -1,5 +1,5 @@
     
-    public {{ent.flatMessageType}} toData() {
+    public Message toData() {
         {{ent.flatMessageType}}.Builder builder = {{ent.flatMessageType}}.newBuilder();
         {% for f in ent.messageFields -%}
         if ({{f.name}} != null) {

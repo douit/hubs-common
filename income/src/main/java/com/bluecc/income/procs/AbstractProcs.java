@@ -6,10 +6,12 @@ import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.descriptor.INameSymbol;
+import com.bluecc.hubs.fund.model.IModel;
 import com.bluecc.income.dummy.store.HubsStore;
 import com.bluecc.income.exchange.FlatMessageCollector;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.exchange.MessageMapCollector;
+import com.bluecc.income.exchange.ResultSubscriber;
 import com.bluecc.income.template.TemplateGlobalContext;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -22,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlLogger;
 import org.jdbi.v3.core.statement.StatementContext;
+import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -44,10 +47,11 @@ public class AbstractProcs {
     @Inject
     protected ProtoMeta protoMeta;
 
-    protected void process(IProc proc) {
-        hubsStore.getJdbi().withHandle(handle -> {
-            proc.proc(new IProc.ProcContext(handle));
-            return null;
+    protected Flux<IModel> process(IProc proc){
+        return hubsStore.getJdbi().withHandle(handle -> {
+            ResultSubscriber<IModel> resultSubscriber=new ResultSubscriber<>();
+            proc.proc(new IProc.ProcContext(handle, resultSubscriber));
+            return Flux.fromIterable(resultSubscriber.getResult());
         });
     }
 
@@ -332,6 +336,38 @@ public class AbstractProcs {
                         limit==0?":":"limit "+limit))
                 .mapToMap().list();
         return rs;
+    }
+
+    public <T> List<T> getRelationValues(IProc.ProcContext ctx,
+                                         Message message,
+                                         String relName,
+                                         Class<T> clz) {
+        EntityMeta p = protoMeta.getEntityMeta(ProtoTypes.getEntityTypeByMessage(message));
+        EntityMeta.RelationMeta relationMeta = p.findRelationByProtoName(relName).get();
+        String relEnt = relationMeta.getRelEntityName();
+        String table = relationMeta.getProtoName();
+        Map<String, Object> e = transferRelations(message,
+                relName, relEnt);
+
+        return getTypedRelations(ctx, table, e, clz);
+    }
+
+    public <T> List<T> getTypedRelations(IProc.ProcContext ctx, String table,
+                                         Map<String, Object> e, Class<T> clz) {
+        List<String> names = new ArrayList<>(e.keySet());
+
+        String fieldsCond = names.stream().map(name ->
+                        format("%s=:%s", name, name))
+                .collect(Collectors.joining(" and "));
+
+        List<T> rs = ctx.getHandle().createQuery(
+                        "select * from <table> where <fieldsCond>")
+                .define("table", table)
+                .defineList("fieldsCond", fieldsCond)
+                .bindMap(e)
+                .mapTo(clz).list();
+        return rs;
+
     }
 }
 

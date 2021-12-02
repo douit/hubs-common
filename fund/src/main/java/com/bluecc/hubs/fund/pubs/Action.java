@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 public @interface Action {
-    Class<?> value();
+    String value() default "";
     String mode() default "async";
     String runAsUser() default "user";
     int seq() default 0;

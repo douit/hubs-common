@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import com.google.protobuf.Message;
 
 import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -54,7 +55,7 @@ public class OrderHeader implements IModel, Serializable {
     
 
         
-    public OrderHeaderFlatData toData() {
+    public Message toData() {
         OrderHeaderFlatData.Builder builder = OrderHeaderFlatData.newBuilder();
         if (orderId != null) {
             builder.setOrderId(orderId);

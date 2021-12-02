@@ -1,11 +1,13 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.descriptor.INameSymbol;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.AbstractStoreProcTest;
+import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Product;
 import com.bluecc.income.model.ProductPrice;
 import com.github.javafaker.Faker;
@@ -113,21 +115,27 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
         // productData.getProductPriceList()
         // product_price, ProductPrice
 
-        String relName="product_price";
+        String relName = "product_price";
         EntityMeta p = protoMeta.getEntityMeta("Product");
         // p.getRelations().forEach(r -> System.out.println(r.getProtoName()));
         EntityMeta.RelationMeta relationMeta = p.findRelationByProtoName(relName).get();
         relationMeta.getRelFieldList().forEach(e -> System.out.println(e));
 
         INameSymbol symbol = EntityNames.ProductPrice;
-        Map<String, Object> e = genericProcs.transferRelations(productData,
-                relName, symbol.getEntityName());
+        Map<String, Object> e = getRelations(productData, relName, symbol);
         System.out.println(e);
 
         // insert with transferred keys
         // insertWithRels(symbol, e);
         getRels(symbol, e);
         getTypedRels(symbol, e);
+    }
+
+    private Map<String, Object> getRelations(Message message,
+                                             String relName, INameSymbol symbol) {
+        Map<String, Object> e = genericProcs.transferRelations(message,
+                relName, symbol.getEntityName());
+        return e;
     }
 
     private void insertWithRels(INameSymbol symbol, Map<String, Object> e) {
@@ -155,7 +163,7 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
 
         process(ctx -> {
             List<Map<String, Object>> rs = ctx.getHandle().createQuery(
-                    "select * from <table> where <fieldsCond>")
+                            "select * from <table> where <fieldsCond>")
                     .define("table", symbol.getTable())
                     .defineList("fieldsCond", fieldsCond)
                     .bindMap(e)
@@ -182,16 +190,16 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
             rs.forEach(pp -> System.out.println(pp.getPrice()));
             // Integer::sum
             // int result = numbers.stream().reduce(0, Integer::sum);
-            BigDecimal result=rs.stream()
+            BigDecimal result = rs.stream()
                     .map(pp -> pp.getPrice())
                     .reduce(BigDecimal.ZERO, Calcs::sumDecimal);
             System.out.println(result);
 
             // sum with proto
-            List<ProductPriceData> ds=rs.stream()
-                    .map(p -> p.toData())
+            List<ProductPriceData> ds = rs.stream()
+                    .map(p -> (ProductPriceData)p.toData())
                     .collect(Collectors.toList());
-            BigDecimal result2=ds.stream()
+            BigDecimal result2 = ds.stream()
                     .map(p -> new BigDecimal(p.getPrice().getValue()))
                     .reduce(BigDecimal.ZERO, Calcs::sumDecimal);
             assertEquals(result, result2);
@@ -207,4 +215,22 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
             return a.add(b);
         }
     }
+
+    @Test
+    public void testRelationValues() {
+        process(c -> genericProcs.storeDataFile(c, sourceSalesOrder));
+
+        process(c -> {
+            // Dao dao = c.getHandle().attach(Dao.class);
+            ProductData productData = ProductData.newBuilder()
+                    .setProductId("GZ-DIG")
+                    .build();
+            List<ProductPrice> rs = genericProcs.getRelationValues(c, productData,
+                    "product_price",
+                    ProductPrice.class);
+            assertEquals(2, rs.size());
+        });
+    }
+
+
 }

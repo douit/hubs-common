@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import com.google.protobuf.Message;
 
 import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -33,7 +34,7 @@ public class PartyGroup implements IModel, Serializable {
     
 
         
-    public PartyGroupFlatData toData() {
+    public Message toData() {
         PartyGroupFlatData.Builder builder = PartyGroupFlatData.newBuilder();
         if (partyId != null) {
             builder.setPartyId(partyId);

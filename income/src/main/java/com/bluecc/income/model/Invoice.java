@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import com.google.protobuf.Message;
 
 import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -40,7 +41,7 @@ public class Invoice implements IModel, Serializable {
     
 
         
-    public InvoiceFlatData toData() {
+    public Message toData() {
         InvoiceFlatData.Builder builder = InvoiceFlatData.newBuilder();
         if (invoiceId != null) {
             builder.setInvoiceId(invoiceId);

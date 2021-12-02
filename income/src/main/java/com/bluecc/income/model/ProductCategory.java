@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import com.google.protobuf.Message;
 
 import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -35,7 +36,7 @@ public class ProductCategory implements IModel, Serializable {
     
 
         
-    public ProductCategoryFlatData toData() {
+    public Message toData() {
         ProductCategoryFlatData.Builder builder = ProductCategoryFlatData.newBuilder();
         if (productCategoryId != null) {
             builder.setProductCategoryId(productCategoryId);
