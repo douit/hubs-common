@@ -310,6 +310,17 @@ public class AbstractProcs {
         return rs;
     }
 
+    public <T> List<T> find(IProc.ProcContext ctx, Message flatData, Class<T> clz) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        List<T> rs = ctx.getHandle().createQuery("select * from <table> where <fields_cond>")
+                .define("table", tableInfo.table)
+                .define("fields_cond", tableInfo.fieldsCondition)
+                .bindMap(tableInfo.e)
+                .mapTo(clz)
+                .list();
+        return rs;
+    }
+
     public List<Map<String, Object>> all(IProc.ProcContext c, Message flatData) {
         return all(c, flatData, 0);
     }

@@ -9,6 +9,7 @@ import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.procs.GenericProcs;
 import com.bluecc.income.template.TemplateGlobalContext;
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.core.statement.SqlLogger;
 import org.jdbi.v3.core.statement.StatementContext;
 import org.junit.runner.RunWith;
@@ -37,6 +38,12 @@ public class AbstractStoreProcTest {
             proc.proc(new IProc.ProcContext(handle));
            return null;
         });
+    }
+
+    protected void rowMapper(Class<?>... types){
+        for (Class<?> type : types) {
+            hubsStore.getJdbi().registerRowMapper(BeanMapper.factory(type));
+        }
     }
 
     protected void truncate(IProc.ProcContext ctx, List<String> tableNames) {

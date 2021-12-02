@@ -231,7 +231,11 @@
                 <artifactId>mvel2</artifactId>
                 <version>${mvel2.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.esotericsoftware</groupId>
+                <artifactId>kryo</artifactId>
+                <version>5.2.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 
+import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ProdCatalogFlatData;
 
@@ -13,7 +14,7 @@ import com.bluecc.hubs.stub.ProdCatalogFlatData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdCatalog implements Serializable {
+public class ProdCatalog implements IModel, Serializable {
     private static final long serialVersionUID = 1L;
 
     String prodCatalogId;

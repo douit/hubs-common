@@ -14,9 +14,12 @@ import static com.bluecc.gentool.GenModule.startup;
  * $ just gen GenHeadEntities
  */
 public class GenHeadEntities {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         GenHeadEntities genHeadEntities=startup(GenHeadEntities.class);
         genHeadEntities.startGen();
+
+        // ...
+        genHeadEntities.genBean("ProductPrice");
     }
 
     @Inject
@@ -24,12 +27,8 @@ public class GenHeadEntities {
     void startGen(){
         HeadEntityResources.allHeads().forEach(e -> {
             try {
-                String conv_part= TemplateUtil.sourceGen(e, "bean_conv", true);
-                // String cnt= TemplateUtil.sourceGen(e, "bean", true);
-                EntityMeta meta= EntityMetaManager.getEntityMeta(e, true);
-                String cnt= TemplateUtil.build("templates/bean_source.j2",
-                        ImmutableMap.of("ent", meta, "conv_part", conv_part));
-                Util.writeFile(cnt, conf.prependModelFile(e+".java"));
+                genBean(e);
+                String cnt;
 
                 cnt= TemplateUtil.sourceGen(e, "dao_decl", true);
                 Util.writeFile(cnt, conf.prependDaoFile(e+"Delegator.java"));
@@ -45,5 +44,16 @@ public class GenHeadEntities {
                 throw new RuntimeException(ex.getMessage(), ex);
             }
         });
+    }
+
+    public void genBean(String... ents) throws IOException {
+        for (String e : ents) {
+            String conv_part = TemplateUtil.sourceGen(e, "bean_conv", true);
+            // String cnt= TemplateUtil.sourceGen(e, "bean", true);
+            EntityMeta meta = EntityMetaManager.getEntityMeta(e, true);
+            String cnt = TemplateUtil.build("templates/bean_source.j2",
+                    ImmutableMap.of("ent", meta, "conv_part", conv_part));
+            Util.writeFile(cnt, conf.prependModelFile(e + ".java"));
+        }
     }
 }

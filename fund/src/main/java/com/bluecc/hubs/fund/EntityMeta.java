@@ -269,6 +269,15 @@ public class EntityMeta {
                 .collect(Collectors.toList());
     }
 
+    public Optional<RelationMeta> findRelation(String relationName){
+        return relations.stream().filter(r -> r.getName().equals(relationName))
+                .findFirst();
+    }
+    public Optional<RelationMeta> findRelationByProtoName(String relationName){
+        return relations.stream().filter(r -> r.getProtoName().equals(relationName))
+                .findFirst();
+    }
+
     @Data
     @Builder
     public static class FieldMeta {

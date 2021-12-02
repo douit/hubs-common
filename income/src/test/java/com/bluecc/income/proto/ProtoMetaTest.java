@@ -52,6 +52,15 @@ public class ProtoMetaTest {
     }
 
     @Test
+    public void testGetRelation(){
+        EntityMeta p = protoMeta.getEntityMeta("Product");
+        // p.getRelations().forEach(r -> System.out.println(r.getProtoName()));
+        EntityMeta.RelationMeta relationMeta=p.findRelation("ProductPrice").get();
+        relationMeta.getRelFieldList().forEach(e -> System.out.println(e));
+
+    }
+
+    @Test
     public void testRelations() {
 
         // EntityMeta c=protoMeta.getEntityMeta("OrderItem");

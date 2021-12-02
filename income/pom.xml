@@ -176,6 +176,10 @@
             <version>0.10.9.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
+        </dependency>
 
         <!-- test -->
         <dependency>

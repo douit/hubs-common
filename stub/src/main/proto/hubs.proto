@@ -755,16 +755,16 @@ message InvoiceData {
     google.protobuf.Timestamp created_tx_stamp = 14;
     
     // relations
-    PartyRoleData party_role = 17; // ref: partyId + roleTypeId
-    BillingAccountData billing_account = 18; // ref: billingAccountId
-    ContactMechData contact_mech = 19; // ref: contactMechId
-    RecurrenceInfoData recurrence_info = 20; // ref: recurrenceInfoId
-    repeated AcctgTransData acctg_trans = 21; // ref: invoiceId
-    repeated InvoiceItemData invoice_item = 22; // ref: invoiceId
-    repeated OrderAdjustmentBillingData order_adjustment_billing = 23; // ref: invoiceId
-    repeated OrderItemBillingData order_item_billing = 24; // ref: invoiceId
-    repeated PaymentApplicationData payment_application = 25; // ref: invoiceId
-    repeated ShipmentItemBillingData shipment_item_billing = 26; // ref: invoiceId
+    PartyRoleData party_role = 17; // ref(PartyRole): partyId + roleTypeId
+    BillingAccountData billing_account = 18; // ref(BillingAccount): billingAccountId
+    ContactMechData contact_mech = 19; // ref(ContactMech): contactMechId
+    RecurrenceInfoData recurrence_info = 20; // ref(RecurrenceInfo): recurrenceInfoId
+    repeated AcctgTransData acctg_trans = 21; // ref(AcctgTrans): invoiceId
+    repeated InvoiceItemData invoice_item = 22; // ref(InvoiceItem): invoiceId
+    repeated OrderAdjustmentBillingData order_adjustment_billing = 23; // ref(OrderAdjustmentBilling): invoiceId
+    repeated OrderItemBillingData order_item_billing = 24; // ref(OrderItemBilling): invoiceId
+    repeated PaymentApplicationData payment_application = 25; // ref(PaymentApplication): invoiceId
+    repeated ShipmentItemBillingData shipment_item_billing = 26; // ref(ShipmentItemBilling): invoiceId
     
         
 }
@@ -897,39 +897,39 @@ message ProductData {
     google.protobuf.Timestamp created_tx_stamp = 68;
     
     // relations
-    ProductCategoryData primary_product_category = 69; // ref: primaryProductCategoryId
-    UserLoginData created_by_user_login = 70; // ref: createdByUserLogin
-    UserLoginData last_modified_by_user_login = 71; // ref: lastModifiedByUserLogin
-    ShipmentBoxTypeData default_shipment_box_type = 72; // ref: defaultShipmentBoxTypeId
-    repeated AgreementData agreement = 73; // ref: productId
-    repeated AgreementProductApplData agreement_product_appl = 74; // ref: productId
-    repeated CustRequestItemData cust_request_item = 75; // ref: productId
-    repeated FixedAssetData instance_of_fixed_asset = 76; // ref: productId
-    repeated FixedAssetProductData fixed_asset_product = 77; // ref: productId
-    repeated InventoryItemData inventory_item = 78; // ref: productId
-    repeated InvoiceItemData invoice_item = 79; // ref: productId
-    repeated OrderItemData order_item = 80; // ref: productId
-    repeated ProductAssocData main_product_assoc = 81; // ref: productId
-    repeated ProductAssocData assoc_product_assoc = 82; // ref: productId
-    repeated ProductCategoryMemberData product_category_member = 83; // ref: productId
-    repeated ProductConfigData product_product_config = 84; // ref: productId
-    repeated ProductConfigProductData product_product_config_product = 85; // ref: productId
-    repeated ProductContentData product_content = 86; // ref: productId
-    repeated ProductFacilityData product_facility = 87; // ref: productId
-    repeated ProductFacilityAssocData product_facility_assoc = 88; // ref: productId
-    repeated ProductFacilityLocationData product_facility_location = 89; // ref: productId
-    repeated ProductFeatureApplData product_feature_appl = 90; // ref: productId
-    repeated ProductKeywordData product_keyword = 91; // ref: productId
-    repeated ProductPriceData product_price = 92; // ref: productId
-    repeated ProductPromoProductData product_promo_product = 93; // ref: productId
-    repeated ProductReviewData product_review = 94; // ref: productId
-    repeated ProductSubscriptionResourceData product_subscription_resource = 95; // ref: productId
-    repeated QuoteItemData quote_item = 96; // ref: productId
-    repeated ShipmentItemData shipment_item = 97; // ref: productId
-    repeated ShipmentPackageContentData sub_shipment_package_content = 98; // ref: productId
-    repeated ShipmentReceiptData shipment_receipt = 99; // ref: productId
-    repeated SupplierProductData supplier_product = 100; // ref: productId
-    repeated WorkEffortGoodStandardData work_effort_good_standard = 101; // ref: productId
+    ProductCategoryData primary_product_category = 69; // ref(PrimaryProductCategory): primaryProductCategoryId
+    UserLoginData created_by_user_login = 70; // ref(CreatedByUserLogin): createdByUserLogin
+    UserLoginData last_modified_by_user_login = 71; // ref(LastModifiedByUserLogin): lastModifiedByUserLogin
+    ShipmentBoxTypeData default_shipment_box_type = 72; // ref(DefaultShipmentBoxType): defaultShipmentBoxTypeId
+    repeated AgreementData agreement = 73; // ref(Agreement): productId
+    repeated AgreementProductApplData agreement_product_appl = 74; // ref(AgreementProductAppl): productId
+    repeated CustRequestItemData cust_request_item = 75; // ref(CustRequestItem): productId
+    repeated FixedAssetData instance_of_fixed_asset = 76; // ref(InstanceOfFixedAsset): productId
+    repeated FixedAssetProductData fixed_asset_product = 77; // ref(FixedAssetProduct): productId
+    repeated InventoryItemData inventory_item = 78; // ref(InventoryItem): productId
+    repeated InvoiceItemData invoice_item = 79; // ref(InvoiceItem): productId
+    repeated OrderItemData order_item = 80; // ref(OrderItem): productId
+    repeated ProductAssocData main_product_assoc = 81; // ref(MainProductAssoc): productId
+    repeated ProductAssocData assoc_product_assoc = 82; // ref(AssocProductAssoc): productId
+    repeated ProductCategoryMemberData product_category_member = 83; // ref(ProductCategoryMember): productId
+    repeated ProductConfigData product_product_config = 84; // ref(ProductProductConfig): productId
+    repeated ProductConfigProductData product_product_config_product = 85; // ref(ProductProductConfigProduct): productId
+    repeated ProductContentData product_content = 86; // ref(ProductContent): productId
+    repeated ProductFacilityData product_facility = 87; // ref(ProductFacility): productId
+    repeated ProductFacilityAssocData product_facility_assoc = 88; // ref(ProductFacilityAssoc): productId
+    repeated ProductFacilityLocationData product_facility_location = 89; // ref(ProductFacilityLocation): productId
+    repeated ProductFeatureApplData product_feature_appl = 90; // ref(ProductFeatureAppl): productId
+    repeated ProductKeywordData product_keyword = 91; // ref(ProductKeyword): productId
+    repeated ProductPriceData product_price = 92; // ref(ProductPrice): productId
+    repeated ProductPromoProductData product_promo_product = 93; // ref(ProductPromoProduct): productId
+    repeated ProductReviewData product_review = 94; // ref(ProductReview): productId
+    repeated ProductSubscriptionResourceData product_subscription_resource = 95; // ref(ProductSubscriptionResource): productId
+    repeated QuoteItemData quote_item = 96; // ref(QuoteItem): productId
+    repeated ShipmentItemData shipment_item = 97; // ref(ShipmentItem): productId
+    repeated ShipmentPackageContentData sub_shipment_package_content = 98; // ref(SubShipmentPackageContent): productId
+    repeated ShipmentReceiptData shipment_receipt = 99; // ref(ShipmentReceipt): productId
+    repeated SupplierProductData supplier_product = 100; // ref(SupplierProduct): productId
+    repeated WorkEffortGoodStandardData work_effort_good_standard = 101; // ref(WorkEffortGoodStandard): productId
     
         
 }
@@ -1597,13 +1597,13 @@ message PersonData {
     google.protobuf.Timestamp created_tx_stamp = 34;
     
     // relations
-    repeated PartyContactMechData party_contact_mech = 36; // ref: partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 37; // ref: partyId
-    repeated ProductStoreRoleData product_store_role = 38; // ref: partyId
-    repeated ShipmentData to_shipment = 39; // ref: partyId
-    repeated ShipmentData from_shipment = 40; // ref: partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 41; // ref: partyId
-    repeated UserLoginData user_login = 42; // ref: partyId
+    repeated PartyContactMechData party_contact_mech = 36; // ref(PartyContactMech): partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 37; // ref(PartyContactMechPurpose): partyId
+    repeated ProductStoreRoleData product_store_role = 38; // ref(ProductStoreRole): partyId
+    repeated ShipmentData to_shipment = 39; // ref(ToShipment): partyId
+    repeated ShipmentData from_shipment = 40; // ref(FromShipment): partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 41; // ref(CarrierShipmentRouteSegment): partyId
+    repeated UserLoginData user_login = 42; // ref(UserLogin): partyId
     
         
 }
@@ -1747,13 +1747,13 @@ message PartyGroupData {
     google.protobuf.Timestamp created_tx_stamp = 11;
     
     // relations
-    repeated PartyContactMechData party_contact_mech = 13; // ref: partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 14; // ref: partyId
-    repeated ProductStoreRoleData product_store_role = 15; // ref: partyId
-    repeated ShipmentData to_shipment = 16; // ref: partyId
-    repeated ShipmentData from_shipment = 17; // ref: partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 18; // ref: partyId
-    repeated UserLoginData user_login = 19; // ref: partyId
+    repeated PartyContactMechData party_contact_mech = 13; // ref(PartyContactMech): partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 14; // ref(PartyContactMechPurpose): partyId
+    repeated ProductStoreRoleData product_store_role = 15; // ref(ProductStoreRole): partyId
+    repeated ShipmentData to_shipment = 16; // ref(ToShipment): partyId
+    repeated ShipmentData from_shipment = 17; // ref(FromShipment): partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 18; // ref(CarrierShipmentRouteSegment): partyId
+    repeated UserLoginData user_login = 19; // ref(UserLogin): partyId
     
         
 }
@@ -1924,55 +1924,55 @@ message PartyData {
     google.protobuf.Timestamp created_tx_stamp = 12;
     
     // relations
-    UserLoginData created_by_user_login = 13; // ref: createdByUserLogin
-    UserLoginData last_modified_by_user_login = 14; // ref: lastModifiedByUserLogin
-    repeated AcctgTransData acctg_trans = 15; // ref: partyId
-    repeated AcctgTransEntryData acctg_trans_entry = 16; // ref: partyId
-    repeated AgreementData from_agreement = 17; // ref: partyId
-    repeated AgreementData to_agreement = 18; // ref: partyId
-    repeated BillingAccountRoleData billing_account_role = 19; // ref: partyId
-    repeated CarrierShipmentBoxTypeData carrier_shipment_box_type = 20; // ref: partyId
-    repeated CarrierShipmentMethodData carrier_shipment_method = 21; // ref: partyId
-    repeated CustRequestData from_cust_request = 22; // ref: partyId
-    repeated CustRequestTypeData cust_request_type = 23; // ref: partyId
-    repeated FixedAssetData fixed_asset = 24; // ref: partyId
-    repeated InventoryItemData inventory_item = 25; // ref: partyId
-    repeated InventoryItemData owner_inventory_item = 26; // ref: partyId
-    repeated InvoiceData from_invoice = 27; // ref: partyId
-    repeated InvoiceData invoice = 28; // ref: partyId
-    repeated InvoiceItemData tax_authority_invoice_item = 29; // ref: partyId
-    repeated InvoiceItemData override_org_invoice_item = 30; // ref: partyId
-    repeated OrderItemShipGroupData supplier_order_item_ship_group = 31; // ref: partyId
-    repeated OrderItemShipGroupData vendor_order_item_ship_group = 32; // ref: partyId
-    repeated OrderItemShipGroupData carrier_order_item_ship_group = 33; // ref: partyId
-    repeated OrderRoleData order_role = 34; // ref: partyId
-    repeated PartyContactMechData party_contact_mech = 35; // ref: partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 36; // ref: partyId
-    repeated PartyGeoPointData party_geo_point = 37; // ref: partyId
-    PartyGroupData party_group = 38; // ref: partyId
-    repeated PartyRelationshipData from_party_relationship = 39; // ref: partyId
-    repeated PartyRelationshipData to_party_relationship = 40; // ref: partyId
-    repeated PartyRoleData party_role = 41; // ref: partyId
-    repeated PartyStatusData party_status = 42; // ref: partyId
-    repeated PartyTaxAuthInfoData party_tax_auth_info = 43; // ref: partyId
-    repeated PaymentData from_payment = 44; // ref: partyId
-    repeated PaymentData to_payment = 45; // ref: partyId
-    repeated PaymentMethodData payment_method = 46; // ref: partyId
-    PersonData person = 47; // ref: partyId
-    repeated ProductCategoryRoleData product_category_role = 48; // ref: partyId
-    repeated ProductPriceData tax_authority_product_price = 49; // ref: partyId
-    repeated ProductPromoData product_promo = 50; // ref: partyId
-    repeated ProductStoreData product_store = 51; // ref: partyId
-    repeated ProductStoreRoleData product_store_role = 52; // ref: partyId
-    repeated ProductStoreShipmentMethData product_store_shipment_meth = 53; // ref: partyId
-    repeated QuoteData quote = 54; // ref: partyId
-    repeated QuoteRoleData quote_role = 55; // ref: partyId
-    repeated ShipmentData to_shipment = 56; // ref: partyId
-    repeated ShipmentData from_shipment = 57; // ref: partyId
-    repeated ShipmentCostEstimateData shipment_cost_estimate = 58; // ref: partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 59; // ref: partyId
-    repeated SupplierProductData supplier_product = 60; // ref: partyId
-    repeated UserLoginData user_login = 61; // ref: partyId
+    UserLoginData created_by_user_login = 13; // ref(CreatedByUserLogin): createdByUserLogin
+    UserLoginData last_modified_by_user_login = 14; // ref(LastModifiedByUserLogin): lastModifiedByUserLogin
+    repeated AcctgTransData acctg_trans = 15; // ref(AcctgTrans): partyId
+    repeated AcctgTransEntryData acctg_trans_entry = 16; // ref(AcctgTransEntry): partyId
+    repeated AgreementData from_agreement = 17; // ref(FromAgreement): partyId
+    repeated AgreementData to_agreement = 18; // ref(ToAgreement): partyId
+    repeated BillingAccountRoleData billing_account_role = 19; // ref(BillingAccountRole): partyId
+    repeated CarrierShipmentBoxTypeData carrier_shipment_box_type = 20; // ref(CarrierShipmentBoxType): partyId
+    repeated CarrierShipmentMethodData carrier_shipment_method = 21; // ref(CarrierShipmentMethod): partyId
+    repeated CustRequestData from_cust_request = 22; // ref(FromCustRequest): partyId
+    repeated CustRequestTypeData cust_request_type = 23; // ref(CustRequestType): partyId
+    repeated FixedAssetData fixed_asset = 24; // ref(FixedAsset): partyId
+    repeated InventoryItemData inventory_item = 25; // ref(InventoryItem): partyId
+    repeated InventoryItemData owner_inventory_item = 26; // ref(OwnerInventoryItem): partyId
+    repeated InvoiceData from_invoice = 27; // ref(FromInvoice): partyId
+    repeated InvoiceData invoice = 28; // ref(Invoice): partyId
+    repeated InvoiceItemData tax_authority_invoice_item = 29; // ref(TaxAuthorityInvoiceItem): partyId
+    repeated InvoiceItemData override_org_invoice_item = 30; // ref(OverrideOrgInvoiceItem): partyId
+    repeated OrderItemShipGroupData supplier_order_item_ship_group = 31; // ref(SupplierOrderItemShipGroup): partyId
+    repeated OrderItemShipGroupData vendor_order_item_ship_group = 32; // ref(VendorOrderItemShipGroup): partyId
+    repeated OrderItemShipGroupData carrier_order_item_ship_group = 33; // ref(CarrierOrderItemShipGroup): partyId
+    repeated OrderRoleData order_role = 34; // ref(OrderRole): partyId
+    repeated PartyContactMechData party_contact_mech = 35; // ref(PartyContactMech): partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 36; // ref(PartyContactMechPurpose): partyId
+    repeated PartyGeoPointData party_geo_point = 37; // ref(PartyGeoPoint): partyId
+    PartyGroupData party_group = 38; // ref(PartyGroup): partyId
+    repeated PartyRelationshipData from_party_relationship = 39; // ref(FromPartyRelationship): partyId
+    repeated PartyRelationshipData to_party_relationship = 40; // ref(ToPartyRelationship): partyId
+    repeated PartyRoleData party_role = 41; // ref(PartyRole): partyId
+    repeated PartyStatusData party_status = 42; // ref(PartyStatus): partyId
+    repeated PartyTaxAuthInfoData party_tax_auth_info = 43; // ref(PartyTaxAuthInfo): partyId
+    repeated PaymentData from_payment = 44; // ref(FromPayment): partyId
+    repeated PaymentData to_payment = 45; // ref(ToPayment): partyId
+    repeated PaymentMethodData payment_method = 46; // ref(PaymentMethod): partyId
+    PersonData person = 47; // ref(Person): partyId
+    repeated ProductCategoryRoleData product_category_role = 48; // ref(ProductCategoryRole): partyId
+    repeated ProductPriceData tax_authority_product_price = 49; // ref(TaxAuthorityProductPrice): partyId
+    repeated ProductPromoData product_promo = 50; // ref(ProductPromo): partyId
+    repeated ProductStoreData product_store = 51; // ref(ProductStore): partyId
+    repeated ProductStoreRoleData product_store_role = 52; // ref(ProductStoreRole): partyId
+    repeated ProductStoreShipmentMethData product_store_shipment_meth = 53; // ref(ProductStoreShipmentMeth): partyId
+    repeated QuoteData quote = 54; // ref(Quote): partyId
+    repeated QuoteRoleData quote_role = 55; // ref(QuoteRole): partyId
+    repeated ShipmentData to_shipment = 56; // ref(ToShipment): partyId
+    repeated ShipmentData from_shipment = 57; // ref(FromShipment): partyId
+    repeated ShipmentCostEstimateData shipment_cost_estimate = 58; // ref(ShipmentCostEstimate): partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 59; // ref(CarrierShipmentRouteSegment): partyId
+    repeated SupplierProductData supplier_product = 60; // ref(SupplierProduct): partyId
+    repeated UserLoginData user_login = 61; // ref(UserLogin): partyId
     
         
 }
@@ -2264,23 +2264,23 @@ message OrderItemData {
     google.protobuf.Timestamp created_tx_stamp = 44;
     
     // relations
-    OrderHeaderData order_header = 45; // ref: orderId
-    ProductData product = 46; // ref: productId
-    InventoryItemData from_inventory_item = 47; // ref: fromInventoryItemId
-    repeated ProductFacilityLocationData product_facility_location = 48; // ref: productId
-    UserLoginData dont_cancel_set_user_login = 49; // ref: dontCancelSetUserLogin
-    QuoteItemData quote_item = 50; // ref: quoteId + quoteItemSeqId
-    UserLoginData change_by_user_login = 51; // ref: changeByUserLoginId
-    repeated FixedAssetData acquire_fixed_asset = 52; // ref: orderId + orderItemSeqId
-    repeated ItemIssuanceData item_issuance = 53; // ref: orderId + orderItemSeqId
-    repeated OrderAdjustmentData order_adjustment = 54; // ref: orderId + orderItemSeqId
-    repeated OrderItemBillingData order_item_billing = 55; // ref: orderId + orderItemSeqId
-    repeated OrderItemPriceInfoData order_item_price_info = 56; // ref: orderId + orderItemSeqId
-    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 57; // ref: orderId + orderItemSeqId
-    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 58; // ref: orderId + orderItemSeqId
-    repeated OrderPaymentPreferenceData order_payment_preference = 59; // ref: orderId + orderItemSeqId
-    repeated OrderStatusData order_status = 60; // ref: orderId + orderItemSeqId
-    repeated ShipmentReceiptData shipment_receipt = 61; // ref: orderId + orderItemSeqId
+    OrderHeaderData order_header = 45; // ref(OrderHeader): orderId
+    ProductData product = 46; // ref(Product): productId
+    InventoryItemData from_inventory_item = 47; // ref(FromInventoryItem): fromInventoryItemId
+    repeated ProductFacilityLocationData product_facility_location = 48; // ref(ProductFacilityLocation): productId
+    UserLoginData dont_cancel_set_user_login = 49; // ref(DontCancelSetUserLogin): dontCancelSetUserLogin
+    QuoteItemData quote_item = 50; // ref(QuoteItem): quoteId + quoteItemSeqId
+    UserLoginData change_by_user_login = 51; // ref(ChangeByUserLogin): changeByUserLoginId
+    repeated FixedAssetData acquire_fixed_asset = 52; // ref(AcquireFixedAsset): orderId + orderItemSeqId
+    repeated ItemIssuanceData item_issuance = 53; // ref(ItemIssuance): orderId + orderItemSeqId
+    repeated OrderAdjustmentData order_adjustment = 54; // ref(OrderAdjustment): orderId + orderItemSeqId
+    repeated OrderItemBillingData order_item_billing = 55; // ref(OrderItemBilling): orderId + orderItemSeqId
+    repeated OrderItemPriceInfoData order_item_price_info = 56; // ref(OrderItemPriceInfo): orderId + orderItemSeqId
+    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 57; // ref(OrderItemShipGroupAssoc): orderId + orderItemSeqId
+    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 58; // ref(OrderItemShipGrpInvRes): orderId + orderItemSeqId
+    repeated OrderPaymentPreferenceData order_payment_preference = 59; // ref(OrderPaymentPreference): orderId + orderItemSeqId
+    repeated OrderStatusData order_status = 60; // ref(OrderStatus): orderId + orderItemSeqId
+    repeated ShipmentReceiptData shipment_receipt = 61; // ref(ShipmentReceipt): orderId + orderItemSeqId
     
         
 }
@@ -2443,8 +2443,8 @@ message ProdCatalogData {
     google.protobuf.Timestamp created_tx_stamp = 11;
     
     // relations
-    repeated ProdCatalogCategoryData prod_catalog_category = 12; // ref: prodCatalogId
-    repeated ProductStoreCatalogData product_store_catalog = 13; // ref: prodCatalogId
+    repeated ProdCatalogCategoryData prod_catalog_category = 12; // ref(ProdCatalogCategory): prodCatalogId
+    repeated ProductStoreCatalogData product_store_catalog = 13; // ref(ProductStoreCatalog): prodCatalogId
     
         
 }
@@ -2828,39 +2828,39 @@ message UserLoginData {
     google.protobuf.Timestamp created_tx_stamp = 17;
     
     // relations
-    PartyData party = 18; // ref: partyId
-    PersonData person = 19; // ref: partyId
-    PartyGroupData party_group = 20; // ref: partyId
-    repeated ContentData created_by_content = 21; // ref: userLoginId
-    repeated ContentData last_modified_by_content = 22; // ref: userLoginId
-    repeated ContentAssocData created_by_content_assoc = 23; // ref: userLoginId
-    repeated ContentAssocData last_modified_by_content_assoc = 24; // ref: userLoginId
-    repeated DataResourceData created_by_data_resource = 25; // ref: userLoginId
-    repeated DataResourceData last_modified_by_data_resource = 26; // ref: userLoginId
-    repeated ItemIssuanceData issued_by_item_issuance = 27; // ref: userLoginId
-    repeated OrderAdjustmentData order_adjustment = 28; // ref: userLoginId
-    repeated OrderHeaderData created_by_order_header = 29; // ref: userLoginId
-    repeated OrderItemData dont_cancel_set_order_item = 30; // ref: userLoginId
-    repeated OrderItemData change_by_order_item = 31; // ref: userLoginId
-    repeated OrderPaymentPreferenceData order_payment_preference = 32; // ref: userLoginId
-    repeated OrderStatusData order_status = 33; // ref: userLoginId
-    repeated PartyData created_by_party = 34; // ref: userLoginId
-    repeated PartyData last_modified_by_party = 35; // ref: userLoginId
-    repeated PartyStatusData change_by_party_status = 36; // ref: userLoginId
-    repeated ProductData created_by_product = 37; // ref: userLoginId
-    repeated ProductData last_modified_by_product = 38; // ref: userLoginId
-    repeated ProductFeaturePriceData created_by_product_feature_price = 39; // ref: userLoginId
-    repeated ProductFeaturePriceData last_modified_by_product_feature_price = 40; // ref: userLoginId
-    repeated ProductPriceData created_by_product_price = 41; // ref: userLoginId
-    repeated ProductPriceData last_modified_by_product_price = 42; // ref: userLoginId
-    repeated ProductPromoData created_by_product_promo = 43; // ref: userLoginId
-    repeated ProductPromoData last_modified_by_product_promo = 44; // ref: userLoginId
-    repeated ProductPromoCodeData created_by_product_promo_code = 45; // ref: userLoginId
-    repeated ProductPromoCodeData last_modified_by_product_promo_code = 46; // ref: userLoginId
-    repeated ProductReviewData product_review = 47; // ref: userLoginId
-    repeated ShipmentReceiptData shipment_receipt = 48; // ref: userLoginId
-    repeated ShipmentStatusData change_by_shipment_status = 49; // ref: userLoginId
-    repeated UserLoginSecurityGroupData user_login_security_group = 50; // ref: userLoginId
+    PartyData party = 18; // ref(Party): partyId
+    PersonData person = 19; // ref(Person): partyId
+    PartyGroupData party_group = 20; // ref(PartyGroup): partyId
+    repeated ContentData created_by_content = 21; // ref(CreatedByContent): userLoginId
+    repeated ContentData last_modified_by_content = 22; // ref(LastModifiedByContent): userLoginId
+    repeated ContentAssocData created_by_content_assoc = 23; // ref(CreatedByContentAssoc): userLoginId
+    repeated ContentAssocData last_modified_by_content_assoc = 24; // ref(LastModifiedByContentAssoc): userLoginId
+    repeated DataResourceData created_by_data_resource = 25; // ref(CreatedByDataResource): userLoginId
+    repeated DataResourceData last_modified_by_data_resource = 26; // ref(LastModifiedByDataResource): userLoginId
+    repeated ItemIssuanceData issued_by_item_issuance = 27; // ref(IssuedByItemIssuance): userLoginId
+    repeated OrderAdjustmentData order_adjustment = 28; // ref(OrderAdjustment): userLoginId
+    repeated OrderHeaderData created_by_order_header = 29; // ref(CreatedByOrderHeader): userLoginId
+    repeated OrderItemData dont_cancel_set_order_item = 30; // ref(DontCancelSetOrderItem): userLoginId
+    repeated OrderItemData change_by_order_item = 31; // ref(ChangeByOrderItem): userLoginId
+    repeated OrderPaymentPreferenceData order_payment_preference = 32; // ref(OrderPaymentPreference): userLoginId
+    repeated OrderStatusData order_status = 33; // ref(OrderStatus): userLoginId
+    repeated PartyData created_by_party = 34; // ref(CreatedByParty): userLoginId
+    repeated PartyData last_modified_by_party = 35; // ref(LastModifiedByParty): userLoginId
+    repeated PartyStatusData change_by_party_status = 36; // ref(ChangeByPartyStatus): userLoginId
+    repeated ProductData created_by_product = 37; // ref(CreatedByProduct): userLoginId
+    repeated ProductData last_modified_by_product = 38; // ref(LastModifiedByProduct): userLoginId
+    repeated ProductFeaturePriceData created_by_product_feature_price = 39; // ref(CreatedByProductFeaturePrice): userLoginId
+    repeated ProductFeaturePriceData last_modified_by_product_feature_price = 40; // ref(LastModifiedByProductFeaturePrice): userLoginId
+    repeated ProductPriceData created_by_product_price = 41; // ref(CreatedByProductPrice): userLoginId
+    repeated ProductPriceData last_modified_by_product_price = 42; // ref(LastModifiedByProductPrice): userLoginId
+    repeated ProductPromoData created_by_product_promo = 43; // ref(CreatedByProductPromo): userLoginId
+    repeated ProductPromoData last_modified_by_product_promo = 44; // ref(LastModifiedByProductPromo): userLoginId
+    repeated ProductPromoCodeData created_by_product_promo_code = 45; // ref(CreatedByProductPromoCode): userLoginId
+    repeated ProductPromoCodeData last_modified_by_product_promo_code = 46; // ref(LastModifiedByProductPromoCode): userLoginId
+    repeated ProductReviewData product_review = 47; // ref(ProductReview): userLoginId
+    repeated ShipmentReceiptData shipment_receipt = 48; // ref(ShipmentReceipt): userLoginId
+    repeated ShipmentStatusData change_by_shipment_status = 49; // ref(ChangeByShipmentStatus): userLoginId
+    repeated UserLoginSecurityGroupData user_login_security_group = 50; // ref(UserLoginSecurityGroup): userLoginId
     
         
 }
@@ -2985,25 +2985,25 @@ message OrderHeaderData {
     google.protobuf.Timestamp created_tx_stamp = 28;
     
     // relations
-    BillingAccountData billing_account = 29; // ref: billingAccountId
-    ProductStoreData product_store = 30; // ref: productStoreId
-    UserLoginData created_by_user_login = 31; // ref: createdBy
-    WebSiteData web_site = 32; // ref: webSiteId
-    repeated FixedAssetData acquire_fixed_asset = 33; // ref: orderId
-    repeated ItemIssuanceData item_issuance = 34; // ref: orderId
-    repeated OrderAdjustmentData order_adjustment = 35; // ref: orderId
-    repeated OrderContactMechData order_contact_mech = 36; // ref: orderId
-    repeated OrderItemData order_item = 37; // ref: orderId
-    repeated OrderItemBillingData order_item_billing = 38; // ref: orderId
-    repeated OrderItemPriceInfoData order_item_price_info = 39; // ref: orderId
-    repeated OrderItemShipGroupData order_item_ship_group = 40; // ref: orderId
-    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 41; // ref: orderId
-    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 42; // ref: orderId
-    repeated OrderPaymentPreferenceData order_payment_preference = 43; // ref: orderId
-    repeated OrderRoleData order_role = 44; // ref: orderId
-    repeated OrderStatusData order_status = 45; // ref: orderId
-    repeated ShipmentData primary_shipment = 46; // ref: orderId
-    repeated ShipmentReceiptData shipment_receipt = 47; // ref: orderId
+    BillingAccountData billing_account = 29; // ref(BillingAccount): billingAccountId
+    ProductStoreData product_store = 30; // ref(ProductStore): productStoreId
+    UserLoginData created_by_user_login = 31; // ref(CreatedByUserLogin): createdBy
+    WebSiteData web_site = 32; // ref(WebSite): webSiteId
+    repeated FixedAssetData acquire_fixed_asset = 33; // ref(AcquireFixedAsset): orderId
+    repeated ItemIssuanceData item_issuance = 34; // ref(ItemIssuance): orderId
+    repeated OrderAdjustmentData order_adjustment = 35; // ref(OrderAdjustment): orderId
+    repeated OrderContactMechData order_contact_mech = 36; // ref(OrderContactMech): orderId
+    repeated OrderItemData order_item = 37; // ref(OrderItem): orderId
+    repeated OrderItemBillingData order_item_billing = 38; // ref(OrderItemBilling): orderId
+    repeated OrderItemPriceInfoData order_item_price_info = 39; // ref(OrderItemPriceInfo): orderId
+    repeated OrderItemShipGroupData order_item_ship_group = 40; // ref(OrderItemShipGroup): orderId
+    repeated OrderItemShipGroupAssocData order_item_ship_group_assoc = 41; // ref(OrderItemShipGroupAssoc): orderId
+    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 42; // ref(OrderItemShipGrpInvRes): orderId
+    repeated OrderPaymentPreferenceData order_payment_preference = 43; // ref(OrderPaymentPreference): orderId
+    repeated OrderRoleData order_role = 44; // ref(OrderRole): orderId
+    repeated OrderStatusData order_status = 45; // ref(OrderStatus): orderId
+    repeated ShipmentData primary_shipment = 46; // ref(PrimaryShipment): orderId
+    repeated ShipmentReceiptData shipment_receipt = 47; // ref(ShipmentReceipt): orderId
     
         
 }
@@ -3063,32 +3063,32 @@ message ShipmentData {
     google.protobuf.Timestamp created_tx_stamp = 23;
     
     // relations
-    WorkEffortData estimated_ship_work_effort = 24; // ref: estimatedShipWorkEffId
-    WorkEffortData estimated_arrival_work_effort = 25; // ref: estimatedArrivalWorkEffId
-    ContactMechData origin_contact_mech = 26; // ref: originContactMechId
-    ContactMechData dest_contact_mech = 27; // ref: destinationContactMechId
-    PostalAddressData origin_postal_address = 28; // ref: originContactMechId
-    TelecomNumberData origin_telecom_number = 29; // ref: originTelecomNumberId
-    PostalAddressData destination_postal_address = 30; // ref: destinationContactMechId
-    TelecomNumberData destination_telecom_number = 31; // ref: destinationTelecomNumberId
-    OrderHeaderData primary_order_header = 32; // ref: primaryOrderId
-    OrderItemShipGroupData primary_order_item_ship_group = 33; // ref: primaryOrderId + primaryShipGroupSeqId
-    PartyData to_party = 34; // ref: partyIdTo
-    PersonData to_person = 35; // ref: partyIdTo
-    PartyGroupData to_party_group = 36; // ref: partyIdTo
-    PartyData from_party = 37; // ref: partyIdFrom
-    PersonData from_person = 38; // ref: partyIdFrom
-    PartyGroupData from_party_group = 39; // ref: partyIdFrom
-    repeated AcctgTransData acctg_trans = 40; // ref: shipmentId
-    repeated ItemIssuanceData item_issuance = 41; // ref: shipmentId
-    repeated ShipmentItemData shipment_item = 42; // ref: shipmentId
-    repeated ShipmentItemBillingData shipment_item_billing = 43; // ref: shipmentId
-    repeated ShipmentPackageData shipment_package = 44; // ref: shipmentId
-    repeated ShipmentPackageContentData shipment_package_content = 45; // ref: shipmentId
-    repeated ShipmentPackageRouteSegData shipment_package_route_seg = 46; // ref: shipmentId
-    repeated ShipmentReceiptData shipment_receipt = 47; // ref: shipmentId
-    repeated ShipmentRouteSegmentData shipment_route_segment = 48; // ref: shipmentId
-    repeated ShipmentStatusData shipment_status = 49; // ref: shipmentId
+    WorkEffortData estimated_ship_work_effort = 24; // ref(EstimatedShipWorkEffort): estimatedShipWorkEffId
+    WorkEffortData estimated_arrival_work_effort = 25; // ref(EstimatedArrivalWorkEffort): estimatedArrivalWorkEffId
+    ContactMechData origin_contact_mech = 26; // ref(OriginContactMech): originContactMechId
+    ContactMechData dest_contact_mech = 27; // ref(DestContactMech): destinationContactMechId
+    PostalAddressData origin_postal_address = 28; // ref(OriginPostalAddress): originContactMechId
+    TelecomNumberData origin_telecom_number = 29; // ref(OriginTelecomNumber): originTelecomNumberId
+    PostalAddressData destination_postal_address = 30; // ref(DestinationPostalAddress): destinationContactMechId
+    TelecomNumberData destination_telecom_number = 31; // ref(DestinationTelecomNumber): destinationTelecomNumberId
+    OrderHeaderData primary_order_header = 32; // ref(PrimaryOrderHeader): primaryOrderId
+    OrderItemShipGroupData primary_order_item_ship_group = 33; // ref(PrimaryOrderItemShipGroup): primaryOrderId + primaryShipGroupSeqId
+    PartyData to_party = 34; // ref(ToParty): partyIdTo
+    PersonData to_person = 35; // ref(ToPerson): partyIdTo
+    PartyGroupData to_party_group = 36; // ref(ToPartyGroup): partyIdTo
+    PartyData from_party = 37; // ref(FromParty): partyIdFrom
+    PersonData from_person = 38; // ref(FromPerson): partyIdFrom
+    PartyGroupData from_party_group = 39; // ref(FromPartyGroup): partyIdFrom
+    repeated AcctgTransData acctg_trans = 40; // ref(AcctgTrans): shipmentId
+    repeated ItemIssuanceData item_issuance = 41; // ref(ItemIssuance): shipmentId
+    repeated ShipmentItemData shipment_item = 42; // ref(ShipmentItem): shipmentId
+    repeated ShipmentItemBillingData shipment_item_billing = 43; // ref(ShipmentItemBilling): shipmentId
+    repeated ShipmentPackageData shipment_package = 44; // ref(ShipmentPackage): shipmentId
+    repeated ShipmentPackageContentData shipment_package_content = 45; // ref(ShipmentPackageContent): shipmentId
+    repeated ShipmentPackageRouteSegData shipment_package_route_seg = 46; // ref(ShipmentPackageRouteSeg): shipmentId
+    repeated ShipmentReceiptData shipment_receipt = 47; // ref(ShipmentReceipt): shipmentId
+    repeated ShipmentRouteSegmentData shipment_route_segment = 48; // ref(ShipmentRouteSegment): shipmentId
+    repeated ShipmentStatusData shipment_status = 49; // ref(ShipmentStatus): shipmentId
     
         
 }
@@ -3259,16 +3259,16 @@ message PaymentData {
     google.protobuf.Timestamp created_tx_stamp = 16;
     
     // relations
-    PaymentMethodData payment_method = 17; // ref: paymentMethodId
-    CreditCardData credit_card = 18; // ref: paymentMethodId
-    OrderPaymentPreferenceData order_payment_preference = 19; // ref: paymentPreferenceId
-    PaymentGatewayResponseData payment_gateway_response = 20; // ref: paymentGatewayResponseId
-    PartyData from_party = 21; // ref: partyIdFrom
-    PartyData to_party = 22; // ref: partyIdTo
-    PartyRoleData to_party_role = 23; // ref: partyIdTo + roleTypeIdTo
-    repeated AcctgTransData acctg_trans = 24; // ref: paymentId
-    repeated PaymentApplicationData payment_application = 25; // ref: paymentId
-    repeated PaymentApplicationData to_payment_application = 26; // ref: paymentId
+    PaymentMethodData payment_method = 17; // ref(PaymentMethod): paymentMethodId
+    CreditCardData credit_card = 18; // ref(CreditCard): paymentMethodId
+    OrderPaymentPreferenceData order_payment_preference = 19; // ref(OrderPaymentPreference): paymentPreferenceId
+    PaymentGatewayResponseData payment_gateway_response = 20; // ref(PaymentGatewayResponse): paymentGatewayResponseId
+    PartyData from_party = 21; // ref(FromParty): partyIdFrom
+    PartyData to_party = 22; // ref(ToParty): partyIdTo
+    PartyRoleData to_party_role = 23; // ref(ToPartyRole): partyIdTo + roleTypeIdTo
+    repeated AcctgTransData acctg_trans = 24; // ref(AcctgTrans): paymentId
+    repeated PaymentApplicationData payment_application = 25; // ref(PaymentApplication): paymentId
+    repeated PaymentApplicationData to_payment_application = 26; // ref(ToPaymentApplication): paymentId
     
         
 }
@@ -3413,18 +3413,18 @@ message ProductCategoryData {
     google.protobuf.Timestamp created_tx_stamp = 12;
     
     // relations
-    ProductCategoryData primary_parent_product_category = 13; // ref: primaryParentCategoryId
-    repeated ProductCategoryData primary_child_product_category = 14; // ref: productCategoryId
-    repeated ProdCatalogCategoryData prod_catalog_category = 15; // ref: productCategoryId
-    repeated ProductData primary_product = 16; // ref: productCategoryId
-    repeated ProductCategoryContentData product_category_content = 17; // ref: productCategoryId
-    repeated ProductCategoryLinkData product_category_link = 18; // ref: productCategoryId
-    repeated ProductCategoryMemberData product_category_member = 19; // ref: productCategoryId
-    repeated ProductCategoryRoleData product_category_role = 20; // ref: productCategoryId
-    repeated ProductCategoryRollupData current_product_category_rollup = 21; // ref: productCategoryId
-    repeated ProductCategoryRollupData parent_product_category_rollup = 22; // ref: productCategoryId
-    repeated ProductFeatureCategoryApplData product_feature_category_appl = 23; // ref: productCategoryId
-    repeated ProductPromoCategoryData product_promo_category = 24; // ref: productCategoryId
+    ProductCategoryData primary_parent_product_category = 13; // ref(PrimaryParentProductCategory): primaryParentCategoryId
+    repeated ProductCategoryData primary_child_product_category = 14; // ref(PrimaryChildProductCategory): productCategoryId
+    repeated ProdCatalogCategoryData prod_catalog_category = 15; // ref(ProdCatalogCategory): productCategoryId
+    repeated ProductData primary_product = 16; // ref(PrimaryProduct): productCategoryId
+    repeated ProductCategoryContentData product_category_content = 17; // ref(ProductCategoryContent): productCategoryId
+    repeated ProductCategoryLinkData product_category_link = 18; // ref(ProductCategoryLink): productCategoryId
+    repeated ProductCategoryMemberData product_category_member = 19; // ref(ProductCategoryMember): productCategoryId
+    repeated ProductCategoryRoleData product_category_role = 20; // ref(ProductCategoryRole): productCategoryId
+    repeated ProductCategoryRollupData current_product_category_rollup = 21; // ref(CurrentProductCategoryRollup): productCategoryId
+    repeated ProductCategoryRollupData parent_product_category_rollup = 22; // ref(ParentProductCategoryRollup): productCategoryId
+    repeated ProductFeatureCategoryApplData product_feature_category_appl = 23; // ref(ProductFeatureCategoryAppl): productCategoryId
+    repeated ProductPromoCategoryData product_promo_category = 24; // ref(ProductPromoCategory): productCategoryId
     
         
 }
@@ -3821,18 +3821,18 @@ message ProductStoreData {
     google.protobuf.Timestamp created_tx_stamp = 80;
     
     // relations
-    repeated CustRequestData cust_request = 82; // ref: productStoreId
-    repeated OrderHeaderData order_header = 83; // ref: productStoreId
-    repeated ProductReviewData product_review = 84; // ref: productStoreId
-    repeated ProductStoreCatalogData product_store_catalog = 85; // ref: productStoreId
-    repeated ProductStoreEmailSettingData product_store_email_setting = 86; // ref: productStoreId
-    repeated ProductStoreFacilityData product_store_facility = 87; // ref: productStoreId
-    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 88; // ref: productStoreId
-    repeated ProductStorePaymentSettingData product_store_payment_setting = 89; // ref: productStoreId
-    repeated ProductStorePromoApplData product_store_promo_appl = 90; // ref: productStoreId
-    repeated ProductStoreRoleData product_store_role = 91; // ref: productStoreId
-    repeated QuoteData quote = 92; // ref: productStoreId
-    repeated WebSiteData web_site = 93; // ref: productStoreId
+    repeated CustRequestData cust_request = 82; // ref(CustRequest): productStoreId
+    repeated OrderHeaderData order_header = 83; // ref(OrderHeader): productStoreId
+    repeated ProductReviewData product_review = 84; // ref(ProductReview): productStoreId
+    repeated ProductStoreCatalogData product_store_catalog = 85; // ref(ProductStoreCatalog): productStoreId
+    repeated ProductStoreEmailSettingData product_store_email_setting = 86; // ref(ProductStoreEmailSetting): productStoreId
+    repeated ProductStoreFacilityData product_store_facility = 87; // ref(ProductStoreFacility): productStoreId
+    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 88; // ref(ProductStoreKeywordOvrd): productStoreId
+    repeated ProductStorePaymentSettingData product_store_payment_setting = 89; // ref(ProductStorePaymentSetting): productStoreId
+    repeated ProductStorePromoApplData product_store_promo_appl = 90; // ref(ProductStorePromoAppl): productStoreId
+    repeated ProductStoreRoleData product_store_role = 91; // ref(ProductStoreRole): productStoreId
+    repeated QuoteData quote = 92; // ref(Quote): productStoreId
+    repeated WebSiteData web_site = 93; // ref(WebSite): productStoreId
     
         
 }
