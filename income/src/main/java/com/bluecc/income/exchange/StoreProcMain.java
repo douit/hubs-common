@@ -29,16 +29,16 @@ public class StoreProcMain {
     @Inject
     protected HubsStore hubsStore;
 
-    protected Flux<IModel> process(IProc proc){
+    protected Flux<IModel<?>> process(IProc proc){
         return hubsStore.getJdbi().withHandle(handle -> {
-            ResultSubscriber<IModel> resultSubscriber=new ResultSubscriber<>();
+            ResultSubscriber<IModel<?>> resultSubscriber=new ResultSubscriber<>();
             proc.proc(new IProc.ProcContext(handle, resultSubscriber));
             return Flux.fromIterable(resultSubscriber.getResult());
         });
     }
 
     @Action
-    public Function<String, Flux<IModel>> personProcs() {
+    public Function<String, Flux<IModel<?>>> personProcs() {
         return input -> process(ctx -> {
             // truncate(ctx, "person");
             // Dao dao = c.getHandle().attach(// Dao.class);

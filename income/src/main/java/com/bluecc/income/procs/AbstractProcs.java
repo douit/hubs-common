@@ -50,9 +50,19 @@ public class AbstractProcs {
     @Inject
     protected ProtoMeta protoMeta;
 
-    protected Flux<IModel> process(IProc proc){
+    protected boolean verbose=true;
+
+    public boolean isVerbose() {
+        return verbose;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+    }
+
+    protected Flux<IModel<?>> process(IProc proc){
         return hubsStore.getJdbi().withHandle(handle -> {
-            ResultSubscriber<IModel> resultSubscriber=new ResultSubscriber<>();
+            ResultSubscriber<IModel<?>> resultSubscriber=new ResultSubscriber<>();
             proc.proc(new IProc.ProcContext(handle, resultSubscriber));
             return Flux.fromIterable(resultSubscriber.getResult());
         });
@@ -100,8 +110,10 @@ public class AbstractProcs {
                     if (pval != null) {
                         persist = false;
                         idval = pval.toString();
-                        System.out.println("\tdon't persist " + c.getSymbol().getTable()
-                                + ", with id value " + idval);
+                        if(verbose) {
+                            System.out.println("\tdon't persist " + c.getSymbol().getTable()
+                                    + ", with id value " + idval);
+                        }
                     }
                 }
 
@@ -125,8 +137,10 @@ public class AbstractProcs {
                 }
             });
 
-            String mark=persist?"Ⓜ️ ":"☑️ ";
-            System.out.println(mark + c.getSymbol() + " -> " + e);
+            if(verbose) {
+                String mark = persist ? "Ⓜ️ " : "☑️ ";
+                System.out.println(mark + c.getSymbol() + " -> " + e);
+            }
 
             if (persist) {
                 List<String> names = new ArrayList<>(e.keySet());
@@ -146,9 +160,11 @@ public class AbstractProcs {
                 String entityType = ProtoTypes.getEntityTypeByMessage(c.getParentMsg());
                 EntityMeta.RelationQueryMeta queryMeta = protoMeta.findRelationQueryMeta(
                         entityType, c.getParentFld().getName());
-                System.out.format("\tresult to: %s -> %s\n",
-                        c.getParentFld().getName(),
-                        queryMeta.getTableFields());
+                if(verbose) {
+                    System.out.format("\tresult to: %s -> %s\n",
+                            c.getParentFld().getName(),
+                            queryMeta.getTableFields());
+                }
                 if (queryMeta.isRepeated()) {
                     Map<String, Object> keyValues = Maps.newHashMap();
                     c.getSymbol().getTableKeys().forEach(key ->
@@ -193,14 +209,16 @@ public class AbstractProcs {
     protected void setupEntities(String...entities){
         final Jdbi db = hubsStore.getJdbi();
 
-        db.setSqlLogger(new SqlLogger() {
-            @Override
-            public void logBeforeExecution(StatementContext ctx) {
-                System.out.println("sql -> " + ctx.getRawSql());
-                System.out.println("\t" + ctx.getParsedSql().getSql());
-                System.out.println("\t"+ctx.getBinding().toString());
-            }
-        });
+        if(verbose) {
+            db.setSqlLogger(new SqlLogger() {
+                @Override
+                public void logBeforeExecution(StatementContext ctx) {
+                    System.out.println("sql -> " + ctx.getRawSql());
+                    System.out.println("\t" + ctx.getParsedSql().getSql());
+                    System.out.println("\t" + ctx.getBinding().toString());
+                }
+            });
+        }
 
         if(entities.length>0) {
             TemplateGlobalContext.getContext().preload(entities);

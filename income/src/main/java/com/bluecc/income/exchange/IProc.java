@@ -11,7 +11,7 @@ public interface IProc {
     @AllArgsConstructor
     public static class ProcContext{
         Handle handle;
-        Subscriber<IModel> subscriber;
+        Subscriber<IModel<?>> subscriber;
     }
     void proc(ProcContext ctx);
 }
