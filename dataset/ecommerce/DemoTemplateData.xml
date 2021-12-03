@@ -19,10 +19,5 @@ under the License.
 -->
 
 <entity-engine-xml>
-    <Tenant tenantId="@tenantId@" tenantName="@tenantName@"/>
-    <TenantDomainName tenantId="@tenantId@" domainName="@domainName@" />
-    <TenantDataSource tenantId="@tenantId@" entityGroupName="org.apache.ofbiz"
-        jdbcUri="jdbc:postgresql://@db-IP@/ofbiz_@tenantId@" jdbcUsername="@db-User@" jdbcPassword="@db-Password@"/>
-    <TenantDataSource tenantId="@tenantId@" entityGroupName="org.apache.ofbiz.olap"
-        jdbcUri="jdbc:postgresql://@db-IP@/ofbizolap_@tenantId@" jdbcUsername="@db-User@" jdbcPassword="@db-Password@"/>
+    <DataResource dataResourceId="TPL_XML_MB" dataResourceTypeId="LOCAL_FILE" dataTemplateTypeId="FTL" objectInfo="component://ecommerce/template/content/TplMbContent.ftl" createdDate="2004-06-14 11:40:15.818" createdByUserLogin="admin" lastModifiedDate="2004-06-14 11:40:15.818" lastModifiedByUserLogin="admin"/>
 </entity-engine-xml>

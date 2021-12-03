@@ -1,5 +1,6 @@
 package com.bluecc.hubs;
 
+import com.bluecc.hubs.fund.MetaTypes;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.feed.DataBuilder;
 import com.bluecc.hubs.stub.*;
@@ -183,6 +184,10 @@ public class ProtoTypes {
     public static boolean isCombine(Message msg) {
         EntityKey keys = msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
         return keys.getCombine();
+    }
+
+    public static boolean hasTable(Message msg){
+        return MetaTypes.hasTable(getEntityTypeByMessage(msg));
     }
 
     public static String[] getEntityKeys(Message msg) {

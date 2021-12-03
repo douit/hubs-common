@@ -37,4 +37,9 @@ public class MetaTypes {
             throw new RuntimeException(e);
         }
     }
+
+    public static boolean hasTable(String entityName){
+        return metaList.has(entityName);
+    }
+
 }

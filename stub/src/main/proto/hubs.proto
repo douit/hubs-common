@@ -923,13 +923,14 @@ message ProductData {
     repeated ProductPriceData product_price = 92; // ref(ProductPrice): productId
     repeated ProductPromoProductData product_promo_product = 93; // ref(ProductPromoProduct): productId
     repeated ProductReviewData product_review = 94; // ref(ProductReview): productId
-    repeated ProductSubscriptionResourceData product_subscription_resource = 95; // ref(ProductSubscriptionResource): productId
-    repeated QuoteItemData quote_item = 96; // ref(QuoteItem): productId
-    repeated ShipmentItemData shipment_item = 97; // ref(ShipmentItem): productId
-    repeated ShipmentPackageContentData sub_shipment_package_content = 98; // ref(SubShipmentPackageContent): productId
-    repeated ShipmentReceiptData shipment_receipt = 99; // ref(ShipmentReceipt): productId
-    repeated SupplierProductData supplier_product = 100; // ref(SupplierProduct): productId
-    repeated WorkEffortGoodStandardData work_effort_good_standard = 101; // ref(WorkEffortGoodStandard): productId
+    repeated ProductStoreSurveyApplData product_store_survey_appl = 95; // ref(ProductStoreSurveyAppl): productId
+    repeated ProductSubscriptionResourceData product_subscription_resource = 96; // ref(ProductSubscriptionResource): productId
+    repeated QuoteItemData quote_item = 97; // ref(QuoteItem): productId
+    repeated ShipmentItemData shipment_item = 98; // ref(ShipmentItem): productId
+    repeated ShipmentPackageContentData sub_shipment_package_content = 99; // ref(SubShipmentPackageContent): productId
+    repeated ShipmentReceiptData shipment_receipt = 100; // ref(ShipmentReceipt): productId
+    repeated SupplierProductData supplier_product = 101; // ref(SupplierProduct): productId
+    repeated WorkEffortGoodStandardData work_effort_good_standard = 102; // ref(WorkEffortGoodStandard): productId
     
         
 }
@@ -1157,6 +1158,26 @@ message ShipmentCostEstimateData {
         
 }
 
+// Supplier-specific product feature information
+message SupplierProductFeatureData {
+    option (routines.entity_type) = "SupplierProductFeature";
+    option (routines.keys).keys = "party_id, product_feature_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: partyId, productFeatureId
+    string id = 200; 
+    // fields
+        
+    string party_id = 1;    
+    string product_feature_id = 2;    
+    string description = 3;
+    string uom_id = 4; // Uom    
+    string id_code = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
+}
+
 // Security Component - Security Group Permission
 message SecurityGroupPermissionData {
     option (routines.entity_type) = "SecurityGroupPermission";
@@ -1173,6 +1194,26 @@ message SecurityGroupPermissionData {
     google.protobuf.Timestamp thru_date = 4;    
     google.protobuf.Timestamp last_updated_tx_stamp = 5;    
     google.protobuf.Timestamp created_tx_stamp = 6;
+        
+}
+
+// Survey Multi-Response Group Column/Category
+message SurveyMultiRespColumnData {
+    option (routines.entity_type) = "SurveyMultiRespColumn";
+    option (routines.keys).keys = "survey_id, survey_multi_resp_id, survey_multi_resp_col_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: surveyId, surveyMultiRespId, surveyMultiRespColId
+    string id = 200; 
+    // fields
+        
+    string survey_id = 1;    
+    string survey_multi_resp_id = 2;    
+    string survey_multi_resp_col_id = 3;    
+    string column_title = 4;    
+    int64 sequence_num = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
         
 }
 
@@ -1222,6 +1263,23 @@ message ProductAssocData {
     string recurrence_info_id = 13;    
     google.protobuf.Timestamp last_updated_tx_stamp = 14;    
     google.protobuf.Timestamp created_tx_stamp = 15;
+        
+}
+
+// Survey Application Type
+message SurveyApplTypeData {
+    option (routines.entity_type) = "SurveyApplType";
+    option (routines.keys).keys = "survey_appl_type_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    // keys: surveyApplTypeId
+    
+    // fields
+        
+    string survey_appl_type_id = 1;    
+    string description = 2;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 3;    
+    google.protobuf.Timestamp created_tx_stamp = 4;
         
 }
 
@@ -1479,6 +1537,61 @@ message PostalAddressData {
     string geo_point_id = 18;    
     google.protobuf.Timestamp last_updated_tx_stamp = 19;    
     google.protobuf.Timestamp created_tx_stamp = 20;
+        
+}
+
+// Allows financial account, such as gift certificate or calling cards, to be configured at store level
+message ProductStoreFinActSettingData {
+    option (routines.entity_type) = "ProductStoreFinActSetting";
+    option (routines.keys).keys = "product_store_id, fin_account_type_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: productStoreId, finAccountTypeId
+    string id = 200; 
+    // fields
+        
+    string product_store_id = 1;
+    string fin_account_type_id = 2; // FinAccountType    
+    routines.Indicator require_pin_code = 3;    
+    routines.Indicator validate_g_c_fin_acct = 4;    
+    int64 account_code_length = 5;    
+    int64 pin_code_length = 6;    
+    int64 account_valid_days = 7;    
+    int64 auth_valid_days = 8;    
+    string purchase_survey_id = 9;    
+    string purch_survey_send_to = 10;    
+    string purch_survey_copy_me = 11;    
+    routines.Indicator allow_auth_to_negative = 12;    
+    routines.Currency min_balance = 13;    
+    routines.Currency replenish_threshold = 14;
+    string replenish_method_enum_id = 15; // Enumeration    
+    google.protobuf.Timestamp last_updated_tx_stamp = 16;    
+    google.protobuf.Timestamp created_tx_stamp = 17;
+        
+}
+
+// Survey
+message SurveyData {
+    option (routines.entity_type) = "Survey";
+    option (routines.keys).keys = "survey_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    // keys: surveyId
+    
+    // fields
+        
+    string survey_id = 1;    
+    string survey_name = 2;    
+    string description = 3;    
+    string comments = 4;    
+    string submit_caption = 5;    
+    string response_service = 6;    
+    routines.Indicator is_anonymous = 7;    
+    routines.Indicator allow_multiple = 8;    
+    routines.Indicator allow_update = 9;    
+    string acro_form_content_id = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
         
 }
 
@@ -1779,6 +1892,25 @@ message ProductPromoProductData {
         
 }
 
+// Defines a System Property
+message SystemPropertyData {
+    option (routines.entity_type) = "SystemProperty";
+    option (routines.keys).keys = "system_resource_id, system_property_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: systemResourceId, systemPropertyId
+    string id = 200; 
+    // fields
+        
+    string system_resource_id = 1;    
+    string system_property_id = 2;    
+    string system_property_value = 3;    
+    string description = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
+}
+
 // Product Review
 message ProductReviewData {
     option (routines.entity_type) = "ProductReview";
@@ -1972,7 +2104,8 @@ message PartyData {
     repeated ShipmentCostEstimateData shipment_cost_estimate = 58; // ref(ShipmentCostEstimate): partyId
     repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 59; // ref(CarrierShipmentRouteSegment): partyId
     repeated SupplierProductData supplier_product = 60; // ref(SupplierProduct): partyId
-    repeated UserLoginData user_login = 61; // ref(UserLogin): partyId
+    repeated SupplierProductFeatureData supplier_product_feature = 61; // ref(SupplierProductFeature): partyId
+    repeated UserLoginData user_login = 62; // ref(UserLogin): partyId
     
         
 }
@@ -2018,6 +2151,24 @@ message PartyTaxAuthInfoData {
     routines.Indicator is_nexus = 8;    
     google.protobuf.Timestamp last_updated_tx_stamp = 9;    
     google.protobuf.Timestamp created_tx_stamp = 10;
+        
+}
+
+// Survey Multi-Response Group
+message SurveyMultiRespData {
+    option (routines.entity_type) = "SurveyMultiResp";
+    option (routines.keys).keys = "survey_id, survey_multi_resp_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: surveyId, surveyMultiRespId
+    string id = 200; 
+    // fields
+        
+    string survey_id = 1;    
+    string survey_multi_resp_id = 2;    
+    string multi_resp_title = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
         
 }
 
@@ -2166,6 +2317,24 @@ message AgreementData {
         
 }
 
+// Survey Question Category
+message SurveyQuestionCategoryData {
+    option (routines.entity_type) = "SurveyQuestionCategory";
+    option (routines.keys).keys = "survey_question_category_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    // keys: surveyQuestionCategoryId
+    
+    // fields
+        
+    string survey_question_category_id = 1;    
+    string parent_category_id = 2;    
+    string description = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
+}
+
 // Catalog Category Association
 message ProdCatalogCategoryData {
     option (routines.entity_type) = "ProdCatalogCategory";
@@ -2310,6 +2479,37 @@ message ShipmentTimeEstimateData {
         
 }
 
+// Tax Authority Rate
+message TaxAuthorityRateProductData {
+    option (routines.entity_type) = "TaxAuthorityRateProduct";
+    option (routines.keys).keys = "tax_authority_rate_seq_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    // keys: taxAuthorityRateSeqId
+    
+    // fields
+        
+    string tax_authority_rate_seq_id = 1;    
+    string tax_auth_geo_id = 2;    
+    string tax_auth_party_id = 3;
+    string tax_authority_rate_type_id = 4; // TaxAuthorityRateType    
+    string product_store_id = 5;    
+    string product_category_id = 6;    
+    string title_transfer_enum_id = 7;    
+    routines.Currency min_item_price = 8;    
+    routines.Currency min_purchase = 9;    
+    routines.Indicator tax_shipping = 10;    
+    routines.FixedPoint tax_percentage = 11;    
+    routines.Indicator tax_promotions = 12;    
+    google.protobuf.Timestamp from_date = 13;    
+    google.protobuf.Timestamp thru_date = 14;    
+    string description = 15;    
+    routines.Indicator is_tax_in_shipping_price = 16;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 17;    
+    google.protobuf.Timestamp created_tx_stamp = 18;
+        
+}
+
 // Product Category Data Object
 message ProductCategoryContentData {
     option (routines.entity_type) = "ProductCategoryContent";
@@ -2351,6 +2551,50 @@ message OrderItemShipGroupAssocData {
     routines.FixedPoint cancel_quantity = 5;    
     google.protobuf.Timestamp last_updated_tx_stamp = 6;    
     google.protobuf.Timestamp created_tx_stamp = 7;
+        
+}
+
+// Web Site Content Associations
+message WebSiteContentData {
+    option (routines.entity_type) = "WebSiteContent";
+    option (routines.keys).keys = "web_site_id, content_id, web_site_content_type_id, from_date";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: webSiteId, contentId, webSiteContentTypeId, fromDate
+    string id = 200; 
+    // fields
+        
+    string web_site_id = 1;    
+    string content_id = 2;
+    string web_site_content_type_id = 3; // WebSiteContentType    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
+}
+
+// Survey Question
+message SurveyQuestionData {
+    option (routines.entity_type) = "SurveyQuestion";
+    option (routines.keys).keys = "survey_question_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    // keys: surveyQuestionId
+    
+    // fields
+        
+    string survey_question_id = 1;    
+    string survey_question_category_id = 2;
+    string survey_question_type_id = 3; // SurveyQuestionType    
+    string description = 4;    
+    string question = 5;    
+    string hint = 6;
+    string enum_type_id = 7; // Enumeration
+    string geo_id = 8; // Geo    
+    string format_string = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
         
 }
 
@@ -2558,6 +2802,25 @@ message ProductFacilityLocationData {
         
 }
 
+// Survey Page Type
+message SurveyPageData {
+    option (routines.entity_type) = "SurveyPage";
+    option (routines.keys).keys = "survey_id, survey_page_seq_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: surveyId, surveyPageSeqId
+    string id = 200; 
+    // fields
+        
+    string survey_id = 1;    
+    string survey_page_seq_id = 2;    
+    string page_name = 3;    
+    int64 sequence_num = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
+}
+
 // Shipment Contact Mechanism Type
 message ShipmentBoxTypeData {
     option (routines.entity_type) = "ShipmentBoxType";
@@ -2677,6 +2940,25 @@ message ProductFeatureApplData {
     routines.Currency recurring_amount = 8;    
     google.protobuf.Timestamp last_updated_tx_stamp = 9;    
     google.protobuf.Timestamp created_tx_stamp = 10;
+        
+}
+
+// Content Attribute
+message ContentAttributeData {
+    option (routines.entity_type) = "ContentAttribute";
+    option (routines.keys).keys = "content_id, attr_name";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: contentId, attrName
+    string id = 200; 
+    // fields
+        
+    string content_id = 1;    
+    string attr_name = 2;    
+    string attr_value = 3;    
+    string attr_description = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
         
 }
 
@@ -3114,6 +3396,33 @@ message ShipmentPackageContentData {
         
 }
 
+// Product Store Survey Application
+message ProductStoreSurveyApplData {
+    option (routines.entity_type) = "ProductStoreSurveyAppl";
+    option (routines.keys).keys = "product_store_survey_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    // keys: productStoreSurveyId
+    
+    // fields
+        
+    string product_store_survey_id = 1;    
+    string product_store_id = 2;    
+    string survey_appl_type_id = 3;    
+    string group_name = 4;    
+    string survey_id = 5;    
+    string product_id = 6;    
+    string product_category_id = 7;    
+    google.protobuf.Timestamp from_date = 8;    
+    google.protobuf.Timestamp thru_date = 9;    
+    string survey_template = 10;    
+    string result_template = 11;    
+    int64 sequence_num = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
+        
+}
+
 // Security Component - Security Group
 message SecurityGroupData {
     option (routines.entity_type) = "SecurityGroup";
@@ -3425,6 +3734,8 @@ message ProductCategoryData {
     repeated ProductCategoryRollupData parent_product_category_rollup = 22; // ref(ParentProductCategoryRollup): productCategoryId
     repeated ProductFeatureCategoryApplData product_feature_category_appl = 23; // ref(ProductFeatureCategoryAppl): productCategoryId
     repeated ProductPromoCategoryData product_promo_category = 24; // ref(ProductPromoCategory): productCategoryId
+    repeated ProductStoreSurveyApplData product_store_survey_appl = 25; // ref(ProductStoreSurveyAppl): productCategoryId
+    repeated TaxAuthorityRateProductData tax_authority_rate_product = 26; // ref(TaxAuthorityRateProduct): productCategoryId
     
         
 }
@@ -3492,6 +3803,30 @@ message ProductPriceCondData {
     string cond_value = 5;    
     google.protobuf.Timestamp last_updated_tx_stamp = 6;    
     google.protobuf.Timestamp created_tx_stamp = 7;
+        
+}
+
+// Survey Question Option
+message SurveyQuestionOptionData {
+    option (routines.entity_type) = "SurveyQuestionOption";
+    option (routines.keys).keys = "survey_question_id, survey_option_seq_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: surveyQuestionId, surveyOptionSeqId
+    string id = 200; 
+    // fields
+        
+    string survey_question_id = 1;    
+    string survey_option_seq_id = 2;    
+    string description = 3;    
+    int64 sequence_num = 4;    
+    routines.Currency amount_base = 5;    
+    string amount_base_uom_id = 6;    
+    double weight_factor = 7;    
+    int64 duration = 8;    
+    string duration_uom_id = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
         
 }
 
@@ -3827,12 +4162,15 @@ message ProductStoreData {
     repeated ProductStoreCatalogData product_store_catalog = 85; // ref(ProductStoreCatalog): productStoreId
     repeated ProductStoreEmailSettingData product_store_email_setting = 86; // ref(ProductStoreEmailSetting): productStoreId
     repeated ProductStoreFacilityData product_store_facility = 87; // ref(ProductStoreFacility): productStoreId
-    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 88; // ref(ProductStoreKeywordOvrd): productStoreId
-    repeated ProductStorePaymentSettingData product_store_payment_setting = 89; // ref(ProductStorePaymentSetting): productStoreId
-    repeated ProductStorePromoApplData product_store_promo_appl = 90; // ref(ProductStorePromoAppl): productStoreId
-    repeated ProductStoreRoleData product_store_role = 91; // ref(ProductStoreRole): productStoreId
-    repeated QuoteData quote = 92; // ref(Quote): productStoreId
-    repeated WebSiteData web_site = 93; // ref(WebSite): productStoreId
+    repeated ProductStoreFinActSettingData product_store_fin_act_setting = 88; // ref(ProductStoreFinActSetting): productStoreId
+    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 89; // ref(ProductStoreKeywordOvrd): productStoreId
+    repeated ProductStorePaymentSettingData product_store_payment_setting = 90; // ref(ProductStorePaymentSetting): productStoreId
+    repeated ProductStorePromoApplData product_store_promo_appl = 91; // ref(ProductStorePromoAppl): productStoreId
+    repeated ProductStoreRoleData product_store_role = 92; // ref(ProductStoreRole): productStoreId
+    repeated ProductStoreSurveyApplData product_store_survey_appl = 93; // ref(ProductStoreSurveyAppl): productStoreId
+    repeated QuoteData quote = 94; // ref(Quote): productStoreId
+    repeated TaxAuthorityRateProductData tax_authority_rate_product = 95; // ref(TaxAuthorityRateProduct): productStoreId
+    repeated WebSiteData web_site = 96; // ref(WebSite): productStoreId
     
         
 }
@@ -4777,6 +5115,33 @@ message QuoteRoleData {
     google.protobuf.Timestamp thru_date = 5;    
     google.protobuf.Timestamp last_updated_tx_stamp = 6;    
     google.protobuf.Timestamp created_tx_stamp = 7;
+        
+}
+
+// Survey Question Application
+message SurveyQuestionApplData {
+    option (routines.entity_type) = "SurveyQuestionAppl";
+    option (routines.keys).keys = "survey_id, survey_question_id, from_date";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: surveyId, surveyQuestionId, fromDate
+    string id = 200; 
+    // fields
+        
+    string survey_id = 1;    
+    string survey_question_id = 2;    
+    google.protobuf.Timestamp from_date = 3;    
+    google.protobuf.Timestamp thru_date = 4;    
+    string survey_page_seq_id = 5;    
+    string survey_multi_resp_id = 6;    
+    string survey_multi_resp_col_id = 7;    
+    routines.Indicator required_field = 8;    
+    int64 sequence_num = 9;    
+    string external_field_ref = 10;    
+    string with_survey_question_id = 11;    
+    string with_survey_option_seq_id = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
         
 }
 

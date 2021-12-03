@@ -17,6 +17,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.requireNonNull;
 
 public class Util {
     public static String arrayAwareToString(Object o) {
@@ -115,5 +120,12 @@ public class Util {
 
     public static String readFile(Path file) throws IOException {
         return new String(Files.readAllBytes(file));
+    }
+
+    public static List<File> listFiles(File dir, String suffix){
+        return Arrays.stream(requireNonNull(dir.listFiles()))
+                .filter(f -> f.getName().toLowerCase(Locale.ROOT)
+                        .endsWith(suffix))
+                .collect(Collectors.toList());
     }
 }

@@ -10,6 +10,7 @@ import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Product;
 import com.bluecc.income.model.ProductPrice;
+import com.bluecc.income.procs.AbstractProcs;
 import com.github.javafaker.Faker;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -233,4 +234,35 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
     }
 
 
+    @Test
+    public void testExtractedTableInfo(){
+        ProductConfigData productConfigData = getProductConfigData();
+        AbstractProcs.ExtractedTableInfo tableInfo=genericProcs.extract(productConfigData);
+        pretty(tableInfo);
+    }
+
+    @Test
+    public void testProductConfig() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            // <ProductConfig productId="PC001" configItemId="IT0003" sequenceNum="00"
+            // fromDate="2004-08-20 12:59:26.209" configTypeId="STANDARD" isMandatory="Y"/>
+            // ? Missing named parameter 'sequence_num'
+            ProductConfigData productConfigData = getProductConfigData();
+            System.out.println(productConfigData);
+            genericProcs.create(c, productConfigData);
+        });
+    }
+
+    private ProductConfigData getProductConfigData() {
+        ProductConfigData productConfigData=ProductConfigData.newBuilder()
+                .setProductId("pc001")
+                .setConfigItemId("it0003")
+                .setSequenceNum(0)
+                .setFromDate(ProtoTypes.now())
+                .setConfigTypeId("STANDARD")
+                .setIsMandatory(Indicator.YES)
+                .build();
+        return productConfigData;
+    }
 }

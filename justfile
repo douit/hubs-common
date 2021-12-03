@@ -77,3 +77,6 @@ package:
 
 heads:
 	just gen GenHeadEntities
+
+console:
+	just i cli.ConsoleMain

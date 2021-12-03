@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.*;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
@@ -13,6 +14,7 @@ import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3.Builder;
 import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
+import jodd.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,9 +49,9 @@ public class DataFill {
         String fn = "sample";
 
         @Parameter(names = {"--source", "-o"})
-        String source="dataset/sample/sales_order.xml";
+        String source = "dataset/sample/sales_order.xml";
         @Parameter(names = {"--sink", "-k"})
-        String sink="console";
+        String sink = "console";
     }
 
     public static void main(String[] args) {
@@ -123,9 +125,10 @@ public class DataFill {
     DataBuilder dataBuilder = new DataBuilder();
     Opts opts;
 
-    public DataFill(){
+    public DataFill() {
         this(new Opts());
     }
+
     DataFill(Opts opts) {
         this.opts = opts;
     }
@@ -150,6 +153,14 @@ public class DataFill {
     static final DateTimeFormatter FMT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
     public static DateTime trimParse(String dtStr) {
+        if (dtStr == null || dtStr.isEmpty()) {
+            return null;
+        }
+
+        if (dtStr.length() < DT_STR.length()) {
+            log.warn("the datetime-string format is invalidate: {}, try parse with date", dtStr);
+            return org.joda.time.LocalDate.parse(dtStr).toDateTimeAtCurrentTime();
+        }
         return FMT.parseDateTime(dtStr.substring(0, DT_STR.length()));
     }
 
@@ -163,6 +174,9 @@ public class DataFill {
     }
 
     public static Timestamp getTimestamp(String dtStr) {
+        if (dtStr == null || dtStr.isEmpty()) {
+            return null;
+        }
         return getTimestamp(trimParse(dtStr));
     }
 
@@ -241,7 +255,13 @@ public class DataFill {
                         // System.out.println("** put "+fld.getName()+" - "+val.getAsString());
                         break;
                     case INT64:
-                        msg.setField(fld, val.getAsLong());
+                        try {
+                            msg.setField(fld, val.getAsLong());
+                        } catch (NumberFormatException e) {
+                            log.warn("entity {} field {} has invalidate value, cause a error {}, set it to default 0",
+                                    entityName, fld.getName(), e.getMessage());
+                            msg.setField(fld, 0L);
+                        }
                         break;
                     case INT32:
                         msg.setField(fld, val.getAsInt());
@@ -283,32 +303,42 @@ public class DataFill {
 
     private void setFieldWithMessage(String entityName, Builder<?> msg, Descriptors.FieldDescriptor fld, JsonElement val) {
         String msgType = fld.getMessageType().getName();
-        switch (msgType) {
-            case "TypeSymbol":
-                TypeSymbol typeSymbol = TypeSymbol.newBuilder()
-                        .setTypeName(fld.getName())
-                        .setValueId(val.getAsString())
-                        .build();
-                msg.setField(fld, typeSymbol);
-                break;
-            case "Timestamp":
-                msg.setField(fld, getTimestamp(val.getAsString()));
-                break;
-            // case "Date":
-            //     msg.setField(fld, getDate(val.getAsString()));
-            //     break;
-            case "DecimalValue":
-                DecimalValue serialized = getDecimalValue(val);
-                msg.setField(fld, serialized);
-                break;
-            case "Currency":
-                msg.setField(fld, getCurrencyValue(val.getAsString()));
-                break;
-            case "FixedPoint":
-                msg.setField(fld, getFixedPoint(val.getAsString()));
-                break;
-            default:
-                proessEntityField(entityName, msg, fld, val);
+        if (StringUtil.isNotEmpty(val.getAsString())) {
+            switch (msgType) {
+                case "TypeSymbol":
+                    TypeSymbol typeSymbol = TypeSymbol.newBuilder()
+                            .setTypeName(fld.getName())
+                            .setValueId(val.getAsString())
+                            .build();
+                    msg.setField(fld, typeSymbol);
+                    break;
+                case "Timestamp":
+                    Timestamp ts = getTimestamp(val.getAsString());
+                    if (ts != null) {
+                        msg.setField(fld, ts);
+                    }
+                    break;
+                // case "Date":
+                //     msg.setField(fld, getDate(val.getAsString()));
+                //     break;
+                case "DecimalValue":
+                    DecimalValue serialized = getDecimalValue(val);
+                    msg.setField(fld, serialized);
+                    break;
+                case "Currency":
+                    msg.setField(fld, getCurrencyValue(val.getAsString()));
+                    break;
+                case "FixedPoint":
+                    try {
+                        msg.setField(fld, getFixedPoint(val.getAsString()));
+                    } catch (NumberFormatException e) {
+                        log.warn("entity {} field {} value is invalidate number format: {}, cause: {}",
+                                entityName, fld.getName(), val.getAsString(), e.getMessage());
+                    }
+                    break;
+                default:
+                    proessEntityField(entityName, msg, fld, val);
+            }
         }
     }
 

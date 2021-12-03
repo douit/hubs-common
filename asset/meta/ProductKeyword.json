@@ -2,7 +2,7 @@
   "name": "ProductKeyword",
   "title": "Product Keyword",
   "description": "None",
-  "tableName": "PRODUCT_KEYWORD_NEW",
+  "tableName": "PRODUCT_KEYWORD",
   "fields": [
     {
       "name": "productId",

@@ -1,10 +1,7 @@
 package com.bluecc.hubs;
 
 import com.bluecc.hubs.feed.ProtoStuffs;
-import com.bluecc.hubs.stub.Currency;
-import com.bluecc.hubs.stub.FixedPoint;
-import com.bluecc.hubs.stub.PeriodData;
-import com.bluecc.hubs.stub.PersonFlatData;
+import com.bluecc.hubs.stub.*;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.type.Date;
 import com.google.type.Money;
@@ -85,5 +82,13 @@ public class ProtoTypesTest {
         System.out.println(localTime);
         TimeOfDay timeOfDay = getTimeOfDay(localTime);
         System.out.println(timeOfDay);
+    }
+
+    @Test
+    public void testHasTable(){
+        ContactMechData contactMechData= ContactMechData.newBuilder().build();
+        System.out.println(ProtoTypes.getTableByMessage(contactMechData));
+        assertEquals("contact_mech", ProtoTypes.getTableByMessage(contactMechData));
+        assertTrue(ProtoTypes.hasTable(contactMechData));
     }
 }

@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.bluecc.hubs.fund.DataSetUtil.collectFromFiles;
 import static com.bluecc.hubs.fund.DataSetUtil.getAvailableEntities;
 import static com.bluecc.hubs.fund.EntityMetaManager.getMetaFile;
 import static com.bluecc.hubs.fund.SystemDefs.prependHubsHomeFile;
@@ -32,7 +33,8 @@ public class EntityTypesTool {
 
     public static void startGen() throws IOException {
         Writer writer = new FileWriter(prependHubsHomeFile("asset/mysql/types.sql"));
-        Set<String> entityList = collectFromFiles(prependHubsHomeFile(seedDir),
+        Set<String> entityList = collectFromFiles(
+                prependHubsHomeFile(seedDir),
                 prependHubsHomeFile(commonDir));
         int totalTypeEntities=entityList.size();
         MetaTypes.MetaList hubsEntities = getAvailableEntities();
@@ -61,17 +63,4 @@ public class EntityTypesTool {
                 .build(), prependHubsHomeFile("asset/mysql/types.json"));
         System.out.println("ok.");
     }
-
-    static Set<String> collectFromFiles(File... metaDirs) {
-        Set<String> rs = Sets.newHashSet();
-        for (File metaDir : metaDirs) {
-            for (File metaFile : requireNonNull(metaDir.listFiles((dir, name)
-                    -> name.toLowerCase().endsWith(".xml")))) {
-                Set<String> entityList = SeedReader.collectEntityNames(metaFile.toString());
-                rs.addAll(entityList);
-            }
-        }
-        return rs;
-    }
-
 }

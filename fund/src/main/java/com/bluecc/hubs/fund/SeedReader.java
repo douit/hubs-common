@@ -9,6 +9,8 @@ import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import static com.bluecc.hubs.fund.Util.GSON;
@@ -41,8 +43,15 @@ public class SeedReader {
     }
 
     public static Set<String> collectEntityNames(String... dataFiles)  {
+        return collectEntityNames(Arrays.asList(dataFiles), false);
+    }
+
+    public static Set<String> collectEntityNames(List<String> dataFiles, boolean defaultLoc)  {
         Set<String> nameSet = Sets.newHashSet();
         for (String dataFile : dataFiles) {
+            if(defaultLoc){
+                dataFile=SystemDefs.prependHubsHome(dataFile);
+            }
             NodeList nodeList = getNodeList(dataFile);
 
             for (int i = 0; i < nodeList.getLength(); ++i) {

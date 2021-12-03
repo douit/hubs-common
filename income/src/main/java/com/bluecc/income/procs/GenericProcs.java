@@ -1,5 +1,6 @@
 package com.bluecc.income.procs;
 
+import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.stub.Response;
 import com.bluecc.income.exchange.IProc;
@@ -53,8 +54,14 @@ public class GenericProcs extends AbstractProcs{
         Multimap<String, Message> dataMap=dataFill.setupData(dataList);
         dataMap.asMap().forEach((k,v)->{
             v.forEach(e ->{
-                log.debug("store {}", e);
-                storeOrUpdate(c, e);
+                String ent=ProtoTypes.getEntityTypeByMessage(e);
+                if(ProtoTypes.hasTable(e)) {
+                    log.debug("store {}: {}", ent, e);
+                    storeOrUpdate(c, e);
+                }else{
+                    log.info("entity {} doesn't has table, ignore",
+                            ent);
+                }
             });
         });
     }

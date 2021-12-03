@@ -202,14 +202,14 @@ public class EntityMeta {
 
         log.debug("fieldWithTypes: {}", fieldWithTypes.keySet());
 
-        getFields().forEach(f -> {
-            if (fieldWithTypes.containsKey(f.getName())) {
-                f.setJavaType("String");
-                f.setSqlType("VARCHAR(20)");
-                f.setType("type-id");
-                f.setFieldDigest(fieldWithTypes.get(f.getName()));
-            }
-        });
+        // getFields().forEach(f -> {
+        //     if (fieldWithTypes.containsKey(f.getName())) {
+        //         f.setJavaType("String");
+        //         f.setSqlType("VARCHAR(20)");
+        //         f.setType("type-id");
+        //         f.setFieldDigest(fieldWithTypes.get(f.getName()));
+        //     }
+        // });
 
         // if the entity build with combine-keys, then add a new primary field.
         if (combine) {

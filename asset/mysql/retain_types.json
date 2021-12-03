@@ -1,8 +1,10 @@
 {
   "entities": [
     "SecurityGroupPermission",
+    "SurveyApplType",
     "Person",
     "ElectronicText",
+    "SystemProperty",
     "Party",
     "DataResource",
     "PartyStatus",

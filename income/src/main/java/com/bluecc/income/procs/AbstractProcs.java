@@ -189,6 +189,7 @@ public class AbstractProcs {
 
     protected void setupEntities(String...entities){
         final Jdbi db = hubsStore.getJdbi();
+
         db.setSqlLogger(new SqlLogger() {
             @Override
             public void logBeforeExecution(StatementContext ctx) {
@@ -198,16 +199,18 @@ public class AbstractProcs {
             }
         });
 
-        TemplateGlobalContext.getContext().preload(entities);
-        process(c -> {
-            truncate(c, Arrays.stream(entities).map(e ->
-                    Util.toSnakecase(e)).collect(Collectors.toList()));
-        });
+        if(entities.length>0) {
+            TemplateGlobalContext.getContext().preload(entities);
+            process(c -> {
+                truncate(c, Arrays.stream(entities).map(e ->
+                        Util.toSnakecase(e)).collect(Collectors.toList()));
+            });
+        }
     }
 
     @Data
     @Builder
-    static class ExtractedTableInfo{
+    public static class ExtractedTableInfo{
         String table;
         List<String> names;
         List<String> placers;
@@ -216,7 +219,7 @@ public class AbstractProcs {
         String fieldsCondition;
     }
 
-    ExtractedTableInfo extract(Message flatData){
+    public ExtractedTableInfo extract(Message flatData){
         Map<String, Object> e= FlatMessageCollector.extract(flatData);
 
         List<String> names = new ArrayList<>(e.keySet());

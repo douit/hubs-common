@@ -12,11 +12,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.*;
 
 import static com.bluecc.gentool.dummy.SeedCollector.dataFile;
+import static com.bluecc.hubs.fund.DataSetUtil.*;
 import static com.bluecc.hubs.fund.DataSetUtil.collectEntitiesFromResources;
 import static com.bluecc.hubs.fund.EntityMetaManager.*;
 import static com.bluecc.hubs.fund.Util.writeJsonFile;
@@ -25,7 +27,9 @@ import static java.util.Objects.requireNonNull;
 /**
  * $ just gen SqlGenTool -s
  */
+@Slf4j
 public class SqlGenTool {
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -46,10 +50,10 @@ public class SqlGenTool {
 
     public static void startGen(GenOpts opts) throws IOException {
         SqlGenTool genMysql = new SqlGenTool(opts,"mysql",
-                "asset/mysql/hubs.sql",
-                "asset/mysql/hubs.json");
+                ASSET_MYSQL_HUBS_SQL,
+                ASSET_MYSQL_HUBS_JSON);
         SqlGenTool genH2 = new SqlGenTool(opts,"h2",
-                "domain/src/main/sql/hubs_h2_full.sql", null);
+                DOMAIN_H2_FULL_SQL, null);
 
 
         System.out.println("opt-silent: " + opts.silent);
@@ -94,17 +98,27 @@ public class SqlGenTool {
             writer.write("SET MODE MYSQL; /* another h2 way to set mode */\n" +
                     "CREATE SCHEMA IF NOT EXISTS \"public\";\n\n");
         }
+        Set<String> ignoreEnts=Sets.newHashSet();
         for (String entityName : entityList) {
             File metaFile = getMetaFile(entityName);
             // System.out.println(metaFile.getName());
-            String genCnt = genDDL(sqlMode, metaFile, writer);
-            if (!opts.silent) {
-                System.out.println(genCnt);
+            if(metaFile.exists()) {
+                String genCnt = genDDL(sqlMode, metaFile, writer);
+                if (!opts.silent) {
+                    System.out.println(genCnt);
+                }
+            }else{
+                log.warn("Cannot read entity {} meta file, ignore it", entityName);
+                ignoreEnts.add(entityName);
             }
         }
 
-        String info=String.format("-- total entities %d, from %s\n",
-                entityList.size(), Arrays.asList(DataSetUtil.DATA_SAMPLES));
+        if(!ignoreEnts.isEmpty()) {
+            System.out.println(".. ignore entities: " + ignoreEnts);
+            entityList.removeAll(ignoreEnts);
+        }
+        String info=String.format("-- total entities %d, from seed dirs: %s\n",
+                entityList.size(), Arrays.asList("order", "ecommerce"));
         System.out.println(info);
         writer.write(info);
         writer.close();
