@@ -12,6 +12,8 @@ import com.bluecc.income.exchange.FlatMessageCollector;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.exchange.ResultSubscriber;
+import com.bluecc.income.model.Product;
+import com.bluecc.income.model.ProductCategory;
 import com.bluecc.income.template.TemplateGlobalContext;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -37,6 +39,7 @@ import static com.bluecc.hubs.ProtoTypes.getTableByMessage;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @Slf4j
 public class AbstractProcs {
@@ -328,6 +331,28 @@ public class AbstractProcs {
         return rs;
     }
 
+    public <T> T findOne(IProc.ProcContext ctx, Message flatData, Class<T> clz) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        T rec = ctx.getHandle().createQuery("select * from <table> where <fields_cond>")
+                .define("table", tableInfo.table)
+                .define("fields_cond", tableInfo.fieldsCondition)
+                .bindMap(tableInfo.e)
+                .mapTo(clz)
+                .one();
+        return rec;
+    }
+
+    public <T> List<T> findRelation(IProc.ProcContext c, Message p, String rel,
+                                    Class<? extends IModel<?>> fromClass,
+                                    Class<T> toClass){
+        IModel<?> m=findOne(c, p, fromClass);
+        if(m!=null) {
+            Message p1 = m.toData();
+            return getRelationValues(c, p1, rel, toClass);
+        }
+        return Lists.newArrayList();
+    }
+
     public List<Map<String, Object>> all(IProc.ProcContext c, Message flatData) {
         return all(c, flatData, 0);
     }
@@ -360,6 +385,10 @@ public class AbstractProcs {
         Map<String, Object> e = transferRelations(message,
                 relName, relEnt);
 
+        if(e.isEmpty()){
+            log.debug("Cannot get relation data with {} by {}", relEnt, relName);
+            return Lists.newArrayList();
+        }
         return getTypedRelations(ctx, table, e, clz);
     }
 
@@ -376,7 +405,8 @@ public class AbstractProcs {
                 .define("table", table)
                 .defineList("fieldsCond", fieldsCond)
                 .bindMap(e)
-                .mapTo(clz).list();
+                .mapTo(clz)
+                .list();
         return rs;
 
     }

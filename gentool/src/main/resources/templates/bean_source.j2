@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
 
-import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.{{ent.flatMessageType}};
 {% if ent.headEntity %}
@@ -18,7 +18,7 @@ import com.bluecc.hubs.stub.{{ent.messageType}};
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class {{ent.name}} implements IModel, Serializable {
+public class {{ent.name}} implements IEventModel<{{ent.flatMessageType}}.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     {% for f in ent.fields -%}

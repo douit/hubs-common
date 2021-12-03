@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
 
-import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.PaymentFlatData;
 
@@ -18,7 +18,7 @@ import com.bluecc.hubs.stub.PaymentData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Payment implements IModel, Serializable {
+public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String paymentId;
@@ -51,8 +51,7 @@ public class Payment implements IModel, Serializable {
         return toDataBuilder().build();
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toDataBuilder() {
+    public PaymentFlatData.Builder toDataBuilder() {
         PaymentFlatData.Builder builder = PaymentFlatData.newBuilder();
         if (paymentId != null) {
             builder.setPaymentId(paymentId);
@@ -118,7 +117,7 @@ public class Payment implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
     public static Payment fromData(PaymentFlatData data) {

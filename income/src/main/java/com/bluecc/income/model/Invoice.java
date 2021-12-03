@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
 
-import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.InvoiceFlatData;
 
@@ -18,7 +18,7 @@ import com.bluecc.hubs.stub.InvoiceData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Invoice implements IModel, Serializable {
+public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String invoiceId;
@@ -48,8 +48,7 @@ public class Invoice implements IModel, Serializable {
         return toDataBuilder().build();
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toDataBuilder() {
+    public InvoiceFlatData.Builder toDataBuilder() {
         InvoiceFlatData.Builder builder = InvoiceFlatData.newBuilder();
         if (invoiceId != null) {
             builder.setInvoiceId(invoiceId);
@@ -106,7 +105,7 @@ public class Invoice implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
     public static Invoice fromData(InvoiceFlatData data) {

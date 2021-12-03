@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
 
-import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.PartyGroupFlatData;
 
@@ -18,7 +18,7 @@ import com.bluecc.hubs.stub.PartyGroupData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PartyGroup implements IModel, Serializable {
+public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String partyId;
@@ -41,8 +41,7 @@ public class PartyGroup implements IModel, Serializable {
         return toDataBuilder().build();
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toDataBuilder() {
+    public PartyGroupFlatData.Builder toDataBuilder() {
         PartyGroupFlatData.Builder builder = PartyGroupFlatData.newBuilder();
         if (partyId != null) {
             builder.setPartyId(partyId);
@@ -78,7 +77,7 @@ public class PartyGroup implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
     public static PartyGroup fromData(PartyGroupFlatData data) {

@@ -9,12 +9,14 @@ import com.bluecc.hubs.stub.*;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Product;
+import com.bluecc.income.model.ProductCategory;
 import com.bluecc.income.model.ProductConfig;
 import com.bluecc.income.model.ProductPrice;
 import com.bluecc.income.procs.AbstractProcs;
 import com.github.javafaker.Faker;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
@@ -23,10 +25,7 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
@@ -270,30 +269,82 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
 
     @Test
     public void testProductList() {
+        final Set<String> relationsDemand= Sets.newHashSet(
+                "product_price",
+                "product_product_config",
+                "primary_product_category");
         process(c -> {
             // Dao dao = c.getHandle().attach(Dao.class);
             // genericProcs.all(c, EntityNames.Product, 0);
             ProductData p = ProductData.newBuilder()
                     .setProductId("PC001")
                     .build();
-            genericProcs.find(c, p, Product.class)
-                    .forEach(e -> {
+            List<ProductData> ds = genericProcs.find(c, p, Product.class).stream()
+                    .map(e -> {
                         pretty(e);
                         // add price to head entity
                         ProductData.Builder pb = e.toHeadBuilder();
-                        genericProcs.getRelationValues(c, p, "product_price",
-                                        ProductPrice.class)
-                                .forEach(pprice -> pb.addProductPrice(
-                                        (ProductPriceData) pprice.toData()));
-                        genericProcs.getRelationValues(c, p, "product_product_config",
-                                        ProductConfig.class)
-                                .forEach(pconfig -> pb.addProductProductConfig(
-                                        (ProductConfigData) pconfig.toData()));
+                        if(relationsDemand.contains("product_price")) {
+                            genericProcs.getRelationValues(c, p, "product_price",
+                                            ProductPrice.class)
+                                    .forEach(pprice -> pb.addProductPrice(
+                                            (ProductPriceData) pprice.toData()));
+                        }
 
-                        System.out.println("↪️  " + pb.build());
-                        System.out.println("--------------");
-                    });
+                        if(relationsDemand.contains("product_product_config")) {
+                            genericProcs.getRelationValues(c, p, "product_product_config",
+                                            ProductConfig.class)
+                                    .forEach(pconfig -> pb.addProductProductConfig(
+                                            (ProductConfigData) pconfig.toData()));
+                        }
 
+                        // single relation, with field setter: pb.set*
+                        if(relationsDemand.contains("primary_product_category")) {
+                            genericProcs.getRelationValues(c, p, "primary_product_category",
+                                            ProductCategory.class)
+                                    .forEach(pcat -> pb.setPrimaryProductCategory(
+                                            (ProductCategoryData) pcat.toData()));
+                        }
+
+                        return pb.build();
+                    }).collect(Collectors.toList());
+
+            assertEquals(1, ds.size());
+            assertFalse(ds.get(0).getProductPriceList().isEmpty());
+            assertTrue(ds.get(0).getProductProductConfigCount()>0);
+            assertFalse(ds.get(0).hasPrimaryProductCategory());
+
+            ds.forEach(e -> {
+                System.out.println("↪️  " + e);
+                System.out.println("--------------");
+            });
+
+            Message p1 = genericProcs.findOne(c, p, Product.class).toData();
+            System.out.println(p1);
+            assertTrue(genericProcs.getRelationValues(c, p1,
+                    "primary_product_category",
+                    ProductCategory.class).isEmpty());
+        });
+    }
+
+    @Test
+    public void testFindRelation() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            ProductData p = ProductData.newBuilder()
+                    .setProductId("FA-001")
+                    .build();
+            Message p1 = genericProcs.findOne(c, p, Product.class).toData();
+            // System.out.println(p1);
+            assertFalse(genericProcs.getRelationValues(c, p1,
+                    "primary_product_category",
+                    ProductCategory.class).isEmpty());
+
+            List<ProductCategory> result= genericProcs.findRelation(c, p, "primary_product_category",
+                    Product.class, ProductCategory.class);
+            result.forEach(e -> System.out.println(e));
+            assertTrue(result.size()>0);
         });
     }
 }
+

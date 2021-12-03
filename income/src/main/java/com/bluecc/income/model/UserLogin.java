@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
 
-import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.UserLoginFlatData;
 
@@ -18,7 +18,7 @@ import com.bluecc.hubs.stub.UserLoginData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLogin implements IModel, Serializable {
+public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String userLoginId;
@@ -48,8 +48,7 @@ public class UserLogin implements IModel, Serializable {
         return toDataBuilder().build();
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toDataBuilder() {
+    public UserLoginFlatData.Builder toDataBuilder() {
         UserLoginFlatData.Builder builder = UserLoginFlatData.newBuilder();
         if (userLoginId != null) {
             builder.setUserLoginId(userLoginId);
@@ -106,7 +105,7 @@ public class UserLogin implements IModel, Serializable {
             builder.setPartyId(partyId);
         }
                     
-        return (T)builder;
+        return builder;
     }
 
     public static UserLogin fromData(UserLoginFlatData data) {

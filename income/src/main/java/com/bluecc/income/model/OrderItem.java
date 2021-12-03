@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
 
-import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.OrderItemFlatData;
 
@@ -18,7 +18,7 @@ import com.bluecc.hubs.stub.OrderItemData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItem implements IModel, Serializable {
+public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String orderId;
@@ -80,8 +80,7 @@ public class OrderItem implements IModel, Serializable {
         return toDataBuilder().build();
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toDataBuilder() {
+    public OrderItemFlatData.Builder toDataBuilder() {
         OrderItemFlatData.Builder builder = OrderItemFlatData.newBuilder();
         if (orderId != null) {
             builder.setOrderId(orderId);
@@ -234,7 +233,7 @@ public class OrderItem implements IModel, Serializable {
             builder.setId(id);
         }
                     
-        return (T)builder;
+        return builder;
     }
 
     public static OrderItem fromData(OrderItemFlatData data) {

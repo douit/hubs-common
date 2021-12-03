@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
 
-import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ShipmentFlatData;
 
@@ -18,7 +18,7 @@ import com.bluecc.hubs.stub.ShipmentData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shipment implements IModel, Serializable {
+public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String shipmentId;
@@ -62,8 +62,7 @@ public class Shipment implements IModel, Serializable {
         return toDataBuilder().build();
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toDataBuilder() {
+    public ShipmentFlatData.Builder toDataBuilder() {
         ShipmentFlatData.Builder builder = ShipmentFlatData.newBuilder();
         if (shipmentId != null) {
             builder.setShipmentId(shipmentId);
@@ -162,7 +161,7 @@ public class Shipment implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
     public static Shipment fromData(ShipmentFlatData data) {

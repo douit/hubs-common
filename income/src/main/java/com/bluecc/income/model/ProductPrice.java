@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
 
-import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ProductPriceData;
 
@@ -16,7 +16,7 @@ import com.bluecc.hubs.stub.ProductPriceData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductPrice implements IModel, Serializable {
+public class ProductPrice implements IEventModel<ProductPriceData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String productId;
@@ -52,8 +52,7 @@ public class ProductPrice implements IModel, Serializable {
         return toDataBuilder().build();
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toDataBuilder() {
+    public ProductPriceData.Builder toDataBuilder() {
         ProductPriceData.Builder builder = ProductPriceData.newBuilder();
         if (productId != null) {
             builder.setProductId(productId);
@@ -128,7 +127,7 @@ public class ProductPrice implements IModel, Serializable {
             builder.setId(id);
         }
                     
-        return (T)builder;
+        return builder;
     }
 
     public static ProductPrice fromData(ProductPriceData data) {
