@@ -80,3 +80,6 @@ heads:
 
 console:
 	just i cli.ConsoleMain
+
+seed:
+	time just i procs.SeedFiles

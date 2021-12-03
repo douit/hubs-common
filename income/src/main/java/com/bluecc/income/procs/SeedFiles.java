@@ -7,10 +7,15 @@ import javax.inject.Inject;
 
 import static com.bluecc.income.dummy.store.StoreModule.startup;
 
+/**
+ * $ just i procs.SeedFiles
+ */
 public class SeedFiles extends AbstractProcs{
     public static void main(String[] args) {
         SeedFiles seedFiles=startup(SeedFiles.class);
         seedFiles.setupSeedFiles();
+        System.out.println("all ok.");
+        System.exit(0);
     }
 
     @Inject

@@ -3,9 +3,9 @@
 <fieldtypemodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <!-- ===================== field-type-def ==================== -->
     <!-- General Types -->
-    <field-type-def type="blob" sql-type="LONGBLOB" java-type="java.sql.Blob" clickhouse-type="String"/>
+    <field-type-def type="blob" sql-type="LONGBLOB" java-type="byte[]" clickhouse-type="String"/>
     <field-type-def type="byte-array" sql-type="LONGBLOB" java-type="byte[]" clickhouse-type="String"/>
-    <field-type-def type="object" sql-type="LONGBLOB" java-type="Object" clickhouse-type="String"/>
+    <field-type-def type="object" sql-type="LONGBLOB" java-type="byte[]" clickhouse-type="String"/>
 
     <field-type-def type="date-time" sql-type="DATETIME(3)" java-type="java.time.LocalDateTime" clickhouse-type="Datetime"/>
     <field-type-def type="date" sql-type="DATE" java-type="java.time.LocalDate" clickhouse-type="Date"/>

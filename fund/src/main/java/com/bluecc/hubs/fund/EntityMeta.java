@@ -1,6 +1,7 @@
 package com.bluecc.hubs.fund;
 
 import com.bluecc.hubs.fund.EntityMetaDigester.FieldDigest;
+import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -282,6 +283,13 @@ public class EntityMeta {
                 .findFirst();
     }
 
+    public List<RelationMeta> getValidRelations(){
+        Set<String> ents=MetaTypes.getAllEntities();
+        return relations.stream()
+                .filter(r ->  ents.contains(r.getRelEntityName()))
+                .collect(Collectors.toList());
+    }
+
     @Data
     @Builder
     public static class FieldMeta {
@@ -373,6 +381,11 @@ public class EntityMeta {
                 case "fixed-point":
                     valuePart= format("getFixedPoint(%s)", name);
                     break;
+                case "byte-array":
+                case "blob":
+                case "object":
+                    valuePart= format("ByteString.copyFrom(%s)", name);
+                    break;
                 // case "url":
                 //     valuePart= format("%s.toString()", name);
                 //     break;
@@ -399,6 +412,10 @@ public class EntityMeta {
                 case "currency-precise":
                 case "fixed-point":
                     return format("getBigDecimal(%s)", getter);
+                case "byte-array":
+                case "blob":
+                case "object":
+                    return format("%s.toByteArray()", getter);
                 // case "url":
                 //     return format("new URI(%s)", getter);
                 default:
@@ -483,6 +500,31 @@ public class EntityMeta {
         public List<String> getTargetFieldList(){
             return keymaps.stream().map(k -> k.relFieldName)
                     .collect(Collectors.toList());
+        }
+
+        public String getConstantDef(){
+            return String.format("public static final String %s " +
+                    "= \"%s\"; // %s",
+                    getUpperSnake(), getProtoName(), type);
+        }
+
+        public String getUpperSnake(){
+            return CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, name);
+        }
+
+        public String getRelationOp(){
+            String prefix=type.equals("many")?"add":"set";
+            return prefix+name;
+        }
+
+        public boolean isHeadEntity() {
+            return HeadEntityResources.contains(this.relEntityName);
+        }
+
+        public String getBuildClause(){
+            // String conv=isHeadEntity()?String.format("(%sData)", relEntityName):"";
+            return String.format("%s el.to%sBuilder().build()",
+                    "", isHeadEntity()?"Head":"Data");
         }
     }
 

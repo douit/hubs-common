@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
+import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -442,9 +443,8 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
                 .build();
     }
 
-    
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toHeadBuilder() {
+        
+    public ProductStoreData.Builder toHeadBuilder() {
         ProductStoreData.Builder builder = ProductStoreData.newBuilder();
         if (productStoreId != null) {
             builder.setProductStoreId(productStoreId);
@@ -687,7 +687,7 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
 }

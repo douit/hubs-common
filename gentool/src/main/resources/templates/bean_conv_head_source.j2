@@ -1,11 +1,10 @@
-
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toHeadBuilder() {
+    
+    public {{ent.messageType}}.Builder toHeadBuilder() {
         {{ent.messageType}}.Builder builder = {{ent.messageType}}.newBuilder();
         {% for f in ent.messageFields -%}
         if ({{f.name}} != null) {
             builder.{{f.protoSetter}};
         }
         {% endfor %}            
-        return (T)builder;
+        return builder;
     }

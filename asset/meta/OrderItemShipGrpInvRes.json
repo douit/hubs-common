@@ -174,19 +174,6 @@
       "validators": []
     },
     {
-      "name": "oldPickStartDate",
-      "type": "date-time",
-      "col": "PICK_START_DATE",
-      "pk": false,
-      "notNull": false,
-      "encrypt": false,
-      "autoCreatedInternal": false,
-      "javaType": "java.sql.Timestamp",
-      "sqlType": "TIMESTAMPTZ",
-      "stringLength": 20,
-      "validators": []
-    },
-    {
       "name": "lastUpdatedStamp",
       "type": "date-time",
       "col": "LAST_UPDATED_STAMP",

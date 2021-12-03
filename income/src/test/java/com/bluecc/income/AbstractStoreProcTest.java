@@ -43,9 +43,9 @@ public class AbstractStoreProcTest {
     //     });
     // }
 
-    protected Flux<IModel> process(IProc proc){
+    protected Flux<IModel<?>> process(IProc proc){
         return hubsStore.getJdbi().withHandle(handle -> {
-            ResultSubscriber<IModel> resultSubscriber=new ResultSubscriber<>();
+            ResultSubscriber<IModel<?>> resultSubscriber=new ResultSubscriber<>();
             proc.proc(new IProc.ProcContext(handle, resultSubscriber));
             return Flux.fromIterable(resultSubscriber.getResult());
         });
@@ -67,7 +67,7 @@ public class AbstractStoreProcTest {
         truncate(ctx, Arrays.asList(tableNames));
     }
 
-    protected void setupEntities(String...entities){
+    protected void setupEntities(boolean cleanup, String...entities){
         final Jdbi db = hubsStore.getJdbi();
         db.setSqlLogger(new SqlLogger() {
             @Override
@@ -80,11 +80,18 @@ public class AbstractStoreProcTest {
 
         if(entities.length>0) {
             TemplateGlobalContext.getContext().preload(entities);
-            process(c -> {
-                truncate(c, Arrays.stream(entities).map(e ->
-                        Util.toSnakecase(e)).collect(Collectors.toList()));
-            });
+
+            if(cleanup) {
+                process(c -> {
+                    truncate(c, Arrays.stream(entities).map(e ->
+                            Util.toSnakecase(e)).collect(Collectors.toList()));
+                });
+            }
         }
+    }
+
+    protected void setupEntities(String...entities){
+        setupEntities(false, entities);
     }
 
 }

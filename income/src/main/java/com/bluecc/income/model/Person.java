@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
+import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -212,9 +213,8 @@ public class Person implements IEventModel<PersonFlatData.Builder>, Serializable
                 .build();
     }
 
-    
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toHeadBuilder() {
+        
+    public PersonData.Builder toHeadBuilder() {
         PersonData.Builder builder = PersonData.newBuilder();
         if (partyId != null) {
             builder.setPartyId(partyId);
@@ -319,7 +319,7 @@ public class Person implements IEventModel<PersonFlatData.Builder>, Serializable
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
 }

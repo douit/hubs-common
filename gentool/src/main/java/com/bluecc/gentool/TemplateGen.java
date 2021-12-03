@@ -23,7 +23,8 @@ public class TemplateGen {
             names = { "--clip", "-c" },
             arity = 1
     )
-    private boolean clip = false;
+    boolean clip = false;
+
     public static void main(String[] args) throws IOException {
         TemplateGen main = new TemplateGen();
         JCommander.newBuilder()

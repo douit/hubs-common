@@ -1,0 +1,22 @@
+        process(c -> {
+            {{ent.messageType}} p = {{ent.messageType}}.newBuilder()
+                    .{{ent.pkSetter}}(key)
+                    .build();
+            List<{{ent.messageType}}> ds = genericProcs.find(c, p, {{ent.name}}.class).stream()
+                    .map(e -> {
+                        {{ent.messageType}}.Builder pb = e.toHeadBuilder();
+                        Message p1=e.toData();
+
+                        {% for rel in ent.validRelations %}                       
+                        // add/set {{rel.protoName}} to head entity                        
+                        if(relationsDemand.contains("{{rel.protoName}}")) {
+                            genericProcs.getRelationValues(c, p1, "{{rel.protoName}}",
+                                            {{rel.relEntityName}}.class)
+                                    .forEach(el -> pb.{{rel.relationOp}}(
+                                            {{rel.buildClause}}));
+                        }
+                        {% endfor %}
+
+                        return pb.build();
+                    }).collect(Collectors.toList());
+        });

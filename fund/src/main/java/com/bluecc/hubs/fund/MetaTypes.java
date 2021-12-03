@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +30,17 @@ public class MetaTypes {
     public static MetaList typeList=types();
     // $ just gen SqlGenTool
     public static MetaTypes.MetaList metaList=getAvailableEntities();
+    public static Set<String> getAllEntities(){
+        return Collections.unmodifiableSet(metaList.getEntities());
+    }
+    public static Set<String> getAllEntitiesCopy(){
+        return new HashSet<>(metaList.getEntities());
+    }
+    public static Set<String> getNonHeadEntities(){
+        Set<String> ents=MetaTypes.getAllEntitiesCopy();
+        ents.removeAll(HeadEntityResources.allHeads());
+        return ents;
+    }
 
     public static MetaList types()  {
         try {

@@ -23,9 +23,9 @@ public class AbstractMemStoreProcTest {
     //        return null;
     //     });
     // }
-    protected Flux<IModel> process(IProc proc){
+    protected Flux<IModel<?>> process(IProc proc){
         return store.getJdbi().withHandle(handle -> {
-            ResultSubscriber<IModel> resultSubscriber=new ResultSubscriber<>();
+            ResultSubscriber<IModel<?>> resultSubscriber=new ResultSubscriber<>();
             proc.proc(new IProc.ProcContext(handle, resultSubscriber));
             return Flux.fromIterable(resultSubscriber.getResult());
         });

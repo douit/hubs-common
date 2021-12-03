@@ -265,45 +265,6 @@
       "validators": []
     },
     {
-      "name": "oldInvoiceSequenceEnumId",
-      "type": "id",
-      "col": "INVOICE_SEQUENCE_ENUM_ID",
-      "pk": false,
-      "notNull": false,
-      "encrypt": false,
-      "autoCreatedInternal": false,
-      "javaType": "String",
-      "sqlType": "VARCHAR(20)",
-      "stringLength": 20,
-      "validators": []
-    },
-    {
-      "name": "oldOrderSequenceEnumId",
-      "type": "id",
-      "col": "ORDER_SEQUENCE_ENUM_ID",
-      "pk": false,
-      "notNull": false,
-      "encrypt": false,
-      "autoCreatedInternal": false,
-      "javaType": "String",
-      "sqlType": "VARCHAR(20)",
-      "stringLength": 20,
-      "validators": []
-    },
-    {
-      "name": "oldQuoteSequenceEnumId",
-      "type": "id",
-      "col": "QUOTE_SEQUENCE_ENUM_ID",
-      "pk": false,
-      "notNull": false,
-      "encrypt": false,
-      "autoCreatedInternal": false,
-      "javaType": "String",
-      "sqlType": "VARCHAR(20)",
-      "stringLength": 20,
-      "validators": []
-    },
-    {
       "name": "lastUpdatedStamp",
       "type": "date-time",
       "col": "LAST_UPDATED_STAMP",

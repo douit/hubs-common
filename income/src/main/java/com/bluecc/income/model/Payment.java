@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
+import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -147,9 +148,8 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
                 .build();
     }
 
-    
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toHeadBuilder() {
+        
+    public PaymentData.Builder toHeadBuilder() {
         PaymentData.Builder builder = PaymentData.newBuilder();
         if (paymentId != null) {
             builder.setPaymentId(paymentId);
@@ -200,7 +200,7 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
 }

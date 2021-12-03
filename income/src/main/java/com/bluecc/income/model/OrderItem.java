@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
+import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -292,9 +293,8 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
                 .build();
     }
 
-    
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toHeadBuilder() {
+        
+    public OrderItemData.Builder toHeadBuilder() {
         OrderItemData.Builder builder = OrderItemData.newBuilder();
         if (orderId != null) {
             builder.setOrderId(orderId);
@@ -432,7 +432,7 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
             builder.setId(id);
         }
                     
-        return (T)builder;
+        return builder;
     }
 
 }

@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
+import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -97,9 +98,8 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
                 .build();
     }
 
-    
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toHeadBuilder() {
+        
+    public ProdCatalogData.Builder toHeadBuilder() {
         ProdCatalogData.Builder builder = ProdCatalogData.newBuilder();
         if (prodCatalogId != null) {
             builder.setProdCatalogId(prodCatalogId);
@@ -135,7 +135,7 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
 }

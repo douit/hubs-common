@@ -6,6 +6,7 @@ import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.template.NamedFilter;
 import com.bluecc.hubs.fund.template.SnakeCaseFilter;
 import com.bluecc.hubs.fund.template.VarFilter;
+import com.google.common.base.CaseFormat;
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Resources;
@@ -21,6 +22,8 @@ public class TemplateUtil {
         jinjava.getGlobalContext().registerFilter(new SnakeCaseFilter());
         jinjava.getGlobalContext().registerFilter(new NamedFilter("camelCase",
                 e -> Util.snakeToCamel(e.toString())));
+        jinjava.getGlobalContext().registerFilter(new NamedFilter("upperSnake",
+                e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, e.toString())));
 
         String template = Resources.toString(Resources
                         .getResource(templateLoc),

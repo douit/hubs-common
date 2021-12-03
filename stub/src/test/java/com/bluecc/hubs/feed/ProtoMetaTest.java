@@ -29,4 +29,12 @@ public class ProtoMetaTest {
     public void dumpMetaToJson(){
         pretty(protoMeta.getEntityMeta("Person"));
     }
+
+    public static final String PARTY_CONTACT_MECH_PURPOSE
+            = "party_contact_mech_purpose"; // many
+    @Test
+    public void testRelationConstants(){
+        protoMeta.getEntityMeta("Person").getRelations()
+                .forEach(e -> System.out.println(e.getConstantDef()));
+    }
 }

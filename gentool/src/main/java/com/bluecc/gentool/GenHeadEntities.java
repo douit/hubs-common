@@ -7,6 +7,9 @@ import com.google.common.collect.ImmutableMap;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import static com.bluecc.gentool.GenModule.startup;
 import static com.bluecc.hubs.fund.MetaTypes.typeList;
@@ -20,7 +23,8 @@ public class GenHeadEntities {
         genHeadEntities.startGen();
 
         // ...
-        genHeadEntities.genBean("ProductPrice", "ProductConfig");
+        // genHeadEntities.genBean("ProductPrice", "ProductConfig");
+        genHeadEntities.genBean(MetaTypes.getNonHeadEntities());
     }
 
     @Inject
@@ -47,7 +51,7 @@ public class GenHeadEntities {
         });
     }
 
-    public void genBean(String... ents) throws IOException {
+    public void genBean(Collection<String> ents) throws IOException {
         for (String e : ents) {
             String conv_part = TemplateUtil.sourceGen(e, "bean_conv", true);
             // String cnt= TemplateUtil.sourceGen(e, "bean", true);
@@ -62,6 +66,9 @@ public class GenHeadEntities {
                             "head_part", head_part));
             Util.writeFile(cnt, conf.prependModelFile(e + ".java"));
         }
+    }
+    public void genBean(String... ents) throws IOException {
+        genBean(Arrays.asList(ents));
     }
 
     EntityMetaProcessors metaProcessors=new EntityMetaProcessors();

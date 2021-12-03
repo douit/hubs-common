@@ -14,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
 
@@ -109,6 +110,14 @@ public class ProtoTest {
         assertEquals( bigDecimal, deserialized);
         System.out.println("DecimalValue size: " + serialized.getSerializedSize());
         // System.out.println("String: " + StringValue.of(pi).getSerializedSize());
+    }
+
+    @Test
+    public void testByteString(){
+        byte[] bytes=new String("test").getBytes(StandardCharsets.UTF_8);
+        ByteString byteString=ByteString.copyFrom(bytes);
+        byte[] toByteArray=byteString.toByteArray();
+        assertArrayEquals(bytes, toByteArray);
     }
 
     @Test

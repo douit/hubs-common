@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
+import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -97,9 +98,8 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
                 .build();
     }
 
-    
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toHeadBuilder() {
+        
+    public PartyGroupData.Builder toHeadBuilder() {
         PartyGroupData.Builder builder = PartyGroupData.newBuilder();
         if (partyId != null) {
             builder.setPartyId(partyId);
@@ -135,7 +135,7 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
 }

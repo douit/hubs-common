@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
 import com.google.protobuf.Message;
+import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -132,9 +133,8 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serial
                 .build();
     }
 
-    
-    @SuppressWarnings("unchecked")
-    public <T extends Message.Builder> T toHeadBuilder() {
+        
+    public UserLoginData.Builder toHeadBuilder() {
         UserLoginData.Builder builder = UserLoginData.newBuilder();
         if (userLoginId != null) {
             builder.setUserLoginId(userLoginId);
@@ -188,7 +188,7 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serial
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return (T)builder;
+        return builder;
     }
 
 }
