@@ -1,8 +1,10 @@
-        process(c -> {
+    @Action
+    public Function<String, Flux<IModel<?>>> query{{ent.name}}Relations(String key, Set<String> relationsDemand) { 
+        return input -> process(ctx -> {
             {{ent.messageType}} p = {{ent.messageType}}.newBuilder()
                     .{{ent.pkSetter}}(key)
                     .build();
-            List<{{ent.messageType}}> ds = genericProcs.find(c, p, {{ent.name}}.class).stream()
+            List<{{ent.messageType}}.Builder> ds = genericProcs.find(c, p, {{ent.name}}.class).stream()
                     .map(e -> {
                         {{ent.messageType}}.Builder pb = e.toHeadBuilder();
                         Message p1=e.toData();
@@ -17,6 +19,11 @@
                         }
                         {% endfor %}
 
-                        return pb.build();
+                        return pb;
                     }).collect(Collectors.toList());
+            
+            ds.forEach(e -> ctx.getSubscriber().onNext(new ModelWrapper<>(e)));
+            ctx.getSubscriber().onComplete();
         });
+    }
+

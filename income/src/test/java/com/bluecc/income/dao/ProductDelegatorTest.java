@@ -5,9 +5,12 @@ import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.descriptor.INameSymbol;
+import com.bluecc.hubs.fund.model.IModel;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.income.exchange.ResultSubscriber;
+import com.bluecc.income.helper.ModelWrapper;
 import com.bluecc.income.model.*;
 import com.bluecc.income.procs.AbstractProcs;
 import com.github.javafaker.Faker;
@@ -353,11 +356,10 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
             ProductData p = ProductData.newBuilder()
                     .setProductId(key)
                     .build();
-            List<ProductData> ds = genericProcs.find(c, p, Product.class).stream()
+            List<ProductData.Builder> ds = genericProcs.find(c, p, Product.class).stream()
                     .map(e -> {
                         ProductData.Builder pb = e.toHeadBuilder();
                         Message p1=e.toData();
-
 
                         // add/set primary_product_category to head entity
                         if(relationsDemand.contains("primary_product_category")) {
@@ -632,10 +634,15 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
                         }
 
 
-                        return pb.build();
+                        return pb;
                     }).collect(Collectors.toList());
 
-            ds.forEach(e -> System.out.println(e));
+            ResultSubscriber<IModel<?>> resultSubscriber=new ResultSubscriber<>();
+            ds.forEach(e -> resultSubscriber.onNext(new ModelWrapper<>(e)));
+            resultSubscriber.onComplete();
+
+            resultSubscriber.getResult()
+                    .forEach(e -> System.out.println(e.toData()));
         });
 
     }
