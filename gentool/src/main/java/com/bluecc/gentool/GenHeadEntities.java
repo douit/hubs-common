@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.bluecc.gentool.GenModule.startup;
+import static com.bluecc.hubs.fund.MetaTypes.typeList;
 
 /**
  * $ just gen GenHeadEntities
@@ -19,7 +20,7 @@ public class GenHeadEntities {
         genHeadEntities.startGen();
 
         // ...
-        genHeadEntities.genBean("ProductPrice");
+        genHeadEntities.genBean("ProductPrice", "ProductConfig");
     }
 
     @Inject
@@ -51,9 +52,28 @@ public class GenHeadEntities {
             String conv_part = TemplateUtil.sourceGen(e, "bean_conv", true);
             // String cnt= TemplateUtil.sourceGen(e, "bean", true);
             EntityMeta meta = EntityMetaManager.getEntityMeta(e, true);
+            String head_part ="";
+            if(meta.isHeadEntity()){
+                head_part = genHeadPart(e);
+            }
             String cnt = TemplateUtil.build("templates/bean_source.j2",
-                    ImmutableMap.of("ent", meta, "conv_part", conv_part));
+                    ImmutableMap.of("ent", meta,
+                            "conv_part", conv_part,
+                            "head_part", head_part));
             Util.writeFile(cnt, conf.prependModelFile(e + ".java"));
         }
+    }
+
+    EntityMetaProcessors metaProcessors=new EntityMetaProcessors();
+    private String genHeadPart(String e) throws IOException {
+        // String head_part = TemplateUtil.sourceGen(e, "bean_conv_head", true);
+        // return head_part;
+        EntityMeta meta= EntityMetaManager.getEntityMeta(e, true);
+        // EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
+        // setup the entity-meta-info
+        metaProcessors.processRelations(meta);
+
+        return TemplateUtil.build("templates/bean_conv_head_source.j2",
+                ImmutableMap.of("ent", meta ));
     }
 }

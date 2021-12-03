@@ -241,6 +241,10 @@ public class EntityMeta {
         if(HeadEntityResources.contains(name)){
             return name+"FlatData";
         }
+        return getMessageType();
+    }
+
+    public String getMessageType(){
         return name+"Data";
     }
 
@@ -446,6 +450,10 @@ public class EntityMeta {
 
         public String getProtoName(){
             return Util.toSnakecase(name);
+        }
+
+        public String getTableName(){
+            return Util.toSnakecase(relEntityName);
         }
 
         public boolean isRepeated(){

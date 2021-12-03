@@ -9,6 +9,7 @@ import com.bluecc.hubs.stub.*;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Product;
+import com.bluecc.income.model.ProductConfig;
 import com.bluecc.income.model.ProductPrice;
 import com.bluecc.income.procs.AbstractProcs;
 import com.github.javafaker.Faker;
@@ -39,8 +40,9 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
 
     @Before
     public void setUp() throws Exception {
-        setupEntities("Product");
+        // setupEntities("Product");
         // rowMapper(Product.class, ProductPrice.class);
+        setupEntities();
     }
 
     Faker faker = new Faker(new Locale("zh-CN"));
@@ -198,7 +200,7 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
 
             // sum with proto
             List<ProductPriceData> ds = rs.stream()
-                    .map(p -> (ProductPriceData)p.toData())
+                    .map(p -> (ProductPriceData) p.toData())
                     .collect(Collectors.toList());
             BigDecimal result2 = ds.stream()
                     .map(p -> new BigDecimal(p.getPrice().getValue()))
@@ -235,9 +237,9 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
 
 
     @Test
-    public void testExtractedTableInfo(){
+    public void testExtractedTableInfo() {
         ProductConfigData productConfigData = getProductConfigData();
-        AbstractProcs.ExtractedTableInfo tableInfo=genericProcs.extract(productConfigData);
+        AbstractProcs.ExtractedTableInfo tableInfo = genericProcs.extract(productConfigData);
         pretty(tableInfo);
     }
 
@@ -255,7 +257,7 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
     }
 
     private ProductConfigData getProductConfigData() {
-        ProductConfigData productConfigData=ProductConfigData.newBuilder()
+        ProductConfigData productConfigData = ProductConfigData.newBuilder()
                 .setProductId("pc001")
                 .setConfigItemId("it0003")
                 .setSequenceNum(0)
@@ -264,5 +266,34 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
                 .setIsMandatory(Indicator.YES)
                 .build();
         return productConfigData;
+    }
+
+    @Test
+    public void testProductList() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(Dao.class);
+            // genericProcs.all(c, EntityNames.Product, 0);
+            ProductData p = ProductData.newBuilder()
+                    .setProductId("PC001")
+                    .build();
+            genericProcs.find(c, p, Product.class)
+                    .forEach(e -> {
+                        pretty(e);
+                        // add price to head entity
+                        ProductData.Builder pb = e.toHeadBuilder();
+                        genericProcs.getRelationValues(c, p, "product_price",
+                                        ProductPrice.class)
+                                .forEach(pprice -> pb.addProductPrice(
+                                        (ProductPriceData) pprice.toData()));
+                        genericProcs.getRelationValues(c, p, "product_product_config",
+                                        ProductConfig.class)
+                                .forEach(pconfig -> pb.addProductProductConfig(
+                                        (ProductConfigData) pconfig.toData()));
+
+                        System.out.println("↪️  " + pb.build());
+                        System.out.println("--------------");
+                    });
+
+        });
     }
 }

@@ -9,4 +9,5 @@ public interface IModel {
     java.time.LocalDateTime getCreatedTxStamp();
 
     Message toData();
+    <T extends Message.Builder> T toDataBuilder();
 }

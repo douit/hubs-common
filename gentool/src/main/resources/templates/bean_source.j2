@@ -10,6 +10,9 @@ import com.google.protobuf.Message;
 import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.{{ent.flatMessageType}};
+{% if ent.headEntity %}
+import com.bluecc.hubs.stub.{{ent.messageType}};
+{% endif %}
 
 @Data
 @Builder
@@ -23,4 +26,5 @@ public class {{ent.name}} implements IModel, Serializable {
     {% endfor %}
 
     {{conv_part}}
+    {{head_part}}
 }

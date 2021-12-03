@@ -1,12 +1,17 @@
     
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         {{ent.flatMessageType}}.Builder builder = {{ent.flatMessageType}}.newBuilder();
         {% for f in ent.messageFields -%}
         if ({{f.name}} != null) {
             builder.{{f.protoSetter}};
         }
         {% endfor %}            
-        return builder.build();
+        return (T)builder;
     }
 
     public static {{ent.name}} fromData({{ent.flatMessageType}} data) {

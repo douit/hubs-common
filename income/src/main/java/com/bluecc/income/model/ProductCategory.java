@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 
+import com.bluecc.hubs.stub.ProductCategoryData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -37,6 +40,11 @@ public class ProductCategory implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         ProductCategoryFlatData.Builder builder = ProductCategoryFlatData.newBuilder();
         if (productCategoryId != null) {
             builder.setProductCategoryId(productCategoryId);
@@ -78,7 +86,7 @@ public class ProductCategory implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static ProductCategory fromData(ProductCategoryFlatData data) {
@@ -98,6 +106,50 @@ public class ProductCategory implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        ProductCategoryData.Builder builder = ProductCategoryData.newBuilder();
+        if (productCategoryId != null) {
+            builder.setProductCategoryId(productCategoryId);
+        }
+        if (productCategoryTypeId != null) {
+            builder.setProductCategoryTypeId(productCategoryTypeId);
+        }
+        if (categoryName != null) {
+            builder.setCategoryName(categoryName);
+        }
+        if (description != null) {
+            builder.setDescription(description);
+        }
+        if (longDescription != null) {
+            builder.setLongDescription(longDescription);
+        }
+        if (categoryImageUrl != null) {
+            builder.setCategoryImageUrl(categoryImageUrl);
+        }
+        if (linkOneImageUrl != null) {
+            builder.setLinkOneImageUrl(linkOneImageUrl);
+        }
+        if (linkTwoImageUrl != null) {
+            builder.setLinkTwoImageUrl(linkTwoImageUrl);
+        }
+        if (detailScreen != null) {
+            builder.setDetailScreen(detailScreen);
+        }
+        if (showInSelect != null) {
+            builder.setShowInSelect(getIndicator(showInSelect));
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

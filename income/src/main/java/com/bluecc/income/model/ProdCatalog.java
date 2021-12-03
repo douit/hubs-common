@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ProdCatalogFlatData;
 
+import com.bluecc.hubs.stub.ProdCatalogData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -35,6 +38,11 @@ public class ProdCatalog implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         ProdCatalogFlatData.Builder builder = ProdCatalogFlatData.newBuilder();
         if (prodCatalogId != null) {
             builder.setProdCatalogId(prodCatalogId);
@@ -70,7 +78,7 @@ public class ProdCatalog implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static ProdCatalog fromData(ProdCatalogFlatData data) {
@@ -88,6 +96,47 @@ public class ProdCatalog implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        ProdCatalogData.Builder builder = ProdCatalogData.newBuilder();
+        if (prodCatalogId != null) {
+            builder.setProdCatalogId(prodCatalogId);
+        }
+        if (catalogName != null) {
+            builder.setCatalogName(catalogName);
+        }
+        if (useQuickAdd != null) {
+            builder.setUseQuickAdd(getIndicator(useQuickAdd));
+        }
+        if (styleSheet != null) {
+            builder.setStyleSheet(styleSheet);
+        }
+        if (headerLogo != null) {
+            builder.setHeaderLogo(headerLogo);
+        }
+        if (contentPathPrefix != null) {
+            builder.setContentPathPrefix(contentPathPrefix);
+        }
+        if (templatePathPrefix != null) {
+            builder.setTemplatePathPrefix(templatePathPrefix);
+        }
+        if (viewAllowPermReqd != null) {
+            builder.setViewAllowPermReqd(getIndicator(viewAllowPermReqd));
+        }
+        if (purchaseAllowPermReqd != null) {
+            builder.setPurchaseAllowPermReqd(getIndicator(purchaseAllowPermReqd));
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

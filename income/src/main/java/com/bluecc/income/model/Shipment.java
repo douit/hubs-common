@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ShipmentFlatData;
 
+import com.bluecc.hubs.stub.ShipmentData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -56,6 +59,11 @@ public class Shipment implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         ShipmentFlatData.Builder builder = ShipmentFlatData.newBuilder();
         if (shipmentId != null) {
             builder.setShipmentId(shipmentId);
@@ -154,7 +162,7 @@ public class Shipment implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static Shipment fromData(ShipmentFlatData data) {
@@ -193,6 +201,83 @@ public class Shipment implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        ShipmentData.Builder builder = ShipmentData.newBuilder();
+        if (shipmentId != null) {
+            builder.setShipmentId(shipmentId);
+        }
+        if (shipmentTypeId != null) {
+            builder.setShipmentTypeId(shipmentTypeId);
+        }
+        if (statusId != null) {
+            builder.setStatusId(statusId);
+        }
+        if (primaryReturnId != null) {
+            builder.setPrimaryReturnId(primaryReturnId);
+        }
+        if (primaryShipGroupSeqId != null) {
+            builder.setPrimaryShipGroupSeqId(primaryShipGroupSeqId);
+        }
+        if (picklistBinId != null) {
+            builder.setPicklistBinId(picklistBinId);
+        }
+        if (estimatedReadyDate != null) {
+            builder.setEstimatedReadyDate(getTimestamp(estimatedReadyDate));
+        }
+        if (estimatedShipDate != null) {
+            builder.setEstimatedShipDate(getTimestamp(estimatedShipDate));
+        }
+        if (estimatedArrivalDate != null) {
+            builder.setEstimatedArrivalDate(getTimestamp(estimatedArrivalDate));
+        }
+        if (latestCancelDate != null) {
+            builder.setLatestCancelDate(getTimestamp(latestCancelDate));
+        }
+        if (estimatedShipCost != null) {
+            builder.setEstimatedShipCost(getCurrency(estimatedShipCost));
+        }
+        if (currencyUomId != null) {
+            builder.setCurrencyUomId(currencyUomId);
+        }
+        if (handlingInstructions != null) {
+            builder.setHandlingInstructions(handlingInstructions);
+        }
+        if (originFacilityId != null) {
+            builder.setOriginFacilityId(originFacilityId);
+        }
+        if (destinationFacilityId != null) {
+            builder.setDestinationFacilityId(destinationFacilityId);
+        }
+        if (additionalShippingCharge != null) {
+            builder.setAdditionalShippingCharge(getCurrency(additionalShippingCharge));
+        }
+        if (addtlShippingChargeDesc != null) {
+            builder.setAddtlShippingChargeDesc(addtlShippingChargeDesc);
+        }
+        if (createdDate != null) {
+            builder.setCreatedDate(getTimestamp(createdDate));
+        }
+        if (createdByUserLogin != null) {
+            builder.setCreatedByUserLogin(createdByUserLogin);
+        }
+        if (lastModifiedDate != null) {
+            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        }
+        if (lastModifiedByUserLogin != null) {
+            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

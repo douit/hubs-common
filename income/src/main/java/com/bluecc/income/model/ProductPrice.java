@@ -11,6 +11,7 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ProductPriceData;
 
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -48,6 +49,11 @@ public class ProductPrice implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         ProductPriceData.Builder builder = ProductPriceData.newBuilder();
         if (productId != null) {
             builder.setProductId(productId);
@@ -122,7 +128,7 @@ public class ProductPrice implements IModel, Serializable {
             builder.setId(id);
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static ProductPrice fromData(ProductPriceData data) {
@@ -155,4 +161,5 @@ public class ProductPrice implements IModel, Serializable {
                 .build();
     }
 
+    
 }

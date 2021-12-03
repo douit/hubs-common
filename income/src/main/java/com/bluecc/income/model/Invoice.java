@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.InvoiceFlatData;
 
+import com.bluecc.hubs.stub.InvoiceData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -42,6 +45,11 @@ public class Invoice implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         InvoiceFlatData.Builder builder = InvoiceFlatData.newBuilder();
         if (invoiceId != null) {
             builder.setInvoiceId(invoiceId);
@@ -98,7 +106,7 @@ public class Invoice implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static Invoice fromData(InvoiceFlatData data) {
@@ -123,6 +131,56 @@ public class Invoice implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        InvoiceData.Builder builder = InvoiceData.newBuilder();
+        if (invoiceId != null) {
+            builder.setInvoiceId(invoiceId);
+        }
+        if (invoiceTypeId != null) {
+            builder.setInvoiceTypeId(invoiceTypeId);
+        }
+        if (partyIdFrom != null) {
+            builder.setPartyIdFrom(partyIdFrom);
+        }
+        if (roleTypeId != null) {
+            builder.setRoleTypeId(roleTypeId);
+        }
+        if (statusId != null) {
+            builder.setStatusId(statusId);
+        }
+        if (invoiceDate != null) {
+            builder.setInvoiceDate(getTimestamp(invoiceDate));
+        }
+        if (dueDate != null) {
+            builder.setDueDate(getTimestamp(dueDate));
+        }
+        if (paidDate != null) {
+            builder.setPaidDate(getTimestamp(paidDate));
+        }
+        if (invoiceMessage != null) {
+            builder.setInvoiceMessage(invoiceMessage);
+        }
+        if (referenceNumber != null) {
+            builder.setReferenceNumber(referenceNumber);
+        }
+        if (description != null) {
+            builder.setDescription(description);
+        }
+        if (currencyUomId != null) {
+            builder.setCurrencyUomId(currencyUomId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

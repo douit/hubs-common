@@ -78,11 +78,13 @@ public class AbstractStoreProcTest {
             }
         });
 
-        TemplateGlobalContext.getContext().preload(entities);
-        process(c -> {
-            truncate(c, Arrays.stream(entities).map(e ->
-                    Util.toSnakecase(e)).collect(Collectors.toList()));
-        });
+        if(entities.length>0) {
+            TemplateGlobalContext.getContext().preload(entities);
+            process(c -> {
+                truncate(c, Arrays.stream(entities).map(e ->
+                        Util.toSnakecase(e)).collect(Collectors.toList()));
+            });
+        }
     }
 
 }

@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.PartyFlatData;
 
+import com.bluecc.hubs.stub.PartyData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -38,6 +41,11 @@ public class Party implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         PartyFlatData.Builder builder = PartyFlatData.newBuilder();
         if (partyId != null) {
             builder.setPartyId(partyId);
@@ -82,7 +90,7 @@ public class Party implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static Party fromData(PartyFlatData data) {
@@ -103,6 +111,50 @@ public class Party implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        PartyData.Builder builder = PartyData.newBuilder();
+        if (partyId != null) {
+            builder.setPartyId(partyId);
+        }
+        if (partyTypeId != null) {
+            builder.setPartyTypeId(partyTypeId);
+        }
+        if (externalId != null) {
+            builder.setExternalId(externalId);
+        }
+        if (preferredCurrencyUomId != null) {
+            builder.setPreferredCurrencyUomId(preferredCurrencyUomId);
+        }
+        if (description != null) {
+            builder.setDescription(description);
+        }
+        if (statusId != null) {
+            builder.setStatusId(statusId);
+        }
+        if (createdDate != null) {
+            builder.setCreatedDate(getTimestamp(createdDate));
+        }
+        if (lastModifiedDate != null) {
+            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        }
+        if (dataSourceId != null) {
+            builder.setDataSourceId(dataSourceId);
+        }
+        if (isUnread != null) {
+            builder.setIsUnread(getIndicator(isUnread));
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

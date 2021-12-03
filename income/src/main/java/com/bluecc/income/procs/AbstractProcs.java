@@ -332,11 +332,19 @@ public class AbstractProcs {
         return all(c, flatData, 0);
     }
 
+    public List<Map<String, Object>> all(IProc.ProcContext c, INameSymbol symbol, int limit) {
+        return all(c, symbol.getTable(), limit);
+    }
+
     public List<Map<String, Object>> all(IProc.ProcContext c, Message flatData, int limit) {
+        return all(c, getTableByMessage(flatData), limit);
+    }
+
+    public List<Map<String, Object>> all(IProc.ProcContext c, String table, int limit) {
         List<Map<String,Object>> rs= c.getHandle().createQuery(
-                format("select * from %s %s",
-                        getTableByMessage(flatData),
-                        limit==0?":":"limit "+limit))
+                        format("select * from %s %s",
+                                table,
+                                limit==0?":":"limit "+limit))
                 .mapToMap().list();
         return rs;
     }
@@ -348,7 +356,7 @@ public class AbstractProcs {
         EntityMeta p = protoMeta.getEntityMeta(ProtoTypes.getEntityTypeByMessage(message));
         EntityMeta.RelationMeta relationMeta = p.findRelationByProtoName(relName).get();
         String relEnt = relationMeta.getRelEntityName();
-        String table = relationMeta.getProtoName();
+        String table = relationMeta.getTableName();
         Map<String, Object> e = transferRelations(message,
                 relName, relEnt);
 

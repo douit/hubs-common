@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.PaymentFlatData;
 
+import com.bluecc.hubs.stub.PaymentData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -45,6 +48,11 @@ public class Payment implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         PaymentFlatData.Builder builder = PaymentFlatData.newBuilder();
         if (paymentId != null) {
             builder.setPaymentId(paymentId);
@@ -110,7 +118,7 @@ public class Payment implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static Payment fromData(PaymentFlatData data) {
@@ -138,6 +146,62 @@ public class Payment implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        PaymentData.Builder builder = PaymentData.newBuilder();
+        if (paymentId != null) {
+            builder.setPaymentId(paymentId);
+        }
+        if (paymentTypeId != null) {
+            builder.setPaymentTypeId(paymentTypeId);
+        }
+        if (paymentMethodTypeId != null) {
+            builder.setPaymentMethodTypeId(paymentMethodTypeId);
+        }
+        if (roleTypeIdTo != null) {
+            builder.setRoleTypeIdTo(roleTypeIdTo);
+        }
+        if (statusId != null) {
+            builder.setStatusId(statusId);
+        }
+        if (effectiveDate != null) {
+            builder.setEffectiveDate(getTimestamp(effectiveDate));
+        }
+        if (paymentRefNum != null) {
+            builder.setPaymentRefNum(paymentRefNum);
+        }
+        if (amount != null) {
+            builder.setAmount(getCurrency(amount));
+        }
+        if (currencyUomId != null) {
+            builder.setCurrencyUomId(currencyUomId);
+        }
+        if (comments != null) {
+            builder.setComments(comments);
+        }
+        if (finAccountTransId != null) {
+            builder.setFinAccountTransId(finAccountTransId);
+        }
+        if (overrideGlAccountId != null) {
+            builder.setOverrideGlAccountId(overrideGlAccountId);
+        }
+        if (actualCurrencyAmount != null) {
+            builder.setActualCurrencyAmount(getCurrency(actualCurrencyAmount));
+        }
+        if (actualCurrencyUomId != null) {
+            builder.setActualCurrencyUomId(actualCurrencyUomId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

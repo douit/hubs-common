@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.OrderItemFlatData;
 
+import com.bluecc.hubs.stub.OrderItemData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -74,6 +77,11 @@ public class OrderItem implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         OrderItemFlatData.Builder builder = OrderItemFlatData.newBuilder();
         if (orderId != null) {
             builder.setOrderId(orderId);
@@ -226,7 +234,7 @@ public class OrderItem implements IModel, Serializable {
             builder.setId(id);
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static OrderItem fromData(OrderItemFlatData data) {
@@ -283,6 +291,149 @@ public class OrderItem implements IModel, Serializable {
                 .id(data.getId())
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        OrderItemData.Builder builder = OrderItemData.newBuilder();
+        if (orderId != null) {
+            builder.setOrderId(orderId);
+        }
+        if (orderItemSeqId != null) {
+            builder.setOrderItemSeqId(orderItemSeqId);
+        }
+        if (externalId != null) {
+            builder.setExternalId(externalId);
+        }
+        if (orderItemTypeId != null) {
+            builder.setOrderItemTypeId(orderItemTypeId);
+        }
+        if (orderItemGroupSeqId != null) {
+            builder.setOrderItemGroupSeqId(orderItemGroupSeqId);
+        }
+        if (isItemGroupPrimary != null) {
+            builder.setIsItemGroupPrimary(getIndicator(isItemGroupPrimary));
+        }
+        if (budgetId != null) {
+            builder.setBudgetId(budgetId);
+        }
+        if (budgetItemSeqId != null) {
+            builder.setBudgetItemSeqId(budgetItemSeqId);
+        }
+        if (supplierProductId != null) {
+            builder.setSupplierProductId(supplierProductId);
+        }
+        if (productFeatureId != null) {
+            builder.setProductFeatureId(productFeatureId);
+        }
+        if (prodCatalogId != null) {
+            builder.setProdCatalogId(prodCatalogId);
+        }
+        if (productCategoryId != null) {
+            builder.setProductCategoryId(productCategoryId);
+        }
+        if (isPromo != null) {
+            builder.setIsPromo(getIndicator(isPromo));
+        }
+        if (quoteItemSeqId != null) {
+            builder.setQuoteItemSeqId(quoteItemSeqId);
+        }
+        if (shoppingListId != null) {
+            builder.setShoppingListId(shoppingListId);
+        }
+        if (shoppingListItemSeqId != null) {
+            builder.setShoppingListItemSeqId(shoppingListItemSeqId);
+        }
+        if (subscriptionId != null) {
+            builder.setSubscriptionId(subscriptionId);
+        }
+        if (deploymentId != null) {
+            builder.setDeploymentId(deploymentId);
+        }
+        if (quantity != null) {
+            builder.setQuantity(getFixedPoint(quantity));
+        }
+        if (cancelQuantity != null) {
+            builder.setCancelQuantity(getFixedPoint(cancelQuantity));
+        }
+        if (selectedAmount != null) {
+            builder.setSelectedAmount(getFixedPoint(selectedAmount));
+        }
+        if (unitPrice != null) {
+            builder.setUnitPrice(getCurrency(unitPrice));
+        }
+        if (unitListPrice != null) {
+            builder.setUnitListPrice(getCurrency(unitListPrice));
+        }
+        if (unitAverageCost != null) {
+            builder.setUnitAverageCost(getCurrency(unitAverageCost));
+        }
+        if (unitRecurringPrice != null) {
+            builder.setUnitRecurringPrice(getCurrency(unitRecurringPrice));
+        }
+        if (isModifiedPrice != null) {
+            builder.setIsModifiedPrice(getIndicator(isModifiedPrice));
+        }
+        if (recurringFreqUomId != null) {
+            builder.setRecurringFreqUomId(recurringFreqUomId);
+        }
+        if (itemDescription != null) {
+            builder.setItemDescription(itemDescription);
+        }
+        if (comments != null) {
+            builder.setComments(comments);
+        }
+        if (correspondingPoId != null) {
+            builder.setCorrespondingPoId(correspondingPoId);
+        }
+        if (statusId != null) {
+            builder.setStatusId(statusId);
+        }
+        if (syncStatusId != null) {
+            builder.setSyncStatusId(syncStatusId);
+        }
+        if (estimatedShipDate != null) {
+            builder.setEstimatedShipDate(getTimestamp(estimatedShipDate));
+        }
+        if (estimatedDeliveryDate != null) {
+            builder.setEstimatedDeliveryDate(getTimestamp(estimatedDeliveryDate));
+        }
+        if (autoCancelDate != null) {
+            builder.setAutoCancelDate(getTimestamp(autoCancelDate));
+        }
+        if (dontCancelSetDate != null) {
+            builder.setDontCancelSetDate(getTimestamp(dontCancelSetDate));
+        }
+        if (shipBeforeDate != null) {
+            builder.setShipBeforeDate(getTimestamp(shipBeforeDate));
+        }
+        if (shipAfterDate != null) {
+            builder.setShipAfterDate(getTimestamp(shipAfterDate));
+        }
+        if (reserveAfterDate != null) {
+            builder.setReserveAfterDate(getTimestamp(reserveAfterDate));
+        }
+        if (cancelBackOrderDate != null) {
+            builder.setCancelBackOrderDate(getTimestamp(cancelBackOrderDate));
+        }
+        if (overrideGlAccountId != null) {
+            builder.setOverrideGlAccountId(overrideGlAccountId);
+        }
+        if (salesOpportunityId != null) {
+            builder.setSalesOpportunityId(salesOpportunityId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+        if (id != null) {
+            builder.setId(id);
+        }
+                    
+        return (T)builder;
     }
 
 }

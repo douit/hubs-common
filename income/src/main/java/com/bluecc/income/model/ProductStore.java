@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 
+import com.bluecc.hubs.stub.ProductStoreData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -104,6 +107,11 @@ public class ProductStore implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         ProductStoreFlatData.Builder builder = ProductStoreFlatData.newBuilder();
         if (productStoreId != null) {
             builder.setProductStoreId(productStoreId);
@@ -346,7 +354,7 @@ public class ProductStore implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static ProductStore fromData(ProductStoreFlatData data) {
@@ -433,6 +441,254 @@ public class ProductStore implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        ProductStoreData.Builder builder = ProductStoreData.newBuilder();
+        if (productStoreId != null) {
+            builder.setProductStoreId(productStoreId);
+        }
+        if (primaryStoreGroupId != null) {
+            builder.setPrimaryStoreGroupId(primaryStoreGroupId);
+        }
+        if (storeName != null) {
+            builder.setStoreName(storeName);
+        }
+        if (companyName != null) {
+            builder.setCompanyName(companyName);
+        }
+        if (title != null) {
+            builder.setTitle(title);
+        }
+        if (subtitle != null) {
+            builder.setSubtitle(subtitle);
+        }
+        if (payToPartyId != null) {
+            builder.setPayToPartyId(payToPartyId);
+        }
+        if (daysToCancelNonPay != null) {
+            builder.setDaysToCancelNonPay(daysToCancelNonPay);
+        }
+        if (manualAuthIsCapture != null) {
+            builder.setManualAuthIsCapture(getIndicator(manualAuthIsCapture));
+        }
+        if (prorateShipping != null) {
+            builder.setProrateShipping(getIndicator(prorateShipping));
+        }
+        if (prorateTaxes != null) {
+            builder.setProrateTaxes(getIndicator(prorateTaxes));
+        }
+        if (viewCartOnAdd != null) {
+            builder.setViewCartOnAdd(getIndicator(viewCartOnAdd));
+        }
+        if (autoSaveCart != null) {
+            builder.setAutoSaveCart(getIndicator(autoSaveCart));
+        }
+        if (autoApproveReviews != null) {
+            builder.setAutoApproveReviews(getIndicator(autoApproveReviews));
+        }
+        if (isDemoStore != null) {
+            builder.setIsDemoStore(getIndicator(isDemoStore));
+        }
+        if (isImmediatelyFulfilled != null) {
+            builder.setIsImmediatelyFulfilled(getIndicator(isImmediatelyFulfilled));
+        }
+        if (inventoryFacilityId != null) {
+            builder.setInventoryFacilityId(inventoryFacilityId);
+        }
+        if (oneInventoryFacility != null) {
+            builder.setOneInventoryFacility(getIndicator(oneInventoryFacility));
+        }
+        if (checkInventory != null) {
+            builder.setCheckInventory(getIndicator(checkInventory));
+        }
+        if (reserveInventory != null) {
+            builder.setReserveInventory(getIndicator(reserveInventory));
+        }
+        if (reserveOrderEnumId != null) {
+            builder.setReserveOrderEnumId(reserveOrderEnumId);
+        }
+        if (requireInventory != null) {
+            builder.setRequireInventory(getIndicator(requireInventory));
+        }
+        if (balanceResOnOrderCreation != null) {
+            builder.setBalanceResOnOrderCreation(getIndicator(balanceResOnOrderCreation));
+        }
+        if (requirementMethodEnumId != null) {
+            builder.setRequirementMethodEnumId(requirementMethodEnumId);
+        }
+        if (orderNumberPrefix != null) {
+            builder.setOrderNumberPrefix(orderNumberPrefix);
+        }
+        if (defaultLocaleString != null) {
+            builder.setDefaultLocaleString(defaultLocaleString);
+        }
+        if (defaultCurrencyUomId != null) {
+            builder.setDefaultCurrencyUomId(defaultCurrencyUomId);
+        }
+        if (defaultTimeZoneString != null) {
+            builder.setDefaultTimeZoneString(defaultTimeZoneString);
+        }
+        if (defaultSalesChannelEnumId != null) {
+            builder.setDefaultSalesChannelEnumId(defaultSalesChannelEnumId);
+        }
+        if (allowPassword != null) {
+            builder.setAllowPassword(getIndicator(allowPassword));
+        }
+        if (defaultPassword != null) {
+            builder.setDefaultPassword(defaultPassword);
+        }
+        if (explodeOrderItems != null) {
+            builder.setExplodeOrderItems(getIndicator(explodeOrderItems));
+        }
+        if (checkGcBalance != null) {
+            builder.setCheckGcBalance(getIndicator(checkGcBalance));
+        }
+        if (retryFailedAuths != null) {
+            builder.setRetryFailedAuths(getIndicator(retryFailedAuths));
+        }
+        if (headerApprovedStatus != null) {
+            builder.setHeaderApprovedStatus(headerApprovedStatus);
+        }
+        if (itemApprovedStatus != null) {
+            builder.setItemApprovedStatus(itemApprovedStatus);
+        }
+        if (digitalItemApprovedStatus != null) {
+            builder.setDigitalItemApprovedStatus(digitalItemApprovedStatus);
+        }
+        if (headerDeclinedStatus != null) {
+            builder.setHeaderDeclinedStatus(headerDeclinedStatus);
+        }
+        if (itemDeclinedStatus != null) {
+            builder.setItemDeclinedStatus(itemDeclinedStatus);
+        }
+        if (headerCancelStatus != null) {
+            builder.setHeaderCancelStatus(headerCancelStatus);
+        }
+        if (itemCancelStatus != null) {
+            builder.setItemCancelStatus(itemCancelStatus);
+        }
+        if (authDeclinedMessage != null) {
+            builder.setAuthDeclinedMessage(authDeclinedMessage);
+        }
+        if (authFraudMessage != null) {
+            builder.setAuthFraudMessage(authFraudMessage);
+        }
+        if (authErrorMessage != null) {
+            builder.setAuthErrorMessage(authErrorMessage);
+        }
+        if (visualThemeId != null) {
+            builder.setVisualThemeId(visualThemeId);
+        }
+        if (storeCreditAccountEnumId != null) {
+            builder.setStoreCreditAccountEnumId(storeCreditAccountEnumId);
+        }
+        if (usePrimaryEmailUsername != null) {
+            builder.setUsePrimaryEmailUsername(getIndicator(usePrimaryEmailUsername));
+        }
+        if (requireCustomerRole != null) {
+            builder.setRequireCustomerRole(getIndicator(requireCustomerRole));
+        }
+        if (autoInvoiceDigitalItems != null) {
+            builder.setAutoInvoiceDigitalItems(getIndicator(autoInvoiceDigitalItems));
+        }
+        if (reqShipAddrForDigItems != null) {
+            builder.setReqShipAddrForDigItems(getIndicator(reqShipAddrForDigItems));
+        }
+        if (showCheckoutGiftOptions != null) {
+            builder.setShowCheckoutGiftOptions(getIndicator(showCheckoutGiftOptions));
+        }
+        if (selectPaymentTypePerItem != null) {
+            builder.setSelectPaymentTypePerItem(getIndicator(selectPaymentTypePerItem));
+        }
+        if (showPricesWithVatTax != null) {
+            builder.setShowPricesWithVatTax(getIndicator(showPricesWithVatTax));
+        }
+        if (showTaxIsExempt != null) {
+            builder.setShowTaxIsExempt(getIndicator(showTaxIsExempt));
+        }
+        if (vatTaxAuthGeoId != null) {
+            builder.setVatTaxAuthGeoId(vatTaxAuthGeoId);
+        }
+        if (vatTaxAuthPartyId != null) {
+            builder.setVatTaxAuthPartyId(vatTaxAuthPartyId);
+        }
+        if (enableAutoSuggestionList != null) {
+            builder.setEnableAutoSuggestionList(getIndicator(enableAutoSuggestionList));
+        }
+        if (enableDigProdUpload != null) {
+            builder.setEnableDigProdUpload(getIndicator(enableDigProdUpload));
+        }
+        if (prodSearchExcludeVariants != null) {
+            builder.setProdSearchExcludeVariants(getIndicator(prodSearchExcludeVariants));
+        }
+        if (digProdUploadCategoryId != null) {
+            builder.setDigProdUploadCategoryId(digProdUploadCategoryId);
+        }
+        if (autoOrderCcTryExp != null) {
+            builder.setAutoOrderCcTryExp(getIndicator(autoOrderCcTryExp));
+        }
+        if (autoOrderCcTryOtherCards != null) {
+            builder.setAutoOrderCcTryOtherCards(getIndicator(autoOrderCcTryOtherCards));
+        }
+        if (autoOrderCcTryLaterNsf != null) {
+            builder.setAutoOrderCcTryLaterNsf(getIndicator(autoOrderCcTryLaterNsf));
+        }
+        if (autoOrderCcTryLaterMax != null) {
+            builder.setAutoOrderCcTryLaterMax(autoOrderCcTryLaterMax);
+        }
+        if (storeCreditValidDays != null) {
+            builder.setStoreCreditValidDays(storeCreditValidDays);
+        }
+        if (autoApproveInvoice != null) {
+            builder.setAutoApproveInvoice(getIndicator(autoApproveInvoice));
+        }
+        if (autoApproveOrder != null) {
+            builder.setAutoApproveOrder(getIndicator(autoApproveOrder));
+        }
+        if (shipIfCaptureFails != null) {
+            builder.setShipIfCaptureFails(getIndicator(shipIfCaptureFails));
+        }
+        if (setOwnerUponIssuance != null) {
+            builder.setSetOwnerUponIssuance(getIndicator(setOwnerUponIssuance));
+        }
+        if (reqReturnInventoryReceive != null) {
+            builder.setReqReturnInventoryReceive(getIndicator(reqReturnInventoryReceive));
+        }
+        if (addToCartRemoveIncompat != null) {
+            builder.setAddToCartRemoveIncompat(getIndicator(addToCartRemoveIncompat));
+        }
+        if (addToCartReplaceUpsell != null) {
+            builder.setAddToCartReplaceUpsell(getIndicator(addToCartReplaceUpsell));
+        }
+        if (splitPayPrefPerShpGrp != null) {
+            builder.setSplitPayPrefPerShpGrp(getIndicator(splitPayPrefPerShpGrp));
+        }
+        if (managedByLot != null) {
+            builder.setManagedByLot(getIndicator(managedByLot));
+        }
+        if (showOutOfStockProducts != null) {
+            builder.setShowOutOfStockProducts(getIndicator(showOutOfStockProducts));
+        }
+        if (orderDecimalQuantity != null) {
+            builder.setOrderDecimalQuantity(getIndicator(orderDecimalQuantity));
+        }
+        if (allowComment != null) {
+            builder.setAllowComment(getIndicator(allowComment));
+        }
+        if (allocateInventory != null) {
+            builder.setAllocateInventory(getIndicator(allocateInventory));
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

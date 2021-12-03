@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.UserLoginFlatData;
 
+import com.bluecc.hubs.stub.UserLoginData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -42,6 +45,11 @@ public class UserLogin implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         UserLoginFlatData.Builder builder = UserLoginFlatData.newBuilder();
         if (userLoginId != null) {
             builder.setUserLoginId(userLoginId);
@@ -98,7 +106,7 @@ public class UserLogin implements IModel, Serializable {
             builder.setPartyId(partyId);
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static UserLogin fromData(UserLoginFlatData data) {
@@ -123,6 +131,65 @@ public class UserLogin implements IModel, Serializable {
                 .partyId(data.getPartyId())
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        UserLoginData.Builder builder = UserLoginData.newBuilder();
+        if (userLoginId != null) {
+            builder.setUserLoginId(userLoginId);
+        }
+        if (currentPassword != null) {
+            builder.setCurrentPassword(currentPassword);
+        }
+        if (passwordHint != null) {
+            builder.setPasswordHint(passwordHint);
+        }
+        if (isSystem != null) {
+            builder.setIsSystem(getIndicator(isSystem));
+        }
+        if (enabled != null) {
+            builder.setEnabled(getIndicator(enabled));
+        }
+        if (hasLoggedOut != null) {
+            builder.setHasLoggedOut(getIndicator(hasLoggedOut));
+        }
+        if (requirePasswordChange != null) {
+            builder.setRequirePasswordChange(getIndicator(requirePasswordChange));
+        }
+        if (lastCurrencyUom != null) {
+            builder.setLastCurrencyUom(lastCurrencyUom);
+        }
+        if (lastLocale != null) {
+            builder.setLastLocale(lastLocale);
+        }
+        if (lastTimeZone != null) {
+            builder.setLastTimeZone(lastTimeZone);
+        }
+        if (disabledDateTime != null) {
+            builder.setDisabledDateTime(getTimestamp(disabledDateTime));
+        }
+        if (successiveFailedLogins != null) {
+            builder.setSuccessiveFailedLogins(successiveFailedLogins);
+        }
+        if (externalAuthId != null) {
+            builder.setExternalAuthId(externalAuthId);
+        }
+        if (userLdapDn != null) {
+            builder.setUserLdapDn(userLdapDn);
+        }
+        if (disabledBy != null) {
+            builder.setDisabledBy(disabledBy);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

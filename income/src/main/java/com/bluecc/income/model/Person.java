@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.PersonFlatData;
 
+import com.bluecc.hubs.stub.PersonData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -58,6 +61,11 @@ public class Person implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         PersonFlatData.Builder builder = PersonFlatData.newBuilder();
         if (partyId != null) {
             builder.setPartyId(partyId);
@@ -162,7 +170,7 @@ public class Person implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static Person fromData(PersonFlatData data) {
@@ -203,6 +211,116 @@ public class Person implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        PersonData.Builder builder = PersonData.newBuilder();
+        if (partyId != null) {
+            builder.setPartyId(partyId);
+        }
+        if (salutation != null) {
+            builder.setSalutation(salutation);
+        }
+        if (firstName != null) {
+            builder.setFirstName(firstName);
+        }
+        if (middleName != null) {
+            builder.setMiddleName(middleName);
+        }
+        if (lastName != null) {
+            builder.setLastName(lastName);
+        }
+        if (personalTitle != null) {
+            builder.setPersonalTitle(personalTitle);
+        }
+        if (suffix != null) {
+            builder.setSuffix(suffix);
+        }
+        if (nickname != null) {
+            builder.setNickname(nickname);
+        }
+        if (firstNameLocal != null) {
+            builder.setFirstNameLocal(firstNameLocal);
+        }
+        if (middleNameLocal != null) {
+            builder.setMiddleNameLocal(middleNameLocal);
+        }
+        if (lastNameLocal != null) {
+            builder.setLastNameLocal(lastNameLocal);
+        }
+        if (otherLocal != null) {
+            builder.setOtherLocal(otherLocal);
+        }
+        if (memberId != null) {
+            builder.setMemberId(memberId);
+        }
+        if (gender != null) {
+            builder.setGender(getIndicator(gender));
+        }
+        if (birthDate != null) {
+            builder.setBirthDate(getDate(birthDate));
+        }
+        if (deceasedDate != null) {
+            builder.setDeceasedDate(getDate(deceasedDate));
+        }
+        if (height != null) {
+            builder.setHeight(height);
+        }
+        if (weight != null) {
+            builder.setWeight(weight);
+        }
+        if (mothersMaidenName != null) {
+            builder.setMothersMaidenName(mothersMaidenName);
+        }
+        if (maritalStatusEnumId != null) {
+            builder.setMaritalStatusEnumId(maritalStatusEnumId);
+        }
+        if (socialSecurityNumber != null) {
+            builder.setSocialSecurityNumber(socialSecurityNumber);
+        }
+        if (passportNumber != null) {
+            builder.setPassportNumber(passportNumber);
+        }
+        if (passportExpireDate != null) {
+            builder.setPassportExpireDate(getDate(passportExpireDate));
+        }
+        if (totalYearsWorkExperience != null) {
+            builder.setTotalYearsWorkExperience(totalYearsWorkExperience);
+        }
+        if (comments != null) {
+            builder.setComments(comments);
+        }
+        if (employmentStatusEnumId != null) {
+            builder.setEmploymentStatusEnumId(employmentStatusEnumId);
+        }
+        if (residenceStatusEnumId != null) {
+            builder.setResidenceStatusEnumId(residenceStatusEnumId);
+        }
+        if (occupation != null) {
+            builder.setOccupation(occupation);
+        }
+        if (yearsWithEmployer != null) {
+            builder.setYearsWithEmployer(yearsWithEmployer);
+        }
+        if (monthsWithEmployer != null) {
+            builder.setMonthsWithEmployer(monthsWithEmployer);
+        }
+        if (existingCustomer != null) {
+            builder.setExistingCustomer(getIndicator(existingCustomer));
+        }
+        if (cardId != null) {
+            builder.setCardId(cardId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

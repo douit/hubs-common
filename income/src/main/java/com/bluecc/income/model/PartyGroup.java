@@ -11,6 +11,9 @@ import com.bluecc.hubs.fund.model.IModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.PartyGroupFlatData;
 
+import com.bluecc.hubs.stub.PartyGroupData;
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -35,6 +38,11 @@ public class PartyGroup implements IModel, Serializable {
 
         
     public Message toData() {
+        return toDataBuilder().build();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toDataBuilder() {
         PartyGroupFlatData.Builder builder = PartyGroupFlatData.newBuilder();
         if (partyId != null) {
             builder.setPartyId(partyId);
@@ -70,7 +78,7 @@ public class PartyGroup implements IModel, Serializable {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
                     
-        return builder.build();
+        return (T)builder;
     }
 
     public static PartyGroup fromData(PartyGroupFlatData data) {
@@ -88,6 +96,47 @@ public class PartyGroup implements IModel, Serializable {
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 
                 .build();
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public <T extends Message.Builder> T toHeadBuilder() {
+        PartyGroupData.Builder builder = PartyGroupData.newBuilder();
+        if (partyId != null) {
+            builder.setPartyId(partyId);
+        }
+        if (groupName != null) {
+            builder.setGroupName(groupName);
+        }
+        if (groupNameLocal != null) {
+            builder.setGroupNameLocal(groupNameLocal);
+        }
+        if (officeSiteName != null) {
+            builder.setOfficeSiteName(officeSiteName);
+        }
+        if (annualRevenue != null) {
+            builder.setAnnualRevenue(getCurrency(annualRevenue));
+        }
+        if (numEmployees != null) {
+            builder.setNumEmployees(numEmployees);
+        }
+        if (tickerSymbol != null) {
+            builder.setTickerSymbol(tickerSymbol);
+        }
+        if (comments != null) {
+            builder.setComments(comments);
+        }
+        if (logoImageUrl != null) {
+            builder.setLogoImageUrl(logoImageUrl);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return (T)builder;
     }
 
 }

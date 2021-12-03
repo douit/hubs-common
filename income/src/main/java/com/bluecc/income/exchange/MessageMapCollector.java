@@ -148,7 +148,7 @@ public class MessageMapCollector {
             case "Currency": {
                 Currency val = (Currency) fldVal;
                 log.debug("-> currency value " + val.getValue());
-                System.out.println("-> currency value " + val.getValue() + ", field: " + fld.getName());
+                // System.out.println("-> currency value " + val.getValue() + ", field: " + fld.getName());
                 dataMap.put(fldName, new BigDecimal(val.getValue()));
                 break;
             }
