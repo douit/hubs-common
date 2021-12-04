@@ -2,6 +2,7 @@ package com.bluecc.income.dummy.store;
 
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.PersonFlatData;
+import com.bluecc.income.AbstractOnceProcTest;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.FlatMessageCollector;
 import com.google.common.collect.Lists;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
-public class UpdaterTest extends AbstractStoreProcTest {
+public class UpdaterTest extends AbstractOnceProcTest {
     @Before
     public void setUp() throws Exception {
         setupEntities("Person");

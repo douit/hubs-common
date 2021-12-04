@@ -3,6 +3,7 @@ package com.bluecc.income.dummy.store;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.stub.*;
+import com.bluecc.income.AbstractOnceProcTest;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.IProc;
 import com.github.javafaker.Faker;
@@ -33,7 +34,7 @@ import static com.bluecc.income.exchange.DataStoreHelper.queryMap;
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 
-public class StoreProcTest extends AbstractStoreProcTest {
+public class StoreProcTest extends AbstractOnceProcTest {
     @RegisterRowMapper(PersonMapper.class)
     public interface PartyDao {
         @SqlQuery("select * from party where party_id=:id")

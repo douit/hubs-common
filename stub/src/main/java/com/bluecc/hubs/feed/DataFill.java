@@ -19,10 +19,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+// import org.joda.time.DateTime;
+// import org.joda.time.format.DateTimeFormat;
+// import org.joda.time.format.DateTimeFormatter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -150,18 +154,19 @@ public class DataFill {
     }
 
     static final String DT_STR = "2001-05-13 00:00:00";
-    static final DateTimeFormatter FMT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+    static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public static DateTime trimParse(String dtStr) {
+    public static LocalDateTime trimParse(String dtStr) {
         if (dtStr == null || dtStr.isEmpty()) {
             return null;
         }
 
         if (dtStr.length() < DT_STR.length()) {
-            log.warn("the datetime-string format is invalidate: {}, try parse with date", dtStr);
-            return org.joda.time.LocalDate.parse(dtStr).toDateTimeAtCurrentTime();
+            log.warn("the datetime-string format is invalidate: {}", dtStr);
+            return null;
         }
-        return FMT.parseDateTime(dtStr.substring(0, DT_STR.length()));
+        // return FMT.parseDateTime(dtStr.substring(0, DT_STR.length()));
+        return LocalDateTime.parse(dtStr.substring(0, DT_STR.length()), FMT);
     }
 
     public static Timestamp getTimestamp(long millis) {
@@ -169,8 +174,13 @@ public class DataFill {
                 .setNanos((int) ((millis % 1000) * 1000000)).build();
     }
 
-    public static Timestamp getTimestamp(DateTime dt) {
-        return getTimestamp(dt.getMillis());
+    public static Timestamp getTimestamp(LocalDateTime dt) {
+        return ProtoTypes.getTimestamp(dt.toInstant(ZoneOffset.UTC));
+    }
+
+    static final ZoneOffset offsetLocal=ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now());
+    public static Timestamp getTimestampAtLocal(LocalDateTime dt) {
+        return ProtoTypes.getTimestamp(dt.toInstant(offsetLocal));
     }
 
     public static Timestamp getTimestamp(String dtStr) {

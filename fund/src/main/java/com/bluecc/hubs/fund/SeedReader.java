@@ -65,9 +65,14 @@ public class SeedReader {
     }
 
     public static void collectEntityData(Multimap<String, JsonObject> dataList,
-                                         String dataFile, boolean camelCase) {
+                                         String fileName, boolean camelCase) {
         // List<JsonObject> rs= Lists.newArrayList();
         // Multimap<String, JsonObject> rs= ArrayListMultimap.create();
+        File dataFile=new File(fileName);
+        if(!dataFile.exists()){
+            dataFile=SystemDefs.prependHubsHomeFile(dataFile);
+        }
+
         NodeList nodeList = getNodeList(dataFile);
         for(int i=0;i<nodeList.getLength();++i){
             if (nodeList.item(i) instanceof Element){
@@ -88,14 +93,19 @@ public class SeedReader {
         return jsonObject;
     }
 
-    public static NodeList getNodeList(String dataFile)  {
+    public static NodeList getNodeList(String fileName) {
+        File dataFile=new File(fileName);
+        return getNodeList(dataFile);
+    }
+
+    public static NodeList getNodeList(File dataFile)  {
         try {
             // Get Document Builder
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
 
             // Build Document
-            Document document = builder.parse(new File(dataFile));
+            Document document = builder.parse(dataFile);
 
             // Normalize the XML Structure; It's just too important !!
             document.getDocumentElement().normalize();

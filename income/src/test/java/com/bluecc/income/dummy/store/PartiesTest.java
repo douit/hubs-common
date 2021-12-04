@@ -1,6 +1,7 @@
 package com.bluecc.income.dummy.store;
 
 import com.bluecc.hubs.stub.PersonFlatData;
+import com.bluecc.income.AbstractOnceProcTest;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.procs.Parties.Person;
 import com.bluecc.income.template.TemplateGlobalContext;
@@ -26,7 +27,7 @@ import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static org.junit.Assert.assertEquals;
 
-public class PartiesTest extends AbstractStoreProcTest {
+public class PartiesTest extends AbstractOnceProcTest {
     @RegisterBeanMapper(value= Person.class)
     public interface PartyDao {
         @SqlQuery("select * from person")

@@ -1,8 +1,10 @@
 package com.bluecc.hubs;
 
+import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.feed.ProtoStuffs;
 import com.bluecc.hubs.stub.*;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Timestamp;
 import com.google.type.Date;
 import com.google.type.Money;
 import com.google.type.TimeOfDay;
@@ -10,8 +12,8 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 import static com.bluecc.hubs.ProtoTypes.getBigDecimal;
 import static com.bluecc.hubs.ProtoTypes.getTimeOfDay;
@@ -82,6 +84,33 @@ public class ProtoTypesTest {
         System.out.println(localTime);
         TimeOfDay timeOfDay = getTimeOfDay(localTime);
         System.out.println(timeOfDay);
+    }
+
+    @Test
+    public void testDateTimeZoneOffset(){
+        // ZoneId.getAvailableZoneIds().forEach(z -> System.out.println(z));
+        System.out.println("default: "+ZoneOffset.systemDefault());
+        ZoneOffset offset=ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now());
+        ZoneOffset offsetUtc=ZoneOffset.UTC.getRules().getOffset(LocalDateTime.now());
+        ZoneOffset offsetShanghai=ZoneId.of("Asia/Shanghai").getRules().getOffset(LocalDateTime.now());
+        System.out.println(offset);
+        System.out.println(offsetUtc);
+        System.out.println(offsetShanghai);
+
+        // String orig="2006-04-25 12:46:27.122";
+        String orig="2006-04-25 12:46:27";
+        Timestamp ts=DataFill.getTimestamp(orig);
+        System.out.println(orig+" -> "+ProtoTypes.getLocalDateTime(ts));
+
+        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dt=LocalDateTime.parse(orig, formatter);
+        System.out.println(dt);
+        // dt.toEpochSecond(ZoneOffset.UTC);
+        ts=ProtoTypes.getTimestamp(dt.toInstant(ZoneOffset.UTC));
+        System.out.println("UTC: "+orig+" -> "+ProtoTypes.getLocalDateTime(ts));
+        ts=ProtoTypes.getTimestamp(dt.toInstant(offset));
+        // 相差8小时
+        System.out.println("Asia/Shanghai: "+orig+" -> "+ProtoTypes.getLocalDateTime(ts));
     }
 
     @Test

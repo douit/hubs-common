@@ -8,6 +8,7 @@ import com.bluecc.hubs.stub.InvoiceFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.dao.InvoiceDelegator.InvoiceDao;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.income.model.Invoice;
 import com.github.javafaker.Faker;
 import com.google.protobuf.Message;
 import lombok.Builder;
@@ -22,7 +23,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import static com.bluecc.hubs.fund.Util.pretty;
-import static com.bluecc.hubs.fund.descriptor.EntityNames.Invoice;
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 
@@ -95,10 +95,24 @@ public class InvoiceDelegatorTest extends AbstractStoreProcTest {
                     .build();
             genericProcs.create(c, flatData);
 
-            QueryClue.builder().symbol(Invoice).limit(5).build()
+            QueryClue.builder().symbol(EntityNames.Invoice).limit(5).build()
                     .select(c).mapToMap()
                     .list()
                     .forEach(e -> pretty(e));
+        });
+    }
+
+    @Test
+    public void testStoreDemoData() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            String demoFile="dataset/accounting/PaymentApplicationTestsData.xml";
+            genericProcs.storeDataFile(c, demoFile);
+
+            Invoice invoice=genericProcs.findOne(c, InvoiceData.newBuilder()
+                            .setInvoiceId("appltest10000")
+                    .build(), com.bluecc.income.model.Invoice.class);
+            pretty(invoice);
         });
     }
 }

@@ -1,6 +1,7 @@
 package com.bluecc.income.procs;
 
 import com.bluecc.hubs.stub.ProductFlatData;
+import com.bluecc.income.AbstractOnceProcTest;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -11,7 +12,7 @@ import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
-public class ProductsTest extends AbstractStoreProcTest {
+public class ProductsTest extends AbstractOnceProcTest {
     @Inject Products products;
 
     @Before

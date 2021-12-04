@@ -11,5 +11,9 @@ public class SystemDefs {
     public static File prependHubsHomeFile(String fileOrDir){
         return new File(HUBS_COMMON_HOME+"/"+fileOrDir);
     }
+
+    public static File prependHubsHomeFile(File fileOrDir){
+        return new File(HUBS_COMMON_HOME+"/"+fileOrDir);
+    }
 }
 

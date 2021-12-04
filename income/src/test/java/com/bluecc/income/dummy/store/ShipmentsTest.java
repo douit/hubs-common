@@ -3,6 +3,7 @@ package com.bluecc.income.dummy.store;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.stub.ShipmentData;
+import com.bluecc.income.AbstractOnceProcTest;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.procs.Shipments.*;
@@ -30,7 +31,7 @@ import static com.bluecc.income.procs.AbstractProcs.getPk;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ShipmentsTest extends AbstractStoreProcTest {
+public class ShipmentsTest extends AbstractOnceProcTest {
     @RegisterBeanMapper(Shipment.class)
     public interface ShipmentDao {
         @SqlQuery("select * from shipment")

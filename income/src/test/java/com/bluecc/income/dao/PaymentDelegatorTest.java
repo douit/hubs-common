@@ -1,5 +1,6 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.PaymentData;
 import com.bluecc.hubs.stub.PaymentFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.github.javafaker.Faker;
@@ -35,6 +36,19 @@ public class PaymentDelegatorTest extends AbstractStoreProcTest {
             assertEquals(1, payments.findById(ctx, flatData).size());
             assertEquals(1, payments.delete(ctx, flatData));
             assertEquals(0, payments.find(ctx, flatData).size());
+        });
+    }
+
+    @Test
+    public void testCreatePayment() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            String newId=sequence.nextStringId();
+            PaymentData flatData= PaymentData.newBuilder()
+                    .setPaymentId(newId)
+                    // .setDescription(faker.hipster().word())
+                    .build();
+            assertEquals(1, payments.create(c, flatData));
         });
     }
 }
