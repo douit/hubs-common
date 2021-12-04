@@ -1,0 +1,26 @@
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+
+<log4j:configuration debug="false">
+    <!--Console appender -->
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
+        </layout>
+    </appender>
+
+    <logger name="com.bluecc.saga" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="stdout"/>
+    </logger>
+    <logger name="com.bluecc.income.types" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="stdout"/>
+    </logger>
+
+    <root>
+<!--        <level value="DEBUG"/>-->
+        <level value="INFO"/>
+        <appender-ref ref="stdout"/>
+    </root>
+
+</log4j:configuration>

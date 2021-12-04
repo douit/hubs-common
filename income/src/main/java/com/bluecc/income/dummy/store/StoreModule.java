@@ -2,7 +2,7 @@ package com.bluecc.income.dummy.store;
 
 import com.bluecc.income.helper.TenantHubs;
 import com.bluecc.income.helper.TestHubs;
-import com.bluecc.income.tenant.Tenants;
+import com.bluecc.hubs.fund.tenant.Tenants;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;

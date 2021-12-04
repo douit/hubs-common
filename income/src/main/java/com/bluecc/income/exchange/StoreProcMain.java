@@ -5,6 +5,7 @@ import com.bluecc.hubs.fund.model.IModel;
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.pubs.Services;
 import com.bluecc.income.dummy.store.HubsStore;
+import com.bluecc.income.dummy.store.StoreModule;
 import com.bluecc.income.model.Person;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -19,7 +20,7 @@ import static com.bluecc.hubs.fund.Util.pretty;
 @Services
 public class StoreProcMain {
     private static final Injector injector = Guice
-            .createInjector(new ProtoModule());
+            .createInjector(new StoreModule("test"));
 
     public static void main(String[] args) {
         StoreProcMain main=injector.getInstance(StoreProcMain.class);

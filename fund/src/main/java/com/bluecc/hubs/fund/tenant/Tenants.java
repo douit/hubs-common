@@ -1,4 +1,4 @@
-package com.bluecc.income.tenant;
+package com.bluecc.hubs.fund.tenant;
 
 import com.bluecc.hubs.fund.SystemDefs;
 import lombok.Data;
@@ -15,6 +15,7 @@ public class Tenants {
     @Data
     public static class TenantConf {
         DataSourceConf dataSource;
+        ServerConf server;
     }
 
     @Data
@@ -22,6 +23,11 @@ public class Tenants {
         String url;
         String user;
         String password;
+    }
+    @Data
+    public static class ServerConf{
+        String host;
+        int port;
     }
 
     private Map<String, TenantConf> tenants;

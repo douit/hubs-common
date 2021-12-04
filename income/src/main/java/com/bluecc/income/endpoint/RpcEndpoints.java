@@ -1,15 +1,22 @@
 package com.bluecc.income.endpoint;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.procs.GenericProcs;
+import com.bluecc.hubs.fund.tenant.Tenants;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.ServerInterceptors;
 import io.grpc.stub.StreamObserver;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -17,6 +24,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.bluecc.hubs.ProtoTypes.extractEnvelopeData;
+import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.income.dummy.store.StoreModule.startup;
 
 /**
@@ -24,19 +32,49 @@ import static com.bluecc.income.dummy.store.StoreModule.startup;
  */
 @Slf4j
 public class RpcEndpoints {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class Opts {
+        @Parameter(names = {"--silent", "-s"})
+        boolean silent;
+        @Parameter(names = {"--profile", "-p"})
+        String profile="default";
+    }
+    /**
+     * Main launches the server from the command line.
+     */
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Opts opts = new Opts();
+        JCommander.newBuilder()
+                .addObject(opts)
+                .build()
+                .parse(args);
+
+        final RpcEndpoints server = startup(opts.profile, RpcEndpoints.class);
+        server.start();
+        server.blockUntilShutdown();
+    }
+
     private Server server;
 
     @Inject
     GreeterImpl greeter;
     @Inject
     RoutinesImpl routines;
+    @Inject
+    HeaderServerInterceptor interceptor;
+    @Inject
+    Tenants.TenantConf conf;
 
     private void start() throws IOException {
+        pretty(conf);
+
         /* The port on which the server should run */
-        int port = 50056;
+        int port = conf.getServer().getPort();
         server = ServerBuilder.forPort(port)
                 .addService(greeter)
-                .addService(routines)
+                .addService(ServerInterceptors.intercept(routines, interceptor))
                 .build()
                 .start();
         log.info("Server started, listening on " + port);
@@ -70,14 +108,6 @@ public class RpcEndpoints {
         }
     }
 
-    /**
-     * Main launches the server from the command line.
-     */
-    public static void main(String[] args) throws IOException, InterruptedException {
-        final RpcEndpoints server = startup( RpcEndpoints.class);
-        server.start();
-        server.blockUntilShutdown();
-    }
 
     static class GreeterImpl extends GreeterGrpc.GreeterImplBase {
 

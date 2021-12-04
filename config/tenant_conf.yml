@@ -4,6 +4,9 @@ tenants:
       url: jdbc:mysql://localhost:3306/hubs
       user: root
       password: root
+    server:
+      host: localhost
+      port: 50056
 
   test:
     dataSource:

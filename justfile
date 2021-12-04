@@ -86,3 +86,6 @@ console:
 
 seed:
 	time just i procs.SeedFiles
+
+srv:
+	just i endpoint.RpcEndpoints

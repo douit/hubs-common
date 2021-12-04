@@ -446,7 +446,7 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
                             genericProcs.getRelationValues(c, p1, "invoice_item",
                                             InvoiceItem.class)
                                     .forEach(el -> pb.addInvoiceItem(
-                                            el.toDataBuilder().build()));
+                                            el.toHeadBuilder().build()));
                         }
 
                         // add/set order_item to head entity

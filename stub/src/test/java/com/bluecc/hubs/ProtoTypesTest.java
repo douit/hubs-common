@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 
 import static com.bluecc.hubs.ProtoTypes.getBigDecimal;
 import static com.bluecc.hubs.ProtoTypes.getTimeOfDay;
@@ -111,6 +112,26 @@ public class ProtoTypesTest {
         ts=ProtoTypes.getTimestamp(dt.toInstant(offset));
         // 相差8小时
         System.out.println("Asia/Shanghai: "+orig+" -> "+ProtoTypes.getLocalDateTime(ts));
+    }
+
+    @Test
+    public void test_parseBest_secondOption() throws Exception {
+        DateTimeFormatter test = DateTimeFormatter.ofPattern("yyyy-MM-dd[ HH:mm[XXX]]");
+        TemporalAccessor result = test.parseBest("2011-06-30", ZonedDateTime::from, LocalDate::from);
+        assertEquals(result, LocalDate.of(2011, 6, 30));
+        assertTrue(result instanceof LocalDate);
+
+
+        result = ZonedDateTime.parse("2007-12-03T10:15:30+01:00[Europe/Paris]");
+        // System.out.println(result);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void testDateTimeStandardFormat(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        LocalDateTime parse = LocalDateTime.parse("2012-10-01T09:45:00.000+02:00", formatter);
+        System.out.println(parse);
     }
 
     @Test
