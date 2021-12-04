@@ -11,4 +11,9 @@ $ mvn compile -f stub/pom.xml
 $ just proto
 $ just stub
 ```
-
+```bash
+# gen all
+$ just gen GeneratorMain  # sql(and types), protobuf(and types)
+$ just gen GenHeadEntities  # model-bean, dao
+$ just gen ExternalTool  # sql
+```

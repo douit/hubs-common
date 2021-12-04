@@ -5,6 +5,7 @@ import java.io.*;
 public class ExternalTool {
     public static void main(String[] args) throws IOException, InterruptedException {
         reimportSql("hubs");
+        reimportSql("testhubs");
     }
 
     public static void reimportSql(String db) throws IOException{

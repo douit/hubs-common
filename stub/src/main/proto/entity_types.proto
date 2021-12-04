@@ -2094,12 +2094,9 @@ message PartyAcctgPreference {
     int64 last_order_number = 17;    
     string refund_payment_method_id = 18;
     string error_gl_journal_id = 19; // GlJournal    
-    routines.Indicator enable_accounting = 20;
-    string invoice_sequence_enum_id = 21; // Enumeration
-    string order_sequence_enum_id = 22; // Enumeration
-    string quote_sequence_enum_id = 23; // Enumeration    
-    google.protobuf.Timestamp last_updated_tx_stamp = 24;    
-    google.protobuf.Timestamp created_tx_stamp = 25;  
+    routines.Indicator enable_accounting = 20;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 21;    
+    google.protobuf.Timestamp created_tx_stamp = 22;  
 }
 
 // flat-ent: General Ledger XBRL Class

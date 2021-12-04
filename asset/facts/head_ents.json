@@ -14,6 +14,9 @@
         "Party"
       ]
     },
+    "InvoiceItem": {
+      "flatIds": []
+    },
     "Product": {
       "flatIds": []
     },

@@ -1,12 +1,14 @@
 package com.bluecc.income.dao;
 
 import com.bluecc.income.procs.AbstractProcs;
-import com.bluecc.income.model.Invoice;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 
 import java.util.List;
+import java.util.Set;
+import com.bluecc.income.model.*;
+import com.bluecc.income.helper.ModelWrapper;
 
 public class InvoiceDelegator extends AbstractProcs{
 
@@ -21,4 +23,7 @@ public class InvoiceDelegator extends AbstractProcs{
         int countInvoice();
     }
 
+    
+    
+    
 }

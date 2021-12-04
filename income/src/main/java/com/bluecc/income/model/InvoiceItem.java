@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import com.bluecc.hubs.stub.InvoiceItemFlatData;
+
 import com.bluecc.hubs.stub.InvoiceItemData;
 
 
@@ -17,7 +19,7 @@ import com.bluecc.hubs.stub.InvoiceItemData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvoiceItem implements IEventModel<InvoiceItemData.Builder>, Serializable {
+public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String invoiceId;
@@ -51,8 +53,8 @@ public class InvoiceItem implements IEventModel<InvoiceItemData.Builder>, Serial
         return toDataBuilder().build();
     }
 
-    public InvoiceItemData.Builder toDataBuilder() {
-        InvoiceItemData.Builder builder = InvoiceItemData.newBuilder();
+    public InvoiceItemFlatData.Builder toDataBuilder() {
+        InvoiceItemFlatData.Builder builder = InvoiceItemFlatData.newBuilder();
         if (invoiceId != null) {
             builder.setInvoiceId(invoiceId);
         }
@@ -123,7 +125,7 @@ public class InvoiceItem implements IEventModel<InvoiceItemData.Builder>, Serial
         return builder;
     }
 
-    public static InvoiceItem fromData(InvoiceItemData data) {
+    public static InvoiceItem fromData(InvoiceItemFlatData data) {
         return InvoiceItem.builder()
                 .invoiceId(data.getInvoiceId())
                 .invoiceItemSeqId(data.getInvoiceItemSeqId())
@@ -151,5 +153,56 @@ public class InvoiceItem implements IEventModel<InvoiceItemData.Builder>, Serial
                 .build();
     }
 
-    
+        
+    public InvoiceItemData.Builder toHeadBuilder() {
+        InvoiceItemData.Builder builder = InvoiceItemData.newBuilder();
+        if (invoiceId != null) {
+            builder.setInvoiceId(invoiceId);
+        }
+        if (invoiceItemSeqId != null) {
+            builder.setInvoiceItemSeqId(invoiceItemSeqId);
+        }
+        if (invoiceItemTypeId != null) {
+            builder.setInvoiceItemTypeId(invoiceItemTypeId);
+        }
+        if (overrideGlAccountId != null) {
+            builder.setOverrideGlAccountId(overrideGlAccountId);
+        }
+        if (parentInvoiceItemSeqId != null) {
+            builder.setParentInvoiceItemSeqId(parentInvoiceItemSeqId);
+        }
+        if (uomId != null) {
+            builder.setUomId(uomId);
+        }
+        if (taxableFlag != null) {
+            builder.setTaxableFlag(getIndicator(taxableFlag));
+        }
+        if (quantity != null) {
+            builder.setQuantity(getFixedPoint(quantity));
+        }
+        if (amount != null) {
+            builder.setAmount(getCurrency(amount));
+        }
+        if (description != null) {
+            builder.setDescription(description);
+        }
+        if (taxAuthGeoId != null) {
+            builder.setTaxAuthGeoId(taxAuthGeoId);
+        }
+        if (salesOpportunityId != null) {
+            builder.setSalesOpportunityId(salesOpportunityId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+        if (id != null) {
+            builder.setId(id);
+        }
+                    
+        return builder;
+    }
+
 }

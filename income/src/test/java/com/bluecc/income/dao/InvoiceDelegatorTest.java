@@ -113,6 +113,8 @@ public class InvoiceDelegatorTest extends AbstractStoreProcTest {
                             .setInvoiceId("appltest10000")
                     .build(), com.bluecc.income.model.Invoice.class);
             pretty(invoice);
+
+
         });
     }
 }

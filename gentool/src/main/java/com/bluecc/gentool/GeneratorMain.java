@@ -15,7 +15,7 @@ public class GeneratorMain {
         ProtoTool.startGen(new ProtoTool.ProtoGenOpts(null, true));
         ProtoTypeTool.startGen();
 
-        reimportSql("hubs");
+        // reimportSql("hubs");
     }
 
 }

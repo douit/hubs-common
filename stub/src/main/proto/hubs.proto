@@ -53,6 +53,16 @@ service InvoiceService {
     rpc FindById(routines.Identity) returns (InvoiceFlatData) {}
 }
 
+// The Invoice Item service definition.
+service InvoiceItemService {
+    rpc Create(InvoiceItemData) returns (routines.Response) {}
+    rpc Update(InvoiceItemFlatData) returns (routines.Response) {}
+    rpc Delete(InvoiceItemFlatData) returns (routines.Response) {}
+    rpc Find(InvoiceItemFlatData) returns (InvoiceItemFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (InvoiceItemFlatData) {}
+}
+
 // The Product service definition.
 service ProductService {
     rpc Create(ProductData) returns (routines.Response) {}
@@ -301,6 +311,37 @@ message InvoiceFlatData {
     string recurrence_info_id = 16;    
     google.protobuf.Timestamp last_updated_tx_stamp = 17;    
     google.protobuf.Timestamp created_tx_stamp = 18;  
+}
+
+// flat-ent: Invoice Item
+message InvoiceItemFlatData {
+    option (routines.entity_type) = "InvoiceItem";
+    option (routines.keys).keys = "invoice_id, invoice_item_seq_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    // keys: invoiceId, invoiceItemSeqId
+    string id = 150;     
+    string invoice_id = 1;    
+    string invoice_item_seq_id = 2;    
+    string invoice_item_type_id = 3;    
+    string override_gl_account_id = 4;    
+    string override_org_party_id = 5;    
+    string inventory_item_id = 6;    
+    string product_id = 7;    
+    string product_feature_id = 8;    
+    string parent_invoice_id = 9;    
+    string parent_invoice_item_seq_id = 10;
+    string uom_id = 11; // Uom    
+    routines.Indicator taxable_flag = 12;    
+    routines.FixedPoint quantity = 13;    
+    routines.Currency amount = 14;    
+    string description = 15;    
+    string tax_auth_party_id = 16;
+    string tax_auth_geo_id = 17; // Geo    
+    string tax_authority_rate_seq_id = 18;    
+    string sales_opportunity_id = 19;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 20;    
+    google.protobuf.Timestamp created_tx_stamp = 21;  
 }
 
 // flat-ent: Product
@@ -3859,17 +3900,15 @@ message InventoryItemData {
     routines.FixedPoint quantity_on_hand_total = 17;    
     routines.FixedPoint available_to_promise_total = 18;    
     routines.FixedPoint accounting_quantity_total = 19;    
-    routines.FixedPoint quantity_on_hand = 20;    
-    routines.FixedPoint available_to_promise = 21;    
-    string serial_number = 22;    
-    string soft_identifier = 23;    
-    string activation_number = 24;    
-    google.protobuf.Timestamp activation_valid_thru = 25;    
-    routines.FixedPoint unit_cost = 26;
-    string currency_uom_id = 27; // Uom    
-    string fixed_asset_id = 28;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 29;    
-    google.protobuf.Timestamp created_tx_stamp = 30;
+    string serial_number = 20;    
+    string soft_identifier = 21;    
+    string activation_number = 22;    
+    google.protobuf.Timestamp activation_valid_thru = 23;    
+    routines.FixedPoint unit_cost = 24;
+    string currency_uom_id = 25; // Uom    
+    string fixed_asset_id = 26;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 27;    
+    google.protobuf.Timestamp created_tx_stamp = 28;
         
 }
 
@@ -3898,7 +3937,7 @@ message InvoiceItemData {
     option (routines.entity_type) = "InvoiceItem";
     option (routines.keys).keys = "invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
-    option (routines.flat) = true;
+    option (routines.flat) = false;
     // keys: invoiceId, invoiceItemSeqId
     string id = 200; 
     // fields
@@ -3907,23 +3946,32 @@ message InvoiceItemData {
     string invoice_item_seq_id = 2;    
     string invoice_item_type_id = 3;    
     string override_gl_account_id = 4;    
-    string override_org_party_id = 5;    
-    string inventory_item_id = 6;    
-    string product_id = 7;    
-    string product_feature_id = 8;    
-    string parent_invoice_id = 9;    
-    string parent_invoice_item_seq_id = 10;
-    string uom_id = 11; // Uom    
-    routines.Indicator taxable_flag = 12;    
-    routines.FixedPoint quantity = 13;    
-    routines.Currency amount = 14;    
-    string description = 15;    
-    string tax_auth_party_id = 16;
-    string tax_auth_geo_id = 17; // Geo    
-    string tax_authority_rate_seq_id = 18;    
-    string sales_opportunity_id = 19;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 20;    
-    google.protobuf.Timestamp created_tx_stamp = 21;
+    string parent_invoice_item_seq_id = 5;
+    string uom_id = 6; // Uom    
+    routines.Indicator taxable_flag = 7;    
+    routines.FixedPoint quantity = 8;    
+    routines.Currency amount = 9;    
+    string description = 10;
+    string tax_auth_geo_id = 11; // Geo    
+    string sales_opportunity_id = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;
+    
+    // relations
+    InvoiceData invoice = 15; // ref(Invoice): invoiceId
+    InventoryItemData inventory_item = 16; // ref(InventoryItem): inventoryItemId
+    ProductData product = 17; // ref(Product): productId
+    ProductFeatureData product_feature = 18; // ref(ProductFeature): productFeatureId
+    InvoiceItemData invoice_item = 19; // ref(InvoiceItem): parentInvoiceId + parentInvoiceItemSeqId
+    repeated InvoiceItemData children_invoice_item = 20; // ref(ChildrenInvoiceItem): invoiceId + invoiceItemSeqId
+    PartyData tax_authority_party = 21; // ref(TaxAuthorityParty): taxAuthPartyId
+    TaxAuthorityRateProductData tax_authority_rate_product = 22; // ref(TaxAuthorityRateProduct): taxAuthorityRateSeqId
+    PartyData override_org_party = 23; // ref(OverrideOrgParty): overrideOrgPartyId
+    repeated OrderAdjustmentBillingData order_adjustment_billing = 24; // ref(OrderAdjustmentBilling): invoiceId + invoiceItemSeqId
+    repeated OrderItemBillingData order_item_billing = 25; // ref(OrderItemBilling): invoiceId + invoiceItemSeqId
+    repeated PaymentApplicationData payment_application = 26; // ref(PaymentApplication): invoiceId + invoiceItemSeqId
+    repeated ShipmentItemBillingData shipment_item_billing = 27; // ref(ShipmentItemBilling): invoiceId + invoiceItemSeqId
+    
         
 }
 
@@ -4271,9 +4319,8 @@ message OrderItemShipGrpInvResData {
     google.protobuf.Timestamp current_promised_date = 11;    
     routines.Indicator priority = 12;    
     int64 sequence_id = 13;    
-    google.protobuf.Timestamp pick_start_date = 14;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 15;    
-    google.protobuf.Timestamp created_tx_stamp = 16;
+    google.protobuf.Timestamp last_updated_tx_stamp = 14;    
+    google.protobuf.Timestamp created_tx_stamp = 15;
         
 }
 
