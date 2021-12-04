@@ -1,9 +1,12 @@
 package com.bluecc.income.procs;
 
+import com.bluecc.hubs.feed.FactBag;
 import com.bluecc.hubs.fund.FnUtil;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.stub.CustRequestTypeData;
+import com.bluecc.hubs.stub.StatusItemData;
 import com.bluecc.hubs.stub.StatusTypeData;
+import com.bluecc.hubs.stub.StatusValidChangeData;
 import com.bluecc.income.GuiceTestRunner;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.junit.Test;
@@ -13,6 +16,7 @@ import reactor.core.publisher.Flux;
 import javax.inject.Inject;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -24,6 +28,8 @@ import static org.junit.Assert.*;
 public class TypeEntityProcsTest {
     @Inject
     TypeEntityProcs typeEntityProcs;
+    @Inject
+    StatusTypes statusTypes;
 
     @Test
     public void getEntityData() throws InvalidProtocolBufferException {
@@ -62,10 +68,37 @@ public class TypeEntityProcsTest {
 
     @Test
     public void testAllTypes(){
-        List<StatusTypeData> ds=typeEntityProcs.factBag
-                .allTypes("StatusType", StatusTypeData::parseFrom);
+        FactBag types=typeEntityProcs.factBag;
+        List<StatusTypeData> ds=types.allTypes("StatusType", StatusTypeData::parseFrom);
         System.out.println(ds.size());
         ds.forEach(e -> System.out.println(e.getDescription()));
+    }
+
+    @Test
+    public void testStatusItems(){
+        FactBag types=typeEntityProcs.factBag;
+        String statusTypeId="ORDER_ITEM_STATUS";
+        types.allTypes("StatusItem", StatusItemData::parseFrom)
+                .stream().filter(e -> e.getStatusTypeId().equals(statusTypeId))
+                .map(e -> e.getStatusId())
+                .collect(Collectors.toList())
+                .forEach(t -> System.out.println(t));
+
+        String statusId="ORDER_CREATED";
+        System.out.format("from %s to:\n", statusId);
+        types.allTypes("StatusValidChange", StatusValidChangeData::parseFrom)
+                .stream().filter(e -> e.getStatusId().equals(statusId))
+                .map(e -> e.getStatusIdTo())
+                .collect(Collectors.toSet())
+                .forEach(e -> System.out.println("\t-> "+e));
+
+        String statusIdTo="ORDER_PROCESSING";
+        Optional<String> transName = statusTypes.getTransitionName(statusId, statusIdTo);
+        assertTrue(transName.isPresent());
+        assertEquals("Process Order", transName.get());
+
+        transName = statusTypes.getTransitionName(statusId, "ORDER_CREATED");
+        assertFalse(transName.isPresent());
     }
 
 }
