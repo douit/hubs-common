@@ -2,6 +2,7 @@ package com.bluecc.income.dummy.store;
 
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.OrderHeaderData;
+import com.bluecc.income.AbstractOnceProcTest;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.google.protobuf.Message;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 import static com.bluecc.income.exchange.ResourceHelper.readResource;
 
-public class OrdersTest extends AbstractStoreProcTest {
+public class OrdersTest extends AbstractOnceProcTest {
 
     @Before
     public void setUp() throws Exception {

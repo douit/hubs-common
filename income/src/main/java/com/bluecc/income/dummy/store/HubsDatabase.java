@@ -15,7 +15,7 @@ import static com.bluecc.hubs.ProtoJsonUtils.toJson;
 
 public class HubsDatabase {
     public static void main(String[] args) {
-        MysqlFac fac=new MysqlFac();
+        MysqlTestFac fac=new MysqlTestFac();
         Jdbi jdbi = Jdbi.create(fac.getDataSource());
 
         List<PersonFlatData> rs=queryPerson(jdbi);

@@ -1,0 +1,12 @@
+tenants:
+  default:
+    dataSource:
+      url: jdbc:mysql://localhost:3306/hubs
+      user: root
+      password: root
+
+  test:
+    dataSource:
+      url: jdbc:mysql://localhost:3306/testhubs
+      user: root
+      password: root

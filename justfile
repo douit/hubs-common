@@ -57,6 +57,9 @@ sql:
 	just gen SqlGenTool -s
 	mysql -uroot -proot hubs < asset/mysql/hubs.sql
 
+testhubs:
+	mysql -uroot -proot testhubs < asset/mysql/hubs.sql
+
 # 生成proto文件对应的java类
 stub:
 	mvn compile -f stub/pom.xml

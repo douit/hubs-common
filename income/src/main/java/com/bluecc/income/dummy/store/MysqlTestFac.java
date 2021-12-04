@@ -9,19 +9,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Singleton
-public class ClickHouseFac implements IDataSourceFac{
+public class MysqlTestFac implements IDataSourceFac{
 
     HikariDataSource ds;
 
-    ClickHouseFac() {
+    MysqlTestFac() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:clickhouse://127.0.0.1:9000/default");
-        config.setDriverClassName("com.github.housepower.jdbc.ClickHouseDriver");
-        config.setUsername("default");
-        config.setPassword("");
-//        config.addDataSourceProperty("cachePrepStmts", "true");
-//        config.addDataSourceProperty("prepStmtCacheSize", "250");
-//        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/testhubs");
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setUsername("root");
+        config.setPassword("root");
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
         ds = new HikariDataSource(config);
     }

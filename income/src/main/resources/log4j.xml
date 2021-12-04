@@ -12,6 +12,10 @@
         <level value="debug"/>
         <appender-ref ref="stdout"/>
     </logger>
+    <logger name="com.bluecc.income.types" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="stdout"/>
+    </logger>
 
     <root>
 <!--        <level value="DEBUG"/>-->

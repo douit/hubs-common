@@ -1,18 +1,17 @@
 package com.bluecc.income;
 
-import com.bluecc.hubs.feed.ProtoModule;
 import com.bluecc.income.dummy.store.StoreModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
-public class GuiceTestRunner extends BlockJUnit4ClassRunner {
+public class GuiceStoreRunner extends BlockJUnit4ClassRunner {
 
     private static final Injector injector = Guice
-            .createInjector(new StoreModule("test"));
+            .createInjector(new StoreModule());
 
-    public GuiceTestRunner(Class<?> klass) throws InitializationError {
+    public GuiceStoreRunner(Class<?> klass) throws InitializationError {
         super(klass);
     }
 
