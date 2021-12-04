@@ -14,11 +14,12 @@ import "routines.proto";
 
 
 // flat-ent: Content Association Type
-message ContentAssocType {
+message ContentAssocTypeData {
     option (routines.entity_type) = "ContentAssocType";
     option (routines.keys).keys = "content_assoc_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contentAssocTypeId
         
     string content_assoc_type_id = 1;    
@@ -28,11 +29,12 @@ message ContentAssocType {
 }
 
 // flat-ent: Custom Method
-message CustomMethod {
+message CustomMethodData {
     option (routines.entity_type) = "CustomMethod";
     option (routines.keys).keys = "custom_method_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: customMethodId
         
     string custom_method_id = 1;
@@ -44,11 +46,12 @@ message CustomMethod {
 }
 
 // flat-ent: Credit Card Type GL Account
-message CreditCardTypeGlAccount {
+message CreditCardTypeGlAccountData {
     option (routines.entity_type) = "CreditCardTypeGlAccount";
     option (routines.keys).keys = "card_type, organization_party_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: cardType, organizationPartyId
     string id = 150;     
     string card_type = 1;    
@@ -59,11 +62,12 @@ message CreditCardTypeGlAccount {
 }
 
 // flat-ent: Cost Component Calculation
-message CostComponentCalc {
+message CostComponentCalcData {
     option (routines.entity_type) = "CostComponentCalc";
     option (routines.keys).keys = "cost_component_calc_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: costComponentCalcId
         
     string cost_component_calc_id = 1;    
@@ -80,11 +84,12 @@ message CostComponentCalc {
 }
 
 // flat-ent: Payment Group Type
-message PaymentGroupType {
+message PaymentGroupTypeData {
     option (routines.entity_type) = "PaymentGroupType";
     option (routines.keys).keys = "payment_group_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: paymentGroupTypeId
         
     string payment_group_type_id = 1;
@@ -96,11 +101,12 @@ message PaymentGroupType {
 }
 
 // flat-ent: File Extension
-message FileExtension {
+message FileExtensionData {
     option (routines.entity_type) = "FileExtension";
     option (routines.keys).keys = "file_extension_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: fileExtensionId
         
     string file_extension_id = 1;
@@ -110,11 +116,12 @@ message FileExtension {
 }
 
 // flat-ent: WorkEffort Content Type
-message WorkEffortContentType {
+message WorkEffortContentTypeData {
     option (routines.entity_type) = "WorkEffortContentType";
     option (routines.keys).keys = "work_effort_content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: workEffortContentTypeId
         
     string work_effort_content_type_id = 1;
@@ -125,11 +132,12 @@ message WorkEffortContentType {
 }
 
 // flat-ent: Geographic Boundary Association
-message GeoAssoc {
+message GeoAssocData {
     option (routines.entity_type) = "GeoAssoc";
     option (routines.keys).keys = "geo_id, geo_id_to";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: geoId, geoIdTo
     string id = 150; 
     string geo_id = 1; // Geo
@@ -140,11 +148,12 @@ message GeoAssoc {
 }
 
 // flat-ent: Product Price Purpose
-message ProductPricePurpose {
+message ProductPricePurposeData {
     option (routines.entity_type) = "ProductPricePurpose";
     option (routines.keys).keys = "product_price_purpose_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productPricePurposeId
         
     string product_price_purpose_id = 1;    
@@ -154,11 +163,12 @@ message ProductPricePurpose {
 }
 
 // flat-ent: Contact Mechanism Type
-message ContactMechType {
+message ContactMechTypeData {
     option (routines.entity_type) = "ContactMechType";
     option (routines.keys).keys = "contact_mech_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contactMechTypeId
         
     string contact_mech_type_id = 1;
@@ -170,11 +180,12 @@ message ContactMechType {
 }
 
 // flat-ent: Survey Question Type
-message SurveyQuestionType {
+message SurveyQuestionTypeData {
     option (routines.entity_type) = "SurveyQuestionType";
     option (routines.keys).keys = "survey_question_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: surveyQuestionTypeId
         
     string survey_question_type_id = 1;    
@@ -184,11 +195,12 @@ message SurveyQuestionType {
 }
 
 // flat-ent: Content Operation
-message ContentOperation {
+message ContentOperationData {
     option (routines.entity_type) = "ContentOperation";
     option (routines.keys).keys = "content_operation_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contentOperationId
     
     string content_operation_id = 1; // ContentPurposeOperation    
@@ -198,11 +210,12 @@ message ContentOperation {
 }
 
 // flat-ent: Order Denylist Type
-message OrderDenylistType {
+message OrderDenylistTypeData {
     option (routines.entity_type) = "OrderDenylistType";
     option (routines.keys).keys = "order_denylist_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: orderDenylistTypeId
         
     string order_denylist_type_id = 1;    
@@ -212,11 +225,12 @@ message OrderDenylistType {
 }
 
 // flat-ent: Return Adjustment Type
-message ReturnAdjustmentType {
+message ReturnAdjustmentTypeData {
     option (routines.entity_type) = "ReturnAdjustmentType";
     option (routines.keys).keys = "return_adjustment_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: returnAdjustmentTypeId
         
     string return_adjustment_type_id = 1;
@@ -228,11 +242,12 @@ message ReturnAdjustmentType {
 }
 
 // flat-ent: Product Type
-message ProductType {
+message ProductTypeData {
     option (routines.entity_type) = "ProductType";
     option (routines.keys).keys = "product_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productTypeId
         
     string product_type_id = 1;
@@ -246,11 +261,12 @@ message ProductType {
 }
 
 // flat-ent: Return Type
-message ReturnType {
+message ReturnTypeData {
     option (routines.entity_type) = "ReturnType";
     option (routines.keys).keys = "return_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: returnTypeId
         
     string return_type_id = 1;    
@@ -263,11 +279,12 @@ message ReturnType {
 }
 
 // flat-ent: Tax Authority Assoc Type
-message TaxAuthorityAssocType {
+message TaxAuthorityAssocTypeData {
     option (routines.entity_type) = "TaxAuthorityAssocType";
     option (routines.keys).keys = "tax_authority_assoc_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: taxAuthorityAssocTypeId
         
     string tax_authority_assoc_type_id = 1;    
@@ -277,11 +294,12 @@ message TaxAuthorityAssocType {
 }
 
 // flat-ent: Data Source
-message DataSource {
+message DataSourceData {
     option (routines.entity_type) = "DataSource";
     option (routines.keys).keys = "data_source_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: dataSourceId
         
     string data_source_id = 1;
@@ -292,11 +310,12 @@ message DataSource {
 }
 
 // flat-ent: ProductStore Group
-message ProductStoreGroup {
+message ProductStoreGroupData {
     option (routines.entity_type) = "ProductStoreGroup";
     option (routines.keys).keys = "product_store_group_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productStoreGroupId
         
     string product_store_group_id = 1;    
@@ -309,11 +328,12 @@ message ProductStoreGroup {
 }
 
 // flat-ent: Shopping List Type
-message ShoppingListType {
+message ShoppingListTypeData {
     option (routines.entity_type) = "ShoppingListType";
     option (routines.keys).keys = "shopping_list_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shoppingListTypeId
         
     string shopping_list_type_id = 1;    
@@ -323,11 +343,12 @@ message ShoppingListType {
 }
 
 // flat-ent: EmplPosition Type
-message EmplPositionType {
+message EmplPositionTypeData {
     option (routines.entity_type) = "EmplPositionType";
     option (routines.keys).keys = "empl_position_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: emplPositionTypeId
         
     string empl_position_type_id = 1;
@@ -339,11 +360,12 @@ message EmplPositionType {
 }
 
 // flat-ent: Responsibility Type
-message ResponsibilityType {
+message ResponsibilityTypeData {
     option (routines.entity_type) = "ResponsibilityType";
     option (routines.keys).keys = "responsibility_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: responsibilityTypeId
         
     string responsibility_type_id = 1;
@@ -355,11 +377,12 @@ message ResponsibilityType {
 }
 
 // flat-ent: General Ledger Account Category
-message GlAccountCategory {
+message GlAccountCategoryData {
     option (routines.entity_type) = "GlAccountCategory";
     option (routines.keys).keys = "gl_account_category_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountCategoryId
     
     string gl_account_category_id = 1; // GlAccountCategoryMember
@@ -370,11 +393,12 @@ message GlAccountCategory {
 }
 
 // flat-ent: Entity Grouping
-message EntityGroup {
+message EntityGroupData {
     option (routines.entity_type) = "EntityGroup";
     option (routines.keys).keys = "entity_group_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: entityGroupId
         
     string entity_group_id = 1;    
@@ -384,11 +408,12 @@ message EntityGroup {
 }
 
 // flat-ent: Deduction Type
-message DeductionType {
+message DeductionTypeData {
     option (routines.entity_type) = "DeductionType";
     option (routines.keys).keys = "deduction_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: deductionTypeId
         
     string deduction_type_id = 1;
@@ -400,11 +425,12 @@ message DeductionType {
 }
 
 // flat-ent: MRP Event Type
-message MrpEventType {
+message MrpEventTypeData {
     option (routines.entity_type) = "MrpEventType";
     option (routines.keys).keys = "mrp_event_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: mrpEventTypeId
         
     string mrp_event_type_id = 1;    
@@ -414,11 +440,12 @@ message MrpEventType {
 }
 
 // flat-ent: Content Purpose Type
-message ContentPurposeType {
+message ContentPurposeTypeData {
     option (routines.entity_type) = "ContentPurposeType";
     option (routines.keys).keys = "content_purpose_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contentPurposeTypeId
         
     string content_purpose_type_id = 1;    
@@ -428,11 +455,12 @@ message ContentPurposeType {
 }
 
 // flat-ent: Fixed Asset Standard Cost Type
-message FixedAssetStdCostType {
+message FixedAssetStdCostTypeData {
     option (routines.entity_type) = "FixedAssetStdCostType";
     option (routines.keys).keys = "fixed_asset_std_cost_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: fixedAssetStdCostTypeId
         
     string fixed_asset_std_cost_type_id = 1;
@@ -444,11 +472,12 @@ message FixedAssetStdCostType {
 }
 
 // flat-ent: Product Price Type
-message ProductPriceType {
+message ProductPriceTypeData {
     option (routines.entity_type) = "ProductPriceType";
     option (routines.keys).keys = "product_price_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productPriceTypeId
         
     string product_price_type_id = 1;    
@@ -458,11 +487,12 @@ message ProductPriceType {
 }
 
 // flat-ent: Contact Mechanism Purpose Type
-message ContactMechPurposeType {
+message ContactMechPurposeTypeData {
     option (routines.entity_type) = "ContactMechPurposeType";
     option (routines.keys).keys = "contact_mech_purpose_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contactMechPurposeTypeId
         
     string contact_mech_purpose_type_id = 1;    
@@ -474,11 +504,12 @@ message ContactMechPurposeType {
 }
 
 // flat-ent: Enumeration
-message Enumeration {
+message EnumerationData {
     option (routines.entity_type) = "Enumeration";
     option (routines.keys).keys = "enum_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: enumId
         
     string enum_id = 1;
@@ -491,11 +522,12 @@ message Enumeration {
 }
 
 // flat-ent: Order Item Type
-message OrderItemType {
+message OrderItemTypeData {
     option (routines.entity_type) = "OrderItemType";
     option (routines.keys).keys = "order_item_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: orderItemTypeId
         
     string order_item_type_id = 1;
@@ -507,11 +539,12 @@ message OrderItemType {
 }
 
 // flat-ent: Return Header Type
-message ReturnHeaderType {
+message ReturnHeaderTypeData {
     option (routines.entity_type) = "ReturnHeaderType";
     option (routines.keys).keys = "return_header_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: returnHeaderTypeId
         
     string return_header_type_id = 1;
@@ -522,11 +555,12 @@ message ReturnHeaderType {
 }
 
 // flat-ent: Work Effort Association Type
-message WorkEffortAssocType {
+message WorkEffortAssocTypeData {
     option (routines.entity_type) = "WorkEffortAssocType";
     option (routines.keys).keys = "work_effort_assoc_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: workEffortAssocTypeId
         
     string work_effort_assoc_type_id = 1;
@@ -538,11 +572,12 @@ message WorkEffortAssocType {
 }
 
 // flat-ent: Geographic Boundary Type
-message GeoType {
+message GeoTypeData {
     option (routines.entity_type) = "GeoType";
     option (routines.keys).keys = "geo_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: geoTypeId
     
     string geo_type_id = 1; // GeoType
@@ -554,11 +589,12 @@ message GeoType {
 }
 
 // flat-ent: Leave Reason Type
-message EmplLeaveReasonType {
+message EmplLeaveReasonTypeData {
     option (routines.entity_type) = "EmplLeaveReasonType";
     option (routines.keys).keys = "empl_leave_reason_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: emplLeaveReasonTypeId
         
     string empl_leave_reason_type_id = 1;
@@ -570,11 +606,12 @@ message EmplLeaveReasonType {
 }
 
 // flat-ent: Product average cost type
-message ProductAverageCostType {
+message ProductAverageCostTypeData {
     option (routines.entity_type) = "ProductAverageCostType";
     option (routines.keys).keys = "product_average_cost_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productAverageCostTypeId
         
     string product_average_cost_type_id = 1;
@@ -586,11 +623,12 @@ message ProductAverageCostType {
 }
 
 // flat-ent: Product Maintenance Type
-message ProductMaintType {
+message ProductMaintTypeData {
     option (routines.entity_type) = "ProductMaintType";
     option (routines.keys).keys = "product_maint_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productMaintTypeId
         
     string product_maint_type_id = 1;    
@@ -601,11 +639,12 @@ message ProductMaintType {
 }
 
 // flat-ent: Term Type
-message TermType {
+message TermTypeData {
     option (routines.entity_type) = "TermType";
     option (routines.keys).keys = "term_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: termTypeId
         
     string term_type_id = 1;
@@ -617,11 +656,12 @@ message TermType {
 }
 
 // flat-ent: Web Site Content Type
-message WebSiteContentType {
+message WebSiteContentTypeData {
     option (routines.entity_type) = "WebSiteContentType";
     option (routines.keys).keys = "web_site_content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: webSiteContentTypeId
         
     string web_site_content_type_id = 1;    
@@ -633,11 +673,12 @@ message WebSiteContentType {
 }
 
 // flat-ent: General Ledger Account Type
-message GlAccountType {
+message GlAccountTypeData {
     option (routines.entity_type) = "GlAccountType";
     option (routines.keys).keys = "gl_account_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountTypeId
         
     string gl_account_type_id = 1;
@@ -649,11 +690,12 @@ message GlAccountType {
 }
 
 // flat-ent: Defines a group of User Preferences
-message UserPrefGroupType {
+message UserPrefGroupTypeData {
     option (routines.entity_type) = "UserPrefGroupType";
     option (routines.keys).keys = "user_pref_group_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: userPrefGroupTypeId
     
     string user_pref_group_type_id = 1; // UserPreference    
@@ -663,11 +705,12 @@ message UserPrefGroupType {
 }
 
 // flat-ent: Define associations between facilities
-message FacilityAssocType {
+message FacilityAssocTypeData {
     option (routines.entity_type) = "FacilityAssocType";
     option (routines.keys).keys = "facility_assoc_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: facilityAssocTypeId
         
     string facility_assoc_type_id = 1;    
@@ -677,11 +720,12 @@ message FacilityAssocType {
 }
 
 // flat-ent: General Ledger Account Category Type
-message GlAccountCategoryType {
+message GlAccountCategoryTypeData {
     option (routines.entity_type) = "GlAccountCategoryType";
     option (routines.keys).keys = "gl_account_category_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountCategoryTypeId
     
     string gl_account_category_type_id = 1; // GlAccountCategory    
@@ -691,11 +735,12 @@ message GlAccountCategoryType {
 }
 
 // flat-ent: Defines GL Accounts for Inventory Variance Reasons
-message VarianceReasonGlAccount {
+message VarianceReasonGlAccountData {
     option (routines.entity_type) = "VarianceReasonGlAccount";
     option (routines.keys).keys = "variance_reason_id, organization_party_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: varianceReasonId, organizationPartyId
     string id = 150; 
     string variance_reason_id = 1; // VarianceReason    
@@ -706,11 +751,12 @@ message VarianceReasonGlAccount {
 }
 
 // flat-ent: Content Association Predicate
-message ContentAssocPredicate {
+message ContentAssocPredicateData {
     option (routines.entity_type) = "ContentAssocPredicate";
     option (routines.keys).keys = "content_assoc_predicate_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contentAssocPredicateId
         
     string content_assoc_predicate_id = 1;    
@@ -720,11 +766,12 @@ message ContentAssocPredicate {
 }
 
 // flat-ent: Work Effort Purpose Type
-message WorkEffortPurposeType {
+message WorkEffortPurposeTypeData {
     option (routines.entity_type) = "WorkEffortPurposeType";
     option (routines.keys).keys = "work_effort_purpose_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: workEffortPurposeTypeId
         
     string work_effort_purpose_type_id = 1;
@@ -735,11 +782,12 @@ message WorkEffortPurposeType {
 }
 
 // flat-ent: PaymentMethodType
-message PaymentMethodType {
+message PaymentMethodTypeData {
     option (routines.entity_type) = "PaymentMethodType";
     option (routines.keys).keys = "payment_method_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: paymentMethodTypeId
         
     string payment_method_type_id = 1;    
@@ -750,11 +798,12 @@ message PaymentMethodType {
 }
 
 // flat-ent: General Ledger Resource
-message GlResourceType {
+message GlResourceTypeData {
     option (routines.entity_type) = "GlResourceType";
     option (routines.keys).keys = "gl_resource_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glResourceTypeId
         
     string gl_resource_type_id = 1;    
@@ -764,11 +813,12 @@ message GlResourceType {
 }
 
 // flat-ent: Facility Group
-message FacilityGroup {
+message FacilityGroupData {
     option (routines.entity_type) = "FacilityGroup";
     option (routines.keys).keys = "facility_group_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: facilityGroupId
         
     string facility_group_id = 1;
@@ -781,11 +831,12 @@ message FacilityGroup {
 }
 
 // flat-ent: Financial Account Transaction Type
-message FinAccountTransType {
+message FinAccountTransTypeData {
     option (routines.entity_type) = "FinAccountTransType";
     option (routines.keys).keys = "fin_account_trans_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: finAccountTransTypeId
         
     string fin_account_trans_type_id = 1;
@@ -797,11 +848,12 @@ message FinAccountTransType {
 }
 
 // flat-ent: Product Feature Type
-message ProductFeatureType {
+message ProductFeatureTypeData {
     option (routines.entity_type) = "ProductFeatureType";
     option (routines.keys).keys = "product_feature_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productFeatureTypeId
         
     string product_feature_type_id = 1;
@@ -813,11 +865,12 @@ message ProductFeatureType {
 }
 
 // flat-ent: Entity Grouping
-message EntityGroupEntry {
+message EntityGroupEntryData {
     option (routines.entity_type) = "EntityGroupEntry";
     option (routines.keys).keys = "entity_group_id, entity_or_package";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: entityGroupId, entityOrPackage
     string id = 150; 
     string entity_group_id = 1; // EntityGroup    
@@ -828,11 +881,12 @@ message EntityGroupEntry {
 }
 
 // flat-ent: Product Content Type
-message ProdConfItemContentType {
+message ProdConfItemContentTypeData {
     option (routines.entity_type) = "ProdConfItemContentType";
     option (routines.keys).keys = "conf_item_content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: confItemContentTypeId
         
     string conf_item_content_type_id = 1;
@@ -844,11 +898,12 @@ message ProdConfItemContentType {
 }
 
 // flat-ent: Preference Type
-message SupplierPrefOrder {
+message SupplierPrefOrderData {
     option (routines.entity_type) = "SupplierPrefOrder";
     option (routines.keys).keys = "supplier_pref_order_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: supplierPrefOrderId
         
     string supplier_pref_order_id = 1;    
@@ -858,11 +913,12 @@ message SupplierPrefOrder {
 }
 
 // flat-ent: Rejection Reason
-message RejectionReason {
+message RejectionReasonData {
     option (routines.entity_type) = "RejectionReason";
     option (routines.keys).keys = "rejection_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: rejectionId
         
     string rejection_id = 1;    
@@ -872,11 +928,12 @@ message RejectionReason {
 }
 
 // flat-ent: Allocation Plan Type Entity
-message AllocationPlanType {
+message AllocationPlanTypeData {
     option (routines.entity_type) = "AllocationPlanType";
     option (routines.keys).keys = "plan_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: planTypeId
         
     string plan_type_id = 1;    
@@ -887,11 +944,12 @@ message AllocationPlanType {
 }
 
 // flat-ent: Product Category Type
-message ProductCategoryType {
+message ProductCategoryTypeData {
     option (routines.entity_type) = "ProductCategoryType";
     option (routines.keys).keys = "product_category_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productCategoryTypeId
         
     string product_category_type_id = 1;
@@ -903,11 +961,12 @@ message ProductCategoryType {
 }
 
 // flat-ent: Country Capital
-message CountryCapital {
+message CountryCapitalData {
     option (routines.entity_type) = "CountryCapital";
     option (routines.keys).keys = "country_code";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: countryCode
     
     string country_code = 1; // CountryCode    
@@ -917,11 +976,12 @@ message CountryCapital {
 }
 
 // flat-ent: Communication Event Type
-message CommunicationEventType {
+message CommunicationEventTypeData {
     option (routines.entity_type) = "CommunicationEventType";
     option (routines.keys).keys = "communication_event_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: communicationEventTypeId
         
     string communication_event_type_id = 1;
@@ -934,11 +994,12 @@ message CommunicationEventType {
 }
 
 // flat-ent: General Ledger Account Group
-message GlAccountGroup {
+message GlAccountGroupData {
     option (routines.entity_type) = "GlAccountGroup";
     option (routines.keys).keys = "gl_account_group_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountGroupId
         
     string gl_account_group_id = 1;
@@ -949,11 +1010,12 @@ message GlAccountGroup {
 }
 
 // flat-ent: Order Adjustment Type
-message OrderAdjustmentType {
+message OrderAdjustmentTypeData {
     option (routines.entity_type) = "OrderAdjustmentType";
     option (routines.keys).keys = "order_adjustment_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: orderAdjustmentTypeId
         
     string order_adjustment_type_id = 1;
@@ -965,11 +1027,12 @@ message OrderAdjustmentType {
 }
 
 // flat-ent: Quote Type
-message QuoteType {
+message QuoteTypeData {
     option (routines.entity_type) = "QuoteType";
     option (routines.keys).keys = "quote_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: quoteTypeId
         
     string quote_type_id = 1;
@@ -981,11 +1044,12 @@ message QuoteType {
 }
 
 // flat-ent: Data Object Type
-message DataResourceType {
+message DataResourceTypeData {
     option (routines.entity_type) = "DataResourceType";
     option (routines.keys).keys = "data_resource_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: dataResourceTypeId
         
     string data_resource_type_id = 1;
@@ -997,11 +1061,12 @@ message DataResourceType {
 }
 
 // flat-ent: Fixed Asset Product Type
-message FixedAssetProductType {
+message FixedAssetProductTypeData {
     option (routines.entity_type) = "FixedAssetProductType";
     option (routines.keys).keys = "fixed_asset_product_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: fixedAssetProductTypeId
         
     string fixed_asset_product_type_id = 1;    
@@ -1011,11 +1076,12 @@ message FixedAssetProductType {
 }
 
 // flat-ent: Agreement Item Type
-message AgreementItemType {
+message AgreementItemTypeData {
     option (routines.entity_type) = "AgreementItemType";
     option (routines.keys).keys = "agreement_item_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: agreementItemTypeId
         
     string agreement_item_type_id = 1;
@@ -1027,11 +1093,12 @@ message AgreementItemType {
 }
 
 // flat-ent: Accounting Transaction Type
-message AcctgTransType {
+message AcctgTransTypeData {
     option (routines.entity_type) = "AcctgTransType";
     option (routines.keys).keys = "acctg_trans_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: acctgTransTypeId
         
     string acctg_trans_type_id = 1;
@@ -1043,11 +1110,12 @@ message AcctgTransType {
 }
 
 // flat-ent: Invoice Item Assoc Type
-message InvoiceItemAssocType {
+message InvoiceItemAssocTypeData {
     option (routines.entity_type) = "InvoiceItemAssocType";
     option (routines.keys).keys = "invoice_item_assoc_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: invoiceItemAssocTypeId
         
     string invoice_item_assoc_type_id = 1;
@@ -1059,11 +1127,12 @@ message InvoiceItemAssocType {
 }
 
 // flat-ent: Data Meta-Data Predicate
-message MetaDataPredicate {
+message MetaDataPredicateData {
     option (routines.entity_type) = "MetaDataPredicate";
     option (routines.keys).keys = "meta_data_predicate_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: metaDataPredicateId
         
     string meta_data_predicate_id = 1;    
@@ -1073,11 +1142,12 @@ message MetaDataPredicate {
 }
 
 // flat-ent: Performance Rating Type
-message PerfRatingType {
+message PerfRatingTypeData {
     option (routines.entity_type) = "PerfRatingType";
     option (routines.keys).keys = "perf_rating_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: perfRatingTypeId
         
     string perf_rating_type_id = 1;
@@ -1089,11 +1159,12 @@ message PerfRatingType {
 }
 
 // flat-ent: Unit Of Measure Type
-message UomType {
+message UomTypeData {
     option (routines.entity_type) = "UomType";
     option (routines.keys).keys = "uom_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: uomTypeId
         
     string uom_type_id = 1;
@@ -1105,11 +1176,12 @@ message UomType {
 }
 
 // flat-ent: Status Valid Change
-message StatusValidChange {
+message StatusValidChangeData {
     option (routines.entity_type) = "StatusValidChange";
     option (routines.keys).keys = "status_id, status_id_to";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: statusId, statusIdTo
     string id = 150;     
     string status_id = 1;
@@ -1121,11 +1193,12 @@ message StatusValidChange {
 }
 
 // flat-ent: Quantity Break Type
-message QuantityBreakType {
+message QuantityBreakTypeData {
     option (routines.entity_type) = "QuantityBreakType";
     option (routines.keys).keys = "quantity_break_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: quantityBreakTypeId
         
     string quantity_break_type_id = 1;    
@@ -1135,11 +1208,12 @@ message QuantityBreakType {
 }
 
 // flat-ent: Employment Application Source Type
-message EmploymentAppSourceType {
+message EmploymentAppSourceTypeData {
     option (routines.entity_type) = "EmploymentAppSourceType";
     option (routines.keys).keys = "employment_app_source_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: employmentAppSourceTypeId
         
     string employment_app_source_type_id = 1;
@@ -1151,11 +1225,12 @@ message EmploymentAppSourceType {
 }
 
 // flat-ent: Work Effort Good Standard Type
-message WorkEffortGoodStandardType {
+message WorkEffortGoodStandardTypeData {
     option (routines.entity_type) = "WorkEffortGoodStandardType";
     option (routines.keys).keys = "work_effort_good_std_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: workEffortGoodStdTypeId
         
     string work_effort_good_std_type_id = 1;
@@ -1167,11 +1242,12 @@ message WorkEffortGoodStandardType {
 }
 
 // flat-ent: DHL Shipment Gateway Configuration
-message ShipmentGatewayDhl {
+message ShipmentGatewayDhlData {
     option (routines.entity_type) = "ShipmentGatewayDhl";
     option (routines.keys).keys = "shipment_gateway_config_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shipmentGatewayConfigId
     
     string shipment_gateway_config_id = 1; // ShipmentGatewayConfig    
@@ -1190,11 +1266,12 @@ message ShipmentGatewayDhl {
 }
 
 // flat-ent: Termination Type
-message TerminationType {
+message TerminationTypeData {
     option (routines.entity_type) = "TerminationType";
     option (routines.keys).keys = "termination_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: terminationTypeId
         
     string termination_type_id = 1;
@@ -1206,11 +1283,12 @@ message TerminationType {
 }
 
 // flat-ent: General Ledger Journal
-message GlJournal {
+message GlJournalData {
     option (routines.entity_type) = "GlJournal";
     option (routines.keys).keys = "gl_journal_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glJournalId
         
     string gl_journal_id = 1;    
@@ -1223,11 +1301,12 @@ message GlJournal {
 }
 
 // flat-ent: Party Relationship Type
-message PartyRelationshipType {
+message PartyRelationshipTypeData {
     option (routines.entity_type) = "PartyRelationshipType";
     option (routines.keys).keys = "party_relationship_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: partyRelationshipTypeId
         
     string party_relationship_type_id = 1;
@@ -1242,11 +1321,12 @@ message PartyRelationshipType {
 }
 
 // flat-ent: Enumeration Type
-message EnumerationType {
+message EnumerationTypeData {
     option (routines.entity_type) = "EnumerationType";
     option (routines.keys).keys = "enum_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: enumTypeId
     
     string enum_type_id = 1; // EnumerationType
@@ -1258,11 +1338,12 @@ message EnumerationType {
 }
 
 // flat-ent: Document Type
-message DocumentType {
+message DocumentTypeData {
     option (routines.entity_type) = "DocumentType";
     option (routines.keys).keys = "document_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: documentTypeId
         
     string document_type_id = 1;
@@ -1274,11 +1355,12 @@ message DocumentType {
 }
 
 // flat-ent: Variance Reason
-message VarianceReason {
+message VarianceReasonData {
     option (routines.entity_type) = "VarianceReason";
     option (routines.keys).keys = "variance_reason_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: varianceReasonId
         
     string variance_reason_id = 1;    
@@ -1288,11 +1370,12 @@ message VarianceReason {
 }
 
 // flat-ent: Geographic Boundary Association
-message GeoAssocType {
+message GeoAssocTypeData {
     option (routines.entity_type) = "GeoAssocType";
     option (routines.keys).keys = "geo_assoc_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: geoAssocTypeId
     
     string geo_assoc_type_id = 1; // GeoAssoc    
@@ -1302,11 +1385,12 @@ message GeoAssocType {
 }
 
 // flat-ent: Benefit Type
-message BenefitType {
+message BenefitTypeData {
     option (routines.entity_type) = "BenefitType";
     option (routines.keys).keys = "benefit_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: benefitTypeId
         
     string benefit_type_id = 1;    
@@ -1320,11 +1404,12 @@ message BenefitType {
 }
 
 // flat-ent: Unit Of Measure
-message Uom {
+message UomData {
     option (routines.entity_type) = "Uom";
     option (routines.keys).keys = "uom_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: uomId
         
     string uom_id = 1;
@@ -1337,11 +1422,12 @@ message Uom {
 }
 
 // flat-ent: Payment Method Type GL Account
-message PaymentMethodTypeGlAccount {
+message PaymentMethodTypeGlAccountData {
     option (routines.entity_type) = "PaymentMethodTypeGlAccount";
     option (routines.keys).keys = "payment_method_type_id, organization_party_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: paymentMethodTypeId, organizationPartyId
     string id = 150; 
     string payment_method_type_id = 1; // PaymentMethodType    
@@ -1352,11 +1438,12 @@ message PaymentMethodTypeGlAccount {
 }
 
 // flat-ent: Cost Component Type
-message CostComponentType {
+message CostComponentTypeData {
     option (routines.entity_type) = "CostComponentType";
     option (routines.keys).keys = "cost_component_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: costComponentTypeId
         
     string cost_component_type_id = 1;
@@ -1368,11 +1455,12 @@ message CostComponentType {
 }
 
 // flat-ent: Unit Of Measure Conversion Entity for those Units of Measure whose conversion values change over time (ie, currencies)
-message UomConversionDated {
+message UomConversionDatedData {
     option (routines.entity_type) = "UomConversionDated";
     option (routines.keys).keys = "uom_id, uom_id_to, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: uomId, uomIdTo, fromDate
     string id = 150; 
     string uom_id = 1; // Uom
@@ -1389,11 +1477,12 @@ message UomConversionDated {
 }
 
 // flat-ent: Entity for storing data about Interview Types
-message JobInterviewType {
+message JobInterviewTypeData {
     option (routines.entity_type) = "JobInterviewType";
     option (routines.keys).keys = "job_interview_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: jobInterviewTypeId
         
     string job_interview_type_id = 1;    
@@ -1403,11 +1492,12 @@ message JobInterviewType {
 }
 
 // flat-ent: Period Type
-message PeriodType {
+message PeriodTypeData {
     option (routines.entity_type) = "PeriodType";
     option (routines.keys).keys = "period_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: periodTypeId
         
     string period_type_id = 1;    
@@ -1419,11 +1509,12 @@ message PeriodType {
 }
 
 // flat-ent: Party Identification Type
-message PartyIdentificationType {
+message PartyIdentificationTypeData {
     option (routines.entity_type) = "PartyIdentificationType";
     option (routines.keys).keys = "party_identification_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: partyIdentificationTypeId
         
     string party_identification_type_id = 1;
@@ -1435,11 +1526,12 @@ message PartyIdentificationType {
 }
 
 // flat-ent: Data Category
-message DataCategory {
+message DataCategoryData {
     option (routines.entity_type) = "DataCategory";
     option (routines.keys).keys = "data_category_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: dataCategoryId
         
     string data_category_id = 1;
@@ -1450,11 +1542,12 @@ message DataCategory {
 }
 
 // flat-ent: Content Type
-message ContentType {
+message ContentTypeData {
     option (routines.entity_type) = "ContentType";
     option (routines.keys).keys = "content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contentTypeId
         
     string content_type_id = 1;
@@ -1466,11 +1559,12 @@ message ContentType {
 }
 
 // flat-ent: Role Type
-message RoleType {
+message RoleTypeData {
     option (routines.entity_type) = "RoleType";
     option (routines.keys).keys = "role_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: roleTypeId
         
     string role_type_id = 1;
@@ -1482,11 +1576,12 @@ message RoleType {
 }
 
 // flat-ent: Shipment Gateway Config Type
-message ShipmentGatewayConfigType {
+message ShipmentGatewayConfigTypeData {
     option (routines.entity_type) = "ShipmentGatewayConfigType";
     option (routines.keys).keys = "shipment_gateway_conf_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shipmentGatewayConfTypeId
     
     string shipment_gateway_conf_type_id = 1; // ShipmentGatewayConfigType
@@ -1498,11 +1593,12 @@ message ShipmentGatewayConfigType {
 }
 
 // flat-ent: Shipment Contact Mechanism Type
-message ShipmentContactMechType {
+message ShipmentContactMechTypeData {
     option (routines.entity_type) = "ShipmentContactMechType";
     option (routines.keys).keys = "shipment_contact_mech_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shipmentContactMechTypeId
         
     string shipment_contact_mech_type_id = 1;    
@@ -1512,11 +1608,12 @@ message ShipmentContactMechType {
 }
 
 // flat-ent: Customer Request Resolution
-message CustRequestResolution {
+message CustRequestResolutionData {
     option (routines.entity_type) = "CustRequestResolution";
     option (routines.keys).keys = "cust_request_resolution_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: custRequestResolutionId
         
     string cust_request_resolution_id = 1;    
@@ -1527,11 +1624,12 @@ message CustRequestResolution {
 }
 
 // flat-ent: Budget Item Type
-message BudgetItemType {
+message BudgetItemTypeData {
     option (routines.entity_type) = "BudgetItemType";
     option (routines.keys).keys = "budget_item_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: budgetItemTypeId
         
     string budget_item_type_id = 1;
@@ -1543,11 +1641,12 @@ message BudgetItemType {
 }
 
 // flat-ent: Subscription Type
-message SubscriptionType {
+message SubscriptionTypeData {
     option (routines.entity_type) = "SubscriptionType";
     option (routines.keys).keys = "subscription_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: subscriptionTypeId
         
     string subscription_type_id = 1;
@@ -1559,11 +1658,12 @@ message SubscriptionType {
 }
 
 // flat-ent: Agreement Content Type
-message AgreementContentType {
+message AgreementContentTypeData {
     option (routines.entity_type) = "AgreementContentType";
     option (routines.keys).keys = "agreement_content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: agreementContentTypeId
         
     string agreement_content_type_id = 1;
@@ -1575,11 +1675,12 @@ message AgreementContentType {
 }
 
 // flat-ent: GL Account Organization
-message GlAccountTypeDefault {
+message GlAccountTypeDefaultData {
     option (routines.entity_type) = "GlAccountTypeDefault";
     option (routines.keys).keys = "gl_account_type_id, organization_party_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountTypeId, organizationPartyId
     string id = 150; 
     string gl_account_type_id = 1; // GlAccountType    
@@ -1590,11 +1691,12 @@ message GlAccountTypeDefault {
 }
 
 // flat-ent: Segment Group Type
-message SegmentGroupType {
+message SegmentGroupTypeData {
     option (routines.entity_type) = "SegmentGroupType";
     option (routines.keys).keys = "segment_group_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: segmentGroupTypeId
         
     string segment_group_type_id = 1;    
@@ -1604,11 +1706,12 @@ message SegmentGroupType {
 }
 
 // flat-ent: Data Source Type
-message DataSourceType {
+message DataSourceTypeData {
     option (routines.entity_type) = "DataSourceType";
     option (routines.keys).keys = "data_source_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: dataSourceTypeId
     
     string data_source_type_id = 1; // DataSource    
@@ -1618,11 +1721,12 @@ message DataSourceType {
 }
 
 // flat-ent: Data Template Type
-message DataTemplateType {
+message DataTemplateTypeData {
     option (routines.entity_type) = "DataTemplateType";
     option (routines.keys).keys = "data_template_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: dataTemplateTypeId
         
     string data_template_type_id = 1;    
@@ -1633,11 +1737,12 @@ message DataTemplateType {
 }
 
 // flat-ent: Application preferences for a given userLogin.
-message UserPreference {
+message UserPreferenceData {
     option (routines.entity_type) = "UserPreference";
     option (routines.keys).keys = "user_login_id, user_pref_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: userLoginId, userPrefTypeId
     string id = 150;     
     string user_login_id = 1;    
@@ -1650,11 +1755,12 @@ message UserPreference {
 }
 
 // flat-ent: Fedex Shipment Gateway Configuration
-message ShipmentGatewayFedex {
+message ShipmentGatewayFedexData {
     option (routines.entity_type) = "ShipmentGatewayFedex";
     option (routines.keys).keys = "shipment_gateway_config_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shipmentGatewayConfigId
     
     string shipment_gateway_config_id = 1; // ShipmentGatewayConfig    
@@ -1676,11 +1782,12 @@ message ShipmentGatewayFedex {
 }
 
 // flat-ent: Geographic Boundary
-message Geo {
+message GeoData {
     option (routines.entity_type) = "Geo";
     option (routines.keys).keys = "geo_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: geoId
         
     string geo_id = 1;
@@ -1695,11 +1802,12 @@ message Geo {
 }
 
 // flat-ent: Contact Mechanism Type Purpose
-message ContactMechTypePurpose {
+message ContactMechTypePurposeData {
     option (routines.entity_type) = "ContactMechTypePurpose";
     option (routines.keys).keys = "contact_mech_type_id, contact_mech_purpose_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contactMechTypeId, contactMechPurposeTypeId
     string id = 150; 
     string contact_mech_type_id = 1; // ContactMechType
@@ -1709,11 +1817,12 @@ message ContactMechTypePurpose {
 }
 
 // flat-ent: Tracking Code Type
-message TrackingCodeType {
+message TrackingCodeTypeData {
     option (routines.entity_type) = "TrackingCodeType";
     option (routines.keys).keys = "tracking_code_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: trackingCodeTypeId
         
     string tracking_code_type_id = 1;    
@@ -1723,11 +1832,12 @@ message TrackingCodeType {
 }
 
 // flat-ent: Return Reason
-message ReturnReason {
+message ReturnReasonData {
     option (routines.entity_type) = "ReturnReason";
     option (routines.keys).keys = "return_reason_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: returnReasonId
         
     string return_reason_id = 1;    
@@ -1738,11 +1848,12 @@ message ReturnReason {
 }
 
 // flat-ent: Fixed Asset Type
-message FixedAssetType {
+message FixedAssetTypeData {
     option (routines.entity_type) = "FixedAssetType";
     option (routines.keys).keys = "fixed_asset_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: fixedAssetTypeId
         
     string fixed_asset_type_id = 1;
@@ -1754,11 +1865,12 @@ message FixedAssetType {
 }
 
 // flat-ent: Content Purpose
-message ContentPurposeOperation {
+message ContentPurposeOperationData {
     option (routines.entity_type) = "ContentPurposeOperation";
     option (routines.keys).keys = "content_purpose_type_id, content_operation_id, role_type_id, status_id, privilege_enum_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contentPurposeTypeId, contentOperationId, roleTypeId, statusId, privilegeEnumId
     string id = 150; 
     string content_purpose_type_id = 1; // ContentPurposeType
@@ -1771,11 +1883,12 @@ message ContentPurposeOperation {
 }
 
 // flat-ent: Catalog Category Association Type
-message ProdCatalogCategoryType {
+message ProdCatalogCategoryTypeData {
     option (routines.entity_type) = "ProdCatalogCategoryType";
     option (routines.keys).keys = "prod_catalog_category_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: prodCatalogCategoryTypeId
         
     string prod_catalog_category_type_id = 1;
@@ -1786,11 +1899,12 @@ message ProdCatalogCategoryType {
 }
 
 // flat-ent: USPS Shipment Gateway Configuration
-message ShipmentGatewayUsps {
+message ShipmentGatewayUspsData {
     option (routines.entity_type) = "ShipmentGatewayUsps";
     option (routines.keys).keys = "shipment_gateway_config_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shipmentGatewayConfigId
     
     string shipment_gateway_config_id = 1; // ShipmentGatewayConfig    
@@ -1806,11 +1920,12 @@ message ShipmentGatewayUsps {
 }
 
 // flat-ent: Product Meter Type
-message ProductMeterType {
+message ProductMeterTypeData {
     option (routines.entity_type) = "ProductMeterType";
     option (routines.keys).keys = "product_meter_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productMeterTypeId
         
     string product_meter_type_id = 1;    
@@ -1821,11 +1936,12 @@ message ProductMeterType {
 }
 
 // flat-ent: General Ledger Fiscal
-message GlFiscalType {
+message GlFiscalTypeData {
     option (routines.entity_type) = "GlFiscalType";
     option (routines.keys).keys = "gl_fiscal_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glFiscalTypeId
         
     string gl_fiscal_type_id = 1;    
@@ -1835,11 +1951,12 @@ message GlFiscalType {
 }
 
 // flat-ent: Mime Type
-message MimeType {
+message MimeTypeData {
     option (routines.entity_type) = "MimeType";
     option (routines.keys).keys = "mime_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: mimeTypeId
         
     string mime_type_id = 1;    
@@ -1849,11 +1966,12 @@ message MimeType {
 }
 
 // flat-ent: Product Category Content Type
-message ProductCategoryContentType {
+message ProductCategoryContentTypeData {
     option (routines.entity_type) = "ProductCategoryContentType";
     option (routines.keys).keys = "prod_cat_content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: prodCatContentTypeId
         
     string prod_cat_content_type_id = 1;
@@ -1865,11 +1983,12 @@ message ProductCategoryContentType {
 }
 
 // flat-ent: Employee Leave Type
-message EmplLeaveType {
+message EmplLeaveTypeData {
     option (routines.entity_type) = "EmplLeaveType";
     option (routines.keys).keys = "leave_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: leaveTypeId
         
     string leave_type_id = 1;
@@ -1881,11 +2000,12 @@ message EmplLeaveType {
 }
 
 // flat-ent: CustomTimePeriod
-message CustomTimePeriod {
+message CustomTimePeriodData {
     option (routines.entity_type) = "CustomTimePeriod";
     option (routines.keys).keys = "custom_time_period_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: customTimePeriodId
         
     string custom_time_period_id = 1;
@@ -1902,11 +2022,12 @@ message CustomTimePeriod {
 }
 
 // flat-ent: Character Set
-message CharacterSet {
+message CharacterSetData {
     option (routines.entity_type) = "CharacterSet";
     option (routines.keys).keys = "character_set_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: characterSetId
         
     string character_set_id = 1;    
@@ -1916,11 +2037,12 @@ message CharacterSet {
 }
 
 // flat-ent: Rate Type
-message RateType {
+message RateTypeData {
     option (routines.entity_type) = "RateType";
     option (routines.keys).keys = "rate_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: rateTypeId
         
     string rate_type_id = 1;    
@@ -1930,11 +2052,12 @@ message RateType {
 }
 
 // flat-ent: Maps PaymentTypes to GlAccountTypes, allowing user to configure payments and gl accounts
-message PaymentGlAccountTypeMap {
+message PaymentGlAccountTypeMapData {
     option (routines.entity_type) = "PaymentGlAccountTypeMap";
     option (routines.keys).keys = "payment_type_id, organization_party_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: paymentTypeId, organizationPartyId
     string id = 150; 
     string payment_type_id = 1; // PaymentType    
@@ -1945,11 +2068,12 @@ message PaymentGlAccountTypeMap {
 }
 
 // flat-ent: Training Class Type
-message TrainingClassType {
+message TrainingClassTypeData {
     option (routines.entity_type) = "TrainingClassType";
     option (routines.keys).keys = "training_class_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: trainingClassTypeId
         
     string training_class_type_id = 1;
@@ -1961,11 +2085,12 @@ message TrainingClassType {
 }
 
 // flat-ent: Security Component - Security Permission
-message SecurityPermission {
+message SecurityPermissionData {
     option (routines.entity_type) = "SecurityPermission";
     option (routines.keys).keys = "permission_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: permissionId
         
     string permission_id = 1;    
@@ -1975,11 +2100,12 @@ message SecurityPermission {
 }
 
 // flat-ent: Defines a set of Visual Themes
-message VisualThemeSet {
+message VisualThemeSetData {
     option (routines.entity_type) = "VisualThemeSet";
     option (routines.keys).keys = "visual_theme_set_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: visualThemeSetId
         
     string visual_theme_set_id = 1;    
@@ -1989,11 +2115,12 @@ message VisualThemeSet {
 }
 
 // flat-ent: StandardLanguage
-message StandardLanguage {
+message StandardLanguageData {
     option (routines.entity_type) = "StandardLanguage";
     option (routines.keys).keys = "standard_language_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: standardLanguageId
         
     string standard_language_id = 1;    
@@ -2008,11 +2135,12 @@ message StandardLanguage {
 }
 
 // flat-ent: Telephone Country Code
-message CountryTeleCode {
+message CountryTeleCodeData {
     option (routines.entity_type) = "CountryTeleCode";
     option (routines.keys).keys = "country_code";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: countryCode
     
     string country_code = 1; // CountryCode    
@@ -2022,11 +2150,12 @@ message CountryTeleCode {
 }
 
 // flat-ent: Product Association Type
-message ProductAssocType {
+message ProductAssocTypeData {
     option (routines.entity_type) = "ProductAssocType";
     option (routines.keys).keys = "product_assoc_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productAssocTypeId
         
     string product_assoc_type_id = 1;
@@ -2038,11 +2167,12 @@ message ProductAssocType {
 }
 
 // flat-ent: Financial Account Type GL Account
-message FinAccountTypeGlAccount {
+message FinAccountTypeGlAccountData {
     option (routines.entity_type) = "FinAccountTypeGlAccount";
     option (routines.keys).keys = "fin_account_type_id, organization_party_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: finAccountTypeId, organizationPartyId
     string id = 150; 
     string fin_account_type_id = 1; // FinAccountType    
@@ -2053,11 +2183,12 @@ message FinAccountTypeGlAccount {
 }
 
 // flat-ent: Calendar
-message TechDataCalendar {
+message TechDataCalendarData {
     option (routines.entity_type) = "TechDataCalendar";
     option (routines.keys).keys = "calendar_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: calendarId
         
     string calendar_id = 1;    
@@ -2068,11 +2199,12 @@ message TechDataCalendar {
 }
 
 // flat-ent: Party (organization) accounting preferences
-message PartyAcctgPreference {
+message PartyAcctgPreferenceData {
     option (routines.entity_type) = "PartyAcctgPreference";
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: partyId
         
     string party_id = 1;    
@@ -2100,11 +2232,12 @@ message PartyAcctgPreference {
 }
 
 // flat-ent: General Ledger XBRL Class
-message GlXbrlClass {
+message GlXbrlClassData {
     option (routines.entity_type) = "GlXbrlClass";
     option (routines.keys).keys = "gl_xbrl_class_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glXbrlClassId
         
     string gl_xbrl_class_id = 1;
@@ -2115,11 +2248,12 @@ message GlXbrlClass {
 }
 
 // flat-ent: Week definition
-message TechDataCalendarWeek {
+message TechDataCalendarWeekData {
     option (routines.entity_type) = "TechDataCalendarWeek";
     option (routines.keys).keys = "calendar_week_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: calendarWeekId
         
     string calendar_week_id = 1;    
@@ -2143,11 +2277,12 @@ message TechDataCalendarWeek {
 }
 
 // flat-ent: Payment Gateway Config Type
-message PaymentGatewayConfigType {
+message PaymentGatewayConfigTypeData {
     option (routines.entity_type) = "PaymentGatewayConfigType";
     option (routines.keys).keys = "payment_gateway_config_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: paymentGatewayConfigTypeId
         
     string payment_gateway_config_type_id = 1;
@@ -2159,11 +2294,12 @@ message PaymentGatewayConfigType {
 }
 
 // flat-ent: Facility Type
-message FacilityType {
+message FacilityTypeData {
     option (routines.entity_type) = "FacilityType";
     option (routines.keys).keys = "facility_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: facilityTypeId
         
     string facility_type_id = 1;
@@ -2175,11 +2311,12 @@ message FacilityType {
 }
 
 // flat-ent: Inventory Item Type
-message InventoryItemType {
+message InventoryItemTypeData {
     option (routines.entity_type) = "InventoryItemType";
     option (routines.keys).keys = "inventory_item_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: inventoryItemTypeId
         
     string inventory_item_type_id = 1;
@@ -2191,11 +2328,12 @@ message InventoryItemType {
 }
 
 // flat-ent: Shipment Gateway Config
-message ShipmentGatewayConfig {
+message ShipmentGatewayConfigData {
     option (routines.entity_type) = "ShipmentGatewayConfig";
     option (routines.keys).keys = "shipment_gateway_config_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shipmentGatewayConfigId
         
     string shipment_gateway_config_id = 1;
@@ -2206,11 +2344,12 @@ message ShipmentGatewayConfig {
 }
 
 // flat-ent: Server Hit Bin
-message ServerHitType {
+message ServerHitTypeData {
     option (routines.entity_type) = "ServerHitType";
     option (routines.keys).keys = "hit_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: hitTypeId
         
     string hit_type_id = 1;    
@@ -2220,11 +2359,12 @@ message ServerHitType {
 }
 
 // flat-ent: Budget Type
-message BudgetType {
+message BudgetTypeData {
     option (routines.entity_type) = "BudgetType";
     option (routines.keys).keys = "budget_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: budgetTypeId
         
     string budget_type_id = 1;
@@ -2236,11 +2376,12 @@ message BudgetType {
 }
 
 // flat-ent: Invoice Item Type Map
-message InvoiceItemTypeMap {
+message InvoiceItemTypeMapData {
     option (routines.entity_type) = "InvoiceItemTypeMap";
     option (routines.keys).keys = "invoice_item_map_key, invoice_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: invoiceItemMapKey, invoiceTypeId
     string id = 150;     
     string invoice_item_map_key = 1;
@@ -2251,11 +2392,12 @@ message InvoiceItemTypeMap {
 }
 
 // flat-ent: Web Analytics Type
-message WebAnalyticsType {
+message WebAnalyticsTypeData {
     option (routines.entity_type) = "WebAnalyticsType";
     option (routines.keys).keys = "web_analytics_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: webAnalyticsTypeId
         
     string web_analytics_type_id = 1;
@@ -2267,11 +2409,12 @@ message WebAnalyticsType {
 }
 
 // flat-ent: Work Requirement Fulfillment Type
-message WorkReqFulfType {
+message WorkReqFulfTypeData {
     option (routines.entity_type) = "WorkReqFulfType";
     option (routines.keys).keys = "work_req_fulf_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: workReqFulfTypeId
         
     string work_req_fulf_type_id = 1;    
@@ -2281,11 +2424,12 @@ message WorkReqFulfType {
 }
 
 // flat-ent: General Ledger Reconciliation
-message GlReconciliation {
+message GlReconciliationData {
     option (routines.entity_type) = "GlReconciliation";
     option (routines.keys).keys = "gl_reconciliation_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glReconciliationId
         
     string gl_reconciliation_id = 1;    
@@ -2306,11 +2450,12 @@ message GlReconciliation {
 }
 
 // flat-ent: Shipment Type
-message ShipmentType {
+message ShipmentTypeData {
     option (routines.entity_type) = "ShipmentType";
     option (routines.keys).keys = "shipment_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shipmentTypeId
         
     string shipment_type_id = 1;
@@ -2322,11 +2467,12 @@ message ShipmentType {
 }
 
 // flat-ent: Order Type
-message OrderType {
+message OrderTypeData {
     option (routines.entity_type) = "OrderType";
     option (routines.keys).keys = "order_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: orderTypeId
         
     string order_type_id = 1;
@@ -2338,11 +2484,12 @@ message OrderType {
 }
 
 // flat-ent: Party Classification Type
-message PartyClassificationType {
+message PartyClassificationTypeData {
     option (routines.entity_type) = "PartyClassificationType";
     option (routines.keys).keys = "party_classification_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: partyClassificationTypeId
         
     string party_classification_type_id = 1;
@@ -2354,11 +2501,12 @@ message PartyClassificationType {
 }
 
 // flat-ent: Return Item Type Map
-message ReturnItemTypeMap {
+message ReturnItemTypeMapData {
     option (routines.entity_type) = "ReturnItemTypeMap";
     option (routines.keys).keys = "return_item_map_key, return_header_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: returnItemMapKey, returnHeaderTypeId
     string id = 150;     
     string return_item_map_key = 1;
@@ -2369,11 +2517,12 @@ message ReturnItemTypeMap {
 }
 
 // flat-ent: Product Feature Applicability Type
-message ProductFeatureApplType {
+message ProductFeatureApplTypeData {
     option (routines.entity_type) = "ProductFeatureApplType";
     option (routines.keys).keys = "product_feature_appl_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productFeatureApplTypeId
         
     string product_feature_appl_type_id = 1;
@@ -2385,11 +2534,12 @@ message ProductFeatureApplType {
 }
 
 // flat-ent: Contact List Type
-message ContactListType {
+message ContactListTypeData {
     option (routines.entity_type) = "ContactListType";
     option (routines.keys).keys = "contact_list_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: contactListTypeId
         
     string contact_list_type_id = 1;    
@@ -2399,11 +2549,12 @@ message ContactListType {
 }
 
 // flat-ent: General Ledger Account Category Member
-message GlAccountCategoryMember {
+message GlAccountCategoryMemberData {
     option (routines.entity_type) = "GlAccountCategoryMember";
     option (routines.keys).keys = "gl_account_id, gl_account_category_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountId, glAccountCategoryId, fromDate
     string id = 150;     
     string gl_account_id = 1;
@@ -2416,11 +2567,12 @@ message GlAccountCategoryMember {
 }
 
 // flat-ent: Invoice Item Type
-message InvoiceItemType {
+message InvoiceItemTypeData {
     option (routines.entity_type) = "InvoiceItemType";
     option (routines.keys).keys = "invoice_item_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: invoiceItemTypeId
         
     string invoice_item_type_id = 1;
@@ -2433,11 +2585,12 @@ message InvoiceItemType {
 }
 
 // flat-ent: Product Price Type
-message ProductPriceActionType {
+message ProductPriceActionTypeData {
     option (routines.entity_type) = "ProductPriceActionType";
     option (routines.keys).keys = "product_price_action_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productPriceActionTypeId
         
     string product_price_action_type_id = 1;    
@@ -2447,11 +2600,12 @@ message ProductPriceActionType {
 }
 
 // flat-ent: CountryAddressFormat
-message CountryAddressFormat {
+message CountryAddressFormatData {
     option (routines.entity_type) = "CountryAddressFormat";
     option (routines.keys).keys = "geo_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: geoId
     
     string geo_id = 1; // Geo
@@ -2467,11 +2621,12 @@ message CountryAddressFormat {
 }
 
 // flat-ent: Party Content Type
-message PartyContentType {
+message PartyContentTypeData {
     option (routines.entity_type) = "PartyContentType";
     option (routines.keys).keys = "party_content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: partyContentTypeId
         
     string party_content_type_id = 1;
@@ -2482,11 +2637,12 @@ message PartyContentType {
 }
 
 // flat-ent: Good Identification Type
-message GoodIdentificationType {
+message GoodIdentificationTypeData {
     option (routines.entity_type) = "GoodIdentificationType";
     option (routines.keys).keys = "good_identification_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: goodIdentificationTypeId
         
     string good_identification_type_id = 1;
@@ -2498,11 +2654,12 @@ message GoodIdentificationType {
 }
 
 // flat-ent: Communication Event Purpose Type
-message CommunicationEventPrpTyp {
+message CommunicationEventPrpTypData {
     option (routines.entity_type) = "CommunicationEventPrpTyp";
     option (routines.keys).keys = "communication_event_prp_typ_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: communicationEventPrpTypId
         
     string communication_event_prp_typ_id = 1;
@@ -2514,11 +2671,12 @@ message CommunicationEventPrpTyp {
 }
 
 // flat-ent: UPS Shipment Gateway Configuration
-message ShipmentGatewayUps {
+message ShipmentGatewayUpsData {
     option (routines.entity_type) = "ShipmentGatewayUps";
     option (routines.keys).keys = "shipment_gateway_config_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: shipmentGatewayConfigId
     
     string shipment_gateway_config_id = 1; // ShipmentGatewayConfig    
@@ -2547,11 +2705,12 @@ message ShipmentGatewayUps {
 }
 
 // flat-ent: General Ledger Account Group Type
-message GlAccountGroupType {
+message GlAccountGroupTypeData {
     option (routines.entity_type) = "GlAccountGroupType";
     option (routines.keys).keys = "gl_account_group_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountGroupTypeId
         
     string gl_account_group_type_id = 1;    
@@ -2561,11 +2720,12 @@ message GlAccountGroupType {
 }
 
 // flat-ent: Telecom Method Type
-message TelecomMethodType {
+message TelecomMethodTypeData {
     option (routines.entity_type) = "TelecomMethodType";
     option (routines.keys).keys = "telecom_method_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: telecomMethodTypeId
         
     string telecom_method_type_id = 1;    
@@ -2575,11 +2735,12 @@ message TelecomMethodType {
 }
 
 // flat-ent: Requirement Type
-message RequirementType {
+message RequirementTypeData {
     option (routines.entity_type) = "RequirementType";
     option (routines.keys).keys = "requirement_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: requirementTypeId
         
     string requirement_type_id = 1;
@@ -2591,11 +2752,12 @@ message RequirementType {
 }
 
 // flat-ent: Custom Method Type
-message CustomMethodType {
+message CustomMethodTypeData {
     option (routines.entity_type) = "CustomMethodType";
     option (routines.keys).keys = "custom_method_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: customMethodTypeId
     
     string custom_method_type_id = 1; // CustomMethodType
@@ -2607,11 +2769,12 @@ message CustomMethodType {
 }
 
 // flat-ent: Return Item Type
-message ReturnItemType {
+message ReturnItemTypeData {
     option (routines.entity_type) = "ReturnItemType";
     option (routines.keys).keys = "return_item_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: returnItemTypeId
         
     string return_item_type_id = 1;
@@ -2622,11 +2785,12 @@ message ReturnItemType {
 }
 
 // flat-ent: Agreement Type
-message AgreementType {
+message AgreementTypeData {
     option (routines.entity_type) = "AgreementType";
     option (routines.keys).keys = "agreement_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: agreementTypeId
         
     string agreement_type_id = 1;
@@ -2638,11 +2802,12 @@ message AgreementType {
 }
 
 // flat-ent: Order Item Assoc Type
-message OrderItemAssocType {
+message OrderItemAssocTypeData {
     option (routines.entity_type) = "OrderItemAssocType";
     option (routines.keys).keys = "order_item_assoc_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: orderItemAssocTypeId
         
     string order_item_assoc_type_id = 1;
@@ -2654,11 +2819,12 @@ message OrderItemAssocType {
 }
 
 // flat-ent: Facility Group Type
-message FacilityGroupType {
+message FacilityGroupTypeData {
     option (routines.entity_type) = "FacilityGroupType";
     option (routines.keys).keys = "facility_group_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: facilityGroupTypeId
     
     string facility_group_type_id = 1; // FacilityGroup    
@@ -2668,11 +2834,12 @@ message FacilityGroupType {
 }
 
 // flat-ent: Product Feature Interaction Type
-message ProductFeatureIactnType {
+message ProductFeatureIactnTypeData {
     option (routines.entity_type) = "ProductFeatureIactnType";
     option (routines.keys).keys = "product_feature_iactn_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productFeatureIactnTypeId
         
     string product_feature_iactn_type_id = 1;
@@ -2684,11 +2851,12 @@ message ProductFeatureIactnType {
 }
 
 // flat-ent: Work Effort Type
-message WorkEffortType {
+message WorkEffortTypeData {
     option (routines.entity_type) = "WorkEffortType";
     option (routines.keys).keys = "work_effort_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: workEffortTypeId
         
     string work_effort_type_id = 1;
@@ -2700,11 +2868,12 @@ message WorkEffortType {
 }
 
 // flat-ent: Status
-message StatusItem {
+message StatusItemData {
     option (routines.entity_type) = "StatusItem";
     option (routines.keys).keys = "status_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: statusId
         
     string status_id = 1;
@@ -2717,11 +2886,12 @@ message StatusItem {
 }
 
 // flat-ent: Payment Type
-message PaymentType {
+message PaymentTypeData {
     option (routines.entity_type) = "PaymentType";
     option (routines.keys).keys = "payment_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: paymentTypeId
         
     string payment_type_id = 1;
@@ -2733,11 +2903,12 @@ message PaymentType {
 }
 
 // flat-ent: ISO Country Code
-message CountryCode {
+message CountryCodeData {
     option (routines.entity_type) = "CountryCode";
     option (routines.keys).keys = "country_code";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: countryCode
     
     string country_code = 1; // CountryTeleCode    
@@ -2749,11 +2920,12 @@ message CountryCode {
 }
 
 // flat-ent: Party Qualification Type
-message PartyQualType {
+message PartyQualTypeData {
     option (routines.entity_type) = "PartyQualType";
     option (routines.keys).keys = "party_qual_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: partyQualTypeId
         
     string party_qual_type_id = 1;
@@ -2765,11 +2937,12 @@ message PartyQualType {
 }
 
 // flat-ent: Party Type
-message PartyType {
+message PartyTypeData {
     option (routines.entity_type) = "PartyType";
     option (routines.keys).keys = "party_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: partyTypeId
         
     string party_type_id = 1;
@@ -2781,11 +2954,12 @@ message PartyType {
 }
 
 // flat-ent: Mime Text Template
-message MimeTypeHtmlTemplate {
+message MimeTypeHtmlTemplateData {
     option (routines.entity_type) = "MimeTypeHtmlTemplate";
     option (routines.keys).keys = "mime_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: mimeTypeId
     
     string mime_type_id = 1; // MimeType    
@@ -2795,11 +2969,12 @@ message MimeTypeHtmlTemplate {
 }
 
 // flat-ent: Financial Account Type
-message FinAccountType {
+message FinAccountTypeData {
     option (routines.entity_type) = "FinAccountType";
     option (routines.keys).keys = "fin_account_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: finAccountTypeId
         
     string fin_account_type_id = 1;
@@ -2813,11 +2988,12 @@ message FinAccountType {
 }
 
 // flat-ent: Invoice Content Type
-message InvoiceContentType {
+message InvoiceContentTypeData {
     option (routines.entity_type) = "InvoiceContentType";
     option (routines.keys).keys = "invoice_content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: invoiceContentTypeId
         
     string invoice_content_type_id = 1;
@@ -2829,11 +3005,12 @@ message InvoiceContentType {
 }
 
 // flat-ent: General Ledger Account Class
-message GlAccountClass {
+message GlAccountClassData {
     option (routines.entity_type) = "GlAccountClass";
     option (routines.keys).keys = "gl_account_class_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountClassId
         
     string gl_account_class_id = 1;
@@ -2846,11 +3023,12 @@ message GlAccountClass {
 }
 
 // flat-ent: Budget Review Result Type
-message BudgetReviewResultType {
+message BudgetReviewResultTypeData {
     option (routines.entity_type) = "BudgetReviewResultType";
     option (routines.keys).keys = "budget_review_result_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: budgetReviewResultTypeId
         
     string budget_review_result_type_id = 1;    
@@ -2861,11 +3039,12 @@ message BudgetReviewResultType {
 }
 
 // flat-ent: GL Account Organization
-message GlAccountOrganization {
+message GlAccountOrganizationData {
     option (routines.entity_type) = "GlAccountOrganization";
     option (routines.keys).keys = "gl_account_id, organization_party_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: glAccountId, organizationPartyId
     string id = 150;     
     string gl_account_id = 1;    
@@ -2878,11 +3057,12 @@ message GlAccountOrganization {
 }
 
 // flat-ent: Tax Authority Rate Type
-message TaxAuthorityRateType {
+message TaxAuthorityRateTypeData {
     option (routines.entity_type) = "TaxAuthorityRateType";
     option (routines.keys).keys = "tax_authority_rate_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: taxAuthorityRateTypeId
         
     string tax_authority_rate_type_id = 1;    
@@ -2892,11 +3072,12 @@ message TaxAuthorityRateType {
 }
 
 // flat-ent: Unit Of Measure Conversion Type
-message UomConversion {
+message UomConversionData {
     option (routines.entity_type) = "UomConversion";
     option (routines.keys).keys = "uom_id, uom_id_to";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: uomId, uomIdTo
     string id = 150; 
     string uom_id = 1; // Uom
@@ -2910,11 +3091,12 @@ message UomConversion {
 }
 
 // flat-ent: Product Content Type
-message ProductContentType {
+message ProductContentTypeData {
     option (routines.entity_type) = "ProductContentType";
     option (routines.keys).keys = "product_content_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: productContentTypeId
         
     string product_content_type_id = 1;
@@ -2926,11 +3108,12 @@ message ProductContentType {
 }
 
 // flat-ent: Invoice Type
-message InvoiceType {
+message InvoiceTypeData {
     option (routines.entity_type) = "InvoiceType";
     option (routines.keys).keys = "invoice_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: invoiceTypeId
         
     string invoice_type_id = 1;
@@ -2942,11 +3125,12 @@ message InvoiceType {
 }
 
 // flat-ent: Performance Review Item Type
-message PerfReviewItemType {
+message PerfReviewItemTypeData {
     option (routines.entity_type) = "PerfReviewItemType";
     option (routines.keys).keys = "perf_review_item_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: perfReviewItemTypeId
         
     string perf_review_item_type_id = 1;
@@ -2958,11 +3142,12 @@ message PerfReviewItemType {
 }
 
 // flat-ent: Status Type
-message StatusType {
+message StatusTypeData {
     option (routines.entity_type) = "StatusType";
     option (routines.keys).keys = "status_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: statusTypeId
     
     string status_type_id = 1; // StatusType
@@ -2974,11 +3159,12 @@ message StatusType {
 }
 
 // flat-ent: Fixed Asset Identification Type
-message FixedAssetIdentType {
+message FixedAssetIdentTypeData {
     option (routines.entity_type) = "FixedAssetIdentType";
     option (routines.keys).keys = "fixed_asset_ident_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: fixedAssetIdentTypeId
         
     string fixed_asset_ident_type_id = 1;    
@@ -2988,11 +3174,12 @@ message FixedAssetIdentType {
 }
 
 // flat-ent: Accounting Transaction Entry Type
-message AcctgTransEntryType {
+message AcctgTransEntryTypeData {
     option (routines.entity_type) = "AcctgTransEntryType";
     option (routines.keys).keys = "acctg_trans_entry_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: acctgTransEntryTypeId
         
     string acctg_trans_entry_type_id = 1;
@@ -3004,11 +3191,12 @@ message AcctgTransEntryType {
 }
 
 // flat-ent: Custom Screen Type
-message CustomScreenType {
+message CustomScreenTypeData {
     option (routines.entity_type) = "CustomScreenType";
     option (routines.keys).keys = "custom_screen_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: customScreenTypeId
         
     string custom_screen_type_id = 1;    
@@ -3020,11 +3208,12 @@ message CustomScreenType {
 }
 
 // flat-ent: Settlement Term
-message SettlementTerm {
+message SettlementTermData {
     option (routines.entity_type) = "SettlementTerm";
     option (routines.keys).keys = "settlement_term_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = false;
     // keys: settlementTermId
         
     string settlement_term_id = 1;    

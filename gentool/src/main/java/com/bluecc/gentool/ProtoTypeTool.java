@@ -26,7 +26,7 @@ public class ProtoTypeTool {
 
         MetaTypes.typeList.getEntities().forEach(e -> {
             try {
-                writer.write(ProtoTool.flatSourceGen(e, ""));
+                writer.write(ProtoTool.flatSourceGen(e, "Data", false));
             } catch (IOException ex) {
                 throw new RuntimeException("Cannot gen "+e, ex);
             }

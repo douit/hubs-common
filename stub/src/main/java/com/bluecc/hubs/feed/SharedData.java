@@ -16,6 +16,13 @@ public class SharedData {
                 .setAddress("redis://127.0.0.1:6379");
 
         client = Redisson.create(config);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            // Use stderr here since the logger may have been reset by its JVM shutdown hook.
+            System.err.println("*** shutting down redis-connection since JVM is shutting down");
+            SharedData.this.shutdown();
+            System.err.println("*** redis-connection shut down");
+        }));
     }
 
     public RedissonClient getClient() {

@@ -15,6 +15,7 @@ extend google.protobuf.MessageOptions {
   optional string entity_type = 51234;
   optional EntityKey keys = 51235;
   optional bool flat = 51236;
+  optional bool has_table = 51237;
 }
 
 message EntityKey{

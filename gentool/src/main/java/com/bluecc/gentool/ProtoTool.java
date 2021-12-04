@@ -81,7 +81,7 @@ public class ProtoTool {
         }
 
         for (String headEnt : HeadEntityResources.allHeads()) {
-            writer.write(flatSourceGen(headEnt, "FlatData"));
+            writer.write(flatSourceGen(headEnt, "FlatData", true));
         }
 
         for (String entity : metaList.getEntities()) {
@@ -118,13 +118,14 @@ public class ProtoTool {
                 ImmutableMap.of("ent", meta, "digester", digester));
     }
 
-    public static String flatSourceGen(String entName, String suffix) throws IOException {
+    public static String flatSourceGen(String entName, String suffix, boolean hasTable) throws IOException {
         EntityMeta meta= EntityMetaManager.getEntityMeta(entName, false);
         EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
         return TemplateUtil.build("templates/proto_flat_source.j2",
                 ImmutableMap.of("ent", meta,
                         "digester", digester,
-                        "suffix", suffix
+                        "suffix", suffix,
+                        "hasTable", hasTable
                         ));
     }
 }

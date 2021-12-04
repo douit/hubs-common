@@ -44,6 +44,12 @@ public class DataSetUtil {
         return files;
     }
 
+    public static List<File> seedFiles(String... dirs){
+        List<File> files= Lists.newArrayList();
+        Stream.of(dirs).forEach(d -> files.addAll(Util.listFiles(d, ".xml")));
+        return files;
+    }
+
     public static MetaTypes.MetaList getAvailableEntities()  {
         MetaTypes.MetaList hubsEntities;
         try {

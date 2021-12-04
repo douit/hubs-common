@@ -48,10 +48,7 @@ public class GenericProcs extends AbstractProcs{
     }
 
     public void storeDataFile(IProc.ProcContext c, String source){
-        Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
-        collectEntityData(dataList, source, false);
-        DataFill dataFill=new DataFill();
-        Multimap<String, Message> dataMap=dataFill.setupData(dataList);
+        Multimap<String, Message> dataMap = loadDataSet(source);
         dataMap.asMap().forEach((k,v)->{
             v.forEach(e ->{
                 String ent=ProtoTypes.getEntityTypeByMessage(e);
@@ -64,6 +61,20 @@ public class GenericProcs extends AbstractProcs{
                 }
             });
         });
+    }
+
+    /**
+     * Load xml data source file, file location is related to SystemDefs.HUBS_COMMON_HOME
+     *
+     * @param source xml file location
+     * @return protobuf message multi-map
+     */
+    public static Multimap<String, Message> loadDataSet(String source) {
+        Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
+        collectEntityData(dataList, source, false);
+        DataFill dataFill=new DataFill();
+        Multimap<String, Message> dataMap=dataFill.setupData(dataList);
+        return dataMap;
     }
 }
 

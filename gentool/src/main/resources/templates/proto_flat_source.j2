@@ -4,6 +4,7 @@ message {{ent.name}}{{suffix}} {
     option (routines.keys).keys = "{{ent.underscoreKeys}}";
     option (routines.keys).combine = {{ent.combine}};
     option (routines.flat) = true;
+    option (routines.has_table) = {{hasTable}};
     // keys: {{ent.keyNames}}
     {% if ent.combine %}string id = 150; {% endif -%}
     {% for f in ent.messageFields -%}

@@ -122,6 +122,9 @@ public class Util {
         return new String(Files.readAllBytes(file));
     }
 
+    public static List<File> listFiles(String dir, String suffix){
+        return listFiles(new File(dir), suffix);
+    }
     public static List<File> listFiles(File dir, String suffix){
         return Arrays.stream(requireNonNull(dir.listFiles()))
                 .filter(f -> f.getName().toLowerCase(Locale.ROOT)

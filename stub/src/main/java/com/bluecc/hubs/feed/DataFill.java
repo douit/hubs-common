@@ -14,6 +14,7 @@ import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3.Builder;
 import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
+import com.google.type.TimeOfDay;
 import jodd.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -331,6 +333,10 @@ public class DataFill {
                 // case "Date":
                 //     msg.setField(fld, getDate(val.getAsString()));
                 //     break;
+                case "TimeOfDay":
+                    TimeOfDay timeOfDay=ProtoTypes.getTimeOfDay(LocalTime.parse(val.getAsString()));
+                    msg.setField(fld, timeOfDay);
+                    break;
                 case "DecimalValue":
                     DecimalValue serialized = getDecimalValue(val);
                     msg.setField(fld, serialized);
