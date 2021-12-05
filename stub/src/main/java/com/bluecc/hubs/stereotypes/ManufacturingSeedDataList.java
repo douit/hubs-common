@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.ManufacturingSeedData.*;import com.bluecc.hubs.stub.EnumerationData;
+import static com.bluecc.hubs.stereotypes.ManufacturingSeedData.*;
+
+import com.bluecc.hubs.stub.EnumerationData;
 import com.bluecc.hubs.stub.TechDataCalendarData;
 import com.bluecc.hubs.stub.MrpEventTypeData;
 import com.bluecc.hubs.stub.WorkEffortData;

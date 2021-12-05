@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.StereoEcommerceSecurityData.*;import com.bluecc.hubs.stub.SecurityGroupData;
+import static com.bluecc.hubs.stereotypes.StereoEcommerceSecurityData.*;
+
+import com.bluecc.hubs.stub.SecurityGroupData;
 import com.bluecc.hubs.stub.SecurityGroupPermissionData;
 
 public final class StereoEcommerceSecurityDataList {

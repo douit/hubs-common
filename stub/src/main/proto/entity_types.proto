@@ -1508,23 +1508,6 @@ message PeriodTypeData {
     google.protobuf.Timestamp created_tx_stamp = 6;  
 }
 
-// flat-ent: Party Identification Type
-message PartyIdentificationTypeData {
-    option (routines.entity_type) = "PartyIdentificationType";
-    option (routines.keys).keys = "party_identification_type_id";
-    option (routines.keys).combine = false;
-    option (routines.flat) = true;
-    option (routines.has_table) = false;
-    // keys: partyIdentificationTypeId
-        
-    string party_identification_type_id = 1;
-    string parent_type_id = 2; // PartyIdentificationType    
-    routines.Indicator has_table = 3;    
-    string description = 4;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
-    google.protobuf.Timestamp created_tx_stamp = 6;  
-}
-
 // flat-ent: Data Category
 message DataCategoryData {
     option (routines.entity_type) = "DataCategory";

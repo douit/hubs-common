@@ -816,6 +816,26 @@ message ShipmentRouteSegmentData {
         
 }
 
+// Party Identification Type
+message PartyIdentificationTypeData {
+    option (routines.entity_type) = "PartyIdentificationType";
+    option (routines.keys).keys = "party_identification_type_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: partyIdentificationTypeId
+    
+    // fields
+        
+    string party_identification_type_id = 1;    
+    string parent_type_id = 2;    
+    routines.Indicator has_table = 3;    
+    string description = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
+}
+
 // Invoice
 message InvoiceData {
     option (routines.entity_type) = "Invoice";
@@ -1685,6 +1705,32 @@ message ProductStoreFinActSettingData {
         
 }
 
+// Email Template Setting
+message EmailTemplateSettingData {
+    option (routines.entity_type) = "EmailTemplateSetting";
+    option (routines.keys).keys = "email_template_setting_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: emailTemplateSettingId
+    
+    // fields
+        
+    string email_template_setting_id = 1;
+    string email_type = 2; // Enumeration    
+    string description = 3;    
+    string body_screen_location = 4;    
+    string xslfo_attach_screen_location = 5;    
+    string from_address = 6;    
+    string cc_address = 7;    
+    string bcc_address = 8;    
+    string subject = 9;    
+    string content_type = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
+        
+}
+
 // Survey
 message SurveyData {
     option (routines.entity_type) = "Survey";
@@ -2200,47 +2246,51 @@ message PartyData {
     repeated BillingAccountRoleData billing_account_role = 19; // ref(BillingAccountRole): partyId
     repeated CarrierShipmentBoxTypeData carrier_shipment_box_type = 20; // ref(CarrierShipmentBoxType): partyId
     repeated CarrierShipmentMethodData carrier_shipment_method = 21; // ref(CarrierShipmentMethod): partyId
-    repeated CustRequestData from_cust_request = 22; // ref(FromCustRequest): partyId
-    repeated CustRequestTypeData cust_request_type = 23; // ref(CustRequestType): partyId
-    repeated FixedAssetData fixed_asset = 24; // ref(FixedAsset): partyId
-    repeated InventoryItemData inventory_item = 25; // ref(InventoryItem): partyId
-    repeated InventoryItemData owner_inventory_item = 26; // ref(OwnerInventoryItem): partyId
-    repeated InvoiceData from_invoice = 27; // ref(FromInvoice): partyId
-    repeated InvoiceData invoice = 28; // ref(Invoice): partyId
-    repeated InvoiceItemData tax_authority_invoice_item = 29; // ref(TaxAuthorityInvoiceItem): partyId
-    repeated InvoiceItemData override_org_invoice_item = 30; // ref(OverrideOrgInvoiceItem): partyId
-    repeated OrderItemShipGroupData supplier_order_item_ship_group = 31; // ref(SupplierOrderItemShipGroup): partyId
-    repeated OrderItemShipGroupData vendor_order_item_ship_group = 32; // ref(VendorOrderItemShipGroup): partyId
-    repeated OrderItemShipGroupData carrier_order_item_ship_group = 33; // ref(CarrierOrderItemShipGroup): partyId
-    repeated OrderRoleData order_role = 34; // ref(OrderRole): partyId
-    repeated PartyContactMechData party_contact_mech = 35; // ref(PartyContactMech): partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 36; // ref(PartyContactMechPurpose): partyId
-    repeated PartyGeoPointData party_geo_point = 37; // ref(PartyGeoPoint): partyId
-    PartyGroupData party_group = 38; // ref(PartyGroup): partyId
-    repeated PartyRelationshipData from_party_relationship = 39; // ref(FromPartyRelationship): partyId
-    repeated PartyRelationshipData to_party_relationship = 40; // ref(ToPartyRelationship): partyId
-    repeated PartyRoleData party_role = 41; // ref(PartyRole): partyId
-    repeated PartyStatusData party_status = 42; // ref(PartyStatus): partyId
-    repeated PartyTaxAuthInfoData party_tax_auth_info = 43; // ref(PartyTaxAuthInfo): partyId
-    repeated PaymentData from_payment = 44; // ref(FromPayment): partyId
-    repeated PaymentData to_payment = 45; // ref(ToPayment): partyId
-    repeated PaymentMethodData payment_method = 46; // ref(PaymentMethod): partyId
-    PersonData person = 47; // ref(Person): partyId
-    repeated ProductCategoryRoleData product_category_role = 48; // ref(ProductCategoryRole): partyId
-    repeated ProductPriceData tax_authority_product_price = 49; // ref(TaxAuthorityProductPrice): partyId
-    repeated ProductPromoData product_promo = 50; // ref(ProductPromo): partyId
-    repeated ProductStoreData product_store = 51; // ref(ProductStore): partyId
-    repeated ProductStoreRoleData product_store_role = 52; // ref(ProductStoreRole): partyId
-    repeated ProductStoreShipmentMethData product_store_shipment_meth = 53; // ref(ProductStoreShipmentMeth): partyId
-    repeated QuoteData quote = 54; // ref(Quote): partyId
-    repeated QuoteRoleData quote_role = 55; // ref(QuoteRole): partyId
-    repeated ShipmentData to_shipment = 56; // ref(ToShipment): partyId
-    repeated ShipmentData from_shipment = 57; // ref(FromShipment): partyId
-    repeated ShipmentCostEstimateData shipment_cost_estimate = 58; // ref(ShipmentCostEstimate): partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 59; // ref(CarrierShipmentRouteSegment): partyId
-    repeated SupplierProductData supplier_product = 60; // ref(SupplierProduct): partyId
-    repeated SupplierProductFeatureData supplier_product_feature = 61; // ref(SupplierProductFeature): partyId
-    repeated UserLoginData user_login = 62; // ref(UserLogin): partyId
+    repeated CommunicationEventData to_communication_event = 22; // ref(ToCommunicationEvent): partyId
+    repeated CommunicationEventData from_communication_event = 23; // ref(FromCommunicationEvent): partyId
+    repeated CommunicationEventRoleData communication_event_role = 24; // ref(CommunicationEventRole): partyId
+    repeated CustRequestData from_cust_request = 25; // ref(FromCustRequest): partyId
+    repeated CustRequestTypeData cust_request_type = 26; // ref(CustRequestType): partyId
+    repeated FixedAssetData fixed_asset = 27; // ref(FixedAsset): partyId
+    repeated InventoryItemData inventory_item = 28; // ref(InventoryItem): partyId
+    repeated InventoryItemData owner_inventory_item = 29; // ref(OwnerInventoryItem): partyId
+    repeated InvoiceData from_invoice = 30; // ref(FromInvoice): partyId
+    repeated InvoiceData invoice = 31; // ref(Invoice): partyId
+    repeated InvoiceItemData tax_authority_invoice_item = 32; // ref(TaxAuthorityInvoiceItem): partyId
+    repeated InvoiceItemData override_org_invoice_item = 33; // ref(OverrideOrgInvoiceItem): partyId
+    repeated OrderItemShipGroupData supplier_order_item_ship_group = 34; // ref(SupplierOrderItemShipGroup): partyId
+    repeated OrderItemShipGroupData vendor_order_item_ship_group = 35; // ref(VendorOrderItemShipGroup): partyId
+    repeated OrderItemShipGroupData carrier_order_item_ship_group = 36; // ref(CarrierOrderItemShipGroup): partyId
+    repeated OrderRoleData order_role = 37; // ref(OrderRole): partyId
+    repeated PartyContactMechData party_contact_mech = 38; // ref(PartyContactMech): partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 39; // ref(PartyContactMechPurpose): partyId
+    repeated PartyGeoPointData party_geo_point = 40; // ref(PartyGeoPoint): partyId
+    PartyGroupData party_group = 41; // ref(PartyGroup): partyId
+    repeated PartyIdentificationData party_identification = 42; // ref(PartyIdentification): partyId
+    repeated PartyRelationshipData from_party_relationship = 43; // ref(FromPartyRelationship): partyId
+    repeated PartyRelationshipData to_party_relationship = 44; // ref(ToPartyRelationship): partyId
+    repeated PartyRoleData party_role = 45; // ref(PartyRole): partyId
+    repeated PartyStatusData party_status = 46; // ref(PartyStatus): partyId
+    repeated PartyTaxAuthInfoData party_tax_auth_info = 47; // ref(PartyTaxAuthInfo): partyId
+    repeated PaymentData from_payment = 48; // ref(FromPayment): partyId
+    repeated PaymentData to_payment = 49; // ref(ToPayment): partyId
+    repeated PaymentMethodData payment_method = 50; // ref(PaymentMethod): partyId
+    PersonData person = 51; // ref(Person): partyId
+    repeated ProductCategoryRoleData product_category_role = 52; // ref(ProductCategoryRole): partyId
+    repeated ProductPriceData tax_authority_product_price = 53; // ref(TaxAuthorityProductPrice): partyId
+    repeated ProductPromoData product_promo = 54; // ref(ProductPromo): partyId
+    repeated ProductStoreData product_store = 55; // ref(ProductStore): partyId
+    repeated ProductStoreRoleData product_store_role = 56; // ref(ProductStoreRole): partyId
+    repeated ProductStoreShipmentMethData product_store_shipment_meth = 57; // ref(ProductStoreShipmentMeth): partyId
+    repeated QuoteData quote = 58; // ref(Quote): partyId
+    repeated QuoteRoleData quote_role = 59; // ref(QuoteRole): partyId
+    repeated ShipmentData to_shipment = 60; // ref(ToShipment): partyId
+    repeated ShipmentData from_shipment = 61; // ref(FromShipment): partyId
+    repeated ShipmentCostEstimateData shipment_cost_estimate = 62; // ref(ShipmentCostEstimate): partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 63; // ref(CarrierShipmentRouteSegment): partyId
+    repeated SupplierProductData supplier_product = 64; // ref(SupplierProduct): partyId
+    repeated SupplierProductFeatureData supplier_product_feature = 65; // ref(SupplierProductFeature): partyId
+    repeated UserLoginData user_login = 66; // ref(UserLogin): partyId
     
         
 }
@@ -2432,6 +2482,25 @@ message FacilityContactMechData {
         
 }
 
+// Party Identification
+message PartyIdentificationData {
+    option (routines.entity_type) = "PartyIdentification";
+    option (routines.keys).keys = "party_id, party_identification_type_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: partyId, partyIdentificationTypeId
+    string id = 200; 
+    // fields
+        
+    string party_id = 1;    
+    string party_identification_type_id = 2;    
+    string id_value = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
+        
+}
+
 // Agreement
 message AgreementData {
     option (routines.entity_type) = "Agreement";
@@ -2457,6 +2526,27 @@ message AgreementData {
     string text_data = 12;    
     google.protobuf.Timestamp last_updated_tx_stamp = 13;    
     google.protobuf.Timestamp created_tx_stamp = 14;
+        
+}
+
+// Communication Event Role Entity showing all participants of the communication event.
+message CommunicationEventRoleData {
+    option (routines.entity_type) = "CommunicationEventRole";
+    option (routines.keys).keys = "communication_event_id, party_id, role_type_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: communicationEventId, partyId, roleTypeId
+    string id = 200; 
+    // fields
+        
+    string communication_event_id = 1;    
+    string party_id = 2;
+    string role_type_id = 3; // RoleType    
+    string contact_mech_id = 4;
+    string status_id = 5; // StatusItem    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
         
 }
 
@@ -3171,6 +3261,49 @@ message RecurrenceInfoData {
     int64 recurrence_count = 7;    
     google.protobuf.Timestamp last_updated_tx_stamp = 8;    
     google.protobuf.Timestamp created_tx_stamp = 9;
+        
+}
+
+// Communication Event
+message CommunicationEventData {
+    option (routines.entity_type) = "CommunicationEvent";
+    option (routines.keys).keys = "communication_event_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: communicationEventId
+    
+    // fields
+        
+    string communication_event_id = 1;
+    string communication_event_type_id = 2; // CommunicationEventType    
+    string orig_comm_event_id = 3;    
+    string parent_comm_event_id = 4;
+    string status_id = 5; // StatusItem
+    string contact_mech_type_id = 6; // ContactMechType    
+    string contact_mech_id_from = 7;    
+    string contact_mech_id_to = 8;
+    string role_type_id_from = 9; // RoleType
+    string role_type_id_to = 10; // RoleType    
+    string party_id_from = 11;    
+    string party_id_to = 12;    
+    google.protobuf.Timestamp entry_date = 13;    
+    google.protobuf.Timestamp datetime_started = 14;    
+    google.protobuf.Timestamp datetime_ended = 15;    
+    string subject = 16;
+    string content_mime_type_id = 17; // MimeType    
+    string content = 18;    
+    string note = 19;
+    string reason_enum_id = 20; // Enumeration    
+    string contact_list_id = 21;    
+    string header_string = 22;    
+    string from_text = 23;    
+    string to_text = 24;    
+    string cc_string = 25;    
+    string bcc_string = 26;    
+    string message_id = 27;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 28;    
+    google.protobuf.Timestamp created_tx_stamp = 29;
         
 }
 

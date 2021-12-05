@@ -1,4 +1,4 @@
-package com.bluecc.gentool;
+package com.bluecc.income.procs;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
@@ -6,15 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.File;
-import java.io.IOException;
+import static com.bluecc.income.dummy.store.StoreModule.startup;
 
-import static com.bluecc.gentool.StereotypeTool.datafileWriter;
-
-/**
- * $ just gen StereotypeAddons
- */
-public class StereotypeAddons {
+public class SeedImporter {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -24,15 +18,15 @@ public class StereotypeAddons {
         @Parameter(names = {"--file", "-f"})
         String file="dataset/accounting/PaymentApplicationTestsData.xml";
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Opts opts = new Opts();
         JCommander.newBuilder()
                 .addObject(opts)
                 .build()
                 .parse(args);
-
-        String targetDir="/opt/gen/stereotypes";
-        datafileWriter(new File(opts.file),
-                targetDir, "", true);
+        GenericProcs genericProcs=startup(GenericProcs.class);
+        genericProcs.process(c -> {
+            genericProcs.storeDataFile(c, opts.file);
+        });
     }
 }

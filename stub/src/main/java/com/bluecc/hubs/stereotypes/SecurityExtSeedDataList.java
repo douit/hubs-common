@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.SecurityExtSeedData.*;import com.bluecc.hubs.stub.PartyRoleData;
+import static com.bluecc.hubs.stereotypes.SecurityExtSeedData.*;
+
+import com.bluecc.hubs.stub.PartyRoleData;
 import com.bluecc.hubs.stub.PartyStatusData;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.PersonFlatData;

@@ -1,5 +1,6 @@
 {
   "entities": [
+    "PartyIdentificationType",
     "SecurityGroupPermission",
     "SurveyApplType",
     "Person",

@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.OrderSeedData.*;import com.bluecc.hubs.stub.OrderItemAssocTypeData;
+import static com.bluecc.hubs.stereotypes.OrderSeedData.*;
+
+import com.bluecc.hubs.stub.OrderItemAssocTypeData;
 import com.bluecc.hubs.stub.EnumerationData;
 import com.bluecc.hubs.stub.OrderItemTypeData;
 import com.bluecc.hubs.stub.OrderDenylistTypeData;

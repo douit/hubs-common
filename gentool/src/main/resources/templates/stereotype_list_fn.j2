@@ -1,0 +1,7 @@
+    public static List<{{meta.flatMessageType}}> {{meta.varName}}List() {
+        return ImmutableList.of(
+            {%- for obj in objs %}        
+            {{obj.constName}}(){% if not loop.last %},{% endif %}
+            {%- endfor %});
+    }
+

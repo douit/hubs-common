@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.PartySeedData.*;import com.bluecc.hubs.stub.PartyIdentificationTypeData;
+import static com.bluecc.hubs.stereotypes.PartySeedData.*;
+
+import com.bluecc.hubs.stub.PartyIdentificationTypeData;
 import com.bluecc.hubs.stub.ContactMechTypeData;
 import com.bluecc.hubs.stub.EnumerationData;
 import com.bluecc.hubs.stub.PartyRelationshipTypeData;

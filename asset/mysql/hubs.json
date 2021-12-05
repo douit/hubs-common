@@ -1,6 +1,7 @@
 {
   "entities": [
     "ShipmentRouteSegment",
+    "PartyIdentificationType",
     "Invoice",
     "OrderAdjustment",
     "Product",
@@ -28,6 +29,7 @@
     "ProductConfigOption",
     "PostalAddress",
     "ProductStoreFinActSetting",
+    "EmailTemplateSetting",
     "Survey",
     "ProductFacilityAssoc",
     "OrderItemPriceInfo",
@@ -53,7 +55,9 @@
     "DataResource",
     "ShipmentItem",
     "FacilityContactMech",
+    "PartyIdentification",
     "Agreement",
+    "CommunicationEventRole",
     "SurveyQuestionCategory",
     "ProdCatalogCategory",
     "ProductCategoryRole",
@@ -81,6 +85,7 @@
     "ContentAttribute",
     "PartyContactMechPurpose",
     "RecurrenceInfo",
+    "CommunicationEvent",
     "ProductFeatureCategory",
     "FacilityLocationGeoPoint",
     "UserLoginSecurityGroup",

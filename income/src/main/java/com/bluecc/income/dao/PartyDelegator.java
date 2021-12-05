@@ -50,6 +50,12 @@ public class PartyDelegator extends AbstractProcs{
          
     public static final String CARRIER_SHIPMENT_METHOD="carrier_shipment_method";
          
+    public static final String TO_COMMUNICATION_EVENT="to_communication_event";
+         
+    public static final String FROM_COMMUNICATION_EVENT="from_communication_event";
+         
+    public static final String COMMUNICATION_EVENT_ROLE="communication_event_role";
+         
     public static final String FROM_CUST_REQUEST="from_cust_request";
          
     public static final String CUST_REQUEST_TYPE="cust_request_type";
@@ -83,6 +89,8 @@ public class PartyDelegator extends AbstractProcs{
     public static final String PARTY_GEO_POINT="party_geo_point";
          
     public static final String PARTY_GROUP="party_group";
+         
+    public static final String PARTY_IDENTIFICATION="party_identification";
          
     public static final String FROM_PARTY_RELATIONSHIP="from_party_relationship";
          
@@ -214,6 +222,30 @@ public class PartyDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "carrier_shipment_method",
                                             CarrierShipmentMethod.class)
                                     .forEach(el -> pb.addCarrierShipmentMethod(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set to_communication_event to head entity                        
+                        if(relationsDemand.contains("to_communication_event")) {
+                            getRelationValues(ctx, p1, "to_communication_event",
+                                            CommunicationEvent.class)
+                                    .forEach(el -> pb.addToCommunicationEvent(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set from_communication_event to head entity                        
+                        if(relationsDemand.contains("from_communication_event")) {
+                            getRelationValues(ctx, p1, "from_communication_event",
+                                            CommunicationEvent.class)
+                                    .forEach(el -> pb.addFromCommunicationEvent(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set communication_event_role to head entity                        
+                        if(relationsDemand.contains("communication_event_role")) {
+                            getRelationValues(ctx, p1, "communication_event_role",
+                                            CommunicationEventRole.class)
+                                    .forEach(el -> pb.addCommunicationEventRole(
                                              el.toDataBuilder().build()));
                         }
                                                
@@ -351,6 +383,14 @@ public class PartyDelegator extends AbstractProcs{
                                             PartyGroup.class)
                                     .forEach(el -> pb.setPartyGroup(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set party_identification to head entity                        
+                        if(relationsDemand.contains("party_identification")) {
+                            getRelationValues(ctx, p1, "party_identification",
+                                            PartyIdentification.class)
+                                    .forEach(el -> pb.addPartyIdentification(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set from_party_relationship to head entity                        

@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.OfbizSetupChartOfAccountsData.*;import com.bluecc.hubs.stub.PaymentMethodTypeData;
+import static com.bluecc.hubs.stereotypes.OfbizSetupChartOfAccountsData.*;
+
+import com.bluecc.hubs.stub.PaymentMethodTypeData;
 import com.bluecc.hubs.stub.GlAccountCategoryData;
 import com.bluecc.hubs.stub.GlJournalData;
 import com.bluecc.hubs.stub.GlAccountOrganizationData;

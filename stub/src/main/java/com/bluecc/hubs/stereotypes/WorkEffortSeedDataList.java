@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.WorkEffortSeedData.*;import com.bluecc.hubs.stub.EnumerationData;
+import static com.bluecc.hubs.stereotypes.WorkEffortSeedData.*;
+
+import com.bluecc.hubs.stub.EnumerationData;
 import com.bluecc.hubs.stub.ContactMechTypeData;
 import com.bluecc.hubs.stub.RoleTypeData;
 import com.bluecc.hubs.stub.WorkEffortTypeData;

@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.HumanResSeedData.*;import com.bluecc.hubs.stub.TerminationTypeData;
+import static com.bluecc.hubs.stereotypes.HumanResSeedData.*;
+
+import com.bluecc.hubs.stub.TerminationTypeData;
 import com.bluecc.hubs.stub.EnumerationData;
 import com.bluecc.hubs.stub.DeductionTypeData;
 import com.bluecc.hubs.stub.WorkEffortTypeData;

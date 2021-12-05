@@ -18,15 +18,19 @@ public class HeadEntityResources {
     public static HeadEntities getHeadEntities()  {
         if(headEntities==null) {
             synchronized (HeadEntities.class) {
-                try {
-                    headEntities = Util.readJsonFile(HeadEntities.class,
-                            prependHubsHomeFile("asset/facts/head_ents.json"));
-                } catch (IOException e) {
-                    throw new RuntimeException("Cannot read head-ents config", e);
-                }
+                reload();
             }
         }
         return headEntities;
+    }
+
+    public static void reload(){
+        try {
+            headEntities = Util.readJsonFile(HeadEntities.class,
+                    prependHubsHomeFile("asset/facts/head_ents.json"));
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot read head-ents config", e);
+        }
     }
 
     // Check if the entity is a head-entity

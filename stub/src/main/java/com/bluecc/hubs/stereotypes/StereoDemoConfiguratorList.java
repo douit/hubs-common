@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.StereoDemoConfigurator.*;import com.bluecc.hubs.stub.FixedAssetGeoPointData;
+import static com.bluecc.hubs.stereotypes.StereoDemoConfigurator.*;
+
+import com.bluecc.hubs.stub.FixedAssetGeoPointData;
 import com.bluecc.hubs.stub.ProductConfigProductData;
 import com.bluecc.hubs.stub.ElectronicTextData;
 import com.bluecc.hubs.stub.ContentAssocData;

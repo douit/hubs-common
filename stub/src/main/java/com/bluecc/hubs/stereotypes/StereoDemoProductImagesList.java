@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.StereoDemoProductImages.*;import com.bluecc.hubs.stub.ProductFlatData;
+import static com.bluecc.hubs.stereotypes.StereoDemoProductImages.*;
+
+import com.bluecc.hubs.stub.ProductFlatData;
 
 public final class StereoDemoProductImagesList {
     public static final List<ProductFlatData> productList=ImmutableList.of(        

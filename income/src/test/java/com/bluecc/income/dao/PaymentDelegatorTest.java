@@ -63,7 +63,7 @@ public class PaymentDelegatorTest extends AbstractStoreProcTest {
     public void testFindPayment() {
         process(c -> {
             // Dao dao = c.getHandle().attach(// Dao.class);
-            Payment payment = genericProcs.findOne(c, Payment_appltest10000, Payment.class);
+            Payment payment = genericProcs.findOne(c, Payment_appltest10000(), Payment.class);
             System.out.println(payment);
             assertNotNull(payment);
         });
@@ -73,11 +73,13 @@ public class PaymentDelegatorTest extends AbstractStoreProcTest {
     public void testQueryPayments() {
         process(c -> {
             // PaymentDelegator.PaymentDao dao = c.getHandle().attach(PaymentDelegator.PaymentDao.class);
-            String key = Payment_appltest10000.getPaymentId();
+            String key = Payment_appltest10000().getPaymentId();
             payments.queryPaymentRelations(key, Sets.newHashSet(
                             FROM_PARTY, TO_PARTY
                     )).apply("")
                     .subscribe(e -> {
+                        // 如果没有查询到结果, 则subscribe这部分代码不会执行,
+                        // 所以这里的assert没有意义, :)
                         assertNotNull(e);
                         assertTrue(ProtoTypes.hasFieldValue(e.toData(), "from_party"));
                     });

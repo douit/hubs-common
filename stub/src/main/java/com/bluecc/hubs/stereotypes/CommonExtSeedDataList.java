@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.CommonExtSeedData.*;import com.bluecc.hubs.stub.EntityGroupData;
+import static com.bluecc.hubs.stereotypes.CommonExtSeedData.*;
+
+import com.bluecc.hubs.stub.EntityGroupData;
 import com.bluecc.hubs.stub.EntityGroupEntryData;
 
 public final class CommonExtSeedDataList {

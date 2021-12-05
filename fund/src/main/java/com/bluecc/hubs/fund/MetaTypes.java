@@ -30,6 +30,11 @@ public class MetaTypes {
     public static MetaList typeList=types();
     // $ just gen SqlGenTool
     public static MetaTypes.MetaList metaList=getAvailableEntities();
+
+    public static void reloadMetaList(){
+        metaList=getAvailableEntities();
+    }
+
     public static Set<String> getAllEntities(){
         return Collections.unmodifiableSet(metaList.getEntities());
     }
