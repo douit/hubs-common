@@ -9,11 +9,7 @@
     "Payment": {
       "flatIds": []
     },
-    "Invoice": {
-      "flatIds": [
-        "Party"
-      ]
-    },
+    "Invoice": {},
     "InvoiceItem": {
       "flatIds": []
     },
@@ -23,24 +19,12 @@
     "Shipment": {
       "flatIds": []
     },
-    "ProductStore": {
-      "flatIds": [
-        "Party"
-      ]
-    },
+    "ProductStore": {},
     "Party": {
       "flatIds": []
     },
-    "Person": {
-      "flatIds": [
-        "Party"
-      ]
-    },
-    "PartyGroup": {
-      "flatIds": [
-        "Party"
-      ]
-    },
+    "Person": {},
+    "PartyGroup": {},
     "UserLogin": {},
     "ProductCategory": {},
     "ProdCatalog": {},

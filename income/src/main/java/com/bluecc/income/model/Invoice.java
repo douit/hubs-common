@@ -142,9 +142,6 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
         if (invoiceTypeId != null) {
             builder.setInvoiceTypeId(invoiceTypeId);
         }
-        if (partyIdFrom != null) {
-            builder.setPartyIdFrom(partyIdFrom);
-        }
         if (roleTypeId != null) {
             builder.setRoleTypeId(roleTypeId);
         }

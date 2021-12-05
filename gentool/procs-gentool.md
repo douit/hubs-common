@@ -10,6 +10,8 @@ $ mvn compile -f stub/pom.xml
 # or
 $ just proto
 $ just stub
+
+$ just addon dataset/order/PartyGeoPointData.xml 
 ```
 ```bash
 # gen all

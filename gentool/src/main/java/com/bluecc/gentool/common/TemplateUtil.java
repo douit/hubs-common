@@ -13,6 +13,7 @@ import com.google.common.io.Resources;
 import com.hubspot.jinjava.Jinjava;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 
 public class TemplateUtil {
@@ -31,6 +32,8 @@ public class TemplateUtil {
         jinjava.getGlobalContext().registerFilter(new SnakeCaseFilter());
         jinjava.getGlobalContext().registerFilter(new NamedFilter("camelCase",
                 e -> Util.snakeToCamel(e.toString())));
+        jinjava.getGlobalContext().registerFilter(new NamedFilter("uppercase",
+                e -> e.toString().toUpperCase(Locale.ROOT)));
         jinjava.getGlobalContext().registerFilter(new NamedFilter("upperSnake",
                 e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, e.toString())));
         return jinjava;

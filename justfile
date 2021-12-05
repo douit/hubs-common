@@ -89,3 +89,7 @@ seed:
 
 srv:
 	just i endpoint.RpcEndpoints
+
+addon file:
+	just gen StereotypeAddons -f {{file}}
+

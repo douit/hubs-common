@@ -464,9 +464,6 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
         if (subtitle != null) {
             builder.setSubtitle(subtitle);
         }
-        if (payToPartyId != null) {
-            builder.setPayToPartyId(payToPartyId);
-        }
         if (daysToCancelNonPay != null) {
             builder.setDaysToCancelNonPay(daysToCancelNonPay);
         }

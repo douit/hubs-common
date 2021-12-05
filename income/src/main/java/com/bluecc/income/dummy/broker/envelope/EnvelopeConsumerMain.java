@@ -10,10 +10,11 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.bluecc.income.dummy.broker.envelope.EnvelopeProducerMain.TOPIC;
-import static com.bluecc.income.dummy.broker.envelope.EnvelopeProducerMain.createKafkaConsumer;
+import static com.bluecc.income.endpoint.ProtoReceiver.PKG_DE;
+import static com.bluecc.income.endpoint.ProtoReceiver.createKafkaConsumer;
 
 public class EnvelopeConsumerMain {
-    public static String PKG_DE="com.bluecc.income.dummy.broker.envelope.EnvelopeDeserializer";
+
 
     public static void main(String[] args) throws InterruptedException {
         // MessageDto msgProd = MessageDto.builder().message("test").version("1.0").build();

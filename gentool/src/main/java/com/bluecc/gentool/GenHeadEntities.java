@@ -44,7 +44,7 @@ public class GenHeadEntities {
                 genBean(e);
                 String cnt;
 
-                cnt= TemplateUtil.sourceGen(e, "dao_decl", true);
+                cnt= genDao(e, "dao_decl", true);
                 Util.writeFile(cnt, conf.prependDaoFile(e+"Delegator.java"));
 
                 File targetFile=conf.prependDaoTestFile(e+"DelegatorTest.java");
@@ -58,6 +58,14 @@ public class GenHeadEntities {
                 throw new RuntimeException(ex.getMessage(), ex);
             }
         });
+    }
+
+    public static String genDao(String entName, String tplName, boolean remap) throws IOException {
+        EntityMeta meta= EntityMetaManager.getEntityMeta(entName, remap);
+        String querySource=TemplateUtil.build("templates/dao_query_source.j2",
+                ImmutableMap.of("ent", meta));
+        return TemplateUtil.build("templates/"+ tplName +"_source.j2",
+                ImmutableMap.of("ent", meta, "query_rels", querySource));
     }
 
     public void genBean(Collection<String> ents) throws IOException {

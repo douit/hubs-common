@@ -316,5 +316,9 @@ public class ProtoTypes {
                 .map(f -> f.getName())
                 .collect(Collectors.toList());
     }
+
+    public static boolean hasFieldValue(Message toData, String fld) {
+        return getFilledFieldNames(toData).contains(fld);
+    }
 }
 

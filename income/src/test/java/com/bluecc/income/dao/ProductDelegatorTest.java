@@ -348,6 +348,8 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
         });
     }
 
+    public static final String primary_product_category="primary_product_category";
+
     @Test
     public void testQueryDemands() {
         String key="FA-001";

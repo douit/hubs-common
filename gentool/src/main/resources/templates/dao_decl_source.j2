@@ -10,6 +10,14 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import com.bluecc.hubs.fund.pubs.Action;
+import com.bluecc.hubs.fund.model.IModel;
+import reactor.core.publisher.Flux;
+import java.util.function.Function;
+import com.google.protobuf.Message;
+import java.util.stream.Collectors;
+import com.bluecc.hubs.stub.{{ent.messageType}};
+
 public class {{ent.name}}Delegator extends AbstractProcs{
 
     @RegisterBeanMapper(value = {{ent.name}}.class)
@@ -23,7 +31,6 @@ public class {{ent.name}}Delegator extends AbstractProcs{
         int count{{ent.name}}();
     }
 
-    {{constants}}
-    {{query_rels}}
+{{query_rels}}
     
 }
