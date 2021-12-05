@@ -117,6 +117,9 @@ public class ProtoTypes {
         return null;
     }
 
+    public static TimeOfDay getTimeOfDay(String localTime) {
+        return getTimeOfDay(LocalTime.parse(localTime));
+    }
     public static TimeOfDay getTimeOfDay(LocalTime localTime) {
         if(localTime!=null) {
             TimeOfDay timeOfDay = TimeOfDay.newBuilder()

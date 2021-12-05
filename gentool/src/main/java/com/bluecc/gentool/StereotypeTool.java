@@ -33,19 +33,24 @@ public class StereotypeTool {
 
         datasetWriter("dataset/ecommerce", targetDir, prefix);
         datasetWriter("dataset/seed", targetDir, "");
+
     }
 
     private static void datasetWriter(String sourceDir, String targetDir, String prefix) throws IOException {
         System.out.println(".. write "+sourceDir);
         // String sourceDir="dataset/sample";
         for (File sourceFile : Util.listFiles(sourceDir, ".xml")) {
-            String className = prefix+getCapName(sourceFile);
-            FileWriter writer=new FileWriter(targetDir +"/"+className+".java");
-            FileWriter listWriter=new FileWriter(targetDir +"/"+className+"List.java");
-            new StereotypeTool(writer, listWriter).gen(className, sourceFile);
-            writer.close();
-            listWriter.close();
+            datafileWriter(sourceFile, targetDir, prefix);
         }
+    }
+
+    public static void datafileWriter(File sourceFile, String targetDir, String prefix) throws IOException {
+        String className = prefix +getCapName(sourceFile);
+        FileWriter writer=new FileWriter(targetDir +"/"+className+".java");
+        FileWriter listWriter=new FileWriter(targetDir +"/"+className+"List.java");
+        new StereotypeTool(writer, listWriter).gen(className, sourceFile);
+        writer.close();
+        listWriter.close();
     }
 
     private static void testWriter() throws IOException {
