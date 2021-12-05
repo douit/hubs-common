@@ -19,12 +19,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1030")
         .build();
 
+
     public final static SurveyQuestionOptionData SurveyQuestionOption_1030_00002 = SurveyQuestionOptionData.newBuilder()
         .setDescription("2-5 times per year")
         .setSequenceNum(2)
         .setSurveyOptionSeqId("00002")
         .setSurveyQuestionId("1030")
         .build();
+
 
     public final static SurveyQuestionOptionData SurveyQuestionOption_1030_00003 = SurveyQuestionOptionData.newBuilder()
         .setDescription("6-10 time per year")
@@ -33,12 +35,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1030")
         .build();
 
+
     public final static SurveyQuestionOptionData SurveyQuestionOption_1030_00004 = SurveyQuestionOptionData.newBuilder()
         .setDescription("more then 10 times per year")
         .setSequenceNum(4)
         .setSurveyOptionSeqId("00004")
         .setSurveyQuestionId("1030")
         .build();
+
 
     public final static SurveyQuestionOptionData SurveyQuestionOption_1033_00001 = SurveyQuestionOptionData.newBuilder()
         .setDescription("The Best!")
@@ -47,12 +51,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1033")
         .build();
 
+
     public final static SurveyQuestionOptionData SurveyQuestionOption_1033_00002 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Above Average")
         .setSequenceNum(2)
         .setSurveyOptionSeqId("00002")
         .setSurveyQuestionId("1033")
         .build();
+
 
     public final static SurveyQuestionOptionData SurveyQuestionOption_1033_00003 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Average")
@@ -61,12 +67,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1033")
         .build();
 
+
     public final static SurveyQuestionOptionData SurveyQuestionOption_1033_00004 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Below Average")
         .setSequenceNum(4)
         .setSurveyOptionSeqId("00004")
         .setSurveyQuestionId("1033")
         .build();
+
 
     public final static SurveyQuestionOptionData SurveyQuestionOption_1033_00005 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Poor")
@@ -75,12 +83,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1033")
         .build();
 
+
     public final static SurveyQuestionOptionData SurveyQuestionOption_1034_00001 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Excellent Functionality")
         .setSequenceNum(1)
         .setSurveyOptionSeqId("00001")
         .setSurveyQuestionId("1034")
         .build();
+
 
     public final static SurveyQuestionOptionData SurveyQuestionOption_1034_00002 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Good Functionality")
@@ -89,12 +99,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1034")
         .build();
 
+
     public final static SurveyQuestionOptionData SurveyQuestionOption_1034_00003 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Poor Functionality")
         .setSequenceNum(3)
         .setSurveyOptionSeqId("00003")
         .setSurveyQuestionId("1034")
         .build();
+
 
     public final static SurveyQuestionOptionData SurveyQuestionOption_1040_00001 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Right Side")
@@ -103,12 +115,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1040")
         .build();
 
+
     public final static SurveyQuestionOptionData SurveyQuestionOption_1040_00002 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Left Side")
         .setSequenceNum(2)
         .setSurveyOptionSeqId("00002")
         .setSurveyQuestionId("1040")
         .build();
+
 
     public final static SurveyQuestionOptionData SurveyQuestionOption_1041_00001 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Right Hand")
@@ -117,6 +131,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1041")
         .build();
 
+
     public final static SurveyQuestionOptionData SurveyQuestionOption_1041_00002 = SurveyQuestionOptionData.newBuilder()
         .setDescription("Left Hand")
         .setSequenceNum(2)
@@ -124,11 +139,13 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1041")
         .build();
 
+
     public final static SurveyMultiRespData SurveyMultiResp_1002_01 = SurveyMultiRespData.newBuilder()
         .setMultiRespTitle("In the last...")
         .setSurveyId("1002")
         .setSurveyMultiRespId("01")
         .build();
+
 
     public final static ProductStoreSurveyApplData ProductStoreSurveyAppl_1000 = ProductStoreSurveyApplData.newBuilder()
         .setFromDate(getTimestamp("2003-11-24 16:00:02.467"))
@@ -140,6 +157,7 @@ public final class StereoDemoSurvey {
         .setSurveyTemplate("component://content/template/survey/GenericSurvey.ftl")
         .build();
 
+
     public final static ProductStoreSurveyApplData ProductStoreSurveyAppl_1001 = ProductStoreSurveyApplData.newBuilder()
         .setFromDate(getTimestamp("2003-11-24 16:00:51.693"))
         .setProductCategoryId("GC-102")
@@ -149,6 +167,7 @@ public final class StereoDemoSurvey {
         .setSurveyId("1001")
         .setSurveyTemplate("component://content/template/survey/GenericSurvey.ftl")
         .build();
+
 
     public final static ProductStoreSurveyApplData ProductStoreSurveyAppl_1002 = ProductStoreSurveyApplData.newBuilder()
         .setFromDate(getTimestamp("2003-12-05 19:22:40.925"))
@@ -160,6 +179,7 @@ public final class StereoDemoSurvey {
         .setSurveyId("1002")
         .setSurveyTemplate("component://content/template/survey/GenericSurvey.ftl")
         .build();
+
 
     public final static ProductStoreSurveyApplData ProductStoreSurveyAppl_1003 = ProductStoreSurveyApplData.newBuilder()
         .setFromDate(getTimestamp("2003-12-05 19:22:40.925"))
@@ -173,6 +193,7 @@ public final class StereoDemoSurvey {
         .setSurveyTemplate("component://ecommerce/template/survey/MiniSurvey.ftl")
         .build();
 
+
     public final static ProductStoreSurveyApplData ProductStoreSurveyAppl_1004 = ProductStoreSurveyApplData.newBuilder()
         .setFromDate(getTimestamp("2003-12-05 19:22:40.925"))
         .setGroupName("testSurveyGroup")
@@ -185,12 +206,91 @@ public final class StereoDemoSurvey {
         .setSurveyTemplate("component://ecommerce/template/survey/MiniSurvey.ftl")
         .build();
 
+
+    public final static SurveyPageData SurveyPage_1002_01 = SurveyPageData.newBuilder()
+        .setPageName("Shopping Survey Page 1")
+        .setSequenceNum(1)
+        .setSurveyId("1002")
+        .setSurveyPageSeqId("01")
+        .build();
+
+
     public final static SurveyPageData SurveyPage_1002_02 = SurveyPageData.newBuilder()
         .setPageName("Shopping Survey Page 2")
         .setSequenceNum(2)
         .setSurveyId("1002")
         .setSurveyPageSeqId("02")
         .build();
+
+
+    public final static SurveyData Survey_1000 = SurveyData.newBuilder()
+        .setAllowMultiple(castIndicator("Y"))
+        .setAllowUpdate(castIndicator("N"))
+        .setDescription("Gift Card Purchase Information")
+        .setIsAnonymous(castIndicator("Y"))
+        .setSurveyId("1000")
+        .build();
+
+
+    public final static SurveyData Survey_1001 = SurveyData.newBuilder()
+        .setAllowMultiple(castIndicator("Y"))
+        .setAllowUpdate(castIndicator("N"))
+        .setDescription("Gift Card Reload Information")
+        .setIsAnonymous(castIndicator("Y"))
+        .setSurveyId("1001")
+        .build();
+
+
+    public final static SurveyData Survey_1002 = SurveyData.newBuilder()
+        .setAllowMultiple(castIndicator("Y"))
+        .setAllowUpdate(castIndicator("Y"))
+        .setComments("Your answers will help us serve you better")
+        .setDescription("Tell us about your on-line shopping patterns")
+        .setIsAnonymous(castIndicator("N"))
+        .setSubmitCaption("Complete Survey")
+        .setSurveyId("1002")
+        .setSurveyName("Shopping Survey")
+        .build();
+
+
+    public final static SurveyData Survey_1003 = SurveyData.newBuilder()
+        .setAllowMultiple(castIndicator("N"))
+        .setAllowUpdate(castIndicator("N"))
+        .setDescription("Tell us where the mini-poll should go")
+        .setIsAnonymous(castIndicator("N"))
+        .setSubmitCaption("Vote!")
+        .setSurveyId("1003")
+        .setSurveyName("Mini-Poll Poll")
+        .build();
+
+
+    public final static SurveyData Survey_1004 = SurveyData.newBuilder()
+        .setAllowMultiple(castIndicator("N"))
+        .setAllowUpdate(castIndicator("N"))
+        .setDescription("Your mouse hand is")
+        .setIsAnonymous(castIndicator("N"))
+        .setSurveyId("1004")
+        .setSurveyName("Mouse Hand Poll")
+        .build();
+
+
+    public final static SurveyQuestionCategoryData SurveyQuestionCategory_1000 = SurveyQuestionCategoryData.newBuilder()
+        .setDescription("Gift Card Purchase Questions")
+        .setSurveyQuestionCategoryId("1000")
+        .build();
+
+
+    public final static SurveyQuestionCategoryData SurveyQuestionCategory_1001 = SurveyQuestionCategoryData.newBuilder()
+        .setDescription("Shopping Questions")
+        .setSurveyQuestionCategoryId("1001")
+        .build();
+
+
+    public final static SurveyQuestionCategoryData SurveyQuestionCategory_1002 = SurveyQuestionCategoryData.newBuilder()
+        .setDescription("Poll Questions")
+        .setSurveyQuestionCategoryId("1002")
+        .build();
+
 
     public final static SurveyMultiRespColumnData SurveyMultiRespColumn_1002_01_01 = SurveyMultiRespColumnData.newBuilder()
         .setColumnTitle("Last Month")
@@ -200,6 +300,7 @@ public final class StereoDemoSurvey {
         .setSurveyMultiRespId("01")
         .build();
 
+
     public final static SurveyMultiRespColumnData SurveyMultiRespColumn_1002_01_02 = SurveyMultiRespColumnData.newBuilder()
         .setColumnTitle("Last Six Months")
         .setSequenceNum(2)
@@ -207,6 +308,7 @@ public final class StereoDemoSurvey {
         .setSurveyMultiRespColId("02")
         .setSurveyMultiRespId("01")
         .build();
+
 
     public final static SurveyMultiRespColumnData SurveyMultiRespColumn_1002_01_03 = SurveyMultiRespColumnData.newBuilder()
         .setColumnTitle("Last Year")
@@ -216,6 +318,7 @@ public final class StereoDemoSurvey {
         .setSurveyMultiRespId("01")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1000_1000_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("Y"))
@@ -223,6 +326,7 @@ public final class StereoDemoSurvey {
         .setSurveyId("1000")
         .setSurveyQuestionId("1000")
         .build();
+
 
     public final static SurveyQuestionApplData SurveyQuestionAppl_1000_1001_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
@@ -232,6 +336,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1001")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1000_1002_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("Y"))
@@ -239,6 +344,7 @@ public final class StereoDemoSurvey {
         .setSurveyId("1000")
         .setSurveyQuestionId("1002")
         .build();
+
 
     public final static SurveyQuestionApplData SurveyQuestionAppl_1000_1003_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
@@ -248,6 +354,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1003")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1001_1010_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("Y"))
@@ -256,6 +363,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1010")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1001_1011_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("Y"))
@@ -263,6 +371,7 @@ public final class StereoDemoSurvey {
         .setSurveyId("1001")
         .setSurveyQuestionId("1011")
         .build();
+
 
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1037_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
@@ -273,6 +382,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1037")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1030_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("Y"))
@@ -281,6 +391,7 @@ public final class StereoDemoSurvey {
         .setSurveyPageSeqId("01")
         .setSurveyQuestionId("1030")
         .build();
+
 
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1031_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
@@ -293,6 +404,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1031")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1031B_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("Y"))
@@ -303,6 +415,7 @@ public final class StereoDemoSurvey {
         .setSurveyPageSeqId("01")
         .setSurveyQuestionId("1031B")
         .build();
+
 
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1031C_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
@@ -315,6 +428,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1031C")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1032_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("N"))
@@ -323,6 +437,7 @@ public final class StereoDemoSurvey {
         .setSurveyPageSeqId("01")
         .setSurveyQuestionId("1032")
         .build();
+
 
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1033_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
@@ -334,6 +449,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1033")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1034_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("Y"))
@@ -344,6 +460,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1034")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1038_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("N"))
@@ -352,6 +469,7 @@ public final class StereoDemoSurvey {
         .setSurveyPageSeqId("02")
         .setSurveyQuestionId("1038")
         .build();
+
 
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1042_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
@@ -362,6 +480,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1042")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1035_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("N"))
@@ -371,6 +490,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1035")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1002_1036_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("N"))
@@ -378,6 +498,7 @@ public final class StereoDemoSurvey {
         .setSurveyId("1002")
         .setSurveyQuestionId("1036")
         .build();
+
 
     public final static SurveyQuestionApplData SurveyQuestionAppl_1003_1040_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
@@ -387,6 +508,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionId("1040")
         .build();
 
+
     public final static SurveyQuestionApplData SurveyQuestionAppl_1004_1041_ = SurveyQuestionApplData.newBuilder()
         .setFromDate(getTimestamp("2001-01-01 00:00:00.0"))
         .setRequiredField(castIndicator("Y"))
@@ -394,6 +516,43 @@ public final class StereoDemoSurvey {
         .setSurveyId("1004")
         .setSurveyQuestionId("1041")
         .build();
+
+
+    public final static SurveyQuestionData SurveyQuestion_1000 = SurveyQuestionData.newBuilder()
+        .setDescription("senderName")
+        .setQuestion("Sender's Name:")
+        .setSurveyQuestionCategoryId("1000")
+        .setSurveyQuestionId("1000")
+        .setSurveyQuestionTypeId("TEXT_LONG")
+        .build();
+
+
+    public final static SurveyQuestionData SurveyQuestion_1001 = SurveyQuestionData.newBuilder()
+        .setDescription("recipientName")
+        .setQuestion("Recipient's Name:")
+        .setSurveyQuestionCategoryId("1000")
+        .setSurveyQuestionId("1001")
+        .setSurveyQuestionTypeId("TEXT_LONG")
+        .build();
+
+
+    public final static SurveyQuestionData SurveyQuestion_1002 = SurveyQuestionData.newBuilder()
+        .setDescription("recipientEmail")
+        .setQuestion("Recipient's Email:")
+        .setSurveyQuestionCategoryId("1000")
+        .setSurveyQuestionId("1002")
+        .setSurveyQuestionTypeId("EMAIL")
+        .build();
+
+
+    public final static SurveyQuestionData SurveyQuestion_1003 = SurveyQuestionData.newBuilder()
+        .setDescription("giftMessage")
+        .setQuestion("Gift Message:")
+        .setSurveyQuestionCategoryId("1000")
+        .setSurveyQuestionId("1003")
+        .setSurveyQuestionTypeId("TEXTAREA")
+        .build();
+
 
     public final static SurveyQuestionData SurveyQuestion_1010 = SurveyQuestionData.newBuilder()
         .setDescription("giftCardNumber")
@@ -403,6 +562,7 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionTypeId("GIFT_CARD")
         .build();
 
+
     public final static SurveyQuestionData SurveyQuestion_1011 = SurveyQuestionData.newBuilder()
         .setDescription("giftCardPin")
         .setQuestion("PIN Number:")
@@ -411,12 +571,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionTypeId("TEXT_SHORT")
         .build();
 
+
     public final static SurveyQuestionData SurveyQuestion_1030 = SurveyQuestionData.newBuilder()
         .setQuestion("How often do you shop on-line?")
         .setSurveyQuestionCategoryId("1001")
         .setSurveyQuestionId("1030")
         .setSurveyQuestionTypeId("OPTION")
         .build();
+
 
     public final static SurveyQuestionData SurveyQuestion_1031 = SurveyQuestionData.newBuilder()
         .setQuestion("Have you shopped here?")
@@ -425,12 +587,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionTypeId("BOOLEAN")
         .build();
 
+
     public final static SurveyQuestionData SurveyQuestion_1031B = SurveyQuestionData.newBuilder()
         .setQuestion("Have you shopped here in the last six months?")
         .setSurveyQuestionCategoryId("1001")
         .setSurveyQuestionId("1031B")
         .setSurveyQuestionTypeId("BOOLEAN")
         .build();
+
 
     public final static SurveyQuestionData SurveyQuestion_1031C = SurveyQuestionData.newBuilder()
         .setQuestion("Have you shopped here in the last year?")
@@ -439,11 +603,13 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionTypeId("BOOLEAN")
         .build();
 
+
     public final static SurveyQuestionData SurveyQuestion_1032 = SurveyQuestionData.newBuilder()
         .setSurveyQuestionCategoryId("1001")
         .setSurveyQuestionId("1032")
         .setSurveyQuestionTypeId("SEPERATOR_LINE")
         .build();
+
 
     public final static SurveyQuestionData SurveyQuestion_1033 = SurveyQuestionData.newBuilder()
         .setQuestion("How would you rate this store for products?")
@@ -452,12 +618,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionTypeId("OPTION")
         .build();
 
+
     public final static SurveyQuestionData SurveyQuestion_1034 = SurveyQuestionData.newBuilder()
         .setQuestion("How would you rate this store for on-line functionality?")
         .setSurveyQuestionCategoryId("1001")
         .setSurveyQuestionId("1034")
         .setSurveyQuestionTypeId("OPTION")
         .build();
+
 
     public final static SurveyQuestionData SurveyQuestion_1035 = SurveyQuestionData.newBuilder()
         .setQuestion("What is your favorite on-line store? (Enter Valid URL)")
@@ -466,12 +634,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionTypeId("URL")
         .build();
 
+
     public final static SurveyQuestionData SurveyQuestion_1036 = SurveyQuestionData.newBuilder()
         .setQuestion("Comments:")
         .setSurveyQuestionCategoryId("1001")
         .setSurveyQuestionId("1036")
         .setSurveyQuestionTypeId("TEXTAREA")
         .build();
+
 
     public final static SurveyQuestionData SurveyQuestion_1037 = SurveyQuestionData.newBuilder()
         .setQuestion("<img src='https://localhost:8443/images/ofbiz_logo.png'>")
@@ -480,11 +650,13 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionTypeId("SEPERATOR_TEXT")
         .build();
 
+
     public final static SurveyQuestionData SurveyQuestion_1038 = SurveyQuestionData.newBuilder()
         .setSurveyQuestionCategoryId("1001")
         .setSurveyQuestionId("1038")
         .setSurveyQuestionTypeId("SEPERATOR_LINE")
         .build();
+
 
     public final static SurveyQuestionData SurveyQuestion_1042 = SurveyQuestionData.newBuilder()
         .setQuestion("Do you have a picture you would like to attach?")
@@ -493,12 +665,14 @@ public final class StereoDemoSurvey {
         .setSurveyQuestionTypeId("CONTENT")
         .build();
 
+
     public final static SurveyQuestionData SurveyQuestion_1040 = SurveyQuestionData.newBuilder()
         .setQuestion("Which side should the mini-poll box show?")
         .setSurveyQuestionCategoryId("1002")
         .setSurveyQuestionId("1040")
         .setSurveyQuestionTypeId("OPTION")
         .build();
+
 
     public final static SurveyQuestionData SurveyQuestion_1041 = SurveyQuestionData.newBuilder()
         .setQuestion("Which hand do you use your mouse with?")

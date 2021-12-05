@@ -411,12 +411,18 @@ public class EntityMeta {
         }
 
         private String filterNum(String rawValue) {
-            if(rawValue.startsWith("0")) {
-                return String.format("%d", Integer.parseInt(rawValue));
+            if(rawValue.contains(".")){
+                return rawValue;
+            }else if(rawValue.startsWith("0")) {
+                try {
+                    return String.format("%d", Integer.parseInt(rawValue));
+                }catch(NumberFormatException e){
+                    log.warn("fail to filter-num with integer: {}", rawValue);
+                    throw e;
+                }
             }
             return rawValue;
         }
-
 
         public String getProtoSetter(){
             String valuePart;

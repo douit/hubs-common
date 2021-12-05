@@ -12,15 +12,18 @@ public final class StereoDemoContentAltUrl {
         .setTextData("Cute Kid")
         .build();
 
+
     public final static ElectronicTextData ElectronicText_DRS_CNT_URL006 = ElectronicTextData.newBuilder()
         .setDataResourceId("DRS_CNT_URL006")
         .setTextData("Next Linus")
         .build();
 
+
     public final static ElectronicTextData ElectronicText_DRS_CNT_URL007 = ElectronicTextData.newBuilder()
         .setDataResourceId("DRS_CNT_URL007")
         .setTextData("2008 Elections")
         .build();
+
 
     public final static ContentAssocData ContentAssoc_BLG10000_CNT_ALTURL_005_ALTERNATIVE_URL_ = ContentAssocData.newBuilder()
         .setContentAssocTypeId("ALTERNATIVE_URL")
@@ -29,6 +32,7 @@ public final class StereoDemoContentAltUrl {
         .setFromDate(getTimestamp("2011-06-23 01:01:01"))
         .build();
 
+
     public final static ContentAssocData ContentAssoc_BLG10010_CNT_ALTURL_006_ALTERNATIVE_URL_ = ContentAssocData.newBuilder()
         .setContentAssocTypeId("ALTERNATIVE_URL")
         .setContentId("BLG10010")
@@ -36,12 +40,41 @@ public final class StereoDemoContentAltUrl {
         .setFromDate(getTimestamp("2011-06-23 01:01:01"))
         .build();
 
+
     public final static ContentAssocData ContentAssoc_BLG10007_CNT_ALTURL_007_ALTERNATIVE_URL_ = ContentAssocData.newBuilder()
         .setContentAssocTypeId("ALTERNATIVE_URL")
         .setContentId("BLG10007")
         .setContentIdTo("CNT_ALTURL_007")
         .setFromDate(getTimestamp("2011-06-23 01:01:01"))
         .build();
+
+
+    public final static DataResourceData DataResource_DRS_CNT_URL005 = DataResourceData.newBuilder()
+        .setDataResourceId("DRS_CNT_URL005")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en_US")
+        .setObjectInfo("/Cute-Kid-BLG10000-content")
+        .setStatusId("CTNT_IN_PROGRESS")
+        .build();
+
+
+    public final static DataResourceData DataResource_DRS_CNT_URL006 = DataResourceData.newBuilder()
+        .setDataResourceId("DRS_CNT_URL006")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en_US")
+        .setObjectInfo("/Next-Linus-BLG10010-content")
+        .setStatusId("CTNT_IN_PROGRESS")
+        .build();
+
+
+    public final static DataResourceData DataResource_DRS_CNT_URL007 = DataResourceData.newBuilder()
+        .setDataResourceId("DRS_CNT_URL007")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en_US")
+        .setObjectInfo("/2008-Elections-BLG10007-content")
+        .setStatusId("CTNT_IN_PROGRESS")
+        .build();
+
 
     public final static ContentData Content_CNT_ALTURL_005 = ContentData.newBuilder()
         .setContentId("CNT_ALTURL_005")
@@ -51,6 +84,7 @@ public final class StereoDemoContentAltUrl {
         .setStatusId("CTNT_IN_PROGRESS")
         .build();
 
+
     public final static ContentData Content_CNT_ALTURL_006 = ContentData.newBuilder()
         .setContentId("CNT_ALTURL_006")
         .setContentTypeId("DOCUMENT")
@@ -58,6 +92,7 @@ public final class StereoDemoContentAltUrl {
         .setLocaleString("en_US")
         .setStatusId("CTNT_IN_PROGRESS")
         .build();
+
 
     public final static ContentData Content_CNT_ALTURL_007 = ContentData.newBuilder()
         .setContentId("CNT_ALTURL_007")

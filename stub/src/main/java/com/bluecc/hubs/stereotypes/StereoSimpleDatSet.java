@@ -16,6 +16,7 @@ public final class StereoSimpleDatSet {
         .setRoleTypeId("SALES_REP")
         .build();
 
+
     public final static ProductFlatData Product_GZ_1001 = ProductFlatData.newBuilder()
         .setAutoCreateKeywords(castIndicator("Y"))
         .setChargeShipping(castIndicator("Y"))
@@ -33,6 +34,7 @@ public final class StereoSimpleDatSet {
         .setProductTypeId("FINISHED_GOOD")
         .setTaxable(castIndicator("Y"))
         .build();
+
 
     public final static ProductFlatData Product_GZ_DIG = ProductFlatData.newBuilder()
         .setAutoCreateKeywords(castIndicator("Y"))
@@ -52,11 +54,13 @@ public final class StereoSimpleDatSet {
         .setTaxable(castIndicator("Y"))
         .build();
 
+
     public final static PartyStatusData PartyStatus_PARTY_ENABLED_DemoRepAll_ = PartyStatusData.newBuilder()
         .setPartyId("DemoRepAll")
         .setStatusDate(getTimestamp("2001-01-01 12:00:00.0"))
         .setStatusId("PARTY_ENABLED")
         .build();
+
 
     public final static ProductPriceData ProductPrice_GZ_DIG_DEFAULT_PRICE_PURCHASE_USD__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
@@ -72,6 +76,7 @@ public final class StereoSimpleDatSet {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static ProductPriceData ProductPrice_GZ_DIG_LIST_PRICE_PURCHASE_USD__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -86,15 +91,30 @@ public final class StereoSimpleDatSet {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static PartyFlatData Party_DemoRepAll = PartyFlatData.newBuilder()
         .setPartyId("DemoRepAll")
         .setPartyTypeId("PERSON")
         .setStatusId("PARTY_ENABLED")
         .build();
 
+
     public final static UserLoginSecurityGroupData UserLoginSecurityGroup_DemoRepAll_ORDERENTRY_ALL_ = UserLoginSecurityGroupData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 00:00:00"))
         .setGroupId("ORDERENTRY_ALL")
+        .setUserLoginId("DemoRepAll")
+        .build();
+
+
+    public final static PersonFlatData Person_DemoRepAll = PersonFlatData.newBuilder()
+        .setFirstName("Demo")
+        .setLastName("Sales Rep for All Stores")
+        .setPartyId("DemoRepAll")
+        .build();
+
+
+    public final static UserLoginFlatData UserLogin_DemoRepAll = UserLoginFlatData.newBuilder()
+        .setPartyId("DemoRepAll")
         .setUserLoginId("DemoRepAll")
         .build();
 

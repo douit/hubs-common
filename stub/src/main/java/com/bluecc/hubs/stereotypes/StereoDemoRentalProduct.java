@@ -27,12 +27,14 @@ public final class StereoDemoRentalProduct {
         .setProductId("RoomStd")
         .build();
 
+
     public final static FixedAssetProductData FixedAssetProduct_RoomLux_RoomLux_FAPT_USE_ = FixedAssetProductData.newBuilder()
         .setFixedAssetId("RoomLux")
         .setFixedAssetProductTypeId("FAPT_USE")
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductId("RoomLux")
         .build();
+
 
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_ODR_CONFIRM = ProductStoreEmailSettingData.newBuilder()
         .setBccAddress("ofbiztest@example.com")
@@ -44,6 +46,7 @@ public final class StereoDemoRentalProduct {
         .setXslfoAttachScreenLocation("component://ecommerce/widget/EmailOrderScreens.xml#OrderConfirmNoticePdf")
         .build();
 
+
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_ODR_COMPLETE = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailOrderScreens.xml#OrderCompleteNotice")
         .setEmailType("PRDS_ODR_COMPLETE")
@@ -51,6 +54,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .setSubject("OFBiz Demo - Your Order Is Complete #${orderId}")
         .build();
+
 
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_ODR_BACKORDER = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailOrderScreens.xml#BackorderNotice")
@@ -60,6 +64,7 @@ public final class StereoDemoRentalProduct {
         .setSubject("OFBiz Demo - Backorder Notification #${orderId}")
         .build();
 
+
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_ODR_CHANGE = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailOrderScreens.xml#OrderChangeNotice")
         .setEmailType("PRDS_ODR_CHANGE")
@@ -67,6 +72,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .setSubject("OFBiz Demo - Order Change Notification #${orderId}")
         .build();
+
 
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_ODR_PAYRETRY = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailOrderScreens.xml#PaymentRetryNotice")
@@ -76,6 +82,7 @@ public final class StereoDemoRentalProduct {
         .setSubject("OFBiz Demo - Order Payment Notification #${orderId}")
         .build();
 
+
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_RTN_ACCEPT = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailReturnScreens.xml#ReturnAccept")
         .setEmailType("PRDS_RTN_ACCEPT")
@@ -83,6 +90,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .setSubject("OFBiz Demo - Return Accepted #${returnHeader.returnId}")
         .build();
+
 
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_RTN_COMPLETE = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailReturnScreens.xml#ReturnComplete")
@@ -92,6 +100,7 @@ public final class StereoDemoRentalProduct {
         .setSubject("OFBiz Demo - Return Completed #${returnHeader.returnId}")
         .build();
 
+
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_RTN_CANCEL = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailReturnScreens.xml#ReturnCancel")
         .setEmailType("PRDS_RTN_CANCEL")
@@ -99,6 +108,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .setSubject("OFBiz Demo - Return Cancelled #${returnHeader.returnId}")
         .build();
+
 
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_GC_PURCHASE = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailGiftCardScreens.xml#GiftCardPurchase")
@@ -108,6 +118,7 @@ public final class StereoDemoRentalProduct {
         .setSubject("A Gift From ${senderName}!")
         .build();
 
+
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_GC_RELOAD = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailGiftCardScreens.xml#GiftCardReload")
         .setEmailType("PRDS_GC_RELOAD")
@@ -115,6 +126,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .setSubject("Gift Card Reload Results")
         .build();
+
 
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_TELL_FRIEND = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://ecommerce/widget/EmailProductScreens.xml#TellFriend")
@@ -124,6 +136,7 @@ public final class StereoDemoRentalProduct {
         .setSubject("${sendFrom} has sent you a link!")
         .build();
 
+
     public final static ProductStoreEmailSettingData ProductStoreEmailSetting_RentalStore_PRDS_PWD_RETRIEVE = ProductStoreEmailSettingData.newBuilder()
         .setBodyScreenLocation("component://securityext/widget/EmailSecurityScreens.xml#PasswordEmail")
         .setEmailType("PRDS_PWD_RETRIEVE")
@@ -132,11 +145,13 @@ public final class StereoDemoRentalProduct {
         .setSubject("OFBiz Demo - Password Reminder (${userLoginId})")
         .build();
 
+
     public final static ProdCatalogFlatData ProdCatalog_RentalCatalog = ProdCatalogFlatData.newBuilder()
         .setCatalogName("Rental Catalog")
         .setProdCatalogId("RentalCatalog")
         .setUseQuickAdd(castIndicator("N"))
         .build();
+
 
     public final static ProductStoreFlatData ProductStore_RentalStore = ProductStoreFlatData.newBuilder()
         .setAllowPassword(castIndicator("Y"))
@@ -177,6 +192,7 @@ public final class StereoDemoRentalProduct {
         .setVisualThemeId("EC_DEFAULT")
         .build();
 
+
     public final static ProductFlatData Product_RoomStd = ProductFlatData.newBuilder()
         .setAutoCreateKeywords(castIndicator("Y"))
         .setChargeShipping(castIndicator("N"))
@@ -198,6 +214,7 @@ public final class StereoDemoRentalProduct {
         .setReservNthPPPerc(getFixedPoint("5"))
         .setTaxable(castIndicator("Y"))
         .build();
+
 
     public final static ProductFlatData Product_RoomLux = ProductFlatData.newBuilder()
         .setAutoCreateKeywords(castIndicator("Y"))
@@ -221,6 +238,7 @@ public final class StereoDemoRentalProduct {
         .setTaxable(castIndicator("Y"))
         .build();
 
+
     public final static ProductFlatData Product_RoomLarge = ProductFlatData.newBuilder()
         .setAutoCreateKeywords(castIndicator("Y"))
         .setChargeShipping(castIndicator("N"))
@@ -242,6 +260,7 @@ public final class StereoDemoRentalProduct {
         .setReservNthPPPerc(getFixedPoint("3"))
         .setTaxable(castIndicator("Y"))
         .build();
+
 
     public final static ProductFlatData Product_BoatRowSimple = ProductFlatData.newBuilder()
         .setAutoCreateKeywords(castIndicator("Y"))
@@ -265,6 +284,7 @@ public final class StereoDemoRentalProduct {
         .setTaxable(castIndicator("Y"))
         .build();
 
+
     public final static ProductFlatData Product_Cap = ProductFlatData.newBuilder()
         .setAutoCreateKeywords(castIndicator("Y"))
         .setChargeShipping(castIndicator("Y"))
@@ -283,6 +303,7 @@ public final class StereoDemoRentalProduct {
         .setTaxable(castIndicator("Y"))
         .build();
 
+
     public final static ProductPriceData ProductPrice_RoomStd_DEFAULT_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -296,6 +317,7 @@ public final class StereoDemoRentalProduct {
         .setProductPriceTypeId("DEFAULT_PRICE")
         .setProductStoreGroupId("_NA_")
         .build();
+
 
     public final static ProductPriceData ProductPrice_RoomStd_LIST_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
@@ -311,6 +333,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static ProductPriceData ProductPrice_RoomLux_DEFAULT_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -324,6 +347,7 @@ public final class StereoDemoRentalProduct {
         .setProductPriceTypeId("DEFAULT_PRICE")
         .setProductStoreGroupId("_NA_")
         .build();
+
 
     public final static ProductPriceData ProductPrice_RoomLux_LIST_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
@@ -339,6 +363,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static ProductPriceData ProductPrice_RoomLarge_AVERAGE_COST_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -352,6 +377,7 @@ public final class StereoDemoRentalProduct {
         .setProductPriceTypeId("AVERAGE_COST")
         .setProductStoreGroupId("_NA_")
         .build();
+
 
     public final static ProductPriceData ProductPrice_RoomLarge_DEFAULT_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
@@ -367,6 +393,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static ProductPriceData ProductPrice_BoatRowSimple_DEFAULT_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -380,6 +407,7 @@ public final class StereoDemoRentalProduct {
         .setProductPriceTypeId("DEFAULT_PRICE")
         .setProductStoreGroupId("_NA_")
         .build();
+
 
     public final static ProductPriceData ProductPrice_BoatRowSimple_LIST_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
@@ -395,6 +423,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static ProductPriceData ProductPrice_BoatRowSimple_COMPETITIVE_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -408,6 +437,7 @@ public final class StereoDemoRentalProduct {
         .setProductPriceTypeId("COMPETITIVE_PRICE")
         .setProductStoreGroupId("_NA_")
         .build();
+
 
     public final static ProductPriceData ProductPrice_Cap_DEFAULT_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
@@ -423,11 +453,29 @@ public final class StereoDemoRentalProduct {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
+    public final static FixedAssetData FixedAsset_RoomStd = FixedAssetData.newBuilder()
+        .setFixedAssetId("RoomStd")
+        .setFixedAssetName("Standard Room")
+        .setFixedAssetTypeId("PROPERTY")
+        .setProductionCapacity(getFixedPoint("10"))
+        .build();
+
+
+    public final static FixedAssetData FixedAsset_RoomLux = FixedAssetData.newBuilder()
+        .setFixedAssetId("RoomLux")
+        .setFixedAssetName("Luxury Room")
+        .setFixedAssetTypeId("PROPERTY")
+        .setProductionCapacity(getFixedPoint("10"))
+        .build();
+
+
     public final static ProductCategoryRollupData ProductCategoryRollup_ConfRooms_HotelFac_ = ProductCategoryRollupData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:21:07.613"))
         .setParentProductCategoryId("HotelFac")
         .setProductCategoryId("ConfRooms")
         .build();
+
 
     public final static ProductCategoryRollupData ProductCategoryRollup_Rooms_HotelFac_ = ProductCategoryRollupData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:22:29.139"))
@@ -435,11 +483,13 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryId("Rooms")
         .build();
 
+
     public final static ProductCategoryRollupData ProductCategoryRollup_Suites_HotelFac_ = ProductCategoryRollupData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:23:05.706"))
         .setParentProductCategoryId("HotelFac")
         .setProductCategoryId("Suites")
         .build();
+
 
     public final static ProductCategoryRollupData ProductCategoryRollup_SpeedBoats_BoatRental_ = ProductCategoryRollupData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:23:54.452"))
@@ -447,11 +497,13 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryId("SpeedBoats")
         .build();
 
+
     public final static ProductCategoryRollupData ProductCategoryRollup_MotorBoats_BoatRental_ = ProductCategoryRollupData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:30:56.77"))
         .setParentProductCategoryId("BoatRental")
         .setProductCategoryId("MotorBoats")
         .build();
+
 
     public final static ProductCategoryRollupData ProductCategoryRollup_RowBoats_BoatRental_ = ProductCategoryRollupData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:32:27.359"))
@@ -459,11 +511,13 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryId("RowBoats")
         .build();
 
+
     public final static ProductCategoryRollupData ProductCategoryRollup_SailBoats_BoatRental_ = ProductCategoryRollupData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:32:48.86"))
         .setParentProductCategoryId("BoatRental")
         .setProductCategoryId("SailBoats")
         .build();
+
 
     public final static ProductCategoryMemberData ProductCategoryMember_RentalPromo_RoomLux_ = ProductCategoryMemberData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 20:39:58.563"))
@@ -471,17 +525,20 @@ public final class StereoDemoRentalProduct {
         .setProductId("RoomLux")
         .build();
 
+
     public final static ProductCategoryMemberData ProductCategoryMember_RentalPromo_RoomStd_ = ProductCategoryMemberData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 20:40:12.749"))
         .setProductCategoryId("RentalPromo")
         .setProductId("RoomStd")
         .build();
 
+
     public final static ProductCategoryMemberData ProductCategoryMember_RentalPromo_Cap_ = ProductCategoryMemberData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 20:40:12.749"))
         .setProductCategoryId("RentalPromo")
         .setProductId("Cap")
         .build();
+
 
     public final static ProdCatalogCategoryData ProdCatalogCategory_RentalCatalog_RentBrowseRoot_PCCT_BROWSE_ROOT_ = ProdCatalogCategoryData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -491,6 +548,7 @@ public final class StereoDemoRentalProduct {
         .setSequenceNum(1)
         .build();
 
+
     public final static ProdCatalogCategoryData ProdCatalogCategory_RentalCatalog_RentBrowseRoot_SRCH_PCCT_SEARCH_ = ProdCatalogCategoryData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProdCatalogCategoryTypeId("PCCT_SEARCH")
@@ -498,6 +556,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryId("RentBrowseRoot_SRCH")
         .setSequenceNum(1)
         .build();
+
 
     public final static ProdCatalogCategoryData ProdCatalogCategory_RentalCatalog_RentalPromo_PCCT_PROMOTIONS_ = ProdCatalogCategoryData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -507,17 +566,20 @@ public final class StereoDemoRentalProduct {
         .setSequenceNum(1)
         .build();
 
+
     public final static ProductStoreFacilityData ProductStoreFacility_RentalStore_WebStoreWarehouse_ = ProductStoreFacilityData.newBuilder()
         .setFacilityId("WebStoreWarehouse")
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductStoreId("RentalStore")
         .build();
 
+
     public final static WebSiteData WebSite_OpenTravelSystem = WebSiteData.newBuilder()
         .setProductStoreId("RentalStore")
         .setSiteName("The Open source Travel System")
         .setWebSiteId("OpenTravelSystem")
         .build();
+
 
     public final static ProductCategoryFlatData ProductCategory_RentBrowseRoot = ProductCategoryFlatData.newBuilder()
         .setDescription("Rental Browse Root")
@@ -526,6 +588,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
 
+
     public final static ProductCategoryFlatData ProductCategory_RentBrowseRoot_SRCH = ProductCategoryFlatData.newBuilder()
         .setDescription("Rental Browse Root to search")
         .setLongDescription("Rental Catalog Primary Browse Root Category")
@@ -533,12 +596,14 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
 
+
     public final static ProductCategoryFlatData ProductCategory_RentalPromo = ProductCategoryFlatData.newBuilder()
         .setDescription("Rental Promotions")
         .setLongDescription("Rental Catalog Primary Browse Root Category")
         .setProductCategoryId("RentalPromo")
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
+
 
     public final static ProductCategoryFlatData ProductCategory_HotelFac = ProductCategoryFlatData.newBuilder()
         .setDescription("Hotel Facilities")
@@ -548,6 +613,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
 
+
     public final static ProductCategoryFlatData ProductCategory_Rooms = ProductCategoryFlatData.newBuilder()
         .setDescription("Rooms")
         .setLongDescription("long description of Hotel rooms")
@@ -555,6 +621,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryId("Rooms")
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
+
 
     public final static ProductCategoryFlatData ProductCategory_Suites = ProductCategoryFlatData.newBuilder()
         .setDescription("Suites")
@@ -564,6 +631,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
 
+
     public final static ProductCategoryFlatData ProductCategory_ConfRooms = ProductCategoryFlatData.newBuilder()
         .setDescription("Conference Rooms")
         .setLongDescription("long description of Hotel conference rooms")
@@ -571,6 +639,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryId("ConfRooms")
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
+
 
     public final static ProductCategoryFlatData ProductCategory_BoatRental = ProductCategoryFlatData.newBuilder()
         .setDescription("Boat Rental")
@@ -580,6 +649,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
 
+
     public final static ProductCategoryFlatData ProductCategory_RowBoats = ProductCategoryFlatData.newBuilder()
         .setDescription("Row Boats")
         .setLongDescription("long description of Row Boats")
@@ -587,6 +657,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryId("RowBoats")
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
+
 
     public final static ProductCategoryFlatData ProductCategory_SailBoats = ProductCategoryFlatData.newBuilder()
         .setDescription("Sailing Boats")
@@ -596,6 +667,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
 
+
     public final static ProductCategoryFlatData ProductCategory_MotorBoats = ProductCategoryFlatData.newBuilder()
         .setDescription("Motor Boats")
         .setLongDescription("long description of Motor Boats")
@@ -603,6 +675,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryId("MotorBoats")
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
+
 
     public final static ProductCategoryFlatData ProductCategory_SpeedBoats = ProductCategoryFlatData.newBuilder()
         .setDescription("Speed Boats")
@@ -612,6 +685,7 @@ public final class StereoDemoRentalProduct {
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
 
+
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_CREDIT_CARD_PRDS_PAY_AUTH = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("CC_AUTH_ALWAYSAPPROV")
         .setPaymentMethodTypeId("CREDIT_CARD")
@@ -619,6 +693,7 @@ public final class StereoDemoRentalProduct {
         .setPaymentServiceTypeEnumId("PRDS_PAY_AUTH")
         .setProductStoreId("RentalStore")
         .build();
+
 
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_CREDIT_CARD_PRDS_PAY_RELEASE = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("CC_RELEASE_TEST")
@@ -628,6 +703,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .build();
 
+
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_CREDIT_CARD_PRDS_PAY_CAPTURE = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("CC_CAPTURE_TEST")
         .setPaymentMethodTypeId("CREDIT_CARD")
@@ -635,6 +711,7 @@ public final class StereoDemoRentalProduct {
         .setPaymentServiceTypeEnumId("PRDS_PAY_CAPTURE")
         .setProductStoreId("RentalStore")
         .build();
+
 
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_CREDIT_CARD_PRDS_PAY_REAUTH = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("CC_AUTH_ALWAYSAPPROV")
@@ -644,6 +721,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .build();
 
+
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_CREDIT_CARD_PRDS_PAY_REFUND = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("CC_REFUND_TEST")
         .setPaymentMethodTypeId("CREDIT_CARD")
@@ -651,6 +729,7 @@ public final class StereoDemoRentalProduct {
         .setPaymentServiceTypeEnumId("PRDS_PAY_REFUND")
         .setProductStoreId("RentalStore")
         .build();
+
 
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_EFT_ACCOUNT_PRDS_PAY_AUTH = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("EFT_AUTH_ALWAYSAPPRO")
@@ -660,6 +739,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .build();
 
+
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_GIFT_CARD_PRDS_PAY_AUTH = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("GIFT_AUTH_ALWAYSAPPR")
         .setPaymentMethodTypeId("GIFT_CARD")
@@ -668,6 +748,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .build();
 
+
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_GIFT_CARD_PRDS_PAY_RELEASE = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("GIFT_RELEASE_TEST")
         .setPaymentMethodTypeId("GIFT_CARD")
@@ -675,6 +756,7 @@ public final class StereoDemoRentalProduct {
         .setPaymentServiceTypeEnumId("PRDS_PAY_RELEASE")
         .setProductStoreId("RentalStore")
         .build();
+
 
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_EXT_PAYPAL_PRDS_PAY_EXTERNAL = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("")
@@ -685,6 +767,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .build();
 
+
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_RentalStore_EXT_WORLDPAY_PRDS_PAY_EXTERNAL = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("")
         .setPaymentGatewayConfigId("WORLDPAY_CONFIG")
@@ -694,6 +777,7 @@ public final class StereoDemoRentalProduct {
         .setProductStoreId("RentalStore")
         .build();
 
+
     public final static ProductStoreKeywordOvrdData ProductStoreKeywordOvrd_RentalStore_gizmo_ = ProductStoreKeywordOvrdData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setKeyword("gizmo")
@@ -702,12 +786,14 @@ public final class StereoDemoRentalProduct {
         .setTargetTypeEnumId("KOTT_PRODCAT")
         .build();
 
+
     public final static ProductStoreCatalogData ProductStoreCatalog_RentalStore_RentalCatalog_ = ProductStoreCatalogData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProdCatalogId("RentalCatalog")
         .setProductStoreId("RentalStore")
         .setSequenceNum(1)
         .build();
+
 
     public final static ProductStoreRoleData ProductStoreRole_admin_SALES_REP_RentalStore_ = ProductStoreRoleData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))

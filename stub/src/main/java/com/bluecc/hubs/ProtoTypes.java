@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class ProtoTypes {
@@ -304,6 +306,12 @@ public class ProtoTypes {
     public static Message deserializeEntityWithEnvelope(byte[] cnt) throws InvalidProtocolBufferException {
         Envelope envelope=Envelope.parseFrom(cnt);
         return unpackEntity(envelope);
+    }
+
+    public static List<String> getFilledFieldNames(Message message){
+        return message.getAllFields().keySet().stream()
+                .map(f -> f.getName())
+                .collect(Collectors.toList());
     }
 }
 

@@ -3,6 +3,7 @@ package com.bluecc.hubs;
 import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.feed.ProtoStuffs;
 import com.bluecc.hubs.stub.*;
+import com.google.protobuf.Descriptors;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Timestamp;
 import com.google.type.Date;
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 
 import static com.bluecc.hubs.ProtoTypes.*;
+import static com.bluecc.hubs.stereotypes.PartySeedData.ContactMechType_ELECTRONIC_ADDRESS;
 import static org.junit.Assert.*;
 
 public class ProtoTypesTest {
@@ -140,4 +142,34 @@ public class ProtoTypesTest {
         assertEquals("contact_mech", ProtoTypes.getTableByMessage(contactMechData));
         assertTrue(ProtoTypes.hasTable(contactMechData));
     }
+
+    @Test
+    public void testMessageFields(){
+        ContactMechType_ELECTRONIC_ADDRESS.getAllFields().keySet()
+                .forEach(f -> System.out.println(f.getName()));
+        System.out.println(ContactMechType_ELECTRONIC_ADDRESS);
+        Descriptors.Descriptor descriptor=ContactMechType_ELECTRONIC_ADDRESS.getDescriptorForType();
+        System.out.println(ContactMechType_ELECTRONIC_ADDRESS
+                .hasField(descriptor.findFieldByName("has_table")));
+        System.out.println("val: "+castIndicator("Y"));
+
+        ContactMechTypeData data=ContactMechTypeData.newBuilder()
+                .setContactMechTypeId("ELECTRONIC_ADDRESS")
+                .setDescription("Electronic Address")
+                .setHasTable(castIndicator("N"))
+                .build();
+        System.out.println(data.getHasTable());
+        System.out.println(data
+                .hasField(descriptor.findFieldByName("has_table")));
+
+        data=ContactMechTypeData.newBuilder()
+                .setContactMechTypeId("ELECTRONIC_ADDRESS")
+                .setDescription("Electronic Address")
+                .setHasTable(castIndicator("Y"))
+                .build();
+        System.out.println(data
+                .hasField(descriptor.findFieldByName("has_table")));
+        System.out.println(data);
+    }
 }
+

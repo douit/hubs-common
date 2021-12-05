@@ -33,50 +33,60 @@ public final class StereoDemoPurchasing {
         .setTextData("dropship")
         .build();
 
+
     public final static ElectronicTextData ElectronicText_dropShip1_ALT = ElectronicTextData.newBuilder()
         .setDataResourceId("dropShip1-ALT")
         .setTextData("dropship1")
         .build();
+
 
     public final static ElectronicTextData ElectronicText_dropShip2_ALT = ElectronicTextData.newBuilder()
         .setDataResourceId("dropShip2-ALT")
         .setTextData("dropship2")
         .build();
 
+
     public final static ElectronicTextData ElectronicText_dropShip3_ALT = ElectronicTextData.newBuilder()
         .setDataResourceId("dropShip3-ALT")
         .setTextData("dropship3")
         .build();
+
 
     public final static ElectronicTextData ElectronicText_orderWhenSold_ALT = ElectronicTextData.newBuilder()
         .setDataResourceId("orderWhenSold-ALT")
         .setTextData("order-when-sold")
         .build();
 
+
     public final static ElectronicTextData ElectronicText_DRdropShip_ALTEN = ElectronicTextData.newBuilder()
         .setDataResourceId("DRdropShip-ALTEN")
         .setTextData("dropship")
         .build();
+
 
     public final static ElectronicTextData ElectronicText_DRdropShip1_ALTEN = ElectronicTextData.newBuilder()
         .setDataResourceId("DRdropShip1-ALTEN")
         .setTextData("dropship1")
         .build();
 
+
     public final static ElectronicTextData ElectronicText_DRdropShip2_ALTEN = ElectronicTextData.newBuilder()
         .setDataResourceId("DRdropShip2-ALTEN")
         .setTextData("dropship2")
         .build();
+
 
     public final static ElectronicTextData ElectronicText_DRdropShip3_ALTEN = ElectronicTextData.newBuilder()
         .setDataResourceId("DRdropShip3-ALTEN")
         .setTextData("dropship3")
         .build();
 
+
     public final static ElectronicTextData ElectronicText_DRorderWhenSold_ALT = ElectronicTextData.newBuilder()
         .setDataResourceId("DRorderWhenSold-ALT")
         .setTextData("order-when-sold")
         .build();
+
 
     public final static ContentAssocData ContentAssoc_dropShip_ALT_CdropShip_ALTEN_ALTERNATE_LOCALE_ = ContentAssocData.newBuilder()
         .setContentAssocTypeId("ALTERNATE_LOCALE")
@@ -85,12 +95,14 @@ public final class StereoDemoPurchasing {
         .setFromDate(getTimestamp("2011-04-26 12:00:00.0"))
         .build();
 
+
     public final static ContentAssocData ContentAssoc_dropShip1_ALT_CdropShip1_ALTEN_ALTERNATE_LOCALE_ = ContentAssocData.newBuilder()
         .setContentAssocTypeId("ALTERNATE_LOCALE")
         .setContentId("dropShip1-ALT")
         .setContentIdTo("CdropShip1-ALTEN")
         .setFromDate(getTimestamp("2011-04-26 12:00:00.0"))
         .build();
+
 
     public final static ContentAssocData ContentAssoc_dropShip2_ALT_CdropShip2_ALTEN_ALTERNATE_LOCALE_ = ContentAssocData.newBuilder()
         .setContentAssocTypeId("ALTERNATE_LOCALE")
@@ -99,6 +111,7 @@ public final class StereoDemoPurchasing {
         .setFromDate(getTimestamp("2011-04-26 12:00:00.0"))
         .build();
 
+
     public final static ContentAssocData ContentAssoc_dropShip3_ALT_CdropShip3_ALTEN_ALTERNATE_LOCALE_ = ContentAssocData.newBuilder()
         .setContentAssocTypeId("ALTERNATE_LOCALE")
         .setContentId("dropShip3-ALT")
@@ -106,12 +119,14 @@ public final class StereoDemoPurchasing {
         .setFromDate(getTimestamp("2011-04-26 12:00:00.0"))
         .build();
 
+
     public final static ContentAssocData ContentAssoc_orderWhenSold_ALT_CorderWhenSold_ALTEN_ALTERNATE_LOCALE_ = ContentAssocData.newBuilder()
         .setContentAssocTypeId("ALTERNATE_LOCALE")
         .setContentId("orderWhenSold-ALT")
         .setContentIdTo("CorderWhenSold-ALTEN")
         .setFromDate(getTimestamp("2011-04-26 12:00:00.0"))
         .build();
+
 
     public final static ProductFlatData Product_dropShip1 = ProductFlatData.newBuilder()
         .setBillOfMaterialLevel(0)
@@ -132,6 +147,7 @@ public final class StereoDemoPurchasing {
         .setSmallImageUrl("/images/products/dropShip1/small.jpg")
         .build();
 
+
     public final static ProductFlatData Product_dropShip2 = ProductFlatData.newBuilder()
         .setBillOfMaterialLevel(0)
         .setCreatedByUserLogin("admin")
@@ -150,6 +166,7 @@ public final class StereoDemoPurchasing {
         .setRequirementMethodEnumId("PRODRQM_DS")
         .setSmallImageUrl("/images/products/dropShip2/small.jpg")
         .build();
+
 
     public final static ProductFlatData Product_dropShip3 = ProductFlatData.newBuilder()
         .setBillOfMaterialLevel(0)
@@ -170,6 +187,7 @@ public final class StereoDemoPurchasing {
         .setSmallImageUrl("/images/products/dropShip3/small.jpg")
         .build();
 
+
     public final static ProductFlatData Product_orderWhenSold = ProductFlatData.newBuilder()
         .setBillOfMaterialLevel(0)
         .setCreatedByUserLogin("admin")
@@ -187,6 +205,7 @@ public final class StereoDemoPurchasing {
         .setSmallImageUrl("/images/products/orderWhenSold/small.jpg")
         .build();
 
+
     public final static ProductPriceData ProductPrice_dropShip1_DEFAULT_PRICE_PURCHASE_USD__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -200,6 +219,7 @@ public final class StereoDemoPurchasing {
         .setProductPriceTypeId("DEFAULT_PRICE")
         .setProductStoreGroupId("_NA_")
         .build();
+
 
     public final static ProductPriceData ProductPrice_dropShip2_DEFAULT_PRICE_PURCHASE_USD__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
@@ -215,6 +235,7 @@ public final class StereoDemoPurchasing {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static ProductPriceData ProductPrice_dropShip3_DEFAULT_PRICE_PURCHASE_EUR__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -228,6 +249,7 @@ public final class StereoDemoPurchasing {
         .setProductPriceTypeId("DEFAULT_PRICE")
         .setProductStoreGroupId("_NA_")
         .build();
+
 
     public final static ProductPriceData ProductPrice_dropShip3_DEFAULT_PRICE_PURCHASE_USD__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
@@ -243,6 +265,7 @@ public final class StereoDemoPurchasing {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static ProductPriceData ProductPrice_orderWhenSold_DEFAULT_PRICE_PURCHASE_USD__NA__ = ProductPriceData.newBuilder()
         .setCreatedByUserLogin("admin")
         .setCreatedDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -257,31 +280,37 @@ public final class StereoDemoPurchasing {
         .setProductStoreGroupId("_NA_")
         .build();
 
+
     public final static PartyGroupFlatData PartyGroup_BigSupplier = PartyGroupFlatData.newBuilder()
         .setGroupName("Big Supplier")
         .setPartyId("BigSupplier")
         .build();
+
 
     public final static PartyGroupFlatData PartyGroup_EuroSupplier = PartyGroupFlatData.newBuilder()
         .setGroupName("European Supplier")
         .setPartyId("EuroSupplier")
         .build();
 
+
     public final static ContactMechData ContactMech_9002 = ContactMechData.newBuilder()
         .setContactMechId("9002")
         .setContactMechTypeId("POSTAL_ADDRESS")
         .build();
+
 
     public final static ContactMechData ContactMech_9003 = ContactMechData.newBuilder()
         .setContactMechId("9003")
         .setContactMechTypeId("POSTAL_ADDRESS")
         .build();
 
+
     public final static ProductCategoryRollupData ProductCategoryRollup_dropShip_CATALOG1_ = ProductCategoryRollupData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setParentProductCategoryId("CATALOG1")
         .setProductCategoryId("dropShip")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1000_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -294,6 +323,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-1000-0")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1001_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -304,6 +334,7 @@ public final class StereoDemoPurchasing {
         .setSupplierPrefOrderId("10_MAIN_SUPPL")
         .setSupplierProductId("GZ-1001-0")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1005_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -316,6 +347,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-1005-0")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1006_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -326,6 +358,7 @@ public final class StereoDemoPurchasing {
         .setSupplierPrefOrderId("10_MAIN_SUPPL")
         .setSupplierProductId("GZ-1006-0")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_2002_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -338,6 +371,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-2002-0")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_2644_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -349,6 +383,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-2644-0")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_5005_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -358,6 +393,7 @@ public final class StereoDemoPurchasing {
         .setProductId("GZ-5005")
         .setSupplierProductId("GZ-5005-0")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_7000_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -369,6 +405,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-7000-0")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_8544_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -378,6 +415,7 @@ public final class StereoDemoPurchasing {
         .setProductId("GZ-8544")
         .setSupplierProductId("GZ-8544-0")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_9290_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -389,6 +427,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-9290-0")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_1111_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -398,6 +437,7 @@ public final class StereoDemoPurchasing {
         .setProductId("WG-1111")
         .setSupplierProductId("WG-1111-0")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_5569_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -409,6 +449,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("WG-5569-0")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_9943_DemoSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -418,6 +459,7 @@ public final class StereoDemoPurchasing {
         .setProductId("WG-9943")
         .setSupplierProductId("WG-9943-0")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1000_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -430,6 +472,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1001_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -440,6 +483,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-1001-5")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1005_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -452,6 +496,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1006_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -462,6 +507,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-1006-5")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_2002_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -474,6 +520,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_2644_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -484,6 +531,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-2644-5")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_5005_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -496,6 +544,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_7000_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -506,6 +555,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-7000-5")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_8544_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -518,6 +568,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_9290_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -528,6 +579,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-9290-5")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_1111_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -540,6 +592,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_5569_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -550,6 +603,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("WG-5569-5")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_9943_DemoSupplier_USD_5_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -562,6 +616,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1000_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -572,6 +627,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-1000-25")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1001_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -584,6 +640,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1005_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -594,6 +651,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-1005-25")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1006_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -606,6 +664,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_2002_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -616,6 +675,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-2002-25")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_2644_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -628,6 +688,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_5005_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -638,6 +699,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-5005-25")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_7000_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -650,6 +712,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_8544_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -660,6 +723,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("GZ-8544-25")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_9290_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -672,6 +736,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_1111_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -682,6 +747,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("WG-1111-25")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_5569_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -694,6 +760,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_9943_DemoSupplier_USD_25_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -704,6 +771,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("WG-9943-25")
         .setSupplierProductName("")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1000_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -716,6 +784,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Bulk Tiny Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1001_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -726,6 +795,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("BKGZ-1001")
         .setSupplierProductName("Bulk Nan Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1005_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -738,6 +808,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Bulk .NIT Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1006_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -748,6 +819,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("BKGZ-1006")
         .setSupplierProductName("Bulk Open Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_2002_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -760,6 +832,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Bulk Square Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_2644_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -770,6 +843,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("BKGZ-2644")
         .setSupplierProductName("Bulk Round Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_5005_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -782,6 +856,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Bulk Purple Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_7000_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -792,6 +867,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("BKGZ-7000")
         .setSupplierProductName("Bulk Massive Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_8544_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -804,6 +880,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Bulk Big Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_9290_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -814,6 +891,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("BKGZ-9290")
         .setSupplierProductName("Bulk His/Her Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_1111_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -826,6 +904,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Bulk Micro Chrome Widget")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_5569_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -836,6 +915,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("BKWG-5569")
         .setSupplierProductName("Bulk Tiny Chrome Widget")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_9943_BigSupplier_USD_500_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -848,6 +928,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Bulk Giant Widget")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1000_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -858,6 +939,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("USGZ-1000")
         .setSupplierProductName("US Tiny Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1001_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -870,6 +952,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Nan Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1005_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -880,6 +963,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("USGZ-1005")
         .setSupplierProductName("US .NIT Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1006_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -892,6 +976,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Open Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_2002_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -903,6 +988,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Square Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_2644_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -913,6 +999,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("USGZ-2644")
         .setSupplierProductName("US Round Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_5005_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -926,6 +1013,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Purple Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_7000_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -937,6 +1025,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("USGZ-7000")
         .setSupplierProductName("US Massive Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_8544_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -950,6 +1039,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Big Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_9290_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -961,6 +1051,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("USGZ-9290")
         .setSupplierProductName("US His/Her Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_1111_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -974,6 +1065,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Micro Chrome Widget")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_5569_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -985,6 +1077,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("USWG-5569")
         .setSupplierProductName("US Tiny Chrome Widget")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_9943_EuroSupplier_USD_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -998,6 +1091,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Giant Widget")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1000_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -1008,6 +1102,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("US1-GZ-1000")
         .setSupplierProductName("US Tiny Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1001_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1020,6 +1115,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Nan Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1005_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -1030,6 +1126,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("US1-GZ-1005")
         .setSupplierProductName("US .NIT Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1006_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1042,6 +1139,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Open Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_2002_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -1052,6 +1150,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("US1-GZ-2002")
         .setSupplierProductName("US Square Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_2644_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1064,6 +1163,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Round Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_5005_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -1074,6 +1174,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("US1-GZ-5005")
         .setSupplierProductName("US Purple Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_7000_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1086,6 +1187,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Massive Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_8544_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -1096,6 +1198,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("US1-GZ-8544")
         .setSupplierProductName("US Big Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_9290_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1108,6 +1211,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US His/Her Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_1111_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -1118,6 +1222,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("US1-WG-1111")
         .setSupplierProductName("US Micro Chrome Widget")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_5569_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1130,6 +1235,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("US Tiny Chrome Widget")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_9943_EuroSupplier_USD_10_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("USD")
@@ -1140,6 +1246,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("US1-WG-9943")
         .setSupplierProductName("US Giant Widget")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1000_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1152,6 +1259,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("EU Tiny Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1001_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("EUR")
@@ -1162,6 +1270,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("EU-GZ-1001")
         .setSupplierProductName("EU Nan Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_1005_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1174,6 +1283,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("EU .NIT Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_1006_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("EUR")
@@ -1184,6 +1294,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("EU-GZ-1006")
         .setSupplierProductName("EU Open Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_2002_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1196,6 +1307,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("EU Square Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_2644_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("EUR")
@@ -1206,6 +1318,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("EU-GZ-2644")
         .setSupplierProductName("EU Round Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_5005_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1218,6 +1331,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("EU Purple Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_7000_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("EUR")
@@ -1228,6 +1342,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("EU-GZ-7000")
         .setSupplierProductName("EU Massive Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_GZ_8544_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1240,6 +1355,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("EU Big Gizmo")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_GZ_9290_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("EUR")
@@ -1250,6 +1366,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("EU-GZ-9290")
         .setSupplierProductName("EU His/Her Gizmo")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_WG_1111_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
@@ -1262,6 +1379,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("EU Micro Chrome Widget")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_5569_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("EUR")
@@ -1273,6 +1391,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("EU Tiny Chrome Widget")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_WG_9943_EuroSupplier_EUR_20_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2005-01-01 00:00:00.000"))
         .setCurrencyUomId("EUR")
@@ -1283,6 +1402,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("EU-WG-9943")
         .setSupplierProductName("EU Giant Widget")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_dropShip1_DemoSupplier_USD_0_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2007-01-01 14:51:52.627"))
@@ -1296,6 +1416,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Drop ship product from demo supplier")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_dropShip2_BigSupplier_USD_0_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2007-01-01 14:51:52.627"))
         .setCanDropShip(castIndicator("Y"))
@@ -1307,6 +1428,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("dropShip2-DS")
         .setSupplierProductName("Drop ship product from big supplier")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_dropShip3_EuroSupplier_EUR_0_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2007-01-01 14:51:52.627"))
@@ -1320,6 +1442,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Drop ship product from Euro supplier")
         .build();
 
+
     public final static SupplierProductData SupplierProduct_dropShip3_EuroSupplier_USD_0_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2007-01-01 14:51:52.627"))
         .setCanDropShip(castIndicator("Y"))
@@ -1331,6 +1454,7 @@ public final class StereoDemoPurchasing {
         .setSupplierProductId("dropShip3-DS")
         .setSupplierProductName("Drop ship product from Euro supplier")
         .build();
+
 
     public final static SupplierProductData SupplierProduct_orderWhenSold_DemoSupplier_USD_0_0_ = SupplierProductData.newBuilder()
         .setAvailableFromDate(getTimestamp("2007-01-01 14:51:52.627"))
@@ -1344,12 +1468,26 @@ public final class StereoDemoPurchasing {
         .setSupplierProductName("Drop ship product from demo supplier")
         .build();
 
+
+    public final static PartyFlatData Party_BigSupplier = PartyFlatData.newBuilder()
+        .setPartyId("BigSupplier")
+        .setPartyTypeId("PARTY_GROUP")
+        .build();
+
+
+    public final static PartyFlatData Party_EuroSupplier = PartyFlatData.newBuilder()
+        .setPartyId("EuroSupplier")
+        .setPartyTypeId("PARTY_GROUP")
+        .build();
+
+
     public final static PartyContactMechPurposeData PartyContactMechPurpose_BigSupplier_9002_BILLING_LOCATION_ = PartyContactMechPurposeData.newBuilder()
         .setContactMechId("9002")
         .setContactMechPurposeTypeId("BILLING_LOCATION")
         .setFromDate(getTimestamp("2000-01-01 00:00:00.000"))
         .setPartyId("BigSupplier")
         .build();
+
 
     public final static PartyContactMechPurposeData PartyContactMechPurpose_BigSupplier_9002_GENERAL_LOCATION_ = PartyContactMechPurposeData.newBuilder()
         .setContactMechId("9002")
@@ -1358,12 +1496,14 @@ public final class StereoDemoPurchasing {
         .setPartyId("BigSupplier")
         .build();
 
+
     public final static PartyContactMechPurposeData PartyContactMechPurpose_BigSupplier_9002_PAYMENT_LOCATION_ = PartyContactMechPurposeData.newBuilder()
         .setContactMechId("9002")
         .setContactMechPurposeTypeId("PAYMENT_LOCATION")
         .setFromDate(getTimestamp("2000-01-01 00:00:00.000"))
         .setPartyId("BigSupplier")
         .build();
+
 
     public final static PartyContactMechPurposeData PartyContactMechPurpose_EuroSupplier_9003_BILLING_LOCATION_ = PartyContactMechPurposeData.newBuilder()
         .setContactMechId("9003")
@@ -1372,12 +1512,14 @@ public final class StereoDemoPurchasing {
         .setPartyId("EuroSupplier")
         .build();
 
+
     public final static PartyContactMechPurposeData PartyContactMechPurpose_EuroSupplier_9003_GENERAL_LOCATION_ = PartyContactMechPurposeData.newBuilder()
         .setContactMechId("9003")
         .setContactMechPurposeTypeId("GENERAL_LOCATION")
         .setFromDate(getTimestamp("2000-01-01 00:00:00.000"))
         .setPartyId("EuroSupplier")
         .build();
+
 
     public final static PartyContactMechPurposeData PartyContactMechPurpose_EuroSupplier_9003_PAYMENT_LOCATION_ = PartyContactMechPurposeData.newBuilder()
         .setContactMechId("9003")
@@ -1386,11 +1528,13 @@ public final class StereoDemoPurchasing {
         .setPartyId("EuroSupplier")
         .build();
 
+
     public final static SupplierProductFeatureData SupplierProductFeature_EuroSupplier_8000 = SupplierProductFeatureData.newBuilder()
         .setDescription("EURO-LGPL")
         .setPartyId("EuroSupplier")
         .setProductFeatureId("8000")
         .build();
+
 
     public final static SupplierProductFeatureData SupplierProductFeature_EuroSupplier_8001 = SupplierProductFeatureData.newBuilder()
         .setDescription("EURO-GPL")
@@ -1398,11 +1542,13 @@ public final class StereoDemoPurchasing {
         .setProductFeatureId("8001")
         .build();
 
+
     public final static SupplierProductFeatureData SupplierProductFeature_EuroSupplier_8002 = SupplierProductFeatureData.newBuilder()
         .setDescription("EURO-BSD")
         .setPartyId("EuroSupplier")
         .setProductFeatureId("8002")
         .build();
+
 
     public final static SupplierProductFeatureData SupplierProductFeature_EuroSupplier_8003 = SupplierProductFeatureData.newBuilder()
         .setDescription("EURO-MIT")
@@ -1410,11 +1556,13 @@ public final class StereoDemoPurchasing {
         .setProductFeatureId("8003")
         .build();
 
+
     public final static SupplierProductFeatureData SupplierProductFeature_EuroSupplier_9000 = SupplierProductFeatureData.newBuilder()
         .setDescription("Noir")
         .setPartyId("EuroSupplier")
         .setProductFeatureId("9000")
         .build();
+
 
     public final static SupplierProductFeatureData SupplierProductFeature_EuroSupplier_9001 = SupplierProductFeatureData.newBuilder()
         .setDescription("Argent")
@@ -1422,11 +1570,13 @@ public final class StereoDemoPurchasing {
         .setProductFeatureId("9001")
         .build();
 
+
     public final static SupplierProductFeatureData SupplierProductFeature_EuroSupplier_9002 = SupplierProductFeatureData.newBuilder()
         .setDescription("a trois roues")
         .setPartyId("EuroSupplier")
         .setProductFeatureId("9002")
         .build();
+
 
     public final static SupplierProductFeatureData SupplierProductFeature_EuroSupplier_9003 = SupplierProductFeatureData.newBuilder()
         .setDescription("a quatre roues")
@@ -1434,11 +1584,13 @@ public final class StereoDemoPurchasing {
         .setProductFeatureId("9003")
         .build();
 
+
     public final static SupplierProductFeatureData SupplierProductFeature_BigSupplier_8000 = SupplierProductFeatureData.newBuilder()
         .setDescription("BIG-LGP")
         .setPartyId("BigSupplier")
         .setProductFeatureId("8000")
         .build();
+
 
     public final static SupplierProductFeatureData SupplierProductFeature_BigSupplier_8001 = SupplierProductFeatureData.newBuilder()
         .setDescription("BIG-GPL")
@@ -1446,11 +1598,13 @@ public final class StereoDemoPurchasing {
         .setProductFeatureId("8001")
         .build();
 
+
     public final static SupplierProductFeatureData SupplierProductFeature_BigSupplier_8002 = SupplierProductFeatureData.newBuilder()
         .setDescription("BIG-BSD")
         .setPartyId("BigSupplier")
         .setProductFeatureId("8002")
         .build();
+
 
     public final static SupplierProductFeatureData SupplierProductFeature_BigSupplier_8003 = SupplierProductFeatureData.newBuilder()
         .setDescription("BIG-MIT")
@@ -1458,11 +1612,13 @@ public final class StereoDemoPurchasing {
         .setProductFeatureId("8003")
         .build();
 
+
     public final static SupplierProductFeatureData SupplierProductFeature_BigSupplier_9000 = SupplierProductFeatureData.newBuilder()
         .setDescription("BIG-BLK")
         .setPartyId("BigSupplier")
         .setProductFeatureId("9000")
         .build();
+
 
     public final static SupplierProductFeatureData SupplierProductFeature_BigSupplier_9001 = SupplierProductFeatureData.newBuilder()
         .setDescription("BIG-SIL")
@@ -1470,11 +1626,13 @@ public final class StereoDemoPurchasing {
         .setProductFeatureId("9001")
         .build();
 
+
     public final static SupplierProductFeatureData SupplierProductFeature_BigSupplier_9002 = SupplierProductFeatureData.newBuilder()
         .setDescription("BIG-3WL")
         .setPartyId("BigSupplier")
         .setProductFeatureId("9002")
         .build();
+
 
     public final static SupplierProductFeatureData SupplierProductFeature_BigSupplier_9003 = SupplierProductFeatureData.newBuilder()
         .setDescription("BIG-4WL")
@@ -1482,21 +1640,39 @@ public final class StereoDemoPurchasing {
         .setProductFeatureId("9003")
         .build();
 
+
     public final static UserLoginSecurityGroupData UserLoginSecurityGroup_DemoCustomer_ECOMMERCE_CUSTOMER_ = UserLoginSecurityGroupData.newBuilder()
         .setFromDate(getTimestamp("2000-01-01 00:00:00.0"))
         .setGroupId("ECOMMERCE_CUSTOMER")
         .setUserLoginId("DemoCustomer")
         .build();
 
+
+    public final static UserLoginFlatData UserLogin_BigSupplier = UserLoginFlatData.newBuilder()
+        .setCurrentPassword("{SHA}47b56994cbc2b6d10aa1be30f70165adb305a41a")
+        .setPartyId("BigSupplier")
+        .setUserLoginId("BigSupplier")
+        .build();
+
+
+    public final static UserLoginFlatData UserLogin_EuroSupplier = UserLoginFlatData.newBuilder()
+        .setCurrentPassword("{SHA}47b56994cbc2b6d10aa1be30f70165adb305a41a")
+        .setPartyId("EuroSupplier")
+        .setUserLoginId("EuroSupplier")
+        .build();
+
+
     public final static PartyRoleData PartyRole_BigSupplier_SUPPLIER = PartyRoleData.newBuilder()
         .setPartyId("BigSupplier")
         .setRoleTypeId("SUPPLIER")
         .build();
 
+
     public final static PartyRoleData PartyRole_EuroSupplier_SUPPLIER = PartyRoleData.newBuilder()
         .setPartyId("EuroSupplier")
         .setRoleTypeId("SUPPLIER")
         .build();
+
 
     public final static AgreementItemData AgreementItem_AGR_TEST_10000 = AgreementItemData.newBuilder()
         .setAgreementId("AGR_TEST")
@@ -1506,6 +1682,7 @@ public final class StereoDemoPurchasing {
         .setCurrencyUomId("USD")
         .build();
 
+
     public final static AgreementItemData AgreementItem_1000_0001 = AgreementItemData.newBuilder()
         .setAgreementId("1000")
         .setAgreementItemSeqId("0001")
@@ -1513,6 +1690,7 @@ public final class StereoDemoPurchasing {
         .setAgreementText("Price list in USD")
         .setCurrencyUomId("USD")
         .build();
+
 
     public final static AgreementItemData AgreementItem_1001_0001 = AgreementItemData.newBuilder()
         .setAgreementId("1001")
@@ -1522,6 +1700,7 @@ public final class StereoDemoPurchasing {
         .setCurrencyUomId("EUR")
         .build();
 
+
     public final static AgreementItemData AgreementItem_1002_0001 = AgreementItemData.newBuilder()
         .setAgreementId("1002")
         .setAgreementItemSeqId("0001")
@@ -1530,12 +1709,84 @@ public final class StereoDemoPurchasing {
         .setCurrencyUomId("USD")
         .build();
 
+
+    public final static DataResourceData DataResource_dropShip_ALT = DataResourceData.newBuilder()
+        .setDataResourceId("dropShip-ALT")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en")
+        .build();
+
+
+    public final static DataResourceData DataResource_DRdropShip_ALTEN = DataResourceData.newBuilder()
+        .setDataResourceId("DRdropShip-ALTEN")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en_US")
+        .build();
+
+
+    public final static DataResourceData DataResource_dropShip1_ALT = DataResourceData.newBuilder()
+        .setDataResourceId("dropShip1-ALT")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en")
+        .build();
+
+
+    public final static DataResourceData DataResource_DRdropShip1_ALTEN = DataResourceData.newBuilder()
+        .setDataResourceId("DRdropShip1-ALTEN")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en_US")
+        .build();
+
+
+    public final static DataResourceData DataResource_dropShip2_ALT = DataResourceData.newBuilder()
+        .setDataResourceId("dropShip2-ALT")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en")
+        .build();
+
+
+    public final static DataResourceData DataResource_DRdropShip2_ALTEN = DataResourceData.newBuilder()
+        .setDataResourceId("DRdropShip2-ALTEN")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en_US")
+        .build();
+
+
+    public final static DataResourceData DataResource_dropShip3_ALT = DataResourceData.newBuilder()
+        .setDataResourceId("dropShip3-ALT")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en")
+        .build();
+
+
+    public final static DataResourceData DataResource_DRdropShip3_ALTEN = DataResourceData.newBuilder()
+        .setDataResourceId("DRdropShip3-ALTEN")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en_US")
+        .build();
+
+
+    public final static DataResourceData DataResource_orderWhenSold_ALT = DataResourceData.newBuilder()
+        .setDataResourceId("orderWhenSold-ALT")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en")
+        .build();
+
+
+    public final static DataResourceData DataResource_DRorderWhenSold_ALT = DataResourceData.newBuilder()
+        .setDataResourceId("DRorderWhenSold-ALT")
+        .setDataResourceTypeId("ELECTRONIC_TEXT")
+        .setLocaleString("en_US")
+        .build();
+
+
     public final static ProductContentData ProductContent_dropShip1_dropShip1_ALT_ALTERNATIVE_URL_ = ProductContentData.newBuilder()
         .setContentId("dropShip1-ALT")
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductContentTypeId("ALTERNATIVE_URL")
         .setProductId("dropShip1")
         .build();
+
 
     public final static ProductContentData ProductContent_dropShip2_dropShip2_ALT_ALTERNATIVE_URL_ = ProductContentData.newBuilder()
         .setContentId("dropShip2-ALT")
@@ -1544,6 +1795,7 @@ public final class StereoDemoPurchasing {
         .setProductId("dropShip2")
         .build();
 
+
     public final static ProductContentData ProductContent_dropShip3_dropShip3_ALT_ALTERNATIVE_URL_ = ProductContentData.newBuilder()
         .setContentId("dropShip3-ALT")
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -1551,12 +1803,35 @@ public final class StereoDemoPurchasing {
         .setProductId("dropShip3")
         .build();
 
+
     public final static ProductContentData ProductContent_orderWhenSold_orderWhenSold_ALT_ALTERNATIVE_URL_ = ProductContentData.newBuilder()
         .setContentId("orderWhenSold-ALT")
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductContentTypeId("ALTERNATIVE_URL")
         .setProductId("orderWhenSold")
         .build();
+
+
+    public final static PostalAddressData PostalAddress_9002 = PostalAddressData.newBuilder()
+        .setAddress1("2005 Industrial Park Blvd")
+        .setCity("New York")
+        .setContactMechId("9002")
+        .setCountryGeoId("USA")
+        .setPostalCode("10000")
+        .setStateProvinceGeoId("NY")
+        .setToName("Big Supplier Company")
+        .build();
+
+
+    public final static PostalAddressData PostalAddress_9003 = PostalAddressData.newBuilder()
+        .setAddress1("2005 Boulevard Industrie")
+        .setCity("Roissy")
+        .setContactMechId("9003")
+        .setCountryGeoId("FRA")
+        .setPostalCode("95700")
+        .setToName("Euro Supplier Company")
+        .build();
+
 
     public final static AgreementData Agreement_AGR_TEST = AgreementData.newBuilder()
         .setAgreementId("AGR_TEST")
@@ -1567,6 +1842,7 @@ public final class StereoDemoPurchasing {
         .setRoleTypeIdTo("SUPPLIER")
         .build();
 
+
     public final static AgreementData Agreement_1000 = AgreementData.newBuilder()
         .setAgreementId("1000")
         .setAgreementTypeId("PURCHASE_AGREEMENT")
@@ -1575,6 +1851,7 @@ public final class StereoDemoPurchasing {
         .setPartyIdTo("BigSupplier")
         .setRoleTypeIdTo("SUPPLIER")
         .build();
+
 
     public final static AgreementData Agreement_1001 = AgreementData.newBuilder()
         .setAgreementId("1001")
@@ -1585,6 +1862,7 @@ public final class StereoDemoPurchasing {
         .setRoleTypeIdTo("SUPPLIER")
         .build();
 
+
     public final static AgreementData Agreement_1002 = AgreementData.newBuilder()
         .setAgreementId("1002")
         .setAgreementTypeId("PURCHASE_AGREEMENT")
@@ -1594,12 +1872,31 @@ public final class StereoDemoPurchasing {
         .setRoleTypeIdTo("SUPPLIER")
         .build();
 
+
+    public final static AgreementTermData AgreementTerm_1000 = AgreementTermData.newBuilder()
+        .setAgreementId("AGR_TEST")
+        .setAgreementTermId("1000")
+        .setTermDays(30)
+        .setTermTypeId("FIN_PAYMENT_TERM")
+        .build();
+
+
+    public final static AgreementTermData AgreementTerm_1001 = AgreementTermData.newBuilder()
+        .setAgreementId("AGR_TEST")
+        .setAgreementTermId("1001")
+        .setTermDays(10)
+        .setTermTypeId("FIN_PAYMENT_DISC")
+        .setTermValue(getCurrency("2"))
+        .build();
+
+
     public final static AgreementTermData AgreementTerm_1003 = AgreementTermData.newBuilder()
         .setAgreementId("AGR_TEST")
         .setAgreementTermId("1003")
         .setTermTypeId("PURCH_VENDOR_ID")
         .setTextValue("OPEN-001")
         .build();
+
 
     public final static AgreementTermData AgreementTerm_1004 = AgreementTermData.newBuilder()
         .setAgreementId("AGR_TEST")
@@ -1608,12 +1905,14 @@ public final class StereoDemoPurchasing {
         .setTextValue("Shp via Open Express")
         .build();
 
+
     public final static AgreementTermData AgreementTerm_1100 = AgreementTermData.newBuilder()
         .setAgreementId("1000")
         .setAgreementTermId("1100")
         .setTermDays(30)
         .setTermTypeId("FIN_PAYMENT_TERM")
         .build();
+
 
     public final static AgreementTermData AgreementTerm_1101 = AgreementTermData.newBuilder()
         .setAgreementId("1000")
@@ -1623,12 +1922,14 @@ public final class StereoDemoPurchasing {
         .setTermValue(getCurrency("2"))
         .build();
 
+
     public final static AgreementTermData AgreementTerm_1200 = AgreementTermData.newBuilder()
         .setAgreementId("1001")
         .setAgreementTermId("1200")
         .setTermDays(60)
         .setTermTypeId("FIN_PAYMENT_TERM")
         .build();
+
 
     public final static AgreementTermData AgreementTerm_1210 = AgreementTermData.newBuilder()
         .setAgreementId("1002")
@@ -1637,12 +1938,14 @@ public final class StereoDemoPurchasing {
         .setTermTypeId("FIN_PAYMENT_TERM")
         .build();
 
+
     public final static ProductCategoryMemberData ProductCategoryMember_dropShip_dropShip1_ = ProductCategoryMemberData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("dropShip")
         .setProductId("dropShip1")
         .setSequenceNum(1)
         .build();
+
 
     public final static ProductCategoryMemberData ProductCategoryMember_dropShip_dropShip2_ = ProductCategoryMemberData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -1651,12 +1954,14 @@ public final class StereoDemoPurchasing {
         .setSequenceNum(1)
         .build();
 
+
     public final static ProductCategoryMemberData ProductCategoryMember_dropShip_dropShip3_ = ProductCategoryMemberData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("dropShip")
         .setProductId("dropShip3")
         .setSequenceNum(1)
         .build();
+
 
     public final static ProductCategoryMemberData ProductCategoryMember_dropShip_orderWhenSold_ = ProductCategoryMemberData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -1665,12 +1970,30 @@ public final class StereoDemoPurchasing {
         .setSequenceNum(1)
         .build();
 
+
+    public final static ContentData Content_dropShip_ALT = ContentData.newBuilder()
+        .setContentId("dropShip-ALT")
+        .setContentTypeId("DOCUMENT")
+        .setDataResourceId("dropShip-ALT")
+        .setLocaleString("en")
+        .build();
+
+
     public final static ContentData Content_CdropShip_ALTEN = ContentData.newBuilder()
         .setContentId("CdropShip-ALTEN")
         .setContentTypeId("DOCUMENT")
         .setDataResourceId("DRdropShip-ALTEN")
         .setLocaleString("en_US")
         .build();
+
+
+    public final static ContentData Content_dropShip1_ALT = ContentData.newBuilder()
+        .setContentId("dropShip1-ALT")
+        .setContentTypeId("DOCUMENT")
+        .setDataResourceId("dropShip1-ALT")
+        .setLocaleString("en")
+        .build();
+
 
     public final static ContentData Content_CdropShip1_ALTEN = ContentData.newBuilder()
         .setContentId("CdropShip1-ALTEN")
@@ -1679,12 +2002,30 @@ public final class StereoDemoPurchasing {
         .setLocaleString("en_US")
         .build();
 
+
+    public final static ContentData Content_dropShip2_ALT = ContentData.newBuilder()
+        .setContentId("dropShip2-ALT")
+        .setContentTypeId("DOCUMENT")
+        .setDataResourceId("dropShip2-ALT")
+        .setLocaleString("en")
+        .build();
+
+
     public final static ContentData Content_CdropShip2_ALTEN = ContentData.newBuilder()
         .setContentId("CdropShip2-ALTEN")
         .setContentTypeId("DOCUMENT")
         .setDataResourceId("DRdropShip2-ALTEN")
         .setLocaleString("en_US")
         .build();
+
+
+    public final static ContentData Content_dropShip3_ALT = ContentData.newBuilder()
+        .setContentId("dropShip3-ALT")
+        .setContentTypeId("DOCUMENT")
+        .setDataResourceId("dropShip3-ALT")
+        .setLocaleString("en")
+        .build();
+
 
     public final static ContentData Content_CdropShip3_ALTEN = ContentData.newBuilder()
         .setContentId("CdropShip3-ALTEN")
@@ -1693,12 +2034,22 @@ public final class StereoDemoPurchasing {
         .setLocaleString("en_US")
         .build();
 
+
+    public final static ContentData Content_orderWhenSold_ALT = ContentData.newBuilder()
+        .setContentId("orderWhenSold-ALT")
+        .setContentTypeId("DOCUMENT")
+        .setDataResourceId("orderWhenSold-ALT")
+        .setLocaleString("en")
+        .build();
+
+
     public final static ContentData Content_CorderWhenSold_ALTEN = ContentData.newBuilder()
         .setContentId("CorderWhenSold-ALTEN")
         .setContentTypeId("DOCUMENT")
         .setDataResourceId("DRorderWhenSold-ALT")
         .setLocaleString("en_US")
         .build();
+
 
     public final static ProductCategoryFlatData ProductCategory_dropShip = ProductCategoryFlatData.newBuilder()
         .setDescription("DropShip Products")
@@ -1707,6 +2058,7 @@ public final class StereoDemoPurchasing {
         .setProductCategoryTypeId("CATALOG_CATEGORY")
         .build();
 
+
     public final static ProductCategoryContentData ProductCategoryContent_dropShip_dropShip_ALT_ALTERNATIVE_URL_ = ProductCategoryContentData.newBuilder()
         .setContentId("dropShip-ALT")
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
@@ -1714,12 +2066,14 @@ public final class StereoDemoPurchasing {
         .setProductCategoryId("dropShip")
         .build();
 
+
     public final static PartyContactMechData PartyContactMech_BigSupplier_9002_ = PartyContactMechData.newBuilder()
         .setAllowSolicitation(castIndicator("Y"))
         .setContactMechId("9002")
         .setFromDate(getTimestamp("2000-01-01 00:00:00.000"))
         .setPartyId("BigSupplier")
         .build();
+
 
     public final static PartyContactMechData PartyContactMech_EuroSupplier_9003_ = PartyContactMechData.newBuilder()
         .setAllowSolicitation(castIndicator("Y"))

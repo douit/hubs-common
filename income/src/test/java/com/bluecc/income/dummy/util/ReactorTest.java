@@ -8,12 +8,20 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static java.lang.Thread.sleep;
 
 @Slf4j
 public class ReactorTest {
@@ -82,7 +90,8 @@ public class ReactorTest {
     }
 
     public static class StateSubscriber<T> extends BaseSubscriber<T> {
-        List<T> result= Lists.newArrayList();
+        List<T> result = Lists.newArrayList();
+
         @Override
         public void hookOnSubscribe(@NonNull Subscription subscription) {
             System.out.println("subscribed");
@@ -96,10 +105,11 @@ public class ReactorTest {
             request(1);
         }
     }
+
     @Test
     public void testStatedSubscriber() throws InterruptedException {
         // Subscriber<String> subs=new StateSubscriber<>();
-        StateSubscriber<String> subs=new StateSubscriber<>();
+        StateSubscriber<String> subs = new StateSubscriber<>();
         subs.onNext("first");
         subs.onNext("second");
         subs.onComplete();
@@ -114,7 +124,7 @@ public class ReactorTest {
                     return state + 1;
                 });
 
-        subs=new StateSubscriber<>();
+        subs = new StateSubscriber<>();
         flux.subscribe(subs);
         System.out.println(subs.result);
 
@@ -126,7 +136,7 @@ public class ReactorTest {
 
 
     @Test
-    public void testRequest(){
+    public void testRequest() {
         Flux<Integer> ints3 = Flux.range(1, 4);
         ints3.subscribe(System.out::println,
                 error -> System.err.println("Error " + error),
@@ -135,7 +145,7 @@ public class ReactorTest {
     }
 
     @Test
-    public void testShare(){
+    public void testShare() {
         Flux<Integer> numbers = Flux
                 .just(1, 2, 3, 4)
                 .log()
@@ -155,9 +165,110 @@ public class ReactorTest {
                 .range(1, 2)
                 .map(i -> 10 + i + ":" + Thread.currentThread())
                 .subscribeOn(s)
-                .map(i -> "value " + i + ":"+ Thread.currentThread());
+                .map(i -> "value " + i + ":" + Thread.currentThread());
 
         new Thread(() -> flux.subscribe(System.out::println), "ThreadA").start();
-        Thread.sleep(5000);
+        sleep(5000);
+    }
+
+    @Test
+    public void testMono() {
+        Mono.just(1)
+                .map(integer -> "foo" + integer)
+                // .or(Mono.delay(Duration.ofMillis(100)))
+                .subscribe(System.out::println);
+    }
+
+    @Test
+    public void testFluxResult() throws Exception {
+
+        Flux.just("red", "white", "blue")
+                .log("source")
+                .flatMap(value -> Mono.fromCallable(() -> {
+                            System.out.println("wait .. "+value);
+                            sleep(1000);
+                            return value;
+                        })
+                        // .subscribeOn(Schedulers.boundedElastic())
+                        .subscribeOn(Schedulers.elastic())
+                )
+                .log("merged")
+                .collect(Result::new, Result::add)
+                .doOnNext(Result::stop)
+                .log("accumulated")
+                .toFuture()
+                .get();
+        sleep(2000);
+    }
+
+    static final class Result {
+
+        private ConcurrentMap<String, AtomicLong> counts = new ConcurrentHashMap<>();
+
+        private long timestamp = System.currentTimeMillis();
+
+        private long duration;
+
+        public long add(String colour) {
+            AtomicLong value = counts.getOrDefault(colour, new AtomicLong());
+            counts.putIfAbsent(colour, value);
+            return value.incrementAndGet();
+        }
+
+        public void stop() {
+            this.duration = System.currentTimeMillis() - timestamp;
+        }
+
+        public long getDuration() {
+            return duration;
+        }
+
+        public Map<String, AtomicLong> getCounts() {
+            return counts;
+        }
+
+        @Override
+        public String toString() {
+            return "Result [duration=" + duration + ", counts=" + counts + "]";
+        }
+
+    }
+
+    @Test
+    public void testSleep() throws InterruptedException {
+
+        //flux emits one element per second
+        Flux<Character> flux = Flux.just('a', 'b', 'c', 'd')
+                .delayElements(Duration.ofSeconds(1));
+        //Observer 1 - takes 500ms to process
+        flux
+                .map(Character::toUpperCase)
+                .subscribe(i -> {
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Observer-1 : " + i);
+                });
+        //Observer 2 - process immediately
+        flux.subscribe(i -> System.out.println("Observer-2 : " + i));
+
+        System.out.println("Ends");
+        sleep(5000);
+    }
+
+    @Test
+    public void testError(){
+        Flux.just(1,2,3)
+                .map(i -> i / (i-2))
+                .subscribe(
+                        i -> System.out.println("Received :: " + i),
+                        err -> System.out.println("Error :: " + err),
+                        () -> System.out.println("Successfully completed"));
+
+            //Output
+//         Received :: -1
+//         Error :: java.lang.ArithmeticException: / by zero
     }
 }

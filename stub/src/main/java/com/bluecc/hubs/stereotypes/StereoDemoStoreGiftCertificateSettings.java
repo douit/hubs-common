@@ -14,6 +14,7 @@ public final class StereoDemoStoreGiftCertificateSettings {
         .setProductId("GC-001")
         .build();
 
+
     public final static ProductStoreFinActSettingData ProductStoreFinActSetting_9000_GIFTCERT_ACCOUNT = ProductStoreFinActSettingData.newBuilder()
         .setAccountCodeLength(12)
         .setAccountValidDays(365)
@@ -28,10 +29,12 @@ public final class StereoDemoStoreGiftCertificateSettings {
         .setValidateGCFinAcct(castIndicator("Y"))
         .build();
 
+
     public final static ContentData Content_GC_PURCHASE = ContentData.newBuilder()
         .setContentId("GC_PURCHASE")
         .setCustomMethodId("GIFT_PURCH_OFBIZ")
         .build();
+
 
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_9000_GIFT_CARD_PRDS_PAY_AUTH = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("GIFT_AUTH_OFBIZ")
@@ -41,6 +44,7 @@ public final class StereoDemoStoreGiftCertificateSettings {
         .setProductStoreId("9000")
         .build();
 
+
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_9000_GIFT_CARD_PRDS_PAY_RELEASE = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("GIFT_RELEASE_OFBIZ")
         .setPaymentMethodTypeId("GIFT_CARD")
@@ -48,6 +52,7 @@ public final class StereoDemoStoreGiftCertificateSettings {
         .setPaymentServiceTypeEnumId("PRDS_PAY_RELEASE")
         .setProductStoreId("9000")
         .build();
+
 
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_9000_GIFT_CARD_PRDS_PAY_CAPTURE = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("GIFT_CAPTURE_OFBIZ")
@@ -57,6 +62,7 @@ public final class StereoDemoStoreGiftCertificateSettings {
         .setProductStoreId("9000")
         .build();
 
+
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_9000_GIFT_CARD_PRDS_PAY_REAUTH = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("GIFT_AUTH_OFBIZ")
         .setPaymentMethodTypeId("GIFT_CARD")
@@ -64,6 +70,7 @@ public final class StereoDemoStoreGiftCertificateSettings {
         .setPaymentServiceTypeEnumId("PRDS_PAY_REAUTH")
         .setProductStoreId("9000")
         .build();
+
 
     public final static ProductStorePaymentSettingData ProductStorePaymentSetting_9000_GIFT_CARD_PRDS_PAY_REFUND = ProductStorePaymentSettingData.newBuilder()
         .setPaymentCustomMethodId("GIFT_REFUND_OFBIZ")

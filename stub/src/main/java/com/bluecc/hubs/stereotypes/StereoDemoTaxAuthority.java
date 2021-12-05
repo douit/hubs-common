@@ -22,6 +22,7 @@ public final class StereoDemoTaxAuthority {
         .setTitleTransferEnumId("")
         .build();
 
+
     public final static TaxAuthorityRateProductData TaxAuthorityRateProduct_9001 = TaxAuthorityRateProductData.newBuilder()
         .setDescription("California State Sales Tax")
         .setFromDate(getTimestamp("2001-05-13 00:00:00.001"))
@@ -39,6 +40,7 @@ public final class StereoDemoTaxAuthority {
         .setThruDate(getTimestamp(""))
         .setTitleTransferEnumId("")
         .build();
+
 
     public final static TaxAuthorityRateProductData TaxAuthorityRateProduct_9002 = TaxAuthorityRateProductData.newBuilder()
         .setDescription("New York State Sales Tax")
@@ -58,6 +60,7 @@ public final class StereoDemoTaxAuthority {
         .setTitleTransferEnumId("")
         .build();
 
+
     public final static TaxAuthorityRateProductData TaxAuthorityRateProduct_9003 = TaxAuthorityRateProductData.newBuilder()
         .setDescription("Texas State Sales Tax")
         .setFromDate(getTimestamp("2001-05-13 00:00:00.001"))
@@ -76,6 +79,7 @@ public final class StereoDemoTaxAuthority {
         .setTitleTransferEnumId("")
         .build();
 
+
     public final static TaxAuthorityRateProductData TaxAuthorityRateProduct_9004 = TaxAuthorityRateProductData.newBuilder()
         .setDescription("Utah State Sales Tax")
         .setFromDate(getTimestamp("2001-05-13 00:00:00.001"))
@@ -93,6 +97,7 @@ public final class StereoDemoTaxAuthority {
         .setThruDate(getTimestamp(""))
         .setTitleTransferEnumId("")
         .build();
+
 
     public final static TaxAuthorityRateProductData TaxAuthorityRateProduct_9005 = TaxAuthorityRateProductData.newBuilder()
         .setDescription("Utah County, Utah Sales Tax")
