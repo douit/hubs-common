@@ -85,7 +85,7 @@ public class ProtoTool {
         }
 
         for (String entity : metaList.getEntities()) {
-            writer.write(sourceGen(entity, "proto"));
+            writer.write(sourceGen(entity, "proto", true));
         }
         writer.close();
     }
@@ -103,11 +103,11 @@ public class ProtoTool {
     }
 
     void gen(String entName, String tplName) throws IOException {
-        String cnt = sourceGen(entName, tplName);
+        String cnt = sourceGen(entName, tplName, true);
         System.out.println(cnt);
     }
 
-    String sourceGen(String entName, String tplName) throws IOException {
+    String sourceGen(String entName, String tplName, boolean hasTable) throws IOException {
         EntityMeta meta= EntityMetaManager.getEntityMeta(entName, false);
         EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
 
@@ -115,7 +115,8 @@ public class ProtoTool {
         metaProcessors.processRelations(meta);
 
         return TemplateUtil.build("templates/"+ tplName +"_source.j2",
-                ImmutableMap.of("ent", meta, "digester", digester));
+                ImmutableMap.of("ent", meta,
+                        "digester", digester, "hasTable", hasTable));
     }
 
     public static String flatSourceGen(String entName, String suffix, boolean hasTable) throws IOException {

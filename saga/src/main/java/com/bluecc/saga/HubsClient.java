@@ -28,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.TimeUnit;
 
 import static com.bluecc.saga.ResourceHelper.readResourceFromFile;
+import static com.bluecc.saga.SagaModule.startup;
 
 @Slf4j
 public class HubsClient {
@@ -36,7 +37,7 @@ public class HubsClient {
     private final ManagedChannel originChannel;
     private final RoutinesGrpc.RoutinesBlockingStub blockingStub;
 
-    private HubsClient(String host, int port) {
+    public HubsClient(String host, int port) {
         originChannel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
                 .build();
@@ -69,7 +70,7 @@ public class HubsClient {
      * Main start the client from the command line.
      */
     public static void main(String[] args) throws Exception {
-        HubsClient client = new HubsClient("localhost", 50056);
+        HubsClient client = startup(HubsClient.class);
         try {
             client.storeValue("dataset/fixtures/order_head_simple.json");
         } finally {

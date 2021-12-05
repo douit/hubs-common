@@ -41,6 +41,20 @@ public class CliMain {
         }
     }
 
+    @Parameters(
+            commandNames = {"meta"},
+            commandDescription = "显示实体信息"
+    )
+    static class MetaCommand implements ICmd {
+        @Parameter(names = {"--info", "-i"})
+        private String info = "hi";
+
+        public void execute() throws InterruptedException {
+            System.out.println(".. meta cmd");
+            // RpcClient.meta(info);
+        }
+    }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -58,6 +72,7 @@ public class CliMain {
         JCommander jc = JCommander.newBuilder()
                 .addCommand(pingCommand)
                 .addCommand(storeCommand)
+                .addCommand(new MetaCommand())
                 .addObject(opts)
                 .build();
 

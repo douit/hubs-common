@@ -1,8 +1,10 @@
 package com.bluecc.hubs.fund;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 
 import java.util.Map;
+import java.util.Set;
 
 public class MetaTypeUtil {
     public static final Map<String, String> PROTO_TYPE_MAP = ImmutableMap.of(
@@ -30,4 +32,9 @@ public class MetaTypeUtil {
     // public static final Map<String, String[]> IGNORE_FIELDS=ImmutableMap.of(
     //         "Person", new String[]{"oldMaritalStatus"}
     // );
+    public static final Set<String> DATETIME_TYPES=
+            Sets.newHashSet("date-time", "date", "time");
+    public static final Set<String> NUMERIC_TYPES=
+            Sets.newHashSet("floating-point", "double", "integer", "int32",
+                    "numeric", "int64");
 }

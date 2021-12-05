@@ -43,6 +43,7 @@
     },
     "UserLogin": {},
     "ProductCategory": {},
-    "ProdCatalog": {}
+    "ProdCatalog": {},
+    "BillingAccount": {}
   }
 }

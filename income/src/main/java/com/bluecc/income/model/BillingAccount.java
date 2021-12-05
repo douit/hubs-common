@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import com.bluecc.hubs.stub.BillingAccountFlatData;
+
 import com.bluecc.hubs.stub.BillingAccountData;
 
 
@@ -17,7 +19,7 @@ import com.bluecc.hubs.stub.BillingAccountData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BillingAccount implements IEventModel<BillingAccountData.Builder>, Serializable {
+public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String billingAccountId;
@@ -39,8 +41,8 @@ public class BillingAccount implements IEventModel<BillingAccountData.Builder>, 
         return toDataBuilder().build();
     }
 
-    public BillingAccountData.Builder toDataBuilder() {
-        BillingAccountData.Builder builder = BillingAccountData.newBuilder();
+    public BillingAccountFlatData.Builder toDataBuilder() {
+        BillingAccountFlatData.Builder builder = BillingAccountFlatData.newBuilder();
         if (billingAccountId != null) {
             builder.setBillingAccountId(billingAccountId);
         }
@@ -75,7 +77,7 @@ public class BillingAccount implements IEventModel<BillingAccountData.Builder>, 
         return builder;
     }
 
-    public static BillingAccount fromData(BillingAccountData data) {
+    public static BillingAccount fromData(BillingAccountFlatData data) {
         return BillingAccount.builder()
                 .billingAccountId(data.getBillingAccountId())
                 .accountLimit(getBigDecimal(data.getAccountLimit()))
@@ -91,5 +93,38 @@ public class BillingAccount implements IEventModel<BillingAccountData.Builder>, 
                 .build();
     }
 
-    
+        
+    public BillingAccountData.Builder toHeadBuilder() {
+        BillingAccountData.Builder builder = BillingAccountData.newBuilder();
+        if (billingAccountId != null) {
+            builder.setBillingAccountId(billingAccountId);
+        }
+        if (accountLimit != null) {
+            builder.setAccountLimit(getCurrency(accountLimit));
+        }
+        if (accountCurrencyUomId != null) {
+            builder.setAccountCurrencyUomId(accountCurrencyUomId);
+        }
+        if (fromDate != null) {
+            builder.setFromDate(getTimestamp(fromDate));
+        }
+        if (thruDate != null) {
+            builder.setThruDate(getTimestamp(thruDate));
+        }
+        if (description != null) {
+            builder.setDescription(description);
+        }
+        if (externalAccountId != null) {
+            builder.setExternalAccountId(externalAccountId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return builder;
+    }
+
 }

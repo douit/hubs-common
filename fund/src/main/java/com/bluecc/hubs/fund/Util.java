@@ -125,7 +125,11 @@ public class Util {
     public static List<File> listFiles(String dir, String suffix){
         return listFiles(new File(dir), suffix);
     }
+
     public static List<File> listFiles(File dir, String suffix){
+        if(!dir.exists()){
+            dir=SystemDefs.prependHubsHomeFile(dir);
+        }
         return Arrays.stream(requireNonNull(dir.listFiles()))
                 .filter(f -> f.getName().toLowerCase(Locale.ROOT)
                         .endsWith(suffix))

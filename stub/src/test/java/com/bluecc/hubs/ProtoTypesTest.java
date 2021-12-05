@@ -16,8 +16,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 
-import static com.bluecc.hubs.ProtoTypes.getBigDecimal;
-import static com.bluecc.hubs.ProtoTypes.getTimeOfDay;
+import static com.bluecc.hubs.ProtoTypes.*;
 import static org.junit.Assert.*;
 
 public class ProtoTypesTest {
@@ -100,16 +99,16 @@ public class ProtoTypesTest {
 
         // String orig="2006-04-25 12:46:27.122";
         String orig="2006-04-25 12:46:27";
-        Timestamp ts=DataFill.getTimestamp(orig);
+        Timestamp ts=getTimestamp(orig);
         System.out.println(orig+" -> "+ProtoTypes.getLocalDateTime(ts));
 
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dt=LocalDateTime.parse(orig, formatter);
         System.out.println(dt);
         // dt.toEpochSecond(ZoneOffset.UTC);
-        ts=ProtoTypes.getTimestamp(dt.toInstant(ZoneOffset.UTC));
+        ts= getTimestamp(dt.toInstant(ZoneOffset.UTC));
         System.out.println("UTC: "+orig+" -> "+ProtoTypes.getLocalDateTime(ts));
-        ts=ProtoTypes.getTimestamp(dt.toInstant(offset));
+        ts= getTimestamp(dt.toInstant(offset));
         // 相差8小时
         System.out.println("Asia/Shanghai: "+orig+" -> "+ProtoTypes.getLocalDateTime(ts));
     }

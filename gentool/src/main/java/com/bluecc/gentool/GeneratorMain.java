@@ -14,6 +14,7 @@ public class GeneratorMain {
         EntityTypesTool.startGen();
         ProtoTool.startGen(new ProtoTool.ProtoGenOpts(null, true));
         ProtoTypeTool.startGen();
+        GenHeadEntities.startGen();
 
         // reimportSql("hubs");
     }

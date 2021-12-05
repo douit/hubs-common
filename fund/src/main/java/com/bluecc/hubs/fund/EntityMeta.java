@@ -87,6 +87,10 @@ public class EntityMeta {
         return fields.stream().map(f -> f.name).collect(Collectors.toSet());
     }
 
+    public Optional<FieldMeta> getField(String fieldName){
+        return fields.stream().filter(f -> f.name.equals(fieldName)).findFirst();
+    }
+
     public String getPk() {
         if (combine) {
             return "id";
@@ -341,6 +345,14 @@ public class EntityMeta {
             }
         }
 
+        public boolean isDateTimeField(){
+            return MetaTypeUtil.DATETIME_TYPES.contains(type);
+        }
+
+        public boolean isNumericField(){
+            return MetaTypeUtil.NUMERIC_TYPES.contains(type);
+        }
+
         // public String getUnderscore() {
         //     return Util.toSnakecase(this.name);
         // }
@@ -358,6 +370,53 @@ public class EntityMeta {
         public boolean isUpdateTs(){
             return name.equals("lastUpdatedStamp");
         }
+
+        public String getSetter(){
+            return format("set%s", fixedClassName());
+        }
+
+        public String valuePart(String rawValue){
+            String value=format("\"%s\"", rawValue.replace('"', '\''));
+            String valuePart;
+            switch (type){
+                case "date-time":
+                    valuePart= format("getTimestamp(%s)", value);
+                    break;
+                case "date":
+                    valuePart= format("getDate(%s)", value);
+                    break;
+                case "time":
+                    valuePart= format("getTimeOfDay(%s)", value);
+                    break;
+                case "indicator":
+                    valuePart= format("castIndicator(%s)", value);
+                    break;
+                case "currency-amount":
+                case "currency-precise":
+                    valuePart= format("getCurrency(%s)", value);
+                    break;
+                case "fixed-point":
+                    valuePart= format("getFixedPoint(%s)", value);
+                    break;
+                case "byte-array":
+                case "blob":
+                case "object":
+                    valuePart= format("ByteString.copyFrom(%s)", value);
+                    break;
+
+                default:
+                    valuePart= isNumericField()?filterNum(rawValue):value;
+            }
+            return valuePart;
+        }
+
+        private String filterNum(String rawValue) {
+            if(rawValue.startsWith("0")) {
+                return String.format("%d", Integer.parseInt(rawValue));
+            }
+            return rawValue;
+        }
+
 
         public String getProtoSetter(){
             String valuePart;

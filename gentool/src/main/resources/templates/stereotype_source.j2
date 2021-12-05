@@ -1,0 +1,6 @@
+    public final static {{obj.meta.flatMessageType}} {{obj.meta.name}}_{{obj.constName}} = {{obj.meta.flatMessageType}}.newBuilder()
+        {% for f in obj.fieldList -%}
+        .{{f.meta.setter}}({{f.meta.valuePart(f.value)}})
+        {% endfor -%}
+        .build();
+

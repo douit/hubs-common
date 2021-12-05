@@ -360,6 +360,17 @@ public class AbstractProcs {
         return rec;
     }
 
+    public <T> List<T> findList(IProc.ProcContext ctx, Message flatData, Class<T> clz) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        List<T> recs = ctx.getHandle().createQuery("select * from <table> where <fields_cond>")
+                .define("table", tableInfo.table)
+                .define("fields_cond", tableInfo.fieldsCondition)
+                .bindMap(tableInfo.e)
+                .mapTo(clz)
+                .list();
+        return recs;
+    }
+
     public <T> List<T> findRelation(IProc.ProcContext c, Message p, String rel,
                                     Class<? extends IModel<?>> fromClass,
                                     Class<T> toClass){

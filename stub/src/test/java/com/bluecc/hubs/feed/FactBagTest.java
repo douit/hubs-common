@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import static com.bluecc.hubs.feed.DataFill.getTimestamp;
+import static com.bluecc.hubs.ProtoTypes.getTimestamp;
 import static org.junit.Assert.*;
 
 @RunWith(GuiceTestRunner.class)

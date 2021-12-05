@@ -19,7 +19,7 @@ import static com.bluecc.hubs.fund.Util.pretty;
 public class SeedReader {
 
     public static void main(String[] args) throws Exception {
-        String dataFile = "dataset/OrderDemoData.xml";
+        String dataFile = "dataset/order/OrderDemoData.xml";
         Set<String> nameSet = collectEntityNames(dataFile);
 
         // entity types
@@ -66,9 +66,15 @@ public class SeedReader {
 
     public static void collectEntityData(Multimap<String, JsonObject> dataList,
                                          String fileName, boolean camelCase) {
+        File dataFile=new File(fileName);
+        collectEntityData(dataList, dataFile, camelCase);
+    }
+
+    public static void collectEntityData(Multimap<String, JsonObject> dataList,
+                                         File dataFile, boolean camelCase) {
         // List<JsonObject> rs= Lists.newArrayList();
         // Multimap<String, JsonObject> rs= ArrayListMultimap.create();
-        File dataFile=new File(fileName);
+
         if(!dataFile.exists()){
             dataFile=SystemDefs.prependHubsHomeFile(dataFile);
         }

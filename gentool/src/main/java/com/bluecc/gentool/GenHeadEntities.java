@@ -20,16 +20,25 @@ import static com.bluecc.hubs.fund.MetaTypes.typeList;
 public class GenHeadEntities {
     public static void main(String[] args) throws IOException {
         GenHeadEntities genHeadEntities=startup(GenHeadEntities.class);
-        genHeadEntities.startGen();
-
-        // ...
-        // genHeadEntities.genBean("ProductPrice", "ProductConfig");
-        genHeadEntities.genBean(MetaTypes.getNonHeadEntities());
+        genHeadEntities.genAll();
     }
 
-    @Inject
+    public static void startGen() throws IOException {
+        new GenHeadEntities(new GenConfig()).genAll();
+    }
+
     GenConfig conf;
-    void startGen(){
+    @Inject
+    GenHeadEntities(GenConfig conf){
+        this.conf=conf;
+    }
+
+    public void genAll() throws IOException {
+        genHeads();
+        genBean(MetaTypes.getNonHeadEntities());
+    }
+
+    void genHeads(){
         HeadEntityResources.allHeads().forEach(e -> {
             try {
                 genBean(e);

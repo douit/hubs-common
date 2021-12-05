@@ -10,10 +10,11 @@ import com.google.type.Date;
 import com.google.type.Money;
 import com.google.type.TimeOfDay;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
+// import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -31,6 +32,9 @@ public class ProtoTypes {
         return new BigDecimal(serialized.getValue());
     }
 
+    public static Currency getCurrency(String val){
+        return getCurrency(new BigDecimal(val));
+    }
     public static Currency getCurrency(java.math.BigDecimal val){
         return Currency.newBuilder()
                 .setCurrencyUomId("CNY")
@@ -69,9 +73,9 @@ public class ProtoTypes {
         return getFixedPoint(new BigDecimal(val));
     }
 
-    public static DateTime getDateTime(Timestamp ts) {
-        return new DateTime(ts.getSeconds() * 1000);
-    }
+    // public static DateTime getDateTime(Timestamp ts) {
+    //     return new DateTime(ts.getSeconds() * 1000);
+    // }
 
     public static java.time.LocalTime getTime(TimeOfDay timeOfDay) {
         return LocalTime.of(timeOfDay.getHours(),
@@ -132,6 +136,41 @@ public class ProtoTypes {
                 .setNanos(ts.getNano()).build();
         return timestamp;
     }
+
+
+    static final String DT_STR = "2001-05-13 00:00:00";
+    static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public static LocalDateTime trimParse(String dtStr) {
+        if (dtStr == null || dtStr.isEmpty()) {
+            return null;
+        }
+
+        if (dtStr.length() < DT_STR.length()) {
+            log.warn("the datetime-string format is invalidate: {}", dtStr);
+            return null;
+        }
+        // return FMT.parseDateTime(dtStr.substring(0, DT_STR.length()));
+        return LocalDateTime.parse(dtStr.substring(0, DT_STR.length()), FMT);
+    }
+
+    public static Timestamp getTimestamp(long millis) {
+        return Timestamp.newBuilder().setSeconds(millis / 1000)
+                .setNanos((int) ((millis % 1000) * 1000000)).build();
+    }
+
+    static final ZoneOffset offsetLocal=ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now());
+    public static Timestamp getTimestampAtLocal(LocalDateTime dt) {
+        return ProtoTypes.getTimestamp(dt.toInstant(offsetLocal));
+    }
+
+    public static Timestamp getTimestamp(String dtStr) {
+        if (dtStr == null || dtStr.isEmpty()) {
+            return null;
+        }
+        return getTimestamp(trimParse(dtStr));
+    }
+
 
     public static java.time.LocalDate getLocalDate(Timestamp ts) {
         return getLocalDateTime(ts).toLocalDate();

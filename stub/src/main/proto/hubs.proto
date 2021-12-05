@@ -153,12 +153,23 @@ service ProdCatalogService {
     rpc FindById(routines.Identity) returns (ProdCatalogFlatData) {}
 }
 
+// The Billing Account service definition.
+service BillingAccountService {
+    rpc Create(BillingAccountData) returns (routines.Response) {}
+    rpc Update(BillingAccountFlatData) returns (routines.Response) {}
+    rpc Delete(BillingAccountFlatData) returns (routines.Response) {}
+    rpc Find(BillingAccountFlatData) returns (BillingAccountFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (BillingAccountFlatData) {}
+}
+
 // flat-ent: Order Header
 message OrderHeaderFlatData {
     option (routines.entity_type) = "OrderHeader";
     option (routines.keys).keys = "order_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderId
         
     string order_id = 1;    
@@ -201,6 +212,7 @@ message OrderItemFlatData {
     option (routines.keys).keys = "order_id, order_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderId, orderItemSeqId
     string id = 150;     
     string order_id = 1;    
@@ -260,6 +272,7 @@ message PaymentFlatData {
     option (routines.keys).keys = "payment_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: paymentId
         
     string payment_id = 1;    
@@ -291,6 +304,7 @@ message InvoiceFlatData {
     option (routines.keys).keys = "invoice_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: invoiceId
         
     string invoice_id = 1;    
@@ -319,6 +333,7 @@ message InvoiceItemFlatData {
     option (routines.keys).keys = "invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: invoiceId, invoiceItemSeqId
     string id = 150;     
     string invoice_id = 1;    
@@ -350,6 +365,7 @@ message ProductFlatData {
     option (routines.keys).keys = "product_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId
         
     string product_id = 1;    
@@ -432,6 +448,7 @@ message ShipmentFlatData {
     option (routines.keys).keys = "shipment_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentId
         
     string shipment_id = 1;    
@@ -474,6 +491,7 @@ message ProductStoreFlatData {
     option (routines.keys).keys = "product_store_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreId
         
     string product_store_id = 1;
@@ -564,6 +582,7 @@ message PartyFlatData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId
         
     string party_id = 1;    
@@ -588,6 +607,7 @@ message PersonFlatData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId
         
     string party_id = 1;    
@@ -632,6 +652,7 @@ message PartyGroupFlatData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId
         
     string party_id = 1;    
@@ -653,6 +674,7 @@ message UserLoginFlatData {
     option (routines.keys).keys = "user_login_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: userLoginId
         
     string user_login_id = 1;    
@@ -681,6 +703,7 @@ message ProductCategoryFlatData {
     option (routines.keys).keys = "product_category_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productCategoryId
         
     string product_category_id = 1;    
@@ -704,6 +727,7 @@ message ProdCatalogFlatData {
     option (routines.keys).keys = "prod_catalog_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: prodCatalogId
         
     string prod_catalog_id = 1;    
@@ -719,12 +743,34 @@ message ProdCatalogFlatData {
     google.protobuf.Timestamp created_tx_stamp = 11;  
 }
 
+// flat-ent: Billing Account
+message BillingAccountFlatData {
+    option (routines.entity_type) = "BillingAccount";
+    option (routines.keys).keys = "billing_account_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: billingAccountId
+        
+    string billing_account_id = 1;    
+    routines.Currency account_limit = 2;
+    string account_currency_uom_id = 3; // Uom    
+    string contact_mech_id = 4;    
+    google.protobuf.Timestamp from_date = 5;    
+    google.protobuf.Timestamp thru_date = 6;    
+    string description = 7;    
+    string external_account_id = 8;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
+    google.protobuf.Timestamp created_tx_stamp = 10;  
+}
+
 // Shipment Route Segment
 message ShipmentRouteSegmentData {
     option (routines.entity_type) = "ShipmentRouteSegment";
     option (routines.keys).keys = "shipment_id, shipment_route_segment_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentId, shipmentRouteSegmentId
     string id = 200; 
     // fields
@@ -776,6 +822,7 @@ message InvoiceData {
     option (routines.keys).keys = "invoice_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: invoiceId
     
     // fields
@@ -816,6 +863,7 @@ message OrderAdjustmentData {
     option (routines.keys).keys = "order_adjustment_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderAdjustmentId
     
     // fields
@@ -864,6 +912,7 @@ message ProductData {
     option (routines.keys).keys = "product_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: productId
     
     // fields
@@ -982,6 +1031,7 @@ message CarrierShipmentBoxTypeData {
     option (routines.keys).keys = "shipment_box_type_id, party_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentBoxTypeId, partyId
     string id = 200; 
     // fields
@@ -1001,6 +1051,7 @@ message FixedAssetData {
     option (routines.keys).keys = "fixed_asset_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: fixedAssetId
     
     // fields
@@ -1041,6 +1092,7 @@ message WebAnalyticsConfigData {
     option (routines.keys).keys = "web_site_id, web_analytics_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: webSiteId, webAnalyticsTypeId
     string id = 200; 
     // fields
@@ -1059,6 +1111,7 @@ message ProductCategoryRollupData {
     option (routines.keys).keys = "product_category_id, parent_product_category_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productCategoryId, parentProductCategoryId, fromDate
     string id = 200; 
     // fields
@@ -1079,6 +1132,7 @@ message PaymentGatewayResponseData {
     option (routines.keys).keys = "payment_gateway_response_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: paymentGatewayResponseId
     
     // fields
@@ -1116,6 +1170,7 @@ message ShipmentItemBillingData {
     option (routines.keys).keys = "shipment_id, shipment_item_seq_id, invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentId, shipmentItemSeqId, invoiceId, invoiceItemSeqId
     string id = 200; 
     // fields
@@ -1135,6 +1190,7 @@ message ProductPromoActionData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId
     string id = 200; 
     // fields
@@ -1162,6 +1218,7 @@ message ShipmentCostEstimateData {
     option (routines.keys).keys = "shipment_cost_estimate_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentCostEstimateId
     
     // fields
@@ -1205,6 +1262,7 @@ message SupplierProductFeatureData {
     option (routines.keys).keys = "party_id, product_feature_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId, productFeatureId
     string id = 200; 
     // fields
@@ -1225,6 +1283,7 @@ message SecurityGroupPermissionData {
     option (routines.keys).keys = "group_id, permission_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: groupId, permissionId, fromDate
     string id = 200; 
     // fields
@@ -1244,6 +1303,7 @@ message SurveyMultiRespColumnData {
     option (routines.keys).keys = "survey_id, survey_multi_resp_id, survey_multi_resp_col_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyId, surveyMultiRespId, surveyMultiRespColId
     string id = 200; 
     // fields
@@ -1264,6 +1324,7 @@ message ProductStoreKeywordOvrdData {
     option (routines.keys).keys = "product_store_id, keyword, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreId, keyword, fromDate
     string id = 200; 
     // fields
@@ -1285,6 +1346,7 @@ message ProductAssocData {
     option (routines.keys).keys = "product_id, product_id_to, product_assoc_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, productIdTo, productAssocTypeId, fromDate
     string id = 200; 
     // fields
@@ -1313,6 +1375,7 @@ message SurveyApplTypeData {
     option (routines.keys).keys = "survey_appl_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyApplTypeId
     
     // fields
@@ -1330,6 +1393,7 @@ message FixedAssetProductData {
     option (routines.keys).keys = "fixed_asset_id, product_id, fixed_asset_product_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: fixedAssetId, productId, fixedAssetProductTypeId, fromDate
     string id = 200; 
     // fields
@@ -1354,6 +1418,7 @@ message PaymentApplicationData {
     option (routines.keys).keys = "payment_application_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: paymentApplicationId
     
     // fields
@@ -1378,6 +1443,7 @@ message CustRequestData {
     option (routines.keys).keys = "cust_request_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: custRequestId
     
     // fields
@@ -1420,6 +1486,7 @@ message ShipmentReceiptData {
     option (routines.keys).keys = "receipt_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: receiptId
     
     // fields
@@ -1451,6 +1518,7 @@ message InventoryItemDetailData {
     option (routines.keys).keys = "inventory_item_id, inventory_item_detail_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: inventoryItemId, inventoryItemDetailSeqId
     string id = 200; 
     // fields
@@ -1488,6 +1556,7 @@ message OrderAdjustmentBillingData {
     option (routines.keys).keys = "order_adjustment_id, invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderAdjustmentId, invoiceId, invoiceItemSeqId
     string id = 200; 
     // fields
@@ -1507,6 +1576,7 @@ message ProductFeaturePriceData {
     option (routines.keys).keys = "product_feature_id, product_price_type_id, currency_uom_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productFeatureId, productPriceTypeId, currencyUomId, fromDate
     string id = 200; 
     // fields
@@ -1532,6 +1602,7 @@ message ProductConfigOptionData {
     option (routines.keys).keys = "config_item_id, config_option_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: configItemId, configOptionId
     string id = 200; 
     // fields
@@ -1554,6 +1625,7 @@ message PostalAddressData {
     option (routines.keys).keys = "contact_mech_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: contactMechId
     
     // fields
@@ -1587,6 +1659,7 @@ message ProductStoreFinActSettingData {
     option (routines.keys).keys = "product_store_id, fin_account_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreId, finAccountTypeId
     string id = 200; 
     // fields
@@ -1617,6 +1690,7 @@ message SurveyData {
     option (routines.keys).keys = "survey_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyId
     
     // fields
@@ -1642,6 +1716,7 @@ message ProductFacilityAssocData {
     option (routines.keys).keys = "product_id, facility_id, facility_id_to, facility_assoc_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, facilityId, facilityIdTo, facilityAssocTypeId, fromDate
     string id = 200; 
     // fields
@@ -1665,6 +1740,7 @@ message OrderItemPriceInfoData {
     option (routines.keys).keys = "order_item_price_info_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderItemPriceInfoId
     
     // fields
@@ -1688,6 +1764,7 @@ message WorkEffortGoodStandardData {
     option (routines.keys).keys = "work_effort_id, product_id, work_effort_good_std_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: workEffortId, productId, workEffortGoodStdTypeId, fromDate
     string id = 200; 
     // fields
@@ -1711,6 +1788,7 @@ message PersonData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: partyId
     
     // fields
@@ -1768,6 +1846,7 @@ message ProductStoreRoleData {
     option (routines.keys).keys = "party_id, role_type_id, product_store_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId, roleTypeId, productStoreId, fromDate
     string id = 200; 
     // fields
@@ -1789,6 +1868,7 @@ message PartyContactMechData {
     option (routines.keys).keys = "party_id, contact_mech_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId, contactMechId, fromDate
     string id = 200; 
     // fields
@@ -1815,6 +1895,7 @@ message ProductStoreEmailSettingData {
     option (routines.keys).keys = "product_store_id, email_type";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreId, emailType
     string id = 200; 
     // fields
@@ -1839,6 +1920,7 @@ message ElectronicTextData {
     option (routines.keys).keys = "data_resource_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: dataResourceId
     
     // fields
@@ -1856,6 +1938,7 @@ message ItemIssuanceData {
     option (routines.keys).keys = "item_issuance_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: itemIssuanceId
     
     // fields
@@ -1884,6 +1967,7 @@ message PartyGroupData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: partyId
     
     // fields
@@ -1918,6 +2002,7 @@ message ProductPromoProductData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id, product_promo_cond_seq_id, product_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productId
     string id = 200; 
     // fields
@@ -1939,6 +2024,7 @@ message SystemPropertyData {
     option (routines.keys).keys = "system_resource_id, system_property_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: systemResourceId, systemPropertyId
     string id = 200; 
     // fields
@@ -1958,6 +2044,7 @@ message ProductReviewData {
     option (routines.keys).keys = "product_review_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productReviewId
     
     // fields
@@ -1982,6 +2069,7 @@ message OrderPaymentPreferenceData {
     option (routines.keys).keys = "order_payment_preference_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderPaymentPreferenceId
     
     // fields
@@ -2021,6 +2109,7 @@ message SupplierProductData {
     option (routines.keys).keys = "product_id, party_id, available_from_date, minimum_order_quantity, currency_uom_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, partyId, currencyUomId, minimumOrderQuantity, availableFromDate
     string id = 200; 
     // fields
@@ -2056,6 +2145,7 @@ message OrderStatusData {
     option (routines.keys).keys = "order_status_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderStatusId
     
     // fields
@@ -2079,6 +2169,7 @@ message PartyData {
     option (routines.keys).keys = "party_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: partyId
     
     // fields
@@ -2157,6 +2248,7 @@ message AgreementItemData {
     option (routines.keys).keys = "agreement_id, agreement_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: agreementId, agreementItemSeqId
     string id = 200; 
     // fields
@@ -2178,6 +2270,7 @@ message PartyTaxAuthInfoData {
     option (routines.keys).keys = "party_id, tax_auth_geo_id, tax_auth_party_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId, taxAuthGeoId, taxAuthPartyId, fromDate
     string id = 200; 
     // fields
@@ -2201,6 +2294,7 @@ message SurveyMultiRespData {
     option (routines.keys).keys = "survey_id, survey_multi_resp_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyId, surveyMultiRespId
     string id = 200; 
     // fields
@@ -2219,6 +2313,7 @@ message AcctgTransData {
     option (routines.keys).keys = "acctg_trans_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: acctgTransId
     
     // fields
@@ -2262,6 +2357,7 @@ message DataResourceData {
     option (routines.keys).keys = "data_resource_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: dataResourceId
     
     // fields
@@ -2296,6 +2392,7 @@ message ShipmentItemData {
     option (routines.keys).keys = "shipment_id, shipment_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentId, shipmentItemSeqId
     string id = 200; 
     // fields
@@ -2316,6 +2413,7 @@ message FacilityContactMechData {
     option (routines.keys).keys = "facility_id, contact_mech_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: facilityId, contactMechId, fromDate
     string id = 200; 
     // fields
@@ -2337,6 +2435,7 @@ message AgreementData {
     option (routines.keys).keys = "agreement_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: agreementId
     
     // fields
@@ -2364,6 +2463,7 @@ message SurveyQuestionCategoryData {
     option (routines.keys).keys = "survey_question_category_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyQuestionCategoryId
     
     // fields
@@ -2382,6 +2482,7 @@ message ProdCatalogCategoryData {
     option (routines.keys).keys = "prod_catalog_id, product_category_id, prod_catalog_category_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: prodCatalogId, productCategoryId, prodCatalogCategoryTypeId, fromDate
     string id = 200; 
     // fields
@@ -2403,6 +2504,7 @@ message ProductCategoryRoleData {
     option (routines.keys).keys = "product_category_id, party_id, role_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productCategoryId, partyId, roleTypeId, fromDate
     string id = 200; 
     // fields
@@ -2424,6 +2526,7 @@ message OrderItemData {
     option (routines.keys).keys = "order_id, order_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: orderId, orderItemSeqId
     string id = 200; 
     // fields
@@ -2501,6 +2604,7 @@ message ShipmentTimeEstimateData {
     option (routines.keys).keys = "shipment_method_type_id, party_id, role_type_id, geo_id_to, geo_id_from, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentMethodTypeId, partyId, roleTypeId, geoIdTo, geoIdFrom, fromDate
     string id = 200; 
     // fields
@@ -2526,6 +2630,7 @@ message TaxAuthorityRateProductData {
     option (routines.keys).keys = "tax_authority_rate_seq_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: taxAuthorityRateSeqId
     
     // fields
@@ -2557,6 +2662,7 @@ message ProductCategoryContentData {
     option (routines.keys).keys = "product_category_id, content_id, prod_cat_content_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productCategoryId, contentId, prodCatContentTypeId, fromDate
     string id = 200; 
     // fields
@@ -2581,6 +2687,7 @@ message OrderItemShipGroupAssocData {
     option (routines.keys).keys = "order_id, order_item_seq_id, ship_group_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderId, orderItemSeqId, shipGroupSeqId
     string id = 200; 
     // fields
@@ -2601,6 +2708,7 @@ message WebSiteContentData {
     option (routines.keys).keys = "web_site_id, content_id, web_site_content_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: webSiteId, contentId, webSiteContentTypeId, fromDate
     string id = 200; 
     // fields
@@ -2621,6 +2729,7 @@ message SurveyQuestionData {
     option (routines.keys).keys = "survey_question_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyQuestionId
     
     // fields
@@ -2645,6 +2754,7 @@ message ContentAssocData {
     option (routines.keys).keys = "content_id, content_id_to, content_assoc_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: contentId, contentIdTo, contentAssocTypeId, fromDate
     string id = 200; 
     // fields
@@ -2675,6 +2785,7 @@ message QuoteItemData {
     option (routines.keys).keys = "quote_id, quote_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: quoteId, quoteItemSeqId
     string id = 200; 
     // fields
@@ -2711,6 +2822,7 @@ message ProdCatalogData {
     option (routines.keys).keys = "prod_catalog_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: prodCatalogId
     
     // fields
@@ -2740,6 +2852,7 @@ message ProductPromoCondData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_cond_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPromoId, productPromoRuleId, productPromoCondSeqId
     string id = 200; 
     // fields
@@ -2763,6 +2876,7 @@ message FacilityLocationData {
     option (routines.keys).keys = "facility_id, location_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: facilityId, locationSeqId
     string id = 200; 
     // fields
@@ -2787,6 +2901,7 @@ message ProductPromoCategoryData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id, product_promo_action_seq_id, product_promo_cond_seq_id, product_category_id, and_group_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productCategoryId, andGroupId
     string id = 200; 
     // fields
@@ -2810,6 +2925,7 @@ message PartyStatusData {
     option (routines.keys).keys = "status_id, party_id, status_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: statusId, partyId, statusDate
     string id = 200; 
     // fields
@@ -2829,6 +2945,7 @@ message ProductFacilityLocationData {
     option (routines.keys).keys = "product_id, facility_id, location_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, facilityId, locationSeqId
     string id = 200; 
     // fields
@@ -2849,6 +2966,7 @@ message SurveyPageData {
     option (routines.keys).keys = "survey_id, survey_page_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyId, surveyPageSeqId
     string id = 200; 
     // fields
@@ -2868,6 +2986,7 @@ message ShipmentBoxTypeData {
     option (routines.keys).keys = "shipment_box_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentBoxTypeId
     
     // fields
@@ -2891,6 +3010,7 @@ message ShipmentPackageRouteSegData {
     option (routines.keys).keys = "shipment_id, shipment_package_seq_id, shipment_route_segment_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentId, shipmentPackageSeqId, shipmentRouteSegmentId
     string id = 200; 
     // fields
@@ -2922,6 +3042,7 @@ message GeoPointData {
     option (routines.keys).keys = "geo_point_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: geoPointId
     
     // fields
@@ -2946,6 +3067,7 @@ message SubscriptionResourceData {
     option (routines.keys).keys = "subscription_resource_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: subscriptionResourceId
     
     // fields
@@ -2967,6 +3089,7 @@ message ProductFeatureApplData {
     option (routines.keys).keys = "product_id, product_feature_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, productFeatureId, fromDate
     string id = 200; 
     // fields
@@ -2990,6 +3113,7 @@ message ContentAttributeData {
     option (routines.keys).keys = "content_id, attr_name";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: contentId, attrName
     string id = 200; 
     // fields
@@ -3009,6 +3133,7 @@ message PartyContactMechPurposeData {
     option (routines.keys).keys = "party_id, contact_mech_id, contact_mech_purpose_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId, contactMechId, contactMechPurposeTypeId, fromDate
     string id = 200; 
     // fields
@@ -3029,6 +3154,7 @@ message RecurrenceInfoData {
     option (routines.keys).keys = "recurrence_info_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: recurrenceInfoId
     
     // fields
@@ -3051,6 +3177,7 @@ message ProductFeatureCategoryData {
     option (routines.keys).keys = "product_feature_category_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productFeatureCategoryId
     
     // fields
@@ -3069,6 +3196,7 @@ message FacilityLocationGeoPointData {
     option (routines.keys).keys = "facility_id, location_seq_id, geo_point_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: facilityId, locationSeqId, geoPointId, fromDate
     string id = 200; 
     // fields
@@ -3089,6 +3217,7 @@ message UserLoginSecurityGroupData {
     option (routines.keys).keys = "user_login_id, group_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: userLoginId, groupId, fromDate
     string id = 200; 
     // fields
@@ -3108,6 +3237,7 @@ message ProductStoreCatalogData {
     option (routines.keys).keys = "product_store_id, prod_catalog_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreId, prodCatalogId, fromDate
     string id = 200; 
     // fields
@@ -3128,6 +3258,7 @@ message UserLoginData {
     option (routines.keys).keys = "user_login_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: userLoginId
     
     // fields
@@ -3194,6 +3325,7 @@ message ProductPriceRuleData {
     option (routines.keys).keys = "product_price_rule_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPriceRuleId
     
     // fields
@@ -3215,6 +3347,7 @@ message PartyRoleData {
     option (routines.keys).keys = "party_id, role_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId, roleTypeId
     string id = 200; 
     // fields
@@ -3232,6 +3365,7 @@ message ProductFacilityData {
     option (routines.keys).keys = "product_id, facility_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, facilityId
     string id = 200; 
     // fields
@@ -3255,6 +3389,7 @@ message PartyGeoPointData {
     option (routines.keys).keys = "party_id, geo_point_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyId, geoPointId, fromDate
     string id = 200; 
     // fields
@@ -3274,6 +3409,7 @@ message OrderHeaderData {
     option (routines.keys).keys = "order_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: orderId
     
     // fields
@@ -3337,6 +3473,7 @@ message CarrierShipmentMethodData {
     option (routines.keys).keys = "shipment_method_type_id, party_id, role_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentMethodTypeId, partyId, roleTypeId
     string id = 200; 
     // fields
@@ -3357,6 +3494,7 @@ message ShipmentData {
     option (routines.keys).keys = "shipment_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: shipmentId
     
     // fields
@@ -3422,6 +3560,7 @@ message ShipmentPackageContentData {
     option (routines.keys).keys = "shipment_id, shipment_package_seq_id, shipment_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentId, shipmentPackageSeqId, shipmentItemSeqId
     string id = 200; 
     // fields
@@ -3443,6 +3582,7 @@ message ProductStoreSurveyApplData {
     option (routines.keys).keys = "product_store_survey_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreSurveyId
     
     // fields
@@ -3470,6 +3610,7 @@ message SecurityGroupData {
     option (routines.keys).keys = "group_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: groupId
     
     // fields
@@ -3488,6 +3629,7 @@ message ProductContentData {
     option (routines.keys).keys = "product_id, content_id, product_content_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, contentId, productContentTypeId, fromDate
     string id = 200; 
     // fields
@@ -3515,6 +3657,7 @@ message PartyRelationshipData {
     option (routines.keys).keys = "party_id_from, party_id_to, role_type_id_from, role_type_id_to, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: partyIdFrom, partyIdTo, roleTypeIdFrom, roleTypeIdTo, fromDate
     string id = 200; 
     // fields
@@ -3544,6 +3687,7 @@ message ProductStoreShipmentMethData {
     option (routines.keys).keys = "product_store_ship_meth_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreShipMethId
     
     // fields
@@ -3587,6 +3731,7 @@ message PaymentData {
     option (routines.keys).keys = "payment_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: paymentId
     
     // fields
@@ -3629,6 +3774,7 @@ message ContentData {
     option (routines.keys).keys = "content_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: contentId
     
     // fields
@@ -3667,6 +3813,7 @@ message ShipmentPackageData {
     option (routines.keys).keys = "shipment_id, shipment_package_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentId, shipmentPackageSeqId
     string id = 200; 
     // fields
@@ -3693,6 +3840,7 @@ message ProductStoreFacilityData {
     option (routines.keys).keys = "product_store_id, facility_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreId, facilityId, fromDate
     string id = 200; 
     // fields
@@ -3713,6 +3861,7 @@ message WebSiteData {
     option (routines.keys).keys = "web_site_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: webSiteId
     
     // fields
@@ -3745,6 +3894,7 @@ message ProductCategoryData {
     option (routines.keys).keys = "product_category_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: productCategoryId
     
     // fields
@@ -3787,6 +3937,7 @@ message ProductStorePaymentSettingData {
     option (routines.keys).keys = "product_store_id, payment_method_type_id, payment_service_type_enum_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreId, paymentMethodTypeId, paymentServiceTypeEnumId
     string id = 200; 
     // fields
@@ -3810,6 +3961,7 @@ message PaymentMethodData {
     option (routines.keys).keys = "payment_method_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: paymentMethodId
     
     // fields
@@ -3833,6 +3985,7 @@ message ProductPriceCondData {
     option (routines.keys).keys = "product_price_rule_id, product_price_cond_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPriceRuleId, productPriceCondSeqId
     string id = 200; 
     // fields
@@ -3853,6 +4006,7 @@ message SurveyQuestionOptionData {
     option (routines.keys).keys = "survey_question_id, survey_option_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyQuestionId, surveyOptionSeqId
     string id = 200; 
     // fields
@@ -3877,6 +4031,7 @@ message InventoryItemData {
     option (routines.keys).keys = "inventory_item_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: inventoryItemId
     
     // fields
@@ -3918,6 +4073,7 @@ message BillingAccountRoleData {
     option (routines.keys).keys = "billing_account_id, party_id, role_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: billingAccountId, partyId, roleTypeId, fromDate
     string id = 200; 
     // fields
@@ -3938,6 +4094,7 @@ message InvoiceItemData {
     option (routines.keys).keys = "invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: invoiceId, invoiceItemSeqId
     string id = 200; 
     // fields
@@ -3981,6 +4138,7 @@ message ProductFeatureCategoryApplData {
     option (routines.keys).keys = "product_category_id, product_feature_category_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productCategoryId, productFeatureCategoryId, fromDate
     string id = 200; 
     // fields
@@ -4000,6 +4158,7 @@ message ProductConfigItemData {
     option (routines.keys).keys = "config_item_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: configItemId
     
     // fields
@@ -4021,6 +4180,7 @@ message TelecomNumberData {
     option (routines.keys).keys = "contact_mech_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: contactMechId
     
     // fields
@@ -4041,6 +4201,7 @@ message ProductFeatureData {
     option (routines.keys).keys = "product_feature_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productFeatureId
     
     // fields
@@ -4066,6 +4227,7 @@ message ProductConfigData {
     option (routines.keys).keys = "product_id, config_item_id, sequence_num, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, configItemId, sequenceNum, fromDate
     string id = 200; 
     // fields
@@ -4091,6 +4253,7 @@ message ProductPromoCodeData {
     option (routines.keys).keys = "product_promo_code_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPromoCodeId
     
     // fields
@@ -4118,6 +4281,7 @@ message ProductStoreData {
     option (routines.keys).keys = "product_store_id";
     option (routines.keys).combine = false;
     option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: productStoreId
     
     // fields
@@ -4229,6 +4393,7 @@ message ProductPriceData {
     option (routines.keys).keys = "product_id, product_price_type_id, product_price_purpose_id, currency_uom_id, product_store_group_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate
     string id = 200; 
     // fields
@@ -4265,6 +4430,7 @@ message QuantityBreakData {
     option (routines.keys).keys = "quantity_break_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: quantityBreakId
     
     // fields
@@ -4284,6 +4450,7 @@ message ContactMechData {
     option (routines.keys).keys = "contact_mech_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: contactMechId
     
     // fields
@@ -4302,6 +4469,7 @@ message OrderItemShipGrpInvResData {
     option (routines.keys).keys = "order_id, ship_group_seq_id, order_item_seq_id, inventory_item_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId
     string id = 200; 
     // fields
@@ -4330,6 +4498,7 @@ message TenantDataSourceData {
     option (routines.keys).keys = "tenant_id, entity_group_name";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: tenantId, entityGroupName
     string id = 200; 
     // fields
@@ -4350,6 +4519,7 @@ message ProductPromoRuleData {
     option (routines.keys).keys = "product_promo_id, product_promo_rule_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPromoId, productPromoRuleId
     string id = 200; 
     // fields
@@ -4368,6 +4538,7 @@ message OrderContactMechData {
     option (routines.keys).keys = "order_id, contact_mech_purpose_type_id, contact_mech_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderId, contactMechPurposeTypeId, contactMechId
     string id = 200; 
     // fields
@@ -4386,6 +4557,7 @@ message WorkEffortData {
     option (routines.keys).keys = "work_effort_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: workEffortId
     
     // fields
@@ -4453,6 +4625,7 @@ message TenantData {
     option (routines.keys).keys = "tenant_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: tenantId
     
     // fields
@@ -4472,6 +4645,7 @@ message ShipmentStatusData {
     option (routines.keys).keys = "status_id, shipment_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: statusId, shipmentId
     string id = 200; 
     // fields
@@ -4490,7 +4664,8 @@ message BillingAccountData {
     option (routines.entity_type) = "BillingAccount";
     option (routines.keys).keys = "billing_account_id";
     option (routines.keys).combine = false;
-    option (routines.flat) = true;
+    option (routines.flat) = false;
+    option (routines.has_table) = true;
     // keys: billingAccountId
     
     // fields
@@ -4498,13 +4673,21 @@ message BillingAccountData {
     string billing_account_id = 1;    
     routines.Currency account_limit = 2;
     string account_currency_uom_id = 3; // Uom    
-    string contact_mech_id = 4;    
-    google.protobuf.Timestamp from_date = 5;    
-    google.protobuf.Timestamp thru_date = 6;    
-    string description = 7;    
-    string external_account_id = 8;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 9;    
-    google.protobuf.Timestamp created_tx_stamp = 10;
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    string description = 6;    
+    string external_account_id = 7;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 8;    
+    google.protobuf.Timestamp created_tx_stamp = 9;
+    
+    // relations
+    ContactMechData contact_mech = 10; // ref(ContactMech): contactMechId
+    PostalAddressData postal_address = 11; // ref(PostalAddress): contactMechId
+    repeated BillingAccountRoleData billing_account_role = 12; // ref(BillingAccountRole): billingAccountId
+    repeated InvoiceData invoice = 13; // ref(Invoice): billingAccountId
+    repeated OrderHeaderData order_header = 14; // ref(OrderHeader): billingAccountId
+    repeated PaymentApplicationData payment_application = 15; // ref(PaymentApplication): billingAccountId
+    
         
 }
 
@@ -4514,6 +4697,7 @@ message FacilityContactMechPurposeData {
     option (routines.keys).keys = "facility_id, contact_mech_id, contact_mech_purpose_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: facilityId, contactMechId, contactMechPurposeTypeId, fromDate
     string id = 200; 
     // fields
@@ -4534,6 +4718,7 @@ message ProductKeywordData {
     option (routines.keys).keys = "product_id, keyword, keyword_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, keyword, keywordTypeId
     string id = 200; 
     // fields
@@ -4554,6 +4739,7 @@ message CustRequestItemData {
     option (routines.keys).keys = "cust_request_id, cust_request_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: custRequestId, custRequestItemSeqId
     string id = 200; 
     // fields
@@ -4586,6 +4772,7 @@ message TenantDomainNameData {
     option (routines.keys).keys = "domain_name";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: domainName
     
     // fields
@@ -4603,6 +4790,7 @@ message OrderRoleData {
     option (routines.keys).keys = "order_id, party_id, role_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderId, partyId, roleTypeId
     string id = 200; 
     // fields
@@ -4621,6 +4809,7 @@ message FixedAssetGeoPointData {
     option (routines.keys).keys = "fixed_asset_id, geo_point_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: fixedAssetId, geoPointId, fromDate
     string id = 200; 
     // fields
@@ -4640,6 +4829,7 @@ message RecurrenceRuleData {
     option (routines.keys).keys = "recurrence_rule_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: recurrenceRuleId
     
     // fields
@@ -4671,6 +4861,7 @@ message ProductStorePromoApplData {
     option (routines.keys).keys = "product_store_id, product_promo_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productStoreId, productPromoId, fromDate
     string id = 200; 
     // fields
@@ -4692,6 +4883,7 @@ message ProductConfigProductData {
     option (routines.keys).keys = "config_item_id, config_option_id, product_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: configItemId, configOptionId, productId
     string id = 200; 
     // fields
@@ -4712,6 +4904,7 @@ message ProductPriceActionData {
     option (routines.keys).keys = "product_price_rule_id, product_price_action_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPriceRuleId, productPriceActionSeqId
     string id = 200; 
     // fields
@@ -4732,6 +4925,7 @@ message ShipmentMethodTypeData {
     option (routines.keys).keys = "shipment_method_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: shipmentMethodTypeId
     
     // fields
@@ -4750,6 +4944,7 @@ message QuoteTermData {
     option (routines.keys).keys = "term_type_id, quote_id, quote_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: termTypeId, quoteId, quoteItemSeqId
     string id = 200; 
     // fields
@@ -4773,6 +4968,7 @@ message AcctgTransEntryData {
     option (routines.keys).keys = "acctg_trans_id, acctg_trans_entry_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: acctgTransId, acctgTransEntrySeqId
     string id = 200; 
     // fields
@@ -4813,6 +5009,7 @@ message OrderItemBillingData {
     option (routines.keys).keys = "order_id, order_item_seq_id, invoice_id, invoice_item_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderId, orderItemSeqId, invoiceId, invoiceItemSeqId
     string id = 200; 
     // fields
@@ -4836,6 +5033,7 @@ message OrderItemShipGroupData {
     option (routines.keys).keys = "order_id, ship_group_seq_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: orderId, shipGroupSeqId
     string id = 200; 
     // fields
@@ -4871,6 +5069,7 @@ message CustRequestTypeData {
     option (routines.keys).keys = "cust_request_type_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: custRequestTypeId
     
     // fields
@@ -4891,6 +5090,7 @@ message AgreementProductApplData {
     option (routines.keys).keys = "agreement_id, agreement_item_seq_id, product_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: agreementId, agreementItemSeqId, productId
     string id = 200; 
     // fields
@@ -4910,6 +5110,7 @@ message ProductSubscriptionResourceData {
     option (routines.keys).keys = "product_id, subscription_resource_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productId, subscriptionResourceId, fromDate
     string id = 200; 
     // fields
@@ -4944,6 +5145,7 @@ message CreditCardData {
     option (routines.keys).keys = "payment_method_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: paymentMethodId
     
     // fields
@@ -4976,6 +5178,7 @@ message QuoteData {
     option (routines.keys).keys = "quote_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: quoteId
     
     // fields
@@ -5003,6 +5206,7 @@ message ProductPromoData {
     option (routines.keys).keys = "product_promo_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productPromoId
     
     // fields
@@ -5033,6 +5237,7 @@ message ProductCategoryMemberData {
     option (routines.keys).keys = "product_category_id, product_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productCategoryId, productId, fromDate
     string id = 200; 
     // fields
@@ -5055,6 +5260,7 @@ message AgreementTermData {
     option (routines.keys).keys = "agreement_term_id";
     option (routines.keys).combine = false;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: agreementTermId
     
     // fields
@@ -5083,6 +5289,7 @@ message ProductCategoryLinkData {
     option (routines.keys).keys = "product_category_id, link_seq_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productCategoryId, linkSeqId, fromDate
     string id = 200; 
     // fields
@@ -5111,6 +5318,7 @@ message ProductFeatureIactnData {
     option (routines.keys).keys = "product_feature_id, product_feature_id_to";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: productFeatureId, productFeatureIdTo
     string id = 200; 
     // fields
@@ -5130,6 +5338,7 @@ message WorkEffortAssocData {
     option (routines.keys).keys = "work_effort_id_from, work_effort_id_to, work_effort_assoc_type_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate
     string id = 200; 
     // fields
@@ -5151,6 +5360,7 @@ message QuoteRoleData {
     option (routines.keys).keys = "quote_id, party_id, role_type_id";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: quoteId, partyId, roleTypeId
     string id = 200; 
     // fields
@@ -5171,6 +5381,7 @@ message SurveyQuestionApplData {
     option (routines.keys).keys = "survey_id, survey_question_id, from_date";
     option (routines.keys).combine = true;
     option (routines.flat) = true;
+    option (routines.has_table) = true;
     // keys: surveyId, surveyQuestionId, fromDate
     string id = 200; 
     // fields

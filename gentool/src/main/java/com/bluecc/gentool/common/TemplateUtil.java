@@ -17,6 +17,15 @@ import java.util.Map;
 
 public class TemplateUtil {
     public static String build(String templateLoc, Map<String, Object> ctx) throws IOException {
+        Jinjava jinjava = getJinjava();
+
+        String template = Resources.toString(Resources
+                        .getResource(templateLoc),
+                Charsets.UTF_8);
+        return jinjava.render(template, ctx);
+    }
+
+    public static Jinjava getJinjava() {
         Jinjava jinjava = new Jinjava();
         jinjava.getGlobalContext().registerFilter(new VarFilter());
         jinjava.getGlobalContext().registerFilter(new SnakeCaseFilter());
@@ -24,11 +33,7 @@ public class TemplateUtil {
                 e -> Util.snakeToCamel(e.toString())));
         jinjava.getGlobalContext().registerFilter(new NamedFilter("upperSnake",
                 e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, e.toString())));
-
-        String template = Resources.toString(Resources
-                        .getResource(templateLoc),
-                Charsets.UTF_8);
-        return jinjava.render(template, ctx);
+        return jinjava;
     }
 
     public static String sourceGen(String entName, String tplName) throws IOException {
