@@ -2,7 +2,9 @@ package com.bluecc.hubs.stereotypes;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import static com.bluecc.hubs.stereotypes.AccountingSeedData.*;import com.bluecc.hubs.stub.PeriodTypeData;
+import static com.bluecc.hubs.stereotypes.AccountingSeedData.*;
+
+import com.bluecc.hubs.stub.PeriodTypeData;
 import com.bluecc.hubs.stub.ProductAverageCostTypeData;
 import com.bluecc.hubs.stub.PartyIdentificationTypeData;
 import com.bluecc.hubs.stub.FixedAssetProductTypeData;
