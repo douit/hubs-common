@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.InventoryItemDetailData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.InventoryItemDetailData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String inventoryItemId;
-    String inventoryItemDetailSeqId;
+    @RIndex String inventoryItemId;
+    @RIndex String inventoryItemDetailSeqId;
     java.time.LocalDateTime effectiveDate;
     java.math.BigDecimal quantityOnHandDiff;
     java.math.BigDecimal availableToPromiseDiff;
@@ -46,7 +49,7 @@ public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

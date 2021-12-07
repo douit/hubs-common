@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductConfigProductData;
 
 
@@ -17,19 +19,20 @@ import com.bluecc.hubs.stub.ProductConfigProductData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductConfigProduct implements IEventModel<ProductConfigProductData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String configItemId;
-    String configOptionId;
-    String productId;
+    @RIndex String configItemId;
+    @RIndex String configOptionId;
+    @RIndex String productId;
     java.math.BigDecimal quantity;
     Long sequenceNum;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

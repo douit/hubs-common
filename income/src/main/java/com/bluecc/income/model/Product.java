@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductFlatData;
 
 import com.bluecc.hubs.stub.ProductData;
@@ -19,10 +21,11 @@ import com.bluecc.hubs.stub.ProductData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class Product implements IEventModel<ProductFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productId;
+    @RIndex String productId;
     String productTypeId;
     String primaryProductCategoryId;
     String facilityId;

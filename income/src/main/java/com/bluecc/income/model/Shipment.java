@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ShipmentFlatData;
 
 import com.bluecc.hubs.stub.ShipmentData;
@@ -19,10 +21,11 @@ import com.bluecc.hubs.stub.ShipmentData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String shipmentId;
+    @RIndex String shipmentId;
     String shipmentTypeId;
     String statusId;
     String primaryOrderId;

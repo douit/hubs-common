@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.SurveyQuestionData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.SurveyQuestionData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class SurveyQuestion implements IEventModel<SurveyQuestionData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String surveyQuestionId;
+    @RIndex String surveyQuestionId;
     String surveyQuestionCategoryId;
     String surveyQuestionTypeId;
     String description;

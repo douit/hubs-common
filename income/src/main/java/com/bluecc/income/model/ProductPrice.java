@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductPriceData;
 
 
@@ -17,14 +19,15 @@ import com.bluecc.hubs.stub.ProductPriceData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductPrice implements IEventModel<ProductPriceData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productId;
-    String productPriceTypeId;
-    String productPricePurposeId;
-    String currencyUomId;
-    String productStoreGroupId;
+    @RIndex String productId;
+    @RIndex String productPriceTypeId;
+    @RIndex String productPricePurposeId;
+    @RIndex String currencyUomId;
+    @RIndex String productStoreGroupId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     java.math.BigDecimal price;
@@ -45,7 +48,7 @@ public class ProductPrice implements IEventModel<ProductPriceData.Builder>, Seri
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

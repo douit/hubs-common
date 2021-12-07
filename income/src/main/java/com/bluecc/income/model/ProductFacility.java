@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductFacilityData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.ProductFacilityData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductFacility implements IEventModel<ProductFacilityData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productId;
-    String facilityId;
+    @RIndex String productId;
+    @RIndex String facilityId;
     java.math.BigDecimal minimumStock;
     java.math.BigDecimal reorderQuantity;
     Long daysToShip;
@@ -32,7 +35,7 @@ public class ProductFacility implements IEventModel<ProductFacilityData.Builder>
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

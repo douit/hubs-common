@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.SurveyMultiRespColumnData;
 
 
@@ -17,19 +19,20 @@ import com.bluecc.hubs.stub.SurveyMultiRespColumnData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class SurveyMultiRespColumn implements IEventModel<SurveyMultiRespColumnData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String surveyId;
-    String surveyMultiRespId;
-    String surveyMultiRespColId;
+    @RIndex String surveyId;
+    @RIndex String surveyMultiRespId;
+    @RIndex String surveyMultiRespColId;
     String columnTitle;
     Long sequenceNum;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

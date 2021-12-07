@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.RecurrenceInfoData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.RecurrenceInfoData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class RecurrenceInfo implements IEventModel<RecurrenceInfoData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String recurrenceInfoId;
+    @RIndex String recurrenceInfoId;
     java.time.LocalDateTime startDateTime;
     String exceptionDateTimes;
     String recurrenceDateTimes;

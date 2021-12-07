@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.CommunicationEventData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.CommunicationEventData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class CommunicationEvent implements IEventModel<CommunicationEventData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String communicationEventId;
+    @RIndex String communicationEventId;
     String communicationEventTypeId;
     String origCommEventId;
     String parentCommEventId;

@@ -375,6 +375,16 @@ public class EntityMeta {
             return format("set%s", fixedClassName());
         }
 
+        public String getAnnotation(){
+            if(name.equals("id")){
+                return "@RId ";
+            }
+            if(pk && !isDateTimeField()){
+                return "@RIndex ";
+            }
+            return "";
+        }
+
         public String valuePart(String rawValue){
             String value=format("\"%s\"", rawValue.replace('"', '\''));
             String valuePart;

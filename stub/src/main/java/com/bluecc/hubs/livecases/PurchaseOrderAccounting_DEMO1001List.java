@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import static com.bluecc.hubs.livecases.PurchaseOrderAccounting_DEMO1001.*;
 
-import com.bluecc.hubs.stub.InventoryItemData;
+import com.bluecc.hubs.stub.InventoryItemFlatData;
 import com.bluecc.hubs.stub.OrderHeaderFlatData;
 import com.bluecc.hubs.stub.ShipmentRouteSegmentData;
 import com.bluecc.hubs.stub.InvoiceFlatData;
@@ -30,7 +30,7 @@ import com.bluecc.hubs.stub.OrderItemPriceInfoData;
 import com.bluecc.hubs.stub.OrderRoleData;
 
 public final class PurchaseOrderAccounting_DEMO1001List {
-    public static List<InventoryItemData> inventoryItemList() {
+    public static List<InventoryItemFlatData> inventoryItemList() {
         return ImmutableList.of(        
             InventoryItem_9025());
     }

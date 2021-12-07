@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.AcctgTransEntryData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.AcctgTransEntryData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String acctgTransId;
-    String acctgTransEntrySeqId;
+    @RIndex String acctgTransId;
+    @RIndex String acctgTransEntrySeqId;
     String acctgTransEntryTypeId;
     String description;
     String voucherRef;
@@ -49,7 +52,7 @@ public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

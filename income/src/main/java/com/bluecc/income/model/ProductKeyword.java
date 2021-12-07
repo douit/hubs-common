@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductKeywordData;
 
 
@@ -17,19 +19,20 @@ import com.bluecc.hubs.stub.ProductKeywordData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductKeyword implements IEventModel<ProductKeywordData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productId;
-    String keyword;
-    String keywordTypeId;
+    @RIndex String productId;
+    @RIndex String keyword;
+    @RIndex String keywordTypeId;
     Long relevancyWeight;
     String statusId;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

@@ -20,14 +20,31 @@ import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 
 @Singleton
 @Slf4j
-public class GenericProcs extends AbstractProcs{
+public class GenericProcs extends AbstractProcs {
+    public static final Response RESULT_OK = Response.newBuilder()
+            .setResult(Response.Result.OK)
+            .build();
+
+    public static Response error(String errorMessage){
+        return Response.newBuilder()
+                .setResult(Response.Result.ERR)
+                .setMessage(errorMessage)
+                .build();
+    }
+
+    public static Response wrap(int result){
+        return Response.newBuilder()
+                .setResult(Response.Result.OK)
+                .setMessage(Integer.toString(result))
+                .build();
+    }
+
     public void storeCompoundObject(Message messageData, StreamObserver<Response> responseObserver) {
         process(ctx -> {
-            Map<String, MessageMapCollector.ResultData> result=
+            Map<String, MessageMapCollector.ResultData> result =
                     storeCompoundObject(ctx, messageData);
 
-            Response reply = null;
-            reply = Response.newBuilder()
+            Response reply = Response.newBuilder()
                     .setResult(Response.Result.OK)
                     .setMessage(result.get("_id_").getChildId())
                     .build();
@@ -37,25 +54,42 @@ public class GenericProcs extends AbstractProcs{
         });
     }
 
+
+    public void update(Message flatData, StreamObserver<Response> responseObserver) {
+        process(c -> {
+            int ret=update(c, flatData);
+            responseObserver.onNext(wrap(ret));
+            responseObserver.onCompleted();
+        });
+    }
+
+    public void delete(Message flatData, StreamObserver<Response> responseObserver) {
+        process(c -> {
+            int ret=delete(c, flatData);
+            responseObserver.onNext(wrap(ret));
+            responseObserver.onCompleted();
+        });
+    }
+
     public void storeOrUpdate(IProc.ProcContext c, Message e) {
-        List<Map<String, Object>> rs= findById(c, e);
-        if(rs.isEmpty()) {
+        List<Map<String, Object>> rs = findById(c, e);
+        if (rs.isEmpty()) {
             create(c, e);
-        }else{
+        } else {
             log.debug("it exists, update it");
             update(c, e);
         }
     }
 
-    public void storeDataFile(IProc.ProcContext c, String source){
+    public void storeDataFile(IProc.ProcContext c, String source) {
         Multimap<String, Message> dataMap = loadDataSet(source);
-        dataMap.asMap().forEach((k,v)->{
-            v.forEach(e ->{
-                String ent=ProtoTypes.getEntityTypeByMessage(e);
-                if(ProtoTypes.hasTable(e)) {
+        dataMap.asMap().forEach((k, v) -> {
+            v.forEach(e -> {
+                String ent = ProtoTypes.getEntityTypeByMessage(e);
+                if (ProtoTypes.hasTable(e)) {
                     log.debug("store {}: {}", ent, e);
                     storeOrUpdate(c, e);
-                }else{
+                } else {
                     log.info("entity {} doesn't has table, ignore",
                             ent);
                 }
@@ -72,8 +106,8 @@ public class GenericProcs extends AbstractProcs{
     public static Multimap<String, Message> loadDataSet(String source) {
         Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
         collectEntityData(dataList, source, false);
-        DataFill dataFill=new DataFill();
-        Multimap<String, Message> dataMap=dataFill.setupData(dataList);
+        DataFill dataFill = new DataFill();
+        Multimap<String, Message> dataMap = dataFill.setupData(dataList);
         return dataMap;
     }
 }

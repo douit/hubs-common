@@ -84,7 +84,7 @@ public class InvoiceItemDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "inventory_item",
                                             InventoryItem.class)
                                     .forEach(el -> pb.setInventoryItem(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set product to head entity                        

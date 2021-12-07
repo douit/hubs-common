@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductSubscriptionResourceData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.ProductSubscriptionResourceData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductSubscriptionResource implements IEventModel<ProductSubscriptionResourceData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productId;
-    String subscriptionResourceId;
+    @RIndex String productId;
+    @RIndex String subscriptionResourceId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     java.time.LocalDateTime purchaseFromDate;
@@ -43,7 +46,7 @@ public class ProductSubscriptionResource implements IEventModel<ProductSubscript
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

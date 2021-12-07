@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.SupplierProductData;
 
 
@@ -17,17 +19,18 @@ import com.bluecc.hubs.stub.SupplierProductData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class SupplierProduct implements IEventModel<SupplierProductData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productId;
-    String partyId;
+    @RIndex String productId;
+    @RIndex String partyId;
     java.time.LocalDateTime availableFromDate;
     java.time.LocalDateTime availableThruDate;
     String supplierPrefOrderId;
     String supplierRatingTypeId;
     java.math.BigDecimal standardLeadTimeDays;
-    java.math.BigDecimal minimumOrderQuantity;
+    @RIndex java.math.BigDecimal minimumOrderQuantity;
     java.math.BigDecimal orderQtyIncrements;
     java.math.BigDecimal unitsIncluded;
     String quantityUomId;
@@ -35,7 +38,7 @@ public class SupplierProduct implements IEventModel<SupplierProductData.Builder>
     String agreementItemSeqId;
     java.math.BigDecimal lastPrice;
     java.math.BigDecimal shippingPrice;
-    String currencyUomId;
+    @RIndex String currencyUomId;
     String supplierProductName;
     String supplierProductId;
     Character canDropShip;
@@ -44,7 +47,7 @@ public class SupplierProduct implements IEventModel<SupplierProductData.Builder>
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

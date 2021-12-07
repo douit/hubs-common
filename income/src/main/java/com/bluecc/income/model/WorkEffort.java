@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.WorkEffortData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.WorkEffortData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String workEffortId;
+    @RIndex String workEffortId;
     String workEffortTypeId;
     String currentStatusId;
     java.time.LocalDateTime lastStatusUpdate;

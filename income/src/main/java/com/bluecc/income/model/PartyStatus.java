@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.PartyStatusData;
 
 
@@ -17,18 +19,19 @@ import com.bluecc.hubs.stub.PartyStatusData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class PartyStatus implements IEventModel<PartyStatusData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String statusId;
-    String partyId;
+    @RIndex String statusId;
+    @RIndex String partyId;
     java.time.LocalDateTime statusDate;
     String changeByUserLoginId;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

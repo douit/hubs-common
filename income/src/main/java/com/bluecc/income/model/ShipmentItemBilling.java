@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ShipmentItemBillingData;
 
 
@@ -17,18 +19,19 @@ import com.bluecc.hubs.stub.ShipmentItemBillingData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ShipmentItemBilling implements IEventModel<ShipmentItemBillingData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String shipmentId;
-    String shipmentItemSeqId;
-    String invoiceId;
-    String invoiceItemSeqId;
+    @RIndex String shipmentId;
+    @RIndex String shipmentItemSeqId;
+    @RIndex String invoiceId;
+    @RIndex String invoiceItemSeqId;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

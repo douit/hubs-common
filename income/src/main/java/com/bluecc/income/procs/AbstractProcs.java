@@ -7,6 +7,7 @@ import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.descriptor.INameSymbol;
 import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.stub.Identity;
 import com.bluecc.income.dummy.store.HubsStore;
 import com.bluecc.income.exchange.FlatMessageCollector;
 import com.bluecc.income.exchange.IProc;
@@ -74,6 +75,12 @@ public class AbstractProcs {
 
     protected void truncate(IProc.ProcContext ctx, String... tableNames) {
         truncate(ctx, Arrays.asList(tableNames));
+    }
+
+    public String getPk(String entityName){
+        EntityMeta meta=protoMeta.getEntityMeta(entityName);
+        Preconditions.checkNotNull(meta, "Cannot find entity %s", entityName);
+        return meta.getPk();
     }
 
     public static String getPk(INameSymbol symbol) {
@@ -317,6 +324,16 @@ public class AbstractProcs {
         return total;
     }
 
+    public int delete(IProc.ProcContext ctx, Identity identity) {
+        int total = ctx.getHandle().createUpdate("delete from <table> where <id_cond>")
+                .define("table", tableName(identity))
+                .define("id_cond", getIdCond(identity))
+                .bind(getKey(identity), identity.getValue())
+                .execute();
+        assertEquals(1, total);
+        return total;
+    }
+
     public List<Map<String, Object>> findById(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
         List<Map<String, Object>> rs = ctx.getHandle().createQuery(
@@ -349,6 +366,29 @@ public class AbstractProcs {
                 .mapTo(clz)
                 .list();
         return rs;
+    }
+
+    String getIdCond(Identity identity){
+        String key= getKey(identity);
+        return String.format("%s=:%s", key, key);
+    }
+
+    private String getKey(Identity identity) {
+        return getPk(identity.getType());
+    }
+
+    public <T> T findOne(IProc.ProcContext ctx, Identity identity, Class<T> clz) {
+        T rec = ctx.getHandle().createQuery("select * from <table> where <fields_cond>")
+                .define("table", tableName(identity))
+                .define("fields_cond", getIdCond(identity))
+                .bind(getKey(identity), identity.getValue())
+                .mapTo(clz)
+                .one();
+        return rec;
+    }
+
+    private String tableName(Identity identity) {
+        return Util.toSnakecase(identity.getType());
     }
 
     public <T> T findOne(IProc.ProcContext ctx, Message flatData, Class<T> clz) {

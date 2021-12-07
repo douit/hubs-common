@@ -83,6 +83,16 @@ service ShipmentService {
     rpc FindById(routines.Identity) returns (ShipmentFlatData) {}
 }
 
+// The Inventory Item service definition.
+service InventoryItemService {
+    rpc Create(InventoryItemData) returns (routines.Response) {}
+    rpc Update(InventoryItemFlatData) returns (routines.Response) {}
+    rpc Delete(InventoryItemFlatData) returns (routines.Response) {}
+    rpc Find(InventoryItemFlatData) returns (InventoryItemFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (InventoryItemFlatData) {}
+}
+
 // The Product Store service definition.
 service ProductStoreService {
     rpc Create(ProductStoreData) returns (routines.Response) {}
@@ -483,6 +493,45 @@ message ShipmentFlatData {
     string last_modified_by_user_login = 30;    
     google.protobuf.Timestamp last_updated_tx_stamp = 31;    
     google.protobuf.Timestamp created_tx_stamp = 32;  
+}
+
+// flat-ent: Inventory Item
+message InventoryItemFlatData {
+    option (routines.entity_type) = "InventoryItem";
+    option (routines.keys).keys = "inventory_item_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: inventoryItemId
+        
+    string inventory_item_id = 1;    
+    string inventory_item_type_id = 2;    
+    string product_id = 3;    
+    string party_id = 4;    
+    string owner_party_id = 5;
+    string status_id = 6; // StatusItem    
+    google.protobuf.Timestamp datetime_received = 7;    
+    google.protobuf.Timestamp datetime_manufactured = 8;    
+    google.protobuf.Timestamp expire_date = 9;    
+    string facility_id = 10;    
+    string container_id = 11;    
+    string lot_id = 12;
+    string uom_id = 13; // Uom    
+    string bin_number = 14;    
+    string location_seq_id = 15;    
+    string comments = 16;    
+    routines.FixedPoint quantity_on_hand_total = 17;    
+    routines.FixedPoint available_to_promise_total = 18;    
+    routines.FixedPoint accounting_quantity_total = 19;    
+    string serial_number = 20;    
+    string soft_identifier = 21;    
+    string activation_number = 22;    
+    google.protobuf.Timestamp activation_valid_thru = 23;    
+    routines.FixedPoint unit_cost = 24;
+    string currency_uom_id = 25; // Uom    
+    string fixed_asset_id = 26;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 27;    
+    google.protobuf.Timestamp created_tx_stamp = 28;  
 }
 
 // flat-ent: Product Store
@@ -4166,40 +4215,53 @@ message InventoryItemData {
     option (routines.entity_type) = "InventoryItem";
     option (routines.keys).keys = "inventory_item_id";
     option (routines.keys).combine = false;
-    option (routines.flat) = true;
+    option (routines.flat) = false;
     option (routines.has_table) = true;
     // keys: inventoryItemId
     
     // fields
         
     string inventory_item_id = 1;    
-    string inventory_item_type_id = 2;    
-    string product_id = 3;    
-    string party_id = 4;    
-    string owner_party_id = 5;
-    string status_id = 6; // StatusItem    
-    google.protobuf.Timestamp datetime_received = 7;    
-    google.protobuf.Timestamp datetime_manufactured = 8;    
-    google.protobuf.Timestamp expire_date = 9;    
-    string facility_id = 10;    
-    string container_id = 11;    
-    string lot_id = 12;
-    string uom_id = 13; // Uom    
-    string bin_number = 14;    
-    string location_seq_id = 15;    
-    string comments = 16;    
-    routines.FixedPoint quantity_on_hand_total = 17;    
-    routines.FixedPoint available_to_promise_total = 18;    
-    routines.FixedPoint accounting_quantity_total = 19;    
-    string serial_number = 20;    
-    string soft_identifier = 21;    
-    string activation_number = 22;    
-    google.protobuf.Timestamp activation_valid_thru = 23;    
-    routines.FixedPoint unit_cost = 24;
-    string currency_uom_id = 25; // Uom    
-    string fixed_asset_id = 26;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 27;    
-    google.protobuf.Timestamp created_tx_stamp = 28;
+    string inventory_item_type_id = 2;
+    string status_id = 3; // StatusItem    
+    google.protobuf.Timestamp datetime_received = 4;    
+    google.protobuf.Timestamp datetime_manufactured = 5;    
+    google.protobuf.Timestamp expire_date = 6;    
+    string container_id = 7;    
+    string lot_id = 8;
+    string uom_id = 9; // Uom    
+    string bin_number = 10;    
+    string location_seq_id = 11;    
+    string comments = 12;    
+    routines.FixedPoint quantity_on_hand_total = 13;    
+    routines.FixedPoint available_to_promise_total = 14;    
+    routines.FixedPoint accounting_quantity_total = 15;    
+    string serial_number = 16;    
+    string soft_identifier = 17;    
+    string activation_number = 18;    
+    google.protobuf.Timestamp activation_valid_thru = 19;    
+    routines.FixedPoint unit_cost = 20;
+    string currency_uom_id = 21; // Uom    
+    google.protobuf.Timestamp last_updated_tx_stamp = 22;    
+    google.protobuf.Timestamp created_tx_stamp = 23;
+    
+    // relations
+    ProductData product = 24; // ref(Product): productId
+    PartyData party = 25; // ref(Party): partyId
+    PartyData owner_party = 26; // ref(OwnerParty): ownerPartyId
+    ProductFacilityData product_facility = 27; // ref(ProductFacility): productId + facilityId
+    FacilityLocationData facility_location = 28; // ref(FacilityLocation): facilityId + locationSeqId
+    ProductFacilityLocationData product_facility_location = 29; // ref(ProductFacilityLocation): productId + facilityId + locationSeqId
+    FixedAssetData fixed_asset_fixed_asset = 30; // ref(FixedAssetFixedAsset): fixedAssetId
+    repeated AcctgTransData acctg_trans = 31; // ref(AcctgTrans): inventoryItemId
+    repeated AcctgTransEntryData acctg_trans_entry = 32; // ref(AcctgTransEntry): inventoryItemId
+    repeated InventoryItemDetailData inventory_item_detail = 33; // ref(InventoryItemDetail): inventoryItemId
+    repeated InvoiceItemData invoice_item = 34; // ref(InvoiceItem): inventoryItemId
+    repeated ItemIssuanceData item_issuance = 35; // ref(ItemIssuance): inventoryItemId
+    repeated OrderItemData from_order_item = 36; // ref(FromOrderItem): inventoryItemId
+    repeated OrderItemShipGrpInvResData order_item_ship_grp_inv_res = 37; // ref(OrderItemShipGrpInvRes): inventoryItemId
+    repeated ShipmentReceiptData shipment_receipt = 38; // ref(ShipmentReceipt): inventoryItemId
+    
         
 }
 

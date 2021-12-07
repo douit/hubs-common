@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.OrderItemShipGroupData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.OrderItemShipGroupData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class OrderItemShipGroup implements IEventModel<OrderItemShipGroupData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String orderId;
-    String shipGroupSeqId;
+    @RIndex String orderId;
+    @RIndex String shipGroupSeqId;
     String shipmentMethodTypeId;
     String supplierPartyId;
     String supplierAgreementId;
@@ -44,7 +47,7 @@ public class OrderItemShipGroup implements IEventModel<OrderItemShipGroupData.Bu
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

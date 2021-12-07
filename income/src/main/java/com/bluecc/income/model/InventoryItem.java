@@ -10,6 +10,10 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.stub.InventoryItemFlatData;
+
 import com.bluecc.hubs.stub.InventoryItemData;
 
 
@@ -17,10 +21,11 @@ import com.bluecc.hubs.stub.InventoryItemData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InventoryItem implements IEventModel<InventoryItemData.Builder>, Serializable {
+@REntity
+public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String inventoryItemId;
+    @RIndex String inventoryItemId;
     String inventoryItemTypeId;
     String productId;
     String partyId;
@@ -57,8 +62,8 @@ public class InventoryItem implements IEventModel<InventoryItemData.Builder>, Se
         return toDataBuilder().build();
     }
 
-    public InventoryItemData.Builder toDataBuilder() {
-        InventoryItemData.Builder builder = InventoryItemData.newBuilder();
+    public InventoryItemFlatData.Builder toDataBuilder() {
+        InventoryItemFlatData.Builder builder = InventoryItemFlatData.newBuilder();
         if (inventoryItemId != null) {
             builder.setInventoryItemId(inventoryItemId);
         }
@@ -147,7 +152,7 @@ public class InventoryItem implements IEventModel<InventoryItemData.Builder>, Se
         return builder;
     }
 
-    public static InventoryItem fromData(InventoryItemData data) {
+    public static InventoryItem fromData(InventoryItemFlatData data) {
         return InventoryItem.builder()
                 .inventoryItemId(data.getInventoryItemId())
                 .inventoryItemTypeId(data.getInventoryItemTypeId())
@@ -181,5 +186,80 @@ public class InventoryItem implements IEventModel<InventoryItemData.Builder>, Se
                 .build();
     }
 
-    
+        
+    public InventoryItemData.Builder toHeadBuilder() {
+        InventoryItemData.Builder builder = InventoryItemData.newBuilder();
+        if (inventoryItemId != null) {
+            builder.setInventoryItemId(inventoryItemId);
+        }
+        if (inventoryItemTypeId != null) {
+            builder.setInventoryItemTypeId(inventoryItemTypeId);
+        }
+        if (statusId != null) {
+            builder.setStatusId(statusId);
+        }
+        if (datetimeReceived != null) {
+            builder.setDatetimeReceived(getTimestamp(datetimeReceived));
+        }
+        if (datetimeManufactured != null) {
+            builder.setDatetimeManufactured(getTimestamp(datetimeManufactured));
+        }
+        if (expireDate != null) {
+            builder.setExpireDate(getTimestamp(expireDate));
+        }
+        if (containerId != null) {
+            builder.setContainerId(containerId);
+        }
+        if (lotId != null) {
+            builder.setLotId(lotId);
+        }
+        if (uomId != null) {
+            builder.setUomId(uomId);
+        }
+        if (binNumber != null) {
+            builder.setBinNumber(binNumber);
+        }
+        if (locationSeqId != null) {
+            builder.setLocationSeqId(locationSeqId);
+        }
+        if (comments != null) {
+            builder.setComments(comments);
+        }
+        if (quantityOnHandTotal != null) {
+            builder.setQuantityOnHandTotal(getFixedPoint(quantityOnHandTotal));
+        }
+        if (availableToPromiseTotal != null) {
+            builder.setAvailableToPromiseTotal(getFixedPoint(availableToPromiseTotal));
+        }
+        if (accountingQuantityTotal != null) {
+            builder.setAccountingQuantityTotal(getFixedPoint(accountingQuantityTotal));
+        }
+        if (serialNumber != null) {
+            builder.setSerialNumber(serialNumber);
+        }
+        if (softIdentifier != null) {
+            builder.setSoftIdentifier(softIdentifier);
+        }
+        if (activationNumber != null) {
+            builder.setActivationNumber(activationNumber);
+        }
+        if (activationValidThru != null) {
+            builder.setActivationValidThru(getTimestamp(activationValidThru));
+        }
+        if (unitCost != null) {
+            builder.setUnitCost(getFixedPoint(unitCost));
+        }
+        if (currencyUomId != null) {
+            builder.setCurrencyUomId(currencyUomId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return builder;
+    }
+
 }

@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductStoreShipmentMethData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.ProductStoreShipmentMethData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductStoreShipmentMeth implements IEventModel<ProductStoreShipmentMethData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productStoreShipMethId;
+    @RIndex String productStoreShipMethId;
     String productStoreId;
     String shipmentMethodTypeId;
     String partyId;

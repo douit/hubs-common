@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.WebSiteData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.WebSiteData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class WebSite implements IEventModel<WebSiteData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String webSiteId;
+    @RIndex String webSiteId;
     String siteName;
     String httpHost;
     String httpPort;

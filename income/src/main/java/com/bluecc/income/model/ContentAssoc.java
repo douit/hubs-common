@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ContentAssocData;
 
 
@@ -17,12 +19,13 @@ import com.bluecc.hubs.stub.ContentAssocData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String contentId;
-    String contentIdTo;
-    String contentAssocTypeId;
+    @RIndex String contentId;
+    @RIndex String contentIdTo;
+    @RIndex String contentAssocTypeId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     String contentAssocPredicateId;
@@ -39,7 +42,7 @@ public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, Seri
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

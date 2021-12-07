@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.PartyIdentificationTypeData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.PartyIdentificationTypeData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class PartyIdentificationType implements IEventModel<PartyIdentificationTypeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String partyIdentificationTypeId;
+    @RIndex String partyIdentificationTypeId;
     String parentTypeId;
     Character hasTable;
     String description;

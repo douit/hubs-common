@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.WorkEffortGoodStandardData;
 
 
@@ -17,12 +19,13 @@ import com.bluecc.hubs.stub.WorkEffortGoodStandardData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandardData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String workEffortId;
-    String productId;
-    String workEffortGoodStdTypeId;
+    @RIndex String workEffortId;
+    @RIndex String productId;
+    @RIndex String workEffortGoodStdTypeId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     String statusId;
@@ -32,7 +35,7 @@ public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandar
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

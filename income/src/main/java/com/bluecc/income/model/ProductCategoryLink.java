@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductCategoryLinkData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.ProductCategoryLinkData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductCategoryLink implements IEventModel<ProductCategoryLinkData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productCategoryId;
-    String linkSeqId;
+    @RIndex String productCategoryId;
+    @RIndex String linkSeqId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     String comments;
@@ -37,7 +40,7 @@ public class ProductCategoryLink implements IEventModel<ProductCategoryLinkData.
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

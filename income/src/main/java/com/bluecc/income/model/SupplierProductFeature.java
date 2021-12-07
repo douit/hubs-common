@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.SupplierProductFeatureData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.SupplierProductFeatureData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class SupplierProductFeature implements IEventModel<SupplierProductFeatureData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String partyId;
-    String productFeatureId;
+    @RIndex String partyId;
+    @RIndex String productFeatureId;
     String description;
     String uomId;
     String idCode;
@@ -29,7 +32,7 @@ public class SupplierProductFeature implements IEventModel<SupplierProductFeatur
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.PartyGroupFlatData;
 
 import com.bluecc.hubs.stub.PartyGroupData;
@@ -19,10 +21,11 @@ import com.bluecc.hubs.stub.PartyGroupData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String partyId;
+    @RIndex String partyId;
     String groupName;
     String groupNameLocal;
     String officeSiteName;

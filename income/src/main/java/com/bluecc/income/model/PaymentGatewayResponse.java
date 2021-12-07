@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.PaymentGatewayResponseData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.PaymentGatewayResponseData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class PaymentGatewayResponse implements IEventModel<PaymentGatewayResponseData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String paymentGatewayResponseId;
+    @RIndex String paymentGatewayResponseId;
     String paymentServiceTypeEnumId;
     String orderPaymentPreferenceId;
     String paymentMethodTypeId;

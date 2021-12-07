@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.TenantData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.TenantData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class Tenant implements IEventModel<TenantData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String tenantId;
+    @RIndex String tenantId;
     String tenantName;
     String initialPath;
     Character disabled;

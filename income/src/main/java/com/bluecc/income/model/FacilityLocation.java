@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.FacilityLocationData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.FacilityLocationData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class FacilityLocation implements IEventModel<FacilityLocationData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String facilityId;
-    String locationSeqId;
+    @RIndex String facilityId;
+    @RIndex String locationSeqId;
     String locationTypeEnumId;
     String areaId;
     String aisleId;
@@ -33,7 +36,7 @@ public class FacilityLocation implements IEventModel<FacilityLocationData.Builde
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

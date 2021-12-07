@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductConfigOptionData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.ProductConfigOptionData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductConfigOption implements IEventModel<ProductConfigOptionData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String configItemId;
-    String configOptionId;
+    @RIndex String configItemId;
+    @RIndex String configOptionId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     String configOptionName;
@@ -31,7 +34,7 @@ public class ProductConfigOption implements IEventModel<ProductConfigOptionData.
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

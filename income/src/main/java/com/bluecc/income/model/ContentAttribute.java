@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ContentAttributeData;
 
 
@@ -17,18 +19,19 @@ import com.bluecc.hubs.stub.ContentAttributeData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ContentAttribute implements IEventModel<ContentAttributeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String contentId;
-    String attrName;
+    @RIndex String contentId;
+    @RIndex String attrName;
     String attrValue;
     String attrDescription;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

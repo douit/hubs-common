@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductStoreRoleData;
 
 
@@ -17,12 +19,13 @@ import com.bluecc.hubs.stub.ProductStoreRoleData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductStoreRole implements IEventModel<ProductStoreRoleData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String partyId;
-    String roleTypeId;
-    String productStoreId;
+    @RIndex String partyId;
+    @RIndex String roleTypeId;
+    @RIndex String productStoreId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     Long sequenceNum;
@@ -30,7 +33,7 @@ public class ProductStoreRole implements IEventModel<ProductStoreRoleData.Builde
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

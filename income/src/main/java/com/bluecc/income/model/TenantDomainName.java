@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.TenantDomainNameData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.TenantDomainNameData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class TenantDomainName implements IEventModel<TenantDomainNameData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     String tenantId;
-    String domainName;
+    @RIndex String domainName;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;

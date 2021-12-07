@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.DataResourceData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.DataResourceData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class DataResource implements IEventModel<DataResourceData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String dataResourceId;
+    @RIndex String dataResourceId;
     String dataResourceTypeId;
     String dataTemplateTypeId;
     String dataCategoryId;

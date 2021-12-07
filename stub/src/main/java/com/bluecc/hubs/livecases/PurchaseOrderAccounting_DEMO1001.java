@@ -1,7 +1,7 @@
 package com.bluecc.hubs.livecases;
 
 import static com.bluecc.hubs.ProtoTypes.*;
-import com.bluecc.hubs.stub.InventoryItemData;
+import com.bluecc.hubs.stub.InventoryItemFlatData;
 import com.bluecc.hubs.stub.OrderHeaderFlatData;
 import com.bluecc.hubs.stub.ShipmentRouteSegmentData;
 import com.bluecc.hubs.stub.InvoiceFlatData;
@@ -27,8 +27,8 @@ import com.bluecc.hubs.stub.OrderItemPriceInfoData;
 import com.bluecc.hubs.stub.OrderRoleData;
 
 public final class PurchaseOrderAccounting_DEMO1001 {
-    public static InventoryItemData InventoryItem_9025() {
-        return InventoryItemData.newBuilder()
+    public static InventoryItemFlatData InventoryItem_9025() {
+        return InventoryItemFlatData.newBuilder()
             .setAvailableToPromiseTotal(getFixedPoint("2.000000"))
             .setCurrencyUomId("USD")
             .setDatetimeReceived(getTimestamp("2009-08-13 17:47:31.095"))

@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.OrderStatusData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.OrderStatusData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class OrderStatus implements IEventModel<OrderStatusData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String orderStatusId;
+    @RIndex String orderStatusId;
     String statusId;
     String orderId;
     String orderItemSeqId;

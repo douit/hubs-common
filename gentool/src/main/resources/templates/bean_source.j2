@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.{{ent.flatMessageType}};
 {% if ent.headEntity %}
 import com.bluecc.hubs.stub.{{ent.messageType}};
@@ -19,11 +21,12 @@ import com.bluecc.hubs.stub.{{ent.messageType}};
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class {{ent.name}} implements IEventModel<{{ent.flatMessageType}}.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     {% for f in ent.fields -%}
-    {{f.javaType}} {{f.name}};
+    {{f.annotation}}{{f.javaType}} {{f.name}};
     {% endfor %}
 
     {{conv_part}}

@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ShipmentReceiptData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.ShipmentReceiptData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ShipmentReceipt implements IEventModel<ShipmentReceiptData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String receiptId;
+    @RIndex String receiptId;
     String inventoryItemId;
     String productId;
     String shipmentId;

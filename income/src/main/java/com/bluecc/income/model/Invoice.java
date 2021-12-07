@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.InvoiceFlatData;
 
 import com.bluecc.hubs.stub.InvoiceData;
@@ -19,10 +21,11 @@ import com.bluecc.hubs.stub.InvoiceData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String invoiceId;
+    @RIndex String invoiceId;
     String invoiceTypeId;
     String partyIdFrom;
     String partyId;

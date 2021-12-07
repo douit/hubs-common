@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductPromoCategoryData;
 
 
@@ -17,22 +19,23 @@ import com.bluecc.hubs.stub.ProductPromoCategoryData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductPromoCategory implements IEventModel<ProductPromoCategoryData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productPromoId;
-    String productPromoRuleId;
-    String productPromoActionSeqId;
-    String productPromoCondSeqId;
-    String productCategoryId;
-    String andGroupId;
+    @RIndex String productPromoId;
+    @RIndex String productPromoRuleId;
+    @RIndex String productPromoActionSeqId;
+    @RIndex String productPromoCondSeqId;
+    @RIndex String productCategoryId;
+    @RIndex String andGroupId;
     String productPromoApplEnumId;
     Character includeSubCategories;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

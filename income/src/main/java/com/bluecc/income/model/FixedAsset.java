@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.FixedAssetData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.FixedAssetData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class FixedAsset implements IEventModel<FixedAssetData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String fixedAssetId;
+    @RIndex String fixedAssetId;
     String fixedAssetTypeId;
     String parentFixedAssetId;
     String instanceOfProductId;

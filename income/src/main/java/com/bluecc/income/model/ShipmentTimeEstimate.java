@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ShipmentTimeEstimateData;
 
 
@@ -17,14 +19,15 @@ import com.bluecc.hubs.stub.ShipmentTimeEstimateData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String shipmentMethodTypeId;
-    String partyId;
-    String roleTypeId;
-    String geoIdTo;
-    String geoIdFrom;
+    @RIndex String shipmentMethodTypeId;
+    @RIndex String partyId;
+    @RIndex String roleTypeId;
+    @RIndex String geoIdTo;
+    @RIndex String geoIdFrom;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     java.math.BigDecimal leadTime;
@@ -34,7 +37,7 @@ public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateDat
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

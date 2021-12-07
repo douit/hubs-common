@@ -278,7 +278,7 @@ public class PartyDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "inventory_item",
                                             InventoryItem.class)
                                     .forEach(el -> pb.addInventoryItem(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set owner_inventory_item to head entity                        
@@ -286,7 +286,7 @@ public class PartyDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "owner_inventory_item",
                                             InventoryItem.class)
                                     .forEach(el -> pb.addOwnerInventoryItem(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set from_invoice to head entity                        

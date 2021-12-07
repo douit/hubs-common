@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ShipmentRouteSegmentData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.ShipmentRouteSegmentData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ShipmentRouteSegment implements IEventModel<ShipmentRouteSegmentData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String shipmentId;
-    String shipmentRouteSegmentId;
+    @RIndex String shipmentId;
+    @RIndex String shipmentRouteSegmentId;
     String deliveryId;
     String originFacilityId;
     String destFacilityId;
@@ -60,7 +63,7 @@ public class ShipmentRouteSegment implements IEventModel<ShipmentRouteSegmentDat
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

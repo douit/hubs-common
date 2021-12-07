@@ -100,7 +100,7 @@ public class OrderItemDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "from_inventory_item",
                                             InventoryItem.class)
                                     .forEach(el -> pb.setFromInventoryItem(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set product_facility_location to head entity                        

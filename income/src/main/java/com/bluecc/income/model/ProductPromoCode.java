@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductPromoCodeData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.ProductPromoCodeData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductPromoCode implements IEventModel<ProductPromoCodeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productPromoCodeId;
+    @RIndex String productPromoCodeId;
     String productPromoId;
     Character userEntered;
     Character requireEmailOrParty;

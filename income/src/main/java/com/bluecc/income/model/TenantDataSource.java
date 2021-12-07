@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.TenantDataSourceData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.TenantDataSourceData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class TenantDataSource implements IEventModel<TenantDataSourceData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String tenantId;
-    String entityGroupName;
+    @RIndex String tenantId;
+    @RIndex String entityGroupName;
     String jdbcUri;
     String jdbcUsername;
     String jdbcPassword;
@@ -29,7 +32,7 @@ public class TenantDataSource implements IEventModel<TenantDataSourceData.Builde
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.OrderHeaderFlatData;
 
 import com.bluecc.hubs.stub.OrderHeaderData;
@@ -19,10 +21,11 @@ import com.bluecc.hubs.stub.OrderHeaderData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String orderId;
+    @RIndex String orderId;
     String orderTypeId;
     String orderName;
     String externalId;

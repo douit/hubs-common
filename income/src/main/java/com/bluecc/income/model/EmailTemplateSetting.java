@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.EmailTemplateSettingData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.EmailTemplateSettingData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String emailTemplateSettingId;
+    @RIndex String emailTemplateSettingId;
     String emailType;
     String description;
     String bodyScreenLocation;

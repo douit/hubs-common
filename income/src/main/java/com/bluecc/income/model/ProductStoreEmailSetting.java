@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.ProductStoreEmailSettingData;
 
 
@@ -17,11 +19,12 @@ import com.bluecc.hubs.stub.ProductStoreEmailSettingData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class ProductStoreEmailSetting implements IEventModel<ProductStoreEmailSettingData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String productStoreId;
-    String emailType;
+    @RIndex String productStoreId;
+    @RIndex String emailType;
     String bodyScreenLocation;
     String xslfoAttachScreenLocation;
     String fromAddress;
@@ -33,7 +36,7 @@ public class ProductStoreEmailSetting implements IEventModel<ProductStoreEmailSe
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

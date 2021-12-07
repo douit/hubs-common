@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.PartyTaxAuthInfoData;
 
 
@@ -17,12 +19,13 @@ import com.bluecc.hubs.stub.PartyTaxAuthInfoData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String partyId;
-    String taxAuthGeoId;
-    String taxAuthPartyId;
+    @RIndex String partyId;
+    @RIndex String taxAuthGeoId;
+    @RIndex String taxAuthPartyId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     String partyTaxId;
@@ -32,7 +35,7 @@ public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builde
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

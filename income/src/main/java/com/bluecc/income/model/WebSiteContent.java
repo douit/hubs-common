@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.WebSiteContentData;
 
 
@@ -17,19 +19,20 @@ import com.bluecc.hubs.stub.WebSiteContentData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class WebSiteContent implements IEventModel<WebSiteContentData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String webSiteId;
-    String contentId;
-    String webSiteContentTypeId;
+    @RIndex String webSiteId;
+    @RIndex String contentId;
+    @RIndex String webSiteContentTypeId;
     java.time.LocalDateTime fromDate;
     java.time.LocalDateTime thruDate;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

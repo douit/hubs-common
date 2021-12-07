@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.OrderItemBillingData;
 
 
@@ -17,13 +19,14 @@ import com.bluecc.hubs.stub.OrderItemBillingData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class OrderItemBilling implements IEventModel<OrderItemBillingData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String orderId;
-    String orderItemSeqId;
-    String invoiceId;
-    String invoiceItemSeqId;
+    @RIndex String orderId;
+    @RIndex String orderItemSeqId;
+    @RIndex String invoiceId;
+    @RIndex String invoiceItemSeqId;
     String itemIssuanceId;
     String shipmentReceiptId;
     java.math.BigDecimal quantity;
@@ -32,7 +35,7 @@ public class OrderItemBilling implements IEventModel<OrderItemBillingData.Builde
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

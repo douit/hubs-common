@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.SystemPropertyData;
 
 
@@ -17,18 +19,19 @@ import com.bluecc.hubs.stub.SystemPropertyData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class SystemProperty implements IEventModel<SystemPropertyData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String systemResourceId;
-    String systemPropertyId;
+    @RIndex String systemResourceId;
+    @RIndex String systemPropertyId;
     String systemPropertyValue;
     String description;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

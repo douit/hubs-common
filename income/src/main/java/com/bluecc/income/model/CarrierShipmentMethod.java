@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.CarrierShipmentMethodData;
 
 
@@ -17,19 +19,20 @@ import com.bluecc.hubs.stub.CarrierShipmentMethodData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class CarrierShipmentMethod implements IEventModel<CarrierShipmentMethodData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String shipmentMethodTypeId;
-    String partyId;
-    String roleTypeId;
+    @RIndex String shipmentMethodTypeId;
+    @RIndex String partyId;
+    @RIndex String roleTypeId;
     Long sequenceNumber;
     String carrierServiceCode;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    String id;
+    @RId String id;
     
 
         

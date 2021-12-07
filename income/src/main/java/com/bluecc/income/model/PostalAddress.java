@@ -10,6 +10,8 @@ import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
+import org.redisson.api.annotation.*;
+
 import com.bluecc.hubs.stub.PostalAddressData;
 
 
@@ -17,10 +19,11 @@ import com.bluecc.hubs.stub.PostalAddressData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@REntity
 public class PostalAddress implements IEventModel<PostalAddressData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String contactMechId;
+    @RIndex String contactMechId;
     String toName;
     String attnName;
     String address1;
