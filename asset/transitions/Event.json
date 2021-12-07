@@ -1,0 +1,160 @@
+{
+  "events": [
+    "Decline",
+    "Accept",
+    "Delegate",
+    "Cancel",
+    "Complete",
+    "Confirm"
+  ],
+  "states": [
+    "CAL_TENTATIVE",
+    "CAL_CONFIRMED"
+  ],
+  "transitions": [
+    {
+      "statusId": "CAL_TENTATIVE",
+      "statusIdTo": "CAL_ACCEPTED",
+      "transitionName": "Accept",
+      "from": {
+        "statusId": "CAL_TENTATIVE",
+        "description": "Tentative",
+        "sequenceId": "01",
+        "statusCode": "TENTATIVE",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "01",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Event",
+        "statusTypeId": "EVENT_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_TENTATIVE",
+      "statusIdTo": "CAL_DECLINED",
+      "transitionName": "Decline",
+      "from": {
+        "statusId": "CAL_TENTATIVE",
+        "description": "Tentative",
+        "sequenceId": "01",
+        "statusCode": "TENTATIVE",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_DECLINED",
+        "description": "Declined",
+        "sequenceId": "10",
+        "statusCode": "DECLINED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Event",
+        "statusTypeId": "EVENT_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_TENTATIVE",
+      "statusIdTo": "CAL_DELEGATED",
+      "transitionName": "Delegate",
+      "from": {
+        "statusId": "CAL_TENTATIVE",
+        "description": "Tentative",
+        "sequenceId": "01",
+        "statusCode": "TENTATIVE",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_DELEGATED",
+        "description": "Delegated",
+        "sequenceId": "11",
+        "statusCode": "DELEGATED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Event",
+        "statusTypeId": "EVENT_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_TENTATIVE",
+      "statusIdTo": "CAL_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "CAL_TENTATIVE",
+        "description": "Tentative",
+        "sequenceId": "01",
+        "statusCode": "TENTATIVE",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Event",
+        "statusTypeId": "EVENT_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_TENTATIVE",
+      "statusIdTo": "CAL_CONFIRMED",
+      "transitionName": "Confirm",
+      "from": {
+        "statusId": "CAL_TENTATIVE",
+        "description": "Tentative",
+        "sequenceId": "01",
+        "statusCode": "TENTATIVE",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "02",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Event",
+        "statusTypeId": "EVENT_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_CONFIRMED",
+      "statusIdTo": "CAL_COMPLETED",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "CAL_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "02",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "02",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Event",
+        "statusTypeId": "EVENT_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    }
+  ]
+}

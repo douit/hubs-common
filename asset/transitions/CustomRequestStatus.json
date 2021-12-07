@@ -1,0 +1,698 @@
+{
+  "events": [
+    "Cancel Request",
+    "Reject Request",
+    "Review Request",
+    "Re-open Request",
+    "Pending customer",
+    "Complete Request",
+    "Accept Request",
+    "Submit Request",
+    "Pending Customer"
+  ],
+  "states": [
+    "CRQ_DRAFT",
+    "CRQ_PENDING",
+    "CRQ_COMPLETED",
+    "CRQ_REOPENED",
+    "CRQ_SUBMITTED",
+    "CRQ_ACCEPTED",
+    "CRQ_REJECTED",
+    "CRQ_REVIEWED",
+    "CRQ_CANCELLED"
+  ],
+  "transitions": [
+    {
+      "statusId": "CRQ_DRAFT",
+      "statusIdTo": "CRQ_ACCEPTED",
+      "transitionName": "Accept Request",
+      "from": {
+        "statusId": "CRQ_DRAFT",
+        "description": "Draft",
+        "sequenceId": "00",
+        "statusCode": "DRAFT",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_DRAFT",
+      "statusIdTo": "CRQ_SUBMITTED",
+      "transitionName": "Submit Request",
+      "from": {
+        "statusId": "CRQ_DRAFT",
+        "description": "Draft",
+        "sequenceId": "00",
+        "statusCode": "DRAFT",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_SUBMITTED",
+        "description": "Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_DRAFT",
+      "statusIdTo": "CRQ_CANCELLED",
+      "transitionName": "Cancel Request",
+      "from": {
+        "statusId": "CRQ_DRAFT",
+        "description": "Draft",
+        "sequenceId": "00",
+        "statusCode": "DRAFT",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_SUBMITTED",
+      "statusIdTo": "CRQ_ACCEPTED",
+      "transitionName": "Accept Request",
+      "from": {
+        "statusId": "CRQ_SUBMITTED",
+        "description": "Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_SUBMITTED",
+      "statusIdTo": "CRQ_COMPLETED",
+      "transitionName": "Complete Request",
+      "from": {
+        "statusId": "CRQ_SUBMITTED",
+        "description": "Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "04",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_SUBMITTED",
+      "statusIdTo": "CRQ_REJECTED",
+      "transitionName": "Reject Request",
+      "from": {
+        "statusId": "CRQ_SUBMITTED",
+        "description": "Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "98",
+        "statusCode": "REJECTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_SUBMITTED",
+      "statusIdTo": "CRQ_CANCELLED",
+      "transitionName": "Cancel Request",
+      "from": {
+        "statusId": "CRQ_SUBMITTED",
+        "description": "Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_SUBMITTED",
+      "statusIdTo": "CRQ_PENDING",
+      "transitionName": "Pending customer",
+      "from": {
+        "statusId": "CRQ_SUBMITTED",
+        "description": "Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_PENDING",
+        "description": "Pending Cust.",
+        "sequenceId": "09",
+        "statusCode": "PENDING",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_PENDING",
+      "statusIdTo": "CRQ_SUBMITTED",
+      "transitionName": "Submit Request",
+      "from": {
+        "statusId": "CRQ_PENDING",
+        "description": "Pending Cust.",
+        "sequenceId": "09",
+        "statusCode": "PENDING",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_SUBMITTED",
+        "description": "Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_PENDING",
+      "statusIdTo": "CRQ_ACCEPTED",
+      "transitionName": "Accept Request",
+      "from": {
+        "statusId": "CRQ_PENDING",
+        "description": "Pending Cust.",
+        "sequenceId": "09",
+        "statusCode": "PENDING",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_PENDING",
+      "statusIdTo": "CRQ_REVIEWED",
+      "transitionName": "Review Request",
+      "from": {
+        "statusId": "CRQ_PENDING",
+        "description": "Pending Cust.",
+        "sequenceId": "09",
+        "statusCode": "PENDING",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_REVIEWED",
+        "description": "Being implemented",
+        "sequenceId": "03",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_PENDING",
+      "statusIdTo": "CRQ_CANCELLED",
+      "transitionName": "Cancel Request",
+      "from": {
+        "statusId": "CRQ_PENDING",
+        "description": "Pending Cust.",
+        "sequenceId": "09",
+        "statusCode": "PENDING",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_ACCEPTED",
+      "statusIdTo": "CRQ_REVIEWED",
+      "transitionName": "Review Request",
+      "from": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_REVIEWED",
+        "description": "Being implemented",
+        "sequenceId": "03",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_ACCEPTED",
+      "statusIdTo": "CRQ_COMPLETED",
+      "transitionName": "Complete Request",
+      "from": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "04",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_ACCEPTED",
+      "statusIdTo": "CRQ_CANCELLED",
+      "transitionName": "Cancel Request",
+      "from": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_ACCEPTED",
+      "statusIdTo": "CRQ_PENDING",
+      "transitionName": "Pending Customer",
+      "from": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_PENDING",
+        "description": "Pending Cust.",
+        "sequenceId": "09",
+        "statusCode": "PENDING",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REVIEWED",
+      "statusIdTo": "CRQ_COMPLETED",
+      "transitionName": "Complete Request",
+      "from": {
+        "statusId": "CRQ_REVIEWED",
+        "description": "Being implemented",
+        "sequenceId": "03",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "04",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REVIEWED",
+      "statusIdTo": "CRQ_CANCELLED",
+      "transitionName": "Cancel Request",
+      "from": {
+        "statusId": "CRQ_REVIEWED",
+        "description": "Being implemented",
+        "sequenceId": "03",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REVIEWED",
+      "statusIdTo": "CRQ_PENDING",
+      "transitionName": "Pending Customer",
+      "from": {
+        "statusId": "CRQ_REVIEWED",
+        "description": "Being implemented",
+        "sequenceId": "03",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_PENDING",
+        "description": "Pending Cust.",
+        "sequenceId": "09",
+        "statusCode": "PENDING",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_COMPLETED",
+      "statusIdTo": "CRQ_REVIEWED",
+      "transitionName": "Re-open Request",
+      "from": {
+        "statusId": "CRQ_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "04",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_REVIEWED",
+        "description": "Being implemented",
+        "sequenceId": "03",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REVIEWED",
+      "statusIdTo": "CRQ_ACCEPTED",
+      "transitionName": "Accept Request",
+      "from": {
+        "statusId": "CRQ_REVIEWED",
+        "description": "Being implemented",
+        "sequenceId": "03",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_CANCELLED",
+      "statusIdTo": "CRQ_ACCEPTED",
+      "transitionName": "Re-open Request",
+      "from": {
+        "statusId": "CRQ_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_COMPLETED",
+      "statusIdTo": "CRQ_REOPENED",
+      "transitionName": "Re-open Request",
+      "from": {
+        "statusId": "CRQ_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "04",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_REOPENED",
+        "description": "Reopened",
+        "sequenceId": "05",
+        "statusCode": "REOPENED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REOPENED",
+      "statusIdTo": "CRQ_COMPLETED",
+      "transitionName": "Complete Request",
+      "from": {
+        "statusId": "CRQ_REOPENED",
+        "description": "Reopened",
+        "sequenceId": "05",
+        "statusCode": "REOPENED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "04",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REOPENED",
+      "statusIdTo": "CRQ_CANCELLED",
+      "transitionName": "Cancel Request",
+      "from": {
+        "statusId": "CRQ_REOPENED",
+        "description": "Reopened",
+        "sequenceId": "05",
+        "statusCode": "REOPENED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REOPENED",
+      "statusIdTo": "CRQ_PENDING",
+      "transitionName": "Pending Customer",
+      "from": {
+        "statusId": "CRQ_REOPENED",
+        "description": "Reopened",
+        "sequenceId": "05",
+        "statusCode": "REOPENED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_PENDING",
+        "description": "Pending Cust.",
+        "sequenceId": "09",
+        "statusCode": "PENDING",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REOPENED",
+      "statusIdTo": "CRQ_ACCEPTED",
+      "transitionName": "Accept Request",
+      "from": {
+        "statusId": "CRQ_REOPENED",
+        "description": "Reopened",
+        "sequenceId": "05",
+        "statusCode": "REOPENED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_ACCEPTED",
+        "description": "Open",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CRQ_REOPENED",
+      "statusIdTo": "CRQ_REVIEWED",
+      "transitionName": "Review Request",
+      "from": {
+        "statusId": "CRQ_REOPENED",
+        "description": "Reopened",
+        "sequenceId": "05",
+        "statusCode": "REOPENED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "to": {
+        "statusId": "CRQ_REVIEWED",
+        "description": "Being implemented",
+        "sequenceId": "03",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "CUSTREQ_STTS"
+      },
+      "statusType": {
+        "description": "Custom Request Status",
+        "statusTypeId": "CUSTREQ_STTS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,580 @@
+{
+  "events": [
+    "Enable purch.invoice update",
+    "Mark Ready",
+    "Cancel",
+    "Mark Receive",
+    "Enable sales invoice update",
+    "Receive",
+    "Pay",
+    "Write Off",
+    "Mark Approved",
+    "Approve",
+    "Unpay",
+    "Send"
+  ],
+  "states": [
+    "INVOICE_SENT",
+    "INVOICE_CANCELLED",
+    "INVOICE_READY",
+    "INVOICE_PAID",
+    "INVOICE_RECEIVED",
+    "INVOICE_WRITEOFF",
+    "INVOICE_IN_PROCESS",
+    "INVOICE_APPROVED"
+  ],
+  "transitions": [
+    {
+      "statusId": "INVOICE_IN_PROCESS",
+      "statusIdTo": "INVOICE_READY",
+      "transitionName": "Mark Ready",
+      "from": {
+        "statusId": "INVOICE_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_READY",
+        "description": "Ready for Posting",
+        "sequenceId": "20",
+        "statusCode": "READY",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_IN_PROCESS",
+      "statusIdTo": "INVOICE_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "INVOICE_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_IN_PROCESS",
+      "statusIdTo": "INVOICE_SENT",
+      "transitionName": "Send",
+      "from": {
+        "statusId": "INVOICE_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_SENT",
+        "description": "Sent",
+        "sequenceId": "10",
+        "statusCode": "SENT",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_IN_PROCESS",
+      "statusIdTo": "INVOICE_RECEIVED",
+      "transitionName": "Receive",
+      "from": {
+        "statusId": "INVOICE_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_RECEIVED",
+        "description": "Received",
+        "sequenceId": "11",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_SENT",
+      "statusIdTo": "INVOICE_APPROVED",
+      "transitionName": "Mark Approved",
+      "from": {
+        "statusId": "INVOICE_SENT",
+        "description": "Sent",
+        "sequenceId": "10",
+        "statusCode": "SENT",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_SENT",
+      "statusIdTo": "INVOICE_READY",
+      "transitionName": "Mark Ready",
+      "from": {
+        "statusId": "INVOICE_SENT",
+        "description": "Sent",
+        "sequenceId": "10",
+        "statusCode": "SENT",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_READY",
+        "description": "Ready for Posting",
+        "sequenceId": "20",
+        "statusCode": "READY",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_SENT",
+      "statusIdTo": "INVOICE_RECEIVED",
+      "transitionName": "Receive",
+      "from": {
+        "statusId": "INVOICE_SENT",
+        "description": "Sent",
+        "sequenceId": "10",
+        "statusCode": "SENT",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_RECEIVED",
+        "description": "Received",
+        "sequenceId": "11",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_RECEIVED",
+      "statusIdTo": "INVOICE_READY",
+      "transitionName": "Mark Receive",
+      "from": {
+        "statusId": "INVOICE_RECEIVED",
+        "description": "Received",
+        "sequenceId": "11",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_READY",
+        "description": "Ready for Posting",
+        "sequenceId": "20",
+        "statusCode": "READY",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_SENT",
+      "statusIdTo": "INVOICE_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "INVOICE_SENT",
+        "description": "Sent",
+        "sequenceId": "10",
+        "statusCode": "SENT",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_RECEIVED",
+      "statusIdTo": "INVOICE_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "INVOICE_RECEIVED",
+        "description": "Received",
+        "sequenceId": "11",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_SENT",
+      "statusIdTo": "INVOICE_IN_PROCESS",
+      "transitionName": "Enable sales invoice update",
+      "from": {
+        "statusId": "INVOICE_SENT",
+        "description": "Sent",
+        "sequenceId": "10",
+        "statusCode": "SENT",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_RECEIVED",
+      "statusIdTo": "INVOICE_IN_PROCESS",
+      "transitionName": "Enable purch.invoice update",
+      "from": {
+        "statusId": "INVOICE_RECEIVED",
+        "description": "Received",
+        "sequenceId": "11",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_IN_PROCESS",
+      "statusIdTo": "INVOICE_APPROVED",
+      "transitionName": "Approve",
+      "from": {
+        "statusId": "INVOICE_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_APPROVED",
+      "statusIdTo": "INVOICE_SENT",
+      "transitionName": "Send",
+      "from": {
+        "statusId": "INVOICE_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_SENT",
+        "description": "Sent",
+        "sequenceId": "10",
+        "statusCode": "SENT",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_IN_PROCESS",
+      "statusIdTo": "INVOICE_RECEIVED",
+      "transitionName": "Receive",
+      "from": {
+        "statusId": "INVOICE_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_RECEIVED",
+        "description": "Received",
+        "sequenceId": "11",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_RECEIVED",
+      "statusIdTo": "INVOICE_APPROVED",
+      "transitionName": "Approve",
+      "from": {
+        "statusId": "INVOICE_RECEIVED",
+        "description": "Received",
+        "sequenceId": "11",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_APPROVED",
+      "statusIdTo": "INVOICE_READY",
+      "transitionName": "Mark Ready",
+      "from": {
+        "statusId": "INVOICE_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_READY",
+        "description": "Ready for Posting",
+        "sequenceId": "20",
+        "statusCode": "READY",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_APPROVED",
+      "statusIdTo": "INVOICE_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "INVOICE_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_READY",
+      "statusIdTo": "INVOICE_PAID",
+      "transitionName": "Pay",
+      "from": {
+        "statusId": "INVOICE_READY",
+        "description": "Ready for Posting",
+        "sequenceId": "20",
+        "statusCode": "READY",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_PAID",
+        "description": "Paid",
+        "sequenceId": "30",
+        "statusCode": "PAID",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_READY",
+      "statusIdTo": "INVOICE_WRITEOFF",
+      "transitionName": "Write Off",
+      "from": {
+        "statusId": "INVOICE_READY",
+        "description": "Ready for Posting",
+        "sequenceId": "20",
+        "statusCode": "READY",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_WRITEOFF",
+        "description": "Write Off",
+        "sequenceId": "31",
+        "statusCode": "WRITE OFF",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_PAID",
+      "statusIdTo": "INVOICE_READY",
+      "transitionName": "Unpay",
+      "from": {
+        "statusId": "INVOICE_PAID",
+        "description": "Paid",
+        "sequenceId": "30",
+        "statusCode": "PAID",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_READY",
+        "description": "Ready for Posting",
+        "sequenceId": "20",
+        "statusCode": "READY",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_READY",
+      "statusIdTo": "INVOICE_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "INVOICE_READY",
+        "description": "Ready for Posting",
+        "sequenceId": "20",
+        "statusCode": "READY",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "INVOICE_PAID",
+      "statusIdTo": "INVOICE_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "INVOICE_PAID",
+        "description": "Paid",
+        "sequenceId": "30",
+        "statusCode": "PAID",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "to": {
+        "statusId": "INVOICE_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "INVOICE_STATUS"
+      },
+      "statusType": {
+        "description": "Invoice Status",
+        "statusTypeId": "INVOICE_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

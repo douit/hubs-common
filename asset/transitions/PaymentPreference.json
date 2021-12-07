@@ -1,0 +1,189 @@
+{
+  "events": [
+    "Payment Received",
+    "Payment Authorized",
+    "Payment Cancelled",
+    "Payment Settled",
+    "Payment Refunded"
+  ],
+  "states": [
+    "PAYMENT_REFUNDED",
+    "PAYMENT_DECLINED",
+    "PAYMENT_CANCELLED",
+    "PAYMENT_RECEIVED",
+    "PAYMENT_NOT_RECEIVED",
+    "PAYMENT_SETTLED",
+    "PAYMENT_AUTHORIZED",
+    "PAYMENT_NOT_AUTH"
+  ],
+  "transitions": [
+    {
+      "statusId": "PAYMENT_NOT_RECEIVED",
+      "statusIdTo": "PAYMENT_RECEIVED",
+      "transitionName": "Payment Received",
+      "from": {
+        "statusId": "PAYMENT_NOT_RECEIVED",
+        "description": "Not-Received",
+        "sequenceId": "01",
+        "statusCode": "NOT_RECEIVED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "to": {
+        "statusId": "PAYMENT_RECEIVED",
+        "description": "Received",
+        "sequenceId": "02",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Preference",
+        "statusTypeId": "PAYMENT_PREF_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PAYMENT_NOT_RECEIVED",
+      "statusIdTo": "PAYMENT_CANCELLED",
+      "transitionName": "Payment Cancelled",
+      "from": {
+        "statusId": "PAYMENT_NOT_RECEIVED",
+        "description": "Not-Received",
+        "sequenceId": "01",
+        "statusCode": "NOT_RECEIVED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "to": {
+        "statusId": "PAYMENT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Preference",
+        "statusTypeId": "PAYMENT_PREF_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PAYMENT_NOT_AUTH",
+      "statusIdTo": "PAYMENT_AUTHORIZED",
+      "transitionName": "Payment Authorized",
+      "from": {
+        "statusId": "PAYMENT_NOT_AUTH",
+        "description": "Not-Authorized",
+        "sequenceId": "01",
+        "statusCode": "NOT_AUTHORIZED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "to": {
+        "statusId": "PAYMENT_AUTHORIZED",
+        "description": "Authorized",
+        "sequenceId": "02",
+        "statusCode": "AUTHORIZED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Preference",
+        "statusTypeId": "PAYMENT_PREF_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PAYMENT_NOT_AUTH",
+      "statusIdTo": "PAYMENT_CANCELLED",
+      "transitionName": "Payment Cancelled",
+      "from": {
+        "statusId": "PAYMENT_NOT_AUTH",
+        "description": "Not-Authorized",
+        "sequenceId": "01",
+        "statusCode": "NOT_AUTHORIZED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "to": {
+        "statusId": "PAYMENT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Preference",
+        "statusTypeId": "PAYMENT_PREF_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PAYMENT_AUTHORIZED",
+      "statusIdTo": "PAYMENT_SETTLED",
+      "transitionName": "Payment Settled",
+      "from": {
+        "statusId": "PAYMENT_AUTHORIZED",
+        "description": "Authorized",
+        "sequenceId": "02",
+        "statusCode": "AUTHORIZED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "to": {
+        "statusId": "PAYMENT_SETTLED",
+        "description": "Settled",
+        "sequenceId": "03",
+        "statusCode": "SETTLED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Preference",
+        "statusTypeId": "PAYMENT_PREF_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PAYMENT_AUTHORIZED",
+      "statusIdTo": "PAYMENT_CANCELLED",
+      "transitionName": "Payment Cancelled",
+      "from": {
+        "statusId": "PAYMENT_AUTHORIZED",
+        "description": "Authorized",
+        "sequenceId": "02",
+        "statusCode": "AUTHORIZED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "to": {
+        "statusId": "PAYMENT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Preference",
+        "statusTypeId": "PAYMENT_PREF_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PAYMENT_SETTLED",
+      "statusIdTo": "PAYMENT_REFUNDED",
+      "transitionName": "Payment Refunded",
+      "from": {
+        "statusId": "PAYMENT_SETTLED",
+        "description": "Settled",
+        "sequenceId": "03",
+        "statusCode": "SETTLED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "to": {
+        "statusId": "PAYMENT_REFUNDED",
+        "description": "Refunded",
+        "sequenceId": "05",
+        "statusCode": "REFUNDED",
+        "statusTypeId": "PAYMENT_PREF_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Preference",
+        "statusTypeId": "PAYMENT_PREF_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

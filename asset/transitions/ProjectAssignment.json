@@ -1,0 +1,35 @@
+{
+  "events": [
+    "Assignment Complete"
+  ],
+  "states": [
+    "PAS_COMPLETED",
+    "PAS_ASSIGNED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PAS_ASSIGNED",
+      "statusIdTo": "PAS_COMPLETED",
+      "transitionName": "Assignment Complete",
+      "from": {
+        "statusId": "PAS_ASSIGNED",
+        "description": "Assigned",
+        "sequenceId": "01",
+        "statusCode": "ASSIGNED",
+        "statusTypeId": "PROJECT_ASSGN_STATUS"
+      },
+      "to": {
+        "statusId": "PAS_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "02",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "PROJECT_ASSGN_STATUS"
+      },
+      "statusType": {
+        "description": "Project Assignment",
+        "statusTypeId": "PROJECT_ASSGN_STATUS",
+        "parentTypeId": "PROJECT"
+      }
+    }
+  ]
+}

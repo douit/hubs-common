@@ -1,0 +1,111 @@
+{
+  "events": [
+    "Reject Quote",
+    "Accept Quote",
+    "Order Quote"
+  ],
+  "states": [
+    "QUO_REJECTED",
+    "QUO_CREATED",
+    "QUO_APPROVED",
+    "QUO_ORDERED"
+  ],
+  "transitions": [
+    {
+      "statusId": "QUO_CREATED",
+      "statusIdTo": "QUO_APPROVED",
+      "transitionName": "Accept Quote",
+      "from": {
+        "statusId": "QUO_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "QUOTE_STATUS"
+      },
+      "to": {
+        "statusId": "QUO_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "QUOTE_STATUS"
+      },
+      "statusType": {
+        "description": "Quote Status",
+        "statusTypeId": "QUOTE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "QUO_CREATED",
+      "statusIdTo": "QUO_REJECTED",
+      "transitionName": "Reject Quote",
+      "from": {
+        "statusId": "QUO_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "QUOTE_STATUS"
+      },
+      "to": {
+        "statusId": "QUO_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "98",
+        "statusCode": "REJECTED",
+        "statusTypeId": "QUOTE_STATUS"
+      },
+      "statusType": {
+        "description": "Quote Status",
+        "statusTypeId": "QUOTE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "QUO_APPROVED",
+      "statusIdTo": "QUO_ORDERED",
+      "transitionName": "Order Quote",
+      "from": {
+        "statusId": "QUO_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "QUOTE_STATUS"
+      },
+      "to": {
+        "statusId": "QUO_ORDERED",
+        "description": "Ordered",
+        "sequenceId": "03",
+        "statusCode": "ORDERED",
+        "statusTypeId": "QUOTE_STATUS"
+      },
+      "statusType": {
+        "description": "Quote Status",
+        "statusTypeId": "QUOTE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "QUO_APPROVED",
+      "statusIdTo": "QUO_REJECTED",
+      "transitionName": "Reject Quote",
+      "from": {
+        "statusId": "QUO_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "QUOTE_STATUS"
+      },
+      "to": {
+        "statusId": "QUO_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "98",
+        "statusCode": "REJECTED",
+        "statusTypeId": "QUOTE_STATUS"
+      },
+      "statusType": {
+        "description": "Quote Status",
+        "statusTypeId": "QUOTE_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

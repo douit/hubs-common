@@ -1,0 +1,35 @@
+{
+  "events": [
+    "Product Complete"
+  ],
+  "states": [
+    "PRODUCT_ACTIVE",
+    "PRODUCT_CLOSED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PRODUCT_ACTIVE",
+      "statusIdTo": "PRODUCT_CLOSED",
+      "transitionName": "Product Complete",
+      "from": {
+        "statusId": "PRODUCT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "PRODUCT_STATUS"
+      },
+      "to": {
+        "statusId": "PRODUCT_CLOSED",
+        "description": "Closed",
+        "sequenceId": "02",
+        "statusCode": "CLOSED",
+        "statusTypeId": "PRODUCT_STATUS"
+      },
+      "statusType": {
+        "description": "Product Status",
+        "statusTypeId": "PRODUCT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "events": [
+    "Review Approved",
+    "Review Deleted"
+  ],
+  "states": [
+    "WERV_APPROVED",
+    "WERV_DELETED",
+    "WERV_PENDING"
+  ],
+  "transitions": [
+    {
+      "statusId": "WERV_PENDING",
+      "statusIdTo": "WERV_APPROVED",
+      "transitionName": "Review Approved",
+      "from": {
+        "statusId": "WERV_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "WEFF_REVIEW_STTS"
+      },
+      "to": {
+        "statusId": "WERV_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "WEFF_REVIEW_STTS"
+      },
+      "statusType": {
+        "description": "WorkEffort Review",
+        "statusTypeId": "WEFF_REVIEW_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "WERV_PENDING",
+      "statusIdTo": "WERV_DELETED",
+      "transitionName": "Review Deleted",
+      "from": {
+        "statusId": "WERV_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "WEFF_REVIEW_STTS"
+      },
+      "to": {
+        "statusId": "WERV_DELETED",
+        "description": "Deleted",
+        "sequenceId": "99",
+        "statusCode": "DELETED",
+        "statusTypeId": "WEFF_REVIEW_STTS"
+      },
+      "statusType": {
+        "description": "WorkEffort Review",
+        "statusTypeId": "WEFF_REVIEW_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "WERV_APPROVED",
+      "statusIdTo": "WERV_DELETED",
+      "transitionName": "Review Deleted",
+      "from": {
+        "statusId": "WERV_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "WEFF_REVIEW_STTS"
+      },
+      "to": {
+        "statusId": "WERV_DELETED",
+        "description": "Deleted",
+        "sequenceId": "99",
+        "statusCode": "DELETED",
+        "statusTypeId": "WEFF_REVIEW_STTS"
+      },
+      "statusType": {
+        "description": "WorkEffort Review",
+        "statusTypeId": "WEFF_REVIEW_STTS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

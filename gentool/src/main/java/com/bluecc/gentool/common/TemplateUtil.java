@@ -36,6 +36,8 @@ public class TemplateUtil {
                 e -> e.toString().toUpperCase(Locale.ROOT)));
         jinjava.getGlobalContext().registerFilter(new NamedFilter("upperSnake",
                 e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, e.toString())));
+        jinjava.getGlobalContext().registerFilter(new NamedFilter("colToVar",
+                e -> CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, e.toString())));
         return jinjava;
     }
 

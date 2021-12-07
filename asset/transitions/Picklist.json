@@ -1,0 +1,233 @@
+{
+  "events": [
+    "Print",
+    "Pick",
+    "Cancel",
+    "Assign"
+  ],
+  "states": [
+    "PICKLIST_CANCELLED",
+    "PICKLIST_PRINTED",
+    "PICKLIST_ASSIGNED",
+    "PICKLIST_PICKED",
+    "PICKLIST_INPUT"
+  ],
+  "transitions": [
+    {
+      "statusId": "PICKLIST_INPUT",
+      "statusIdTo": "PICKLIST_ASSIGNED",
+      "transitionName": "Assign",
+      "from": {
+        "statusId": "PICKLIST_INPUT",
+        "description": "Input",
+        "sequenceId": "01",
+        "statusCode": "INPUT",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_ASSIGNED",
+        "description": "Assigned",
+        "sequenceId": "02",
+        "statusCode": "ASSIGNED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKLIST_INPUT",
+      "statusIdTo": "PICKLIST_PRINTED",
+      "transitionName": "Print",
+      "from": {
+        "statusId": "PICKLIST_INPUT",
+        "description": "Input",
+        "sequenceId": "01",
+        "statusCode": "INPUT",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_PRINTED",
+        "description": "Printed",
+        "sequenceId": "03",
+        "statusCode": "PRINTED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKLIST_INPUT",
+      "statusIdTo": "PICKLIST_PICKED",
+      "transitionName": "Pick",
+      "from": {
+        "statusId": "PICKLIST_INPUT",
+        "description": "Input",
+        "sequenceId": "01",
+        "statusCode": "INPUT",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_PICKED",
+        "description": "Picked",
+        "sequenceId": "10",
+        "statusCode": "PICKED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKLIST_INPUT",
+      "statusIdTo": "PICKLIST_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "PICKLIST_INPUT",
+        "description": "Input",
+        "sequenceId": "01",
+        "statusCode": "INPUT",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKLIST_ASSIGNED",
+      "statusIdTo": "PICKLIST_PICKED",
+      "transitionName": "Pick",
+      "from": {
+        "statusId": "PICKLIST_ASSIGNED",
+        "description": "Assigned",
+        "sequenceId": "02",
+        "statusCode": "ASSIGNED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_PICKED",
+        "description": "Picked",
+        "sequenceId": "10",
+        "statusCode": "PICKED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKLIST_ASSIGNED",
+      "statusIdTo": "PICKLIST_PRINTED",
+      "transitionName": "Print",
+      "from": {
+        "statusId": "PICKLIST_ASSIGNED",
+        "description": "Assigned",
+        "sequenceId": "02",
+        "statusCode": "ASSIGNED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_PRINTED",
+        "description": "Printed",
+        "sequenceId": "03",
+        "statusCode": "PRINTED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKLIST_ASSIGNED",
+      "statusIdTo": "PICKLIST_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "PICKLIST_ASSIGNED",
+        "description": "Assigned",
+        "sequenceId": "02",
+        "statusCode": "ASSIGNED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKLIST_PRINTED",
+      "statusIdTo": "PICKLIST_PICKED",
+      "transitionName": "Pick",
+      "from": {
+        "statusId": "PICKLIST_PRINTED",
+        "description": "Printed",
+        "sequenceId": "03",
+        "statusCode": "PRINTED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_PICKED",
+        "description": "Picked",
+        "sequenceId": "10",
+        "statusCode": "PICKED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKLIST_PRINTED",
+      "statusIdTo": "PICKLIST_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "PICKLIST_PRINTED",
+        "description": "Printed",
+        "sequenceId": "03",
+        "statusCode": "PRINTED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "to": {
+        "statusId": "PICKLIST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PICKLIST_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist",
+        "statusTypeId": "PICKLIST_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

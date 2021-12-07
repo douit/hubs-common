@@ -1,0 +1,505 @@
+{
+  "events": [
+    "Order Cancelled",
+    "Cancel Order",
+    "Process Order",
+    "Hold Order",
+    "Reject Order",
+    "Complete Order",
+    "Approve Order",
+    "Order Completed",
+    "Send Order"
+  ],
+  "states": [
+    "ORDER_COMPLETED",
+    "ORDER_HOLD",
+    "ORDER_PROCESSING",
+    "ORDER_CREATED",
+    "ORDER_APPROVED",
+    "ORDER_CANCELLED",
+    "ORDER_SENT",
+    "ORDER_REJECTED"
+  ],
+  "transitions": [
+    {
+      "statusId": "ORDER_CREATED",
+      "statusIdTo": "ORDER_PROCESSING",
+      "transitionName": "Process Order",
+      "from": {
+        "statusId": "ORDER_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_PROCESSING",
+        "description": "Processing",
+        "sequenceId": "04",
+        "statusCode": "PROCESSING",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_CREATED",
+      "statusIdTo": "ORDER_APPROVED",
+      "transitionName": "Approve Order",
+      "from": {
+        "statusId": "ORDER_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_CREATED",
+      "statusIdTo": "ORDER_HOLD",
+      "transitionName": "Hold Order",
+      "from": {
+        "statusId": "ORDER_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_HOLD",
+        "description": "Held",
+        "sequenceId": "06",
+        "statusCode": "HELD",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_CREATED",
+      "statusIdTo": "ORDER_REJECTED",
+      "transitionName": "Reject Order",
+      "from": {
+        "statusId": "ORDER_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "98",
+        "statusCode": "REJECTED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_CREATED",
+      "statusIdTo": "ORDER_CANCELLED",
+      "transitionName": "Cancel Order",
+      "from": {
+        "statusId": "ORDER_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_PROCESSING",
+      "statusIdTo": "ORDER_HOLD",
+      "transitionName": "Hold Order",
+      "from": {
+        "statusId": "ORDER_PROCESSING",
+        "description": "Processing",
+        "sequenceId": "04",
+        "statusCode": "PROCESSING",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_HOLD",
+        "description": "Held",
+        "sequenceId": "06",
+        "statusCode": "HELD",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_PROCESSING",
+      "statusIdTo": "ORDER_APPROVED",
+      "transitionName": "Approve Order",
+      "from": {
+        "statusId": "ORDER_PROCESSING",
+        "description": "Processing",
+        "sequenceId": "04",
+        "statusCode": "PROCESSING",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_PROCESSING",
+      "statusIdTo": "ORDER_REJECTED",
+      "transitionName": "Reject Order",
+      "from": {
+        "statusId": "ORDER_PROCESSING",
+        "description": "Processing",
+        "sequenceId": "04",
+        "statusCode": "PROCESSING",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "98",
+        "statusCode": "REJECTED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_PROCESSING",
+      "statusIdTo": "ORDER_CANCELLED",
+      "transitionName": "Cancel Order",
+      "from": {
+        "statusId": "ORDER_PROCESSING",
+        "description": "Processing",
+        "sequenceId": "04",
+        "statusCode": "PROCESSING",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_APPROVED",
+      "statusIdTo": "ORDER_SENT",
+      "transitionName": "Send Order",
+      "from": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_SENT",
+        "description": "Sent",
+        "sequenceId": "03",
+        "statusCode": "SENT",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_APPROVED",
+      "statusIdTo": "ORDER_PROCESSING",
+      "transitionName": "Process Order",
+      "from": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_PROCESSING",
+        "description": "Processing",
+        "sequenceId": "04",
+        "statusCode": "PROCESSING",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_APPROVED",
+      "statusIdTo": "ORDER_COMPLETED",
+      "transitionName": "Complete Order",
+      "from": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "10",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_APPROVED",
+      "statusIdTo": "ORDER_CANCELLED",
+      "transitionName": "Cancel Order",
+      "from": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_APPROVED",
+      "statusIdTo": "ORDER_HOLD",
+      "transitionName": "Hold Order",
+      "from": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_HOLD",
+        "description": "Held",
+        "sequenceId": "06",
+        "statusCode": "HELD",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_HOLD",
+      "statusIdTo": "ORDER_PROCESSING",
+      "transitionName": "Process Order",
+      "from": {
+        "statusId": "ORDER_HOLD",
+        "description": "Held",
+        "sequenceId": "06",
+        "statusCode": "HELD",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_PROCESSING",
+        "description": "Processing",
+        "sequenceId": "04",
+        "statusCode": "PROCESSING",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_HOLD",
+      "statusIdTo": "ORDER_APPROVED",
+      "transitionName": "Approve Order",
+      "from": {
+        "statusId": "ORDER_HOLD",
+        "description": "Held",
+        "sequenceId": "06",
+        "statusCode": "HELD",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_HOLD",
+      "statusIdTo": "ORDER_CANCELLED",
+      "transitionName": "Cancel Order",
+      "from": {
+        "statusId": "ORDER_HOLD",
+        "description": "Held",
+        "sequenceId": "06",
+        "statusCode": "HELD",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_SENT",
+      "statusIdTo": "ORDER_COMPLETED",
+      "transitionName": "Order Completed",
+      "from": {
+        "statusId": "ORDER_SENT",
+        "description": "Sent",
+        "sequenceId": "03",
+        "statusCode": "SENT",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "10",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_SENT",
+      "statusIdTo": "ORDER_CANCELLED",
+      "transitionName": "Order Cancelled",
+      "from": {
+        "statusId": "ORDER_SENT",
+        "description": "Sent",
+        "sequenceId": "03",
+        "statusCode": "SENT",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ORDER_COMPLETED",
+      "statusIdTo": "ORDER_APPROVED",
+      "transitionName": "Approve Order",
+      "from": {
+        "statusId": "ORDER_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "10",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "to": {
+        "statusId": "ORDER_APPROVED",
+        "description": "Approved",
+        "sequenceId": "05",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_STATUS"
+      },
+      "statusType": {
+        "description": "Order",
+        "statusTypeId": "ORDER_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

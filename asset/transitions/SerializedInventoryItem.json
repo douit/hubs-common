@@ -1,0 +1,567 @@
+{
+  "events": [
+    "Being Transfered (Promised)",
+    "Hold Inactive",
+    "Deliver",
+    "Mark As Defective",
+    "Release Hold",
+    "Transfer Complete (Promised)",
+    "Return Inactive",
+    "Make Return Available",
+    "Cancel Promise",
+    "Transfer Complete",
+    "Mark Return Defective",
+    "Make Return Held",
+    "Promise",
+    "Return Status Pending",
+    "Order Arrived",
+    "Mark Held Defective",
+    "Activate",
+    "Being Transfered",
+    "Deactivate",
+    "Hold"
+  ],
+  "states": [
+    "INV_BEING_TRANSFERED",
+    "INV_DEACTIVATED",
+    "INV_ON_HOLD",
+    "INV_DELIVERED",
+    "INV_AVAILABLE",
+    "INV_BEING_TRANS_PRM",
+    "INV_ACTIVATED",
+    "INV_DEFECTIVE",
+    "INV_RETURNED",
+    "INV_ON_ORDER",
+    "INV_PROMISED"
+  ],
+  "transitions": [
+    {
+      "statusId": "INV_ON_ORDER",
+      "statusIdTo": "INV_AVAILABLE",
+      "transitionName": "Order Arrived",
+      "from": {
+        "statusId": "INV_ON_ORDER",
+        "description": "On Order",
+        "sequenceId": "01",
+        "statusCode": "ON_ORDER",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_AVAILABLE",
+      "statusIdTo": "INV_PROMISED",
+      "transitionName": "Promise",
+      "from": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_PROMISED",
+        "description": "Promised",
+        "sequenceId": "03",
+        "statusCode": "PROMISED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_AVAILABLE",
+      "statusIdTo": "INV_ON_HOLD",
+      "transitionName": "Hold",
+      "from": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_AVAILABLE",
+      "statusIdTo": "INV_DEFECTIVE",
+      "transitionName": "Mark As Defective",
+      "from": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_DEFECTIVE",
+        "description": "Defective",
+        "sequenceId": "21",
+        "statusCode": "DEFECTIVE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_AVAILABLE",
+      "statusIdTo": "INV_BEING_TRANSFERED",
+      "transitionName": "Being Transfered",
+      "from": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_BEING_TRANSFERED",
+        "description": "Being Transfered",
+        "sequenceId": "10",
+        "statusCode": "BEING_TRANSFERED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_ON_HOLD",
+      "statusIdTo": "INV_AVAILABLE",
+      "transitionName": "Release Hold",
+      "from": {
+        "statusId": "INV_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_ON_HOLD",
+      "statusIdTo": "INV_DEFECTIVE",
+      "transitionName": "Mark Held Defective",
+      "from": {
+        "statusId": "INV_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_DEFECTIVE",
+        "description": "Defective",
+        "sequenceId": "21",
+        "statusCode": "DEFECTIVE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_BEING_TRANSFERED",
+      "statusIdTo": "INV_AVAILABLE",
+      "transitionName": "Transfer Complete",
+      "from": {
+        "statusId": "INV_BEING_TRANSFERED",
+        "description": "Being Transfered",
+        "sequenceId": "10",
+        "statusCode": "BEING_TRANSFERED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_PROMISED",
+      "statusIdTo": "INV_AVAILABLE",
+      "transitionName": "Cancel Promise",
+      "from": {
+        "statusId": "INV_PROMISED",
+        "description": "Promised",
+        "sequenceId": "03",
+        "statusCode": "PROMISED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_PROMISED",
+      "statusIdTo": "INV_DELIVERED",
+      "transitionName": "Deliver",
+      "from": {
+        "statusId": "INV_PROMISED",
+        "description": "Promised",
+        "sequenceId": "03",
+        "statusCode": "PROMISED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_DELIVERED",
+        "description": "Delivered",
+        "sequenceId": "04",
+        "statusCode": "DELIVERED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_PROMISED",
+      "statusIdTo": "INV_DEFECTIVE",
+      "transitionName": "Mark As Defective",
+      "from": {
+        "statusId": "INV_PROMISED",
+        "description": "Promised",
+        "sequenceId": "03",
+        "statusCode": "PROMISED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_DEFECTIVE",
+        "description": "Defective",
+        "sequenceId": "21",
+        "statusCode": "DEFECTIVE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_PROMISED",
+      "statusIdTo": "INV_BEING_TRANS_PRM",
+      "transitionName": "Being Transfered (Promised)",
+      "from": {
+        "statusId": "INV_PROMISED",
+        "description": "Promised",
+        "sequenceId": "03",
+        "statusCode": "PROMISED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_BEING_TRANS_PRM",
+        "description": "Being Transfered (Promised)",
+        "sequenceId": "11",
+        "statusCode": "BEING_TRANS_PRM",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_BEING_TRANS_PRM",
+      "statusIdTo": "INV_PROMISED",
+      "transitionName": "Transfer Complete (Promised)",
+      "from": {
+        "statusId": "INV_BEING_TRANS_PRM",
+        "description": "Being Transfered (Promised)",
+        "sequenceId": "11",
+        "statusCode": "BEING_TRANS_PRM",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_PROMISED",
+        "description": "Promised",
+        "sequenceId": "03",
+        "statusCode": "PROMISED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_DELIVERED",
+      "statusIdTo": "INV_RETURNED",
+      "transitionName": "Return Status Pending",
+      "from": {
+        "statusId": "INV_DELIVERED",
+        "description": "Delivered",
+        "sequenceId": "04",
+        "statusCode": "DELIVERED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_RETURNED",
+        "description": "Returned",
+        "sequenceId": "20",
+        "statusCode": "RETURNED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_RETURNED",
+      "statusIdTo": "INV_AVAILABLE",
+      "transitionName": "Make Return Available",
+      "from": {
+        "statusId": "INV_RETURNED",
+        "description": "Returned",
+        "sequenceId": "20",
+        "statusCode": "RETURNED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "02",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_RETURNED",
+      "statusIdTo": "INV_ON_HOLD",
+      "transitionName": "Make Return Held",
+      "from": {
+        "statusId": "INV_RETURNED",
+        "description": "Returned",
+        "sequenceId": "20",
+        "statusCode": "RETURNED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_RETURNED",
+      "statusIdTo": "INV_DEFECTIVE",
+      "transitionName": "Mark Return Defective",
+      "from": {
+        "statusId": "INV_RETURNED",
+        "description": "Returned",
+        "sequenceId": "20",
+        "statusCode": "RETURNED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_DEFECTIVE",
+        "description": "Defective",
+        "sequenceId": "21",
+        "statusCode": "DEFECTIVE",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_DELIVERED",
+      "statusIdTo": "INV_ACTIVATED",
+      "transitionName": "Activate",
+      "from": {
+        "statusId": "INV_DELIVERED",
+        "description": "Delivered",
+        "sequenceId": "04",
+        "statusCode": "DELIVERED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_ACTIVATED",
+        "description": "Activated",
+        "sequenceId": "05",
+        "statusCode": "ACTIVATED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_ACTIVATED",
+      "statusIdTo": "INV_DEACTIVATED",
+      "transitionName": "Deactivate",
+      "from": {
+        "statusId": "INV_ACTIVATED",
+        "description": "Activated",
+        "sequenceId": "05",
+        "statusCode": "ACTIVATED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_DEACTIVATED",
+        "description": "Deactivated",
+        "sequenceId": "06",
+        "statusCode": "DEACTIVATED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_ACTIVATED",
+      "statusIdTo": "INV_RETURNED",
+      "transitionName": "Return Status Pending",
+      "from": {
+        "statusId": "INV_ACTIVATED",
+        "description": "Activated",
+        "sequenceId": "05",
+        "statusCode": "ACTIVATED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_RETURNED",
+        "description": "Returned",
+        "sequenceId": "20",
+        "statusCode": "RETURNED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_DEACTIVATED",
+      "statusIdTo": "INV_ON_HOLD",
+      "transitionName": "Hold Inactive",
+      "from": {
+        "statusId": "INV_DEACTIVATED",
+        "description": "Deactivated",
+        "sequenceId": "06",
+        "statusCode": "DEACTIVATED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_DEACTIVATED",
+      "statusIdTo": "INV_RETURNED",
+      "transitionName": "Return Inactive",
+      "from": {
+        "statusId": "INV_DEACTIVATED",
+        "description": "Deactivated",
+        "sequenceId": "06",
+        "statusCode": "DEACTIVATED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "to": {
+        "statusId": "INV_RETURNED",
+        "description": "Returned",
+        "sequenceId": "20",
+        "statusCode": "RETURNED",
+        "statusTypeId": "INV_SERIALIZED_STTS"
+      },
+      "statusType": {
+        "description": "Serialized Inventory Item",
+        "statusTypeId": "INV_SERIALIZED_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    }
+  ]
+}

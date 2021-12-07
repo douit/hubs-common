@@ -1,0 +1,114 @@
+{
+  "events": [
+    "Activated",
+    "Task On Hold",
+    "Task Complete"
+  ],
+  "states": [
+    "PTS_CREATED_AS",
+    "PTS_ON_HOLD",
+    "PTS_CREATED_UA",
+    "PTS_CANCELLED",
+    "PTS_CREATED",
+    "PTS_CREATED_IP",
+    "PTS_COMPLETED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PTS_CREATED",
+      "statusIdTo": "PTS_COMPLETED",
+      "transitionName": "Task Complete",
+      "from": {
+        "statusId": "PTS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PROJECT_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "PTS_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "05",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "PROJECT_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Project Task",
+        "statusTypeId": "PROJECT_TASK_STATUS",
+        "parentTypeId": "PROJECT"
+      }
+    },
+    {
+      "statusId": "PTS_CREATED",
+      "statusIdTo": "PTS_ON_HOLD",
+      "transitionName": "Task On Hold",
+      "from": {
+        "statusId": "PTS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PROJECT_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "PTS_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "PROJECT_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Project Task",
+        "statusTypeId": "PROJECT_TASK_STATUS",
+        "parentTypeId": "PROJECT"
+      }
+    },
+    {
+      "statusId": "PTS_CREATED",
+      "statusIdTo": "PTS_CANCELLED",
+      "transitionName": "Task On Hold",
+      "from": {
+        "statusId": "PTS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PROJECT_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "PTS_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "09",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PROJECT_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Project Task",
+        "statusTypeId": "PROJECT_TASK_STATUS",
+        "parentTypeId": "PROJECT"
+      }
+    },
+    {
+      "statusId": "PTS_ON_HOLD",
+      "statusIdTo": "PTS_CREATED",
+      "transitionName": "Activated",
+      "from": {
+        "statusId": "PTS_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "PROJECT_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "PTS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PROJECT_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Project Task",
+        "statusTypeId": "PROJECT_TASK_STATUS",
+        "parentTypeId": "PROJECT"
+      }
+    }
+  ]
+}

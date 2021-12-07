@@ -1,0 +1,161 @@
+{
+  "events": [
+    "Declined",
+    "Cancelled",
+    "Pending",
+    "Accepted"
+  ],
+  "states": [
+    "PARTYINV_CANCELLED",
+    "PARTYINV_PENDING",
+    "PARTYINV_DECLINED",
+    "PARTYINV_SENT",
+    "PARTYINV_ACCEPTED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PARTYINV_SENT",
+      "statusIdTo": "PARTYINV_PENDING",
+      "transitionName": "Pending",
+      "from": {
+        "statusId": "PARTYINV_SENT",
+        "description": "Invitation Sent",
+        "sequenceId": "01",
+        "statusCode": "SENT",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "to": {
+        "statusId": "PARTYINV_PENDING",
+        "description": "Invitation Pending",
+        "sequenceId": "02",
+        "statusCode": "PENDING",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "statusType": {
+        "description": "Party Invitation",
+        "statusTypeId": "PARTY_INV_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PARTYINV_SENT",
+      "statusIdTo": "PARTYINV_ACCEPTED",
+      "transitionName": "Accepted",
+      "from": {
+        "statusId": "PARTYINV_SENT",
+        "description": "Invitation Sent",
+        "sequenceId": "01",
+        "statusCode": "SENT",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "to": {
+        "statusId": "PARTYINV_ACCEPTED",
+        "description": "Invitation Accepted",
+        "sequenceId": "05",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "statusType": {
+        "description": "Party Invitation",
+        "statusTypeId": "PARTY_INV_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PARTYINV_SENT",
+      "statusIdTo": "PARTYINV_DECLINED",
+      "transitionName": "Declined",
+      "from": {
+        "statusId": "PARTYINV_SENT",
+        "description": "Invitation Sent",
+        "sequenceId": "01",
+        "statusCode": "SENT",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "to": {
+        "statusId": "PARTYINV_DECLINED",
+        "description": "Invitation Declined",
+        "sequenceId": "06",
+        "statusCode": "DECLINED",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "statusType": {
+        "description": "Party Invitation",
+        "statusTypeId": "PARTY_INV_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PARTYINV_SENT",
+      "statusIdTo": "PARTYINV_CANCELLED",
+      "transitionName": "Cancelled",
+      "from": {
+        "statusId": "PARTYINV_SENT",
+        "description": "Invitation Sent",
+        "sequenceId": "01",
+        "statusCode": "SENT",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "to": {
+        "statusId": "PARTYINV_CANCELLED",
+        "description": "Invitation Cancelled",
+        "sequenceId": "10",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "statusType": {
+        "description": "Party Invitation",
+        "statusTypeId": "PARTY_INV_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PARTYINV_PENDING",
+      "statusIdTo": "PARTYINV_ACCEPTED",
+      "transitionName": "Accepted",
+      "from": {
+        "statusId": "PARTYINV_PENDING",
+        "description": "Invitation Pending",
+        "sequenceId": "02",
+        "statusCode": "PENDING",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "to": {
+        "statusId": "PARTYINV_ACCEPTED",
+        "description": "Invitation Accepted",
+        "sequenceId": "05",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "statusType": {
+        "description": "Party Invitation",
+        "statusTypeId": "PARTY_INV_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PARTYINV_PENDING",
+      "statusIdTo": "PARTYINV_CANCELLED",
+      "transitionName": "Cancelled",
+      "from": {
+        "statusId": "PARTYINV_PENDING",
+        "description": "Invitation Pending",
+        "sequenceId": "02",
+        "statusCode": "PENDING",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "to": {
+        "statusId": "PARTYINV_CANCELLED",
+        "description": "Invitation Cancelled",
+        "sequenceId": "10",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PARTY_INV_STATUS"
+      },
+      "statusType": {
+        "description": "Party Invitation",
+        "statusTypeId": "PARTY_INV_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "events": [
+    "Manually Freeze",
+    "Re-activate",
+    "Set Manually Frozen",
+    "Cancel",
+    "Set Negative Pending Replenishment"
+  ],
+  "states": [
+    "FNACT_MANFROZEN",
+    "FNACT_ACTIVE",
+    "FNACT_CANCELLED",
+    "FNACT_NEGPENDREPL"
+  ],
+  "transitions": [
+    {
+      "statusId": "FNACT_ACTIVE",
+      "statusIdTo": "FNACT_NEGPENDREPL",
+      "transitionName": "Set Negative Pending Replenishment",
+      "from": {
+        "statusId": "FNACT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "to": {
+        "statusId": "FNACT_NEGPENDREPL",
+        "description": "Negative Pending Replenishment",
+        "sequenceId": "02",
+        "statusCode": "NEGPENDREPL",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Status",
+        "statusTypeId": "FINACCT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FNACT_ACTIVE",
+      "statusIdTo": "FNACT_MANFROZEN",
+      "transitionName": "Set Manually Frozen",
+      "from": {
+        "statusId": "FNACT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "to": {
+        "statusId": "FNACT_MANFROZEN",
+        "description": "Manually Frozen",
+        "sequenceId": "03",
+        "statusCode": "MANFROZEN",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Status",
+        "statusTypeId": "FINACCT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FNACT_ACTIVE",
+      "statusIdTo": "FNACT_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "FNACT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "to": {
+        "statusId": "FNACT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "09",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Status",
+        "statusTypeId": "FINACCT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FNACT_NEGPENDREPL",
+      "statusIdTo": "FNACT_ACTIVE",
+      "transitionName": "Re-activate",
+      "from": {
+        "statusId": "FNACT_NEGPENDREPL",
+        "description": "Negative Pending Replenishment",
+        "sequenceId": "02",
+        "statusCode": "NEGPENDREPL",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "to": {
+        "statusId": "FNACT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Status",
+        "statusTypeId": "FINACCT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FNACT_NEGPENDREPL",
+      "statusIdTo": "FNACT_MANFROZEN",
+      "transitionName": "Manually Freeze",
+      "from": {
+        "statusId": "FNACT_NEGPENDREPL",
+        "description": "Negative Pending Replenishment",
+        "sequenceId": "02",
+        "statusCode": "NEGPENDREPL",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "to": {
+        "statusId": "FNACT_MANFROZEN",
+        "description": "Manually Frozen",
+        "sequenceId": "03",
+        "statusCode": "MANFROZEN",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Status",
+        "statusTypeId": "FINACCT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FNACT_NEGPENDREPL",
+      "statusIdTo": "FNACT_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "FNACT_NEGPENDREPL",
+        "description": "Negative Pending Replenishment",
+        "sequenceId": "02",
+        "statusCode": "NEGPENDREPL",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "to": {
+        "statusId": "FNACT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "09",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Status",
+        "statusTypeId": "FINACCT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FNACT_MANFROZEN",
+      "statusIdTo": "FNACT_ACTIVE",
+      "transitionName": "Re-activate",
+      "from": {
+        "statusId": "FNACT_MANFROZEN",
+        "description": "Manually Frozen",
+        "sequenceId": "03",
+        "statusCode": "MANFROZEN",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "to": {
+        "statusId": "FNACT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Status",
+        "statusTypeId": "FINACCT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FNACT_MANFROZEN",
+      "statusIdTo": "FNACT_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "FNACT_MANFROZEN",
+        "description": "Manually Frozen",
+        "sequenceId": "03",
+        "statusCode": "MANFROZEN",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "to": {
+        "statusId": "FNACT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "09",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "FINACCT_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Status",
+        "statusTypeId": "FINACCT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

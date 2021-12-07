@@ -1,0 +1,506 @@
+{
+  "events": [
+    "Corrected",
+    "Refer",
+    "Entered,visible to all participants",
+    "Set Pending, only visible to originator",
+    "Set In Progress, waiting to be send",
+    "Bounced",
+    "Cancel",
+    "Complete",
+    "Resolve"
+  ],
+  "states": [
+    "COM_IN_PROGRESS",
+    "COM_REFERRED",
+    "COM_COMPLETE",
+    "COM_RESOLVED",
+    "COM_UNKNOWN_PARTY",
+    "COM_PENDING",
+    "COM_CANCELLED",
+    "COM_BOUNCED",
+    "COM_ENTERED"
+  ],
+  "transitions": [
+    {
+      "statusId": "COM_ENTERED",
+      "statusIdTo": "COM_PENDING",
+      "transitionName": "Set Pending, only visible to originator",
+      "from": {
+        "statusId": "COM_ENTERED",
+        "description": "Entered",
+        "sequenceId": "02",
+        "statusCode": "ENTERED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_ENTERED",
+      "statusIdTo": "COM_IN_PROGRESS",
+      "transitionName": "Set In Progress, waiting to be send",
+      "from": {
+        "statusId": "COM_ENTERED",
+        "description": "Entered",
+        "sequenceId": "02",
+        "statusCode": "ENTERED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_IN_PROGRESS",
+        "description": "In-Progress",
+        "sequenceId": "05",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_ENTERED",
+      "statusIdTo": "COM_COMPLETE",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "COM_ENTERED",
+        "description": "Entered",
+        "sequenceId": "02",
+        "statusCode": "ENTERED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_COMPLETE",
+        "description": "Closed",
+        "sequenceId": "20",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_PENDING",
+      "statusIdTo": "COM_ENTERED",
+      "transitionName": "Entered,visible to all participants",
+      "from": {
+        "statusId": "COM_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_ENTERED",
+        "description": "Entered",
+        "sequenceId": "02",
+        "statusCode": "ENTERED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_PENDING",
+      "statusIdTo": "COM_IN_PROGRESS",
+      "transitionName": "Set In Progress, waiting to be send",
+      "from": {
+        "statusId": "COM_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_IN_PROGRESS",
+        "description": "In-Progress",
+        "sequenceId": "05",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_IN_PROGRESS",
+      "statusIdTo": "COM_COMPLETE",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "COM_IN_PROGRESS",
+        "description": "In-Progress",
+        "sequenceId": "05",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_COMPLETE",
+        "description": "Closed",
+        "sequenceId": "20",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_IN_PROGRESS",
+      "statusIdTo": "COM_BOUNCED",
+      "transitionName": "Bounced",
+      "from": {
+        "statusId": "COM_IN_PROGRESS",
+        "description": "In-Progress",
+        "sequenceId": "05",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_BOUNCED",
+        "description": "Bounced",
+        "sequenceId": "50",
+        "statusCode": "BOUNCED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_COMPLETE",
+      "statusIdTo": "COM_RESOLVED",
+      "transitionName": "Resolve",
+      "from": {
+        "statusId": "COM_COMPLETE",
+        "description": "Closed",
+        "sequenceId": "20",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_RESOLVED",
+        "description": "Resolved",
+        "sequenceId": "21",
+        "statusCode": "RESOLVED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_COMPLETE",
+      "statusIdTo": "COM_REFERRED",
+      "transitionName": "Refer",
+      "from": {
+        "statusId": "COM_COMPLETE",
+        "description": "Closed",
+        "sequenceId": "20",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_REFERRED",
+        "description": "Referred",
+        "sequenceId": "22",
+        "statusCode": "REFERRED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_COMPLETE",
+      "statusIdTo": "COM_BOUNCED",
+      "transitionName": "Bounced",
+      "from": {
+        "statusId": "COM_COMPLETE",
+        "description": "Closed",
+        "sequenceId": "20",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_BOUNCED",
+        "description": "Bounced",
+        "sequenceId": "50",
+        "statusCode": "BOUNCED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_UNKNOWN_PARTY",
+      "statusIdTo": "COM_COMPLETE",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "COM_UNKNOWN_PARTY",
+        "description": "Unknown Party",
+        "sequenceId": "07",
+        "statusCode": "UNKNOWN_PARTY",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_COMPLETE",
+        "description": "Closed",
+        "sequenceId": "20",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_UNKNOWN_PARTY",
+      "statusIdTo": "COM_ENTERED",
+      "transitionName": "Corrected",
+      "from": {
+        "statusId": "COM_UNKNOWN_PARTY",
+        "description": "Unknown Party",
+        "sequenceId": "07",
+        "statusCode": "UNKNOWN_PARTY",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_ENTERED",
+        "description": "Entered",
+        "sequenceId": "02",
+        "statusCode": "ENTERED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_PENDING",
+      "statusIdTo": "COM_COMPLETE",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "COM_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_COMPLETE",
+        "description": "Closed",
+        "sequenceId": "20",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_ENTERED",
+      "statusIdTo": "COM_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "COM_ENTERED",
+        "description": "Entered",
+        "sequenceId": "02",
+        "statusCode": "ENTERED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_PENDING",
+      "statusIdTo": "COM_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "COM_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_IN_PROGRESS",
+      "statusIdTo": "COM_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "COM_IN_PROGRESS",
+        "description": "In-Progress",
+        "sequenceId": "05",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_COMPLETE",
+      "statusIdTo": "COM_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "COM_COMPLETE",
+        "description": "Closed",
+        "sequenceId": "20",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_RESOLVED",
+      "statusIdTo": "COM_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "COM_RESOLVED",
+        "description": "Resolved",
+        "sequenceId": "21",
+        "statusCode": "RESOLVED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_REFERRED",
+      "statusIdTo": "COM_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "COM_REFERRED",
+        "description": "Referred",
+        "sequenceId": "22",
+        "statusCode": "REFERRED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "COM_UNKNOWN_PARTY",
+      "statusIdTo": "COM_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "COM_UNKNOWN_PARTY",
+        "description": "Unknown Party",
+        "sequenceId": "07",
+        "statusCode": "UNKNOWN_PARTY",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "to": {
+        "statusId": "COM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "COM_EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event",
+        "statusTypeId": "COM_EVENT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "events": [
+    "Accept",
+    "Confirm",
+    "Void"
+  ],
+  "states": [
+    "SHRSCS_CONFIRMED",
+    "SHRSCS_NOT_STARTED",
+    "SHRSCS_VOIDED",
+    "SHRSCS_ACCEPTED"
+  ],
+  "transitions": [
+    {
+      "statusId": "SHRSCS_NOT_STARTED",
+      "statusIdTo": "SHRSCS_CONFIRMED",
+      "transitionName": "Confirm",
+      "from": {
+        "statusId": "SHRSCS_NOT_STARTED",
+        "description": "Not Started",
+        "sequenceId": "01",
+        "statusCode": "NOT_STARTED",
+        "statusTypeId": "SHPRTSG_CS_STATUS"
+      },
+      "to": {
+        "statusId": "SHRSCS_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "02",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "SHPRTSG_CS_STATUS"
+      },
+      "statusType": {
+        "description": "ShipmentRouteSegment:CarrierService",
+        "statusTypeId": "SHPRTSG_CS_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHRSCS_CONFIRMED",
+      "statusIdTo": "SHRSCS_ACCEPTED",
+      "transitionName": "Accept",
+      "from": {
+        "statusId": "SHRSCS_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "02",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "SHPRTSG_CS_STATUS"
+      },
+      "to": {
+        "statusId": "SHRSCS_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "03",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "SHPRTSG_CS_STATUS"
+      },
+      "statusType": {
+        "description": "ShipmentRouteSegment:CarrierService",
+        "statusTypeId": "SHPRTSG_CS_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHRSCS_CONFIRMED",
+      "statusIdTo": "SHRSCS_VOIDED",
+      "transitionName": "Void",
+      "from": {
+        "statusId": "SHRSCS_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "02",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "SHPRTSG_CS_STATUS"
+      },
+      "to": {
+        "statusId": "SHRSCS_VOIDED",
+        "description": "Voided",
+        "sequenceId": "08",
+        "statusCode": "VOIDED",
+        "statusTypeId": "SHPRTSG_CS_STATUS"
+      },
+      "statusType": {
+        "description": "ShipmentRouteSegment:CarrierService",
+        "statusTypeId": "SHPRTSG_CS_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHRSCS_ACCEPTED",
+      "statusIdTo": "SHRSCS_VOIDED",
+      "transitionName": "Void",
+      "from": {
+        "statusId": "SHRSCS_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "03",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "SHPRTSG_CS_STATUS"
+      },
+      "to": {
+        "statusId": "SHRSCS_VOIDED",
+        "description": "Voided",
+        "sequenceId": "08",
+        "statusCode": "VOIDED",
+        "statusTypeId": "SHPRTSG_CS_STATUS"
+      },
+      "statusType": {
+        "description": "ShipmentRouteSegment:CarrierService",
+        "statusTypeId": "SHPRTSG_CS_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

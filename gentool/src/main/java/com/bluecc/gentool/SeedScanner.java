@@ -1,5 +1,8 @@
 package com.bluecc.gentool;
 
+import com.bluecc.hubs.fund.ModelTransition;
+import com.bluecc.hubs.fund.ModelTransition.*;
+import com.bluecc.hubs.fund.Util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.Builder;
@@ -17,10 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,49 +36,57 @@ public class SeedScanner {
 
         scanner.statusValidChangeList
                 .stream()
-                .peek(e -> e.setup(scanner.statusItemMap))
-                .forEach(e -> pretty(e));
+                .peek(e -> scanner.setup(e))
+                .forEach(Util::pretty);
+
+        printTransitions(scanner);
+
+        String targetDir="asset/transitions";
+        writeToFiles(scanner, targetDir);
     }
 
-    @Data
-    @Builder
-    public static class StatusType {
-        // description="Project" hasTable="N" parentTypeId="WORK_EFFORT_STATUS"
-        // statusTypeId="WE_PROJECT_STATUS"
-        String description;
-        String statusTypeId;
+    private static void printTransitions(SeedScanner scanner) {
+        scanner.statusTypeMap.values().stream()
+                .map(t -> t.getDescription())
+                .sorted()
+                .forEach(e -> System.out.println(e));
+        System.out.println("total transitions: " + scanner.statusValidChangeList.size());
+        System.out.println("total types: " + scanner.statusTypeMap.size());
     }
 
-    @Data
-    @Builder
-    public static class StatusItem {
-        // description="Planning" sequenceId="01" statusCode="PLANNING"
-        // statusId="WEPR_PLANNING" statusTypeId="WE_PROJECT_STATUS"
-        String statusId;
-        String description;
-        String sequenceId;
-        String statusCode;
-        String statusTypeId;
+    private static void writeToFiles(SeedScanner scanner, String targetDir) {
+        scanner.statusTypeMap.keySet().forEach(typ ->{
+            String typeDesc= scanner.statusTypeMap.get(typ).getDescription();
+            Path path=Paths.get(targetDir, Util.wordsToClassName(typeDesc)+".json");
+            List<StatusValidChange> changeList= scanner.statusValidChangeList.stream()
+                    .filter(s -> s.statusType.getStatusTypeId().equals(typ))
+                    .collect(Collectors.toList());
+            List<String> statusItems=scanner.statusItemMap.values().stream()
+                    .filter(s -> s.getStatusTypeId().equals(typ))
+                    .map(s -> s.getStatusId())
+                    .collect(Collectors.toList());
+            if(!changeList.isEmpty()) {
+                try {
+                    System.out.format(".. write to %s\n", path);
+                    Util.writeJsonFile(StatusTransitions
+                                    .createBy(changeList, statusItems),
+                            path.toFile());
+                } catch (IOException e) {
+                    log.error(e.getMessage(), e);
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
-    @Data
-    @Builder
-    public static class StatusValidChange {
-        // statusId="WEPR_PLANNING" statusIdTo="WEPR_IN_PROGRESS" transitionName="Begin Project"
-        String statusId;
-        String statusIdTo;
-        String transitionName;
-
-        StatusItem from;
-        StatusItem to;
-
-        public void setup(Map<String, StatusItem> statusItemMap) {
-            this.from = statusItemMap.get(statusId);
-            this.to = statusItemMap.get(statusIdTo);
-        }
+    public void setup(StatusValidChange change) {
+        change.from = statusItemMap.get(change.getStatusId());
+        change.to = statusItemMap.get(change.getStatusIdTo());
+        change.statusType = statusTypeMap.get(change.from.getStatusTypeId());
     }
 
     Map<String, StatusItem> statusItemMap = Maps.newHashMap();
+    Map<String, StatusType> statusTypeMap = Maps.newHashMap();
     List<StatusValidChange> statusValidChangeList = Lists.newArrayList();
 
     void scan(String rootDir) {
@@ -95,7 +103,7 @@ public class SeedScanner {
                     .flatMap(f -> extractResourceFiles(f).stream())
                     .filter(f -> f.toFile().exists())
                     .flatMap(dataFile -> pickupElements(dataFile,
-                            "StatusValidChange", "StatusItem").stream())
+                            "StatusValidChange", "StatusItem", "StatusType").stream())
                     .forEach(e -> {
                         switch (e.getTagName()) {
                             case "StatusValidChange":
@@ -114,6 +122,15 @@ public class SeedScanner {
                                                 .statusCode(e.getAttribute("statusCode"))
                                                 .statusTypeId(e.getAttribute("statusTypeId"))
                                                 .build());
+                                break;
+                            case "StatusType":
+                                statusTypeMap.put(e.getAttribute("statusTypeId"),
+                                        StatusType.builder()
+                                                .statusTypeId(e.getAttribute("statusTypeId"))
+                                                .description(e.getAttribute("description"))
+                                                .parentTypeId(e.getAttribute("parentTypeId"))
+                                                .build()
+                                );
                                 break;
                         }
                     });

@@ -1,0 +1,136 @@
+{
+  "events": [
+    "Resume Project",
+    "Begin Project",
+    "Cancel"
+  ],
+  "states": [
+    "WEPR_PLANNING",
+    "WEPR_ON_HOLD",
+    "WEPR_CANCELLED",
+    "WEPR_IN_PROGRESS",
+    "WEPR_COMPLETE"
+  ],
+  "transitions": [
+    {
+      "statusId": "WEPR_PLANNING",
+      "statusIdTo": "WEPR_IN_PROGRESS",
+      "transitionName": "Begin Project",
+      "from": {
+        "statusId": "WEPR_PLANNING",
+        "description": "Planning",
+        "sequenceId": "01",
+        "statusCode": "PLANNING",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "to": {
+        "statusId": "WEPR_IN_PROGRESS",
+        "description": "In Progress",
+        "sequenceId": "02",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Project",
+        "statusTypeId": "WE_PROJECT_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "WEPR_IN_PROGRESS",
+      "statusIdTo": "WEPR_ON_HOLD",
+      "transitionName": "Begin Project",
+      "from": {
+        "statusId": "WEPR_IN_PROGRESS",
+        "description": "In Progress",
+        "sequenceId": "02",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "to": {
+        "statusId": "WEPR_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "98",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Project",
+        "statusTypeId": "WE_PROJECT_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "WEPR_ON_HOLD",
+      "statusIdTo": "WEPR_IN_PROGRESS",
+      "transitionName": "Resume Project",
+      "from": {
+        "statusId": "WEPR_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "98",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "to": {
+        "statusId": "WEPR_IN_PROGRESS",
+        "description": "In Progress",
+        "sequenceId": "02",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Project",
+        "statusTypeId": "WE_PROJECT_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "WEPR_IN_PROGRESS",
+      "statusIdTo": "WEPR_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "WEPR_IN_PROGRESS",
+        "description": "In Progress",
+        "sequenceId": "02",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "to": {
+        "statusId": "WEPR_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Project",
+        "statusTypeId": "WE_PROJECT_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "WEPR_ON_HOLD",
+      "statusIdTo": "WEPR_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "WEPR_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "98",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "to": {
+        "statusId": "WEPR_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "WE_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Project",
+        "statusTypeId": "WE_PROJECT_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    }
+  ]
+}

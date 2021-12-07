@@ -1,0 +1,310 @@
+{
+  "events": [
+    "Payment Not Paid",
+    "Payment Received",
+    "Payment Voided",
+    "Payment Send",
+    "Payment Cancelled",
+    "Payment Confirmed to Sent",
+    "Payment Confirmed to Received",
+    "Payment Confirmed"
+  ],
+  "states": [
+    "PMNT_RECEIVED",
+    "PMNT_VOID",
+    "PMNT_SENT",
+    "PMNT_CONFIRMED",
+    "PMNT_CANCELLED",
+    "PMNT_NOT_PAID"
+  ],
+  "transitions": [
+    {
+      "statusId": "PMNT_NOT_PAID",
+      "statusIdTo": "PMNT_SENT",
+      "transitionName": "Payment Send",
+      "from": {
+        "statusId": "PMNT_NOT_PAID",
+        "description": "Not Paid",
+        "sequenceId": "01",
+        "statusCode": "NOT_PAID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_SENT",
+        "description": "Sent",
+        "sequenceId": "03",
+        "statusCode": "SENT",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_NOT_PAID",
+      "statusIdTo": "PMNT_RECEIVED",
+      "transitionName": "Payment Received",
+      "from": {
+        "statusId": "PMNT_NOT_PAID",
+        "description": "Not Paid",
+        "sequenceId": "01",
+        "statusCode": "NOT_PAID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_RECEIVED",
+        "description": "Received",
+        "sequenceId": "04",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_NOT_PAID",
+      "statusIdTo": "PMNT_CANCELLED",
+      "transitionName": "Payment Cancelled",
+      "from": {
+        "statusId": "PMNT_NOT_PAID",
+        "description": "Not Paid",
+        "sequenceId": "01",
+        "statusCode": "NOT_PAID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "10",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_SENT",
+      "statusIdTo": "PMNT_CONFIRMED",
+      "transitionName": "Payment Confirmed",
+      "from": {
+        "statusId": "PMNT_SENT",
+        "description": "Sent",
+        "sequenceId": "03",
+        "statusCode": "SENT",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "05",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_RECEIVED",
+      "statusIdTo": "PMNT_CONFIRMED",
+      "transitionName": "Payment Confirmed",
+      "from": {
+        "statusId": "PMNT_RECEIVED",
+        "description": "Received",
+        "sequenceId": "04",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "05",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_SENT",
+      "statusIdTo": "PMNT_VOID",
+      "transitionName": "Payment Voided",
+      "from": {
+        "statusId": "PMNT_SENT",
+        "description": "Sent",
+        "sequenceId": "03",
+        "statusCode": "SENT",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_VOID",
+        "description": "Voided",
+        "sequenceId": "11",
+        "statusCode": "VOID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_RECEIVED",
+      "statusIdTo": "PMNT_VOID",
+      "transitionName": "Payment Voided",
+      "from": {
+        "statusId": "PMNT_RECEIVED",
+        "description": "Received",
+        "sequenceId": "04",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_VOID",
+        "description": "Voided",
+        "sequenceId": "11",
+        "statusCode": "VOID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_NOT_PAID",
+      "statusIdTo": "PMNT_VOID",
+      "transitionName": "Payment Voided",
+      "from": {
+        "statusId": "PMNT_NOT_PAID",
+        "description": "Not Paid",
+        "sequenceId": "01",
+        "statusCode": "NOT_PAID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_VOID",
+        "description": "Voided",
+        "sequenceId": "11",
+        "statusCode": "VOID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_SENT",
+      "statusIdTo": "PMNT_NOT_PAID",
+      "transitionName": "Payment Not Paid",
+      "from": {
+        "statusId": "PMNT_SENT",
+        "description": "Sent",
+        "sequenceId": "03",
+        "statusCode": "SENT",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_NOT_PAID",
+        "description": "Not Paid",
+        "sequenceId": "01",
+        "statusCode": "NOT_PAID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_RECEIVED",
+      "statusIdTo": "PMNT_NOT_PAID",
+      "transitionName": "Payment Not Paid",
+      "from": {
+        "statusId": "PMNT_RECEIVED",
+        "description": "Received",
+        "sequenceId": "04",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_NOT_PAID",
+        "description": "Not Paid",
+        "sequenceId": "01",
+        "statusCode": "NOT_PAID",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_CONFIRMED",
+      "statusIdTo": "PMNT_SENT",
+      "transitionName": "Payment Confirmed to Sent",
+      "from": {
+        "statusId": "PMNT_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "05",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_SENT",
+        "description": "Sent",
+        "sequenceId": "03",
+        "statusCode": "SENT",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PMNT_CONFIRMED",
+      "statusIdTo": "PMNT_RECEIVED",
+      "transitionName": "Payment Confirmed to Received",
+      "from": {
+        "statusId": "PMNT_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "05",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "to": {
+        "statusId": "PMNT_RECEIVED",
+        "description": "Received",
+        "sequenceId": "04",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PMNT_STATUS"
+      },
+      "statusType": {
+        "description": "Payment Status",
+        "statusTypeId": "PMNT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

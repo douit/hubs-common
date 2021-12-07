@@ -1,0 +1,61 @@
+{
+  "events": [
+    "Review Disapproved",
+    "Review Approved"
+  ],
+  "states": [
+    "KW_DISAPPROVED",
+    "KW_APPROVED",
+    "KW_PENDING"
+  ],
+  "transitions": [
+    {
+      "statusId": "KW_PENDING",
+      "statusIdTo": "KW_APPROVED",
+      "transitionName": "Review Approved",
+      "from": {
+        "statusId": "KW_PENDING",
+        "description": "Pending",
+        "sequenceId": "02",
+        "statusCode": "PENDING",
+        "statusTypeId": "KEYWORD_STATUS"
+      },
+      "to": {
+        "statusId": "KW_APPROVED",
+        "description": "Approved",
+        "sequenceId": "01",
+        "statusCode": "APPROVED",
+        "statusTypeId": "KEYWORD_STATUS"
+      },
+      "statusType": {
+        "description": "Keyword",
+        "statusTypeId": "KEYWORD_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "KW_PENDING",
+      "statusIdTo": "KW_DISAPPROVED",
+      "transitionName": "Review Disapproved",
+      "from": {
+        "statusId": "KW_PENDING",
+        "description": "Pending",
+        "sequenceId": "02",
+        "statusCode": "PENDING",
+        "statusTypeId": "KEYWORD_STATUS"
+      },
+      "to": {
+        "statusId": "KW_DISAPPROVED",
+        "description": "Disapproved",
+        "sequenceId": "03",
+        "statusCode": "DISAPPROVED",
+        "statusTypeId": "KEYWORD_STATUS"
+      },
+      "statusType": {
+        "description": "Keyword",
+        "statusTypeId": "KEYWORD_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

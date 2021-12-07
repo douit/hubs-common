@@ -1,0 +1,61 @@
+{
+  "events": [
+    "Cancel",
+    "Complete"
+  ],
+  "states": [
+    "PICKITEM_CANCELLED",
+    "PICKITEM_PENDING",
+    "PICKITEM_COMPLETED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PICKITEM_PENDING",
+      "statusIdTo": "PICKITEM_COMPLETED",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "PICKITEM_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "PICKITEM_STATUS"
+      },
+      "to": {
+        "statusId": "PICKITEM_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "50",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "PICKITEM_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist Item",
+        "statusTypeId": "PICKITEM_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PICKITEM_PENDING",
+      "statusIdTo": "PICKITEM_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "PICKITEM_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "PICKITEM_STATUS"
+      },
+      "to": {
+        "statusId": "PICKITEM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PICKITEM_STATUS"
+      },
+      "statusType": {
+        "description": "Picklist Item",
+        "statusTypeId": "PICKITEM_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

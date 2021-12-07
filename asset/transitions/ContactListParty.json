@@ -1,0 +1,387 @@
+{
+  "events": [
+    "Reject",
+    "Subscription Accepted - Unsubscription Pending",
+    "Accept",
+    "Subscription Invalid - Unsubscription Pending",
+    "Subscription Accepted - Unsubscribed",
+    "Subscription In Use - Unsubscribed",
+    "Subscription Pending - Unsubscription Pending",
+    "Subscription Invalid - Unsubscribed",
+    "Locked - In Use",
+    "Subscription In Use - Unsubscription Pending",
+    "Pending Accept",
+    "Invalid"
+  ],
+  "states": [
+    "CLPT_REJECTED",
+    "CLPT_PENDING",
+    "CLPT_IN_USE",
+    "CLPT_UNSUBSCRIBED",
+    "CLPT_INVALID",
+    "CLPT_ACCEPTED",
+    "CLPT_UNSUBS_PENDING"
+  ],
+  "transitions": [
+    {
+      "statusId": "CLPT_PENDING",
+      "statusIdTo": "CLPT_ACCEPTED",
+      "transitionName": "Accept",
+      "from": {
+        "statusId": "CLPT_PENDING",
+        "description": "Pending Acceptance",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_PENDING",
+      "statusIdTo": "CLPT_REJECTED",
+      "transitionName": "Reject",
+      "from": {
+        "statusId": "CLPT_PENDING",
+        "description": "Pending Acceptance",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "03",
+        "statusCode": "REJECTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_ACCEPTED",
+      "statusIdTo": "CLPT_REJECTED",
+      "transitionName": "Reject",
+      "from": {
+        "statusId": "CLPT_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "03",
+        "statusCode": "REJECTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_REJECTED",
+      "statusIdTo": "CLPT_ACCEPTED",
+      "transitionName": "Accept",
+      "from": {
+        "statusId": "CLPT_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "03",
+        "statusCode": "REJECTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_REJECTED",
+      "statusIdTo": "CLPT_PENDING",
+      "transitionName": "Pending Accept",
+      "from": {
+        "statusId": "CLPT_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "03",
+        "statusCode": "REJECTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_PENDING",
+        "description": "Pending Acceptance",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_ACCEPTED",
+      "statusIdTo": "CLPT_IN_USE",
+      "transitionName": "Locked - In Use",
+      "from": {
+        "statusId": "CLPT_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_IN_USE",
+        "description": "In Use",
+        "sequenceId": "04",
+        "statusCode": "IN_USE",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_ACCEPTED",
+      "statusIdTo": "CLPT_INVALID",
+      "transitionName": "Invalid",
+      "from": {
+        "statusId": "CLPT_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_INVALID",
+        "description": "Invalid",
+        "sequenceId": "05",
+        "statusCode": "INVALID",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_ACCEPTED",
+      "statusIdTo": "CLPT_UNSUBS_PENDING",
+      "transitionName": "Subscription Accepted - Unsubscription Pending",
+      "from": {
+        "statusId": "CLPT_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_UNSUBS_PENDING",
+        "description": "Unsubscription pending",
+        "sequenceId": "06",
+        "statusCode": "UNSUBS_PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_PENDING",
+      "statusIdTo": "CLPT_UNSUBS_PENDING",
+      "transitionName": "Subscription Pending - Unsubscription Pending",
+      "from": {
+        "statusId": "CLPT_PENDING",
+        "description": "Pending Acceptance",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_UNSUBS_PENDING",
+        "description": "Unsubscription pending",
+        "sequenceId": "06",
+        "statusCode": "UNSUBS_PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_IN_USE",
+      "statusIdTo": "CLPT_UNSUBS_PENDING",
+      "transitionName": "Subscription In Use - Unsubscription Pending",
+      "from": {
+        "statusId": "CLPT_IN_USE",
+        "description": "In Use",
+        "sequenceId": "04",
+        "statusCode": "IN_USE",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_UNSUBS_PENDING",
+        "description": "Unsubscription pending",
+        "sequenceId": "06",
+        "statusCode": "UNSUBS_PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_INVALID",
+      "statusIdTo": "CLPT_UNSUBS_PENDING",
+      "transitionName": "Subscription Invalid - Unsubscription Pending",
+      "from": {
+        "statusId": "CLPT_INVALID",
+        "description": "Invalid",
+        "sequenceId": "05",
+        "statusCode": "INVALID",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_UNSUBS_PENDING",
+        "description": "Unsubscription pending",
+        "sequenceId": "06",
+        "statusCode": "UNSUBS_PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_ACCEPTED",
+      "statusIdTo": "CLPT_UNSUBSCRIBED",
+      "transitionName": "Subscription Accepted - Unsubscribed",
+      "from": {
+        "statusId": "CLPT_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_UNSUBSCRIBED",
+        "description": "Unsubscribed",
+        "sequenceId": "07",
+        "statusCode": "UNSUBSCRIBED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_PENDING",
+      "statusIdTo": "CLPT_UNSUBSCRIBED",
+      "transitionName": "Subscription Accepted - Unsubscribed",
+      "from": {
+        "statusId": "CLPT_PENDING",
+        "description": "Pending Acceptance",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_UNSUBSCRIBED",
+        "description": "Unsubscribed",
+        "sequenceId": "07",
+        "statusCode": "UNSUBSCRIBED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_IN_USE",
+      "statusIdTo": "CLPT_UNSUBSCRIBED",
+      "transitionName": "Subscription In Use - Unsubscribed",
+      "from": {
+        "statusId": "CLPT_IN_USE",
+        "description": "In Use",
+        "sequenceId": "04",
+        "statusCode": "IN_USE",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_UNSUBSCRIBED",
+        "description": "Unsubscribed",
+        "sequenceId": "07",
+        "statusCode": "UNSUBSCRIBED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CLPT_INVALID",
+      "statusIdTo": "CLPT_UNSUBSCRIBED",
+      "transitionName": "Subscription Invalid - Unsubscribed",
+      "from": {
+        "statusId": "CLPT_INVALID",
+        "description": "Invalid",
+        "sequenceId": "05",
+        "statusCode": "INVALID",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "to": {
+        "statusId": "CLPT_UNSUBSCRIBED",
+        "description": "Unsubscribed",
+        "sequenceId": "07",
+        "statusCode": "UNSUBSCRIBED",
+        "statusTypeId": "CONTACTLST_PARTY"
+      },
+      "statusType": {
+        "description": "Contact List Party",
+        "statusTypeId": "CONTACTLST_PARTY",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

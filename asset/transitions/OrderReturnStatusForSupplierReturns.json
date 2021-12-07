@@ -1,0 +1,163 @@
+{
+  "events": [
+    "Accepted Return Shipped",
+    "Shipped Return Cancelled",
+    "Requested Return Accepted",
+    "Requested Return Cancelled",
+    "Accepted Return Cancelled",
+    "Shipped Return Completed"
+  ],
+  "states": [
+    "SUP_RETURN_COMPLETED",
+    "SUP_RETURN_REQUESTED",
+    "SUP_RETURN_ACCEPTED",
+    "SUP_RETURN_SHIPPED",
+    "SUP_RETURN_CANCELLED"
+  ],
+  "transitions": [
+    {
+      "statusId": "SUP_RETURN_REQUESTED",
+      "statusIdTo": "SUP_RETURN_ACCEPTED",
+      "transitionName": "Requested Return Accepted",
+      "from": {
+        "statusId": "SUP_RETURN_REQUESTED",
+        "description": "Requested",
+        "sequenceId": "01",
+        "statusCode": "REQUESTED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "SUP_RETURN_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Supplier Returns",
+        "statusTypeId": "PORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SUP_RETURN_REQUESTED",
+      "statusIdTo": "SUP_RETURN_CANCELLED",
+      "transitionName": "Requested Return Cancelled",
+      "from": {
+        "statusId": "SUP_RETURN_REQUESTED",
+        "description": "Requested",
+        "sequenceId": "01",
+        "statusCode": "REQUESTED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "SUP_RETURN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Supplier Returns",
+        "statusTypeId": "PORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SUP_RETURN_ACCEPTED",
+      "statusIdTo": "SUP_RETURN_SHIPPED",
+      "transitionName": "Accepted Return Shipped",
+      "from": {
+        "statusId": "SUP_RETURN_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "SUP_RETURN_SHIPPED",
+        "description": "Shipped",
+        "sequenceId": "03",
+        "statusCode": "SHIPPED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Supplier Returns",
+        "statusTypeId": "PORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SUP_RETURN_ACCEPTED",
+      "statusIdTo": "SUP_RETURN_CANCELLED",
+      "transitionName": "Accepted Return Cancelled",
+      "from": {
+        "statusId": "SUP_RETURN_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "SUP_RETURN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Supplier Returns",
+        "statusTypeId": "PORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SUP_RETURN_SHIPPED",
+      "statusIdTo": "SUP_RETURN_COMPLETED",
+      "transitionName": "Shipped Return Completed",
+      "from": {
+        "statusId": "SUP_RETURN_SHIPPED",
+        "description": "Shipped",
+        "sequenceId": "03",
+        "statusCode": "SHIPPED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "SUP_RETURN_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "10",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Supplier Returns",
+        "statusTypeId": "PORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SUP_RETURN_SHIPPED",
+      "statusIdTo": "SUP_RETURN_CANCELLED",
+      "transitionName": "Shipped Return Cancelled",
+      "from": {
+        "statusId": "SUP_RETURN_SHIPPED",
+        "description": "Shipped",
+        "sequenceId": "03",
+        "statusCode": "SHIPPED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "SUP_RETURN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Supplier Returns",
+        "statusTypeId": "PORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

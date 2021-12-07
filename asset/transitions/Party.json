@@ -1,0 +1,110 @@
+{
+  "events": [
+    "Assigned",
+    "Re-Enable",
+    "Disable",
+    "Convert Lead To Contact"
+  ],
+  "states": [
+    "PARTY_ENABLED",
+    "PARTY_DISABLED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PARTY_ENABLED",
+      "statusIdTo": "PARTY_DISABLED",
+      "transitionName": "Disable",
+      "from": {
+        "statusId": "PARTY_ENABLED",
+        "description": "Enabled",
+        "sequenceId": "01",
+        "statusCode": "ENABLED",
+        "statusTypeId": "PARTY_STATUS"
+      },
+      "to": {
+        "statusId": "PARTY_DISABLED",
+        "description": "Disabled",
+        "sequenceId": "99",
+        "statusCode": "DISABLED",
+        "statusTypeId": "PARTY_STATUS"
+      },
+      "statusType": {
+        "description": "Party",
+        "statusTypeId": "PARTY_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PARTY_DISABLED",
+      "statusIdTo": "PARTY_ENABLED",
+      "transitionName": "Re-Enable",
+      "from": {
+        "statusId": "PARTY_DISABLED",
+        "description": "Disabled",
+        "sequenceId": "99",
+        "statusCode": "DISABLED",
+        "statusTypeId": "PARTY_STATUS"
+      },
+      "to": {
+        "statusId": "PARTY_ENABLED",
+        "description": "Enabled",
+        "sequenceId": "01",
+        "statusCode": "ENABLED",
+        "statusTypeId": "PARTY_STATUS"
+      },
+      "statusType": {
+        "description": "Party",
+        "statusTypeId": "PARTY_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PARTY_ENABLED",
+      "statusIdTo": "LEAD_ASSIGNED",
+      "transitionName": "Assigned",
+      "from": {
+        "statusId": "PARTY_ENABLED",
+        "description": "Enabled",
+        "sequenceId": "01",
+        "statusCode": "ENABLED",
+        "statusTypeId": "PARTY_STATUS"
+      },
+      "to": {
+        "statusId": "LEAD_ASSIGNED",
+        "description": "Assigned",
+        "sequenceId": "01",
+        "statusCode": "ASSIGNED",
+        "statusTypeId": "LEAD_STATUS"
+      },
+      "statusType": {
+        "description": "Party",
+        "statusTypeId": "PARTY_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PARTY_ENABLED",
+      "statusIdTo": "LEAD_CONVERTED",
+      "transitionName": "Convert Lead To Contact",
+      "from": {
+        "statusId": "PARTY_ENABLED",
+        "description": "Enabled",
+        "sequenceId": "01",
+        "statusCode": "ENABLED",
+        "statusTypeId": "PARTY_STATUS"
+      },
+      "to": {
+        "statusId": "LEAD_CONVERTED",
+        "description": "Converted",
+        "sequenceId": "02",
+        "statusCode": "CONVERTED",
+        "statusTypeId": "LEAD_STATUS"
+      },
+      "statusType": {
+        "description": "Party",
+        "statusTypeId": "PARTY_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

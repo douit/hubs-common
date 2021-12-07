@@ -1,0 +1,164 @@
+{
+  "events": [
+    "Activated",
+    "Task On Hold",
+    "Task Complete with Project Complete",
+    "Task Complete",
+    "Task Re-Open"
+  ],
+  "states": [
+    "STS_CREATED_UA",
+    "STS_CREATED",
+    "STS_COMPLETED",
+    "STS_CREATED_AS",
+    "STS_ON_HOLD",
+    "STS_CREATED_IP",
+    "STS_CANCELLED"
+  ],
+  "transitions": [
+    {
+      "statusId": "STS_CREATED",
+      "statusIdTo": "STS_COMPLETED",
+      "transitionName": "Task Complete",
+      "from": {
+        "statusId": "STS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "STS_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "05",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Task",
+        "statusTypeId": "SCRUM_TASK_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "STS_CREATED",
+      "statusIdTo": "STS_ON_HOLD",
+      "transitionName": "Task On Hold",
+      "from": {
+        "statusId": "STS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "STS_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Task",
+        "statusTypeId": "SCRUM_TASK_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "STS_CREATED",
+      "statusIdTo": "STS_CANCELLED",
+      "transitionName": "Task On Hold",
+      "from": {
+        "statusId": "STS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "STS_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "09",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Task",
+        "statusTypeId": "SCRUM_TASK_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "STS_ON_HOLD",
+      "statusIdTo": "STS_CREATED",
+      "transitionName": "Activated",
+      "from": {
+        "statusId": "STS_ON_HOLD",
+        "description": "On Hold",
+        "sequenceId": "07",
+        "statusCode": "ON_HOLD",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "STS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Task",
+        "statusTypeId": "SCRUM_TASK_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "STS_COMPLETED",
+      "statusIdTo": "STS_CREATED",
+      "transitionName": "Task Re-Open",
+      "from": {
+        "statusId": "STS_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "05",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "STS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Task",
+        "statusTypeId": "SCRUM_TASK_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "STS_CREATED",
+      "statusIdTo": "SPJ_CLOSED",
+      "transitionName": "Task Complete with Project Complete",
+      "from": {
+        "statusId": "STS_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "SCRUM_TASK_STATUS"
+      },
+      "to": {
+        "statusId": "SPJ_CLOSED",
+        "description": "Closed",
+        "sequenceId": "09",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SCRUM_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Task",
+        "statusTypeId": "SCRUM_TASK_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

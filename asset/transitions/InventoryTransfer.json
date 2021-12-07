@@ -1,0 +1,213 @@
+{
+  "events": [
+    "Inventory Request In Route",
+    "Inventory Request Scheduled",
+    "Scheduled Inventory Cancelled",
+    "Scheduled Inventory Completed",
+    "Inventory Request Completed",
+    "Scheduled Inventory In Route",
+    "Inventory Request Cancelled",
+    "In Route Transfer Completed"
+  ],
+  "states": [
+    "IXF_EN_ROUTE",
+    "IXF_COMPLETE",
+    "IXF_CANCELLED",
+    "IXF_REQUESTED",
+    "IXF_SCHEDULED"
+  ],
+  "transitions": [
+    {
+      "statusId": "IXF_REQUESTED",
+      "statusIdTo": "IXF_SCHEDULED",
+      "transitionName": "Inventory Request Scheduled",
+      "from": {
+        "statusId": "IXF_REQUESTED",
+        "description": "Requested",
+        "sequenceId": "01",
+        "statusCode": "REQUESTED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "to": {
+        "statusId": "IXF_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "statusType": {
+        "description": "Inventory Transfer",
+        "statusTypeId": "INVENTORY_XFER_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "IXF_REQUESTED",
+      "statusIdTo": "IXF_EN_ROUTE",
+      "transitionName": "Inventory Request In Route",
+      "from": {
+        "statusId": "IXF_REQUESTED",
+        "description": "Requested",
+        "sequenceId": "01",
+        "statusCode": "REQUESTED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "to": {
+        "statusId": "IXF_EN_ROUTE",
+        "description": "En-Route",
+        "sequenceId": "03",
+        "statusCode": "EN_ROUTE",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "statusType": {
+        "description": "Inventory Transfer",
+        "statusTypeId": "INVENTORY_XFER_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "IXF_REQUESTED",
+      "statusIdTo": "IXF_COMPLETE",
+      "transitionName": "Inventory Request Completed",
+      "from": {
+        "statusId": "IXF_REQUESTED",
+        "description": "Requested",
+        "sequenceId": "01",
+        "statusCode": "REQUESTED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "to": {
+        "statusId": "IXF_COMPLETE",
+        "description": "Complete",
+        "sequenceId": "04",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "statusType": {
+        "description": "Inventory Transfer",
+        "statusTypeId": "INVENTORY_XFER_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "IXF_REQUESTED",
+      "statusIdTo": "IXF_CANCELLED",
+      "transitionName": "Inventory Request Cancelled",
+      "from": {
+        "statusId": "IXF_REQUESTED",
+        "description": "Requested",
+        "sequenceId": "01",
+        "statusCode": "REQUESTED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "to": {
+        "statusId": "IXF_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "statusType": {
+        "description": "Inventory Transfer",
+        "statusTypeId": "INVENTORY_XFER_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "IXF_SCHEDULED",
+      "statusIdTo": "IXF_EN_ROUTE",
+      "transitionName": "Scheduled Inventory In Route",
+      "from": {
+        "statusId": "IXF_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "to": {
+        "statusId": "IXF_EN_ROUTE",
+        "description": "En-Route",
+        "sequenceId": "03",
+        "statusCode": "EN_ROUTE",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "statusType": {
+        "description": "Inventory Transfer",
+        "statusTypeId": "INVENTORY_XFER_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "IXF_SCHEDULED",
+      "statusIdTo": "IXF_COMPLETE",
+      "transitionName": "Scheduled Inventory Completed",
+      "from": {
+        "statusId": "IXF_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "to": {
+        "statusId": "IXF_COMPLETE",
+        "description": "Complete",
+        "sequenceId": "04",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "statusType": {
+        "description": "Inventory Transfer",
+        "statusTypeId": "INVENTORY_XFER_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "IXF_SCHEDULED",
+      "statusIdTo": "IXF_CANCELLED",
+      "transitionName": "Scheduled Inventory Cancelled",
+      "from": {
+        "statusId": "IXF_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "to": {
+        "statusId": "IXF_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "statusType": {
+        "description": "Inventory Transfer",
+        "statusTypeId": "INVENTORY_XFER_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "IXF_EN_ROUTE",
+      "statusIdTo": "IXF_COMPLETE",
+      "transitionName": "In Route Transfer Completed",
+      "from": {
+        "statusId": "IXF_EN_ROUTE",
+        "description": "En-Route",
+        "sequenceId": "03",
+        "statusCode": "EN_ROUTE",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "to": {
+        "statusId": "IXF_COMPLETE",
+        "description": "Complete",
+        "sequenceId": "04",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "INVENTORY_XFER_STTS"
+      },
+      "statusType": {
+        "description": "Inventory Transfer",
+        "statusTypeId": "INVENTORY_XFER_STTS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

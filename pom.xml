@@ -33,6 +33,7 @@
         <clickhouse-native-jdbc.version>2.6.0</clickhouse-native-jdbc.version>
 
         <mvel2.version>2.4.10.Final</mvel2.version>
+        <akka.version>2.6.17</akka.version>
     </properties>
 
     <dependencies>

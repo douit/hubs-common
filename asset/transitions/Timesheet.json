@@ -1,0 +1,61 @@
+{
+  "events": [
+    "Confirm complete",
+    "Approve"
+  ],
+  "states": [
+    "TIMESHEET_COMPLETED",
+    "TIMESHEET_IN_PROCESS",
+    "TIMESHEET_APPROVED"
+  ],
+  "transitions": [
+    {
+      "statusId": "TIMESHEET_IN_PROCESS",
+      "statusIdTo": "TIMESHEET_COMPLETED",
+      "transitionName": "Confirm complete",
+      "from": {
+        "statusId": "TIMESHEET_IN_PROCESS",
+        "description": "In-Process",
+        "sequenceId": "01",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "TIMESHEET_STATUS"
+      },
+      "to": {
+        "statusId": "TIMESHEET_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "02",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "TIMESHEET_STATUS"
+      },
+      "statusType": {
+        "description": "Timesheet",
+        "statusTypeId": "TIMESHEET_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "TIMESHEET_COMPLETED",
+      "statusIdTo": "TIMESHEET_APPROVED",
+      "transitionName": "Approve",
+      "from": {
+        "statusId": "TIMESHEET_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "02",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "TIMESHEET_STATUS"
+      },
+      "to": {
+        "statusId": "TIMESHEET_APPROVED",
+        "description": "Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "TIMESHEET_STATUS"
+      },
+      "statusType": {
+        "description": "Timesheet",
+        "statusTypeId": "TIMESHEET_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

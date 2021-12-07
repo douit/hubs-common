@@ -1,0 +1,161 @@
+{
+  "events": [
+    "Approve Marketing Campaign",
+    "Cancel Marketing Campaign",
+    "Marketing Campaign In Progress",
+    "Complete Marketing Campaign"
+  ],
+  "states": [
+    "MKTG_CAMP_INPROGRESS",
+    "MKTG_CAMP_PLANNED",
+    "MKTG_CAMP_CANCELLED",
+    "MKTG_CAMP_APPROVED",
+    "MKTG_CAMP_COMPLETED"
+  ],
+  "transitions": [
+    {
+      "statusId": "MKTG_CAMP_PLANNED",
+      "statusIdTo": "MKTG_CAMP_APPROVED",
+      "transitionName": "Approve Marketing Campaign",
+      "from": {
+        "statusId": "MKTG_CAMP_PLANNED",
+        "description": "Planned",
+        "sequenceId": "01",
+        "statusCode": "PLANNED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "to": {
+        "statusId": "MKTG_CAMP_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "statusType": {
+        "description": "Marketing Campaign",
+        "statusTypeId": "MKTG_CAMP_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "MKTG_CAMP_APPROVED",
+      "statusIdTo": "MKTG_CAMP_INPROGRESS",
+      "transitionName": "Marketing Campaign In Progress",
+      "from": {
+        "statusId": "MKTG_CAMP_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "to": {
+        "statusId": "MKTG_CAMP_INPROGRESS",
+        "description": "In Progress",
+        "sequenceId": "03",
+        "statusCode": "INPROGRESS",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "statusType": {
+        "description": "Marketing Campaign",
+        "statusTypeId": "MKTG_CAMP_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "MKTG_CAMP_INPROGRESS",
+      "statusIdTo": "MKTG_CAMP_COMPLETED",
+      "transitionName": "Complete Marketing Campaign",
+      "from": {
+        "statusId": "MKTG_CAMP_INPROGRESS",
+        "description": "In Progress",
+        "sequenceId": "03",
+        "statusCode": "INPROGRESS",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "to": {
+        "statusId": "MKTG_CAMP_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "04",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "statusType": {
+        "description": "Marketing Campaign",
+        "statusTypeId": "MKTG_CAMP_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "MKTG_CAMP_PLANNED",
+      "statusIdTo": "MKTG_CAMP_CANCELLED",
+      "transitionName": "Cancel Marketing Campaign",
+      "from": {
+        "statusId": "MKTG_CAMP_PLANNED",
+        "description": "Planned",
+        "sequenceId": "01",
+        "statusCode": "PLANNED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "to": {
+        "statusId": "MKTG_CAMP_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "05",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "statusType": {
+        "description": "Marketing Campaign",
+        "statusTypeId": "MKTG_CAMP_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "MKTG_CAMP_APPROVED",
+      "statusIdTo": "MKTG_CAMP_CANCELLED",
+      "transitionName": "Cancel Marketing Campaign",
+      "from": {
+        "statusId": "MKTG_CAMP_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "to": {
+        "statusId": "MKTG_CAMP_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "05",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "statusType": {
+        "description": "Marketing Campaign",
+        "statusTypeId": "MKTG_CAMP_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "MKTG_CAMP_INPROGRESS",
+      "statusIdTo": "MKTG_CAMP_CANCELLED",
+      "transitionName": "Cancel Marketing Campaign",
+      "from": {
+        "statusId": "MKTG_CAMP_INPROGRESS",
+        "description": "In Progress",
+        "sequenceId": "03",
+        "statusCode": "INPROGRESS",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "to": {
+        "statusId": "MKTG_CAMP_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "05",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "MKTG_CAMP_STATUS"
+      },
+      "statusType": {
+        "description": "Marketing Campaign",
+        "statusTypeId": "MKTG_CAMP_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

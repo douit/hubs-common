@@ -1,0 +1,60 @@
+{
+  "events": [
+    "Re-Open project",
+    "Close project"
+  ],
+  "states": [
+    "SPJ_CLOSED",
+    "SPJ_ACTIVE"
+  ],
+  "transitions": [
+    {
+      "statusId": "SPJ_ACTIVE",
+      "statusIdTo": "SPJ_CLOSED",
+      "transitionName": "Close project",
+      "from": {
+        "statusId": "SPJ_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "SCRUM_PROJECT_STATUS"
+      },
+      "to": {
+        "statusId": "SPJ_CLOSED",
+        "description": "Closed",
+        "sequenceId": "09",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SCRUM_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Project status",
+        "statusTypeId": "SCRUM_PROJECT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SPJ_CLOSED",
+      "statusIdTo": "SPJ_ACTIVE",
+      "transitionName": "Re-Open project",
+      "from": {
+        "statusId": "SPJ_CLOSED",
+        "description": "Closed",
+        "sequenceId": "09",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SCRUM_PROJECT_STATUS"
+      },
+      "to": {
+        "statusId": "SPJ_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "SCRUM_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Project status",
+        "statusTypeId": "SCRUM_PROJECT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

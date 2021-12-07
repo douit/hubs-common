@@ -1,0 +1,58 @@
+{
+  "events": [
+    "Close project"
+  ],
+  "states": [
+    "_NA_"
+  ],
+  "transitions": [
+    {
+      "statusId": "_NA_",
+      "statusIdTo": "PRJ_CLOSED",
+      "transitionName": "Close project",
+      "from": {
+        "statusId": "_NA_",
+        "description": "Not Applicable",
+        "sequenceId": "0",
+        "statusCode": "_NA_",
+        "statusTypeId": "_NA_"
+      },
+      "to": {
+        "statusId": "PRJ_CLOSED",
+        "description": "Closed",
+        "sequenceId": "09",
+        "statusCode": "CLOSED",
+        "statusTypeId": "PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Not Applicable",
+        "statusTypeId": "_NA_",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "_NA_",
+      "statusIdTo": "SPJ_CLOSED",
+      "transitionName": "Close project",
+      "from": {
+        "statusId": "_NA_",
+        "description": "Not Applicable",
+        "sequenceId": "0",
+        "statusCode": "_NA_",
+        "statusTypeId": "_NA_"
+      },
+      "to": {
+        "statusId": "SPJ_CLOSED",
+        "description": "Closed",
+        "sequenceId": "09",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SCRUM_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Not Applicable",
+        "statusTypeId": "_NA_",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

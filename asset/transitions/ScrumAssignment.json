@@ -1,0 +1,35 @@
+{
+  "events": [
+    "Assignment Complete"
+  ],
+  "states": [
+    "SCAS_ASSIGNED",
+    "SCAS_COMPLETED"
+  ],
+  "transitions": [
+    {
+      "statusId": "SCAS_ASSIGNED",
+      "statusIdTo": "SCAS_COMPLETED",
+      "transitionName": "Assignment Complete",
+      "from": {
+        "statusId": "SCAS_ASSIGNED",
+        "description": "Assigned",
+        "sequenceId": "01",
+        "statusCode": "ASSIGNED",
+        "statusTypeId": "SCRUM_ASSGN_STATUS"
+      },
+      "to": {
+        "statusId": "SCAS_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "02",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "SCRUM_ASSGN_STATUS"
+      },
+      "statusType": {
+        "description": "Scrum Assignment",
+        "statusTypeId": "SCRUM_ASSGN_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

@@ -46,6 +46,11 @@ public class Util {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, str);
     }
 
+    public static String wordsToClassName(String words){
+        return CaseFormat.LOWER_UNDERSCORE.to(
+                CaseFormat.UPPER_CAMEL, words.replaceAll(" ", "_"));
+    }
+
 
     /**
      * A simpler implementation. Add null support to by registering the nullSafe() wrapped version

@@ -1,0 +1,86 @@
+{
+  "events": [
+    "Set Approved to Canceled",
+    "Set Created to Approved",
+    "Set Created to Canceled"
+  ],
+  "states": [
+    "FINACT_TRNS_APPROVED",
+    "FINACT_TRNS_CANCELED",
+    "FINACT_TRNS_CREATED"
+  ],
+  "transitions": [
+    {
+      "statusId": "FINACT_TRNS_CREATED",
+      "statusIdTo": "FINACT_TRNS_APPROVED",
+      "transitionName": "Set Created to Approved",
+      "from": {
+        "statusId": "FINACT_TRNS_CREATED",
+        "description": "Created",
+        "sequenceId": "12",
+        "statusCode": "CREATED",
+        "statusTypeId": "FINACT_TRNS_STATUS"
+      },
+      "to": {
+        "statusId": "FINACT_TRNS_APPROVED",
+        "description": "Approved",
+        "sequenceId": "11",
+        "statusCode": "APPROVED",
+        "statusTypeId": "FINACT_TRNS_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Trans Status",
+        "statusTypeId": "FINACT_TRNS_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FINACT_TRNS_CREATED",
+      "statusIdTo": "FINACT_TRNS_CANCELED",
+      "transitionName": "Set Created to Canceled",
+      "from": {
+        "statusId": "FINACT_TRNS_CREATED",
+        "description": "Created",
+        "sequenceId": "12",
+        "statusCode": "CREATED",
+        "statusTypeId": "FINACT_TRNS_STATUS"
+      },
+      "to": {
+        "statusId": "FINACT_TRNS_CANCELED",
+        "description": "Canceled",
+        "sequenceId": "13",
+        "statusCode": "CANCELED",
+        "statusTypeId": "FINACT_TRNS_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Trans Status",
+        "statusTypeId": "FINACT_TRNS_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FINACT_TRNS_APPROVED",
+      "statusIdTo": "FINACT_TRNS_CANCELED",
+      "transitionName": "Set Approved to Canceled",
+      "from": {
+        "statusId": "FINACT_TRNS_APPROVED",
+        "description": "Approved",
+        "sequenceId": "11",
+        "statusCode": "APPROVED",
+        "statusTypeId": "FINACT_TRNS_STATUS"
+      },
+      "to": {
+        "statusId": "FINACT_TRNS_CANCELED",
+        "description": "Canceled",
+        "sequenceId": "13",
+        "statusCode": "CANCELED",
+        "statusTypeId": "FINACT_TRNS_STATUS"
+      },
+      "statusType": {
+        "description": "Financial Account Trans Status",
+        "statusTypeId": "FINACT_TRNS_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

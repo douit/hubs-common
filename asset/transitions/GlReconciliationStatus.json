@@ -1,0 +1,35 @@
+{
+  "events": [
+    "Set Created to Reconciled"
+  ],
+  "states": [
+    "GLREC_RECONCILED",
+    "GLREC_CREATED"
+  ],
+  "transitions": [
+    {
+      "statusId": "GLREC_CREATED",
+      "statusIdTo": "GLREC_RECONCILED",
+      "transitionName": "Set Created to Reconciled",
+      "from": {
+        "statusId": "GLREC_CREATED",
+        "description": "Created",
+        "sequenceId": "11",
+        "statusCode": "CREATED",
+        "statusTypeId": "GLREC_STATUS"
+      },
+      "to": {
+        "statusId": "GLREC_RECONCILED",
+        "description": "Reconciled",
+        "sequenceId": "12",
+        "statusCode": "RECONCILED",
+        "statusTypeId": "GLREC_STATUS"
+      },
+      "statusType": {
+        "description": "Gl Reconciliation Status",
+        "statusTypeId": "GLREC_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "events": [
+    "Active",
+    "Inactive"
+  ],
+  "states": [
+    "ROU_INACTIVE",
+    "ROU_ACTIVE"
+  ],
+  "transitions": [
+    {
+      "statusId": "ROU_ACTIVE",
+      "statusIdTo": "ROU_INACTIVE",
+      "transitionName": "Inactive",
+      "from": {
+        "statusId": "ROU_ACTIVE",
+        "description": "Well defined and usable",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "ROUTING_STATUS"
+      },
+      "to": {
+        "statusId": "ROU_INACTIVE",
+        "description": "Not well defined and unusable",
+        "sequenceId": "02",
+        "statusCode": "INACTIVE",
+        "statusTypeId": "ROUTING_STATUS"
+      },
+      "statusType": {
+        "description": "Manufacturing Task and Routing status",
+        "statusTypeId": "ROUTING_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "ROU_INACTIVE",
+      "statusIdTo": "ROU_ACTIVE",
+      "transitionName": "Active",
+      "from": {
+        "statusId": "ROU_INACTIVE",
+        "description": "Not well defined and unusable",
+        "sequenceId": "02",
+        "statusCode": "INACTIVE",
+        "statusTypeId": "ROUTING_STATUS"
+      },
+      "to": {
+        "statusId": "ROU_ACTIVE",
+        "description": "Well defined and usable",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "ROUTING_STATUS"
+      },
+      "statusType": {
+        "description": "Manufacturing Task and Routing status",
+        "statusTypeId": "ROUTING_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    }
+  ]
+}

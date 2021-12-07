@@ -1,0 +1,109 @@
+{
+  "events": [
+    "Receive",
+    "Ship"
+  ],
+  "states": [
+    "PURCH_SHIP_SHIPPED",
+    "PURCH_SHIP_CREATED",
+    "PURCH_SHIP_RECEIVED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PURCH_SHIP_CREATED",
+      "statusIdTo": "PURCH_SHIP_RECEIVED",
+      "transitionName": "Receive",
+      "from": {
+        "statusId": "PURCH_SHIP_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PURCH_SHIP_STATUS"
+      },
+      "to": {
+        "statusId": "PURCH_SHIP_RECEIVED",
+        "description": "Received",
+        "sequenceId": "03",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PURCH_SHIP_STATUS"
+      },
+      "statusType": {
+        "description": "Purchase Shipment",
+        "statusTypeId": "PURCH_SHIP_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PURCH_SHIP_CREATED",
+      "statusIdTo": "PURCH_SHIP_SHIPPED",
+      "transitionName": "Ship",
+      "from": {
+        "statusId": "PURCH_SHIP_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PURCH_SHIP_STATUS"
+      },
+      "to": {
+        "statusId": "PURCH_SHIP_SHIPPED",
+        "description": "Shipped",
+        "sequenceId": "02",
+        "statusCode": "SHIPPED",
+        "statusTypeId": "PURCH_SHIP_STATUS"
+      },
+      "statusType": {
+        "description": "Purchase Shipment",
+        "statusTypeId": "PURCH_SHIP_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PURCH_SHIP_SHIPPED",
+      "statusIdTo": "PURCH_SHIP_RECEIVED",
+      "transitionName": "Receive",
+      "from": {
+        "statusId": "PURCH_SHIP_SHIPPED",
+        "description": "Shipped",
+        "sequenceId": "02",
+        "statusCode": "SHIPPED",
+        "statusTypeId": "PURCH_SHIP_STATUS"
+      },
+      "to": {
+        "statusId": "PURCH_SHIP_RECEIVED",
+        "description": "Received",
+        "sequenceId": "03",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PURCH_SHIP_STATUS"
+      },
+      "statusType": {
+        "description": "Purchase Shipment",
+        "statusTypeId": "PURCH_SHIP_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PURCH_SHIP_RECEIVED",
+      "statusIdTo": "PURCH_SHIP_SHIPPED",
+      "transitionName": "Ship",
+      "from": {
+        "statusId": "PURCH_SHIP_RECEIVED",
+        "description": "Received",
+        "sequenceId": "03",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "PURCH_SHIP_STATUS"
+      },
+      "to": {
+        "statusId": "PURCH_SHIP_SHIPPED",
+        "description": "Shipped",
+        "sequenceId": "02",
+        "statusCode": "SHIPPED",
+        "statusTypeId": "PURCH_SHIP_STATUS"
+      },
+      "statusType": {
+        "description": "Purchase Shipment",
+        "statusTypeId": "PURCH_SHIP_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

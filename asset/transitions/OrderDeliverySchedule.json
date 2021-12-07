@@ -1,0 +1,185 @@
+{
+  "events": [
+    "Cancel Delivery",
+    "Accept Delivery Information",
+    "Approve Delivery Schedule",
+    "Arrange Delivery"
+  ],
+  "states": [
+    "ODS_CANCELLED",
+    "ODS_SUBMITTED",
+    "ODS_ARRANGED",
+    "ODS_APPROVED",
+    "ODS_ACCEPTED"
+  ],
+  "transitions": [
+    {
+      "statusId": "ODS_SUBMITTED",
+      "statusIdTo": "ODS_ACCEPTED",
+      "transitionName": "Accept Delivery Information",
+      "from": {
+        "statusId": "ODS_SUBMITTED",
+        "description": "Supplier Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "to": {
+        "statusId": "ODS_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "statusType": {
+        "description": "Order Delivery Schedule",
+        "statusTypeId": "ORDER_DEL_SCH",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ODS_ACCEPTED",
+      "statusIdTo": "ODS_APPROVED",
+      "transitionName": "Approve Delivery Schedule",
+      "from": {
+        "statusId": "ODS_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "to": {
+        "statusId": "ODS_APPROVED",
+        "description": "Schedule Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "statusType": {
+        "description": "Order Delivery Schedule",
+        "statusTypeId": "ORDER_DEL_SCH",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ODS_APPROVED",
+      "statusIdTo": "ODS_ARRANGED",
+      "transitionName": "Arrange Delivery",
+      "from": {
+        "statusId": "ODS_APPROVED",
+        "description": "Schedule Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "to": {
+        "statusId": "ODS_ARRANGED",
+        "description": "Delivery Arranged",
+        "sequenceId": "04",
+        "statusCode": "ARRANGED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "statusType": {
+        "description": "Order Delivery Schedule",
+        "statusTypeId": "ORDER_DEL_SCH",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ODS_SUBMITTED",
+      "statusIdTo": "ODS_CANCELLED",
+      "transitionName": "Cancel Delivery",
+      "from": {
+        "statusId": "ODS_SUBMITTED",
+        "description": "Supplier Submitted",
+        "sequenceId": "01",
+        "statusCode": "SUBMITTED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "to": {
+        "statusId": "ODS_CANCELLED",
+        "description": "Delivery Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "statusType": {
+        "description": "Order Delivery Schedule",
+        "statusTypeId": "ORDER_DEL_SCH",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ODS_ACCEPTED",
+      "statusIdTo": "ODS_CANCELLED",
+      "transitionName": "Cancel Delivery",
+      "from": {
+        "statusId": "ODS_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "to": {
+        "statusId": "ODS_CANCELLED",
+        "description": "Delivery Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "statusType": {
+        "description": "Order Delivery Schedule",
+        "statusTypeId": "ORDER_DEL_SCH",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ODS_APPROVED",
+      "statusIdTo": "ODS_CANCELLED",
+      "transitionName": "Cancel Delivery",
+      "from": {
+        "statusId": "ODS_APPROVED",
+        "description": "Schedule Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "to": {
+        "statusId": "ODS_CANCELLED",
+        "description": "Delivery Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "statusType": {
+        "description": "Order Delivery Schedule",
+        "statusTypeId": "ORDER_DEL_SCH",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ODS_ARRANGED",
+      "statusIdTo": "ODS_CANCELLED",
+      "transitionName": "Cancel Delivery",
+      "from": {
+        "statusId": "ODS_ARRANGED",
+        "description": "Delivery Arranged",
+        "sequenceId": "04",
+        "statusCode": "ARRANGED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "to": {
+        "statusId": "ODS_CANCELLED",
+        "description": "Delivery Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_DEL_SCH"
+      },
+      "statusType": {
+        "description": "Order Delivery Schedule",
+        "statusTypeId": "ORDER_DEL_SCH",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

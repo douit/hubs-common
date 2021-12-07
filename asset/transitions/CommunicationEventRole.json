@@ -1,0 +1,85 @@
+{
+  "events": [
+    "Read",
+    "Completed"
+  ],
+  "states": [
+    "COM_ROLE_READ",
+    "COM_ROLE_CREATED",
+    "COM_ROLE_COMPLETED"
+  ],
+  "transitions": [
+    {
+      "statusId": "COM_ROLE_CREATED",
+      "statusIdTo": "COM_ROLE_READ",
+      "transitionName": "Read",
+      "from": {
+        "statusId": "COM_ROLE_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "ENTERED",
+        "statusTypeId": "COM_EVENT_ROL_STATUS"
+      },
+      "to": {
+        "statusId": "COM_ROLE_READ",
+        "description": "Read",
+        "sequenceId": "02",
+        "statusCode": "PENDING",
+        "statusTypeId": "COM_EVENT_ROL_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event Role",
+        "statusTypeId": "COM_EVENT_ROL_STATUS",
+        "parentTypeId": "COM_EVENT_STATUS"
+      }
+    },
+    {
+      "statusId": "COM_ROLE_CREATED",
+      "statusIdTo": "COM_ROLE_COMPLETED",
+      "transitionName": "Completed",
+      "from": {
+        "statusId": "COM_ROLE_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "ENTERED",
+        "statusTypeId": "COM_EVENT_ROL_STATUS"
+      },
+      "to": {
+        "statusId": "COM_ROLE_COMPLETED",
+        "description": "Closed",
+        "sequenceId": "03",
+        "statusCode": "READ",
+        "statusTypeId": "COM_EVENT_ROL_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event Role",
+        "statusTypeId": "COM_EVENT_ROL_STATUS",
+        "parentTypeId": "COM_EVENT_STATUS"
+      }
+    },
+    {
+      "statusId": "COM_ROLE_READ",
+      "statusIdTo": "COM_ROLE_COMPLETED",
+      "transitionName": "Completed",
+      "from": {
+        "statusId": "COM_ROLE_READ",
+        "description": "Read",
+        "sequenceId": "02",
+        "statusCode": "PENDING",
+        "statusTypeId": "COM_EVENT_ROL_STATUS"
+      },
+      "to": {
+        "statusId": "COM_ROLE_COMPLETED",
+        "description": "Closed",
+        "sequenceId": "03",
+        "statusCode": "READ",
+        "statusTypeId": "COM_EVENT_ROL_STATUS"
+      },
+      "statusType": {
+        "description": "Communication Event Role",
+        "statusTypeId": "COM_EVENT_ROL_STATUS",
+        "parentTypeId": "COM_EVENT_STATUS"
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "events": [
+    "Make Return Held",
+    "Mark Return Defective"
+  ],
+  "states": [
+    "INV_NS_ON_HOLD",
+    "INV_NS_RETURNED",
+    "INV_NS_DEFECTIVE"
+  ],
+  "transitions": [
+    {
+      "statusId": "INV_NS_RETURNED",
+      "statusIdTo": "INV_NS_ON_HOLD",
+      "transitionName": "Make Return Held",
+      "from": {
+        "statusId": "INV_NS_RETURNED",
+        "description": "Returned (Non-Serialized)",
+        "sequenceId": "02",
+        "statusCode": "RETURNED_NS",
+        "statusTypeId": "INV_NON_SER_STTS"
+      },
+      "to": {
+        "statusId": "INV_NS_ON_HOLD",
+        "description": "On Hold (Non-Serialized)",
+        "sequenceId": "01",
+        "statusCode": "ON_HOLD_NS",
+        "statusTypeId": "INV_NON_SER_STTS"
+      },
+      "statusType": {
+        "description": "Non-Serialized Inventory Item",
+        "statusTypeId": "INV_NON_SER_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    },
+    {
+      "statusId": "INV_NS_RETURNED",
+      "statusIdTo": "INV_NS_DEFECTIVE",
+      "transitionName": "Mark Return Defective",
+      "from": {
+        "statusId": "INV_NS_RETURNED",
+        "description": "Returned (Non-Serialized)",
+        "sequenceId": "02",
+        "statusCode": "RETURNED_NS",
+        "statusTypeId": "INV_NON_SER_STTS"
+      },
+      "to": {
+        "statusId": "INV_NS_DEFECTIVE",
+        "description": "Defective (Non-Serialized)",
+        "sequenceId": "02",
+        "statusCode": "DEFECTIVE_NS",
+        "statusTypeId": "INV_NON_SER_STTS"
+      },
+      "statusType": {
+        "description": "Non-Serialized Inventory Item",
+        "statusTypeId": "INV_NON_SER_STTS",
+        "parentTypeId": "INVENTORY_ITEM_STTS"
+      }
+    }
+  ]
+}

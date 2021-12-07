@@ -1,0 +1,185 @@
+{
+  "events": [
+    "Approved Budget",
+    "Submit Budget",
+    "Reject Budget",
+    "Review Budget",
+    "Accept Budget"
+  ],
+  "states": [
+    "BG_REJECTED",
+    "BG_CREATED",
+    "BG_APPROVED",
+    "BG_REVIEWED"
+  ],
+  "transitions": [
+    {
+      "statusId": "BG_CREATED",
+      "statusIdTo": "BG_REVIEWED",
+      "transitionName": "Review Budget",
+      "from": {
+        "statusId": "BG_CREATED",
+        "description": "Created",
+        "sequenceId": "00",
+        "statusCode": "CREATED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "to": {
+        "statusId": "BG_REVIEWED",
+        "description": "Reviewed",
+        "sequenceId": "01",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "statusType": {
+        "description": "Budget",
+        "statusTypeId": "BUDGET_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "BG_CREATED",
+      "statusIdTo": "BG_APPROVED",
+      "transitionName": "Submit Budget",
+      "from": {
+        "statusId": "BG_CREATED",
+        "description": "Created",
+        "sequenceId": "00",
+        "statusCode": "CREATED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "to": {
+        "statusId": "BG_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "statusType": {
+        "description": "Budget",
+        "statusTypeId": "BUDGET_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "BG_CREATED",
+      "statusIdTo": "BG_REJECTED",
+      "transitionName": "Reject Budget",
+      "from": {
+        "statusId": "BG_CREATED",
+        "description": "Created",
+        "sequenceId": "00",
+        "statusCode": "CREATED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "to": {
+        "statusId": "BG_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "03",
+        "statusCode": "REJECTED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "statusType": {
+        "description": "Budget",
+        "statusTypeId": "BUDGET_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "BG_REVIEWED",
+      "statusIdTo": "BG_APPROVED",
+      "transitionName": "Approved Budget",
+      "from": {
+        "statusId": "BG_REVIEWED",
+        "description": "Reviewed",
+        "sequenceId": "01",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "to": {
+        "statusId": "BG_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "statusType": {
+        "description": "Budget",
+        "statusTypeId": "BUDGET_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "BG_REVIEWED",
+      "statusIdTo": "BG_REJECTED",
+      "transitionName": "Reject Budget",
+      "from": {
+        "statusId": "BG_REVIEWED",
+        "description": "Reviewed",
+        "sequenceId": "01",
+        "statusCode": "REVIEWED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "to": {
+        "statusId": "BG_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "03",
+        "statusCode": "REJECTED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "statusType": {
+        "description": "Budget",
+        "statusTypeId": "BUDGET_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "BG_APPROVED",
+      "statusIdTo": "BG_CREATED",
+      "transitionName": "Accept Budget",
+      "from": {
+        "statusId": "BG_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "to": {
+        "statusId": "BG_CREATED",
+        "description": "Created",
+        "sequenceId": "00",
+        "statusCode": "CREATED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "statusType": {
+        "description": "Budget",
+        "statusTypeId": "BUDGET_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "BG_APPROVED",
+      "statusIdTo": "BG_REJECTED",
+      "transitionName": "Reject Budget",
+      "from": {
+        "statusId": "BG_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "to": {
+        "statusId": "BG_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "03",
+        "statusCode": "REJECTED",
+        "statusTypeId": "BUDGET_STATUS"
+      },
+      "statusType": {
+        "description": "Budget",
+        "statusTypeId": "BUDGET_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+    // FSM states represented as behaviors
+
+    // initial state
+    public static Behavior<Event> create() {
+        return uninitialized();
+    }
+
+    private static Behavior<Event> uninitialized() {
+        return Behaviors.receive(Event.class)
+                .onMessage(
+                        SetTarget.class, message -> {{top.defaultHandler}}(new {{actor.name}}State(message.ref, Collections.emptyList())))
+                .build();
+    }
+
+    private static Behavior<Event> {{actor.defaultHandler}}({{actor.name}}State data) {
+        return Behaviors.receive(Event.class)
+                .onMessage({{actor.startEvent}}.class, message -> active(data.addElement(message)))
+                .build();
+    }
+
+    {% for state in actor.states %}
+    private static Behavior<Event> {{state|colToVar}}({{top.name}}State data) {
+        return Behaviors.receive(Event.class)
+                {%- for trans in actor.getFromTransitions(state) %}
+                .onMessage({{trans.eventName}}.class, message -> {{trans.toHandler}}(data.processElement(message)))
+                {%- endfor %}
+                .build();
+    }
+    {% endfor -%}
+
+    private static Behavior<Event> flushOrTimeout({{actor.name}}State data) {
+        // data.target.tell(new Batch(data.queue));
+        return {{actor.defaultHandler}}(data.copy(new ArrayList<>()));
+    }

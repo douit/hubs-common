@@ -1,0 +1,85 @@
+{
+  "events": [
+    "Cancel",
+    "Delegate",
+    "Complete"
+  ],
+  "states": [
+    "CAL_ACCEPTED",
+    "CAL_COMPLETED"
+  ],
+  "transitions": [
+    {
+      "statusId": "CAL_ACCEPTED",
+      "statusIdTo": "CAL_COMPLETED",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "CAL_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "01",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "TASK_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "02",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Task",
+        "statusTypeId": "TASK_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_ACCEPTED",
+      "statusIdTo": "CAL_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "CAL_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "01",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "TASK_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Task",
+        "statusTypeId": "TASK_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_ACCEPTED",
+      "statusIdTo": "CAL_DELEGATED",
+      "transitionName": "Delegate",
+      "from": {
+        "statusId": "CAL_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "01",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "TASK_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_DELEGATED",
+        "description": "Delegated",
+        "sequenceId": "11",
+        "statusCode": "DELEGATED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Task",
+        "statusTypeId": "TASK_STATUS",
+        "parentTypeId": "CALENDAR_STATUS"
+      }
+    }
+  ]
+}

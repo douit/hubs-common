@@ -1,0 +1,110 @@
+{
+  "events": [
+    "Product Complete with sprint close",
+    "Product Complete with sprint active",
+    "Sprint Complete",
+    "Project Re-Open with Sprint Open"
+  ],
+  "states": [
+    "SPRINT_CLOSED",
+    "SPRINT_ACTIVE"
+  ],
+  "transitions": [
+    {
+      "statusId": "SPRINT_ACTIVE",
+      "statusIdTo": "SPRINT_CLOSED",
+      "transitionName": "Sprint Complete",
+      "from": {
+        "statusId": "SPRINT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "SPRINT_STATUS"
+      },
+      "to": {
+        "statusId": "SPRINT_CLOSED",
+        "description": "Closed",
+        "sequenceId": "02",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SPRINT_STATUS"
+      },
+      "statusType": {
+        "description": "Sprint Status",
+        "statusTypeId": "SPRINT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SPRINT_CLOSED",
+      "statusIdTo": "SPRINT_ACTIVE",
+      "transitionName": "Project Re-Open with Sprint Open",
+      "from": {
+        "statusId": "SPRINT_CLOSED",
+        "description": "Closed",
+        "sequenceId": "02",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SPRINT_STATUS"
+      },
+      "to": {
+        "statusId": "SPRINT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "SPRINT_STATUS"
+      },
+      "statusType": {
+        "description": "Sprint Status",
+        "statusTypeId": "SPRINT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SPRINT_ACTIVE",
+      "statusIdTo": "SPJ_CLOSED",
+      "transitionName": "Product Complete with sprint active",
+      "from": {
+        "statusId": "SPRINT_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "SPRINT_STATUS"
+      },
+      "to": {
+        "statusId": "SPJ_CLOSED",
+        "description": "Closed",
+        "sequenceId": "09",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SCRUM_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Sprint Status",
+        "statusTypeId": "SPRINT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SPRINT_CLOSED",
+      "statusIdTo": "SPJ_CLOSED",
+      "transitionName": "Product Complete with sprint close",
+      "from": {
+        "statusId": "SPRINT_CLOSED",
+        "description": "Closed",
+        "sequenceId": "02",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SPRINT_STATUS"
+      },
+      "to": {
+        "statusId": "SPJ_CLOSED",
+        "description": "Closed",
+        "sequenceId": "09",
+        "statusCode": "CLOSED",
+        "statusTypeId": "SCRUM_PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Sprint Status",
+        "statusTypeId": "SPRINT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

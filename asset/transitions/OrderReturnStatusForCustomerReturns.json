@@ -1,0 +1,189 @@
+{
+  "events": [
+    "Received Return Completed",
+    "Received Return Cancelled",
+    "Received Return Requires Manual Refund",
+    "Accepted Return Received",
+    "Requested Return Accepted",
+    "Requested Return Cancelled",
+    "Accepted Return Cancelled"
+  ],
+  "states": [
+    "RETURN_ACCEPTED",
+    "RETURN_REQUESTED",
+    "RETURN_COMPLETED",
+    "RETURN_MAN_REFUND",
+    "RETURN_RECEIVED",
+    "RETURN_CANCELLED"
+  ],
+  "transitions": [
+    {
+      "statusId": "RETURN_REQUESTED",
+      "statusIdTo": "RETURN_ACCEPTED",
+      "transitionName": "Requested Return Accepted",
+      "from": {
+        "statusId": "RETURN_REQUESTED",
+        "description": "Requested",
+        "sequenceId": "01",
+        "statusCode": "REQUESTED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "RETURN_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Customer Returns",
+        "statusTypeId": "ORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "RETURN_REQUESTED",
+      "statusIdTo": "RETURN_CANCELLED",
+      "transitionName": "Requested Return Cancelled",
+      "from": {
+        "statusId": "RETURN_REQUESTED",
+        "description": "Requested",
+        "sequenceId": "01",
+        "statusCode": "REQUESTED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "RETURN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Customer Returns",
+        "statusTypeId": "ORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "RETURN_ACCEPTED",
+      "statusIdTo": "RETURN_RECEIVED",
+      "transitionName": "Accepted Return Received",
+      "from": {
+        "statusId": "RETURN_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "RETURN_RECEIVED",
+        "description": "Received",
+        "sequenceId": "03",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Customer Returns",
+        "statusTypeId": "ORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "RETURN_ACCEPTED",
+      "statusIdTo": "RETURN_CANCELLED",
+      "transitionName": "Accepted Return Cancelled",
+      "from": {
+        "statusId": "RETURN_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "02",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "RETURN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Customer Returns",
+        "statusTypeId": "ORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "RETURN_RECEIVED",
+      "statusIdTo": "RETURN_COMPLETED",
+      "transitionName": "Received Return Completed",
+      "from": {
+        "statusId": "RETURN_RECEIVED",
+        "description": "Received",
+        "sequenceId": "03",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "RETURN_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "10",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Customer Returns",
+        "statusTypeId": "ORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "RETURN_RECEIVED",
+      "statusIdTo": "RETURN_CANCELLED",
+      "transitionName": "Received Return Cancelled",
+      "from": {
+        "statusId": "RETURN_RECEIVED",
+        "description": "Received",
+        "sequenceId": "03",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "RETURN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Customer Returns",
+        "statusTypeId": "ORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "RETURN_RECEIVED",
+      "statusIdTo": "RETURN_MAN_REFUND",
+      "transitionName": "Received Return Requires Manual Refund",
+      "from": {
+        "statusId": "RETURN_RECEIVED",
+        "description": "Received",
+        "sequenceId": "03",
+        "statusCode": "RECEIVED",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "to": {
+        "statusId": "RETURN_MAN_REFUND",
+        "description": "Manual Refund Required",
+        "sequenceId": "11",
+        "statusCode": "MANUAL_REFUND",
+        "statusTypeId": "ORDER_RETURN_STTS"
+      },
+      "statusType": {
+        "description": "Order Return Status For Customer Returns",
+        "statusTypeId": "ORDER_RETURN_STTS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

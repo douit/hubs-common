@@ -1,0 +1,85 @@
+{
+  "events": [
+    "Review Approved",
+    "Review Deleted"
+  ],
+  "states": [
+    "PRR_PENDING",
+    "PRR_APPROVED",
+    "PRR_DELETED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PRR_PENDING",
+      "statusIdTo": "PRR_APPROVED",
+      "transitionName": "Review Approved",
+      "from": {
+        "statusId": "PRR_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "PRODUCT_REVIEW_STTS"
+      },
+      "to": {
+        "statusId": "PRR_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "PRODUCT_REVIEW_STTS"
+      },
+      "statusType": {
+        "description": "Product Review",
+        "statusTypeId": "PRODUCT_REVIEW_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PRR_PENDING",
+      "statusIdTo": "PRR_DELETED",
+      "transitionName": "Review Deleted",
+      "from": {
+        "statusId": "PRR_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "PRODUCT_REVIEW_STTS"
+      },
+      "to": {
+        "statusId": "PRR_DELETED",
+        "description": "Deleted",
+        "sequenceId": "99",
+        "statusCode": "DELETED",
+        "statusTypeId": "PRODUCT_REVIEW_STTS"
+      },
+      "statusType": {
+        "description": "Product Review",
+        "statusTypeId": "PRODUCT_REVIEW_STTS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "PRR_APPROVED",
+      "statusIdTo": "PRR_DELETED",
+      "transitionName": "Review Deleted",
+      "from": {
+        "statusId": "PRR_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "PRODUCT_REVIEW_STTS"
+      },
+      "to": {
+        "statusId": "PRR_DELETED",
+        "description": "Deleted",
+        "sequenceId": "99",
+        "statusCode": "DELETED",
+        "statusTypeId": "PRODUCT_REVIEW_STTS"
+      },
+      "statusType": {
+        "description": "Product Review",
+        "statusTypeId": "PRODUCT_REVIEW_STTS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

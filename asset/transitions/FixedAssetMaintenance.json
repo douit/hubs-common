@@ -1,0 +1,163 @@
+{
+  "events": [
+    "Scheduled Maintenace In-Process",
+    "Created Maintenance Scheduled",
+    "Created Maintenace Cancelled",
+    "Scheduled Maintenace Cancelled",
+    "Created Maintenance In-Process",
+    "In-Process Maintenance Completed"
+  ],
+  "states": [
+    "FAM_CREATED",
+    "FAM_CANCELLED",
+    "FAM_IN_PROCESS",
+    "FAM_COMPLETED",
+    "FAM_SCHEDULED"
+  ],
+  "transitions": [
+    {
+      "statusId": "FAM_CREATED",
+      "statusIdTo": "FAM_SCHEDULED",
+      "transitionName": "Created Maintenance Scheduled",
+      "from": {
+        "statusId": "FAM_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "to": {
+        "statusId": "FAM_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "03",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "statusType": {
+        "description": "Fixed Asset Maintenance",
+        "statusTypeId": "FIXEDAST_MNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FAM_CREATED",
+      "statusIdTo": "FAM_IN_PROCESS",
+      "transitionName": "Created Maintenance In-Process",
+      "from": {
+        "statusId": "FAM_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "to": {
+        "statusId": "FAM_IN_PROCESS",
+        "description": "In Process",
+        "sequenceId": "05",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "statusType": {
+        "description": "Fixed Asset Maintenance",
+        "statusTypeId": "FIXEDAST_MNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FAM_CREATED",
+      "statusIdTo": "FAM_CANCELLED",
+      "transitionName": "Created Maintenace Cancelled",
+      "from": {
+        "statusId": "FAM_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "to": {
+        "statusId": "FAM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "statusType": {
+        "description": "Fixed Asset Maintenance",
+        "statusTypeId": "FIXEDAST_MNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FAM_SCHEDULED",
+      "statusIdTo": "FAM_IN_PROCESS",
+      "transitionName": "Scheduled Maintenace In-Process",
+      "from": {
+        "statusId": "FAM_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "03",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "to": {
+        "statusId": "FAM_IN_PROCESS",
+        "description": "In Process",
+        "sequenceId": "05",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "statusType": {
+        "description": "Fixed Asset Maintenance",
+        "statusTypeId": "FIXEDAST_MNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FAM_SCHEDULED",
+      "statusIdTo": "FAM_CANCELLED",
+      "transitionName": "Scheduled Maintenace Cancelled",
+      "from": {
+        "statusId": "FAM_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "03",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "to": {
+        "statusId": "FAM_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "statusType": {
+        "description": "Fixed Asset Maintenance",
+        "statusTypeId": "FIXEDAST_MNT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "FAM_IN_PROCESS",
+      "statusIdTo": "FAM_COMPLETED",
+      "transitionName": "In-Process Maintenance Completed",
+      "from": {
+        "statusId": "FAM_IN_PROCESS",
+        "description": "In Process",
+        "sequenceId": "05",
+        "statusCode": "IN_PROCESS",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "to": {
+        "statusId": "FAM_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "10",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "FIXEDAST_MNT_STATUS"
+      },
+      "statusType": {
+        "description": "Fixed Asset Maintenance",
+        "statusTypeId": "FIXEDAST_MNT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

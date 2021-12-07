@@ -1,0 +1,160 @@
+{
+  "events": [
+    "Reject Requirement",
+    "Order Requirement",
+    "Accept Requirement"
+  ],
+  "states": [
+    "REQ_REJECTED",
+    "REQ_PROPOSED",
+    "REQ_APPROVED",
+    "REQ_CREATED",
+    "REQ_ORDERED"
+  ],
+  "transitions": [
+    {
+      "statusId": "REQ_PROPOSED",
+      "statusIdTo": "REQ_APPROVED",
+      "transitionName": "Accept Requirement",
+      "from": {
+        "statusId": "REQ_PROPOSED",
+        "description": "Proposed",
+        "sequenceId": "01",
+        "statusCode": "PROPOSED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "to": {
+        "statusId": "REQ_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Requirement Status",
+        "statusTypeId": "REQUIREMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "REQ_PROPOSED",
+      "statusIdTo": "REQ_REJECTED",
+      "transitionName": "Reject Requirement",
+      "from": {
+        "statusId": "REQ_PROPOSED",
+        "description": "Proposed",
+        "sequenceId": "01",
+        "statusCode": "PROPOSED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "to": {
+        "statusId": "REQ_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "98",
+        "statusCode": "REJECTED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Requirement Status",
+        "statusTypeId": "REQUIREMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "REQ_CREATED",
+      "statusIdTo": "REQ_APPROVED",
+      "transitionName": "Accept Requirement",
+      "from": {
+        "statusId": "REQ_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "to": {
+        "statusId": "REQ_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Requirement Status",
+        "statusTypeId": "REQUIREMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "REQ_CREATED",
+      "statusIdTo": "REQ_REJECTED",
+      "transitionName": "Reject Requirement",
+      "from": {
+        "statusId": "REQ_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "to": {
+        "statusId": "REQ_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "98",
+        "statusCode": "REJECTED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Requirement Status",
+        "statusTypeId": "REQUIREMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "REQ_APPROVED",
+      "statusIdTo": "REQ_ORDERED",
+      "transitionName": "Order Requirement",
+      "from": {
+        "statusId": "REQ_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "to": {
+        "statusId": "REQ_ORDERED",
+        "description": "Ordered",
+        "sequenceId": "03",
+        "statusCode": "ORDERED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Requirement Status",
+        "statusTypeId": "REQUIREMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "REQ_APPROVED",
+      "statusIdTo": "REQ_REJECTED",
+      "transitionName": "Reject Requirement",
+      "from": {
+        "statusId": "REQ_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "to": {
+        "statusId": "REQ_REJECTED",
+        "description": "Rejected",
+        "sequenceId": "98",
+        "statusCode": "REJECTED",
+        "statusTypeId": "REQUIREMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Requirement Status",
+        "statusTypeId": "REQUIREMENT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

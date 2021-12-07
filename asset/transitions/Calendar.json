@@ -1,0 +1,311 @@
+{
+  "events": [
+    "Decline",
+    "Tentatively Plan",
+    "Accept",
+    "Cancel",
+    "Delegate",
+    "Complete",
+    "Confirm",
+    "Send"
+  ],
+  "states": [
+    "CAL_PLANNED",
+    "CAL_IN_PLANNING",
+    "CAL_DECLINED",
+    "CAL_SENT",
+    "CAL_NEEDS_ACTION",
+    "CAL_DELEGATED",
+    "CAL_CANCELLED"
+  ],
+  "transitions": [
+    {
+      "statusId": "CAL_IN_PLANNING",
+      "statusIdTo": "CAL_PLANNED",
+      "transitionName": "Send",
+      "from": {
+        "statusId": "CAL_IN_PLANNING",
+        "description": "In Planning",
+        "sequenceId": "01",
+        "statusCode": "IN_PLANNING",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_PLANNED",
+        "description": "Planned",
+        "sequenceId": "02",
+        "statusCode": "PLANNED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_IN_PLANNING",
+      "statusIdTo": "CAL_NEEDS_ACTION",
+      "transitionName": "Send",
+      "from": {
+        "statusId": "CAL_IN_PLANNING",
+        "description": "In Planning",
+        "sequenceId": "01",
+        "statusCode": "IN_PLANNING",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_NEEDS_ACTION",
+        "description": "Needs Action (Approved)",
+        "sequenceId": "03",
+        "statusCode": "NEEDS_ACTION",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_PLANNED",
+      "statusIdTo": "CAL_NEEDS_ACTION",
+      "transitionName": "Send",
+      "from": {
+        "statusId": "CAL_PLANNED",
+        "description": "Planned",
+        "sequenceId": "02",
+        "statusCode": "PLANNED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_NEEDS_ACTION",
+        "description": "Needs Action (Approved)",
+        "sequenceId": "03",
+        "statusCode": "NEEDS_ACTION",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_NEEDS_ACTION",
+      "statusIdTo": "CAL_SENT",
+      "transitionName": "Send",
+      "from": {
+        "statusId": "CAL_NEEDS_ACTION",
+        "description": "Needs Action (Approved)",
+        "sequenceId": "03",
+        "statusCode": "NEEDS_ACTION",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_SENT",
+        "description": "Sent",
+        "sequenceId": "04",
+        "statusCode": "SENT",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_NEEDS_ACTION",
+      "statusIdTo": "CAL_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "CAL_NEEDS_ACTION",
+        "description": "Needs Action (Approved)",
+        "sequenceId": "03",
+        "statusCode": "NEEDS_ACTION",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_SENT",
+      "statusIdTo": "CAL_DECLINED",
+      "transitionName": "Decline",
+      "from": {
+        "statusId": "CAL_SENT",
+        "description": "Sent",
+        "sequenceId": "04",
+        "statusCode": "SENT",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_DECLINED",
+        "description": "Declined",
+        "sequenceId": "10",
+        "statusCode": "DECLINED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_SENT",
+      "statusIdTo": "CAL_DELEGATED",
+      "transitionName": "Delegate",
+      "from": {
+        "statusId": "CAL_SENT",
+        "description": "Sent",
+        "sequenceId": "04",
+        "statusCode": "SENT",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_DELEGATED",
+        "description": "Delegated",
+        "sequenceId": "11",
+        "statusCode": "DELEGATED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_SENT",
+      "statusIdTo": "CAL_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "CAL_SENT",
+        "description": "Sent",
+        "sequenceId": "04",
+        "statusCode": "SENT",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_NEEDS_ACTION",
+      "statusIdTo": "CAL_COMPLETED",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "CAL_NEEDS_ACTION",
+        "description": "Needs Action (Approved)",
+        "sequenceId": "03",
+        "statusCode": "NEEDS_ACTION",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "02",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_SENT",
+      "statusIdTo": "CAL_ACCEPTED",
+      "transitionName": "Accept",
+      "from": {
+        "statusId": "CAL_SENT",
+        "description": "Sent",
+        "sequenceId": "04",
+        "statusCode": "SENT",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_ACCEPTED",
+        "description": "Accepted",
+        "sequenceId": "01",
+        "statusCode": "ACCEPTED",
+        "statusTypeId": "TASK_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_NEEDS_ACTION",
+      "statusIdTo": "CAL_TENTATIVE",
+      "transitionName": "Tentatively Plan",
+      "from": {
+        "statusId": "CAL_NEEDS_ACTION",
+        "description": "Needs Action (Approved)",
+        "sequenceId": "03",
+        "statusCode": "NEEDS_ACTION",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_TENTATIVE",
+        "description": "Tentative",
+        "sequenceId": "01",
+        "statusCode": "TENTATIVE",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "CAL_NEEDS_ACTION",
+      "statusIdTo": "CAL_CONFIRMED",
+      "transitionName": "Confirm",
+      "from": {
+        "statusId": "CAL_NEEDS_ACTION",
+        "description": "Needs Action (Approved)",
+        "sequenceId": "03",
+        "statusCode": "NEEDS_ACTION",
+        "statusTypeId": "CALENDAR_STATUS"
+      },
+      "to": {
+        "statusId": "CAL_CONFIRMED",
+        "description": "Confirmed",
+        "sequenceId": "02",
+        "statusCode": "CONFIRMED",
+        "statusTypeId": "EVENT_STATUS"
+      },
+      "statusType": {
+        "description": "Calendar",
+        "statusTypeId": "CALENDAR_STATUS",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "events": [
+    "Image Pending",
+    "Draft revised",
+    "Final draft",
+    "published, not revised",
+    "Initial draft published",
+    "Available to Deactivated",
+    "Final draft Published",
+    "Deactivated",
+    "Available",
+    "Revised draft published",
+    "First draft"
+  ],
+  "states": [
+    "CTNT_FINAL_DRAFT",
+    "CTNT_AVAILABLE",
+    "CTNT_REVISED_DRAFT",
+    "CTNT_INITIAL_DRAFT",
+    "CTNT_IN_PROGRESS",
+    "CTNT_PUBLISHED",
+    "CTNT_DEACTIVATED"
+  ],
+  "transitions": [
+    {
+      "statusId": "CTNT_IN_PROGRESS",
+      "statusIdTo": "CTNT_INITIAL_DRAFT",
+      "transitionName": "First draft",
+      "from": {
+        "statusId": "CTNT_IN_PROGRESS",
+        "description": "In Progress",
+        "sequenceId": "01",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_INITIAL_DRAFT",
+        "description": "Initial Draft",
+        "sequenceId": "02",
+        "statusCode": "INITIAL_DRAFT",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_IN_PROGRESS",
+      "statusIdTo": "CTNT_PUBLISHED",
+      "transitionName": "published, not revised",
+      "from": {
+        "statusId": "CTNT_IN_PROGRESS",
+        "description": "In Progress",
+        "sequenceId": "01",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_PUBLISHED",
+        "description": "Published",
+        "sequenceId": "05",
+        "statusCode": "PUBLISHED",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_IN_PROGRESS",
+      "statusIdTo": "CTNT_AVAILABLE",
+      "transitionName": "Available",
+      "from": {
+        "statusId": "CTNT_IN_PROGRESS",
+        "description": "In Progress",
+        "sequenceId": "01",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "10",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_IN_PROGRESS",
+      "statusIdTo": "IM_PENDING",
+      "transitionName": "Image Pending",
+      "from": {
+        "statusId": "CTNT_IN_PROGRESS",
+        "description": "In Progress",
+        "sequenceId": "01",
+        "statusCode": "IN_PROGRESS",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "IM_PENDING",
+        "description": "Pending",
+        "sequenceId": "01",
+        "statusCode": "PENDING",
+        "statusTypeId": "IMAGE_MANAGEMENT_ST"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_INITIAL_DRAFT",
+      "statusIdTo": "CTNT_REVISED_DRAFT",
+      "transitionName": "Draft revised",
+      "from": {
+        "statusId": "CTNT_INITIAL_DRAFT",
+        "description": "Initial Draft",
+        "sequenceId": "02",
+        "statusCode": "INITIAL_DRAFT",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_REVISED_DRAFT",
+        "description": "Revised Draft",
+        "sequenceId": "03",
+        "statusCode": "REVISED_DRAFT",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_INITIAL_DRAFT",
+      "statusIdTo": "CTNT_PUBLISHED",
+      "transitionName": "Initial draft published",
+      "from": {
+        "statusId": "CTNT_INITIAL_DRAFT",
+        "description": "Initial Draft",
+        "sequenceId": "02",
+        "statusCode": "INITIAL_DRAFT",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_PUBLISHED",
+        "description": "Published",
+        "sequenceId": "05",
+        "statusCode": "PUBLISHED",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_REVISED_DRAFT",
+      "statusIdTo": "CTNT_FINAL_DRAFT",
+      "transitionName": "Final draft",
+      "from": {
+        "statusId": "CTNT_REVISED_DRAFT",
+        "description": "Revised Draft",
+        "sequenceId": "03",
+        "statusCode": "REVISED_DRAFT",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_FINAL_DRAFT",
+        "description": "Final Draft",
+        "sequenceId": "04",
+        "statusCode": "FINAL_DRAFT",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_REVISED_DRAFT",
+      "statusIdTo": "CTNT_PUBLISHED",
+      "transitionName": "Revised draft published",
+      "from": {
+        "statusId": "CTNT_REVISED_DRAFT",
+        "description": "Revised Draft",
+        "sequenceId": "03",
+        "statusCode": "REVISED_DRAFT",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_PUBLISHED",
+        "description": "Published",
+        "sequenceId": "05",
+        "statusCode": "PUBLISHED",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_FINAL_DRAFT",
+      "statusIdTo": "CTNT_PUBLISHED",
+      "transitionName": "Final draft Published",
+      "from": {
+        "statusId": "CTNT_FINAL_DRAFT",
+        "description": "Final Draft",
+        "sequenceId": "04",
+        "statusCode": "FINAL_DRAFT",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_PUBLISHED",
+        "description": "Published",
+        "sequenceId": "05",
+        "statusCode": "PUBLISHED",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_PUBLISHED",
+      "statusIdTo": "CTNT_DEACTIVATED",
+      "transitionName": "Deactivated",
+      "from": {
+        "statusId": "CTNT_PUBLISHED",
+        "description": "Published",
+        "sequenceId": "05",
+        "statusCode": "PUBLISHED",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_DEACTIVATED",
+        "description": "Deactivated",
+        "sequenceId": "99",
+        "statusCode": "DEACTIVATED",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "CTNT_AVAILABLE",
+      "statusIdTo": "CTNT_DEACTIVATED",
+      "transitionName": "Available to Deactivated",
+      "from": {
+        "statusId": "CTNT_AVAILABLE",
+        "description": "Available",
+        "sequenceId": "10",
+        "statusCode": "AVAILABLE",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "to": {
+        "statusId": "CTNT_DEACTIVATED",
+        "description": "Deactivated",
+        "sequenceId": "99",
+        "statusCode": "DEACTIVATED",
+        "statusTypeId": "CONTENT_STATUS"
+      },
+      "statusType": {
+        "description": "Content",
+        "statusTypeId": "CONTENT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

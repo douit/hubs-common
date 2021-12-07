@@ -1,0 +1,35 @@
+{
+  "events": [
+    "Expired"
+  ],
+  "states": [
+    "PARTYREL_CREATED",
+    "PARTYREL_EXPIRED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PARTYREL_CREATED",
+      "statusIdTo": "PARTYREL_EXPIRED",
+      "transitionName": "Expired",
+      "from": {
+        "statusId": "PARTYREL_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PARTY_REL_STATUS"
+      },
+      "to": {
+        "statusId": "PARTYREL_EXPIRED",
+        "description": "Expired",
+        "sequenceId": "02",
+        "statusCode": "EXPIRED",
+        "statusTypeId": "PARTY_REL_STATUS"
+      },
+      "statusType": {
+        "description": "Party Relationship",
+        "statusTypeId": "PARTY_REL_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

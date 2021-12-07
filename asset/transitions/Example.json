@@ -1,0 +1,501 @@
+{
+  "events": [
+    "Testing Complete",
+    "Implementation Complete",
+    "Definition Complete",
+    "Cancel Example",
+    "Approve",
+    "Example Completed"
+  ],
+  "states": [
+    "EXST_IMPLEMENTED",
+    "EXST_CANCELLED",
+    "EXST_COMPLETE",
+    "EXST_APPROVED",
+    "EXST_TESTED",
+    "EXST_IN_DESIGN",
+    "EXST_DEFINED"
+  ],
+  "transitions": [
+    {
+      "statusId": "EXST_IN_DESIGN",
+      "statusIdTo": "EXST_DEFINED",
+      "transitionName": "Definition Complete",
+      "from": {
+        "statusId": "EXST_IN_DESIGN",
+        "description": "In Design",
+        "sequenceId": "01",
+        "statusCode": "IN_DESIGN",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_DEFINED",
+        "description": "Defined",
+        "sequenceId": "02",
+        "statusCode": "DEFINED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_DEFINED",
+      "statusIdTo": "EXST_APPROVED",
+      "transitionName": "Approve",
+      "from": {
+        "statusId": "EXST_DEFINED",
+        "description": "Defined",
+        "sequenceId": "02",
+        "statusCode": "DEFINED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_APPROVED",
+        "description": "Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_APPROVED",
+      "statusIdTo": "EXST_IMPLEMENTED",
+      "transitionName": "Implementation Complete",
+      "from": {
+        "statusId": "EXST_APPROVED",
+        "description": "Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_IMPLEMENTED",
+        "description": "Implemented",
+        "sequenceId": "04",
+        "statusCode": "IMPLEMENTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_IMPLEMENTED",
+      "statusIdTo": "EXST_TESTED",
+      "transitionName": "Testing Complete",
+      "from": {
+        "statusId": "EXST_IMPLEMENTED",
+        "description": "Implemented",
+        "sequenceId": "04",
+        "statusCode": "IMPLEMENTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_TESTED",
+        "description": "Tested",
+        "sequenceId": "05",
+        "statusCode": "TESTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_TESTED",
+      "statusIdTo": "EXST_COMPLETE",
+      "transitionName": "Example Completed",
+      "from": {
+        "statusId": "EXST_TESTED",
+        "description": "Tested",
+        "sequenceId": "05",
+        "statusCode": "TESTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_COMPLETE",
+        "description": "Complete",
+        "sequenceId": "06",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_IN_DESIGN",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_IN_DESIGN",
+        "description": "In Design",
+        "sequenceId": "01",
+        "statusCode": "IN_DESIGN",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_DEFINED",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_DEFINED",
+        "description": "Defined",
+        "sequenceId": "02",
+        "statusCode": "DEFINED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_APPROVED",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_APPROVED",
+        "description": "Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_IMPLEMENTED",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_IMPLEMENTED",
+        "description": "Implemented",
+        "sequenceId": "04",
+        "statusCode": "IMPLEMENTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_TESTED",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_TESTED",
+        "description": "Tested",
+        "sequenceId": "05",
+        "statusCode": "TESTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_IN_DESIGN",
+      "statusIdTo": "EXST_DEFINED",
+      "transitionName": "Definition Complete",
+      "from": {
+        "statusId": "EXST_IN_DESIGN",
+        "description": "In Design",
+        "sequenceId": "01",
+        "statusCode": "IN_DESIGN",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_DEFINED",
+        "description": "Defined",
+        "sequenceId": "02",
+        "statusCode": "DEFINED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_DEFINED",
+      "statusIdTo": "EXST_APPROVED",
+      "transitionName": "Approve",
+      "from": {
+        "statusId": "EXST_DEFINED",
+        "description": "Defined",
+        "sequenceId": "02",
+        "statusCode": "DEFINED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_APPROVED",
+        "description": "Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_APPROVED",
+      "statusIdTo": "EXST_IMPLEMENTED",
+      "transitionName": "Implementation Complete",
+      "from": {
+        "statusId": "EXST_APPROVED",
+        "description": "Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_IMPLEMENTED",
+        "description": "Implemented",
+        "sequenceId": "04",
+        "statusCode": "IMPLEMENTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_IMPLEMENTED",
+      "statusIdTo": "EXST_TESTED",
+      "transitionName": "Testing Complete",
+      "from": {
+        "statusId": "EXST_IMPLEMENTED",
+        "description": "Implemented",
+        "sequenceId": "04",
+        "statusCode": "IMPLEMENTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_TESTED",
+        "description": "Tested",
+        "sequenceId": "05",
+        "statusCode": "TESTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_TESTED",
+      "statusIdTo": "EXST_COMPLETE",
+      "transitionName": "Example Completed",
+      "from": {
+        "statusId": "EXST_TESTED",
+        "description": "Tested",
+        "sequenceId": "05",
+        "statusCode": "TESTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_COMPLETE",
+        "description": "Complete",
+        "sequenceId": "06",
+        "statusCode": "COMPLETE",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_IN_DESIGN",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_IN_DESIGN",
+        "description": "In Design",
+        "sequenceId": "01",
+        "statusCode": "IN_DESIGN",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_DEFINED",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_DEFINED",
+        "description": "Defined",
+        "sequenceId": "02",
+        "statusCode": "DEFINED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_APPROVED",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_APPROVED",
+        "description": "Approved",
+        "sequenceId": "03",
+        "statusCode": "APPROVED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_IMPLEMENTED",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_IMPLEMENTED",
+        "description": "Implemented",
+        "sequenceId": "04",
+        "statusCode": "IMPLEMENTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "EXST_TESTED",
+      "statusIdTo": "EXST_CANCELLED",
+      "transitionName": "Cancel Example",
+      "from": {
+        "statusId": "EXST_TESTED",
+        "description": "Tested",
+        "sequenceId": "05",
+        "statusCode": "TESTED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "to": {
+        "statusId": "EXST_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "EXAMPLE_STATUS"
+      },
+      "statusType": {
+        "description": "Example",
+        "statusTypeId": "EXAMPLE_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

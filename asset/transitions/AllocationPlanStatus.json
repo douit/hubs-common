@@ -1,0 +1,136 @@
+{
+  "events": [
+    "Cancel",
+    "Create",
+    "Complete",
+    "Approve"
+  ],
+  "states": [
+    "ALLOC_PLAN_CREATED",
+    "ALLOC_PLAN_COMPLETED",
+    "ALLOC_PLAN_CANCELLED",
+    "ALLOC_PLAN_APPROVED"
+  ],
+  "transitions": [
+    {
+      "statusId": "ALLOC_PLAN_CREATED",
+      "statusIdTo": "ALLOC_PLAN_APPROVED",
+      "transitionName": "Approve",
+      "from": {
+        "statusId": "ALLOC_PLAN_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Status",
+        "statusTypeId": "ALLOC_PLAN_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ALLOC_PLAN_CREATED",
+      "statusIdTo": "ALLOC_PLAN_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "ALLOC_PLAN_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "04",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Status",
+        "statusTypeId": "ALLOC_PLAN_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ALLOC_PLAN_APPROVED",
+      "statusIdTo": "ALLOC_PLAN_CREATED",
+      "transitionName": "Create",
+      "from": {
+        "statusId": "ALLOC_PLAN_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Status",
+        "statusTypeId": "ALLOC_PLAN_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ALLOC_PLAN_APPROVED",
+      "statusIdTo": "ALLOC_PLAN_COMPLETED",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "ALLOC_PLAN_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "03",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Status",
+        "statusTypeId": "ALLOC_PLAN_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "ALLOC_PLAN_APPROVED",
+      "statusIdTo": "ALLOC_PLAN_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "ALLOC_PLAN_APPROVED",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "04",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ALLOC_PLAN_STATUS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Status",
+        "statusTypeId": "ALLOC_PLAN_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+    public interface Event {}
+
+    // general events
+    public static final class SetTarget implements Event {
+        public final ActorRef<{{sink}}> ref;
+
+        public SetTarget(ActorRef<{{sink}}> ref) {
+            this.ref = ref;
+        }
+    }
+
+    // transitions
+    {% for ev in actor.eventNames %}
+    public enum {{ev}} implements Event {
+        INSTANCE
+    }
+    {% endfor %}    
+

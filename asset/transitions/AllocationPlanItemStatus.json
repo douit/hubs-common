@@ -1,0 +1,136 @@
+{
+  "events": [
+    "Cancel",
+    "Create",
+    "Complete",
+    "Approve"
+  ],
+  "states": [
+    "ALLOC_PLAN_ITEM_APRV",
+    "ALLOC_PLAN_ITEM_CRTD",
+    "ALLOC_PLAN_ITEM_CMPL",
+    "ALLOC_PLAN_ITEM_CNCL"
+  ],
+  "transitions": [
+    {
+      "statusId": "ALLOC_PLAN_ITEM_CRTD",
+      "statusIdTo": "ALLOC_PLAN_ITEM_APRV",
+      "transitionName": "Approve",
+      "from": {
+        "statusId": "ALLOC_PLAN_ITEM_CRTD",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_ITEM_APRV",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Item Status",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS",
+        "parentTypeId": "ALLOC_PLAN_STATUS"
+      }
+    },
+    {
+      "statusId": "ALLOC_PLAN_ITEM_CRTD",
+      "statusIdTo": "ALLOC_PLAN_ITEM_CNCL",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "ALLOC_PLAN_ITEM_CRTD",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_ITEM_CNCL",
+        "description": "Cancelled",
+        "sequenceId": "04",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Item Status",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS",
+        "parentTypeId": "ALLOC_PLAN_STATUS"
+      }
+    },
+    {
+      "statusId": "ALLOC_PLAN_ITEM_APRV",
+      "statusIdTo": "ALLOC_PLAN_ITEM_CRTD",
+      "transitionName": "Create",
+      "from": {
+        "statusId": "ALLOC_PLAN_ITEM_APRV",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_ITEM_CRTD",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Item Status",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS",
+        "parentTypeId": "ALLOC_PLAN_STATUS"
+      }
+    },
+    {
+      "statusId": "ALLOC_PLAN_ITEM_APRV",
+      "statusIdTo": "ALLOC_PLAN_ITEM_CMPL",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "ALLOC_PLAN_ITEM_APRV",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_ITEM_CMPL",
+        "description": "Completed",
+        "sequenceId": "03",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Item Status",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS",
+        "parentTypeId": "ALLOC_PLAN_STATUS"
+      }
+    },
+    {
+      "statusId": "ALLOC_PLAN_ITEM_APRV",
+      "statusIdTo": "ALLOC_PLAN_ITEM_CNCL",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "ALLOC_PLAN_ITEM_APRV",
+        "description": "Approved",
+        "sequenceId": "02",
+        "statusCode": "APPROVED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "to": {
+        "statusId": "ALLOC_PLAN_ITEM_CNCL",
+        "description": "Cancelled",
+        "sequenceId": "04",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS"
+      },
+      "statusType": {
+        "description": "Allocation Plan Item Status",
+        "statusTypeId": "ALLOC_PLAN_ITEM_STTS",
+        "parentTypeId": "ALLOC_PLAN_STATUS"
+      }
+    }
+  ]
+}

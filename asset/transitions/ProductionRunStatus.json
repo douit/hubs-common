@@ -1,0 +1,261 @@
+{
+  "events": [
+    "Start",
+    "Cancel",
+    "Complete",
+    "Schedule",
+    "Confirm",
+    "Close"
+  ],
+  "states": [
+    "PRUN_CREATED",
+    "PRUN_CLOSED",
+    "PRUN_RUNNING",
+    "PRUN_CANCELLED",
+    "PRUN_DOC_PRINTED",
+    "PRUN_COMPLETED",
+    "PRUN_SCHEDULED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PRUN_CREATED",
+      "statusIdTo": "PRUN_DOC_PRINTED",
+      "transitionName": "Confirm",
+      "from": {
+        "statusId": "PRUN_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_DOC_PRINTED",
+        "description": "Confirmed",
+        "sequenceId": "03",
+        "statusCode": "DOC_PRINTED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_CREATED",
+      "statusIdTo": "PRUN_SCHEDULED",
+      "transitionName": "Schedule",
+      "from": {
+        "statusId": "PRUN_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_CREATED",
+      "statusIdTo": "PRUN_RUNNING",
+      "transitionName": "Start",
+      "from": {
+        "statusId": "PRUN_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_RUNNING",
+        "description": "Running",
+        "sequenceId": "04",
+        "statusCode": "RUNNING",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_SCHEDULED",
+      "statusIdTo": "PRUN_DOC_PRINTED",
+      "transitionName": "Confirm",
+      "from": {
+        "statusId": "PRUN_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_DOC_PRINTED",
+        "description": "Confirmed",
+        "sequenceId": "03",
+        "statusCode": "DOC_PRINTED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_SCHEDULED",
+      "statusIdTo": "PRUN_RUNNING",
+      "transitionName": "Start",
+      "from": {
+        "statusId": "PRUN_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_RUNNING",
+        "description": "Running",
+        "sequenceId": "04",
+        "statusCode": "RUNNING",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_SCHEDULED",
+      "statusIdTo": "PRUN_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "PRUN_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "10",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_DOC_PRINTED",
+      "statusIdTo": "PRUN_RUNNING",
+      "transitionName": "Start",
+      "from": {
+        "statusId": "PRUN_DOC_PRINTED",
+        "description": "Confirmed",
+        "sequenceId": "03",
+        "statusCode": "DOC_PRINTED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_RUNNING",
+        "description": "Running",
+        "sequenceId": "04",
+        "statusCode": "RUNNING",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_RUNNING",
+      "statusIdTo": "PRUN_COMPLETED",
+      "transitionName": "Complete",
+      "from": {
+        "statusId": "PRUN_RUNNING",
+        "description": "Running",
+        "sequenceId": "04",
+        "statusCode": "RUNNING",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "05",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_COMPLETED",
+      "statusIdTo": "PRUN_CLOSED",
+      "transitionName": "Close",
+      "from": {
+        "statusId": "PRUN_COMPLETED",
+        "description": "Completed",
+        "sequenceId": "05",
+        "statusCode": "COMPLETED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_CLOSED",
+        "description": "Closed",
+        "sequenceId": "06",
+        "statusCode": "CLOSED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    },
+    {
+      "statusId": "PRUN_CREATED",
+      "statusIdTo": "PRUN_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "PRUN_CREATED",
+        "description": "Created",
+        "sequenceId": "01",
+        "statusCode": "CREATED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "to": {
+        "statusId": "PRUN_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "10",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "PRODUCTION_RUN"
+      },
+      "statusType": {
+        "description": "Production Run Status",
+        "statusTypeId": "PRODUCTION_RUN",
+        "parentTypeId": "WORK_EFFORT_STATUS"
+      }
+    }
+  ]
+}

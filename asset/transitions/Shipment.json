@@ -1,0 +1,285 @@
+{
+  "events": [
+    "Deliver",
+    "Pick",
+    "Cancel",
+    "Schedule",
+    "Ship",
+    "Pack"
+  ],
+  "states": [
+    "SHIPMENT_PICKED",
+    "SHIPMENT_SCHEDULED",
+    "SHIPMENT_DELIVERED",
+    "SHIPMENT_PACKED",
+    "SHIPMENT_CANCELLED",
+    "SHIPMENT_INPUT",
+    "SHIPMENT_SHIPPED"
+  ],
+  "transitions": [
+    {
+      "statusId": "SHIPMENT_INPUT",
+      "statusIdTo": "SHIPMENT_SCHEDULED",
+      "transitionName": "Schedule",
+      "from": {
+        "statusId": "SHIPMENT_INPUT",
+        "description": "Input",
+        "sequenceId": "01",
+        "statusCode": "INPUT",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_INPUT",
+      "statusIdTo": "SHIPMENT_PICKED",
+      "transitionName": "Pick",
+      "from": {
+        "statusId": "SHIPMENT_INPUT",
+        "description": "Input",
+        "sequenceId": "01",
+        "statusCode": "INPUT",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_PICKED",
+        "description": "Picked",
+        "sequenceId": "03",
+        "statusCode": "PICKED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_INPUT",
+      "statusIdTo": "SHIPMENT_PACKED",
+      "transitionName": "Pack",
+      "from": {
+        "statusId": "SHIPMENT_INPUT",
+        "description": "Input",
+        "sequenceId": "01",
+        "statusCode": "INPUT",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_PACKED",
+        "description": "Packed",
+        "sequenceId": "04",
+        "statusCode": "PACKED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_SCHEDULED",
+      "statusIdTo": "SHIPMENT_PICKED",
+      "transitionName": "Pick",
+      "from": {
+        "statusId": "SHIPMENT_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_PICKED",
+        "description": "Picked",
+        "sequenceId": "03",
+        "statusCode": "PICKED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_SCHEDULED",
+      "statusIdTo": "SHIPMENT_PACKED",
+      "transitionName": "Pack",
+      "from": {
+        "statusId": "SHIPMENT_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_PACKED",
+        "description": "Packed",
+        "sequenceId": "04",
+        "statusCode": "PACKED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_PICKED",
+      "statusIdTo": "SHIPMENT_PACKED",
+      "transitionName": "Pack",
+      "from": {
+        "statusId": "SHIPMENT_PICKED",
+        "description": "Picked",
+        "sequenceId": "03",
+        "statusCode": "PICKED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_PACKED",
+        "description": "Packed",
+        "sequenceId": "04",
+        "statusCode": "PACKED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_PACKED",
+      "statusIdTo": "SHIPMENT_SHIPPED",
+      "transitionName": "Ship",
+      "from": {
+        "statusId": "SHIPMENT_PACKED",
+        "description": "Packed",
+        "sequenceId": "04",
+        "statusCode": "PACKED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_SHIPPED",
+        "description": "Shipped",
+        "sequenceId": "05",
+        "statusCode": "SHIPPED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_SHIPPED",
+      "statusIdTo": "SHIPMENT_DELIVERED",
+      "transitionName": "Deliver",
+      "from": {
+        "statusId": "SHIPMENT_SHIPPED",
+        "description": "Shipped",
+        "sequenceId": "05",
+        "statusCode": "SHIPPED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_DELIVERED",
+        "description": "Delivered",
+        "sequenceId": "06",
+        "statusCode": "DELIVERED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_INPUT",
+      "statusIdTo": "SHIPMENT_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "SHIPMENT_INPUT",
+        "description": "Input",
+        "sequenceId": "01",
+        "statusCode": "INPUT",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_SCHEDULED",
+      "statusIdTo": "SHIPMENT_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "SHIPMENT_SCHEDULED",
+        "description": "Scheduled",
+        "sequenceId": "02",
+        "statusCode": "SCHEDULED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    },
+    {
+      "statusId": "SHIPMENT_PICKED",
+      "statusIdTo": "SHIPMENT_CANCELLED",
+      "transitionName": "Cancel",
+      "from": {
+        "statusId": "SHIPMENT_PICKED",
+        "description": "Picked",
+        "sequenceId": "03",
+        "statusCode": "PICKED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "to": {
+        "statusId": "SHIPMENT_CANCELLED",
+        "description": "Cancelled",
+        "sequenceId": "99",
+        "statusCode": "CANCELLED",
+        "statusTypeId": "SHIPMENT_STATUS"
+      },
+      "statusType": {
+        "description": "Shipment",
+        "statusTypeId": "SHIPMENT_STATUS",
+        "parentTypeId": ""
+      }
+    }
+  ]
+}

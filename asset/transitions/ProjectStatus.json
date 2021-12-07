@@ -1,0 +1,35 @@
+{
+  "events": [
+    "Close project"
+  ],
+  "states": [
+    "PRJ_ACTIVE",
+    "PRJ_CLOSED"
+  ],
+  "transitions": [
+    {
+      "statusId": "PRJ_ACTIVE",
+      "statusIdTo": "PRJ_CLOSED",
+      "transitionName": "Close project",
+      "from": {
+        "statusId": "PRJ_ACTIVE",
+        "description": "Active",
+        "sequenceId": "01",
+        "statusCode": "ACTIVE",
+        "statusTypeId": "PROJECT_STATUS"
+      },
+      "to": {
+        "statusId": "PRJ_CLOSED",
+        "description": "Closed",
+        "sequenceId": "09",
+        "statusCode": "CLOSED",
+        "statusTypeId": "PROJECT_STATUS"
+      },
+      "statusType": {
+        "description": "Project status",
+        "statusTypeId": "PROJECT_STATUS",
+        "parentTypeId": "PROJECT"
+      }
+    }
+  ]
+}
