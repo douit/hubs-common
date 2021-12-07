@@ -4,9 +4,9 @@
     "Review Deleted"
   ],
   "states": [
+    "WERV_PENDING",
     "WERV_APPROVED",
-    "WERV_DELETED",
-    "WERV_PENDING"
+    "WERV_DELETED"
   ],
   "transitions": [
     {

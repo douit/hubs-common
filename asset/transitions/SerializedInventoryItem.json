@@ -22,17 +22,17 @@
     "Hold"
   ],
   "states": [
-    "INV_BEING_TRANSFERED",
+    "INV_ON_ORDER",
+    "INV_AVAILABLE",
+    "INV_PROMISED",
+    "INV_DELIVERED",
+    "INV_ACTIVATED",
     "INV_DEACTIVATED",
     "INV_ON_HOLD",
-    "INV_DELIVERED",
-    "INV_AVAILABLE",
+    "INV_BEING_TRANSFERED",
     "INV_BEING_TRANS_PRM",
-    "INV_ACTIVATED",
-    "INV_DEFECTIVE",
     "INV_RETURNED",
-    "INV_ON_ORDER",
-    "INV_PROMISED"
+    "INV_DEFECTIVE"
   ],
   "transitions": [
     {

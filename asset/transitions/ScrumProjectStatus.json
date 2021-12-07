@@ -4,8 +4,8 @@
     "Close project"
   ],
   "states": [
-    "SPJ_CLOSED",
-    "SPJ_ACTIVE"
+    "SPJ_ACTIVE",
+    "SPJ_CLOSED"
   ],
   "transitions": [
     {

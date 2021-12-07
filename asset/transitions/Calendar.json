@@ -10,11 +10,11 @@
     "Send"
   ],
   "states": [
-    "CAL_PLANNED",
     "CAL_IN_PLANNING",
-    "CAL_DECLINED",
-    "CAL_SENT",
+    "CAL_PLANNED",
     "CAL_NEEDS_ACTION",
+    "CAL_SENT",
+    "CAL_DECLINED",
     "CAL_DELEGATED",
     "CAL_CANCELLED"
   ],

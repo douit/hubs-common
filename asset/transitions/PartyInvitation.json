@@ -6,11 +6,11 @@
     "Accepted"
   ],
   "states": [
-    "PARTYINV_CANCELLED",
-    "PARTYINV_PENDING",
-    "PARTYINV_DECLINED",
     "PARTYINV_SENT",
-    "PARTYINV_ACCEPTED"
+    "PARTYINV_PENDING",
+    "PARTYINV_ACCEPTED",
+    "PARTYINV_DECLINED",
+    "PARTYINV_CANCELLED"
   ],
   "transitions": [
     {

@@ -4,8 +4,8 @@
     "Ship"
   ],
   "states": [
-    "PURCH_SHIP_SHIPPED",
     "PURCH_SHIP_CREATED",
+    "PURCH_SHIP_SHIPPED",
     "PURCH_SHIP_RECEIVED"
   ],
   "transitions": [

@@ -8,13 +8,13 @@
     "Example Completed"
   ],
   "states": [
-    "EXST_IMPLEMENTED",
-    "EXST_CANCELLED",
-    "EXST_COMPLETE",
-    "EXST_APPROVED",
-    "EXST_TESTED",
     "EXST_IN_DESIGN",
-    "EXST_DEFINED"
+    "EXST_DEFINED",
+    "EXST_APPROVED",
+    "EXST_IMPLEMENTED",
+    "EXST_TESTED",
+    "EXST_COMPLETE",
+    "EXST_CANCELLED"
   ],
   "transitions": [
     {

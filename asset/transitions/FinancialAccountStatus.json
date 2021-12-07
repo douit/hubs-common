@@ -7,10 +7,10 @@
     "Set Negative Pending Replenishment"
   ],
   "states": [
-    "FNACT_MANFROZEN",
     "FNACT_ACTIVE",
-    "FNACT_CANCELLED",
-    "FNACT_NEGPENDREPL"
+    "FNACT_NEGPENDREPL",
+    "FNACT_MANFROZEN",
+    "FNACT_CANCELLED"
   ],
   "transitions": [
     {

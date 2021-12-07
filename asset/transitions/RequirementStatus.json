@@ -5,11 +5,11 @@
     "Accept Requirement"
   ],
   "states": [
-    "REQ_REJECTED",
     "REQ_PROPOSED",
-    "REQ_APPROVED",
     "REQ_CREATED",
-    "REQ_ORDERED"
+    "REQ_APPROVED",
+    "REQ_ORDERED",
+    "REQ_REJECTED"
   ],
   "transitions": [
     {

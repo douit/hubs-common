@@ -10,12 +10,12 @@
     "Payment Confirmed"
   ],
   "states": [
-    "PMNT_RECEIVED",
-    "PMNT_VOID",
+    "PMNT_NOT_PAID",
     "PMNT_SENT",
+    "PMNT_RECEIVED",
     "PMNT_CONFIRMED",
     "PMNT_CANCELLED",
-    "PMNT_NOT_PAID"
+    "PMNT_VOID"
   ],
   "transitions": [
     {

@@ -5,13 +5,13 @@
     "Task Complete"
   ],
   "states": [
-    "PTS_CREATED_AS",
-    "PTS_ON_HOLD",
-    "PTS_CREATED_UA",
-    "PTS_CANCELLED",
     "PTS_CREATED",
+    "PTS_CREATED_UA",
+    "PTS_CREATED_AS",
     "PTS_CREATED_IP",
-    "PTS_COMPLETED"
+    "PTS_COMPLETED",
+    "PTS_ON_HOLD",
+    "PTS_CANCELLED"
   ],
   "transitions": [
     {

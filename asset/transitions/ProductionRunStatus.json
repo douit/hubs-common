@@ -9,12 +9,12 @@
   ],
   "states": [
     "PRUN_CREATED",
-    "PRUN_CLOSED",
-    "PRUN_RUNNING",
-    "PRUN_CANCELLED",
+    "PRUN_SCHEDULED",
     "PRUN_DOC_PRINTED",
+    "PRUN_RUNNING",
     "PRUN_COMPLETED",
-    "PRUN_SCHEDULED"
+    "PRUN_CLOSED",
+    "PRUN_CANCELLED"
   ],
   "transitions": [
     {

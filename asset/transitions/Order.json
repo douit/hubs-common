@@ -11,14 +11,14 @@
     "Send Order"
   ],
   "states": [
-    "ORDER_COMPLETED",
-    "ORDER_HOLD",
-    "ORDER_PROCESSING",
     "ORDER_CREATED",
-    "ORDER_APPROVED",
-    "ORDER_CANCELLED",
     "ORDER_SENT",
-    "ORDER_REJECTED"
+    "ORDER_PROCESSING",
+    "ORDER_APPROVED",
+    "ORDER_HOLD",
+    "ORDER_COMPLETED",
+    "ORDER_REJECTED",
+    "ORDER_CANCELLED"
   ],
   "transitions": [
     {

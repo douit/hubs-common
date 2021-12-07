@@ -6,11 +6,11 @@
     "Complete Marketing Campaign"
   ],
   "states": [
-    "MKTG_CAMP_INPROGRESS",
     "MKTG_CAMP_PLANNED",
-    "MKTG_CAMP_CANCELLED",
     "MKTG_CAMP_APPROVED",
-    "MKTG_CAMP_COMPLETED"
+    "MKTG_CAMP_INPROGRESS",
+    "MKTG_CAMP_COMPLETED",
+    "MKTG_CAMP_CANCELLED"
   ],
   "transitions": [
     {

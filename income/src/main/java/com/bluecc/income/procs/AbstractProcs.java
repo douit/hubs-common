@@ -18,6 +18,7 @@ import com.bluecc.income.template.TemplateGlobalContext;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
 import lombok.Builder;
@@ -29,10 +30,7 @@ import org.jdbi.v3.core.statement.StatementContext;
 import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.ProtoTypes.getTableByMessage;
@@ -50,7 +48,7 @@ public class AbstractProcs {
     @Inject
     protected ProtoMeta protoMeta;
 
-    protected boolean verbose=true;
+    protected boolean verbose = true;
 
     public boolean isVerbose() {
         return verbose;
@@ -60,9 +58,9 @@ public class AbstractProcs {
         this.verbose = verbose;
     }
 
-    protected Flux<IModel<?>> process(IProc proc){
+    protected Flux<IModel<?>> process(IProc proc) {
         return hubsStore.getJdbi().withHandle(handle -> {
-            ResultSubscriber<IModel<?>> resultSubscriber=new ResultSubscriber<>();
+            ResultSubscriber<IModel<?>> resultSubscriber = new ResultSubscriber<>();
             proc.proc(new IProc.ProcContext(handle, resultSubscriber));
             return Flux.fromIterable(resultSubscriber.getResult());
         });
@@ -110,7 +108,7 @@ public class AbstractProcs {
                     if (pval != null) {
                         persist = false;
                         idval = pval.toString();
-                        if(verbose) {
+                        if (verbose) {
                             System.out.println("\tdon't persist " + c.getSymbol().getTable()
                                     + ", with id value " + idval);
                         }
@@ -131,13 +129,13 @@ public class AbstractProcs {
                 idval = e.get(c.getSymbol().getTableKeys().get(0)).toString();
             }
 
-            e.forEach((k,v) -> {
-                if(v!=null && v.equals(ValueConstants.PLACER_HEAD_ID)){
+            e.forEach((k, v) -> {
+                if (v != null && v.equals(ValueConstants.PLACER_HEAD_ID)) {
                     e.put(k, c.getCollector().getTravelContext().getHeadId());
                 }
             });
 
-            if(verbose) {
+            if (verbose) {
                 String mark = persist ? "Ⓜ️ " : "☑️ ";
                 System.out.println(mark + c.getSymbol() + " -> " + e);
             }
@@ -160,7 +158,7 @@ public class AbstractProcs {
                 String entityType = ProtoTypes.getEntityTypeByMessage(c.getParentMsg());
                 EntityMeta.RelationQueryMeta queryMeta = protoMeta.findRelationQueryMeta(
                         entityType, c.getParentFld().getName());
-                if(verbose) {
+                if (verbose) {
                     System.out.format("\tresult to: %s -> %s\n",
                             c.getParentFld().getName(),
                             queryMeta.getTableFields());
@@ -196,7 +194,7 @@ public class AbstractProcs {
                         Descriptors.FieldDescriptor fldDesc = descriptor.findFieldByName(keymap.getProtoField());
                         if (fldDesc != null) {
                             Object val = from.getField(fldDesc);
-                            if(val!=null && !val.toString().isEmpty()) {
+                            if (val != null && !val.toString().isEmpty()) {
                                 log.debug("\t..transfer {}: {}\n", fldDesc.getName(), val);
                                 values.put(keymap.getProtoRelField(), val);
                             }
@@ -206,10 +204,10 @@ public class AbstractProcs {
         return values;
     }
 
-    protected void setupEntities(String...entities){
+    protected void setupEntities(String... entities) {
         final Jdbi db = hubsStore.getJdbi();
 
-        if(verbose) {
+        if (verbose) {
             db.setSqlLogger(new SqlLogger() {
                 @Override
                 public void logBeforeExecution(StatementContext ctx) {
@@ -220,7 +218,7 @@ public class AbstractProcs {
             });
         }
 
-        if(entities.length>0) {
+        if (entities.length > 0) {
             TemplateGlobalContext.getContext().preload(entities);
             process(c -> {
                 truncate(c, Arrays.stream(entities).map(e ->
@@ -231,7 +229,7 @@ public class AbstractProcs {
 
     @Data
     @Builder
-    public static class ExtractedTableInfo{
+    public static class ExtractedTableInfo {
         String table;
         List<String> names;
         List<String> placers;
@@ -240,8 +238,8 @@ public class AbstractProcs {
         String fieldsCondition;
     }
 
-    public ExtractedTableInfo extract(Message flatData){
-        Map<String, Object> e= FlatMessageCollector.extract(flatData);
+    public ExtractedTableInfo extract(Message flatData) {
+        Map<String, Object> e = FlatMessageCollector.extract(flatData);
 
         List<String> names = new ArrayList<>(e.keySet());
         List<String> placers = names.stream().map(name -> ":" + name)
@@ -251,13 +249,13 @@ public class AbstractProcs {
                         format("%s=:%s", name, name))
                 .collect(Collectors.joining(" and "));
 
-        String table= getTableByMessage(flatData);
+        String table = getTableByMessage(flatData);
 
-        List<String> idCondList= Lists.newArrayList();
+        List<String> idCondList = Lists.newArrayList();
         for (String entityKey : ProtoTypes.getEntityKeys(flatData)) {
             idCondList.add(format("%s=:%s", entityKey, entityKey));
         }
-        String idCond=String.join(" and ", idCondList);
+        String idCond = String.join(" and ", idCondList);
 
         return ExtractedTableInfo.builder()
                 .table(table)
@@ -269,10 +267,10 @@ public class AbstractProcs {
                 .build();
     }
 
-    public int create(IProc.ProcContext ctx, Message flatData){
-        ExtractedTableInfo tableInfo=extract(flatData);
-        if(ProtoTypes.isCombine(flatData)){
-            String uid=sequence.nextStringId();
+    public int create(IProc.ProcContext ctx, Message flatData) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        if (ProtoTypes.isCombine(flatData)) {
+            String uid = sequence.nextStringId();
             tableInfo.names.add("id");
             tableInfo.placers.add(":id");
             tableInfo.e.put("id", uid);
@@ -290,8 +288,12 @@ public class AbstractProcs {
 
     public int update(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
+        Set<String> keys = ProtoTypes.getEntityKeySet(flatData);
+        // 如果是复合键, 则去掉固定的id字段
+        final Set<String> finalKeys = keys.size() > 1 ? Sets.newHashSet("id") : keys;
         List<String> fieldsCond = tableInfo.names.stream()
-                .map(name -> name+" = :" + name)
+                .filter(k -> !finalKeys.contains(k))
+                .map(name -> name + " = :" + name)
                 .collect(Collectors.toList());
 
         int total = ctx.getHandle().createUpdate("update <table> set <fields_cond> where <id_cond>")
@@ -318,7 +320,7 @@ public class AbstractProcs {
     public List<Map<String, Object>> findById(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
         List<Map<String, Object>> rs = ctx.getHandle().createQuery(
-                "select * from <table> where <id_cond>")
+                        "select * from <table> where <id_cond>")
                 .define("table", tableInfo.table)
                 .define("id_cond", tableInfo.idCond)
                 .bindMap(tableInfo.e)
@@ -373,9 +375,9 @@ public class AbstractProcs {
 
     public <T> List<T> findRelation(IProc.ProcContext c, Message p, String rel,
                                     Class<? extends IModel<?>> fromClass,
-                                    Class<T> toClass){
-        IModel<?> m=findOne(c, p, fromClass);
-        if(m!=null) {
+                                    Class<T> toClass) {
+        IModel<?> m = findOne(c, p, fromClass);
+        if (m != null) {
             Message p1 = m.toData();
             return getRelationValues(c, p1, rel, toClass);
         }
@@ -395,10 +397,10 @@ public class AbstractProcs {
     }
 
     public List<Map<String, Object>> all(IProc.ProcContext c, String table, int limit) {
-        List<Map<String,Object>> rs= c.getHandle().createQuery(
+        List<Map<String, Object>> rs = c.getHandle().createQuery(
                         format("select * from %s %s",
                                 table,
-                                limit==0?":":"limit "+limit))
+                                limit == 0 ? ":" : "limit " + limit))
                 .mapToMap().list();
         return rs;
     }
@@ -414,7 +416,7 @@ public class AbstractProcs {
         Map<String, Object> e = transferRelations(message,
                 relName, relEnt);
 
-        if(e.isEmpty()){
+        if (e.isEmpty()) {
             log.debug("Cannot get relation data with {} by {}", relEnt, relName);
             return Lists.newArrayList();
         }

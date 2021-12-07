@@ -39,26 +39,32 @@ public class StereotypeTool {
                 "dataset/order/PartyDemoData.xml",
                 "dataset/order/PartyGeoPointData.xml").forEach(file -> {
             datafileWriter(new File(file),
-                    targetDir, "", true);
+                    targetDir, "", true, "stereotypes");
         });
 
     }
 
-    private static void datasetWriter(String sourceDir, String targetDir, String prefix) throws IOException {
+    private static void datasetWriter(String sourceDir, String targetDir,
+                                      String prefix) throws IOException {
+        datasetWriter(sourceDir, targetDir, prefix, false, "stereotypes");
+    }
+
+    public static void datasetWriter(String sourceDir, String targetDir,
+                                     String prefix, boolean fnMode, String pkg) throws IOException {
         System.out.println(".. write " + sourceDir);
         // String sourceDir="dataset/sample";
         for (File sourceFile : Util.listFiles(sourceDir, ".xml")) {
-            datafileWriter(sourceFile, targetDir, prefix, false);
+            datafileWriter(sourceFile, targetDir, prefix, fnMode, pkg);
         }
     }
 
     public static void datafileWriter(File sourceFile, String targetDir,
-                                      String prefix, boolean fnMode) {
+                                      String prefix, boolean fnMode, String pkg) {
         try {
             String className = prefix + getCapName(sourceFile);
             FileWriter writer = new FileWriter(targetDir + "/" + className + ".java");
             FileWriter listWriter = new FileWriter(targetDir + "/" + className + "List.java");
-            new StereotypeTool(writer, listWriter, fnMode).gen(className, sourceFile);
+            new StereotypeTool(writer, listWriter, fnMode).gen(className, sourceFile, pkg);
             writer.close();
             listWriter.close();
         } catch (IOException e) {
@@ -72,7 +78,7 @@ public class StereotypeTool {
 
         StringWriter writer = new StringWriter();
         String className = "Stereo" + getCapName(dataFile);
-        new StereotypeTool(writer, new StringWriter(), false).gen(className, new File(dataFile));
+        new StereotypeTool(writer, new StringWriter(), false).gen(className, new File(dataFile), "stereotypes");
         writer.close();
         System.out.println(writer.toString());
     }
@@ -90,7 +96,7 @@ public class StereotypeTool {
         this.fnMode = fnMode;
     }
 
-    void gen(String className, File dataFile) throws IOException {
+    void gen(String className, File dataFile, String pkg) throws IOException {
         String tplSource = IOUtils.toString(Objects.requireNonNull(
                         StereotypeTool.class.getResourceAsStream(
                                 fnMode ? "/templates/stereotype_fn.j2" :
@@ -105,15 +111,18 @@ public class StereotypeTool {
         Multimap<String, JsonObject> dataList = ArrayListMultimap.create();
         collectEntityData(dataList, dataFile, true);
 
-        // package
-        writer.write("package com/bluecc/hubs/stereotypes;\n\n".replace('/', '.'));
-        listWriter.write("package com/bluecc/hubs/stereotypes;\n\n".replace('/', '.'));
+        // package: default pkg is stereotypes
+        String pkgDecl=format("package com/bluecc/hubs/%s;\n\n"
+                .replace('/', '.'), pkg);
+        writer.write(pkgDecl);
+        listWriter.write(pkgDecl);
 
         // import part
         writer.write("import static com.bluecc.hubs.ProtoTypes.*;\n");
         listWriter.write("import com.google.common.collect.ImmutableList;\n");
         listWriter.write("import java.util.List;\n");
-        listWriter.write(format("import static com.bluecc.hubs.stereotypes.%s.*;\n\n", className));
+        listWriter.write(format("import static com.bluecc.hubs.%s.%s.*;\n\n",
+                pkg, className));
 
         dataList.keySet().stream().map(k -> format(
                         "import com.bluecc.hubs.stub.%s;",

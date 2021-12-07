@@ -7,12 +7,12 @@
     "Task Re-Open"
   ],
   "states": [
-    "STS_CREATED_UA",
     "STS_CREATED",
-    "STS_COMPLETED",
+    "STS_CREATED_UA",
     "STS_CREATED_AS",
-    "STS_ON_HOLD",
     "STS_CREATED_IP",
+    "STS_COMPLETED",
+    "STS_ON_HOLD",
     "STS_CANCELLED"
   ],
   "transitions": [

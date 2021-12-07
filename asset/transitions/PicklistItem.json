@@ -4,9 +4,9 @@
     "Complete"
   ],
   "states": [
-    "PICKITEM_CANCELLED",
     "PICKITEM_PENDING",
-    "PICKITEM_COMPLETED"
+    "PICKITEM_COMPLETED",
+    "PICKITEM_CANCELLED"
   ],
   "transitions": [
     {

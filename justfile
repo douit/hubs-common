@@ -93,3 +93,5 @@ srv:
 addon file:
 	just gen StereotypeAddons -f {{file}}
 
+livecases:
+	just gen StereotypeAddons -t stub/src/main/java/com/bluecc/hubs/livecases dataset/livecases

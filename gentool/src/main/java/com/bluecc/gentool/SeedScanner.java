@@ -63,6 +63,8 @@ public class SeedScanner {
                     .collect(Collectors.toList());
             List<String> statusItems=scanner.statusItemMap.values().stream()
                     .filter(s -> s.getStatusTypeId().equals(typ))
+                    .sorted(Comparator.comparingInt(s ->
+                            safeInt(s)))
                     .map(s -> s.getStatusId())
                     .collect(Collectors.toList());
             if(!changeList.isEmpty()) {
@@ -77,6 +79,18 @@ public class SeedScanner {
                 }
             }
         });
+    }
+
+    private static int safeInt(StatusItem s) {
+        if(s.getSequenceId().isEmpty()){
+            return 0;
+        }
+        try {
+            return Integer.parseInt(s.getSequenceId());
+        }catch (NumberFormatException e ){
+            log.warn(e.getMessage(), e);
+            return 0;
+        }
     }
 
     public void setup(StatusValidChange change) {

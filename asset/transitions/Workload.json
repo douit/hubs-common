@@ -8,13 +8,13 @@
     "Cancel Workload"
   ],
   "states": [
-    "WLST_DEFINED",
-    "WLST_CANCELLED",
-    "WLST_COMPLETE",
     "WLST_IN_DESIGN",
+    "WLST_DEFINED",
     "WLST_APPROVED",
+    "WLST_IMPLEMENTED",
     "WLST_TESTED",
-    "WLST_IMPLEMENTED"
+    "WLST_COMPLETE",
+    "WLST_CANCELLED"
   ],
   "transitions": [
     {

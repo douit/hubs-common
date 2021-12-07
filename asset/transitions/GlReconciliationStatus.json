@@ -3,8 +3,8 @@
     "Set Created to Reconciled"
   ],
   "states": [
-    "GLREC_RECONCILED",
-    "GLREC_CREATED"
+    "GLREC_CREATED",
+    "GLREC_RECONCILED"
   ],
   "transitions": [
     {

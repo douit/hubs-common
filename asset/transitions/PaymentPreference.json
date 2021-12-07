@@ -7,14 +7,14 @@
     "Payment Refunded"
   ],
   "states": [
-    "PAYMENT_REFUNDED",
-    "PAYMENT_DECLINED",
-    "PAYMENT_CANCELLED",
-    "PAYMENT_RECEIVED",
     "PAYMENT_NOT_RECEIVED",
-    "PAYMENT_SETTLED",
+    "PAYMENT_NOT_AUTH",
+    "PAYMENT_RECEIVED",
     "PAYMENT_AUTHORIZED",
-    "PAYMENT_NOT_AUTH"
+    "PAYMENT_SETTLED",
+    "PAYMENT_DECLINED",
+    "PAYMENT_REFUNDED",
+    "PAYMENT_CANCELLED"
   ],
   "transitions": [
     {

@@ -6,8 +6,8 @@
     "Approve"
   ],
   "states": [
-    "ALLOC_PLAN_ITEM_APRV",
     "ALLOC_PLAN_ITEM_CRTD",
+    "ALLOC_PLAN_ITEM_APRV",
     "ALLOC_PLAN_ITEM_CMPL",
     "ALLOC_PLAN_ITEM_CNCL"
   ],

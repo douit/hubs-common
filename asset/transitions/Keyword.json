@@ -4,9 +4,9 @@
     "Review Approved"
   ],
   "states": [
-    "KW_DISAPPROVED",
     "KW_APPROVED",
-    "KW_PENDING"
+    "KW_PENDING",
+    "KW_DISAPPROVED"
   ],
   "transitions": [
     {

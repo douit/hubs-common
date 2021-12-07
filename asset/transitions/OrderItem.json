@@ -8,8 +8,8 @@
   "states": [
     "ITEM_CREATED",
     "ITEM_APPROVED",
-    "ITEM_REJECTED",
     "ITEM_COMPLETED",
+    "ITEM_REJECTED",
     "ITEM_CANCELLED"
   ],
   "transitions": [

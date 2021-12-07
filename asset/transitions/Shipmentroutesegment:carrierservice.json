@@ -5,10 +5,10 @@
     "Void"
   ],
   "states": [
-    "SHRSCS_CONFIRMED",
     "SHRSCS_NOT_STARTED",
-    "SHRSCS_VOIDED",
-    "SHRSCS_ACCEPTED"
+    "SHRSCS_CONFIRMED",
+    "SHRSCS_ACCEPTED",
+    "SHRSCS_VOIDED"
   ],
   "transitions": [
     {

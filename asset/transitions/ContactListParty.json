@@ -14,13 +14,13 @@
     "Invalid"
   ],
   "states": [
-    "CLPT_REJECTED",
     "CLPT_PENDING",
-    "CLPT_IN_USE",
-    "CLPT_UNSUBSCRIBED",
-    "CLPT_INVALID",
     "CLPT_ACCEPTED",
-    "CLPT_UNSUBS_PENDING"
+    "CLPT_REJECTED",
+    "CLPT_IN_USE",
+    "CLPT_INVALID",
+    "CLPT_UNSUBS_PENDING",
+    "CLPT_UNSUBSCRIBED"
   ],
   "transitions": [
     {

@@ -8,10 +8,10 @@
     "Shipped Return Completed"
   ],
   "states": [
-    "SUP_RETURN_COMPLETED",
     "SUP_RETURN_REQUESTED",
     "SUP_RETURN_ACCEPTED",
     "SUP_RETURN_SHIPPED",
+    "SUP_RETURN_COMPLETED",
     "SUP_RETURN_CANCELLED"
   ],
   "transitions": [

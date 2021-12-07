@@ -7,9 +7,9 @@
   ],
   "states": [
     "ALLOC_PLAN_CREATED",
+    "ALLOC_PLAN_APPROVED",
     "ALLOC_PLAN_COMPLETED",
-    "ALLOC_PLAN_CANCELLED",
-    "ALLOC_PLAN_APPROVED"
+    "ALLOC_PLAN_CANCELLED"
   ],
   "transitions": [
     {

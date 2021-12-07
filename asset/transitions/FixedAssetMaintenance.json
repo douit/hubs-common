@@ -9,10 +9,10 @@
   ],
   "states": [
     "FAM_CREATED",
-    "FAM_CANCELLED",
+    "FAM_SCHEDULED",
     "FAM_IN_PROCESS",
     "FAM_COMPLETED",
-    "FAM_SCHEDULED"
+    "FAM_CANCELLED"
   ],
   "transitions": [
     {

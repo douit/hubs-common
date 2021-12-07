@@ -5,10 +5,10 @@
     "Order Quote"
   ],
   "states": [
-    "QUO_REJECTED",
     "QUO_CREATED",
     "QUO_APPROVED",
-    "QUO_ORDERED"
+    "QUO_ORDERED",
+    "QUO_REJECTED"
   ],
   "transitions": [
     {

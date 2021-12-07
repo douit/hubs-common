@@ -13,12 +13,12 @@
     "First draft"
   ],
   "states": [
-    "CTNT_FINAL_DRAFT",
-    "CTNT_AVAILABLE",
-    "CTNT_REVISED_DRAFT",
-    "CTNT_INITIAL_DRAFT",
     "CTNT_IN_PROGRESS",
+    "CTNT_INITIAL_DRAFT",
+    "CTNT_REVISED_DRAFT",
+    "CTNT_FINAL_DRAFT",
     "CTNT_PUBLISHED",
+    "CTNT_AVAILABLE",
     "CTNT_DEACTIVATED"
   ],
   "transitions": [

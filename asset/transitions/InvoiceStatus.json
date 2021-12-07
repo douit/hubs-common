@@ -14,14 +14,14 @@
     "Send"
   ],
   "states": [
+    "INVOICE_IN_PROCESS",
+    "INVOICE_APPROVED",
     "INVOICE_SENT",
-    "INVOICE_CANCELLED",
+    "INVOICE_RECEIVED",
     "INVOICE_READY",
     "INVOICE_PAID",
-    "INVOICE_RECEIVED",
     "INVOICE_WRITEOFF",
-    "INVOICE_IN_PROCESS",
-    "INVOICE_APPROVED"
+    "INVOICE_CANCELLED"
   ],
   "transitions": [
     {

@@ -6,8 +6,8 @@
   ],
   "states": [
     "FINACT_TRNS_APPROVED",
-    "FINACT_TRNS_CANCELED",
-    "FINACT_TRNS_CREATED"
+    "FINACT_TRNS_CREATED",
+    "FINACT_TRNS_CANCELED"
   ],
   "transitions": [
     {

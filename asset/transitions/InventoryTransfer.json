@@ -10,11 +10,11 @@
     "In Route Transfer Completed"
   ],
   "states": [
+    "IXF_REQUESTED",
+    "IXF_SCHEDULED",
     "IXF_EN_ROUTE",
     "IXF_COMPLETE",
-    "IXF_CANCELLED",
-    "IXF_REQUESTED",
-    "IXF_SCHEDULED"
+    "IXF_CANCELLED"
   ],
   "transitions": [
     {

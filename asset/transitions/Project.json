@@ -6,10 +6,10 @@
   ],
   "states": [
     "WEPR_PLANNING",
-    "WEPR_ON_HOLD",
-    "WEPR_CANCELLED",
     "WEPR_IN_PROGRESS",
-    "WEPR_COMPLETE"
+    "WEPR_COMPLETE",
+    "WEPR_ON_HOLD",
+    "WEPR_CANCELLED"
   ],
   "transitions": [
     {

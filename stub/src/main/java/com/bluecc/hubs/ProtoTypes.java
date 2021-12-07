@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -238,6 +239,10 @@ public class ProtoTypes {
         return MetaTypes.hasTable(getEntityTypeByMessage(msg));
     }
 
+    public static Set<String> getEntityKeySet(Message msg) {
+        return Arrays.stream(getEntityKeys(msg))
+                .collect(Collectors.toSet());
+    }
     public static String[] getEntityKeys(Message msg) {
         EntityKey keys = msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
         return keys.getKeys().split(", ");

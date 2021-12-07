@@ -6,11 +6,11 @@
     "Arrange Delivery"
   ],
   "states": [
-    "ODS_CANCELLED",
     "ODS_SUBMITTED",
-    "ODS_ARRANGED",
+    "ODS_ACCEPTED",
     "ODS_APPROVED",
-    "ODS_ACCEPTED"
+    "ODS_ARRANGED",
+    "ODS_CANCELLED"
   ],
   "transitions": [
     {

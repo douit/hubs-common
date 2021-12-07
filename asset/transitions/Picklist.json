@@ -6,11 +6,11 @@
     "Assign"
   ],
   "states": [
-    "PICKLIST_CANCELLED",
-    "PICKLIST_PRINTED",
+    "PICKLIST_INPUT",
     "PICKLIST_ASSIGNED",
+    "PICKLIST_PRINTED",
     "PICKLIST_PICKED",
-    "PICKLIST_INPUT"
+    "PICKLIST_CANCELLED"
   ],
   "transitions": [
     {

@@ -4,8 +4,8 @@
     "Completed"
   ],
   "states": [
-    "COM_ROLE_READ",
     "COM_ROLE_CREATED",
+    "COM_ROLE_READ",
     "COM_ROLE_COMPLETED"
   ],
   "transitions": [

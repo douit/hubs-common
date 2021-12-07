@@ -7,10 +7,10 @@
     "Accept Budget"
   ],
   "states": [
-    "BG_REJECTED",
     "BG_CREATED",
+    "BG_REVIEWED",
     "BG_APPROVED",
-    "BG_REVIEWED"
+    "BG_REJECTED"
   ],
   "transitions": [
     {

@@ -11,15 +11,15 @@
     "Resolve"
   ],
   "states": [
+    "COM_PENDING",
+    "COM_ENTERED",
     "COM_IN_PROGRESS",
-    "COM_REFERRED",
+    "COM_UNKNOWN_PARTY",
     "COM_COMPLETE",
     "COM_RESOLVED",
-    "COM_UNKNOWN_PARTY",
-    "COM_PENDING",
-    "COM_CANCELLED",
+    "COM_REFERRED",
     "COM_BOUNCED",
-    "COM_ENTERED"
+    "COM_CANCELLED"
   ],
   "transitions": [
     {

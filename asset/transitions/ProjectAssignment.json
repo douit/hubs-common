@@ -3,8 +3,8 @@
     "Assignment Complete"
   ],
   "states": [
-    "PAS_COMPLETED",
-    "PAS_ASSIGNED"
+    "PAS_ASSIGNED",
+    "PAS_COMPLETED"
   ],
   "transitions": [
     {

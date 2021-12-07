@@ -4,8 +4,8 @@
     "Inactive"
   ],
   "states": [
-    "ROU_INACTIVE",
-    "ROU_ACTIVE"
+    "ROU_ACTIVE",
+    "ROU_INACTIVE"
   ],
   "transitions": [
     {

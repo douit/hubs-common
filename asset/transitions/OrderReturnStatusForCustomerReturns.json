@@ -9,11 +9,11 @@
     "Accepted Return Cancelled"
   ],
   "states": [
-    "RETURN_ACCEPTED",
     "RETURN_REQUESTED",
+    "RETURN_ACCEPTED",
+    "RETURN_RECEIVED",
     "RETURN_COMPLETED",
     "RETURN_MAN_REFUND",
-    "RETURN_RECEIVED",
     "RETURN_CANCELLED"
   ],
   "transitions": [

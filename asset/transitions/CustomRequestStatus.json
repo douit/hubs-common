@@ -12,13 +12,13 @@
   ],
   "states": [
     "CRQ_DRAFT",
-    "CRQ_PENDING",
-    "CRQ_COMPLETED",
-    "CRQ_REOPENED",
     "CRQ_SUBMITTED",
     "CRQ_ACCEPTED",
-    "CRQ_REJECTED",
     "CRQ_REVIEWED",
+    "CRQ_COMPLETED",
+    "CRQ_REOPENED",
+    "CRQ_PENDING",
+    "CRQ_REJECTED",
     "CRQ_CANCELLED"
   ],
   "transitions": [

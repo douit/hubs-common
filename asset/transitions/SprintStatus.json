@@ -6,8 +6,8 @@
     "Project Re-Open with Sprint Open"
   ],
   "states": [
-    "SPRINT_CLOSED",
-    "SPRINT_ACTIVE"
+    "SPRINT_ACTIVE",
+    "SPRINT_CLOSED"
   ],
   "transitions": [
     {

@@ -4,8 +4,8 @@
     "Approve"
   ],
   "states": [
-    "TIMESHEET_COMPLETED",
     "TIMESHEET_IN_PROCESS",
+    "TIMESHEET_COMPLETED",
     "TIMESHEET_APPROVED"
   ],
   "transitions": [

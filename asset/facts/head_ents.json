@@ -19,6 +19,7 @@
     "Shipment": {
       "flatIds": []
     },
+    "InventoryItem": {},
     "ProductStore": {},
     "Party": {
       "flatIds": []
