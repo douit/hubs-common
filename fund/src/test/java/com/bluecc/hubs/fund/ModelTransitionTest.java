@@ -14,5 +14,32 @@ public class ModelTransitionTest {
         System.out.println(statusTransitions
                 .getTransitions()
                 .getEventNames());
+
+        // test repeated events
+        String state="ORDER_COMPLETED";
+        statusTransitions.getTransitions()
+                .getEventSources(state)
+                .forEach(e -> System.out.println(e));
+        assertEquals(2,
+                statusTransitions.getTransitions()
+                .getEventSources(state).size());
+
+        System.out.println("test all states --------");
+        for (String st : statusTransitions.getTransitions().getStates()) {
+            System.out.println(st+": "+statusTransitions.getTransitions()
+                    .getEventSources(st));
+        }
+    }
+
+    @Test
+    public void testStartEvent(){
+        ModelTransition modelTransition=new ModelTransition();
+        ModelTransition.ObjectStatus statusTransitions= modelTransition.getTransitions("Task");
+        assertNotNull(statusTransitions);
+        String firstState=statusTransitions.getTransitions().getStates().get(0);
+        System.out.println(firstState);
+
+        // System.out.println(statusTransitions.getStartEvent());
+        assertEquals("DefaultStart", statusTransitions.getStartEvent());
     }
 }

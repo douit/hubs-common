@@ -72,11 +72,21 @@ public class ModelTransition {
                     .collect(Collectors.toList());
         }
 
+        public Set<String> getEventSources(String state) {
+            Set<String> sources= transitions.stream()
+                    .filter(s -> s.getStatusIdTo().equals(state))
+                    .map(s -> s.getEventName()).collect(Collectors.toSet());
+            if(sources.isEmpty()){
+                sources.add("DefaultStart");
+            }
+            return sources;
+        }
+
         public String getEventSource(String state){
             return transitions.stream().filter(s -> s.getStatusIdTo().equals(state))
                     .map(s -> s.getEventName())
                     .findFirst()
-                    .get();
+                    .orElse("DefaultStart");
         }
 
         public List<String> getStateNames(){

@@ -1,5 +1,6 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.fund.model.IModel;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.Identity;
 import com.bluecc.hubs.stub.ProductStoreData;
@@ -13,11 +14,15 @@ import com.google.protobuf.Descriptors;
 import org.assertj.core.api.Condition;
 import org.junit.Before;
 import org.junit.Test;
+import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 
 import static com.bluecc.hubs.fund.Util.pretty;
@@ -119,6 +124,54 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
     }
 
     @Test
+    public void testCompletionStage() throws ExecutionException, InterruptedException {
+        CompletableFuture<List<IModel<?>>> cf = CompletableFuture.supplyAsync(() -> {
+            Flux<IModel<?>> flux = process(c -> {
+                // Dao dao = c.getHandle().attach(// Dao.class);
+
+                // ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
+                // ProductStore productStore = agent.merge();
+                // merge的对象无法传递
+
+                // pretty(productStore);
+                // System.out.println("-> " + productStore.getProductStorePaymentSetting());
+                ProductStore store = productStores.findOne(c,
+                        Identity.newBuilder()
+                                .setType("ProductStore")
+                                .setValue("9000")
+                                .build(), ProductStore.class);
+                c.getSubscriber().onNext(store);
+                c.getSubscriber().onComplete();
+            });
+            return flux.collectList().block();
+        });
+        // cf.get().index().subscribe(e -> {
+        //     System.out.println(e.getT1()+" -> "+e.getT2().toData());
+        // });
+        List<IModel<?>> rs = cf.get();
+        rs.forEach(e -> System.out.println("-> " + e.toData()));
+        // CompletableFuture<String> cf2 = cf.exceptionally(throwable -> "occurs a error: " + throwable);
+    }
+
+    @Test
+    public void testCompletionStageWithAgent() throws ExecutionException, InterruptedException {
+        CompletableFuture<Flux<IModel<?>>> cf = CompletableFuture.supplyAsync(() ->
+                process(c -> {
+                    ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
+                    // ProductStore productStore = agent.merge(); // DON'T DO THIS
+
+                    c.getSubscriber().onNext(agent.getRecord());
+                    agent.getProductStorePaymentSetting().forEach(e -> {
+                        c.getSubscriber().onNext(e);
+                    });
+                    c.getSubscriber().onComplete();
+                }));
+        cf.get().index().subscribe(e -> {
+            System.out.println(e.getT1() + " -> " + e.getT2().toData());
+        });
+    }
+
+    @Test
     public void testEntityAnnotation() {
         // Dao dao = c.getHandle().attach(Dao.class);
         // ProductStoreData.class;
@@ -129,12 +182,12 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
             Supplier<Descriptors.Descriptor> descriptorSupplier = ProductStoreData::getDescriptor;
             Descriptors.Descriptor descriptor = descriptorSupplier.get();
             // descriptor.getFields().forEach(f -> System.out.println(f.getName()));
-            assertTrue(descriptor.getFields().size()>1);
+            assertTrue(descriptor.getFields().size() > 1);
         }
-        MessageObject messageObject=ProductStore.class.getAnnotation(MessageObject.class);
+        MessageObject messageObject = ProductStore.class.getAnnotation(MessageObject.class);
         try {
             Method method = messageObject.value().getMethod("getDescriptor");
-            Descriptors.Descriptor descriptor= (Descriptors.Descriptor)method.invoke(null);
+            Descriptors.Descriptor descriptor = (Descriptors.Descriptor) method.invoke(null);
             descriptor.getFields().forEach(f -> System.out.println(f.getName()));
         } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             fail(e.getMessage());

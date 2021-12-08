@@ -103,7 +103,7 @@ public class ProductStoreDelegator extends AbstractProcs{
 
         public List<Party> mergeParty(){
             return getParty().stream()
-                    .peek(p -> liveObjectsProvider.get().merge(p))
+                    .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getParty().add(c))
                     .collect(Collectors.toList());
         }

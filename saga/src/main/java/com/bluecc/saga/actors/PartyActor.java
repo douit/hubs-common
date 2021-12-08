@@ -59,6 +59,10 @@ public class PartyActor {
         String status;
     }
 
+    public enum DefaultStart implements Event {
+        INSTANCE
+    }
+
     // transitions
 
     public enum Assigned implements Event {
@@ -106,14 +110,13 @@ public class PartyActor {
 
             private Behavior<Event> leadAssigned(Assigned data) {
                 CompletionStage<Done> futureResult = dataAccessor.update(data);
-                getContext()
-                        .pipeToSelf(
-                                futureResult,
-                                (ok, exc) -> {
-                                    return Result.builder()
-                                            .status("ok")
-                                            .build();
-                                });
+                getContext().pipeToSelf(
+                        futureResult,
+                        (ok, exc) -> {
+                            return Result.builder()
+                                    .status("ok")
+                                    .build();
+                        });
                 // do something ...
                 // return Behaviors.same();
                 return Behaviors.receive(Event.class)

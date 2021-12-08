@@ -11,6 +11,7 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Resources;
 import com.hubspot.jinjava.Jinjava;
+import com.hubspot.jinjava.interpret.FatalTemplateErrorsException;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -18,12 +19,18 @@ import java.util.Map;
 
 public class TemplateUtil {
     public static String build(String templateLoc, Map<String, Object> ctx) throws IOException {
-        Jinjava jinjava = getJinjava();
+        try {
+            Jinjava jinjava = getJinjava();
 
-        String template = Resources.toString(Resources
-                        .getResource(templateLoc),
-                Charsets.UTF_8);
-        return jinjava.render(template, ctx);
+            String template = Resources.toString(Resources
+                            .getResource(templateLoc),
+                    Charsets.UTF_8);
+            return jinjava.render(template, ctx);
+        }catch (FatalTemplateErrorsException e){
+            System.out.println("⚠️  error template: \n"+e.getTemplate());
+            e.getErrors().forEach(t -> System.out.println("🆑 "+t));
+            return "";
+        }
     }
 
     public static Jinjava getJinjava() {

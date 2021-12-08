@@ -9,6 +9,16 @@
         }
     }
 
+    @Data
+    @Builder
+    public static class Result implements Event {
+        String status;
+    }
+
+    public enum DefaultStart implements Event {
+        INSTANCE
+    }
+
     // transitions
     {% for ev in actor.eventNames %}
     public enum {{ev}} implements Event {
