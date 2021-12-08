@@ -13,8 +13,6 @@ import com.bluecc.income.exchange.FlatMessageCollector;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.exchange.ResultSubscriber;
-import com.bluecc.income.model.Product;
-import com.bluecc.income.model.ProductCategory;
 import com.bluecc.income.template.TemplateGlobalContext;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -37,8 +35,6 @@ import java.util.stream.Collectors;
 import static com.bluecc.hubs.ProtoTypes.getTableByMessage;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static java.lang.String.format;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 @Slf4j
 public class AbstractProcs {
@@ -80,7 +76,7 @@ public class AbstractProcs {
     public String getPk(String entityName){
         EntityMeta meta=protoMeta.getEntityMeta(entityName);
         Preconditions.checkNotNull(meta, "Cannot find entity %s", entityName);
-        return meta.getPk();
+        return meta.getPkCol();
     }
 
     public static String getPk(INameSymbol symbol) {

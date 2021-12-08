@@ -1,6 +1,7 @@
 // The {{ent.title}} service definition.
 service {{ent.name}}Service {
     rpc Create({{ent.name}}Data) returns (routines.Response) {}
+    rpc StoreOrUpdate({{ent.name}}FlatData) returns (routines.Response) {}
     rpc Update({{ent.name}}FlatData) returns (routines.Response) {}
     rpc Delete({{ent.name}}FlatData) returns (routines.Response) {}
     rpc Find({{ent.name}}FlatData) returns ({{ent.name}}FlatData) {}

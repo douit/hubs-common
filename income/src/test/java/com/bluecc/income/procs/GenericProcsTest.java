@@ -1,14 +1,17 @@
 package com.bluecc.income.procs;
 
+import com.bluecc.hubs.stub.Identity;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
+import com.bluecc.income.model.OrderHeader;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
+import static com.bluecc.hubs.fund.Util.pretty;
 import static org.junit.Assert.*;
 
 public class GenericProcsTest extends AbstractStoreProcTest {
@@ -45,6 +48,19 @@ public class GenericProcsTest extends AbstractStoreProcTest {
                     .setProductId("GZ-1001")
                     .build());
             assertFalse(rs.isEmpty());
+        });
+    }
+
+    @Test
+    public void testFind() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            OrderHeader rec=genericProcs.findOne(c, Identity.newBuilder()
+                    .setType("OrderHeader")
+                    .setValue("Demo1001")
+                    .build(), OrderHeader.class);
+            pretty(rec);
+            assertNotNull(rec);
         });
     }
 }

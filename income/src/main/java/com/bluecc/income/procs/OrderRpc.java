@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import static com.bluecc.income.procs.GenericProcs.wrap;
 
 public class OrderRpc extends OrderHeaderServiceGrpc.OrderHeaderServiceImplBase {
-    @Inject
-    Orders orders;
+    // @Inject
+    // Orders orders;
     @Inject
     GenericProcs genericProcs;
 

@@ -436,12 +436,12 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
                         }
 
                         // add/set inventory_item to head entity
-                        if(relationsDemand.contains("inventory_item")) {
-                            genericProcs.getRelationValues(c, p1, "inventory_item",
-                                            InventoryItem.class)
-                                    .forEach(el -> pb.addInventoryItem(
-                                            el.toDataBuilder().build()));
-                        }
+                        // if(relationsDemand.contains("inventory_item")) {
+                        //     genericProcs.getRelationValues(c, p1, "inventory_item",
+                        //                     InventoryItem.class)
+                        //             .forEach(el -> pb.addInventoryItem(
+                        //                     el.toDataBuilder().build()));
+                        // }
 
                         // add/set invoice_item to head entity
                         if(relationsDemand.contains("invoice_item")) {

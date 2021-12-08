@@ -294,6 +294,17 @@ public class EntityMeta {
                 .collect(Collectors.toList());
     }
 
+
+    public String getAnnotation(FieldMeta fld){
+        if(getPk().equals(fld.name)){
+            return "@RId ";
+        } else if(fld.pk && !fld.isDateTimeField()){
+            return "@RIndex ";
+        }
+        return "";
+    }
+
+
     @Data
     @Builder
     public static class FieldMeta {
@@ -373,16 +384,6 @@ public class EntityMeta {
 
         public String getSetter(){
             return format("set%s", fixedClassName());
-        }
-
-        public String getAnnotation(){
-            if(name.equals("id")){
-                return "@RId ";
-            }
-            if(pk && !isDateTimeField()){
-                return "@RIndex ";
-            }
-            return "";
         }
 
         public String valuePart(String rawValue){

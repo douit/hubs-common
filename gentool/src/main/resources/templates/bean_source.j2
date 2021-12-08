@@ -26,7 +26,7 @@ public class {{ent.name}} implements IEventModel<{{ent.flatMessageType}}.Builder
     private static final long serialVersionUID = 1L;
 
     {% for f in ent.fields -%}
-    {{f.annotation}}{{f.javaType}} {{f.name}};
+    {{ent.getAnnotation(f)}}{{f.javaType}} {{f.name}};
     {% endfor %}
 
     {{conv_part}}

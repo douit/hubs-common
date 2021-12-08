@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
@@ -25,7 +27,7 @@ import com.bluecc.hubs.stub.ProductStoreData;
 public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productStoreId;
+    @RId String productStoreId;
     String primaryStoreGroupId;
     String storeName;
     String companyName;
@@ -107,9 +109,11 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
-    
 
-        
+    // relations
+    List<Party> party;
+    List<ProductStorePaymentSetting> productStorePaymentSetting;
+
     public Message toData() {
         return toDataBuilder().build();
     }
