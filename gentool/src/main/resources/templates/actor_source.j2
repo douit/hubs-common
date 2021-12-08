@@ -4,12 +4,14 @@ import akka.actor.typed.ActorRef;
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.AbstractBehavior;
 import akka.actor.typed.javadsl.Behaviors;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class {{source.name}}Actor {
     {{source.eventDecl}}
 
     // --------------------
-    interface Conductors {
+    public interface Conductors {
         {% for decl in source.conductorDecls %}
         {{decl}}
         {% endfor %}

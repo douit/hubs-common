@@ -6,6 +6,7 @@
         {% for state in actor.availableStates %}
 
         private Behavior<Event> {{state|colToVar}}({{actor.getEventSource(state)}} data) {
+            log.info("-> {{state|colToVar}} {}/{}", data.getDeclaringClass().getSimpleName(), data);
             {% if actor.hasTransitions(state) -%}
             return Behaviors.receive(Event.class)
                     {%- for trans in actor.getFromTransitions(state) %}
