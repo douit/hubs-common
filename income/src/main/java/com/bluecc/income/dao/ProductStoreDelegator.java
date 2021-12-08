@@ -110,7 +110,7 @@ public class ProductStoreDelegator extends AbstractProcs{
 
         public List<ProductStorePaymentSetting> mergeProductStorePaymentSetting(){
             return getProductStorePaymentSetting().stream()
-                    .peek(p -> liveObjectsProvider.get().merge(p))
+                    .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getProductStorePaymentSetting().add(c))
                     .collect(Collectors.toList());
         }

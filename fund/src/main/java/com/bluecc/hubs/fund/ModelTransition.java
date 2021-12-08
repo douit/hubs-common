@@ -1,7 +1,9 @@
 package com.bluecc.hubs.fund;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import lombok.Builder;
 import lombok.Data;
 
@@ -44,6 +46,14 @@ public class ModelTransition {
         String name;
         String defaultHandler;
         StatusTransitions transitions;
+
+        public String getStartState(){
+            return transitions.getStateNames().get(0);
+        }
+
+        public String getStartEvent(){
+            return transitions.getEventSource(transitions.states.get(0));
+        }
     }
 
     static String toVar(String s){
@@ -62,14 +72,34 @@ public class ModelTransition {
                     .collect(Collectors.toList());
         }
 
+        public String getEventSource(String state){
+            return transitions.stream().filter(s -> s.getStatusIdTo().equals(state))
+                    .map(s -> s.getEventName())
+                    .findFirst()
+                    .get();
+        }
+
         public List<String> getStateNames(){
             return states.stream().map(e -> toVar(e))
                     .collect(Collectors.toList());
         }
 
+        public List<String> getAvailableStates(){
+            Set<String> allStatus= Sets.newHashSet();
+            for (StatusValidChange transition : transitions) {
+                allStatus.add(transition.getStatusId());
+                allStatus.add(transition.getStatusIdTo());
+            }
+            return allStatus.stream().sorted().collect(Collectors.toList());
+        }
+
         public List<StatusValidChange> getFromTransitions(String state){
             return transitions.stream().filter(f -> f.statusId.equals(state))
                     .collect(Collectors.toList());
+        }
+
+        public boolean hasTransitions(String state){
+            return !getFromTransitions(state).isEmpty();
         }
 
         public static StatusTransitions createBy(List<StatusValidChange> transitions,

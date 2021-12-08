@@ -1,10 +1,13 @@
 package com.bluecc.income.model;
 
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 import lombok.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.protobuf.Message;
@@ -24,6 +27,8 @@ import com.bluecc.hubs.stub.ProductStoreData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = ProductStoreData.class,
+        symbol = EntityNames.ProductStore)
 public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -111,8 +116,8 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
     java.time.LocalDateTime createdTxStamp;
 
     // relations
-    List<Party> party;
-    List<ProductStorePaymentSetting> productStorePaymentSetting;
+    List<Party> party= new ArrayList<>();
+    List<ProductStorePaymentSetting> productStorePaymentSetting= new ArrayList<>();
 
     public Message toData() {
         return toDataBuilder().build();

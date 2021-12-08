@@ -1,22 +1,28 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.Identity;
+import com.bluecc.hubs.stub.ProductStoreData;
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.model.ProductStore;
 import com.bluecc.income.model.ProductStorePaymentSetting;
 import com.github.javafaker.Faker;
 import com.google.common.collect.Sets;
+import com.google.protobuf.Descriptors;
 import org.assertj.core.api.Condition;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 import static com.bluecc.hubs.fund.Util.pretty;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
     @Inject
@@ -78,7 +84,7 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
     public void testAgent() {
         process(c -> {
             // Dao dao = c.getHandle().attach(// Dao.class);
-            ProductStoreDelegator.Agent agent=productStores.getAgent(c, "9000");
+            ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
             agent.getProductStorePaymentSetting().forEach(e -> pretty(e));
 
             Condition<ProductStorePaymentSetting> giftCard = new Condition<>(
@@ -95,9 +101,43 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
     public void testLiveObject() {
         process(c -> {
             // Dao dao = c.getHandle().attach(// Dao.class);
-            ProductStoreDelegator.Agent agent=productStores.getAgent(c, "9000");
-            ProductStore productStore=agent.merge();
+            ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
+            ProductStore productStore = agent.merge();
             pretty(productStore);
+            System.out.println("-> " + productStore.getProductStorePaymentSetting());
+
+            // agent.mergeProductStorePaymentSetting()
+            //         .forEach(e -> pretty(e));
+
+            ProductStorePaymentSetting po = agent.getProductStorePaymentSetting().get(0);
+            System.out.println("id: " + po.getId());
+            productStores.liveObjectsProvider.get().merge(po);
+
+            agent.mergeProductStorePaymentSetting();
         });
+
+    }
+
+    @Test
+    public void testEntityAnnotation() {
+        // Dao dao = c.getHandle().attach(Dao.class);
+        // ProductStoreData.class;
+        // Descriptors.Descriptor
+        // ProductStoreData.getDefaultInstance();
+        // ProductStoreData.getDescriptor()
+        {
+            Supplier<Descriptors.Descriptor> descriptorSupplier = ProductStoreData::getDescriptor;
+            Descriptors.Descriptor descriptor = descriptorSupplier.get();
+            // descriptor.getFields().forEach(f -> System.out.println(f.getName()));
+            assertTrue(descriptor.getFields().size()>1);
+        }
+        MessageObject messageObject=ProductStore.class.getAnnotation(MessageObject.class);
+        try {
+            Method method = messageObject.value().getMethod("getDescriptor");
+            Descriptors.Descriptor descriptor= (Descriptors.Descriptor)method.invoke(null);
+            descriptor.getFields().forEach(f -> System.out.println(f.getName()));
+        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            fail(e.getMessage());
+        }
     }
 }

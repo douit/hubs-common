@@ -1,0 +1,17 @@
+package com.bluecc.saga.actors;
+
+import akka.actor.typed.ActorRef;
+import akka.actor.typed.Behavior;
+import akka.actor.typed.javadsl.AbstractBehavior;
+import akka.actor.typed.javadsl.Behaviors;
+
+public class {{source.name}}Actor {
+    {{source.eventDecl}}
+
+    // --------------------
+    interface Conductors {
+        {% for decl in source.conductorDecls %}
+        {{decl}}
+        {% endfor %}
+    }
+}

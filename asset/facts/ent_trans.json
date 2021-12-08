@@ -1,0 +1,12 @@
+{
+  "entities": {
+    "OrderHeader": {
+      "field": "statusId",
+      "transitions": "Order"
+    },
+    "OrderItem": {
+      "field": "statusId",
+      "transitions": "OrderItem"
+    }
+  }
+}

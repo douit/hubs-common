@@ -41,8 +41,10 @@ public class StatusTool {
 
         String cnt=TemplateUtil.build("templates/actor_event_source.j2", ctx);
         System.out.println(cnt);
-        System.out.println("--------------------");
+        System.out.println("// --------------------");
+        System.out.println("interface Conductors {");
         cnt=TemplateUtil.build("templates/actor_transitions_source.j2", ctx);
         System.out.println(cnt);
+        System.out.println("}");
     }
 }
