@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ProductConfigItemData;
 public class ProductConfigItem implements IEventModel<ProductConfigItemData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String configItemId;
+    @RId String configItemId;
     String configItemTypeId;
     String configItemName;
     String description;

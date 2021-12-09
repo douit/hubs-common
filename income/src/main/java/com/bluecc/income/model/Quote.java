@@ -12,6 +12,8 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.stub.QuoteFlatData;
+
 import com.bluecc.hubs.stub.QuoteData;
 
 
@@ -20,10 +22,10 @@ import com.bluecc.hubs.stub.QuoteData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
-public class Quote implements IEventModel<QuoteData.Builder>, Serializable {
+public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String quoteId;
+    @RId String quoteId;
     String quoteTypeId;
     String partyId;
     java.time.LocalDateTime issueDate;
@@ -46,8 +48,8 @@ public class Quote implements IEventModel<QuoteData.Builder>, Serializable {
         return toDataBuilder().build();
     }
 
-    public QuoteData.Builder toDataBuilder() {
-        QuoteData.Builder builder = QuoteData.newBuilder();
+    public QuoteFlatData.Builder toDataBuilder() {
+        QuoteFlatData.Builder builder = QuoteFlatData.newBuilder();
         if (quoteId != null) {
             builder.setQuoteId(quoteId);
         }
@@ -94,7 +96,7 @@ public class Quote implements IEventModel<QuoteData.Builder>, Serializable {
         return builder;
     }
 
-    public static Quote fromData(QuoteData data) {
+    public static Quote fromData(QuoteFlatData data) {
         return Quote.builder()
                 .quoteId(data.getQuoteId())
                 .quoteTypeId(data.getQuoteTypeId())
@@ -114,5 +116,47 @@ public class Quote implements IEventModel<QuoteData.Builder>, Serializable {
                 .build();
     }
 
-    
+        
+    public QuoteData.Builder toHeadBuilder() {
+        QuoteData.Builder builder = QuoteData.newBuilder();
+        if (quoteId != null) {
+            builder.setQuoteId(quoteId);
+        }
+        if (quoteTypeId != null) {
+            builder.setQuoteTypeId(quoteTypeId);
+        }
+        if (issueDate != null) {
+            builder.setIssueDate(getTimestamp(issueDate));
+        }
+        if (statusId != null) {
+            builder.setStatusId(statusId);
+        }
+        if (currencyUomId != null) {
+            builder.setCurrencyUomId(currencyUomId);
+        }
+        if (salesChannelEnumId != null) {
+            builder.setSalesChannelEnumId(salesChannelEnumId);
+        }
+        if (validFromDate != null) {
+            builder.setValidFromDate(getTimestamp(validFromDate));
+        }
+        if (validThruDate != null) {
+            builder.setValidThruDate(getTimestamp(validThruDate));
+        }
+        if (quoteName != null) {
+            builder.setQuoteName(quoteName);
+        }
+        if (description != null) {
+            builder.setDescription(description);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+                    
+        return builder;
+    }
+
 }

@@ -120,7 +120,7 @@ public class OrderHeaderDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "acquire_fixed_asset",
                                             FixedAsset.class)
                                     .forEach(el -> pb.addAcquireFixedAsset(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set item_issuance to head entity                        

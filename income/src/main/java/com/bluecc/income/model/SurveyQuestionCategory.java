@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.SurveyQuestionCategoryData;
 public class SurveyQuestionCategory implements IEventModel<SurveyQuestionCategoryData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String surveyQuestionCategoryId;
+    @RId String surveyQuestionCategoryId;
     String parentCategoryId;
     String description;
     java.time.LocalDateTime lastUpdatedStamp;

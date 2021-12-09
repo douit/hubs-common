@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.PartyIdentificationTypeData;
 public class PartyIdentificationType implements IEventModel<PartyIdentificationTypeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String partyIdentificationTypeId;
+    @RId String partyIdentificationTypeId;
     String parentTypeId;
     Character hasTable;
     String description;

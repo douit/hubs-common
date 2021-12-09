@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ShipmentBoxTypeData;
 public class ShipmentBoxType implements IEventModel<ShipmentBoxTypeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String shipmentBoxTypeId;
+    @RId String shipmentBoxTypeId;
     String description;
     String dimensionUomId;
     java.math.BigDecimal boxLength;

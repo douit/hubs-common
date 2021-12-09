@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.ProdCatalogData;
 public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String prodCatalogId;
+    @RId String prodCatalogId;
     String catalogName;
     Character useQuickAdd;
     String styleSheet;

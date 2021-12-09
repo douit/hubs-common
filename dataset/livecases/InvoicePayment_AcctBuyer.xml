@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+
+    <!-- Invoice Payment Demo Data -->
+    <Party partyId="AcctBuyer" partyTypeId="PERSON"/>
+    <Person partyId="AcctBuyer" firstName="Acct" lastName="Buyer"/>
+    <PartyRole partyId="AcctBuyer" roleTypeId="BUYER"/>
+    <UserLogin partyId="AcctBuyer" userLoginId="AcctBuyer"/>
+    <SecurityGroup groupId="ORDERPURCH"/><!-- is needed because accounting is before order -->
+    <UserLoginSecurityGroup userLoginId="AcctBuyer" groupId="ORDERPURCH" fromDate="2001-05-13 00:00:00"/>
+
+    <Party partyId="AcctBigSupplier" partyTypeId="PARTY_GROUP"/>
+    <PartyGroup partyId="AcctBigSupplier" groupName="Acct Big Supplier"/>
+    <PartyRole partyId="AcctBigSupplier" roleTypeId="SUPPLIER"/>
+
+    <Payment paymentId="demo10000" paymentTypeId="CUSTOMER_PAYMENT" paymentMethodTypeId="EFT_ACCOUNT" partyIdFrom="AcctBuyer" partyIdTo="Company" statusId="PMNT_NOT_PAID" effectiveDate="2006-04-25 12:56:54.292" amount="190.97" currencyUomId="USD"/>
+    <Payment paymentId="demo10010" paymentTypeId="CUSTOMER_REFUND" paymentMethodTypeId="EXT_BILLACT" partyIdFrom="Company" partyIdTo="AcctBuyer" statusId="PMNT_SENT" effectiveDate="2006-04-25 13:11:05.94" amount="20.0" currencyUomId="USD" />
+
+    <Invoice invoiceId="demo10000" invoiceTypeId="SALES_INVOICE" partyIdFrom="Company" partyId="AcctBuyer" statusId="INVOICE_IN_PROCESS" invoiceDate="2006-04-25 12:46:27.122" dueDate="2006-05-25 12:46:27.122" description="This is the first invoice number to AcctBuyer" currencyUomId="USD"/>
+    <InvoiceItem invoiceId="demo10000" invoiceItemSeqId="00001" invoiceItemTypeId="INV_SPROD_ITEM" uomId="USD" taxableFlag="Y" amount="20.0" description="this was e service for a product"/>
+    <InvoiceItem invoiceId="demo10000" invoiceItemSeqId="00002" invoiceItemTypeId="INV_PROD_ITEM" uomId="USD" taxableFlag="Y" amount="269.99" description="Big Gizmo w/ Legs"/>
+    <InvoiceItem invoiceId="demo10000" invoiceItemSeqId="00003" invoiceItemTypeId="INV_SALES_TAX" uomId="USD" taxableFlag="Y" amount="33.55" description="sales tax"/>
+    <Invoice invoiceId="demo10001" invoiceTypeId="PURCHASE_INVOICE" partyIdFrom="AcctBigSupplier" partyId="Company" statusId="INVOICE_IN_PROCESS" invoiceDate="2006-04-25 12:50:50.655" dueDate="2006-05-25 12:50:50.655" description="Another invoice" currencyUomId="USD"/>
+    <InvoiceItem invoiceId="demo10001" invoiceItemSeqId="00001" invoiceItemTypeId="PINV_WE_ITEM" uomId="USD" taxableFlag="Y" amount="33.99" description="Service received"/>
+    <InvoiceItem invoiceId="demo10001" invoiceItemSeqId="00002" invoiceItemTypeId="PINV_SURCHARGE_ADJ" uomId="USD" taxableFlag="Y" amount="2.44" description="Service received"/>
+    <Invoice invoiceId="demo10002" invoiceTypeId="SALES_INVOICE" partyIdFrom="Company" partyId="AcctBuyer" statusId="INVOICE_SENT" invoiceDate="2006-04-25 12:54:07.011" dueDate="2006-05-25 12:54:07.011" description="Another sales invoice" currencyUomId="USD"/>
+    <InvoiceItem invoiceId="demo10002" invoiceItemSeqId="00001" invoiceItemTypeId="INV_DPROD_ITEM" uomId="USD" taxableFlag="Y" amount="1.0" description="Add more money to your card!" />
+    <InvoiceItem invoiceId="demo10002" invoiceItemSeqId="00002" invoiceItemTypeId="INV_DPROD_ITEM" uomId="USD" taxableFlag="Y" amount="55.99" description="A digital gizmo: can be downloaded immediately after purchase."/>
+    <InvoiceStatus statusId="INVOICE_IN_PROCESS" invoiceId="demo10000" statusDate="2006-04-25 12:46:27.122"/>
+    <InvoiceStatus statusId="INVOICE_IN_PROCESS" invoiceId="demo10001" statusDate="2006-04-25 12:50:50.655"/>
+    <InvoiceStatus statusId="INVOICE_IN_PROCESS" invoiceId="demo10002" statusDate="2006-04-25 12:54:07.011"/>
+    <InvoiceStatus statusId="INVOICE_SENT" invoiceId="demo10002" statusDate="2006-04-25 12:55:44.228"/>
+
+    <Party partyId="EuroCustomer"/><!-- more data added in party component -->
+    <Invoice invoiceId="demo11000" invoiceTypeId="SALES_INVOICE" partyIdFrom="Company" partyId="EuroCustomer" statusId="INVOICE_APPROVED" invoiceDate="2006-04-25 12:46:27.122" dueDate="2006-05-25 12:46:27.122" description="This is the first invoice number to Eurocustomer with currency in euro" currencyUomId="EUR"/>
+    <InvoiceItem invoiceId="demo11000" invoiceItemSeqId="00001" invoiceItemTypeId="INV_SPROD_ITEM" uomId="USD" taxableFlag="Y" amount="20.0" description="this was e service for a product"/>
+    <InvoiceStatus statusId="INVOICE_IN_PROCESS" invoiceId="demo11000" statusDate="2006-04-25 12:46:27.122"/>
+    <InvoiceStatus statusId="INVOICE_APPROVED" invoiceId="demo11000" statusDate="2006-04-25 12:46:27.122"/>
+    <Invoice invoiceId="demo11001" invoiceTypeId="SALES_INVOICE" partyIdFrom="Company" partyId="EuroCustomer" statusId="INVOICE_APPROVED" invoiceDate="2006-04-25 12:46:27.122" dueDate="2006-05-25 12:46:27.122" description="This is the first invoice number to Eurocustomer with currency in euro" currencyUomId="EUR"/>
+    <InvoiceItem invoiceId="demo11001" invoiceItemSeqId="00001" invoiceItemTypeId="INV_SPROD_ITEM" uomId="USD" taxableFlag="Y" amount="543.23" description="this was e service for a product"/>
+    <InvoiceStatus statusId="INVOICE_IN_PROCESS" invoiceId="demo11001" statusDate="2006-04-25 12:46:27.122"/>
+    <InvoiceStatus statusId="INVOICE_APPROVED" invoiceId="demo11001" statusDate="2006-04-25 12:46:27.122"/>
+    <Payment paymentId="demo10001" paymentTypeId="CUSTOMER_PAYMENT" paymentMethodTypeId="EFT_ACCOUNT" partyIdFrom="EuroCustomer" partyIdTo="Company" statusId="PMNT_RECEIVED" effectiveDate="2006-04-25 12:56:54.292" amount="820.97" currencyUomId="USD" actualCurrencyAmount="543.23" actualCurrencyUomId="EUR"/>
+    <PaymentApplication paymentApplicationId="demo11000" paymentId="demo10001" invoiceId="demo11001" amountApplied="543.23"/>
+
+</entity-engine-xml>

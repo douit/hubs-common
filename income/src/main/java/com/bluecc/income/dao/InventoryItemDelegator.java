@@ -128,7 +128,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "fixed_asset_fixed_asset",
                                             FixedAsset.class)
                                     .forEach(el -> pb.setFixedAssetFixedAsset(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set acctg_trans to head entity                        

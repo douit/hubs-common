@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.OrderAdjustmentData;
 public class OrderAdjustment implements IEventModel<OrderAdjustmentData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String orderAdjustmentId;
+    @RId String orderAdjustmentId;
     String orderAdjustmentTypeId;
     String orderId;
     String orderItemSeqId;

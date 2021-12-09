@@ -1,15 +1,15 @@
-package com.bluecc.saga.actors;
+package com.bluecc.saga.meshes;
 
 import akka.actor.typed.ActorRef;
 import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.AbstractBehavior;
 import akka.actor.typed.javadsl.Behaviors;
+import com.bluecc.saga.common.ConsolePrinter;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class OrderActor {
+public class OrderMesh {
         public interface Event {}
 
     // general events

@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.AgreementData;
 public class Agreement implements IEventModel<AgreementData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String agreementId;
+    @RId String agreementId;
     String productId;
     String partyIdFrom;
     String partyIdTo;

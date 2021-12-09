@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ProductReviewData;
 public class ProductReview implements IEventModel<ProductReviewData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productReviewId;
+    @RId String productReviewId;
     String productStoreId;
     String productId;
     String userLoginId;

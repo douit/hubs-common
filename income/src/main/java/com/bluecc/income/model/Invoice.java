@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.InvoiceData;
 public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String invoiceId;
+    @RId String invoiceId;
     String invoiceTypeId;
     String partyIdFrom;
     String partyId;

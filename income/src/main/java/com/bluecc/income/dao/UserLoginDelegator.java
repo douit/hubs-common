@@ -50,6 +50,10 @@ public class UserLoginDelegator extends AbstractProcs{
          
     public static final String LAST_MODIFIED_BY_DATA_RESOURCE="last_modified_by_data_resource";
          
+    public static final String FIN_ACCOUNT_STATUS="fin_account_status";
+         
+    public static final String CHANGE_BY_INVOICE_STATUS="change_by_invoice_status";
+         
     public static final String ISSUED_BY_ITEM_ISSUANCE="issued_by_item_issuance";
          
     public static final String ORDER_ADJUSTMENT="order_adjustment";
@@ -180,6 +184,22 @@ public class UserLoginDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "last_modified_by_data_resource",
                                             DataResource.class)
                                     .forEach(el -> pb.addLastModifiedByDataResource(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set fin_account_status to head entity                        
+                        if(relationsDemand.contains("fin_account_status")) {
+                            getRelationValues(ctx, p1, "fin_account_status",
+                                            FinAccountStatus.class)
+                                    .forEach(el -> pb.addFinAccountStatus(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set change_by_invoice_status to head entity                        
+                        if(relationsDemand.contains("change_by_invoice_status")) {
+                            getRelationValues(ctx, p1, "change_by_invoice_status",
+                                            InvoiceStatus.class)
+                                    .forEach(el -> pb.addChangeByInvoiceStatus(
                                              el.toDataBuilder().build()));
                         }
                                                

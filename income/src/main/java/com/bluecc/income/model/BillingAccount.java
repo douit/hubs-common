@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.BillingAccountData;
 public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String billingAccountId;
+    @RId String billingAccountId;
     java.math.BigDecimal accountLimit;
     String accountCurrencyUomId;
     String contactMechId;

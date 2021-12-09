@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.CreditCardData;
 public class CreditCard implements IEventModel<CreditCardData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String paymentMethodId;
+    @RId String paymentMethodId;
     String cardType;
     String cardNumber;
     String validFromDate;

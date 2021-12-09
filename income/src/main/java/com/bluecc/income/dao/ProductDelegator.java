@@ -174,7 +174,7 @@ public class ProductDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "instance_of_fixed_asset",
                                             FixedAsset.class)
                                     .forEach(el -> pb.addInstanceOfFixedAsset(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set fixed_asset_product to head entity                        

@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.PaymentData;
 public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String paymentId;
+    @RId String paymentId;
     String paymentTypeId;
     String paymentMethodTypeId;
     String paymentMethodId;

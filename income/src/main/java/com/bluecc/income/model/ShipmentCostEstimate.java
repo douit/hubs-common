@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ShipmentCostEstimateData;
 public class ShipmentCostEstimate implements IEventModel<ShipmentCostEstimateData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String shipmentCostEstimateId;
+    @RId String shipmentCostEstimateId;
     String shipmentMethodTypeId;
     String carrierPartyId;
     String carrierRoleTypeId;

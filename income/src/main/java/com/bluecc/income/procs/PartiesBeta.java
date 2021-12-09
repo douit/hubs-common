@@ -36,7 +36,7 @@ import static com.bluecc.income.exchange.MessageMapCollector.collect;
  * $ just i procs.Parties create --last-name wu --first-name samlet --timestamp 2019-10-03T10:58:00
  * $ just i procs.Parties find --last-name wu --first-name samlet
  */
-public class Parties extends AbstractProcs {
+public class PartiesBeta extends AbstractProcs {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -66,7 +66,7 @@ public class Parties extends AbstractProcs {
                 .addObject(opts)
                 .build()
                 .parse(args);
-        Parties parties = startup(Parties.class);
+        PartiesBeta parties = startup(PartiesBeta.class);
         for (String command : opts.commands) {
             switch (command) {
                 case "sample":

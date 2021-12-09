@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ContentData;
 public class Content implements IEventModel<ContentData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String contentId;
+    @RId String contentId;
     String contentTypeId;
     String ownerContentId;
     String decoratorContentId;

@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.CustRequestTypeData;
 public class CustRequestType implements IEventModel<CustRequestTypeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String custRequestTypeId;
+    @RId String custRequestTypeId;
     String parentTypeId;
     Character hasTable;
     String description;

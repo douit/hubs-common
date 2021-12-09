@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.WorkEffortData;
 public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String workEffortId;
+    @RId String workEffortId;
     String workEffortTypeId;
     String currentStatusId;
     java.time.LocalDateTime lastStatusUpdate;

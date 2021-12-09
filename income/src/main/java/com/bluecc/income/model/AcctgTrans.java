@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.AcctgTransData;
 public class AcctgTrans implements IEventModel<AcctgTransData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String acctgTransId;
+    @RId String acctgTransId;
     String acctgTransTypeId;
     String description;
     java.time.LocalDateTime transactionDate;

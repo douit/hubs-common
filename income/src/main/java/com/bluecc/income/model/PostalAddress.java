@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.PostalAddressData;
 public class PostalAddress implements IEventModel<PostalAddressData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String contactMechId;
+    @RId String contactMechId;
     String toName;
     String attnName;
     String address1;

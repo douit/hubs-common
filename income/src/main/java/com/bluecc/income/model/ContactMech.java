@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ContactMechData;
 public class ContactMech implements IEventModel<ContactMechData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String contactMechId;
+    @RId String contactMechId;
     String contactMechTypeId;
     String infoString;
     java.time.LocalDateTime lastUpdatedStamp;

@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.GeoPointData;
 public class GeoPoint implements IEventModel<GeoPointData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String geoPointId;
+    @RId String geoPointId;
     String geoPointTypeEnumId;
     String description;
     String dataSourceId;

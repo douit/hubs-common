@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ElectronicTextData;
 public class ElectronicText implements IEventModel<ElectronicTextData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String dataResourceId;
+    @RId String dataResourceId;
     String textData;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;

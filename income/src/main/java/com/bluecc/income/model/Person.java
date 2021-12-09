@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.PersonData;
 public class Person implements IEventModel<PersonFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String partyId;
+    @RId String partyId;
     String salutation;
     String firstName;
     String middleName;

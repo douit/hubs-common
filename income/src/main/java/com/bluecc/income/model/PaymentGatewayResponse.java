@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.PaymentGatewayResponseData;
 public class PaymentGatewayResponse implements IEventModel<PaymentGatewayResponseData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String paymentGatewayResponseId;
+    @RId String paymentGatewayResponseId;
     String paymentServiceTypeEnumId;
     String orderPaymentPreferenceId;
     String paymentMethodTypeId;

@@ -118,7 +118,7 @@ public class SqlGenTool {
             entityList.removeAll(ignoreEnts);
         }
         String info=String.format("-- total entities %d, from seed dirs: %s\n",
-                entityList.size(), Arrays.asList("order", "ecommerce"));
+                entityList.size(), Arrays.asList(DATASET_DIR));
         System.out.println(info);
         writer.write(info);
         writer.close();

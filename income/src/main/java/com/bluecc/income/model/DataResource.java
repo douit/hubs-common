@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.DataResourceData;
 public class DataResource implements IEventModel<DataResourceData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String dataResourceId;
+    @RId String dataResourceId;
     String dataResourceTypeId;
     String dataTemplateTypeId;
     String dataCategoryId;

@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.PaymentApplicationData;
 public class PaymentApplication implements IEventModel<PaymentApplicationData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String paymentApplicationId;
+    @RId String paymentApplicationId;
     String paymentId;
     String invoiceId;
     String invoiceItemSeqId;

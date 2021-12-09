@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.PartyGroupData;
 public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String partyId;
+    @RId String partyId;
     String groupName;
     String groupNameLocal;
     String officeSiteName;

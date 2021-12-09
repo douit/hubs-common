@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.EmailTemplateSettingData;
 public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String emailTemplateSettingId;
+    @RId String emailTemplateSettingId;
     String emailType;
     String description;
     String bodyScreenLocation;

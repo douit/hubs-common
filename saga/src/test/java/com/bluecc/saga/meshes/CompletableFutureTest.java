@@ -1,4 +1,4 @@
-package com.bluecc.saga.actors;
+package com.bluecc.saga.meshes;
 
 import org.junit.Test;
 

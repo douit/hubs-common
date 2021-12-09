@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.OrderStatusData;
 public class OrderStatus implements IEventModel<OrderStatusData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String orderStatusId;
+    @RId String orderStatusId;
     String statusId;
     String orderId;
     String orderItemSeqId;

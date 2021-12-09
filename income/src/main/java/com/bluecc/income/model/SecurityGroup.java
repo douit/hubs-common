@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.SecurityGroupData;
 public class SecurityGroup implements IEventModel<SecurityGroupData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String groupId;
+    @RId String groupId;
     String groupName;
     String description;
     java.time.LocalDateTime lastUpdatedStamp;

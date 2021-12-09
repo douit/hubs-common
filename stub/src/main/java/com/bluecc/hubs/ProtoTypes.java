@@ -170,6 +170,10 @@ public class ProtoTypes {
         return ProtoTypes.getTimestamp(dt.toInstant(offsetLocal));
     }
 
+    public static Timestamp nowTimestamp(){
+        return getTimestamp(LocalDateTime.now());
+    }
+
     public static Timestamp getTimestamp(String dtStr) {
         if (dtStr == null || dtStr.isEmpty()) {
             return null;

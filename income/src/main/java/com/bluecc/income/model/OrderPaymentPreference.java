@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.OrderPaymentPreferenceData;
 public class OrderPaymentPreference implements IEventModel<OrderPaymentPreferenceData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String orderPaymentPreferenceId;
+    @RId String orderPaymentPreferenceId;
     String orderId;
     String orderItemSeqId;
     String shipGroupSeqId;

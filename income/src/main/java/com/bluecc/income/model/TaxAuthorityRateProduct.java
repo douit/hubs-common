@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.TaxAuthorityRateProductData;
 public class TaxAuthorityRateProduct implements IEventModel<TaxAuthorityRateProductData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String taxAuthorityRateSeqId;
+    @RId String taxAuthorityRateSeqId;
     String taxAuthGeoId;
     String taxAuthPartyId;
     String taxAuthorityRateTypeId;

@@ -28,7 +28,7 @@ public class StatusTool {
         @Parameter(names = {"--status", "-t"})
         String status="Order";
         @Parameter(names = {"--target-dir", "-d"})
-        String targetDir="saga/src/main/java/com/bluecc/saga/actors"; // default
+        String targetDir="saga/src/main/java/com/bluecc/saga/meshes"; // default
         @Parameter(names = {"--write", "-w"})
         boolean write=false;
         @Parameter(names = {"--force", "-f"})
@@ -69,7 +69,7 @@ public class StatusTool {
                                 .eventDecl(eventDecl)
                                 .conductorDecl(conductorDecl)
                         .build()));
-        File targetFile= Paths.get(opts.targetDir, opts.getStatus()+"Actor.java").toFile();
+        File targetFile= Paths.get(opts.targetDir, opts.getStatus()+"Mesh.java").toFile();
         if(targetFile.exists() && !opts.force){
             System.out.format("target file %s exists, ignore it.\n", targetFile);
             return false;

@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.SurveyQuestionData;
 public class SurveyQuestion implements IEventModel<SurveyQuestionData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String surveyQuestionId;
+    @RId String surveyQuestionId;
     String surveyQuestionCategoryId;
     String surveyQuestionTypeId;
     String description;

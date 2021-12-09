@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ShipmentReceiptData;
 public class ShipmentReceipt implements IEventModel<ShipmentReceiptData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String receiptId;
+    @RId String receiptId;
     String inventoryItemId;
     String productId;
     String shipmentId;

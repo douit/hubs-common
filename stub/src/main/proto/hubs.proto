@@ -16,6 +16,7 @@ import "routines.proto";
 // The Order Header service definition.
 service OrderHeaderService {
     rpc Create(OrderHeaderData) returns (routines.Response) {}
+    rpc StoreOrUpdate(OrderHeaderFlatData) returns (routines.Response) {}
     rpc Update(OrderHeaderFlatData) returns (routines.Response) {}
     rpc Delete(OrderHeaderFlatData) returns (routines.Response) {}
     rpc Find(OrderHeaderFlatData) returns (OrderHeaderFlatData) {}
@@ -26,6 +27,7 @@ service OrderHeaderService {
 // The Order Item service definition.
 service OrderItemService {
     rpc Create(OrderItemData) returns (routines.Response) {}
+    rpc StoreOrUpdate(OrderItemFlatData) returns (routines.Response) {}
     rpc Update(OrderItemFlatData) returns (routines.Response) {}
     rpc Delete(OrderItemFlatData) returns (routines.Response) {}
     rpc Find(OrderItemFlatData) returns (OrderItemFlatData) {}
@@ -36,6 +38,7 @@ service OrderItemService {
 // The Payment service definition.
 service PaymentService {
     rpc Create(PaymentData) returns (routines.Response) {}
+    rpc StoreOrUpdate(PaymentFlatData) returns (routines.Response) {}
     rpc Update(PaymentFlatData) returns (routines.Response) {}
     rpc Delete(PaymentFlatData) returns (routines.Response) {}
     rpc Find(PaymentFlatData) returns (PaymentFlatData) {}
@@ -46,6 +49,7 @@ service PaymentService {
 // The Invoice service definition.
 service InvoiceService {
     rpc Create(InvoiceData) returns (routines.Response) {}
+    rpc StoreOrUpdate(InvoiceFlatData) returns (routines.Response) {}
     rpc Update(InvoiceFlatData) returns (routines.Response) {}
     rpc Delete(InvoiceFlatData) returns (routines.Response) {}
     rpc Find(InvoiceFlatData) returns (InvoiceFlatData) {}
@@ -56,6 +60,7 @@ service InvoiceService {
 // The Invoice Item service definition.
 service InvoiceItemService {
     rpc Create(InvoiceItemData) returns (routines.Response) {}
+    rpc StoreOrUpdate(InvoiceItemFlatData) returns (routines.Response) {}
     rpc Update(InvoiceItemFlatData) returns (routines.Response) {}
     rpc Delete(InvoiceItemFlatData) returns (routines.Response) {}
     rpc Find(InvoiceItemFlatData) returns (InvoiceItemFlatData) {}
@@ -66,6 +71,7 @@ service InvoiceItemService {
 // The Product service definition.
 service ProductService {
     rpc Create(ProductData) returns (routines.Response) {}
+    rpc StoreOrUpdate(ProductFlatData) returns (routines.Response) {}
     rpc Update(ProductFlatData) returns (routines.Response) {}
     rpc Delete(ProductFlatData) returns (routines.Response) {}
     rpc Find(ProductFlatData) returns (ProductFlatData) {}
@@ -76,6 +82,7 @@ service ProductService {
 // The Shipment service definition.
 service ShipmentService {
     rpc Create(ShipmentData) returns (routines.Response) {}
+    rpc StoreOrUpdate(ShipmentFlatData) returns (routines.Response) {}
     rpc Update(ShipmentFlatData) returns (routines.Response) {}
     rpc Delete(ShipmentFlatData) returns (routines.Response) {}
     rpc Find(ShipmentFlatData) returns (ShipmentFlatData) {}
@@ -86,6 +93,7 @@ service ShipmentService {
 // The Inventory Item service definition.
 service InventoryItemService {
     rpc Create(InventoryItemData) returns (routines.Response) {}
+    rpc StoreOrUpdate(InventoryItemFlatData) returns (routines.Response) {}
     rpc Update(InventoryItemFlatData) returns (routines.Response) {}
     rpc Delete(InventoryItemFlatData) returns (routines.Response) {}
     rpc Find(InventoryItemFlatData) returns (InventoryItemFlatData) {}
@@ -96,6 +104,7 @@ service InventoryItemService {
 // The Product Store service definition.
 service ProductStoreService {
     rpc Create(ProductStoreData) returns (routines.Response) {}
+    rpc StoreOrUpdate(ProductStoreFlatData) returns (routines.Response) {}
     rpc Update(ProductStoreFlatData) returns (routines.Response) {}
     rpc Delete(ProductStoreFlatData) returns (routines.Response) {}
     rpc Find(ProductStoreFlatData) returns (ProductStoreFlatData) {}
@@ -106,6 +115,7 @@ service ProductStoreService {
 // The Party service definition.
 service PartyService {
     rpc Create(PartyData) returns (routines.Response) {}
+    rpc StoreOrUpdate(PartyFlatData) returns (routines.Response) {}
     rpc Update(PartyFlatData) returns (routines.Response) {}
     rpc Delete(PartyFlatData) returns (routines.Response) {}
     rpc Find(PartyFlatData) returns (PartyFlatData) {}
@@ -116,6 +126,7 @@ service PartyService {
 // The Person service definition.
 service PersonService {
     rpc Create(PersonData) returns (routines.Response) {}
+    rpc StoreOrUpdate(PersonFlatData) returns (routines.Response) {}
     rpc Update(PersonFlatData) returns (routines.Response) {}
     rpc Delete(PersonFlatData) returns (routines.Response) {}
     rpc Find(PersonFlatData) returns (PersonFlatData) {}
@@ -126,6 +137,7 @@ service PersonService {
 // The Party Group service definition.
 service PartyGroupService {
     rpc Create(PartyGroupData) returns (routines.Response) {}
+    rpc StoreOrUpdate(PartyGroupFlatData) returns (routines.Response) {}
     rpc Update(PartyGroupFlatData) returns (routines.Response) {}
     rpc Delete(PartyGroupFlatData) returns (routines.Response) {}
     rpc Find(PartyGroupFlatData) returns (PartyGroupFlatData) {}
@@ -136,6 +148,7 @@ service PartyGroupService {
 // The UserLogin service definition.
 service UserLoginService {
     rpc Create(UserLoginData) returns (routines.Response) {}
+    rpc StoreOrUpdate(UserLoginFlatData) returns (routines.Response) {}
     rpc Update(UserLoginFlatData) returns (routines.Response) {}
     rpc Delete(UserLoginFlatData) returns (routines.Response) {}
     rpc Find(UserLoginFlatData) returns (UserLoginFlatData) {}
@@ -146,6 +159,7 @@ service UserLoginService {
 // The Product Category service definition.
 service ProductCategoryService {
     rpc Create(ProductCategoryData) returns (routines.Response) {}
+    rpc StoreOrUpdate(ProductCategoryFlatData) returns (routines.Response) {}
     rpc Update(ProductCategoryFlatData) returns (routines.Response) {}
     rpc Delete(ProductCategoryFlatData) returns (routines.Response) {}
     rpc Find(ProductCategoryFlatData) returns (ProductCategoryFlatData) {}
@@ -156,6 +170,7 @@ service ProductCategoryService {
 // The Catalog service definition.
 service ProdCatalogService {
     rpc Create(ProdCatalogData) returns (routines.Response) {}
+    rpc StoreOrUpdate(ProdCatalogFlatData) returns (routines.Response) {}
     rpc Update(ProdCatalogFlatData) returns (routines.Response) {}
     rpc Delete(ProdCatalogFlatData) returns (routines.Response) {}
     rpc Find(ProdCatalogFlatData) returns (ProdCatalogFlatData) {}
@@ -166,11 +181,45 @@ service ProdCatalogService {
 // The Billing Account service definition.
 service BillingAccountService {
     rpc Create(BillingAccountData) returns (routines.Response) {}
+    rpc StoreOrUpdate(BillingAccountFlatData) returns (routines.Response) {}
     rpc Update(BillingAccountFlatData) returns (routines.Response) {}
     rpc Delete(BillingAccountFlatData) returns (routines.Response) {}
     rpc Find(BillingAccountFlatData) returns (BillingAccountFlatData) {}
     rpc DeleteById(routines.Identity) returns (routines.Response) {}
     rpc FindById(routines.Identity) returns (BillingAccountFlatData) {}
+}
+
+// The Financial Account service definition.
+service FinAccountService {
+    rpc Create(FinAccountData) returns (routines.Response) {}
+    rpc StoreOrUpdate(FinAccountFlatData) returns (routines.Response) {}
+    rpc Update(FinAccountFlatData) returns (routines.Response) {}
+    rpc Delete(FinAccountFlatData) returns (routines.Response) {}
+    rpc Find(FinAccountFlatData) returns (FinAccountFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (FinAccountFlatData) {}
+}
+
+// The Quote service definition.
+service QuoteService {
+    rpc Create(QuoteData) returns (routines.Response) {}
+    rpc StoreOrUpdate(QuoteFlatData) returns (routines.Response) {}
+    rpc Update(QuoteFlatData) returns (routines.Response) {}
+    rpc Delete(QuoteFlatData) returns (routines.Response) {}
+    rpc Find(QuoteFlatData) returns (QuoteFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (QuoteFlatData) {}
+}
+
+// The Fixed Asset service definition.
+service FixedAssetService {
+    rpc Create(FixedAssetData) returns (routines.Response) {}
+    rpc StoreOrUpdate(FixedAssetFlatData) returns (routines.Response) {}
+    rpc Update(FixedAssetFlatData) returns (routines.Response) {}
+    rpc Delete(FixedAssetFlatData) returns (routines.Response) {}
+    rpc Find(FixedAssetFlatData) returns (FixedAssetFlatData) {}
+    rpc DeleteById(routines.Identity) returns (routines.Response) {}
+    rpc FindById(routines.Identity) returns (FixedAssetFlatData) {}
 }
 
 // flat-ent: Order Header
@@ -813,6 +862,99 @@ message BillingAccountFlatData {
     google.protobuf.Timestamp created_tx_stamp = 10;  
 }
 
+// flat-ent: Financial Account
+message FinAccountFlatData {
+    option (routines.entity_type) = "FinAccount";
+    option (routines.keys).keys = "fin_account_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: finAccountId
+        
+    string fin_account_id = 1;    
+    string fin_account_type_id = 2;    
+    string status_id = 3;    
+    string fin_account_name = 4;    
+    string fin_account_code = 5;    
+    string fin_account_pin = 6;
+    string currency_uom_id = 7; // Uom    
+    string organization_party_id = 8;    
+    string owner_party_id = 9;    
+    string post_to_gl_account_id = 10;    
+    google.protobuf.Timestamp from_date = 11;    
+    google.protobuf.Timestamp thru_date = 12;    
+    routines.Indicator is_refundable = 13;    
+    string replenish_payment_id = 14;    
+    routines.Currency replenish_level = 15;    
+    routines.Currency actual_balance = 16;    
+    routines.Currency available_balance = 17;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 18;    
+    google.protobuf.Timestamp created_tx_stamp = 19;  
+}
+
+// flat-ent: Quote
+message QuoteFlatData {
+    option (routines.entity_type) = "Quote";
+    option (routines.keys).keys = "quote_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: quoteId
+        
+    string quote_id = 1;    
+    string quote_type_id = 2;    
+    string party_id = 3;    
+    google.protobuf.Timestamp issue_date = 4;
+    string status_id = 5; // StatusItem
+    string currency_uom_id = 6; // Uom    
+    string product_store_id = 7;
+    string sales_channel_enum_id = 8; // Enumeration    
+    google.protobuf.Timestamp valid_from_date = 9;    
+    google.protobuf.Timestamp valid_thru_date = 10;    
+    string quote_name = 11;    
+    string description = 12;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
+    google.protobuf.Timestamp created_tx_stamp = 14;  
+}
+
+// flat-ent: Fixed Asset
+message FixedAssetFlatData {
+    option (routines.entity_type) = "FixedAsset";
+    option (routines.keys).keys = "fixed_asset_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: fixedAssetId
+        
+    string fixed_asset_id = 1;    
+    string fixed_asset_type_id = 2;    
+    string parent_fixed_asset_id = 3;    
+    string instance_of_product_id = 4;
+    string class_enum_id = 5; // Enumeration    
+    string party_id = 6;
+    string role_type_id = 7; // RoleType    
+    string fixed_asset_name = 8;    
+    string acquire_order_id = 9;    
+    string acquire_order_item_seq_id = 10;    
+    google.protobuf.Timestamp date_acquired = 11;    
+    google.protobuf.Timestamp date_last_serviced = 12;    
+    google.protobuf.Timestamp date_next_service = 13;    
+    google.type.Date expected_end_of_life = 14;    
+    google.type.Date actual_end_of_life = 15;    
+    routines.FixedPoint production_capacity = 16;
+    string uom_id = 17; // Uom
+    string calendar_id = 18; // TechDataCalendar    
+    string serial_number = 19;    
+    string located_at_facility_id = 20;    
+    string located_at_location_seq_id = 21;    
+    routines.Currency salvage_value = 22;    
+    routines.Currency depreciation = 23;    
+    routines.Currency purchase_cost = 24;    
+    string purchase_cost_uom_id = 25;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 26;    
+    google.protobuf.Timestamp created_tx_stamp = 27;  
+}
+
 // Shipment Route Segment
 message ShipmentRouteSegmentData {
     option (routines.entity_type) = "ShipmentRouteSegment";
@@ -919,10 +1061,12 @@ message InvoiceData {
     RecurrenceInfoData recurrence_info = 19; // ref(RecurrenceInfo): recurrenceInfoId
     repeated AcctgTransData acctg_trans = 20; // ref(AcctgTrans): invoiceId
     repeated InvoiceItemData invoice_item = 21; // ref(InvoiceItem): invoiceId
-    repeated OrderAdjustmentBillingData order_adjustment_billing = 22; // ref(OrderAdjustmentBilling): invoiceId
-    repeated OrderItemBillingData order_item_billing = 23; // ref(OrderItemBilling): invoiceId
-    repeated PaymentApplicationData payment_application = 24; // ref(PaymentApplication): invoiceId
-    repeated ShipmentItemBillingData shipment_item_billing = 25; // ref(ShipmentItemBilling): invoiceId
+    repeated InvoiceRoleData invoice_role = 22; // ref(InvoiceRole): invoiceId
+    repeated InvoiceStatusData invoice_status = 23; // ref(InvoiceStatus): invoiceId
+    repeated OrderAdjustmentBillingData order_adjustment_billing = 24; // ref(OrderAdjustmentBilling): invoiceId
+    repeated OrderItemBillingData order_item_billing = 25; // ref(OrderItemBilling): invoiceId
+    repeated PaymentApplicationData payment_application = 26; // ref(PaymentApplication): invoiceId
+    repeated ShipmentItemBillingData shipment_item_billing = 27; // ref(ShipmentItemBilling): invoiceId
     
         
 }
@@ -1120,39 +1264,50 @@ message FixedAssetData {
     option (routines.entity_type) = "FixedAsset";
     option (routines.keys).keys = "fixed_asset_id";
     option (routines.keys).combine = false;
-    option (routines.flat) = true;
+    option (routines.flat) = false;
     option (routines.has_table) = true;
     // keys: fixedAssetId
     
     // fields
         
     string fixed_asset_id = 1;    
-    string fixed_asset_type_id = 2;    
-    string parent_fixed_asset_id = 3;    
-    string instance_of_product_id = 4;
-    string class_enum_id = 5; // Enumeration    
-    string party_id = 6;
-    string role_type_id = 7; // RoleType    
-    string fixed_asset_name = 8;    
-    string acquire_order_id = 9;    
-    string acquire_order_item_seq_id = 10;    
-    google.protobuf.Timestamp date_acquired = 11;    
-    google.protobuf.Timestamp date_last_serviced = 12;    
-    google.protobuf.Timestamp date_next_service = 13;    
-    google.type.Date expected_end_of_life = 14;    
-    google.type.Date actual_end_of_life = 15;    
-    routines.FixedPoint production_capacity = 16;
-    string uom_id = 17; // Uom
-    string calendar_id = 18; // TechDataCalendar    
-    string serial_number = 19;    
-    string located_at_facility_id = 20;    
-    string located_at_location_seq_id = 21;    
-    routines.Currency salvage_value = 22;    
-    routines.Currency depreciation = 23;    
-    routines.Currency purchase_cost = 24;    
-    string purchase_cost_uom_id = 25;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 26;    
-    google.protobuf.Timestamp created_tx_stamp = 27;
+    string fixed_asset_type_id = 2;
+    string class_enum_id = 3; // Enumeration
+    string role_type_id = 4; // RoleType    
+    string fixed_asset_name = 5;    
+    string acquire_order_item_seq_id = 6;    
+    google.protobuf.Timestamp date_acquired = 7;    
+    google.protobuf.Timestamp date_last_serviced = 8;    
+    google.protobuf.Timestamp date_next_service = 9;    
+    google.type.Date expected_end_of_life = 10;    
+    google.type.Date actual_end_of_life = 11;    
+    routines.FixedPoint production_capacity = 12;
+    string uom_id = 13; // Uom
+    string calendar_id = 14; // TechDataCalendar    
+    string serial_number = 15;    
+    string located_at_location_seq_id = 16;    
+    routines.Currency salvage_value = 17;    
+    routines.Currency depreciation = 18;    
+    routines.Currency purchase_cost = 19;    
+    string purchase_cost_uom_id = 20;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 21;    
+    google.protobuf.Timestamp created_tx_stamp = 22;
+    
+    // relations
+    FixedAssetData parent_fixed_asset = 23; // ref(ParentFixedAsset): parentFixedAssetId
+    ProductData instance_of_product = 24; // ref(InstanceOfProduct): instanceOfProductId
+    PartyData party = 25; // ref(Party): partyId
+    PartyRoleData party_role = 26; // ref(PartyRole): partyId + roleTypeId
+    OrderHeaderData acquire_order_header = 27; // ref(AcquireOrderHeader): acquireOrderId
+    OrderItemData acquire_order_item = 28; // ref(AcquireOrderItem): acquireOrderId + acquireOrderItemSeqId
+    FacilityLocationData located_at_facility_location = 29; // ref(LocatedAtFacilityLocation): locatedAtFacilityId + locatedAtLocationSeqId
+    repeated AcctgTransData acctg_trans = 30; // ref(AcctgTrans): fixedAssetId
+    repeated FixedAssetData child_fixed_asset = 31; // ref(ChildFixedAsset): fixedAssetId
+    repeated FixedAssetGeoPointData fixed_asset_geo_point = 32; // ref(FixedAssetGeoPoint): fixedAssetId
+    repeated FixedAssetProductData fixed_asset_product = 33; // ref(FixedAssetProduct): fixedAssetId
+    repeated InventoryItemData fixed_asset_inventory_item = 34; // ref(FixedAssetInventoryItem): fixedAssetId
+    repeated WorkEffortData work_effort = 35; // ref(WorkEffort): fixedAssetId
+    
         
 }
 
@@ -1507,6 +1662,27 @@ message PaymentApplicationData {
         
 }
 
+// Invoice Role
+message InvoiceRoleData {
+    option (routines.entity_type) = "InvoiceRole";
+    option (routines.keys).keys = "invoice_id, party_id, role_type_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: invoiceId, partyId, roleTypeId
+    string id = 200; 
+    // fields
+        
+    string invoice_id = 1;    
+    string party_id = 2;
+    string role_type_id = 3; // RoleType    
+    google.protobuf.Timestamp datetime_performed = 4;    
+    routines.FixedPoint percentage = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
+}
+
 // CustRequest
 message CustRequestData {
     option (routines.entity_type) = "CustRequest";
@@ -1754,6 +1930,45 @@ message ProductStoreFinActSettingData {
         
 }
 
+// Financial Account
+message FinAccountData {
+    option (routines.entity_type) = "FinAccount";
+    option (routines.keys).keys = "fin_account_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = false;
+    option (routines.has_table) = true;
+    // keys: finAccountId
+    
+    // fields
+        
+    string fin_account_id = 1;    
+    string fin_account_type_id = 2;    
+    string status_id = 3;    
+    string fin_account_name = 4;    
+    string fin_account_code = 5;    
+    string fin_account_pin = 6;
+    string currency_uom_id = 7; // Uom    
+    string post_to_gl_account_id = 8;    
+    google.protobuf.Timestamp from_date = 9;    
+    google.protobuf.Timestamp thru_date = 10;    
+    routines.Indicator is_refundable = 11;    
+    routines.Currency replenish_level = 12;    
+    routines.Currency actual_balance = 13;    
+    routines.Currency available_balance = 14;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 15;    
+    google.protobuf.Timestamp created_tx_stamp = 16;
+    
+    // relations
+    PartyData organization_party = 17; // ref(OrganizationParty): organizationPartyId
+    PartyData owner_party = 18; // ref(OwnerParty): ownerPartyId
+    PaymentMethodData replenish_payment_method = 19; // ref(ReplenishPaymentMethod): replenishPaymentId
+    repeated FinAccountStatusData fin_account_status = 20; // ref(FinAccountStatus): finAccountId
+    repeated OrderPaymentPreferenceData order_payment_preference = 21; // ref(OrderPaymentPreference): finAccountId
+    repeated PaymentMethodData payment_method = 22; // ref(PaymentMethod): finAccountId
+    
+        
+}
+
 // Email Template Setting
 message EmailTemplateSettingData {
     option (routines.entity_type) = "EmailTemplateSetting";
@@ -1937,6 +2152,27 @@ message PersonData {
         
 }
 
+// Tax Authority
+message TaxAuthorityData {
+    option (routines.entity_type) = "TaxAuthority";
+    option (routines.keys).keys = "tax_auth_geo_id, tax_auth_party_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: taxAuthGeoId, taxAuthPartyId
+    string id = 200; 
+    // fields
+        
+    string tax_auth_geo_id = 1;    
+    string tax_auth_party_id = 2;    
+    routines.Indicator require_tax_id_for_exemption = 3;    
+    string tax_id_format_pattern = 4;    
+    routines.Indicator include_tax_in_price = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
+}
+
 // Product Store Role Association
 message ProductStoreRoleData {
     option (routines.entity_type) = "ProductStoreRole";
@@ -2026,6 +2262,29 @@ message ElectronicTextData {
     string text_data = 2;    
     google.protobuf.Timestamp last_updated_tx_stamp = 3;    
     google.protobuf.Timestamp created_tx_stamp = 4;
+        
+}
+
+// Tax Authority Association
+message TaxAuthorityAssocData {
+    option (routines.entity_type) = "TaxAuthorityAssoc";
+    option (routines.keys).keys = "tax_auth_geo_id, tax_auth_party_id, to_tax_auth_geo_id, to_tax_auth_party_id, from_date";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: taxAuthGeoId, taxAuthPartyId, toTaxAuthGeoId, toTaxAuthPartyId, fromDate
+    string id = 200; 
+    // fields
+        
+    string tax_auth_geo_id = 1;    
+    string tax_auth_party_id = 2;    
+    string to_tax_auth_geo_id = 3;    
+    string to_tax_auth_party_id = 4;    
+    google.protobuf.Timestamp from_date = 5;    
+    google.protobuf.Timestamp thru_date = 6;
+    string tax_authority_assoc_type_id = 7; // TaxAuthorityAssocType    
+    google.protobuf.Timestamp last_updated_tx_stamp = 8;    
+    google.protobuf.Timestamp created_tx_stamp = 9;
         
 }
 
@@ -2298,49 +2557,76 @@ message PartyData {
     repeated CommunicationEventData to_communication_event = 22; // ref(ToCommunicationEvent): partyId
     repeated CommunicationEventData from_communication_event = 23; // ref(FromCommunicationEvent): partyId
     repeated CommunicationEventRoleData communication_event_role = 24; // ref(CommunicationEventRole): partyId
-    repeated CustRequestData from_cust_request = 25; // ref(FromCustRequest): partyId
-    repeated CustRequestTypeData cust_request_type = 26; // ref(CustRequestType): partyId
-    repeated FixedAssetData fixed_asset = 27; // ref(FixedAsset): partyId
-    repeated InventoryItemData inventory_item = 28; // ref(InventoryItem): partyId
-    repeated InventoryItemData owner_inventory_item = 29; // ref(OwnerInventoryItem): partyId
-    repeated InvoiceData from_invoice = 30; // ref(FromInvoice): partyId
-    repeated InvoiceData invoice = 31; // ref(Invoice): partyId
-    repeated InvoiceItemData tax_authority_invoice_item = 32; // ref(TaxAuthorityInvoiceItem): partyId
-    repeated InvoiceItemData override_org_invoice_item = 33; // ref(OverrideOrgInvoiceItem): partyId
-    repeated OrderItemShipGroupData supplier_order_item_ship_group = 34; // ref(SupplierOrderItemShipGroup): partyId
-    repeated OrderItemShipGroupData vendor_order_item_ship_group = 35; // ref(VendorOrderItemShipGroup): partyId
-    repeated OrderItemShipGroupData carrier_order_item_ship_group = 36; // ref(CarrierOrderItemShipGroup): partyId
-    repeated OrderRoleData order_role = 37; // ref(OrderRole): partyId
-    repeated PartyContactMechData party_contact_mech = 38; // ref(PartyContactMech): partyId
-    repeated PartyContactMechPurposeData party_contact_mech_purpose = 39; // ref(PartyContactMechPurpose): partyId
-    repeated PartyGeoPointData party_geo_point = 40; // ref(PartyGeoPoint): partyId
-    PartyGroupData party_group = 41; // ref(PartyGroup): partyId
-    repeated PartyIdentificationData party_identification = 42; // ref(PartyIdentification): partyId
-    repeated PartyRelationshipData from_party_relationship = 43; // ref(FromPartyRelationship): partyId
-    repeated PartyRelationshipData to_party_relationship = 44; // ref(ToPartyRelationship): partyId
-    repeated PartyRoleData party_role = 45; // ref(PartyRole): partyId
-    repeated PartyStatusData party_status = 46; // ref(PartyStatus): partyId
-    repeated PartyTaxAuthInfoData party_tax_auth_info = 47; // ref(PartyTaxAuthInfo): partyId
-    repeated PaymentData from_payment = 48; // ref(FromPayment): partyId
-    repeated PaymentData to_payment = 49; // ref(ToPayment): partyId
-    repeated PaymentMethodData payment_method = 50; // ref(PaymentMethod): partyId
-    PersonData person = 51; // ref(Person): partyId
-    repeated ProductCategoryRoleData product_category_role = 52; // ref(ProductCategoryRole): partyId
-    repeated ProductPriceData tax_authority_product_price = 53; // ref(TaxAuthorityProductPrice): partyId
-    repeated ProductPromoData product_promo = 54; // ref(ProductPromo): partyId
-    repeated ProductStoreData product_store = 55; // ref(ProductStore): partyId
-    repeated ProductStoreRoleData product_store_role = 56; // ref(ProductStoreRole): partyId
-    repeated ProductStoreShipmentMethData product_store_shipment_meth = 57; // ref(ProductStoreShipmentMeth): partyId
-    repeated QuoteData quote = 58; // ref(Quote): partyId
-    repeated QuoteRoleData quote_role = 59; // ref(QuoteRole): partyId
-    repeated ShipmentData to_shipment = 60; // ref(ToShipment): partyId
-    repeated ShipmentData from_shipment = 61; // ref(FromShipment): partyId
-    repeated ShipmentCostEstimateData shipment_cost_estimate = 62; // ref(ShipmentCostEstimate): partyId
-    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 63; // ref(CarrierShipmentRouteSegment): partyId
-    repeated SupplierProductData supplier_product = 64; // ref(SupplierProduct): partyId
-    repeated SupplierProductFeatureData supplier_product_feature = 65; // ref(SupplierProductFeature): partyId
-    repeated UserLoginData user_login = 66; // ref(UserLogin): partyId
+    repeated ContentRoleData content_role = 25; // ref(ContentRole): partyId
+    repeated CustRequestData from_cust_request = 26; // ref(FromCustRequest): partyId
+    repeated CustRequestTypeData cust_request_type = 27; // ref(CustRequestType): partyId
+    repeated FinAccountData organization_fin_account = 28; // ref(OrganizationFinAccount): partyId
+    repeated FinAccountData owner_fin_account = 29; // ref(OwnerFinAccount): partyId
+    repeated FixedAssetData fixed_asset = 30; // ref(FixedAsset): partyId
+    repeated InventoryItemData inventory_item = 31; // ref(InventoryItem): partyId
+    repeated InventoryItemData owner_inventory_item = 32; // ref(OwnerInventoryItem): partyId
+    repeated InvoiceData from_invoice = 33; // ref(FromInvoice): partyId
+    repeated InvoiceData invoice = 34; // ref(Invoice): partyId
+    repeated InvoiceItemData tax_authority_invoice_item = 35; // ref(TaxAuthorityInvoiceItem): partyId
+    repeated InvoiceItemData override_org_invoice_item = 36; // ref(OverrideOrgInvoiceItem): partyId
+    repeated InvoiceRoleData invoice_role = 37; // ref(InvoiceRole): partyId
+    repeated OrderItemShipGroupData supplier_order_item_ship_group = 38; // ref(SupplierOrderItemShipGroup): partyId
+    repeated OrderItemShipGroupData vendor_order_item_ship_group = 39; // ref(VendorOrderItemShipGroup): partyId
+    repeated OrderItemShipGroupData carrier_order_item_ship_group = 40; // ref(CarrierOrderItemShipGroup): partyId
+    repeated OrderRoleData order_role = 41; // ref(OrderRole): partyId
+    repeated PartyContactMechData party_contact_mech = 42; // ref(PartyContactMech): partyId
+    repeated PartyContactMechPurposeData party_contact_mech_purpose = 43; // ref(PartyContactMechPurpose): partyId
+    repeated PartyGeoPointData party_geo_point = 44; // ref(PartyGeoPoint): partyId
+    PartyGroupData party_group = 45; // ref(PartyGroup): partyId
+    repeated PartyIdentificationData party_identification = 46; // ref(PartyIdentification): partyId
+    repeated PartyRelationshipData from_party_relationship = 47; // ref(FromPartyRelationship): partyId
+    repeated PartyRelationshipData to_party_relationship = 48; // ref(ToPartyRelationship): partyId
+    repeated PartyRoleData party_role = 49; // ref(PartyRole): partyId
+    repeated PartyStatusData party_status = 50; // ref(PartyStatus): partyId
+    repeated PartyTaxAuthInfoData party_tax_auth_info = 51; // ref(PartyTaxAuthInfo): partyId
+    repeated PaymentData from_payment = 52; // ref(FromPayment): partyId
+    repeated PaymentData to_payment = 53; // ref(ToPayment): partyId
+    repeated PaymentMethodData payment_method = 54; // ref(PaymentMethod): partyId
+    PersonData person = 55; // ref(Person): partyId
+    repeated ProductCategoryRoleData product_category_role = 56; // ref(ProductCategoryRole): partyId
+    repeated ProductPriceData tax_authority_product_price = 57; // ref(TaxAuthorityProductPrice): partyId
+    repeated ProductPromoData product_promo = 58; // ref(ProductPromo): partyId
+    repeated ProductStoreData product_store = 59; // ref(ProductStore): partyId
+    repeated ProductStoreRoleData product_store_role = 60; // ref(ProductStoreRole): partyId
+    repeated ProductStoreShipmentMethData product_store_shipment_meth = 61; // ref(ProductStoreShipmentMeth): partyId
+    repeated QuoteData quote = 62; // ref(Quote): partyId
+    repeated QuoteRoleData quote_role = 63; // ref(QuoteRole): partyId
+    repeated ShipmentData to_shipment = 64; // ref(ToShipment): partyId
+    repeated ShipmentData from_shipment = 65; // ref(FromShipment): partyId
+    repeated ShipmentCostEstimateData shipment_cost_estimate = 66; // ref(ShipmentCostEstimate): partyId
+    repeated ShipmentRouteSegmentData carrier_shipment_route_segment = 67; // ref(CarrierShipmentRouteSegment): partyId
+    repeated SupplierProductData supplier_product = 68; // ref(SupplierProduct): partyId
+    repeated SupplierProductFeatureData supplier_product_feature = 69; // ref(SupplierProductFeature): partyId
+    repeated TaxAuthorityData tax_auth_tax_authority = 70; // ref(TaxAuthTaxAuthority): partyId
+    repeated TaxAuthorityGlAccountData organization_tax_authority_gl_account = 71; // ref(OrganizationTaxAuthorityGlAccount): partyId
+    repeated UserLoginData user_login = 72; // ref(UserLogin): partyId
     
+        
+}
+
+// Content Role
+message ContentRoleData {
+    option (routines.entity_type) = "ContentRole";
+    option (routines.keys).keys = "content_id, party_id, role_type_id, from_date";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: contentId, partyId, roleTypeId, fromDate
+    string id = 200; 
+    // fields
+        
+    string content_id = 1;    
+    string party_id = 2;    
+    string role_type_id = 3;    
+    google.protobuf.Timestamp from_date = 4;    
+    google.protobuf.Timestamp thru_date = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
         
 }
 
@@ -2640,6 +2926,26 @@ message ProdCatalogCategoryData {
         
 }
 
+// Tax Authority GL Account
+message TaxAuthorityGlAccountData {
+    option (routines.entity_type) = "TaxAuthorityGlAccount";
+    option (routines.keys).keys = "tax_auth_geo_id, tax_auth_party_id, organization_party_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: taxAuthGeoId, taxAuthPartyId, organizationPartyId
+    string id = 200; 
+    // fields
+        
+    string tax_auth_geo_id = 1;    
+    string tax_auth_party_id = 2;    
+    string organization_party_id = 3;    
+    string gl_account_id = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
+}
+
 // Product Category Role
 message ProductCategoryRoleData {
     option (routines.entity_type) = "ProductCategoryRole";
@@ -2844,6 +3150,26 @@ message OrderItemShipGroupAssocData {
         
 }
 
+// Invoice Status
+message InvoiceStatusData {
+    option (routines.entity_type) = "InvoiceStatus";
+    option (routines.keys).keys = "status_id, invoice_id, status_date";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: statusId, invoiceId, statusDate
+    string id = 200; 
+    // fields
+    
+    string status_id = 1; // StatusItem    
+    string invoice_id = 2;    
+    google.protobuf.Timestamp status_date = 3;    
+    string change_by_user_login_id = 4;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 5;    
+    google.protobuf.Timestamp created_tx_stamp = 6;
+        
+}
+
 // Web Site Content Associations
 message WebSiteContentData {
     option (routines.entity_type) = "WebSiteContent";
@@ -2918,6 +3244,25 @@ message ContentAssocData {
     string last_modified_by_user_login = 15;    
     google.protobuf.Timestamp last_updated_tx_stamp = 16;    
     google.protobuf.Timestamp created_tx_stamp = 17;
+        
+}
+
+// Tax Authority Product Category
+message TaxAuthorityCategoryData {
+    option (routines.entity_type) = "TaxAuthorityCategory";
+    option (routines.keys).keys = "tax_auth_geo_id, tax_auth_party_id, product_category_id";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: taxAuthGeoId, taxAuthPartyId, productCategoryId
+    string id = 200; 
+    // fields
+        
+    string tax_auth_geo_id = 1;    
+    string tax_auth_party_id = 2;    
+    string product_category_id = 3;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 4;    
+    google.protobuf.Timestamp created_tx_stamp = 5;
         
 }
 
@@ -3203,6 +3548,32 @@ message GeoPointData {
         
 }
 
+// eBay Configuration
+message EbayConfigData {
+    option (routines.entity_type) = "EbayConfig";
+    option (routines.keys).keys = "product_store_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: productStoreId
+    
+    // fields
+        
+    string product_store_id = 1;    
+    string dev_id = 2;    
+    string app_id = 3;    
+    string cert_id = 4;    
+    string token = 5;    
+    string compatibility_level = 6;    
+    string site_id = 7;    
+    string xml_gateway_uri = 8;    
+    string custom_xml = 9;    
+    string web_site_id = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
+        
+}
+
 // Subscription Resource
 message SubscriptionResourceData {
     option (routines.entity_type) = "SubscriptionResource";
@@ -3476,30 +3847,32 @@ message UserLoginData {
     repeated ContentAssocData last_modified_by_content_assoc = 24; // ref(LastModifiedByContentAssoc): userLoginId
     repeated DataResourceData created_by_data_resource = 25; // ref(CreatedByDataResource): userLoginId
     repeated DataResourceData last_modified_by_data_resource = 26; // ref(LastModifiedByDataResource): userLoginId
-    repeated ItemIssuanceData issued_by_item_issuance = 27; // ref(IssuedByItemIssuance): userLoginId
-    repeated OrderAdjustmentData order_adjustment = 28; // ref(OrderAdjustment): userLoginId
-    repeated OrderHeaderData created_by_order_header = 29; // ref(CreatedByOrderHeader): userLoginId
-    repeated OrderItemData dont_cancel_set_order_item = 30; // ref(DontCancelSetOrderItem): userLoginId
-    repeated OrderItemData change_by_order_item = 31; // ref(ChangeByOrderItem): userLoginId
-    repeated OrderPaymentPreferenceData order_payment_preference = 32; // ref(OrderPaymentPreference): userLoginId
-    repeated OrderStatusData order_status = 33; // ref(OrderStatus): userLoginId
-    repeated PartyData created_by_party = 34; // ref(CreatedByParty): userLoginId
-    repeated PartyData last_modified_by_party = 35; // ref(LastModifiedByParty): userLoginId
-    repeated PartyStatusData change_by_party_status = 36; // ref(ChangeByPartyStatus): userLoginId
-    repeated ProductData created_by_product = 37; // ref(CreatedByProduct): userLoginId
-    repeated ProductData last_modified_by_product = 38; // ref(LastModifiedByProduct): userLoginId
-    repeated ProductFeaturePriceData created_by_product_feature_price = 39; // ref(CreatedByProductFeaturePrice): userLoginId
-    repeated ProductFeaturePriceData last_modified_by_product_feature_price = 40; // ref(LastModifiedByProductFeaturePrice): userLoginId
-    repeated ProductPriceData created_by_product_price = 41; // ref(CreatedByProductPrice): userLoginId
-    repeated ProductPriceData last_modified_by_product_price = 42; // ref(LastModifiedByProductPrice): userLoginId
-    repeated ProductPromoData created_by_product_promo = 43; // ref(CreatedByProductPromo): userLoginId
-    repeated ProductPromoData last_modified_by_product_promo = 44; // ref(LastModifiedByProductPromo): userLoginId
-    repeated ProductPromoCodeData created_by_product_promo_code = 45; // ref(CreatedByProductPromoCode): userLoginId
-    repeated ProductPromoCodeData last_modified_by_product_promo_code = 46; // ref(LastModifiedByProductPromoCode): userLoginId
-    repeated ProductReviewData product_review = 47; // ref(ProductReview): userLoginId
-    repeated ShipmentReceiptData shipment_receipt = 48; // ref(ShipmentReceipt): userLoginId
-    repeated ShipmentStatusData change_by_shipment_status = 49; // ref(ChangeByShipmentStatus): userLoginId
-    repeated UserLoginSecurityGroupData user_login_security_group = 50; // ref(UserLoginSecurityGroup): userLoginId
+    repeated FinAccountStatusData fin_account_status = 27; // ref(FinAccountStatus): userLoginId
+    repeated InvoiceStatusData change_by_invoice_status = 28; // ref(ChangeByInvoiceStatus): userLoginId
+    repeated ItemIssuanceData issued_by_item_issuance = 29; // ref(IssuedByItemIssuance): userLoginId
+    repeated OrderAdjustmentData order_adjustment = 30; // ref(OrderAdjustment): userLoginId
+    repeated OrderHeaderData created_by_order_header = 31; // ref(CreatedByOrderHeader): userLoginId
+    repeated OrderItemData dont_cancel_set_order_item = 32; // ref(DontCancelSetOrderItem): userLoginId
+    repeated OrderItemData change_by_order_item = 33; // ref(ChangeByOrderItem): userLoginId
+    repeated OrderPaymentPreferenceData order_payment_preference = 34; // ref(OrderPaymentPreference): userLoginId
+    repeated OrderStatusData order_status = 35; // ref(OrderStatus): userLoginId
+    repeated PartyData created_by_party = 36; // ref(CreatedByParty): userLoginId
+    repeated PartyData last_modified_by_party = 37; // ref(LastModifiedByParty): userLoginId
+    repeated PartyStatusData change_by_party_status = 38; // ref(ChangeByPartyStatus): userLoginId
+    repeated ProductData created_by_product = 39; // ref(CreatedByProduct): userLoginId
+    repeated ProductData last_modified_by_product = 40; // ref(LastModifiedByProduct): userLoginId
+    repeated ProductFeaturePriceData created_by_product_feature_price = 41; // ref(CreatedByProductFeaturePrice): userLoginId
+    repeated ProductFeaturePriceData last_modified_by_product_feature_price = 42; // ref(LastModifiedByProductFeaturePrice): userLoginId
+    repeated ProductPriceData created_by_product_price = 43; // ref(CreatedByProductPrice): userLoginId
+    repeated ProductPriceData last_modified_by_product_price = 44; // ref(LastModifiedByProductPrice): userLoginId
+    repeated ProductPromoData created_by_product_promo = 45; // ref(CreatedByProductPromo): userLoginId
+    repeated ProductPromoData last_modified_by_product_promo = 46; // ref(LastModifiedByProductPromo): userLoginId
+    repeated ProductPromoCodeData created_by_product_promo_code = 47; // ref(CreatedByProductPromoCode): userLoginId
+    repeated ProductPromoCodeData last_modified_by_product_promo_code = 48; // ref(LastModifiedByProductPromoCode): userLoginId
+    repeated ProductReviewData product_review = 49; // ref(ProductReview): userLoginId
+    repeated ShipmentReceiptData shipment_receipt = 50; // ref(ShipmentReceipt): userLoginId
+    repeated ShipmentStatusData change_by_shipment_status = 51; // ref(ChangeByShipmentStatus): userLoginId
+    repeated UserLoginSecurityGroupData user_login_security_group = 52; // ref(UserLoginSecurityGroup): userLoginId
     
         
 }
@@ -3668,6 +4041,27 @@ message CarrierShipmentMethodData {
     string role_type_id = 3;    
     int64 sequence_number = 4;    
     string carrier_service_code = 5;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 6;    
+    google.protobuf.Timestamp created_tx_stamp = 7;
+        
+}
+
+// Financial Account Status
+message FinAccountStatusData {
+    option (routines.entity_type) = "FinAccountStatus";
+    option (routines.keys).keys = "fin_account_id, status_id, status_date";
+    option (routines.keys).combine = true;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: finAccountId, statusId, statusDate
+    string id = 200; 
+    // fields
+        
+    string fin_account_id = 1;
+    string status_id = 2; // StatusItem    
+    google.protobuf.Timestamp status_date = 3;    
+    google.protobuf.Timestamp status_end_date = 4;    
+    string change_by_user_login_id = 5;    
     google.protobuf.Timestamp last_updated_tx_stamp = 6;    
     google.protobuf.Timestamp created_tx_stamp = 7;
         
@@ -3941,14 +4335,15 @@ message PaymentData {
     // relations
     PaymentMethodData payment_method = 17; // ref(PaymentMethod): paymentMethodId
     CreditCardData credit_card = 18; // ref(CreditCard): paymentMethodId
-    OrderPaymentPreferenceData order_payment_preference = 19; // ref(OrderPaymentPreference): paymentPreferenceId
-    PaymentGatewayResponseData payment_gateway_response = 20; // ref(PaymentGatewayResponse): paymentGatewayResponseId
-    PartyData from_party = 21; // ref(FromParty): partyIdFrom
-    PartyData to_party = 22; // ref(ToParty): partyIdTo
-    PartyRoleData to_party_role = 23; // ref(ToPartyRole): partyIdTo + roleTypeIdTo
-    repeated AcctgTransData acctg_trans = 24; // ref(AcctgTrans): paymentId
-    repeated PaymentApplicationData payment_application = 25; // ref(PaymentApplication): paymentId
-    repeated PaymentApplicationData to_payment_application = 26; // ref(ToPaymentApplication): paymentId
+    EftAccountData eft_account = 19; // ref(EftAccount): paymentMethodId
+    OrderPaymentPreferenceData order_payment_preference = 20; // ref(OrderPaymentPreference): paymentPreferenceId
+    PaymentGatewayResponseData payment_gateway_response = 21; // ref(PaymentGatewayResponse): paymentGatewayResponseId
+    PartyData from_party = 22; // ref(FromParty): partyIdFrom
+    PartyData to_party = 23; // ref(ToParty): partyIdTo
+    PartyRoleData to_party_role = 24; // ref(ToPartyRole): partyIdTo + roleTypeIdTo
+    repeated AcctgTransData acctg_trans = 25; // ref(AcctgTrans): paymentId
+    repeated PaymentApplicationData payment_application = 26; // ref(PaymentApplication): paymentId
+    repeated PaymentApplicationData to_payment_application = 27; // ref(ToPaymentApplication): paymentId
     
         
 }
@@ -4111,7 +4506,8 @@ message ProductCategoryData {
     repeated ProductFeatureCategoryApplData product_feature_category_appl = 23; // ref(ProductFeatureCategoryAppl): productCategoryId
     repeated ProductPromoCategoryData product_promo_category = 24; // ref(ProductPromoCategory): productCategoryId
     repeated ProductStoreSurveyApplData product_store_survey_appl = 25; // ref(ProductStoreSurveyAppl): productCategoryId
-    repeated TaxAuthorityRateProductData tax_authority_rate_product = 26; // ref(TaxAuthorityRateProduct): productCategoryId
+    repeated TaxAuthorityCategoryData tax_authority_category = 26; // ref(TaxAuthorityCategory): productCategoryId
+    repeated TaxAuthorityRateProductData tax_authority_rate_product = 27; // ref(TaxAuthorityRateProduct): productCategoryId
     
         
 }
@@ -4537,50 +4933,51 @@ message ProductStoreData {
     routines.Indicator select_payment_type_per_item = 51;    
     routines.Indicator show_prices_with_vat_tax = 52;    
     routines.Indicator show_tax_is_exempt = 53;    
-    string vat_tax_auth_geo_id = 54;    
-    string vat_tax_auth_party_id = 55;    
-    routines.Indicator enable_auto_suggestion_list = 56;    
-    routines.Indicator enable_dig_prod_upload = 57;    
-    routines.Indicator prod_search_exclude_variants = 58;    
-    string dig_prod_upload_category_id = 59;    
-    routines.Indicator auto_order_cc_try_exp = 60;    
-    routines.Indicator auto_order_cc_try_other_cards = 61;    
-    routines.Indicator auto_order_cc_try_later_nsf = 62;    
-    int64 auto_order_cc_try_later_max = 63;    
-    int64 store_credit_valid_days = 64;    
-    routines.Indicator auto_approve_invoice = 65;    
-    routines.Indicator auto_approve_order = 66;    
-    routines.Indicator ship_if_capture_fails = 67;    
-    routines.Indicator set_owner_upon_issuance = 68;    
-    routines.Indicator req_return_inventory_receive = 69;    
-    routines.Indicator add_to_cart_remove_incompat = 70;    
-    routines.Indicator add_to_cart_replace_upsell = 71;    
-    routines.Indicator split_pay_pref_per_shp_grp = 72;    
-    routines.Indicator managed_by_lot = 73;    
-    routines.Indicator show_out_of_stock_products = 74;    
-    routines.Indicator order_decimal_quantity = 75;    
-    routines.Indicator allow_comment = 76;    
-    routines.Indicator allocate_inventory = 77;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 78;    
-    google.protobuf.Timestamp created_tx_stamp = 79;
+    string vat_tax_auth_party_id = 54;    
+    routines.Indicator enable_auto_suggestion_list = 55;    
+    routines.Indicator enable_dig_prod_upload = 56;    
+    routines.Indicator prod_search_exclude_variants = 57;    
+    string dig_prod_upload_category_id = 58;    
+    routines.Indicator auto_order_cc_try_exp = 59;    
+    routines.Indicator auto_order_cc_try_other_cards = 60;    
+    routines.Indicator auto_order_cc_try_later_nsf = 61;    
+    int64 auto_order_cc_try_later_max = 62;    
+    int64 store_credit_valid_days = 63;    
+    routines.Indicator auto_approve_invoice = 64;    
+    routines.Indicator auto_approve_order = 65;    
+    routines.Indicator ship_if_capture_fails = 66;    
+    routines.Indicator set_owner_upon_issuance = 67;    
+    routines.Indicator req_return_inventory_receive = 68;    
+    routines.Indicator add_to_cart_remove_incompat = 69;    
+    routines.Indicator add_to_cart_replace_upsell = 70;    
+    routines.Indicator split_pay_pref_per_shp_grp = 71;    
+    routines.Indicator managed_by_lot = 72;    
+    routines.Indicator show_out_of_stock_products = 73;    
+    routines.Indicator order_decimal_quantity = 74;    
+    routines.Indicator allow_comment = 75;    
+    routines.Indicator allocate_inventory = 76;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 77;    
+    google.protobuf.Timestamp created_tx_stamp = 78;
     
     // relations
-    PartyData party = 80; // ref(Party): payToPartyId
+    PartyData party = 79; // ref(Party): payToPartyId
+    TaxAuthorityData vat_tax_authority = 80; // ref(VatTaxAuthority): vatTaxAuthGeoId + vatTaxAuthPartyId
     repeated CustRequestData cust_request = 81; // ref(CustRequest): productStoreId
-    repeated OrderHeaderData order_header = 82; // ref(OrderHeader): productStoreId
-    repeated ProductReviewData product_review = 83; // ref(ProductReview): productStoreId
-    repeated ProductStoreCatalogData product_store_catalog = 84; // ref(ProductStoreCatalog): productStoreId
-    repeated ProductStoreEmailSettingData product_store_email_setting = 85; // ref(ProductStoreEmailSetting): productStoreId
-    repeated ProductStoreFacilityData product_store_facility = 86; // ref(ProductStoreFacility): productStoreId
-    repeated ProductStoreFinActSettingData product_store_fin_act_setting = 87; // ref(ProductStoreFinActSetting): productStoreId
-    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 88; // ref(ProductStoreKeywordOvrd): productStoreId
-    repeated ProductStorePaymentSettingData product_store_payment_setting = 89; // ref(ProductStorePaymentSetting): productStoreId
-    repeated ProductStorePromoApplData product_store_promo_appl = 90; // ref(ProductStorePromoAppl): productStoreId
-    repeated ProductStoreRoleData product_store_role = 91; // ref(ProductStoreRole): productStoreId
-    repeated ProductStoreSurveyApplData product_store_survey_appl = 92; // ref(ProductStoreSurveyAppl): productStoreId
-    repeated QuoteData quote = 93; // ref(Quote): productStoreId
-    repeated TaxAuthorityRateProductData tax_authority_rate_product = 94; // ref(TaxAuthorityRateProduct): productStoreId
-    repeated WebSiteData web_site = 95; // ref(WebSite): productStoreId
+    EbayConfigData ebay_config = 82; // ref(EbayConfig): productStoreId
+    repeated OrderHeaderData order_header = 83; // ref(OrderHeader): productStoreId
+    repeated ProductReviewData product_review = 84; // ref(ProductReview): productStoreId
+    repeated ProductStoreCatalogData product_store_catalog = 85; // ref(ProductStoreCatalog): productStoreId
+    repeated ProductStoreEmailSettingData product_store_email_setting = 86; // ref(ProductStoreEmailSetting): productStoreId
+    repeated ProductStoreFacilityData product_store_facility = 87; // ref(ProductStoreFacility): productStoreId
+    repeated ProductStoreFinActSettingData product_store_fin_act_setting = 88; // ref(ProductStoreFinActSetting): productStoreId
+    repeated ProductStoreKeywordOvrdData product_store_keyword_ovrd = 89; // ref(ProductStoreKeywordOvrd): productStoreId
+    repeated ProductStorePaymentSettingData product_store_payment_setting = 90; // ref(ProductStorePaymentSetting): productStoreId
+    repeated ProductStorePromoApplData product_store_promo_appl = 91; // ref(ProductStorePromoAppl): productStoreId
+    repeated ProductStoreRoleData product_store_role = 92; // ref(ProductStoreRole): productStoreId
+    repeated ProductStoreSurveyApplData product_store_survey_appl = 93; // ref(ProductStoreSurveyAppl): productStoreId
+    repeated QuoteData quote = 94; // ref(Quote): productStoreId
+    repeated TaxAuthorityRateProductData tax_authority_rate_product = 95; // ref(TaxAuthorityRateProduct): productStoreId
+    repeated WebSiteData web_site = 96; // ref(WebSite): productStoreId
     
         
 }
@@ -5375,7 +5772,7 @@ message QuoteData {
     option (routines.entity_type) = "Quote";
     option (routines.keys).keys = "quote_id";
     option (routines.keys).combine = false;
-    option (routines.flat) = true;
+    option (routines.flat) = false;
     option (routines.has_table) = true;
     // keys: quoteId
     
@@ -5383,18 +5780,24 @@ message QuoteData {
         
     string quote_id = 1;    
     string quote_type_id = 2;    
-    string party_id = 3;    
-    google.protobuf.Timestamp issue_date = 4;
-    string status_id = 5; // StatusItem
-    string currency_uom_id = 6; // Uom    
-    string product_store_id = 7;
-    string sales_channel_enum_id = 8; // Enumeration    
-    google.protobuf.Timestamp valid_from_date = 9;    
-    google.protobuf.Timestamp valid_thru_date = 10;    
-    string quote_name = 11;    
-    string description = 12;    
-    google.protobuf.Timestamp last_updated_tx_stamp = 13;    
-    google.protobuf.Timestamp created_tx_stamp = 14;
+    google.protobuf.Timestamp issue_date = 3;
+    string status_id = 4; // StatusItem
+    string currency_uom_id = 5; // Uom
+    string sales_channel_enum_id = 6; // Enumeration    
+    google.protobuf.Timestamp valid_from_date = 7;    
+    google.protobuf.Timestamp valid_thru_date = 8;    
+    string quote_name = 9;    
+    string description = 10;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 11;    
+    google.protobuf.Timestamp created_tx_stamp = 12;
+    
+    // relations
+    PartyData party = 13; // ref(Party): partyId
+    ProductStoreData product_store = 14; // ref(ProductStore): productStoreId
+    repeated QuoteItemData quote_item = 15; // ref(QuoteItem): quoteId
+    repeated QuoteRoleData quote_role = 16; // ref(QuoteRole): quoteId
+    repeated QuoteTermData quote_term = 17; // ref(QuoteTerm): quoteId
+    
         
 }
 
@@ -5598,6 +6001,31 @@ message SurveyQuestionApplData {
     string with_survey_option_seq_id = 12;    
     google.protobuf.Timestamp last_updated_tx_stamp = 13;    
     google.protobuf.Timestamp created_tx_stamp = 14;
+        
+}
+
+// EFT Account Information
+message EftAccountData {
+    option (routines.entity_type) = "EftAccount";
+    option (routines.keys).keys = "payment_method_id";
+    option (routines.keys).combine = false;
+    option (routines.flat) = true;
+    option (routines.has_table) = true;
+    // keys: paymentMethodId
+    
+    // fields
+        
+    string payment_method_id = 1;    
+    string bank_name = 2;    
+    string routing_number = 3;    
+    string account_type = 4;    
+    string account_number = 5;    
+    string name_on_account = 6;    
+    string company_name_on_account = 7;    
+    string contact_mech_id = 8;    
+    int64 years_at_bank = 9;    
+    google.protobuf.Timestamp last_updated_tx_stamp = 10;    
+    google.protobuf.Timestamp created_tx_stamp = 11;
         
 }
 

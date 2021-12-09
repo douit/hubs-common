@@ -2,8 +2,7 @@ package com.bluecc.income.dummy.store;
 
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.income.AbstractOnceProcTest;
-import com.bluecc.income.AbstractStoreProcTest;
-import com.bluecc.income.procs.Parties.Person;
+import com.bluecc.income.procs.PartiesBeta.Person;
 import com.bluecc.income.template.TemplateGlobalContext;
 import com.bluecc.income.template.UseHubsTemplateEngine;
 import org.jdbi.v3.core.Jdbi;
@@ -17,7 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,7 @@ import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static org.junit.Assert.assertEquals;
 
-public class PartiesTest extends AbstractOnceProcTest {
+public class PartiesBetaTest extends AbstractOnceProcTest {
     @RegisterBeanMapper(value= Person.class)
     public interface PartyDao {
         @SqlQuery("select * from person")

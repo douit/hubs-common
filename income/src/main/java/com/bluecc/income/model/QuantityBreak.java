@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.QuantityBreakData;
 public class QuantityBreak implements IEventModel<QuantityBreakData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String quantityBreakId;
+    @RId String quantityBreakId;
     String quantityBreakTypeId;
     java.math.BigDecimal fromQuantity;
     java.math.BigDecimal thruQuantity;

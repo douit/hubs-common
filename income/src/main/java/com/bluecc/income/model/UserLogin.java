@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.UserLoginData;
 public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String userLoginId;
+    @RId String userLoginId;
     String currentPassword;
     String passwordHint;
     Character isSystem;

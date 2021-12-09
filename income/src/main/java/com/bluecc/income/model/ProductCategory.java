@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.ProductCategoryData;
 public class ProductCategory implements IEventModel<ProductCategoryFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productCategoryId;
+    @RId String productCategoryId;
     String productCategoryTypeId;
     String primaryParentCategoryId;
     String categoryName;

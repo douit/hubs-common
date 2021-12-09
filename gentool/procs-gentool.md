@@ -16,6 +16,6 @@ $ just addon dataset/order/PartyGeoPointData.xml
 ```bash
 # gen all
 $ just gen GeneratorMain  # sql(and types), protobuf(and types)
-$ just gen GenHeadEntities  # model-bean, dao
-$ just gen ExternalTool  # sql
+#$ just gen GenHeadEntities  # model-bean, dao
+$ just gen ExternalTool  # sql, or: just sql
 ```

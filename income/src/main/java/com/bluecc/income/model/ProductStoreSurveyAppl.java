@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ProductStoreSurveyApplData;
 public class ProductStoreSurveyAppl implements IEventModel<ProductStoreSurveyApplData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productStoreSurveyId;
+    @RId String productStoreSurveyId;
     String productStoreId;
     String surveyApplTypeId;
     String groupName;

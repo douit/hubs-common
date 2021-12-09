@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.TenantData;
 public class Tenant implements IEventModel<TenantData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String tenantId;
+    @RId String tenantId;
     String tenantName;
     String initialPath;
     Character disabled;

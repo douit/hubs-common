@@ -705,7 +705,7 @@ under the License.
     <StatusValidChange statusId="SHIPMENT_SCHEDULED" statusIdTo="SHIPMENT_CANCELLED" transitionName="Cancel"/>
     <StatusValidChange statusId="SHIPMENT_PICKED" statusIdTo="SHIPMENT_CANCELLED" transitionName="Cancel"/>
 
-    <!-- these shipment status are intended for purchase shipments -->
+    <!-- these shipment status are intended for purchase shipmentsBeta -->
     <StatusType description="Purchase Shipment" hasTable="N" statusTypeId="PURCH_SHIP_STATUS"/>
     <StatusItem description="Created" sequenceId="01" statusCode="CREATED" statusId="PURCH_SHIP_CREATED" statusTypeId="PURCH_SHIP_STATUS"/>
     <StatusItem description="Shipped" sequenceId="02" statusCode="SHIPPED" statusId="PURCH_SHIP_SHIPPED" statusTypeId="PURCH_SHIP_STATUS"/>

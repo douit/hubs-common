@@ -21,6 +21,7 @@ public class DataSetUtil {
     public static final String ASSET_MYSQL_HUBS_SQL = "asset/mysql/hubs.sql";
     public static final String DOMAIN_H2_FULL_SQL = "domain/src/main/sql/hubs_h2_full.sql";
 
+    public static final String[] DATASET_DIR={"order", "ecommerce", "livecases"};
     // public static final String[] DATA_SAMPLES={
     //         "dataset/OrderDemoData.xml",
     //         "dataset/PartyGeoPointData.xml",
@@ -33,7 +34,7 @@ public class DataSetUtil {
     }
 
     private static List<File> seedDirs() {
-        return Stream.of("order", "ecommerce")
+        return Stream.of(DATASET_DIR)
                 .map(d -> SystemDefs.prependHubsHomeFile("dataset/"+d))
                 .collect(Collectors.toList());
     }

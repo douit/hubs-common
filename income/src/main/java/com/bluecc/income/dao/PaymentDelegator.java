@@ -36,6 +36,8 @@ public class PaymentDelegator extends AbstractProcs{
          
     public static final String CREDIT_CARD="credit_card";
          
+    public static final String EFT_ACCOUNT="eft_account";
+         
     public static final String ORDER_PAYMENT_PREFERENCE="order_payment_preference";
          
     public static final String PAYMENT_GATEWAY_RESPONSE="payment_gateway_response";
@@ -78,6 +80,14 @@ public class PaymentDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "credit_card",
                                             CreditCard.class)
                                     .forEach(el -> pb.setCreditCard(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set eft_account to head entity                        
+                        if(relationsDemand.contains("eft_account")) {
+                            getRelationValues(ctx, p1, "eft_account",
+                                            EftAccount.class)
+                                    .forEach(el -> pb.setEftAccount(
                                              el.toDataBuilder().build()));
                         }
                                                

@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.WebSiteData;
 public class WebSite implements IEventModel<WebSiteData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String webSiteId;
+    @RId String webSiteId;
     String siteName;
     String httpHost;
     String httpPort;

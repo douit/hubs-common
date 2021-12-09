@@ -1,4 +1,4 @@
-package com.bluecc.saga.actors;
+package com.bluecc.saga.common;
 
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.Behaviors;

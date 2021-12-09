@@ -2,7 +2,9 @@ package com.bluecc.income.procs;
 
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.*;
+import com.bluecc.income.dao.OrderHeaderDelegator;
 import com.bluecc.income.model.OrderHeader;
+import com.bluecc.income.procs.CommonData.PartyFromTo;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,12 +13,8 @@ import java.time.LocalDateTime;
 import static com.bluecc.hubs.ProtoTypes.*;
 import static com.bluecc.hubs.ProtoTypes.getCurrency;
 
-public class Orders extends AbstractProcs{
-    @Data
-    public static class PartyFromTo{
-        String from;
-        String to;
-    }
+public class Orders extends OrderHeaderDelegator {
+
     public OrderHeaderFlatData createOrderHeader() {
         return OrderHeaderFlatData.newBuilder()
                 .setCreatedBy("admin")

@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.RecurrenceInfoData;
 public class RecurrenceInfo implements IEventModel<RecurrenceInfoData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String recurrenceInfoId;
+    @RId String recurrenceInfoId;
     java.time.LocalDateTime startDateTime;
     String exceptionDateTimes;
     String recurrenceDateTimes;

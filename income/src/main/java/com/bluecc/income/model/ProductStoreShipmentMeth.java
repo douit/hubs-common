@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ProductStoreShipmentMethData;
 public class ProductStoreShipmentMeth implements IEventModel<ProductStoreShipmentMethData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productStoreShipMethId;
+    @RId String productStoreShipMethId;
     String productStoreId;
     String shipmentMethodTypeId;
     String partyId;

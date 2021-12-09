@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.AgreementTermData;
 public class AgreementTerm implements IEventModel<AgreementTermData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String agreementTermId;
+    @RId String agreementTermId;
     String termTypeId;
     String agreementId;
     String agreementItemSeqId;

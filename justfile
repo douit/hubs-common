@@ -54,10 +54,8 @@ proto:
 	just gen ProtoTool -w
 
 sql:
-	just gen SqlGenTool -s
+	# just gen SqlGenTool -s
 	mysql -uroot -proot hubs < asset/mysql/hubs.sql
-
-testhubs:
 	mysql -uroot -proot testhubs < asset/mysql/hubs.sql
 
 # 生成proto文件对应的java类

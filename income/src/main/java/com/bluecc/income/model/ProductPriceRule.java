@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ProductPriceRuleData;
 public class ProductPriceRule implements IEventModel<ProductPriceRuleData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productPriceRuleId;
+    @RId String productPriceRuleId;
     String ruleName;
     String description;
     Character isSale;

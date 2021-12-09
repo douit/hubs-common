@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.InventoryItemData;
 public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String inventoryItemId;
+    @RId String inventoryItemId;
     String inventoryItemTypeId;
     String productId;
     String partyId;

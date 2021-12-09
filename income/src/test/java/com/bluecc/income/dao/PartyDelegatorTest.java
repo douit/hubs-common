@@ -1,15 +1,9 @@
 package com.bluecc.income.dao;
 
-import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.feed.DataFill;
-import com.bluecc.hubs.fund.SystemDefs;
 import com.bluecc.hubs.stub.PartyFlatData;
-import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
-import com.bluecc.income.dummy.store.PartiesTest;
-import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Person;
-import com.bluecc.income.procs.Parties;
 import com.github.javafaker.Faker;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -20,12 +14,9 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
-import static com.bluecc.hubs.fund.Util.pretty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

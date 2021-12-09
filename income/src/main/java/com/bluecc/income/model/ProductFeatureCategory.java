@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ProductFeatureCategoryData;
 public class ProductFeatureCategory implements IEventModel<ProductFeatureCategoryData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productFeatureCategoryId;
+    @RId String productFeatureCategoryId;
     String parentCategoryId;
     String description;
     java.time.LocalDateTime lastUpdatedStamp;

@@ -29,6 +29,9 @@
     "UserLogin": {},
     "ProductCategory": {},
     "ProdCatalog": {},
-    "BillingAccount": {}
+    "BillingAccount": {},
+    "FinAccount": {},
+    "Quote": {},
+    "FixedAsset": {}
   }
 }

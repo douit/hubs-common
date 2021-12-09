@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ItemIssuanceData;
 public class ItemIssuance implements IEventModel<ItemIssuanceData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String itemIssuanceId;
+    @RId String itemIssuanceId;
     String orderId;
     String orderItemSeqId;
     String shipGroupSeqId;

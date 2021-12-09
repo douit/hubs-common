@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ShipmentMethodTypeData;
 public class ShipmentMethodType implements IEventModel<ShipmentMethodTypeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String shipmentMethodTypeId;
+    @RId String shipmentMethodTypeId;
     String description;
     Long sequenceNum;
     java.time.LocalDateTime lastUpdatedStamp;

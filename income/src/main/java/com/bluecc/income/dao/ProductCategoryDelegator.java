@@ -58,6 +58,8 @@ public class ProductCategoryDelegator extends AbstractProcs{
          
     public static final String PRODUCT_STORE_SURVEY_APPL="product_store_survey_appl";
          
+    public static final String TAX_AUTHORITY_CATEGORY="tax_authority_category";
+         
     public static final String TAX_AUTHORITY_RATE_PRODUCT="tax_authority_rate_product";
     
 
@@ -174,6 +176,14 @@ public class ProductCategoryDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "product_store_survey_appl",
                                             ProductStoreSurveyAppl.class)
                                     .forEach(el -> pb.addProductStoreSurveyAppl(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tax_authority_category to head entity                        
+                        if(relationsDemand.contains("tax_authority_category")) {
+                            getRelationValues(ctx, p1, "tax_authority_category",
+                                            TaxAuthorityCategory.class)
+                                    .forEach(el -> pb.addTaxAuthorityCategory(
                                              el.toDataBuilder().build()));
                         }
                                                

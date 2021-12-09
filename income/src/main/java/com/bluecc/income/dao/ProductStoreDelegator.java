@@ -1,7 +1,5 @@
 package com.bluecc.income.dao;
 
-import com.bluecc.hubs.feed.LiveObjects;
-import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -20,12 +18,7 @@ import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import com.bluecc.hubs.stub.ProductStoreData;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
-
 public class ProductStoreDelegator extends AbstractProcs{
-    @Inject
-    Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(value = ProductStore.class)
     public interface ProductStoreDao {
@@ -41,7 +34,11 @@ public class ProductStoreDelegator extends AbstractProcs{
          
     public static final String PARTY="party";
          
+    public static final String VAT_TAX_AUTHORITY="vat_tax_authority";
+         
     public static final String CUST_REQUEST="cust_request";
+         
+    public static final String EBAY_CONFIG="ebay_config";
          
     public static final String ORDER_HEADER="order_header";
          
@@ -70,59 +67,7 @@ public class ProductStoreDelegator extends AbstractProcs{
     public static final String TAX_AUTHORITY_RATE_PRODUCT="tax_authority_rate_product";
          
     public static final String WEB_SITE="web_site";
-
-    public class Agent{
-        final IProc.ProcContext ctx;
-        final ProductStore rec;
-        final Message p1;
-        ProductStore persistObject;
-
-        Agent(IProc.ProcContext ctx, ProductStore rec){
-            this.ctx=ctx;
-            this.rec=rec;
-            this.p1=rec.toData();
-        }
-
-        public ProductStore getRecord(){
-            return rec;
-        }
-
-        public List<Party> getParty(){
-            return getRelationValues(ctx, p1, "party", Party.class);
-        }
-
-        public List<ProductStorePaymentSetting> getProductStorePaymentSetting(){
-            return getRelationValues(ctx, p1, "product_store_payment_setting",
-                    ProductStorePaymentSetting.class);
-        }
-
-        public ProductStore merge(){
-            this.persistObject= liveObjectsProvider.get().merge(rec);
-            return persistObject;
-        }
-
-        public List<Party> mergeParty(){
-            return getParty().stream()
-                    .map(p -> liveObjectsProvider.get().merge(p))
-                    .peek(c -> persistObject.getParty().add(c))
-                    .collect(Collectors.toList());
-        }
-
-        public List<ProductStorePaymentSetting> mergeProductStorePaymentSetting(){
-            return getProductStorePaymentSetting().stream()
-                    .map(p -> liveObjectsProvider.get().merge(p))
-                    .peek(c -> persistObject.getProductStorePaymentSetting().add(c))
-                    .collect(Collectors.toList());
-        }
-    }
-
-    public Agent getAgent(IProc.ProcContext ctx, String key) {
-        ProductStoreData p = ProductStoreData.newBuilder()
-                .setProductStoreId(key)
-                .build();
-        ProductStore rec = findOne(ctx, p, ProductStore.class);
-        return new Agent(ctx, rec);
-    }
+    
 
     @Action
     public Function<String, Flux<IModel<?>>> queryProductStoreRelations(String key, Set<String> relationsDemand) { 
@@ -144,11 +89,27 @@ public class ProductStoreDelegator extends AbstractProcs{
                                              el.toHeadBuilder().build()));
                         }
                                                
+                        // add/set vat_tax_authority to head entity                        
+                        if(relationsDemand.contains("vat_tax_authority")) {
+                            getRelationValues(ctx, p1, "vat_tax_authority",
+                                            TaxAuthority.class)
+                                    .forEach(el -> pb.setVatTaxAuthority(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set cust_request to head entity                        
                         if(relationsDemand.contains("cust_request")) {
                             getRelationValues(ctx, p1, "cust_request",
                                             CustRequest.class)
                                     .forEach(el -> pb.addCustRequest(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set ebay_config to head entity                        
+                        if(relationsDemand.contains("ebay_config")) {
+                            getRelationValues(ctx, p1, "ebay_config",
+                                            EbayConfig.class)
+                                    .forEach(el -> pb.setEbayConfig(
                                              el.toDataBuilder().build()));
                         }
                                                
@@ -245,7 +206,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "quote",
                                             Quote.class)
                                     .forEach(el -> pb.addQuote(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set tax_authority_rate_product to head entity                        

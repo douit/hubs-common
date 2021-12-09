@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.CommunicationEventData;
 public class CommunicationEvent implements IEventModel<CommunicationEventData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String communicationEventId;
+    @RId String communicationEventId;
     String communicationEventTypeId;
     String origCommEventId;
     String parentCommEventId;

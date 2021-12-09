@@ -48,6 +48,10 @@ public class InvoiceDelegator extends AbstractProcs{
          
     public static final String INVOICE_ITEM="invoice_item";
          
+    public static final String INVOICE_ROLE="invoice_role";
+         
+    public static final String INVOICE_STATUS="invoice_status";
+         
     public static final String ORDER_ADJUSTMENT_BILLING="order_adjustment_billing";
          
     public static final String ORDER_ITEM_BILLING="order_item_billing";
@@ -131,6 +135,22 @@ public class InvoiceDelegator extends AbstractProcs{
                                             InvoiceItem.class)
                                     .forEach(el -> pb.addInvoiceItem(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set invoice_role to head entity                        
+                        if(relationsDemand.contains("invoice_role")) {
+                            getRelationValues(ctx, p1, "invoice_role",
+                                            InvoiceRole.class)
+                                    .forEach(el -> pb.addInvoiceRole(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set invoice_status to head entity                        
+                        if(relationsDemand.contains("invoice_status")) {
+                            getRelationValues(ctx, p1, "invoice_status",
+                                            InvoiceStatus.class)
+                                    .forEach(el -> pb.addInvoiceStatus(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set order_adjustment_billing to head entity                        

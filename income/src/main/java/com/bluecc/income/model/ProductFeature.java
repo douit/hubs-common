@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ProductFeatureData;
 public class ProductFeature implements IEventModel<ProductFeatureData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productFeatureId;
+    @RId String productFeatureId;
     String productFeatureTypeId;
     String productFeatureCategoryId;
     String description;

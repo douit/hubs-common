@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.PartyData;
 public class Party implements IEventModel<PartyFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String partyId;
+    @RId String partyId;
     String partyTypeId;
     String externalId;
     String preferredCurrencyUomId;

@@ -56,9 +56,15 @@ public class PartyDelegator extends AbstractProcs{
          
     public static final String COMMUNICATION_EVENT_ROLE="communication_event_role";
          
+    public static final String CONTENT_ROLE="content_role";
+         
     public static final String FROM_CUST_REQUEST="from_cust_request";
          
     public static final String CUST_REQUEST_TYPE="cust_request_type";
+         
+    public static final String ORGANIZATION_FIN_ACCOUNT="organization_fin_account";
+         
+    public static final String OWNER_FIN_ACCOUNT="owner_fin_account";
          
     public static final String FIXED_ASSET="fixed_asset";
          
@@ -73,6 +79,8 @@ public class PartyDelegator extends AbstractProcs{
     public static final String TAX_AUTHORITY_INVOICE_ITEM="tax_authority_invoice_item";
          
     public static final String OVERRIDE_ORG_INVOICE_ITEM="override_org_invoice_item";
+         
+    public static final String INVOICE_ROLE="invoice_role";
          
     public static final String SUPPLIER_ORDER_ITEM_SHIP_GROUP="supplier_order_item_ship_group";
          
@@ -137,6 +145,10 @@ public class PartyDelegator extends AbstractProcs{
     public static final String SUPPLIER_PRODUCT="supplier_product";
          
     public static final String SUPPLIER_PRODUCT_FEATURE="supplier_product_feature";
+         
+    public static final String TAX_AUTH_TAX_AUTHORITY="tax_auth_tax_authority";
+         
+    public static final String ORGANIZATION_TAX_AUTHORITY_GL_ACCOUNT="organization_tax_authority_gl_account";
          
     public static final String USER_LOGIN="user_login";
     
@@ -249,6 +261,14 @@ public class PartyDelegator extends AbstractProcs{
                                              el.toDataBuilder().build()));
                         }
                                                
+                        // add/set content_role to head entity                        
+                        if(relationsDemand.contains("content_role")) {
+                            getRelationValues(ctx, p1, "content_role",
+                                            ContentRole.class)
+                                    .forEach(el -> pb.addContentRole(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set from_cust_request to head entity                        
                         if(relationsDemand.contains("from_cust_request")) {
                             getRelationValues(ctx, p1, "from_cust_request",
@@ -265,12 +285,28 @@ public class PartyDelegator extends AbstractProcs{
                                              el.toDataBuilder().build()));
                         }
                                                
+                        // add/set organization_fin_account to head entity                        
+                        if(relationsDemand.contains("organization_fin_account")) {
+                            getRelationValues(ctx, p1, "organization_fin_account",
+                                            FinAccount.class)
+                                    .forEach(el -> pb.addOrganizationFinAccount(
+                                             el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set owner_fin_account to head entity                        
+                        if(relationsDemand.contains("owner_fin_account")) {
+                            getRelationValues(ctx, p1, "owner_fin_account",
+                                            FinAccount.class)
+                                    .forEach(el -> pb.addOwnerFinAccount(
+                                             el.toHeadBuilder().build()));
+                        }
+                                               
                         // add/set fixed_asset to head entity                        
                         if(relationsDemand.contains("fixed_asset")) {
                             getRelationValues(ctx, p1, "fixed_asset",
                                             FixedAsset.class)
                                     .forEach(el -> pb.addFixedAsset(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set inventory_item to head entity                        
@@ -319,6 +355,14 @@ public class PartyDelegator extends AbstractProcs{
                                             InvoiceItem.class)
                                     .forEach(el -> pb.addOverrideOrgInvoiceItem(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set invoice_role to head entity                        
+                        if(relationsDemand.contains("invoice_role")) {
+                            getRelationValues(ctx, p1, "invoice_role",
+                                            InvoiceRole.class)
+                                    .forEach(el -> pb.addInvoiceRole(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set supplier_order_item_ship_group to head entity                        
@@ -518,7 +562,7 @@ public class PartyDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "quote",
                                             Quote.class)
                                     .forEach(el -> pb.addQuote(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set quote_role to head entity                        
@@ -574,6 +618,22 @@ public class PartyDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "supplier_product_feature",
                                             SupplierProductFeature.class)
                                     .forEach(el -> pb.addSupplierProductFeature(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tax_auth_tax_authority to head entity                        
+                        if(relationsDemand.contains("tax_auth_tax_authority")) {
+                            getRelationValues(ctx, p1, "tax_auth_tax_authority",
+                                            TaxAuthority.class)
+                                    .forEach(el -> pb.addTaxAuthTaxAuthority(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set organization_tax_authority_gl_account to head entity                        
+                        if(relationsDemand.contains("organization_tax_authority_gl_account")) {
+                            getRelationValues(ctx, p1, "organization_tax_authority_gl_account",
+                                            TaxAuthorityGlAccount.class)
+                                    .forEach(el -> pb.addOrganizationTaxAuthorityGlAccount(
                                              el.toDataBuilder().build()));
                         }
                                                

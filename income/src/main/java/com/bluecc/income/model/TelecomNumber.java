@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.TelecomNumberData;
 public class TelecomNumber implements IEventModel<TelecomNumberData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String contactMechId;
+    @RId String contactMechId;
     String countryCode;
     String areaCode;
     String contactNumber;

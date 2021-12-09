@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.OrderItemPriceInfoData;
 public class OrderItemPriceInfo implements IEventModel<OrderItemPriceInfoData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String orderItemPriceInfoId;
+    @RId String orderItemPriceInfoId;
     String orderId;
     String orderItemSeqId;
     String productPriceRuleId;

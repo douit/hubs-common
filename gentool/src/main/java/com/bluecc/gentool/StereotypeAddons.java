@@ -50,4 +50,11 @@ public class StereotypeAddons {
             datasetWriter(sourceDir, opts.targetDir, "", true, "livecases");
         }
     }
+
+    public static void startGen() throws IOException {
+        String sourceDir="dataset/livecases";
+        String targetDir="stub/src/main/java/com/bluecc/hubs/livecases";
+        datasetWriter(sourceDir, targetDir, "", true, "livecases");
+    }
+
 }

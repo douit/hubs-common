@@ -24,7 +24,7 @@ public class TenantDomainName implements IEventModel<TenantDomainNameData.Builde
     private static final long serialVersionUID = 1L;
 
     String tenantId;
-    @RIndex String domainName;
+    @RId String domainName;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;

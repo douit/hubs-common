@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.SurveyApplTypeData;
 public class SurveyApplType implements IEventModel<SurveyApplTypeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String surveyApplTypeId;
+    @RId String surveyApplTypeId;
     String description;
     java.time.LocalDateTime lastUpdatedStamp;
     java.time.LocalDateTime lastUpdatedTxStamp;

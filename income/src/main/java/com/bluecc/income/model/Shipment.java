@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.ShipmentData;
 public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String shipmentId;
+    @RId String shipmentId;
     String shipmentTypeId;
     String statusId;
     String primaryOrderId;

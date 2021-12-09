@@ -23,7 +23,7 @@ import com.bluecc.hubs.stub.ProductPromoCodeData;
 public class ProductPromoCode implements IEventModel<ProductPromoCodeData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productPromoCodeId;
+    @RId String productPromoCodeId;
     String productPromoId;
     Character userEntered;
     Character requireEmailOrParty;

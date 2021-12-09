@@ -25,7 +25,7 @@ import com.bluecc.hubs.stub.OrderHeaderData;
 public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String orderId;
+    @RId String orderId;
     String orderTypeId;
     String orderName;
     String externalId;

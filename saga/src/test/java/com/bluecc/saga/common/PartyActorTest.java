@@ -1,18 +1,16 @@
-package com.bluecc.saga.actors;
+package com.bluecc.saga.common;
 
 import akka.Done;
 import akka.actor.testkit.typed.javadsl.TestKitJunitResource;
 import akka.actor.typed.ActorRef;
-import com.bluecc.saga.actors.PartyActor.Conductors.PartyConductor;
-import com.bluecc.saga.dummy.actor.SimpleActorTest;
+import com.bluecc.saga.common.PartyActor;
+import com.bluecc.saga.common.PartyActor.Conductors.PartyConductor;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.scalatestplus.junit.JUnitSuite;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-
-import static org.junit.Assert.*;
 
 public class PartyActorTest extends JUnitSuite {
     @ClassRule

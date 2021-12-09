@@ -20,6 +20,8 @@ public class GeneratorMain {
         ProtoTypeTool.startGen();
         GenHeadEntities.startGen();
 
+        StereotypeAddons.startGen(); // livecases
+
         // reimportSql("hubs");
     }
 
