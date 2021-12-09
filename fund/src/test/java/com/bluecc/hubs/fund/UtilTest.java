@@ -16,4 +16,13 @@ public class UtilTest {
         System.out.println(result);
     }
 
+    @Test
+    public void testWordsConvert(){
+        // System.out.println(Util.wordsToClassName(Util.toSnakecase("Scrum Project status")));
+        // System.out.println(Util.wordsToClassName(Util.toSnakecase("ShipmentRouteSegment:CarrierService")));
+        assertEquals("ScrumProjectStatus",
+                Util.wordsToClassName("Scrum Project status"));
+        assertEquals("ShipmentRouteSegmentCarrierService",
+                Util.wordsToClassName("ShipmentRouteSegment:CarrierService"));
+    }
 }

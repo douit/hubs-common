@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.bluecc.hubs.stub";
+option java_outer_classname = "MeshesProto";
+option objc_class_prefix = "MSP";
+
+package meshes;
+
+//import "hubs.proto";
+import "routines.proto";
+
+service Meshes{
+  rpc UpdateStatus(StatusProposal) returns (routines.Response) {}
+}
+
+message StatusProposal{
+  routines.Identity identity = 1;
+  string status_id = 2;
+  routines.Envelope data = 3;
+}
+

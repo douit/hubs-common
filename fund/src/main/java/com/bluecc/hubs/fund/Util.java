@@ -58,7 +58,7 @@ public class Util {
     public static String wordsToClassName(String words){
         return CaseFormat.LOWER_UNDERSCORE.to(
                 CaseFormat.UPPER_CAMEL,
-                words.replaceAll("[ \\-]", "_"));
+                toSnakecase(words.replaceAll("[ \\-,.():]", "_")));
     }
 
 

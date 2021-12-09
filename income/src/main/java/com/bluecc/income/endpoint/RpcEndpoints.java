@@ -7,6 +7,7 @@ import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.procs.GenericProcs;
 import com.bluecc.hubs.fund.tenant.Tenants;
+import com.bluecc.income.service.ServiceFacade;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
@@ -51,65 +52,12 @@ public class RpcEndpoints {
                 .build()
                 .parse(args);
 
-        final RpcEndpoints server = startup(opts.profile, RpcEndpoints.class);
+        final ServiceFacade server = startup(opts.profile, ServiceFacade.class);
         server.start();
         server.blockUntilShutdown();
     }
 
-    private Server server;
-
-    @Inject
-    GreeterImpl greeter;
-    @Inject
-    RoutinesImpl routines;
-    @Inject
-    HeaderServerInterceptor interceptor;
-    @Inject
-    Tenants.TenantConf conf;
-
-    private void start() throws IOException {
-        pretty(conf);
-
-        /* The port on which the server should run */
-        int port = conf.getServer().getPort();
-        server = ServerBuilder.forPort(port)
-                .addService(greeter)
-                .addService(ServerInterceptors.intercept(routines, interceptor))
-                .build()
-                .start();
-        log.info("Server started, listening on " + port);
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                // Use stderr here since the logger may have been reset by its JVM shutdown hook.
-                System.err.println("*** shutting down gRPC server since JVM is shutting down");
-                try {
-                    RpcEndpoints.this.stop();
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
-                }
-                System.err.println("*** server shut down");
-            }
-        });
-    }
-
-    private void stop() throws InterruptedException {
-        if (server != null) {
-            server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
-        }
-    }
-
-    /**
-     * Await termination on the main thread since the grpc library uses daemon threads.
-     */
-    private void blockUntilShutdown() throws InterruptedException {
-        if (server != null) {
-            server.awaitTermination();
-        }
-    }
-
-
-    static class GreeterImpl extends GreeterGrpc.GreeterImplBase {
+    public static class GreeterImpl extends GreeterGrpc.GreeterImplBase {
 
         @Override
         public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
@@ -120,7 +68,7 @@ public class RpcEndpoints {
         }
     }
 
-    static class RoutinesImpl extends RoutinesGrpc.RoutinesImplBase {
+    public static class RoutinesImpl extends RoutinesGrpc.RoutinesImplBase {
         Sequence sequence=new Sequence(null);
         @Inject
         GenericProcs genericProcs;

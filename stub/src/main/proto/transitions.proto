@@ -1,0 +1,503 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.bluecc.hubs.stub";
+option java_outer_classname = "TransitionsProto";
+option objc_class_prefix = "TSP";
+
+package transitions;
+
+import "routines.proto";
+
+message StateProposal{
+    routines.Envelope data=1;
+}
+
+
+service ProductReviewProcessor{
+    
+    rpc ReviewDeleted(StateProposal) returns (routines.Response) {}
+    rpc ReviewApproved(StateProposal) returns (routines.Response) {}
+}
+
+service PurchaseShipmentProcessor{
+    
+    rpc Receive(StateProposal) returns (routines.Response) {}
+    rpc Ship(StateProposal) returns (routines.Response) {}
+}
+
+service ContentProcessor{
+    
+    rpc RevisedDraftPublished(StateProposal) returns (routines.Response) {}
+    rpc FinalDraftPublished(StateProposal) returns (routines.Response) {}
+    rpc PublishedNotRevised(StateProposal) returns (routines.Response) {}
+    rpc InitialDraftPublished(StateProposal) returns (routines.Response) {}
+    rpc Deactivated(StateProposal) returns (routines.Response) {}
+    rpc ImagePending(StateProposal) returns (routines.Response) {}
+    rpc FinalDraft(StateProposal) returns (routines.Response) {}
+    rpc Available(StateProposal) returns (routines.Response) {}
+    rpc DraftRevised(StateProposal) returns (routines.Response) {}
+    rpc AvailableToDeactivated(StateProposal) returns (routines.Response) {}
+    rpc FirstDraft(StateProposal) returns (routines.Response) {}
+}
+
+service KeywordProcessor{
+    
+    rpc ReviewDisapproved(StateProposal) returns (routines.Response) {}
+    rpc ReviewApproved(StateProposal) returns (routines.Response) {}
+}
+
+service SerializedInventoryItemProcessor{
+    
+    rpc Deliver(StateProposal) returns (routines.Response) {}
+    rpc TransferCompletePromised(StateProposal) returns (routines.Response) {}
+    rpc HoldInactive(StateProposal) returns (routines.Response) {}
+    rpc TransferComplete(StateProposal) returns (routines.Response) {}
+    rpc MakeReturnHeld(StateProposal) returns (routines.Response) {}
+    rpc MarkHeldDefective(StateProposal) returns (routines.Response) {}
+    rpc MarkReturnDefective(StateProposal) returns (routines.Response) {}
+    rpc OrderArrived(StateProposal) returns (routines.Response) {}
+    rpc BeingTransfered(StateProposal) returns (routines.Response) {}
+    rpc MakeReturnAvailable(StateProposal) returns (routines.Response) {}
+    rpc CancelPromise(StateProposal) returns (routines.Response) {}
+    rpc Promise(StateProposal) returns (routines.Response) {}
+    rpc ReturnStatusPending(StateProposal) returns (routines.Response) {}
+    rpc ReturnInactive(StateProposal) returns (routines.Response) {}
+    rpc Activate(StateProposal) returns (routines.Response) {}
+    rpc Deactivate(StateProposal) returns (routines.Response) {}
+    rpc BeingTransferedPromised(StateProposal) returns (routines.Response) {}
+    rpc MarkAsDefective(StateProposal) returns (routines.Response) {}
+    rpc ReleaseHold(StateProposal) returns (routines.Response) {}
+    rpc Hold(StateProposal) returns (routines.Response) {}
+}
+
+service AllocationPlanStatusProcessor{
+    
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Create(StateProposal) returns (routines.Response) {}
+    rpc Complete(StateProposal) returns (routines.Response) {}
+    rpc Approve(StateProposal) returns (routines.Response) {}
+}
+
+service QuoteStatusProcessor{
+    
+    rpc RejectQuote(StateProposal) returns (routines.Response) {}
+    rpc AcceptQuote(StateProposal) returns (routines.Response) {}
+    rpc OrderQuote(StateProposal) returns (routines.Response) {}
+}
+
+service OrderDeliveryScheduleProcessor{
+    
+    rpc AcceptDeliveryInformation(StateProposal) returns (routines.Response) {}
+    rpc CancelDelivery(StateProposal) returns (routines.Response) {}
+    rpc ArrangeDelivery(StateProposal) returns (routines.Response) {}
+    rpc ApproveDeliverySchedule(StateProposal) returns (routines.Response) {}
+}
+
+service ProductStatusProcessor{
+    
+    rpc ProductComplete(StateProposal) returns (routines.Response) {}
+}
+
+service PartyRelationshipProcessor{
+    
+    rpc Expired(StateProposal) returns (routines.Response) {}
+}
+
+service OrderReturnStatusForSupplierReturnsProcessor{
+    
+    rpc AcceptedReturnShipped(StateProposal) returns (routines.Response) {}
+    rpc RequestedReturnCancelled(StateProposal) returns (routines.Response) {}
+    rpc AcceptedReturnCancelled(StateProposal) returns (routines.Response) {}
+    rpc ShippedReturnCompleted(StateProposal) returns (routines.Response) {}
+    rpc RequestedReturnAccepted(StateProposal) returns (routines.Response) {}
+    rpc ShippedReturnCancelled(StateProposal) returns (routines.Response) {}
+}
+
+service ProductionRunStatusProcessor{
+    
+    rpc Start(StateProposal) returns (routines.Response) {}
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Complete(StateProposal) returns (routines.Response) {}
+    rpc Schedule(StateProposal) returns (routines.Response) {}
+    rpc Confirm(StateProposal) returns (routines.Response) {}
+    rpc Close(StateProposal) returns (routines.Response) {}
+}
+
+service ProjectProcessor{
+    
+    rpc ResumeProject(StateProposal) returns (routines.Response) {}
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc BeginProject(StateProposal) returns (routines.Response) {}
+}
+
+service RequirementStatusProcessor{
+    
+    rpc AcceptRequirement(StateProposal) returns (routines.Response) {}
+    rpc RejectRequirement(StateProposal) returns (routines.Response) {}
+    rpc OrderRequirement(StateProposal) returns (routines.Response) {}
+}
+
+service ManufacturingTaskAndRoutingStatusProcessor{
+    
+    rpc Active(StateProposal) returns (routines.Response) {}
+    rpc Inactive(StateProposal) returns (routines.Response) {}
+}
+
+service MarketingCampaignProcessor{
+    
+    rpc ApproveMarketingCampaign(StateProposal) returns (routines.Response) {}
+    rpc CancelMarketingCampaign(StateProposal) returns (routines.Response) {}
+    rpc MarketingCampaignInProgress(StateProposal) returns (routines.Response) {}
+    rpc CompleteMarketingCampaign(StateProposal) returns (routines.Response) {}
+}
+
+service InvoiceStatusProcessor{
+    
+    rpc MarkReady(StateProposal) returns (routines.Response) {}
+    rpc MarkApproved(StateProposal) returns (routines.Response) {}
+    rpc EnableSalesInvoiceUpdate(StateProposal) returns (routines.Response) {}
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Receive(StateProposal) returns (routines.Response) {}
+    rpc MarkReceive(StateProposal) returns (routines.Response) {}
+    rpc Pay(StateProposal) returns (routines.Response) {}
+    rpc WriteOff(StateProposal) returns (routines.Response) {}
+    rpc EnablePurchInvoiceUpdate(StateProposal) returns (routines.Response) {}
+    rpc Approve(StateProposal) returns (routines.Response) {}
+    rpc Unpay(StateProposal) returns (routines.Response) {}
+    rpc Send(StateProposal) returns (routines.Response) {}
+}
+
+service TaskProcessor{
+    
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Delegate(StateProposal) returns (routines.Response) {}
+    rpc Complete(StateProposal) returns (routines.Response) {}
+}
+
+service WorkloadProcessor{
+    
+    rpc ImplementationComplete(StateProposal) returns (routines.Response) {}
+    rpc TestingComplete(StateProposal) returns (routines.Response) {}
+    rpc CancelWorkload(StateProposal) returns (routines.Response) {}
+    rpc DefinitionComplete(StateProposal) returns (routines.Response) {}
+    rpc Approve(StateProposal) returns (routines.Response) {}
+    rpc WorkloadCompleted(StateProposal) returns (routines.Response) {}
+}
+
+service ProjectAssignmentProcessor{
+    
+    rpc AssignmentComplete(StateProposal) returns (routines.Response) {}
+}
+
+service SprintStatusProcessor{
+    
+    rpc ProductCompleteWithSprintActive(StateProposal) returns (routines.Response) {}
+    rpc ProductCompleteWithSprintClose(StateProposal) returns (routines.Response) {}
+    rpc SprintComplete(StateProposal) returns (routines.Response) {}
+    rpc ProjectReOpenWithSprintOpen(StateProposal) returns (routines.Response) {}
+}
+
+service PicklistItemProcessor{
+    
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Complete(StateProposal) returns (routines.Response) {}
+}
+
+service InventoryTransferProcessor{
+    
+    rpc InventoryRequestScheduled(StateProposal) returns (routines.Response) {}
+    rpc ScheduledInventoryInRoute(StateProposal) returns (routines.Response) {}
+    rpc InRouteTransferCompleted(StateProposal) returns (routines.Response) {}
+    rpc InventoryRequestInRoute(StateProposal) returns (routines.Response) {}
+    rpc InventoryRequestCompleted(StateProposal) returns (routines.Response) {}
+    rpc InventoryRequestCancelled(StateProposal) returns (routines.Response) {}
+    rpc ScheduledInventoryCompleted(StateProposal) returns (routines.Response) {}
+    rpc ScheduledInventoryCancelled(StateProposal) returns (routines.Response) {}
+}
+
+service ScrumTaskProcessor{
+    
+    rpc Activated(StateProposal) returns (routines.Response) {}
+    rpc TaskCompleteWithProjectComplete(StateProposal) returns (routines.Response) {}
+    rpc TaskComplete(StateProposal) returns (routines.Response) {}
+    rpc TaskReOpen(StateProposal) returns (routines.Response) {}
+    rpc TaskOnHold(StateProposal) returns (routines.Response) {}
+}
+
+service ExampleProcessor{
+    
+    rpc CancelExample(StateProposal) returns (routines.Response) {}
+    rpc ImplementationComplete(StateProposal) returns (routines.Response) {}
+    rpc TestingComplete(StateProposal) returns (routines.Response) {}
+    rpc DefinitionComplete(StateProposal) returns (routines.Response) {}
+    rpc Approve(StateProposal) returns (routines.Response) {}
+    rpc ExampleCompleted(StateProposal) returns (routines.Response) {}
+}
+
+service EventProcessor{
+    
+    rpc Decline(StateProposal) returns (routines.Response) {}
+    rpc Accept(StateProposal) returns (routines.Response) {}
+    rpc Delegate(StateProposal) returns (routines.Response) {}
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Complete(StateProposal) returns (routines.Response) {}
+    rpc Confirm(StateProposal) returns (routines.Response) {}
+}
+
+service NotApplicableProcessor{
+    
+    rpc CloseProject(StateProposal) returns (routines.Response) {}
+}
+
+service PaymentPreferenceProcessor{
+    
+    rpc PaymentRefunded(StateProposal) returns (routines.Response) {}
+    rpc PaymentAuthorized(StateProposal) returns (routines.Response) {}
+    rpc PaymentCancelled(StateProposal) returns (routines.Response) {}
+    rpc PaymentReceived(StateProposal) returns (routines.Response) {}
+    rpc PaymentSettled(StateProposal) returns (routines.Response) {}
+}
+
+service FixedAssetMaintenanceProcessor{
+    
+    rpc ScheduledMaintenaceCancelled(StateProposal) returns (routines.Response) {}
+    rpc CreatedMaintenaceCancelled(StateProposal) returns (routines.Response) {}
+    rpc ScheduledMaintenaceInProcess(StateProposal) returns (routines.Response) {}
+    rpc CreatedMaintenanceScheduled(StateProposal) returns (routines.Response) {}
+    rpc CreatedMaintenanceInProcess(StateProposal) returns (routines.Response) {}
+    rpc InProcessMaintenanceCompleted(StateProposal) returns (routines.Response) {}
+}
+
+service ScrumProjectStatusProcessor{
+    
+    rpc ReOpenProject(StateProposal) returns (routines.Response) {}
+    rpc CloseProject(StateProposal) returns (routines.Response) {}
+}
+
+service BudgetProcessor{
+    
+    rpc SubmitBudget(StateProposal) returns (routines.Response) {}
+    rpc RejectBudget(StateProposal) returns (routines.Response) {}
+    rpc ReviewBudget(StateProposal) returns (routines.Response) {}
+    rpc AcceptBudget(StateProposal) returns (routines.Response) {}
+    rpc ApprovedBudget(StateProposal) returns (routines.Response) {}
+}
+
+service WorkEffortReviewProcessor{
+    
+    rpc ReviewDeleted(StateProposal) returns (routines.Response) {}
+    rpc ReviewApproved(StateProposal) returns (routines.Response) {}
+}
+
+service OrderReturnStatusForCustomerReturnsProcessor{
+    
+    rpc AcceptedReturnReceived(StateProposal) returns (routines.Response) {}
+    rpc RequestedReturnCancelled(StateProposal) returns (routines.Response) {}
+    rpc ReceivedReturnRequiresManualRefund(StateProposal) returns (routines.Response) {}
+    rpc AcceptedReturnCancelled(StateProposal) returns (routines.Response) {}
+    rpc RequestedReturnAccepted(StateProposal) returns (routines.Response) {}
+    rpc ReceivedReturnCompleted(StateProposal) returns (routines.Response) {}
+    rpc ReceivedReturnCancelled(StateProposal) returns (routines.Response) {}
+}
+
+service PicklistProcessor{
+    
+    rpc Print(StateProposal) returns (routines.Response) {}
+    rpc Pick(StateProposal) returns (routines.Response) {}
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Assign(StateProposal) returns (routines.Response) {}
+}
+
+service PaymentStatusProcessor{
+    
+    rpc PaymentConfirmedToSent(StateProposal) returns (routines.Response) {}
+    rpc PaymentNotPaid(StateProposal) returns (routines.Response) {}
+    rpc PaymentConfirmed(StateProposal) returns (routines.Response) {}
+    rpc PaymentSend(StateProposal) returns (routines.Response) {}
+    rpc PaymentVoided(StateProposal) returns (routines.Response) {}
+    rpc PaymentCancelled(StateProposal) returns (routines.Response) {}
+    rpc PaymentReceived(StateProposal) returns (routines.Response) {}
+    rpc PaymentConfirmedToReceived(StateProposal) returns (routines.Response) {}
+}
+
+service CommunicationEventRoleProcessor{
+    
+    rpc Read(StateProposal) returns (routines.Response) {}
+    rpc Completed(StateProposal) returns (routines.Response) {}
+}
+
+service AllocationPlanItemStatusProcessor{
+    
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Create(StateProposal) returns (routines.Response) {}
+    rpc Complete(StateProposal) returns (routines.Response) {}
+    rpc Approve(StateProposal) returns (routines.Response) {}
+}
+
+service FinancialAccountTransStatusProcessor{
+    
+    rpc SetApprovedToCanceled(StateProposal) returns (routines.Response) {}
+    rpc SetCreatedToApproved(StateProposal) returns (routines.Response) {}
+    rpc SetCreatedToCanceled(StateProposal) returns (routines.Response) {}
+}
+
+service FinancialAccountStatusProcessor{
+    
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc SetManuallyFrozen(StateProposal) returns (routines.Response) {}
+    rpc ManuallyFreeze(StateProposal) returns (routines.Response) {}
+    rpc SetNegativePendingReplenishment(StateProposal) returns (routines.Response) {}
+    rpc ReActivate(StateProposal) returns (routines.Response) {}
+}
+
+service ProjectStatusProcessor{
+    
+    rpc CloseProject(StateProposal) returns (routines.Response) {}
+}
+
+service CommunicationEventProcessor{
+    
+    rpc Corrected(StateProposal) returns (routines.Response) {}
+    rpc Refer(StateProposal) returns (routines.Response) {}
+    rpc Bounced(StateProposal) returns (routines.Response) {}
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Complete(StateProposal) returns (routines.Response) {}
+    rpc SetPendingOnlyVisibleToOriginator(StateProposal) returns (routines.Response) {}
+    rpc SetInProgressWaitingToBeSend(StateProposal) returns (routines.Response) {}
+    rpc EnteredVisibleToAllParticipants(StateProposal) returns (routines.Response) {}
+    rpc Resolve(StateProposal) returns (routines.Response) {}
+}
+
+service ScrumAssignmentProcessor{
+    
+    rpc AssignmentComplete(StateProposal) returns (routines.Response) {}
+}
+
+service CalendarProcessor{
+    
+    rpc Decline(StateProposal) returns (routines.Response) {}
+    rpc TentativelyPlan(StateProposal) returns (routines.Response) {}
+    rpc Accept(StateProposal) returns (routines.Response) {}
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Delegate(StateProposal) returns (routines.Response) {}
+    rpc Complete(StateProposal) returns (routines.Response) {}
+    rpc Confirm(StateProposal) returns (routines.Response) {}
+    rpc Send(StateProposal) returns (routines.Response) {}
+}
+
+service ShipmentRouteSegmentCarrierServiceProcessor{
+    
+    rpc Accept(StateProposal) returns (routines.Response) {}
+    rpc Confirm(StateProposal) returns (routines.Response) {}
+    rpc Void(StateProposal) returns (routines.Response) {}
+}
+
+service GlReconciliationStatusProcessor{
+    
+    rpc SetCreatedToReconciled(StateProposal) returns (routines.Response) {}
+}
+
+service PartyProcessor{
+    
+    rpc Assigned(StateProposal) returns (routines.Response) {}
+    rpc ConvertLeadToContact(StateProposal) returns (routines.Response) {}
+    rpc ReEnable(StateProposal) returns (routines.Response) {}
+    rpc Disable(StateProposal) returns (routines.Response) {}
+}
+
+service ProjectTaskProcessor{
+    
+    rpc Activated(StateProposal) returns (routines.Response) {}
+    rpc TaskComplete(StateProposal) returns (routines.Response) {}
+    rpc TaskOnHold(StateProposal) returns (routines.Response) {}
+}
+
+service ShipmentProcessor{
+    
+    rpc Deliver(StateProposal) returns (routines.Response) {}
+    rpc Pick(StateProposal) returns (routines.Response) {}
+    rpc Cancel(StateProposal) returns (routines.Response) {}
+    rpc Schedule(StateProposal) returns (routines.Response) {}
+    rpc Ship(StateProposal) returns (routines.Response) {}
+    rpc Pack(StateProposal) returns (routines.Response) {}
+}
+
+service OrderItemProcessor{
+    
+    rpc CancelItem(StateProposal) returns (routines.Response) {}
+    rpc CompleteItem(StateProposal) returns (routines.Response) {}
+    rpc ApproveItem(StateProposal) returns (routines.Response) {}
+    rpc RejectItem(StateProposal) returns (routines.Response) {}
+}
+
+service CustomRequestStatusProcessor{
+    
+    rpc RejectRequest(StateProposal) returns (routines.Response) {}
+    rpc AcceptRequest(StateProposal) returns (routines.Response) {}
+    rpc PendingCustomer(StateProposal) returns (routines.Response) {}
+    rpc CompleteRequest(StateProposal) returns (routines.Response) {}
+    rpc CancelRequest(StateProposal) returns (routines.Response) {}
+    rpc ReOpenRequest(StateProposal) returns (routines.Response) {}
+    rpc SubmitRequest(StateProposal) returns (routines.Response) {}
+    rpc ReviewRequest(StateProposal) returns (routines.Response) {}
+}
+
+service LeadStatusProcessor{
+    
+    rpc Converted(StateProposal) returns (routines.Response) {}
+    rpc Qualified(StateProposal) returns (routines.Response) {}
+    rpc Disabled(StateProposal) returns (routines.Response) {}
+}
+
+service NonSerializedInventoryItemProcessor{
+    
+    rpc MakeReturnHeld(StateProposal) returns (routines.Response) {}
+    rpc MarkReturnDefective(StateProposal) returns (routines.Response) {}
+}
+
+service OrderProcessor{
+    
+    rpc SendOrder(StateProposal) returns (routines.Response) {}
+    rpc OrderCancelled(StateProposal) returns (routines.Response) {}
+    rpc ProcessOrder(StateProposal) returns (routines.Response) {}
+    rpc CompleteOrder(StateProposal) returns (routines.Response) {}
+    rpc HoldOrder(StateProposal) returns (routines.Response) {}
+    rpc ApproveOrder(StateProposal) returns (routines.Response) {}
+    rpc OrderCompleted(StateProposal) returns (routines.Response) {}
+    rpc CancelOrder(StateProposal) returns (routines.Response) {}
+    rpc RejectOrder(StateProposal) returns (routines.Response) {}
+}
+
+service TimesheetProcessor{
+    
+    rpc ConfirmComplete(StateProposal) returns (routines.Response) {}
+    rpc Approve(StateProposal) returns (routines.Response) {}
+}
+
+service PartyInvitationProcessor{
+    
+    rpc Declined(StateProposal) returns (routines.Response) {}
+    rpc Cancelled(StateProposal) returns (routines.Response) {}
+    rpc Pending(StateProposal) returns (routines.Response) {}
+    rpc Accepted(StateProposal) returns (routines.Response) {}
+}
+
+service ContactListPartyProcessor{
+    
+    rpc SubscriptionInUseUnsubscribed(StateProposal) returns (routines.Response) {}
+    rpc SubscriptionPendingUnsubscriptionPending(StateProposal) returns (routines.Response) {}
+    rpc Reject(StateProposal) returns (routines.Response) {}
+    rpc PendingAccept(StateProposal) returns (routines.Response) {}
+    rpc SubscriptionInUseUnsubscriptionPending(StateProposal) returns (routines.Response) {}
+    rpc Accept(StateProposal) returns (routines.Response) {}
+    rpc SubscriptionAcceptedUnsubscriptionPending(StateProposal) returns (routines.Response) {}
+    rpc SubscriptionInvalidUnsubscriptionPending(StateProposal) returns (routines.Response) {}
+    rpc SubscriptionAcceptedUnsubscribed(StateProposal) returns (routines.Response) {}
+    rpc SubscriptionInvalidUnsubscribed(StateProposal) returns (routines.Response) {}
+    rpc LockedInUse(StateProposal) returns (routines.Response) {}
+    rpc Invalid(StateProposal) returns (routines.Response) {}
+}
+
+
+// total: 56

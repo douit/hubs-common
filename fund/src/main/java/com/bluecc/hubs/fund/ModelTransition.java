@@ -54,6 +54,10 @@ public class ModelTransition {
         public String getStartEvent(){
             return transitions.getEventSource(transitions.states.get(0));
         }
+
+        public String getClassName(){
+            return name.replaceAll("[\\-]", "");
+        }
     }
 
     static String toVar(String s){
@@ -67,9 +71,9 @@ public class ModelTransition {
         List<String> states;
         List<StatusValidChange> transitions;
 
-        public List<String> getEventNames(){
+        public Set<String> getEventNames(){
             return events.stream().map(e -> Util.wordsToClassName(e))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toSet());
         }
 
         public Set<String> getEventSources(String state) {
