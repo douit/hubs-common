@@ -1469,7 +1469,7 @@ public final class TaxAuthorityDemo {
             .setIncludeTaxInPrice(castIndicator("N"))
             .setTaxAuthGeoId("USA")
             .setTaxAuthPartyId("USA_IRS")
-            .setTaxIdFormatPattern("\d{2}\-\d{7}|\d{3}\-\d{2}\-\d{4}")
+            .setTaxIdFormatPattern("\\d{2}\\-\\d{7}|\\d{3}\\-\\d{2}\\-\\d{4}")
             .build();
     }
 
@@ -1554,7 +1554,7 @@ public final class TaxAuthorityDemo {
             .setRequireTaxIdForExemption(castIndicator("Y"))
             .setTaxAuthGeoId("AUT")
             .setTaxAuthPartyId("AUT_BMF")
-            .setTaxIdFormatPattern("^(AT-?)[U]\d{9}$")
+            .setTaxIdFormatPattern("^(AT-?)[U]\\d{9}$")
             .build();
     }
 
@@ -1565,7 +1565,7 @@ public final class TaxAuthorityDemo {
             .setRequireTaxIdForExemption(castIndicator("Y"))
             .setTaxAuthGeoId("BEL")
             .setTaxAuthPartyId("BEL_FOD")
-            .setTaxIdFormatPattern("^(BE-?)\d{10}$")
+            .setTaxIdFormatPattern("^(BE-?)\\d{10}$")
             .build();
     }
 
@@ -1576,7 +1576,7 @@ public final class TaxAuthorityDemo {
             .setRequireTaxIdForExemption(castIndicator("Y"))
             .setTaxAuthGeoId("BGR")
             .setTaxAuthPartyId("BGR_TA")
-            .setTaxIdFormatPattern("^(BG-?)\d{10}$")
+            .setTaxIdFormatPattern("^(BG-?)\\d{10}$")
             .build();
     }
 
@@ -1598,7 +1598,7 @@ public final class TaxAuthorityDemo {
             .setRequireTaxIdForExemption(castIndicator("Y"))
             .setTaxAuthGeoId("DNK")
             .setTaxAuthPartyId("DNK_SKAT")
-            .setTaxIdFormatPattern("^(DK-?)?([0-9]{2}\ ?){3}[0-9]{2}$")
+            .setTaxIdFormatPattern("^(DK-?)?([0-9]{2}\\ ?){3}[0-9]{2}$")
             .build();
     }
 
@@ -1664,7 +1664,7 @@ public final class TaxAuthorityDemo {
             .setRequireTaxIdForExemption(castIndicator("Y"))
             .setTaxAuthGeoId("FRA")
             .setTaxAuthPartyId("FRA_TA")
-            .setTaxIdFormatPattern("^(FR-?)?[0-9A-Z]{2}\ ?[0-9]{9}$")
+            .setTaxIdFormatPattern("^(FR-?)?[0-9A-Z]{2}\\ ?[0-9]{9}$")
             .build();
     }
 
@@ -1719,7 +1719,7 @@ public final class TaxAuthorityDemo {
             .setRequireTaxIdForExemption(castIndicator("Y"))
             .setTaxAuthGeoId("IRL")
             .setTaxAuthPartyId("IRL_ITC")
-            .setTaxIdFormatPattern("^(IE-?)?[0-9][0-9A-Z\+\*][0-9]{5}[A-Z]$")
+            .setTaxIdFormatPattern("^(IE-?)?[0-9][0-9A-Z\\+\\*][0-9]{5}[A-Z]$")
             .build();
     }
 

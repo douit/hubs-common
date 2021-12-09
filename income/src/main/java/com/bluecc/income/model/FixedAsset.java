@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.FixedAssetFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.FixedAssetData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = FixedAssetData.class,
+        symbol = EntityNames.FixedAsset)
 public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -181,7 +189,22 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
                 .build();
     }
 
-        
+        // relations
+     
+    List<FixedAsset> relParentFixedAsset= new ArrayList<>(); 
+    List<Product> relInstanceOfProduct= new ArrayList<>(); 
+    List<Party> relParty= new ArrayList<>(); 
+    List<PartyRole> relPartyRole= new ArrayList<>(); 
+    List<OrderHeader> relAcquireOrderHeader= new ArrayList<>(); 
+    List<OrderItem> relAcquireOrderItem= new ArrayList<>(); 
+    List<FacilityLocation> relLocatedAtFacilityLocation= new ArrayList<>(); 
+    List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    List<FixedAsset> relChildFixedAsset= new ArrayList<>(); 
+    List<FixedAssetGeoPoint> relFixedAssetGeoPoint= new ArrayList<>(); 
+    List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
+    List<InventoryItem> relFixedAssetInventoryItem= new ArrayList<>(); 
+    List<WorkEffort> relWorkEffort= new ArrayList<>();
+
     public FixedAssetData.Builder toHeadBuilder() {
         FixedAssetData.Builder builder = FixedAssetData.newBuilder();
         if (fixedAssetId != null) {

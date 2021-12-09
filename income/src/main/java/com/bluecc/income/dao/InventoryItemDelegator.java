@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.InventoryItemData;
 
 public class InventoryItemDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = InventoryItem.class)
     public interface InventoryItemDao {
         @SqlQuery("select * from inventory_item")
@@ -29,6 +38,205 @@ public class InventoryItemDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from inventory_item")
         int countInventoryItem();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final InventoryItem rec;
+        final Message p1;
+        InventoryItem persistObject;
+
+        Agent(IProc.ProcContext ctx, InventoryItem rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public InventoryItem getRecord(){
+            return rec;
+        }
+
+        public InventoryItem merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<Product> getProduct(){
+            return getRelationValues(ctx, p1, "product", Product.class);
+        }
+
+        public List<Product> mergeProduct(){
+            return getProduct().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProduct().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Party> getParty(){
+            return getRelationValues(ctx, p1, "party", Party.class);
+        }
+
+        public List<Party> mergeParty(){
+            return getParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Party> getOwnerParty(){
+            return getRelationValues(ctx, p1, "owner_party", Party.class);
+        }
+
+        public List<Party> mergeOwnerParty(){
+            return getOwnerParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOwnerParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductFacility> getProductFacility(){
+            return getRelationValues(ctx, p1, "product_facility", ProductFacility.class);
+        }
+
+        public List<ProductFacility> mergeProductFacility(){
+            return getProductFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FacilityLocation> getFacilityLocation(){
+            return getRelationValues(ctx, p1, "facility_location", FacilityLocation.class);
+        }
+
+        public List<FacilityLocation> mergeFacilityLocation(){
+            return getFacilityLocation().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFacilityLocation().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductFacilityLocation> getProductFacilityLocation(){
+            return getRelationValues(ctx, p1, "product_facility_location", ProductFacilityLocation.class);
+        }
+
+        public List<ProductFacilityLocation> mergeProductFacilityLocation(){
+            return getProductFacilityLocation().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductFacilityLocation().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FixedAsset> getFixedAssetFixedAsset(){
+            return getRelationValues(ctx, p1, "fixed_asset_fixed_asset", FixedAsset.class);
+        }
+
+        public List<FixedAsset> mergeFixedAssetFixedAsset(){
+            return getFixedAssetFixedAsset().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFixedAssetFixedAsset().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<AcctgTrans> getAcctgTrans(){
+            return getRelationValues(ctx, p1, "acctg_trans", AcctgTrans.class);
+        }
+
+        public List<AcctgTrans> mergeAcctgTrans(){
+            return getAcctgTrans().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelAcctgTrans().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<AcctgTransEntry> getAcctgTransEntry(){
+            return getRelationValues(ctx, p1, "acctg_trans_entry", AcctgTransEntry.class);
+        }
+
+        public List<AcctgTransEntry> mergeAcctgTransEntry(){
+            return getAcctgTransEntry().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelAcctgTransEntry().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<InventoryItemDetail> getInventoryItemDetail(){
+            return getRelationValues(ctx, p1, "inventory_item_detail", InventoryItemDetail.class);
+        }
+
+        public List<InventoryItemDetail> mergeInventoryItemDetail(){
+            return getInventoryItemDetail().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelInventoryItemDetail().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<InvoiceItem> getInvoiceItem(){
+            return getRelationValues(ctx, p1, "invoice_item", InvoiceItem.class);
+        }
+
+        public List<InvoiceItem> mergeInvoiceItem(){
+            return getInvoiceItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelInvoiceItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ItemIssuance> getItemIssuance(){
+            return getRelationValues(ctx, p1, "item_issuance", ItemIssuance.class);
+        }
+
+        public List<ItemIssuance> mergeItemIssuance(){
+            return getItemIssuance().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelItemIssuance().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItem> getFromOrderItem(){
+            return getRelationValues(ctx, p1, "from_order_item", OrderItem.class);
+        }
+
+        public List<OrderItem> mergeFromOrderItem(){
+            return getFromOrderItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFromOrderItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItemShipGrpInvRes> getOrderItemShipGrpInvRes(){
+            return getRelationValues(ctx, p1, "order_item_ship_grp_inv_res", OrderItemShipGrpInvRes.class);
+        }
+
+        public List<OrderItemShipGrpInvRes> mergeOrderItemShipGrpInvRes(){
+            return getOrderItemShipGrpInvRes().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderItemShipGrpInvRes().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentReceipt> getShipmentReceipt(){
+            return getRelationValues(ctx, p1, "shipment_receipt", ShipmentReceipt.class);
+        }
+
+        public List<ShipmentReceipt> mergeShipmentReceipt(){
+            return getShipmentReceipt().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentReceipt().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        InventoryItemData p = InventoryItemData.newBuilder()
+                .setInventoryItemId(key)
+                .build();
+        InventoryItem rec = findOne(ctx, p, InventoryItem.class);
+        return new Agent(ctx, rec);
     }
 
          

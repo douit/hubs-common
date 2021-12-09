@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.ProdCatalogFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.ProdCatalogData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = ProdCatalogData.class,
+        symbol = EntityNames.ProdCatalog)
 public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -101,7 +109,11 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
                 .build();
     }
 
-        
+        // relations
+     
+    List<ProdCatalogCategory> relProdCatalogCategory= new ArrayList<>(); 
+    List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>();
+
     public ProdCatalogData.Builder toHeadBuilder() {
         ProdCatalogData.Builder builder = ProdCatalogData.newBuilder();
         if (prodCatalogId != null) {

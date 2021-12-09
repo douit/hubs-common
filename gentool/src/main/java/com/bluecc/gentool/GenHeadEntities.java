@@ -64,8 +64,12 @@ public class GenHeadEntities {
         EntityMeta meta= EntityMetaManager.getEntityMeta(entName, remap);
         String querySource=TemplateUtil.build("templates/dao_query_source.j2",
                 ImmutableMap.of("ent", meta));
+        String agentSource=TemplateUtil.build("templates/dao_agent_source.j2",
+                ImmutableMap.of("ent", meta));
         return TemplateUtil.build("templates/"+ tplName +"_source.j2",
-                ImmutableMap.of("ent", meta, "query_rels", querySource));
+                ImmutableMap.of("ent", meta,
+                        "query_rels", querySource,
+                        "agent_source", agentSource));
     }
 
     public void genBean(Collection<String> ents) throws IOException {
@@ -89,7 +93,7 @@ public class GenHeadEntities {
     }
 
     EntityMetaProcessors metaProcessors=new EntityMetaProcessors();
-    private String genHeadPart(String e) throws IOException {
+    String genHeadPart(String e) throws IOException {
         // String head_part = TemplateUtil.sourceGen(e, "bean_conv_head", true);
         // return head_part;
         EntityMeta meta= EntityMetaManager.getEntityMeta(e, true);

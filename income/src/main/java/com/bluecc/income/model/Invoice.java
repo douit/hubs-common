@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.InvoiceFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.InvoiceData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = InvoiceData.class,
+        symbol = EntityNames.Invoice)
 public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -136,7 +144,23 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
                 .build();
     }
 
-        
+        // relations
+     
+    List<Party> relFromParty= new ArrayList<>(); 
+    List<Party> relParty= new ArrayList<>(); 
+    List<PartyRole> relPartyRole= new ArrayList<>(); 
+    List<BillingAccount> relBillingAccount= new ArrayList<>(); 
+    List<ContactMech> relContactMech= new ArrayList<>(); 
+    List<RecurrenceInfo> relRecurrenceInfo= new ArrayList<>(); 
+    List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
+    List<InvoiceRole> relInvoiceRole= new ArrayList<>(); 
+    List<InvoiceStatus> relInvoiceStatus= new ArrayList<>(); 
+    List<OrderAdjustmentBilling> relOrderAdjustmentBilling= new ArrayList<>(); 
+    List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
+    List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
+    List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>();
+
     public InvoiceData.Builder toHeadBuilder() {
         InvoiceData.Builder builder = InvoiceData.newBuilder();
         if (invoiceId != null) {

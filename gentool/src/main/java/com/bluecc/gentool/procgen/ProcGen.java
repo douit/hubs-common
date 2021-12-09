@@ -23,10 +23,14 @@ import static com.bluecc.hubs.fund.DataSetUtil.collectEntitiesFromResources;
 public class ProcGen {
 
     public static void main(String[] args) throws IOException {
+        startGen();
+    }
+
+    public static void startGen() throws IOException {
         Set<String> entityList = collectEntitiesFromResources();
         ProcGen procGen = new ProcGen();
         String code = procGen.gen(entityList);
-        System.out.println(code);
+        // System.out.println(code);
 
         //
         // File targetFile = SystemDefs.prependHubsHomeFile(

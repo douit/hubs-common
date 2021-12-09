@@ -76,7 +76,7 @@ public class GenericProcs extends AbstractProcs {
         if (rs.isEmpty()) {
             create(c, e);
         } else {
-            log.debug("it exists, update it");
+            log.debug("it exists, update it: "+e);
             update(c, e);
         }
     }

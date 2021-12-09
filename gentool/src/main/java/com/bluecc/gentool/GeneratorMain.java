@@ -1,5 +1,6 @@
 package com.bluecc.gentool;
 
+import com.bluecc.gentool.procgen.ProcGen;
 import com.bluecc.hubs.fund.HeadEntityResources;
 import com.bluecc.hubs.fund.MetaTypes;
 import jodd.io.StreamGobbler;
@@ -20,7 +21,8 @@ public class GeneratorMain {
         ProtoTypeTool.startGen();
         GenHeadEntities.startGen();
 
-        StereotypeAddons.startGen(); // livecases
+        ProcGen.startGen();  // generate EntityNames.java
+        StereotypeAddons.startGen();  // livecases
 
         // reimportSql("hubs");
     }

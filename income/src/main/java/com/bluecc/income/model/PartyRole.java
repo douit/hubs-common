@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.PartyRoleData;
 
@@ -20,6 +26,8 @@ import com.bluecc.hubs.stub.PartyRoleData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = PartyRoleData.class,
+        symbol = EntityNames.PartyRole)
 public class PartyRole implements IEventModel<PartyRoleData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 

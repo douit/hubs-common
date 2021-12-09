@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.UserLoginFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.UserLoginData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = UserLoginData.class,
+        symbol = EntityNames.UserLogin)
 public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -136,7 +144,44 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serial
                 .build();
     }
 
-        
+        // relations
+     
+    List<Party> relParty= new ArrayList<>(); 
+    List<Person> relPerson= new ArrayList<>(); 
+    List<PartyGroup> relPartyGroup= new ArrayList<>(); 
+    List<Content> relCreatedByContent= new ArrayList<>(); 
+    List<Content> relLastModifiedByContent= new ArrayList<>(); 
+    List<ContentAssoc> relCreatedByContentAssoc= new ArrayList<>(); 
+    List<ContentAssoc> relLastModifiedByContentAssoc= new ArrayList<>(); 
+    List<DataResource> relCreatedByDataResource= new ArrayList<>(); 
+    List<DataResource> relLastModifiedByDataResource= new ArrayList<>(); 
+    List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
+    List<InvoiceStatus> relChangeByInvoiceStatus= new ArrayList<>(); 
+    List<ItemIssuance> relIssuedByItemIssuance= new ArrayList<>(); 
+    List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
+    List<OrderHeader> relCreatedByOrderHeader= new ArrayList<>(); 
+    List<OrderItem> relDontCancelSetOrderItem= new ArrayList<>(); 
+    List<OrderItem> relChangeByOrderItem= new ArrayList<>(); 
+    List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
+    List<OrderStatus> relOrderStatus= new ArrayList<>(); 
+    List<Party> relCreatedByParty= new ArrayList<>(); 
+    List<Party> relLastModifiedByParty= new ArrayList<>(); 
+    List<PartyStatus> relChangeByPartyStatus= new ArrayList<>(); 
+    List<Product> relCreatedByProduct= new ArrayList<>(); 
+    List<Product> relLastModifiedByProduct= new ArrayList<>(); 
+    List<ProductFeaturePrice> relCreatedByProductFeaturePrice= new ArrayList<>(); 
+    List<ProductFeaturePrice> relLastModifiedByProductFeaturePrice= new ArrayList<>(); 
+    List<ProductPrice> relCreatedByProductPrice= new ArrayList<>(); 
+    List<ProductPrice> relLastModifiedByProductPrice= new ArrayList<>(); 
+    List<ProductPromo> relCreatedByProductPromo= new ArrayList<>(); 
+    List<ProductPromo> relLastModifiedByProductPromo= new ArrayList<>(); 
+    List<ProductPromoCode> relCreatedByProductPromoCode= new ArrayList<>(); 
+    List<ProductPromoCode> relLastModifiedByProductPromoCode= new ArrayList<>(); 
+    List<ProductReview> relProductReview= new ArrayList<>(); 
+    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    List<ShipmentStatus> relChangeByShipmentStatus= new ArrayList<>(); 
+    List<UserLoginSecurityGroup> relUserLoginSecurityGroup= new ArrayList<>();
+
     public UserLoginData.Builder toHeadBuilder() {
         UserLoginData.Builder builder = UserLoginData.newBuilder();
         if (userLoginId != null) {

@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.UserLoginData;
 
 public class UserLoginDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = UserLogin.class)
     public interface UserLoginDao {
         @SqlQuery("select * from user_login")
@@ -29,6 +38,425 @@ public class UserLoginDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from user_login")
         int countUserLogin();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final UserLogin rec;
+        final Message p1;
+        UserLogin persistObject;
+
+        Agent(IProc.ProcContext ctx, UserLogin rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public UserLogin getRecord(){
+            return rec;
+        }
+
+        public UserLogin merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<Party> getParty(){
+            return getRelationValues(ctx, p1, "party", Party.class);
+        }
+
+        public List<Party> mergeParty(){
+            return getParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Person> getPerson(){
+            return getRelationValues(ctx, p1, "person", Person.class);
+        }
+
+        public List<Person> mergePerson(){
+            return getPerson().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPerson().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PartyGroup> getPartyGroup(){
+            return getRelationValues(ctx, p1, "party_group", PartyGroup.class);
+        }
+
+        public List<PartyGroup> mergePartyGroup(){
+            return getPartyGroup().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPartyGroup().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Content> getCreatedByContent(){
+            return getRelationValues(ctx, p1, "created_by_content", Content.class);
+        }
+
+        public List<Content> mergeCreatedByContent(){
+            return getCreatedByContent().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByContent().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Content> getLastModifiedByContent(){
+            return getRelationValues(ctx, p1, "last_modified_by_content", Content.class);
+        }
+
+        public List<Content> mergeLastModifiedByContent(){
+            return getLastModifiedByContent().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByContent().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ContentAssoc> getCreatedByContentAssoc(){
+            return getRelationValues(ctx, p1, "created_by_content_assoc", ContentAssoc.class);
+        }
+
+        public List<ContentAssoc> mergeCreatedByContentAssoc(){
+            return getCreatedByContentAssoc().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByContentAssoc().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ContentAssoc> getLastModifiedByContentAssoc(){
+            return getRelationValues(ctx, p1, "last_modified_by_content_assoc", ContentAssoc.class);
+        }
+
+        public List<ContentAssoc> mergeLastModifiedByContentAssoc(){
+            return getLastModifiedByContentAssoc().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByContentAssoc().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<DataResource> getCreatedByDataResource(){
+            return getRelationValues(ctx, p1, "created_by_data_resource", DataResource.class);
+        }
+
+        public List<DataResource> mergeCreatedByDataResource(){
+            return getCreatedByDataResource().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByDataResource().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<DataResource> getLastModifiedByDataResource(){
+            return getRelationValues(ctx, p1, "last_modified_by_data_resource", DataResource.class);
+        }
+
+        public List<DataResource> mergeLastModifiedByDataResource(){
+            return getLastModifiedByDataResource().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByDataResource().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FinAccountStatus> getFinAccountStatus(){
+            return getRelationValues(ctx, p1, "fin_account_status", FinAccountStatus.class);
+        }
+
+        public List<FinAccountStatus> mergeFinAccountStatus(){
+            return getFinAccountStatus().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFinAccountStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<InvoiceStatus> getChangeByInvoiceStatus(){
+            return getRelationValues(ctx, p1, "change_by_invoice_status", InvoiceStatus.class);
+        }
+
+        public List<InvoiceStatus> mergeChangeByInvoiceStatus(){
+            return getChangeByInvoiceStatus().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelChangeByInvoiceStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ItemIssuance> getIssuedByItemIssuance(){
+            return getRelationValues(ctx, p1, "issued_by_item_issuance", ItemIssuance.class);
+        }
+
+        public List<ItemIssuance> mergeIssuedByItemIssuance(){
+            return getIssuedByItemIssuance().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelIssuedByItemIssuance().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderAdjustment> getOrderAdjustment(){
+            return getRelationValues(ctx, p1, "order_adjustment", OrderAdjustment.class);
+        }
+
+        public List<OrderAdjustment> mergeOrderAdjustment(){
+            return getOrderAdjustment().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderAdjustment().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderHeader> getCreatedByOrderHeader(){
+            return getRelationValues(ctx, p1, "created_by_order_header", OrderHeader.class);
+        }
+
+        public List<OrderHeader> mergeCreatedByOrderHeader(){
+            return getCreatedByOrderHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByOrderHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItem> getDontCancelSetOrderItem(){
+            return getRelationValues(ctx, p1, "dont_cancel_set_order_item", OrderItem.class);
+        }
+
+        public List<OrderItem> mergeDontCancelSetOrderItem(){
+            return getDontCancelSetOrderItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelDontCancelSetOrderItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItem> getChangeByOrderItem(){
+            return getRelationValues(ctx, p1, "change_by_order_item", OrderItem.class);
+        }
+
+        public List<OrderItem> mergeChangeByOrderItem(){
+            return getChangeByOrderItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelChangeByOrderItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderPaymentPreference> getOrderPaymentPreference(){
+            return getRelationValues(ctx, p1, "order_payment_preference", OrderPaymentPreference.class);
+        }
+
+        public List<OrderPaymentPreference> mergeOrderPaymentPreference(){
+            return getOrderPaymentPreference().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderPaymentPreference().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderStatus> getOrderStatus(){
+            return getRelationValues(ctx, p1, "order_status", OrderStatus.class);
+        }
+
+        public List<OrderStatus> mergeOrderStatus(){
+            return getOrderStatus().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Party> getCreatedByParty(){
+            return getRelationValues(ctx, p1, "created_by_party", Party.class);
+        }
+
+        public List<Party> mergeCreatedByParty(){
+            return getCreatedByParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Party> getLastModifiedByParty(){
+            return getRelationValues(ctx, p1, "last_modified_by_party", Party.class);
+        }
+
+        public List<Party> mergeLastModifiedByParty(){
+            return getLastModifiedByParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PartyStatus> getChangeByPartyStatus(){
+            return getRelationValues(ctx, p1, "change_by_party_status", PartyStatus.class);
+        }
+
+        public List<PartyStatus> mergeChangeByPartyStatus(){
+            return getChangeByPartyStatus().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelChangeByPartyStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Product> getCreatedByProduct(){
+            return getRelationValues(ctx, p1, "created_by_product", Product.class);
+        }
+
+        public List<Product> mergeCreatedByProduct(){
+            return getCreatedByProduct().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByProduct().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Product> getLastModifiedByProduct(){
+            return getRelationValues(ctx, p1, "last_modified_by_product", Product.class);
+        }
+
+        public List<Product> mergeLastModifiedByProduct(){
+            return getLastModifiedByProduct().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByProduct().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductFeaturePrice> getCreatedByProductFeaturePrice(){
+            return getRelationValues(ctx, p1, "created_by_product_feature_price", ProductFeaturePrice.class);
+        }
+
+        public List<ProductFeaturePrice> mergeCreatedByProductFeaturePrice(){
+            return getCreatedByProductFeaturePrice().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByProductFeaturePrice().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductFeaturePrice> getLastModifiedByProductFeaturePrice(){
+            return getRelationValues(ctx, p1, "last_modified_by_product_feature_price", ProductFeaturePrice.class);
+        }
+
+        public List<ProductFeaturePrice> mergeLastModifiedByProductFeaturePrice(){
+            return getLastModifiedByProductFeaturePrice().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByProductFeaturePrice().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductPrice> getCreatedByProductPrice(){
+            return getRelationValues(ctx, p1, "created_by_product_price", ProductPrice.class);
+        }
+
+        public List<ProductPrice> mergeCreatedByProductPrice(){
+            return getCreatedByProductPrice().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByProductPrice().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductPrice> getLastModifiedByProductPrice(){
+            return getRelationValues(ctx, p1, "last_modified_by_product_price", ProductPrice.class);
+        }
+
+        public List<ProductPrice> mergeLastModifiedByProductPrice(){
+            return getLastModifiedByProductPrice().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByProductPrice().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductPromo> getCreatedByProductPromo(){
+            return getRelationValues(ctx, p1, "created_by_product_promo", ProductPromo.class);
+        }
+
+        public List<ProductPromo> mergeCreatedByProductPromo(){
+            return getCreatedByProductPromo().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByProductPromo().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductPromo> getLastModifiedByProductPromo(){
+            return getRelationValues(ctx, p1, "last_modified_by_product_promo", ProductPromo.class);
+        }
+
+        public List<ProductPromo> mergeLastModifiedByProductPromo(){
+            return getLastModifiedByProductPromo().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByProductPromo().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductPromoCode> getCreatedByProductPromoCode(){
+            return getRelationValues(ctx, p1, "created_by_product_promo_code", ProductPromoCode.class);
+        }
+
+        public List<ProductPromoCode> mergeCreatedByProductPromoCode(){
+            return getCreatedByProductPromoCode().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreatedByProductPromoCode().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductPromoCode> getLastModifiedByProductPromoCode(){
+            return getRelationValues(ctx, p1, "last_modified_by_product_promo_code", ProductPromoCode.class);
+        }
+
+        public List<ProductPromoCode> mergeLastModifiedByProductPromoCode(){
+            return getLastModifiedByProductPromoCode().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLastModifiedByProductPromoCode().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductReview> getProductReview(){
+            return getRelationValues(ctx, p1, "product_review", ProductReview.class);
+        }
+
+        public List<ProductReview> mergeProductReview(){
+            return getProductReview().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductReview().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentReceipt> getShipmentReceipt(){
+            return getRelationValues(ctx, p1, "shipment_receipt", ShipmentReceipt.class);
+        }
+
+        public List<ShipmentReceipt> mergeShipmentReceipt(){
+            return getShipmentReceipt().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentReceipt().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentStatus> getChangeByShipmentStatus(){
+            return getRelationValues(ctx, p1, "change_by_shipment_status", ShipmentStatus.class);
+        }
+
+        public List<ShipmentStatus> mergeChangeByShipmentStatus(){
+            return getChangeByShipmentStatus().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelChangeByShipmentStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<UserLoginSecurityGroup> getUserLoginSecurityGroup(){
+            return getRelationValues(ctx, p1, "user_login_security_group", UserLoginSecurityGroup.class);
+        }
+
+        public List<UserLoginSecurityGroup> mergeUserLoginSecurityGroup(){
+            return getUserLoginSecurityGroup().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelUserLoginSecurityGroup().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        UserLoginData p = UserLoginData.newBuilder()
+                .setUserLoginId(key)
+                .build();
+        UserLogin rec = findOne(ctx, p, UserLogin.class);
+        return new Agent(ctx, rec);
     }
 
          

@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.ProductStoreData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = ProductStoreData.class,
+        symbol = EntityNames.ProductStore)
 public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -446,7 +454,27 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
                 .build();
     }
 
-        
+        // relations
+     
+    List<Party> relParty= new ArrayList<>(); 
+    List<TaxAuthority> relVatTaxAuthority= new ArrayList<>(); 
+    List<CustRequest> relCustRequest= new ArrayList<>(); 
+    List<EbayConfig> relEbayConfig= new ArrayList<>(); 
+    List<OrderHeader> relOrderHeader= new ArrayList<>(); 
+    List<ProductReview> relProductReview= new ArrayList<>(); 
+    List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>(); 
+    List<ProductStoreEmailSetting> relProductStoreEmailSetting= new ArrayList<>(); 
+    List<ProductStoreFacility> relProductStoreFacility= new ArrayList<>(); 
+    List<ProductStoreFinActSetting> relProductStoreFinActSetting= new ArrayList<>(); 
+    List<ProductStoreKeywordOvrd> relProductStoreKeywordOvrd= new ArrayList<>(); 
+    List<ProductStorePaymentSetting> relProductStorePaymentSetting= new ArrayList<>(); 
+    List<ProductStorePromoAppl> relProductStorePromoAppl= new ArrayList<>(); 
+    List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
+    List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
+    List<Quote> relQuote= new ArrayList<>(); 
+    List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
+    List<WebSite> relWebSite= new ArrayList<>();
+
     public ProductStoreData.Builder toHeadBuilder() {
         ProductStoreData.Builder builder = ProductStoreData.newBuilder();
         if (productStoreId != null) {

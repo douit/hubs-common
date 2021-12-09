@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.FinAccountFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.FinAccountData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = FinAccountData.class,
+        symbol = EntityNames.FinAccount)
 public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -141,7 +149,15 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
                 .build();
     }
 
-        
+        // relations
+     
+    List<Party> relOrganizationParty= new ArrayList<>(); 
+    List<Party> relOwnerParty= new ArrayList<>(); 
+    List<PaymentMethod> relReplenishPaymentMethod= new ArrayList<>(); 
+    List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
+    List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
+    List<PaymentMethod> relPaymentMethod= new ArrayList<>();
+
     public FinAccountData.Builder toHeadBuilder() {
         FinAccountData.Builder builder = FinAccountData.newBuilder();
         if (finAccountId != null) {

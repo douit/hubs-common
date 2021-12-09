@@ -1,0 +1,44 @@
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final {{ent.name}} rec;
+        final Message p1;
+        {{ent.name}} persistObject;
+
+        Agent(IProc.ProcContext ctx, {{ent.name}} rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public {{ent.name}} getRecord(){
+            return rec;
+        }
+
+        public {{ent.name}} merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+        {% for rel in ent.validRelations %} 
+        public List<{{rel.relEntityName}}> get{{rel.name}}(){
+            return getRelationValues(ctx, p1, "{{rel.protoName}}", {{rel.relEntityName}}.class);
+        }
+
+        public List<{{rel.relEntityName}}> merge{{rel.name}}(){
+            return get{{rel.name}}().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.{{rel.relGetter}}().add(c))
+                    .collect(Collectors.toList());
+        }
+        {% endfor %}
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        {{ent.messageType}} p = {{ent.messageType}}.newBuilder()
+                .{{ent.pkSetter}}(key)
+                .build();
+        {{ent.name}} rec = findOne(ctx, p, {{ent.name}}.class);
+        return new Agent(ctx, rec);
+    }

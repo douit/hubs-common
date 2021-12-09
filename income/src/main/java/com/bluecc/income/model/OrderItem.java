@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.OrderItemFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.OrderItemData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = OrderItemData.class,
+        symbol = EntityNames.OrderItem)
 public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -296,7 +304,26 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
                 .build();
     }
 
-        
+        // relations
+     
+    List<OrderHeader> relOrderHeader= new ArrayList<>(); 
+    List<Product> relProduct= new ArrayList<>(); 
+    List<InventoryItem> relFromInventoryItem= new ArrayList<>(); 
+    List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
+    List<UserLogin> relDontCancelSetUserLogin= new ArrayList<>(); 
+    List<QuoteItem> relQuoteItem= new ArrayList<>(); 
+    List<UserLogin> relChangeByUserLogin= new ArrayList<>(); 
+    List<FixedAsset> relAcquireFixedAsset= new ArrayList<>(); 
+    List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
+    List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
+    List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
+    List<OrderItemPriceInfo> relOrderItemPriceInfo= new ArrayList<>(); 
+    List<OrderItemShipGroupAssoc> relOrderItemShipGroupAssoc= new ArrayList<>(); 
+    List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
+    List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
+    List<OrderStatus> relOrderStatus= new ArrayList<>(); 
+    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
+
     public OrderItemData.Builder toHeadBuilder() {
         OrderItemData.Builder builder = OrderItemData.newBuilder();
         if (orderId != null) {

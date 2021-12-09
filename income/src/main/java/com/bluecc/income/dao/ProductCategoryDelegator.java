@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.ProductCategoryData;
 
 public class ProductCategoryDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = ProductCategory.class)
     public interface ProductCategoryDao {
         @SqlQuery("select * from product_category")
@@ -29,6 +38,205 @@ public class ProductCategoryDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from product_category")
         int countProductCategory();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final ProductCategory rec;
+        final Message p1;
+        ProductCategory persistObject;
+
+        Agent(IProc.ProcContext ctx, ProductCategory rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public ProductCategory getRecord(){
+            return rec;
+        }
+
+        public ProductCategory merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<ProductCategory> getPrimaryParentProductCategory(){
+            return getRelationValues(ctx, p1, "primary_parent_product_category", ProductCategory.class);
+        }
+
+        public List<ProductCategory> mergePrimaryParentProductCategory(){
+            return getPrimaryParentProductCategory().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPrimaryParentProductCategory().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductCategory> getPrimaryChildProductCategory(){
+            return getRelationValues(ctx, p1, "primary_child_product_category", ProductCategory.class);
+        }
+
+        public List<ProductCategory> mergePrimaryChildProductCategory(){
+            return getPrimaryChildProductCategory().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPrimaryChildProductCategory().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProdCatalogCategory> getProdCatalogCategory(){
+            return getRelationValues(ctx, p1, "prod_catalog_category", ProdCatalogCategory.class);
+        }
+
+        public List<ProdCatalogCategory> mergeProdCatalogCategory(){
+            return getProdCatalogCategory().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProdCatalogCategory().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Product> getPrimaryProduct(){
+            return getRelationValues(ctx, p1, "primary_product", Product.class);
+        }
+
+        public List<Product> mergePrimaryProduct(){
+            return getPrimaryProduct().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPrimaryProduct().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductCategoryContent> getProductCategoryContent(){
+            return getRelationValues(ctx, p1, "product_category_content", ProductCategoryContent.class);
+        }
+
+        public List<ProductCategoryContent> mergeProductCategoryContent(){
+            return getProductCategoryContent().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductCategoryContent().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductCategoryLink> getProductCategoryLink(){
+            return getRelationValues(ctx, p1, "product_category_link", ProductCategoryLink.class);
+        }
+
+        public List<ProductCategoryLink> mergeProductCategoryLink(){
+            return getProductCategoryLink().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductCategoryLink().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductCategoryMember> getProductCategoryMember(){
+            return getRelationValues(ctx, p1, "product_category_member", ProductCategoryMember.class);
+        }
+
+        public List<ProductCategoryMember> mergeProductCategoryMember(){
+            return getProductCategoryMember().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductCategoryMember().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductCategoryRole> getProductCategoryRole(){
+            return getRelationValues(ctx, p1, "product_category_role", ProductCategoryRole.class);
+        }
+
+        public List<ProductCategoryRole> mergeProductCategoryRole(){
+            return getProductCategoryRole().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductCategoryRole().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductCategoryRollup> getCurrentProductCategoryRollup(){
+            return getRelationValues(ctx, p1, "current_product_category_rollup", ProductCategoryRollup.class);
+        }
+
+        public List<ProductCategoryRollup> mergeCurrentProductCategoryRollup(){
+            return getCurrentProductCategoryRollup().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCurrentProductCategoryRollup().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductCategoryRollup> getParentProductCategoryRollup(){
+            return getRelationValues(ctx, p1, "parent_product_category_rollup", ProductCategoryRollup.class);
+        }
+
+        public List<ProductCategoryRollup> mergeParentProductCategoryRollup(){
+            return getParentProductCategoryRollup().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelParentProductCategoryRollup().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductFeatureCategoryAppl> getProductFeatureCategoryAppl(){
+            return getRelationValues(ctx, p1, "product_feature_category_appl", ProductFeatureCategoryAppl.class);
+        }
+
+        public List<ProductFeatureCategoryAppl> mergeProductFeatureCategoryAppl(){
+            return getProductFeatureCategoryAppl().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductFeatureCategoryAppl().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductPromoCategory> getProductPromoCategory(){
+            return getRelationValues(ctx, p1, "product_promo_category", ProductPromoCategory.class);
+        }
+
+        public List<ProductPromoCategory> mergeProductPromoCategory(){
+            return getProductPromoCategory().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductPromoCategory().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductStoreSurveyAppl> getProductStoreSurveyAppl(){
+            return getRelationValues(ctx, p1, "product_store_survey_appl", ProductStoreSurveyAppl.class);
+        }
+
+        public List<ProductStoreSurveyAppl> mergeProductStoreSurveyAppl(){
+            return getProductStoreSurveyAppl().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductStoreSurveyAppl().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<TaxAuthorityCategory> getTaxAuthorityCategory(){
+            return getRelationValues(ctx, p1, "tax_authority_category", TaxAuthorityCategory.class);
+        }
+
+        public List<TaxAuthorityCategory> mergeTaxAuthorityCategory(){
+            return getTaxAuthorityCategory().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTaxAuthorityCategory().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<TaxAuthorityRateProduct> getTaxAuthorityRateProduct(){
+            return getRelationValues(ctx, p1, "tax_authority_rate_product", TaxAuthorityRateProduct.class);
+        }
+
+        public List<TaxAuthorityRateProduct> mergeTaxAuthorityRateProduct(){
+            return getTaxAuthorityRateProduct().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTaxAuthorityRateProduct().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        ProductCategoryData p = ProductCategoryData.newBuilder()
+                .setProductCategoryId(key)
+                .build();
+        ProductCategory rec = findOne(ctx, p, ProductCategory.class);
+        return new Agent(ctx, rec);
     }
 
          

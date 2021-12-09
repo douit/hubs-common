@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.PartyFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.PartyData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = PartyData.class,
+        symbol = EntityNames.Party)
 public class Party implements IEventModel<PartyFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -116,7 +124,69 @@ public class Party implements IEventModel<PartyFlatData.Builder>, Serializable {
                 .build();
     }
 
-        
+        // relations
+     
+    List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
+    List<UserLogin> relLastModifiedByUserLogin= new ArrayList<>(); 
+    List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    List<AcctgTransEntry> relAcctgTransEntry= new ArrayList<>(); 
+    List<Agreement> relFromAgreement= new ArrayList<>(); 
+    List<Agreement> relToAgreement= new ArrayList<>(); 
+    List<BillingAccountRole> relBillingAccountRole= new ArrayList<>(); 
+    List<CarrierShipmentBoxType> relCarrierShipmentBoxType= new ArrayList<>(); 
+    List<CarrierShipmentMethod> relCarrierShipmentMethod= new ArrayList<>(); 
+    List<CommunicationEvent> relToCommunicationEvent= new ArrayList<>(); 
+    List<CommunicationEvent> relFromCommunicationEvent= new ArrayList<>(); 
+    List<CommunicationEventRole> relCommunicationEventRole= new ArrayList<>(); 
+    List<ContentRole> relContentRole= new ArrayList<>(); 
+    List<CustRequest> relFromCustRequest= new ArrayList<>(); 
+    List<CustRequestType> relCustRequestType= new ArrayList<>(); 
+    List<FinAccount> relOrganizationFinAccount= new ArrayList<>(); 
+    List<FinAccount> relOwnerFinAccount= new ArrayList<>(); 
+    List<FixedAsset> relFixedAsset= new ArrayList<>(); 
+    List<InventoryItem> relInventoryItem= new ArrayList<>(); 
+    List<InventoryItem> relOwnerInventoryItem= new ArrayList<>(); 
+    List<Invoice> relFromInvoice= new ArrayList<>(); 
+    List<Invoice> relInvoice= new ArrayList<>(); 
+    List<InvoiceItem> relTaxAuthorityInvoiceItem= new ArrayList<>(); 
+    List<InvoiceItem> relOverrideOrgInvoiceItem= new ArrayList<>(); 
+    List<InvoiceRole> relInvoiceRole= new ArrayList<>(); 
+    List<OrderItemShipGroup> relSupplierOrderItemShipGroup= new ArrayList<>(); 
+    List<OrderItemShipGroup> relVendorOrderItemShipGroup= new ArrayList<>(); 
+    List<OrderItemShipGroup> relCarrierOrderItemShipGroup= new ArrayList<>(); 
+    List<OrderRole> relOrderRole= new ArrayList<>(); 
+    List<PartyContactMech> relPartyContactMech= new ArrayList<>(); 
+    List<PartyContactMechPurpose> relPartyContactMechPurpose= new ArrayList<>(); 
+    List<PartyGeoPoint> relPartyGeoPoint= new ArrayList<>(); 
+    List<PartyGroup> relPartyGroup= new ArrayList<>(); 
+    List<PartyIdentification> relPartyIdentification= new ArrayList<>(); 
+    List<PartyRelationship> relFromPartyRelationship= new ArrayList<>(); 
+    List<PartyRelationship> relToPartyRelationship= new ArrayList<>(); 
+    List<PartyRole> relPartyRole= new ArrayList<>(); 
+    List<PartyStatus> relPartyStatus= new ArrayList<>(); 
+    List<PartyTaxAuthInfo> relPartyTaxAuthInfo= new ArrayList<>(); 
+    List<Payment> relFromPayment= new ArrayList<>(); 
+    List<Payment> relToPayment= new ArrayList<>(); 
+    List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
+    List<Person> relPerson= new ArrayList<>(); 
+    List<ProductCategoryRole> relProductCategoryRole= new ArrayList<>(); 
+    List<ProductPrice> relTaxAuthorityProductPrice= new ArrayList<>(); 
+    List<ProductPromo> relProductPromo= new ArrayList<>(); 
+    List<ProductStore> relProductStore= new ArrayList<>(); 
+    List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
+    List<ProductStoreShipmentMeth> relProductStoreShipmentMeth= new ArrayList<>(); 
+    List<Quote> relQuote= new ArrayList<>(); 
+    List<QuoteRole> relQuoteRole= new ArrayList<>(); 
+    List<Shipment> relToShipment= new ArrayList<>(); 
+    List<Shipment> relFromShipment= new ArrayList<>(); 
+    List<ShipmentCostEstimate> relShipmentCostEstimate= new ArrayList<>(); 
+    List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
+    List<SupplierProduct> relSupplierProduct= new ArrayList<>(); 
+    List<SupplierProductFeature> relSupplierProductFeature= new ArrayList<>(); 
+    List<TaxAuthority> relTaxAuthTaxAuthority= new ArrayList<>(); 
+    List<TaxAuthorityGlAccount> relOrganizationTaxAuthorityGlAccount= new ArrayList<>(); 
+    List<UserLogin> relUserLogin= new ArrayList<>();
+
     public PartyData.Builder toHeadBuilder() {
         PartyData.Builder builder = PartyData.newBuilder();
         if (partyId != null) {

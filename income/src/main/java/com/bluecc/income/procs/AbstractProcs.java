@@ -299,6 +299,11 @@ public class AbstractProcs {
                 .map(name -> name + " = :" + name)
                 .collect(Collectors.toList());
 
+        if(fieldsCond.isEmpty()){
+            log.warn("no fields to update.");
+            return 0;
+        }
+
         int total = ctx.getHandle().createUpdate("update <table> set <fields_cond> where <id_cond>")
                 .define("table", tableInfo.table)
                 .defineList("fields_cond", fieldsCond)

@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.ShipmentFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.ShipmentData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = ShipmentData.class,
+        symbol = EntityNames.Shipment)
 public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -206,7 +214,35 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
                 .build();
     }
 
-        
+        // relations
+     
+    List<WorkEffort> relEstimatedShipWorkEffort= new ArrayList<>(); 
+    List<WorkEffort> relEstimatedArrivalWorkEffort= new ArrayList<>(); 
+    List<ContactMech> relOriginContactMech= new ArrayList<>(); 
+    List<ContactMech> relDestContactMech= new ArrayList<>(); 
+    List<PostalAddress> relOriginPostalAddress= new ArrayList<>(); 
+    List<TelecomNumber> relOriginTelecomNumber= new ArrayList<>(); 
+    List<PostalAddress> relDestinationPostalAddress= new ArrayList<>(); 
+    List<TelecomNumber> relDestinationTelecomNumber= new ArrayList<>(); 
+    List<OrderHeader> relPrimaryOrderHeader= new ArrayList<>(); 
+    List<OrderItemShipGroup> relPrimaryOrderItemShipGroup= new ArrayList<>(); 
+    List<Party> relToParty= new ArrayList<>(); 
+    List<Person> relToPerson= new ArrayList<>(); 
+    List<PartyGroup> relToPartyGroup= new ArrayList<>(); 
+    List<Party> relFromParty= new ArrayList<>(); 
+    List<Person> relFromPerson= new ArrayList<>(); 
+    List<PartyGroup> relFromPartyGroup= new ArrayList<>(); 
+    List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
+    List<ShipmentItem> relShipmentItem= new ArrayList<>(); 
+    List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>(); 
+    List<ShipmentPackage> relShipmentPackage= new ArrayList<>(); 
+    List<ShipmentPackageContent> relShipmentPackageContent= new ArrayList<>(); 
+    List<ShipmentPackageRouteSeg> relShipmentPackageRouteSeg= new ArrayList<>(); 
+    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    List<ShipmentRouteSegment> relShipmentRouteSegment= new ArrayList<>(); 
+    List<ShipmentStatus> relShipmentStatus= new ArrayList<>();
+
     public ShipmentData.Builder toHeadBuilder() {
         ShipmentData.Builder builder = ShipmentData.newBuilder();
         if (shipmentId != null) {

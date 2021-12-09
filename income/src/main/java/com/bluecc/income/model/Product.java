@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.ProductFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.ProductData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = ProductData.class,
+        symbol = EntityNames.Product)
 public class Product implements IEventModel<ProductFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -406,7 +414,43 @@ public class Product implements IEventModel<ProductFlatData.Builder>, Serializab
                 .build();
     }
 
-        
+        // relations
+     
+    List<ProductCategory> relPrimaryProductCategory= new ArrayList<>(); 
+    List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
+    List<UserLogin> relLastModifiedByUserLogin= new ArrayList<>(); 
+    List<ShipmentBoxType> relDefaultShipmentBoxType= new ArrayList<>(); 
+    List<Agreement> relAgreement= new ArrayList<>(); 
+    List<AgreementProductAppl> relAgreementProductAppl= new ArrayList<>(); 
+    List<CustRequestItem> relCustRequestItem= new ArrayList<>(); 
+    List<FixedAsset> relInstanceOfFixedAsset= new ArrayList<>(); 
+    List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
+    List<InventoryItem> relInventoryItem= new ArrayList<>(); 
+    List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
+    List<OrderItem> relOrderItem= new ArrayList<>(); 
+    List<ProductAssoc> relMainProductAssoc= new ArrayList<>(); 
+    List<ProductAssoc> relAssocProductAssoc= new ArrayList<>(); 
+    List<ProductCategoryMember> relProductCategoryMember= new ArrayList<>(); 
+    List<ProductConfig> relProductProductConfig= new ArrayList<>(); 
+    List<ProductConfigProduct> relProductProductConfigProduct= new ArrayList<>(); 
+    List<ProductContent> relProductContent= new ArrayList<>(); 
+    List<ProductFacility> relProductFacility= new ArrayList<>(); 
+    List<ProductFacilityAssoc> relProductFacilityAssoc= new ArrayList<>(); 
+    List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
+    List<ProductFeatureAppl> relProductFeatureAppl= new ArrayList<>(); 
+    List<ProductKeyword> relProductKeyword= new ArrayList<>(); 
+    List<ProductPrice> relProductPrice= new ArrayList<>(); 
+    List<ProductPromoProduct> relProductPromoProduct= new ArrayList<>(); 
+    List<ProductReview> relProductReview= new ArrayList<>(); 
+    List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
+    List<ProductSubscriptionResource> relProductSubscriptionResource= new ArrayList<>(); 
+    List<QuoteItem> relQuoteItem= new ArrayList<>(); 
+    List<ShipmentItem> relShipmentItem= new ArrayList<>(); 
+    List<ShipmentPackageContent> relSubShipmentPackageContent= new ArrayList<>(); 
+    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    List<SupplierProduct> relSupplierProduct= new ArrayList<>(); 
+    List<WorkEffortGoodStandard> relWorkEffortGoodStandard= new ArrayList<>();
+
     public ProductData.Builder toHeadBuilder() {
         ProductData.Builder builder = ProductData.newBuilder();
         if (productId != null) {

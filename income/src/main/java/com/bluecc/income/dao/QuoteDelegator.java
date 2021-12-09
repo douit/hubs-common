@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.QuoteData;
 
 public class QuoteDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = Quote.class)
     public interface QuoteDao {
         @SqlQuery("select * from quote")
@@ -29,6 +38,95 @@ public class QuoteDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from quote")
         int countQuote();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final Quote rec;
+        final Message p1;
+        Quote persistObject;
+
+        Agent(IProc.ProcContext ctx, Quote rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public Quote getRecord(){
+            return rec;
+        }
+
+        public Quote merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<Party> getParty(){
+            return getRelationValues(ctx, p1, "party", Party.class);
+        }
+
+        public List<Party> mergeParty(){
+            return getParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductStore> getProductStore(){
+            return getRelationValues(ctx, p1, "product_store", ProductStore.class);
+        }
+
+        public List<ProductStore> mergeProductStore(){
+            return getProductStore().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductStore().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<QuoteItem> getQuoteItem(){
+            return getRelationValues(ctx, p1, "quote_item", QuoteItem.class);
+        }
+
+        public List<QuoteItem> mergeQuoteItem(){
+            return getQuoteItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelQuoteItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<QuoteRole> getQuoteRole(){
+            return getRelationValues(ctx, p1, "quote_role", QuoteRole.class);
+        }
+
+        public List<QuoteRole> mergeQuoteRole(){
+            return getQuoteRole().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelQuoteRole().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<QuoteTerm> getQuoteTerm(){
+            return getRelationValues(ctx, p1, "quote_term", QuoteTerm.class);
+        }
+
+        public List<QuoteTerm> mergeQuoteTerm(){
+            return getQuoteTerm().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelQuoteTerm().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        QuoteData p = QuoteData.newBuilder()
+                .setQuoteId(key)
+                .build();
+        Quote rec = findOne(ctx, p, Quote.class);
+        return new Agent(ctx, rec);
     }
 
          

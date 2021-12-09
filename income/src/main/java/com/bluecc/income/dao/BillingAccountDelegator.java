@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.BillingAccountData;
 
 public class BillingAccountDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = BillingAccount.class)
     public interface BillingAccountDao {
         @SqlQuery("select * from billing_account")
@@ -29,6 +38,106 @@ public class BillingAccountDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from billing_account")
         int countBillingAccount();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final BillingAccount rec;
+        final Message p1;
+        BillingAccount persistObject;
+
+        Agent(IProc.ProcContext ctx, BillingAccount rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public BillingAccount getRecord(){
+            return rec;
+        }
+
+        public BillingAccount merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<ContactMech> getContactMech(){
+            return getRelationValues(ctx, p1, "contact_mech", ContactMech.class);
+        }
+
+        public List<ContactMech> mergeContactMech(){
+            return getContactMech().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelContactMech().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PostalAddress> getPostalAddress(){
+            return getRelationValues(ctx, p1, "postal_address", PostalAddress.class);
+        }
+
+        public List<PostalAddress> mergePostalAddress(){
+            return getPostalAddress().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPostalAddress().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<BillingAccountRole> getBillingAccountRole(){
+            return getRelationValues(ctx, p1, "billing_account_role", BillingAccountRole.class);
+        }
+
+        public List<BillingAccountRole> mergeBillingAccountRole(){
+            return getBillingAccountRole().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelBillingAccountRole().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Invoice> getInvoice(){
+            return getRelationValues(ctx, p1, "invoice", Invoice.class);
+        }
+
+        public List<Invoice> mergeInvoice(){
+            return getInvoice().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelInvoice().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderHeader> getOrderHeader(){
+            return getRelationValues(ctx, p1, "order_header", OrderHeader.class);
+        }
+
+        public List<OrderHeader> mergeOrderHeader(){
+            return getOrderHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PaymentApplication> getPaymentApplication(){
+            return getRelationValues(ctx, p1, "payment_application", PaymentApplication.class);
+        }
+
+        public List<PaymentApplication> mergePaymentApplication(){
+            return getPaymentApplication().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPaymentApplication().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        BillingAccountData p = BillingAccountData.newBuilder()
+                .setBillingAccountId(key)
+                .build();
+        BillingAccount rec = findOne(ctx, p, BillingAccount.class);
+        return new Agent(ctx, rec);
     }
 
          

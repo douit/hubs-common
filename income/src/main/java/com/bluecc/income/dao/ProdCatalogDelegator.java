@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.ProdCatalogData;
 
 public class ProdCatalogDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = ProdCatalog.class)
     public interface ProdCatalogDao {
         @SqlQuery("select * from prod_catalog")
@@ -29,6 +38,62 @@ public class ProdCatalogDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from prod_catalog")
         int countProdCatalog();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final ProdCatalog rec;
+        final Message p1;
+        ProdCatalog persistObject;
+
+        Agent(IProc.ProcContext ctx, ProdCatalog rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public ProdCatalog getRecord(){
+            return rec;
+        }
+
+        public ProdCatalog merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<ProdCatalogCategory> getProdCatalogCategory(){
+            return getRelationValues(ctx, p1, "prod_catalog_category", ProdCatalogCategory.class);
+        }
+
+        public List<ProdCatalogCategory> mergeProdCatalogCategory(){
+            return getProdCatalogCategory().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProdCatalogCategory().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductStoreCatalog> getProductStoreCatalog(){
+            return getRelationValues(ctx, p1, "product_store_catalog", ProductStoreCatalog.class);
+        }
+
+        public List<ProductStoreCatalog> mergeProductStoreCatalog(){
+            return getProductStoreCatalog().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductStoreCatalog().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        ProdCatalogData p = ProdCatalogData.newBuilder()
+                .setProdCatalogId(key)
+                .build();
+        ProdCatalog rec = findOne(ctx, p, ProdCatalog.class);
+        return new Agent(ctx, rec);
     }
 
          

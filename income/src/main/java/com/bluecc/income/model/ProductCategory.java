@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.ProductCategoryData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = ProductCategoryData.class,
+        symbol = EntityNames.ProductCategory)
 public class ProductCategory implements IEventModel<ProductCategoryFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -111,7 +119,24 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
                 .build();
     }
 
-        
+        // relations
+     
+    List<ProductCategory> relPrimaryParentProductCategory= new ArrayList<>(); 
+    List<ProductCategory> relPrimaryChildProductCategory= new ArrayList<>(); 
+    List<ProdCatalogCategory> relProdCatalogCategory= new ArrayList<>(); 
+    List<Product> relPrimaryProduct= new ArrayList<>(); 
+    List<ProductCategoryContent> relProductCategoryContent= new ArrayList<>(); 
+    List<ProductCategoryLink> relProductCategoryLink= new ArrayList<>(); 
+    List<ProductCategoryMember> relProductCategoryMember= new ArrayList<>(); 
+    List<ProductCategoryRole> relProductCategoryRole= new ArrayList<>(); 
+    List<ProductCategoryRollup> relCurrentProductCategoryRollup= new ArrayList<>(); 
+    List<ProductCategoryRollup> relParentProductCategoryRollup= new ArrayList<>(); 
+    List<ProductFeatureCategoryAppl> relProductFeatureCategoryAppl= new ArrayList<>(); 
+    List<ProductPromoCategory> relProductPromoCategory= new ArrayList<>(); 
+    List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
+    List<TaxAuthorityCategory> relTaxAuthorityCategory= new ArrayList<>(); 
+    List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>();
+
     public ProductCategoryData.Builder toHeadBuilder() {
         ProductCategoryData.Builder builder = ProductCategoryData.newBuilder();
         if (productCategoryId != null) {

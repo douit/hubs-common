@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -19,6 +25,9 @@ import java.util.stream.Collectors;
 import com.bluecc.hubs.stub.{{ent.messageType}};
 
 public class {{ent.name}}Delegator extends AbstractProcs{
+
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(value = {{ent.name}}.class)
     public interface {{ent.name}}Dao {
@@ -31,6 +40,7 @@ public class {{ent.name}}Delegator extends AbstractProcs{
         int count{{ent.name}}();
     }
 
+{{agent_source}}
 {{query_rels}}
     
 }

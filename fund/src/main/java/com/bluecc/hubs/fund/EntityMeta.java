@@ -8,6 +8,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -416,6 +417,9 @@ public class EntityMeta {
                     break;
 
                 default:
+                    if(name.endsWith("FormatPattern")){
+                        value= StringUtils.replace(value, "\\", "\\\\");
+                    }
                     valuePart= isNumericField()?filterNum(rawValue):value;
             }
             return valuePart;
@@ -544,6 +548,12 @@ public class EntityMeta {
         public String getProtoName(){
             return Util.toSnakecase(name);
         }
+        public String getVarName(){
+            return Util.toVarName(name);
+        }
+        public String getRelVarName(){
+            return "rel"+name;
+        }
 
         public String getTableName(){
             return Util.toSnakecase(relEntityName);
@@ -591,6 +601,10 @@ public class EntityMeta {
         public String getRelationOp(){
             String prefix=type.equals("many")?"add":"set";
             return prefix+name;
+        }
+
+        public String getRelGetter(){
+            return "getRel"+name;
         }
 
         public boolean isHeadEntity() {

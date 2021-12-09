@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.QuoteFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.QuoteData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = QuoteData.class,
+        symbol = EntityNames.Quote)
 public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -116,7 +124,14 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable {
                 .build();
     }
 
-        
+        // relations
+     
+    List<Party> relParty= new ArrayList<>(); 
+    List<ProductStore> relProductStore= new ArrayList<>(); 
+    List<QuoteItem> relQuoteItem= new ArrayList<>(); 
+    List<QuoteRole> relQuoteRole= new ArrayList<>(); 
+    List<QuoteTerm> relQuoteTerm= new ArrayList<>();
+
     public QuoteData.Builder toHeadBuilder() {
         QuoteData.Builder builder = QuoteData.newBuilder();
         if (quoteId != null) {

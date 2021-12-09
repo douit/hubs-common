@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.ShipmentData;
 
 public class ShipmentDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = Shipment.class)
     public interface ShipmentDao {
         @SqlQuery("select * from shipment")
@@ -29,6 +38,326 @@ public class ShipmentDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from shipment")
         int countShipment();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final Shipment rec;
+        final Message p1;
+        Shipment persistObject;
+
+        Agent(IProc.ProcContext ctx, Shipment rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public Shipment getRecord(){
+            return rec;
+        }
+
+        public Shipment merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<WorkEffort> getEstimatedShipWorkEffort(){
+            return getRelationValues(ctx, p1, "estimated_ship_work_effort", WorkEffort.class);
+        }
+
+        public List<WorkEffort> mergeEstimatedShipWorkEffort(){
+            return getEstimatedShipWorkEffort().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelEstimatedShipWorkEffort().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<WorkEffort> getEstimatedArrivalWorkEffort(){
+            return getRelationValues(ctx, p1, "estimated_arrival_work_effort", WorkEffort.class);
+        }
+
+        public List<WorkEffort> mergeEstimatedArrivalWorkEffort(){
+            return getEstimatedArrivalWorkEffort().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelEstimatedArrivalWorkEffort().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ContactMech> getOriginContactMech(){
+            return getRelationValues(ctx, p1, "origin_contact_mech", ContactMech.class);
+        }
+
+        public List<ContactMech> mergeOriginContactMech(){
+            return getOriginContactMech().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOriginContactMech().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ContactMech> getDestContactMech(){
+            return getRelationValues(ctx, p1, "dest_contact_mech", ContactMech.class);
+        }
+
+        public List<ContactMech> mergeDestContactMech(){
+            return getDestContactMech().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelDestContactMech().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PostalAddress> getOriginPostalAddress(){
+            return getRelationValues(ctx, p1, "origin_postal_address", PostalAddress.class);
+        }
+
+        public List<PostalAddress> mergeOriginPostalAddress(){
+            return getOriginPostalAddress().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOriginPostalAddress().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<TelecomNumber> getOriginTelecomNumber(){
+            return getRelationValues(ctx, p1, "origin_telecom_number", TelecomNumber.class);
+        }
+
+        public List<TelecomNumber> mergeOriginTelecomNumber(){
+            return getOriginTelecomNumber().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOriginTelecomNumber().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PostalAddress> getDestinationPostalAddress(){
+            return getRelationValues(ctx, p1, "destination_postal_address", PostalAddress.class);
+        }
+
+        public List<PostalAddress> mergeDestinationPostalAddress(){
+            return getDestinationPostalAddress().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelDestinationPostalAddress().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<TelecomNumber> getDestinationTelecomNumber(){
+            return getRelationValues(ctx, p1, "destination_telecom_number", TelecomNumber.class);
+        }
+
+        public List<TelecomNumber> mergeDestinationTelecomNumber(){
+            return getDestinationTelecomNumber().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelDestinationTelecomNumber().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderHeader> getPrimaryOrderHeader(){
+            return getRelationValues(ctx, p1, "primary_order_header", OrderHeader.class);
+        }
+
+        public List<OrderHeader> mergePrimaryOrderHeader(){
+            return getPrimaryOrderHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPrimaryOrderHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItemShipGroup> getPrimaryOrderItemShipGroup(){
+            return getRelationValues(ctx, p1, "primary_order_item_ship_group", OrderItemShipGroup.class);
+        }
+
+        public List<OrderItemShipGroup> mergePrimaryOrderItemShipGroup(){
+            return getPrimaryOrderItemShipGroup().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPrimaryOrderItemShipGroup().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Party> getToParty(){
+            return getRelationValues(ctx, p1, "to_party", Party.class);
+        }
+
+        public List<Party> mergeToParty(){
+            return getToParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelToParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Person> getToPerson(){
+            return getRelationValues(ctx, p1, "to_person", Person.class);
+        }
+
+        public List<Person> mergeToPerson(){
+            return getToPerson().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelToPerson().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PartyGroup> getToPartyGroup(){
+            return getRelationValues(ctx, p1, "to_party_group", PartyGroup.class);
+        }
+
+        public List<PartyGroup> mergeToPartyGroup(){
+            return getToPartyGroup().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelToPartyGroup().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Party> getFromParty(){
+            return getRelationValues(ctx, p1, "from_party", Party.class);
+        }
+
+        public List<Party> mergeFromParty(){
+            return getFromParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFromParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Person> getFromPerson(){
+            return getRelationValues(ctx, p1, "from_person", Person.class);
+        }
+
+        public List<Person> mergeFromPerson(){
+            return getFromPerson().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFromPerson().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PartyGroup> getFromPartyGroup(){
+            return getRelationValues(ctx, p1, "from_party_group", PartyGroup.class);
+        }
+
+        public List<PartyGroup> mergeFromPartyGroup(){
+            return getFromPartyGroup().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFromPartyGroup().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<AcctgTrans> getAcctgTrans(){
+            return getRelationValues(ctx, p1, "acctg_trans", AcctgTrans.class);
+        }
+
+        public List<AcctgTrans> mergeAcctgTrans(){
+            return getAcctgTrans().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelAcctgTrans().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ItemIssuance> getItemIssuance(){
+            return getRelationValues(ctx, p1, "item_issuance", ItemIssuance.class);
+        }
+
+        public List<ItemIssuance> mergeItemIssuance(){
+            return getItemIssuance().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelItemIssuance().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentItem> getShipmentItem(){
+            return getRelationValues(ctx, p1, "shipment_item", ShipmentItem.class);
+        }
+
+        public List<ShipmentItem> mergeShipmentItem(){
+            return getShipmentItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentItemBilling> getShipmentItemBilling(){
+            return getRelationValues(ctx, p1, "shipment_item_billing", ShipmentItemBilling.class);
+        }
+
+        public List<ShipmentItemBilling> mergeShipmentItemBilling(){
+            return getShipmentItemBilling().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentItemBilling().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentPackage> getShipmentPackage(){
+            return getRelationValues(ctx, p1, "shipment_package", ShipmentPackage.class);
+        }
+
+        public List<ShipmentPackage> mergeShipmentPackage(){
+            return getShipmentPackage().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentPackage().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentPackageContent> getShipmentPackageContent(){
+            return getRelationValues(ctx, p1, "shipment_package_content", ShipmentPackageContent.class);
+        }
+
+        public List<ShipmentPackageContent> mergeShipmentPackageContent(){
+            return getShipmentPackageContent().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentPackageContent().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentPackageRouteSeg> getShipmentPackageRouteSeg(){
+            return getRelationValues(ctx, p1, "shipment_package_route_seg", ShipmentPackageRouteSeg.class);
+        }
+
+        public List<ShipmentPackageRouteSeg> mergeShipmentPackageRouteSeg(){
+            return getShipmentPackageRouteSeg().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentPackageRouteSeg().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentReceipt> getShipmentReceipt(){
+            return getRelationValues(ctx, p1, "shipment_receipt", ShipmentReceipt.class);
+        }
+
+        public List<ShipmentReceipt> mergeShipmentReceipt(){
+            return getShipmentReceipt().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentReceipt().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentRouteSegment> getShipmentRouteSegment(){
+            return getRelationValues(ctx, p1, "shipment_route_segment", ShipmentRouteSegment.class);
+        }
+
+        public List<ShipmentRouteSegment> mergeShipmentRouteSegment(){
+            return getShipmentRouteSegment().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentRouteSegment().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentStatus> getShipmentStatus(){
+            return getRelationValues(ctx, p1, "shipment_status", ShipmentStatus.class);
+        }
+
+        public List<ShipmentStatus> mergeShipmentStatus(){
+            return getShipmentStatus().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        ShipmentData p = ShipmentData.newBuilder()
+                .setShipmentId(key)
+                .build();
+        Shipment rec = findOne(ctx, p, Shipment.class);
+        return new Agent(ctx, rec);
     }
 
          

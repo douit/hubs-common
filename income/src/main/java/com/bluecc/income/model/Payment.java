@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.PaymentFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.PaymentData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = PaymentData.class,
+        symbol = EntityNames.Payment)
 public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -151,7 +159,20 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
                 .build();
     }
 
-        
+        // relations
+     
+    List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
+    List<CreditCard> relCreditCard= new ArrayList<>(); 
+    List<EftAccount> relEftAccount= new ArrayList<>(); 
+    List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
+    List<PaymentGatewayResponse> relPaymentGatewayResponse= new ArrayList<>(); 
+    List<Party> relFromParty= new ArrayList<>(); 
+    List<Party> relToParty= new ArrayList<>(); 
+    List<PartyRole> relToPartyRole= new ArrayList<>(); 
+    List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
+    List<PaymentApplication> relToPaymentApplication= new ArrayList<>();
+
     public PaymentData.Builder toHeadBuilder() {
         PaymentData.Builder builder = PaymentData.newBuilder();
         if (paymentId != null) {

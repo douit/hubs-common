@@ -96,6 +96,10 @@ public class SeedReader {
             jsonObject.addProperty(camelCase?node.getNodeName():Util.toSnakecase(node.getNodeName()),
                     node.getNodeValue());
         }
+        List<Element> children=Util.childElements(element, null);
+        children.forEach(c -> jsonObject.addProperty(
+                camelCase?c.getTagName():Util.toSnakecase(c.getTagName()),
+                c.getTextContent()));
         return jsonObject;
     }
 

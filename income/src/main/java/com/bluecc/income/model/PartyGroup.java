@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.PartyGroupFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.PartyGroupData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = PartyGroupData.class,
+        symbol = EntityNames.PartyGroup)
 public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -101,7 +109,17 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
                 .build();
     }
 
-        
+        // relations
+     
+    List<Party> relParty= new ArrayList<>(); 
+    List<PartyContactMech> relPartyContactMech= new ArrayList<>(); 
+    List<PartyContactMechPurpose> relPartyContactMechPurpose= new ArrayList<>(); 
+    List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
+    List<Shipment> relToShipment= new ArrayList<>(); 
+    List<Shipment> relFromShipment= new ArrayList<>(); 
+    List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
+    List<UserLogin> relUserLogin= new ArrayList<>();
+
     public PartyGroupData.Builder toHeadBuilder() {
         PartyGroupData.Builder builder = PartyGroupData.newBuilder();
         if (partyId != null) {

@@ -109,7 +109,7 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
             ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
             ProductStore productStore = agent.merge();
             pretty(productStore);
-            System.out.println("-> " + productStore.getProductStorePaymentSetting());
+            System.out.println("-> " + productStore.getRelProductStorePaymentSetting());
 
             // agent.mergeProductStorePaymentSetting()
             //         .forEach(e -> pretty(e));

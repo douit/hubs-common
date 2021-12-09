@@ -2,6 +2,7 @@ package com.bluecc.hubs.fund;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +10,14 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.apache.commons.io.IOUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
@@ -140,5 +149,49 @@ public class Util {
                 .filter(f -> f.getName().toLowerCase(Locale.ROOT)
                         .endsWith(suffix))
                 .collect(Collectors.toList());
+    }
+
+    public static Element readXml(String dataFile) {
+        try {
+            // Get Document Builder
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            // Build Document
+            Document document = builder.parse(dataFile);
+
+            // Normalize the XML Structure; It's just too important !!
+            document.getDocumentElement().normalize();
+
+            // Here comes the root node
+            Element root = document.getDocumentElement();
+
+            return root;
+        }catch (Exception e){
+            throw new RuntimeException("Cannot read xml file "+dataFile, e);
+        }
+    }
+
+    public static List<Element> allElements(String dataFile, Predicate<Element> filter){
+        Element root = readXml(dataFile);
+        return childElements(root, filter);
+    }
+
+    public static List<Element> childElements(Element root, Predicate<Element> filter) {
+        NodeList nodeList= root.getChildNodes();
+        List<Element> rs= Lists.newArrayList();
+        for(int i=0;i<nodeList.getLength();++i) {
+            if (nodeList.item(i) instanceof Element) {
+                Element element = (Element) nodeList.item(i);
+                if(filter !=null){
+                    if(filter.test(element)){
+                        rs.add(element);
+                    }
+                }else {
+                    rs.add(element);
+                }
+            }
+        }
+        return rs;
     }
 }

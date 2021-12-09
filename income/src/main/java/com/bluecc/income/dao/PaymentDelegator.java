@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.PaymentData;
 
 public class PaymentDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = Payment.class)
     public interface PaymentDao {
         @SqlQuery("select * from payment")
@@ -29,6 +38,161 @@ public class PaymentDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from payment")
         int countPayment();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final Payment rec;
+        final Message p1;
+        Payment persistObject;
+
+        Agent(IProc.ProcContext ctx, Payment rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public Payment getRecord(){
+            return rec;
+        }
+
+        public Payment merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<PaymentMethod> getPaymentMethod(){
+            return getRelationValues(ctx, p1, "payment_method", PaymentMethod.class);
+        }
+
+        public List<PaymentMethod> mergePaymentMethod(){
+            return getPaymentMethod().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPaymentMethod().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<CreditCard> getCreditCard(){
+            return getRelationValues(ctx, p1, "credit_card", CreditCard.class);
+        }
+
+        public List<CreditCard> mergeCreditCard(){
+            return getCreditCard().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelCreditCard().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<EftAccount> getEftAccount(){
+            return getRelationValues(ctx, p1, "eft_account", EftAccount.class);
+        }
+
+        public List<EftAccount> mergeEftAccount(){
+            return getEftAccount().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelEftAccount().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderPaymentPreference> getOrderPaymentPreference(){
+            return getRelationValues(ctx, p1, "order_payment_preference", OrderPaymentPreference.class);
+        }
+
+        public List<OrderPaymentPreference> mergeOrderPaymentPreference(){
+            return getOrderPaymentPreference().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderPaymentPreference().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PaymentGatewayResponse> getPaymentGatewayResponse(){
+            return getRelationValues(ctx, p1, "payment_gateway_response", PaymentGatewayResponse.class);
+        }
+
+        public List<PaymentGatewayResponse> mergePaymentGatewayResponse(){
+            return getPaymentGatewayResponse().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPaymentGatewayResponse().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Party> getFromParty(){
+            return getRelationValues(ctx, p1, "from_party", Party.class);
+        }
+
+        public List<Party> mergeFromParty(){
+            return getFromParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFromParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Party> getToParty(){
+            return getRelationValues(ctx, p1, "to_party", Party.class);
+        }
+
+        public List<Party> mergeToParty(){
+            return getToParty().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelToParty().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PartyRole> getToPartyRole(){
+            return getRelationValues(ctx, p1, "to_party_role", PartyRole.class);
+        }
+
+        public List<PartyRole> mergeToPartyRole(){
+            return getToPartyRole().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelToPartyRole().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<AcctgTrans> getAcctgTrans(){
+            return getRelationValues(ctx, p1, "acctg_trans", AcctgTrans.class);
+        }
+
+        public List<AcctgTrans> mergeAcctgTrans(){
+            return getAcctgTrans().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelAcctgTrans().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PaymentApplication> getPaymentApplication(){
+            return getRelationValues(ctx, p1, "payment_application", PaymentApplication.class);
+        }
+
+        public List<PaymentApplication> mergePaymentApplication(){
+            return getPaymentApplication().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPaymentApplication().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PaymentApplication> getToPaymentApplication(){
+            return getRelationValues(ctx, p1, "to_payment_application", PaymentApplication.class);
+        }
+
+        public List<PaymentApplication> mergeToPaymentApplication(){
+            return getToPaymentApplication().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelToPaymentApplication().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        PaymentData p = PaymentData.newBuilder()
+                .setPaymentId(key)
+                .build();
+        Payment rec = findOne(ctx, p, Payment.class);
+        return new Agent(ctx, rec);
     }
 
          

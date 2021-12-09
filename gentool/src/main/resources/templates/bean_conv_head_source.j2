@@ -1,4 +1,8 @@
-    
+    // relations
+    {% for rel in ent.validRelations %} 
+    List<{{rel.relEntityName}}> {{rel.relVarName}}= new ArrayList<>();
+    {%- endfor %}
+
     public {{ent.messageType}}.Builder toHeadBuilder() {
         {{ent.messageType}}.Builder builder = {{ent.messageType}}.newBuilder();
         {% for f in ent.messageFields -%}

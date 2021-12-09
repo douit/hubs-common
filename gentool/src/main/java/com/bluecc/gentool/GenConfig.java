@@ -37,7 +37,7 @@ public class GenConfig {
     }
 
     public static GenConf loadConfig() throws IOException {
-        String cnt= Util.readFile("config/gen_conf.yml");
+        String cnt= Util.readFile(SystemDefs.prependHubsHome("config/gen_conf.yml"));
         Yaml yaml = new Yaml();
         GenConf obj = yaml.loadAs(cnt, GenConf.class);
         return obj;

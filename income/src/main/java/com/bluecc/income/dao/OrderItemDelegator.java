@@ -10,6 +10,12 @@ import java.util.Set;
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.income.exchange.IProc;
+
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
 import reactor.core.publisher.Flux;
@@ -20,6 +26,9 @@ import com.bluecc.hubs.stub.OrderItemData;
 
 public class OrderItemDelegator extends AbstractProcs{
 
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+
     @RegisterBeanMapper(value = OrderItem.class)
     public interface OrderItemDao {
         @SqlQuery("select * from order_item")
@@ -29,6 +38,227 @@ public class OrderItemDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from order_item")
         int countOrderItem();
+    }
+
+
+    public class Agent{
+        final IProc.ProcContext ctx;
+        final OrderItem rec;
+        final Message p1;
+        OrderItem persistObject;
+
+        Agent(IProc.ProcContext ctx, OrderItem rec){
+            this.ctx=ctx;
+            this.rec=rec;
+            this.p1=rec.toData();
+        }
+
+        public OrderItem getRecord(){
+            return rec;
+        }
+
+        public OrderItem merge(){
+            this.persistObject= liveObjectsProvider.get().merge(rec);
+            return persistObject;
+        }
+
+         
+        public List<OrderHeader> getOrderHeader(){
+            return getRelationValues(ctx, p1, "order_header", OrderHeader.class);
+        }
+
+        public List<OrderHeader> mergeOrderHeader(){
+            return getOrderHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Product> getProduct(){
+            return getRelationValues(ctx, p1, "product", Product.class);
+        }
+
+        public List<Product> mergeProduct(){
+            return getProduct().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProduct().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<InventoryItem> getFromInventoryItem(){
+            return getRelationValues(ctx, p1, "from_inventory_item", InventoryItem.class);
+        }
+
+        public List<InventoryItem> mergeFromInventoryItem(){
+            return getFromInventoryItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFromInventoryItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ProductFacilityLocation> getProductFacilityLocation(){
+            return getRelationValues(ctx, p1, "product_facility_location", ProductFacilityLocation.class);
+        }
+
+        public List<ProductFacilityLocation> mergeProductFacilityLocation(){
+            return getProductFacilityLocation().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelProductFacilityLocation().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<UserLogin> getDontCancelSetUserLogin(){
+            return getRelationValues(ctx, p1, "dont_cancel_set_user_login", UserLogin.class);
+        }
+
+        public List<UserLogin> mergeDontCancelSetUserLogin(){
+            return getDontCancelSetUserLogin().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelDontCancelSetUserLogin().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<QuoteItem> getQuoteItem(){
+            return getRelationValues(ctx, p1, "quote_item", QuoteItem.class);
+        }
+
+        public List<QuoteItem> mergeQuoteItem(){
+            return getQuoteItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelQuoteItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<UserLogin> getChangeByUserLogin(){
+            return getRelationValues(ctx, p1, "change_by_user_login", UserLogin.class);
+        }
+
+        public List<UserLogin> mergeChangeByUserLogin(){
+            return getChangeByUserLogin().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelChangeByUserLogin().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FixedAsset> getAcquireFixedAsset(){
+            return getRelationValues(ctx, p1, "acquire_fixed_asset", FixedAsset.class);
+        }
+
+        public List<FixedAsset> mergeAcquireFixedAsset(){
+            return getAcquireFixedAsset().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelAcquireFixedAsset().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ItemIssuance> getItemIssuance(){
+            return getRelationValues(ctx, p1, "item_issuance", ItemIssuance.class);
+        }
+
+        public List<ItemIssuance> mergeItemIssuance(){
+            return getItemIssuance().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelItemIssuance().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderAdjustment> getOrderAdjustment(){
+            return getRelationValues(ctx, p1, "order_adjustment", OrderAdjustment.class);
+        }
+
+        public List<OrderAdjustment> mergeOrderAdjustment(){
+            return getOrderAdjustment().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderAdjustment().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItemBilling> getOrderItemBilling(){
+            return getRelationValues(ctx, p1, "order_item_billing", OrderItemBilling.class);
+        }
+
+        public List<OrderItemBilling> mergeOrderItemBilling(){
+            return getOrderItemBilling().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderItemBilling().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItemPriceInfo> getOrderItemPriceInfo(){
+            return getRelationValues(ctx, p1, "order_item_price_info", OrderItemPriceInfo.class);
+        }
+
+        public List<OrderItemPriceInfo> mergeOrderItemPriceInfo(){
+            return getOrderItemPriceInfo().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderItemPriceInfo().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItemShipGroupAssoc> getOrderItemShipGroupAssoc(){
+            return getRelationValues(ctx, p1, "order_item_ship_group_assoc", OrderItemShipGroupAssoc.class);
+        }
+
+        public List<OrderItemShipGroupAssoc> mergeOrderItemShipGroupAssoc(){
+            return getOrderItemShipGroupAssoc().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderItemShipGroupAssoc().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderItemShipGrpInvRes> getOrderItemShipGrpInvRes(){
+            return getRelationValues(ctx, p1, "order_item_ship_grp_inv_res", OrderItemShipGrpInvRes.class);
+        }
+
+        public List<OrderItemShipGrpInvRes> mergeOrderItemShipGrpInvRes(){
+            return getOrderItemShipGrpInvRes().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderItemShipGrpInvRes().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderPaymentPreference> getOrderPaymentPreference(){
+            return getRelationValues(ctx, p1, "order_payment_preference", OrderPaymentPreference.class);
+        }
+
+        public List<OrderPaymentPreference> mergeOrderPaymentPreference(){
+            return getOrderPaymentPreference().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderPaymentPreference().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<OrderStatus> getOrderStatus(){
+            return getRelationValues(ctx, p1, "order_status", OrderStatus.class);
+        }
+
+        public List<OrderStatus> mergeOrderStatus(){
+            return getOrderStatus().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrderStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShipmentReceipt> getShipmentReceipt(){
+            return getRelationValues(ctx, p1, "shipment_receipt", ShipmentReceipt.class);
+        }
+
+        public List<ShipmentReceipt> mergeShipmentReceipt(){
+            return getShipmentReceipt().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShipmentReceipt().add(c))
+                    .collect(Collectors.toList());
+        }
+        
+
+    }
+
+    public Agent getAgent(IProc.ProcContext ctx, String key) {
+        OrderItemData p = OrderItemData.newBuilder()
+                .setId(key)
+                .build();
+        OrderItem rec = findOne(ctx, p, OrderItem.class);
+        return new Agent(ctx, rec);
     }
 
          

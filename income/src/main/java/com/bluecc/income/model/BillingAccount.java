@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.BillingAccountFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.BillingAccountData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = BillingAccountData.class,
+        symbol = EntityNames.BillingAccount)
 public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -96,7 +104,15 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
                 .build();
     }
 
-        
+        // relations
+     
+    List<ContactMech> relContactMech= new ArrayList<>(); 
+    List<PostalAddress> relPostalAddress= new ArrayList<>(); 
+    List<BillingAccountRole> relBillingAccountRole= new ArrayList<>(); 
+    List<Invoice> relInvoice= new ArrayList<>(); 
+    List<OrderHeader> relOrderHeader= new ArrayList<>(); 
+    List<PaymentApplication> relPaymentApplication= new ArrayList<>();
+
     public BillingAccountData.Builder toHeadBuilder() {
         BillingAccountData.Builder builder = BillingAccountData.newBuilder();
         if (billingAccountId != null) {

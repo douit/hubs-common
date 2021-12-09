@@ -5,12 +5,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
+
+import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.pubs.MessageObject;
 
 import com.bluecc.hubs.stub.InventoryItemFlatData;
 
@@ -22,6 +28,8 @@ import com.bluecc.hubs.stub.InventoryItemData;
 @NoArgsConstructor
 @AllArgsConstructor
 @REntity
+@MessageObject(value = InventoryItemData.class,
+        symbol = EntityNames.InventoryItem)
 public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -186,7 +194,24 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
                 .build();
     }
 
-        
+        // relations
+     
+    List<Product> relProduct= new ArrayList<>(); 
+    List<Party> relParty= new ArrayList<>(); 
+    List<Party> relOwnerParty= new ArrayList<>(); 
+    List<ProductFacility> relProductFacility= new ArrayList<>(); 
+    List<FacilityLocation> relFacilityLocation= new ArrayList<>(); 
+    List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
+    List<FixedAsset> relFixedAssetFixedAsset= new ArrayList<>(); 
+    List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    List<AcctgTransEntry> relAcctgTransEntry= new ArrayList<>(); 
+    List<InventoryItemDetail> relInventoryItemDetail= new ArrayList<>(); 
+    List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
+    List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
+    List<OrderItem> relFromOrderItem= new ArrayList<>(); 
+    List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
+    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
+
     public InventoryItemData.Builder toHeadBuilder() {
         InventoryItemData.Builder builder = InventoryItemData.newBuilder();
         if (inventoryItemId != null) {

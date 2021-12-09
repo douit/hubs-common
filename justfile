@@ -70,6 +70,9 @@ build:
 income:
 	mvn compile -f income/pom.xml
 
+saga:
+	mvn compile -f saga/pom.xml
+
 template tpl ent:
 	just gen TemplateGen -t {{tpl}} -e {{ent}}
 
