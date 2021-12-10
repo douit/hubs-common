@@ -40,8 +40,13 @@ public class PartyAlphaMesh {
         actorMain.tell(ReEnable.INSTANCE);
 
         actorMain.tell(Assigned.pack("by samlet"));
+
+        //+
+        //+
+
         sleep(2000);
         actorMain.terminate();
+
     }
 
     public interface Event {

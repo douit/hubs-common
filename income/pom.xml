@@ -193,7 +193,7 @@
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
-            <optional>true</optional>
+<!--            <optional>true</optional>-->
         </dependency>
         <dependency>
             <groupId>io.projectreactor</groupId>

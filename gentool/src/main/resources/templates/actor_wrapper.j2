@@ -1,0 +1,60 @@
+package com.bluecc.saga.meshes;
+
+import akka.actor.typed.Behavior;
+import akka.actor.typed.javadsl.ActorContext;
+import akka.actor.typed.javadsl.Behaviors;
+import com.bluecc.hubs.stub.*;
+import com.bluecc.income.procs.CommonData;
+import com.bluecc.income.procs.CommonData.PartyFromTo;
+import com.bluecc.income.procs.Orders;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public class {{obj.name}}Manipulator {
+    public interface Event {}
+
+    {% for proc in obj.processors %}
+    @Data
+    @AllArgsConstructor
+    public static final class {{proc.className}} implements Event {
+        {%- for param in proc.params %}
+        {{param.typeName}} {{param.name}};
+        {%- endfor %}
+    }
+    {% endfor %}
+
+    public static class {{obj.name}}Wrapper {
+        public static Behavior<Event> create({{obj.name}} mani) {
+            return Behaviors.setup(ctx -> new {{obj.name}}Wrapper(ctx, mani).behavior());
+        }
+
+        private final ActorContext<Event> context;
+        {{obj.name}} mani;
+        private {{obj.name}}Wrapper(ActorContext<Event> context, {{obj.name}} mani) {
+            this.context = context;
+            this.mani=mani;
+        }
+
+        private Behavior<Event> behavior() {
+            return Behaviors.receive(Event.class)
+                    {%- for proc in obj.processors %}
+                    .onMessage({{proc.className}}.class, this::on{{proc.className}})
+                    {%- endfor %}
+                    .build();
+        }
+
+        {% for proc in obj.processors %}
+        private Behavior<Event> on{{proc.className}}({{proc.className}} message) {
+            context.getLog().info("{{proc.className}}: {}", message.getClass().getSimpleName());
+            mani.{{proc.name}}({%- for param in proc.params %}
+                message.{{param.name}}{% if not loop.last %},{% endif %}
+                {%- endfor %});                
+            
+            return Behaviors.same();
+        }
+        {% endfor %}
+    }
+}

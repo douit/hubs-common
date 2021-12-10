@@ -49,5 +49,6 @@ public class ProtoEnumTest {
 
         System.out.println(Indicator.valueOf("NO"));
         System.out.println(Indicator.forNumber(0));
+        System.out.println(enumVal.getType().getName());
     }
 }

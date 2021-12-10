@@ -124,6 +124,9 @@ public class Util {
         writer.close();
     }
 
+    public static void writeFile(String string, Path path) throws IOException {
+        writeFile(string, path.toFile());
+    }
     public static void writeFile(String string, File file) throws IOException {
         Writer writer=new FileWriter(file);
         writer.write(string);

@@ -1,18 +1,24 @@
 package com.bluecc.saga.alphaworks;
 
+import com.bluecc.gentool.common.TemplateUtil;
 import com.bluecc.hubs.fund.Printers;
+import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.pubs.Exclude;
 import com.bluecc.hubs.fund.pubs.Persist;
 import com.bluecc.hubs.fund.pubs.StatusUpdater;
 import com.bluecc.income.procs.Orders;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +28,19 @@ import static java.util.Objects.requireNonNull;
 
 public class AlphaGenerator {
     static boolean verbose=false;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Class<?> clz=Orders.class;
         ExecutorInfo info=extractClassInfo(clz);
         // pretty(info);
         System.out.println(info.asTreeNode().toString());
+
+        String cnt= TemplateUtil.build("templates/actor_wrapper.j2",
+                ImmutableMap.of("obj", info));
+        System.out.println(cnt);
+        String targetDir="saga/src/main/java/com/bluecc/saga/meshes";
+        Path targetFile= Paths.get(targetDir,
+                String.format("%sManipulator.java", info.name));
+        Util.writeFile(cnt, targetFile);
     }
 
     public enum ExecuteType{
@@ -58,6 +72,10 @@ public class AlphaGenerator {
         ExecuteType executeType;
         String name;
         List<ParamInfo> params;
+
+        public String getClassName(){
+            return Util.toClassName(name);
+        }
 
         public Printers.TreeNode asTreeNode(){
             return Printers.TreeNode.builder()

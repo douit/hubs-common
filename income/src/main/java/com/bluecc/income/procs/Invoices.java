@@ -10,6 +10,7 @@ import static com.bluecc.hubs.ProtoTypes.getTimestamp;
 import static com.bluecc.hubs.ProtoTypes.nowTimestamp;
 
 public class Invoices extends InvoiceDelegator {
+
     public InvoiceFlatData createInvoice(LocalDateTime dueDate) {
         return InvoiceFlatData.newBuilder()
                 .setCurrencyUomId("USD")

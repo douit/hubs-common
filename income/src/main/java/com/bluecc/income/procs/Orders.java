@@ -15,13 +15,15 @@ import static com.bluecc.hubs.ProtoTypes.getCurrency;
 public class Orders extends OrderHeaderDelegator {
 
     @Persist
-    public OrderHeaderFlatData createOrderHeader() {
+    public OrderHeaderFlatData createOrderHeader(
+            PartyFlatData createdBy,
+            BigDecimal grandTotal) {
         return OrderHeaderFlatData.newBuilder()
-                .setCreatedBy("admin")
+                .setCreatedBy(createdBy.getPartyId())
                 .setCurrencyUom("USD")
-                .setEntryDate(getTimestamp("2009-08-17 14:23:49.475"))
-                .setGrandTotal(getCurrency("127.09"))
-                .setOrderDate(getTimestamp("2009-08-17 14:23:49.475"))
+                .setEntryDate(nowTimestamp())
+                .setGrandTotal(getCurrency(grandTotal))
+                .setOrderDate(nowTimestamp())
                 .setOrderId(sequence.nextStringId())
                 .setOrderName("Demo Sales Order")
                 .setOrderTypeId("SALES_ORDER")
@@ -37,8 +39,8 @@ public class Orders extends OrderHeaderDelegator {
 
     @Persist
     public OrderItemFlatData addOrderItem(OrderHeaderFlatData order,
-                                                 String seqId,
-                                                 String productId) {
+                                          String seqId,
+                                          String productId) {
         return OrderItemFlatData.newBuilder()
                 .setIsModifiedPrice(castIndicator("N"))
                 .setIsPromo(castIndicator("N"))
@@ -72,10 +74,10 @@ public class Orders extends OrderHeaderDelegator {
 
     @Persist
     public InvoiceItemFlatData addInvoiceItem(InvoiceFlatData invoice,
-                                                     String seqId,
-                                                     String inventoryItemId,
-                                                     BigDecimal amount,
-                                                     BigDecimal quantity) {
+                                              String seqId,
+                                              String inventoryItemId,
+                                              BigDecimal amount,
+                                              BigDecimal quantity) {
         return InvoiceItemFlatData.newBuilder()
                 .setAmount(getCurrency(amount))
                 .setDescription("Micro Chrome Widget")
@@ -129,8 +131,8 @@ public class Orders extends OrderHeaderDelegator {
 
     @Persist
     public ShipmentItemData addShipmentItem(ShipmentFlatData shipment,
-                                                   String seqId,
-                                                   BigDecimal quantity) {
+                                            String seqId,
+                                            BigDecimal quantity) {
         return ShipmentItemData.newBuilder()
                 .setProductId("WG-1111")
                 .setQuantity(getFixedPoint(quantity))
@@ -155,9 +157,9 @@ public class Orders extends OrderHeaderDelegator {
     }
 
     @StatusUpdater("Order")
-    public void setOrderStatus(OrderHeaderFlatData order, String statusId){
-        process(c ->{
-            OrderStatusData statusData=addOrderStatus(order, statusId);
+    public void setOrderStatus(OrderHeaderFlatData order, String statusId) {
+        process(c -> {
+            OrderStatusData statusData = addOrderStatus(order, statusId);
             create(c, statusData);
             // OrderHeader orderHeader=findOne(c, order, OrderHeader.class);
             // orderHeader.setStatusId(statusId); // StatusItem
