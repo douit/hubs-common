@@ -78,6 +78,18 @@ public class ModelTransition {
             }
             return prefix;
         }
+
+        public String getStateComments(String state){
+            Printers.TreeNode node = Printers.TreeNode.builder()
+                    .name(getName())
+                    .data(state)
+                    .children(
+                            collectToTreeNodes(transitions, state))
+                    .build();
+
+            // System.out.println(node.toStringPrefix("//\t"));
+            return node.toStringPrefix("//\t");
+        }
     }
 
     static String toVar(String s){
@@ -218,6 +230,13 @@ public class ModelTransition {
 
     }
 
-
-
+    private static List<Printers.TreeNode> collectToTreeNodes(ModelTransition.StatusTransitions mesh, String state) {
+        return mesh.getFromTransitions(state)
+                .stream()
+                .map(change -> Printers.TreeNode.builder()
+                        .name(change.getTransitionName())
+                        .data(change.getTo().getDescription())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

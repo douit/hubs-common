@@ -1,4 +1,4 @@
-package com.bluecc.saga.common;
+package com.bluecc.saga.alphaworks;
 
 import akka.Done;
 import akka.actor.typed.ActorRef;
@@ -6,6 +6,9 @@ import akka.actor.typed.ActorSystem;
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.ActorContext;
 import akka.actor.typed.javadsl.Behaviors;
+import com.bluecc.hubs.stub.Envelope;
+import com.bluecc.hubs.stub.StringValue;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+import static com.bluecc.hubs.ProtoTypes.packEntity;
 import static java.lang.Thread.sleep;
 
 @Slf4j
@@ -35,7 +39,7 @@ public class PartyAlphaMesh {
         sleep(1000);
         actorMain.tell(ReEnable.INSTANCE);
 
-        actorMain.tell(Assigned.INSTANCE);
+        actorMain.tell(Assigned.pack("by samlet"));
         sleep(2000);
         actorMain.terminate();
     }
@@ -52,20 +56,30 @@ public class PartyAlphaMesh {
         }
     }
 
+    public enum ResultCode{
+        OK, ERR
+    }
     @Data
     @Builder
     public static class Result implements Event {
-        String status;
+        ResultCode status;
+        String message;
     }
 
-    public enum DefaultStart implements Event {
-        INSTANCE
-    }
+    // public enum DefaultStart implements Event {
+    //     INSTANCE
+    // }
 
     // transitions
-
-    public enum Assigned implements Event {
-        INSTANCE
+    @Data
+    @AllArgsConstructor
+    public static final class Assigned implements Event {
+        Envelope data;
+        public static Assigned pack(String cnt){
+            return new Assigned(packEntity(StringValue.newBuilder()
+                    .setValue(cnt)
+                    .build()));
+        }
     }
 
     public enum ReEnable implements Event {
@@ -107,23 +121,32 @@ public class PartyAlphaMesh {
                 return context;
             }
 
-            private Behavior<Event> leadAssigned(Assigned data) {
+            private Behavior<Event> leadAssignedProposal(Assigned data) {
                 CompletionStage<Done> futureResult = dataAccessor.update(data);
                 getContext().pipeToSelf(
                         futureResult,
                         (ok, exc) -> {
                             return Result.builder()
-                                    .status("ok")
+                                    .status(ResultCode.OK)
                                     .build();
                         });
                 // do something ...
                 // return Behaviors.same();
                 return Behaviors.receive(Event.class)
                         .onMessage(Result.class, message -> {
-                            log.info("update done: {}", message);
-                            return Behaviors.same();
+                            if(message.getStatus().equals(ResultCode.OK)) {
+                                log.info("update done: {}", message);
+                                return leadAssigned(data);
+                            }else{
+                                log.info("update fail: {}", message);
+                                return Behaviors.same();
+                            }
                         })
                         .build();
+            }
+
+            private Behavior<Event> leadAssigned(Assigned data) {
+                return Behaviors.same();
             }
 
             private Behavior<Event> leadConverted(ConvertLeadToContact data) {
@@ -143,7 +166,7 @@ public class PartyAlphaMesh {
                 log.info("-> partyEnabled {}/{}", data.getDeclaringClass().getSimpleName(), data);
                 return Behaviors.receive(Event.class)
                         .onMessage(Disable.class, message -> partyDisabled(message))
-                        .onMessage(Assigned.class, message -> leadAssigned(message))
+                        .onMessage(Assigned.class, message -> leadAssignedProposal(message))
                         .onMessage(ConvertLeadToContact.class, message -> leadConverted(message))
                         .build();
             }

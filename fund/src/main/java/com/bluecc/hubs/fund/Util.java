@@ -1,12 +1,11 @@
 package com.bluecc.hubs.fund;
 
+import com.bluecc.hubs.fund.pubs.Exclude;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
+import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.apache.commons.io.IOUtils;
@@ -15,6 +14,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,6 +24,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -82,12 +85,25 @@ public class Util {
         }
     }
 
+    static ExclusionStrategy strategy = new ExclusionStrategy() {
+        @Override
+        public boolean shouldSkipClass(Class<?> clazz) {
+            return false;
+        }
+
+        @Override
+        public boolean shouldSkipField(FieldAttributes field) {
+            return field.getAnnotation(Exclude.class) != null;
+        }
+    };
+
     public static final Gson GSON = new GsonBuilder()
             // .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
 //            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
             .setPrettyPrinting()
+            .setExclusionStrategies(strategy)
             .create();
 
     public static void pretty(Object o){
@@ -201,5 +217,34 @@ public class Util {
 
     public static String getWordsFirstLetters(String str){
         return str.replaceAll("\\B.|\\P{L}", "").toUpperCase();
+    }
+
+    /**
+     * Computes the HMAC/SHA-256 code for a given key and message.
+     *
+     * @param key the key used to generate the code.
+     * @param message the message.
+     * @return the code as a string.
+     */
+    public static String computeHmacSha256(String key, String message)
+            throws NoSuchAlgorithmException, InvalidKeyException {
+        Mac hasher = Mac.getInstance("HmacSHA256");
+        hasher.init(new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
+        byte[] hash = hasher.doFinal(message.getBytes(StandardCharsets.UTF_8));
+        String result = "";
+        for (byte b : hash) {
+            result += Integer.toString((b & 0xff) + 0x100, 16).substring(1);
+        }
+        return result;
+    }
+
+    /**
+     * Returns the current UTC timestamp in seconds.
+     *
+     * @return the timestamp as a long.
+     */
+    public static long getTimeNow() {
+        long time = System.currentTimeMillis() / 1000L;
+        return time;
     }
 }

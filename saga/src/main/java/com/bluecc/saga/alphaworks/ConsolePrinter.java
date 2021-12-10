@@ -1,4 +1,4 @@
-package com.bluecc.saga.common;
+package com.bluecc.saga.alphaworks;
 
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.Behaviors;
@@ -6,7 +6,6 @@ import akka.actor.typed.javadsl.Behaviors;
 public class ConsolePrinter {
     public static class PrintMe {
         public final String message;
-
         public PrintMe(String message) {
             this.message = message;
         }

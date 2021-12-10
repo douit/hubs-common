@@ -3,7 +3,7 @@ package com.bluecc.saga.meshes;
 import akka.actor.typed.ActorRef;
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.Behaviors;
-import com.bluecc.saga.common.ConsolePrinter;
+import com.bluecc.saga.alphaworks.ConsolePrinter;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

@@ -1,11 +1,10 @@
 package com.bluecc.income.procs;
 
-import com.bluecc.hubs.ProtoTypes;
+import com.bluecc.hubs.fund.pubs.Persist;
+import com.bluecc.hubs.fund.pubs.StatusUpdater;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.dao.OrderHeaderDelegator;
-import com.bluecc.income.model.OrderHeader;
 import com.bluecc.income.procs.CommonData.PartyFromTo;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +14,7 @@ import static com.bluecc.hubs.ProtoTypes.getCurrency;
 
 public class Orders extends OrderHeaderDelegator {
 
+    @Persist
     public OrderHeaderFlatData createOrderHeader() {
         return OrderHeaderFlatData.newBuilder()
                 .setCreatedBy("admin")
@@ -35,6 +35,7 @@ public class Orders extends OrderHeaderDelegator {
                 .build();
     }
 
+    @Persist
     public OrderItemFlatData addOrderItem(OrderHeaderFlatData order,
                                                  String seqId,
                                                  String productId) {
@@ -55,6 +56,7 @@ public class Orders extends OrderHeaderDelegator {
                 .build();
     }
 
+    @Persist
     public InvoiceFlatData createInvoice(PartyFromTo fromTo, LocalDateTime paidDate) {
         return InvoiceFlatData.newBuilder()
                 .setCurrencyUomId("USD")
@@ -68,6 +70,7 @@ public class Orders extends OrderHeaderDelegator {
                 .build();
     }
 
+    @Persist
     public InvoiceItemFlatData addInvoiceItem(InvoiceFlatData invoice,
                                                      String seqId,
                                                      String inventoryItemId,
@@ -85,7 +88,8 @@ public class Orders extends OrderHeaderDelegator {
                 .build();
     }
 
-    public static OrderItemBillingData addOrderItemBilling(
+    @Persist
+    public OrderItemBillingData addOrderItemBilling(
             OrderItemFlatData orderItem,
             InvoiceItemFlatData invoiceItem,
             ItemIssuanceData itemIssuance) {
@@ -101,6 +105,7 @@ public class Orders extends OrderHeaderDelegator {
                 .build();
     }
 
+    @Persist
     public ShipmentFlatData createShipment(PartyFromTo fromTo,
                                            OrderHeaderFlatData order,
                                            BigDecimal estimatedShipCost) {
@@ -122,7 +127,8 @@ public class Orders extends OrderHeaderDelegator {
                 .build();
     }
 
-    public static ShipmentItemData addShipmentItem(ShipmentFlatData shipment,
+    @Persist
+    public ShipmentItemData addShipmentItem(ShipmentFlatData shipment,
                                                    String seqId,
                                                    BigDecimal quantity) {
         return ShipmentItemData.newBuilder()
@@ -133,10 +139,11 @@ public class Orders extends OrderHeaderDelegator {
                 .build();
     }
 
-    private static BigDecimal calcAmount(Currency unitPrice, FixedPoint quantity) {
+    private BigDecimal calcAmount(Currency unitPrice, FixedPoint quantity) {
         return getBigDecimal(unitPrice).multiply(getBigDecimal(quantity));
     }
 
+    @Persist
     public OrderStatusData addOrderStatus(OrderHeaderFlatData order, String statusId) {
         return OrderStatusData.newBuilder()
                 .setOrderId(order.getOrderId())
@@ -147,6 +154,7 @@ public class Orders extends OrderHeaderDelegator {
                 .build();
     }
 
+    @StatusUpdater("Order")
     public void setOrderStatus(OrderHeaderFlatData order, String statusId){
         process(c ->{
             OrderStatusData statusData=addOrderStatus(order, statusId);

@@ -15,24 +15,8 @@ public class MeshPrinter {
 
         ModelTransition.StatusTransitions mesh = statusTransitions.getTransitions();
         mesh.getStates().forEach(state -> {
-            Printers.TreeNode node = Printers.TreeNode.builder()
-                    .name(statusTransitions.getName())
-                    .data(state)
-                    .children(
-                            collectToTreeNodes(mesh, state))
-                    .build();
-
-            System.out.println(node.toStringPrefix("//\t"));
+            System.out.println(statusTransitions.getStateComments(state));
         });
     }
 
-    private static List<Printers.TreeNode> collectToTreeNodes(ModelTransition.StatusTransitions mesh, String state) {
-        return mesh.getFromTransitions(state)
-                .stream()
-                .map(change -> Printers.TreeNode.builder()
-                        .name(change.getTransitionName())
-                        .data(change.getTo().getDescription())
-                        .build())
-                .collect(Collectors.toList());
-    }
 }

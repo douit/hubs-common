@@ -25,8 +25,9 @@ enum {{obj.className}}Event{
 
 enum {{obj.className}}State{
     {% for e in obj.transitions.states %}
+{{obj.getStateComments(e)}}
     {{e}} = {{loop.index-1}};
-    {%- endfor %}
+    {% endfor %}
 }
 
 service {{obj.className}}Processor{

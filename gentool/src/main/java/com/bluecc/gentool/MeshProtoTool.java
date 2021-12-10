@@ -2,6 +2,7 @@ package com.bluecc.gentool;
 
 import com.bluecc.gentool.common.TemplateUtil;
 import com.bluecc.hubs.fund.ModelTransition;
+import com.bluecc.hubs.fund.SystemDefs;
 import com.bluecc.hubs.fund.Util;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.io.FilenameUtils;
@@ -29,7 +30,7 @@ public class MeshProtoTool {
 
         // String targetFile="stub/src/main/proto/transitions.proto";
         String targetFile="mesh/src/main/proto/transitions.proto";
-        Util.writeFile(cnt, new File(targetFile));
+        Util.writeFile(cnt, new File(SystemDefs.prependApiHome(targetFile)));
         System.out.println(".. write ok: "+targetFile);
     }
 }

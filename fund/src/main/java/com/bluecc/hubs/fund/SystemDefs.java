@@ -7,6 +7,9 @@ public class SystemDefs {
     public static String prependHubsHome(String fileOrDir){
         return HUBS_COMMON_HOME+"/"+fileOrDir;
     }
+    public static String prependApiHome(String fileOrDir){
+        return "/opt/app/apiset/"+fileOrDir;
+    }
 
     public static File prependHubsHomeFile(String fileOrDir){
         return new File(HUBS_COMMON_HOME+"/"+fileOrDir);

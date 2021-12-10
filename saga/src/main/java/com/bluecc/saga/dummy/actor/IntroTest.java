@@ -205,7 +205,7 @@ public interface IntroTest {
         // #chatroom-behavior
 
         // #chatroom-protocol
-        static interface RoomCommand {
+        public static interface RoomCommand {
         }
 
         public static final class GetSession implements RoomCommand {
@@ -232,7 +232,7 @@ public interface IntroTest {
         // #chatroom-behavior
         // #chatroom-protocol
 
-        interface SessionEvent {
+        public interface SessionEvent {
         }
 
         public static final class SessionGranted implements SessionEvent {
