@@ -96,3 +96,10 @@ addon file:
 
 livecases:
 	just gen StereotypeAddons -t stub/src/main/java/com/bluecc/hubs/livecases dataset/livecases
+
+mesh-proto:
+	protoc --plugin=protoc-gen-grpc-java=stub/target/protoc-plugins/protoc-gen-grpc-java-1.40.1-osx-x86_64.exe \
+		--grpc-java_out=mesh/src/main/java/ \
+		--proto_path=mesh/src/main/proto/ \
+		-Istub/src/main/proto transitions.proto
+

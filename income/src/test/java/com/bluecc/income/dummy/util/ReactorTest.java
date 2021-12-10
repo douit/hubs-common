@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import reactor.core.publisher.BaseSubscriber;
+import reactor.core.publisher.DirectProcessor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
@@ -15,13 +16,12 @@ import reactor.core.scheduler.Schedulers;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static java.lang.Thread.sleep;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 public class ReactorTest {
@@ -58,6 +58,7 @@ public class ReactorTest {
                 });
 
         flux.subscribe(System.out::println);
+
     }
 
 
@@ -88,6 +89,60 @@ public class ReactorTest {
 
         flux.subscribe(new CustSubscriber<>());
     }
+
+    @Test
+    public void testToFuture() throws ExecutionException, InterruptedException {
+        Flux<String> flux = Flux.generate(
+                () -> 0,
+                (state, sink) -> {
+                    sink.next("3 x " + state + " = " + 3 * state);
+                    if (state == 10) sink.complete();
+                    return state + 1;
+                });
+
+        // flux.subscribe(new CustSubscriber<>());
+        CompletableFuture<List<String>> result = flux.collectList().toFuture();
+        System.out.println(result.get());
+    }
+
+    @Test
+    public void testResultToFuture() throws Exception {
+        Result r=Flux.just("red", "white", "blue")
+                .log("source")
+                .flatMap(value -> Mono.fromCallable(() -> {
+                    Thread.sleep(1000);
+                    return value;
+                }).subscribeOn(Schedulers.elastic()))
+                .log("merged")
+                .collect(Result::new, Result::add)
+                .doOnNext(Result::stop)
+                .log("accumulated")
+                .toFuture()
+                .get();
+
+        System.out.println(r);
+    }
+
+    // @Test
+    // public void delayElementShouldNotCancelTwice() throws Exception {
+    //     DirectProcessor<Long> p = DirectProcessor.create();
+    //     AtomicInteger cancellations = new AtomicInteger();
+    //     Flux<Long> publishedFlux = p
+    //             .publish()
+    //             .refCount(2)
+    //             .doOnCancel(() -> cancellations.incrementAndGet());
+    //     publishedFlux.any(x -> x > 5)
+    //             .delayElement(Duration.ofMillis(2))
+    //             .subscribe();
+    //     CompletableFuture<List<Long>> result = publishedFlux.collectList().toFuture();
+    //     for (long i = 0; i < 10; i++) {
+    //         p.onNext(i);
+    //         Thread.sleep(1);
+    //     }
+    //     p.onComplete();
+    //     assertThat(result.get(10, TimeUnit.MILLISECONDS).size()).isEqualTo(10);
+    //     assertThat(cancellations.get()).isEqualTo(2);
+    // }
 
     public static class StateSubscriber<T> extends BaseSubscriber<T> {
         List<T> result = Lists.newArrayList();
@@ -172,11 +227,15 @@ public class ReactorTest {
     }
 
     @Test
-    public void testMono() {
+    public void testMono() throws ExecutionException, InterruptedException {
         Mono.just(1)
                 .map(integer -> "foo" + integer)
                 // .or(Mono.delay(Duration.ofMillis(100)))
                 .subscribe(System.out::println);
+
+        System.out.println(Mono.just(1)
+                .map(integer -> "foo" + integer)
+                .toFuture().get());
     }
 
     @Test

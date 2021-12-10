@@ -47,6 +47,10 @@ public class Util {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, str);
     }
 
+    public static String toConstName(String str){
+        return CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, str);
+    }
+
     public static String toVarName(String str){
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, str);
     }
@@ -193,5 +197,9 @@ public class Util {
             }
         }
         return rs;
+    }
+
+    public static String getWordsFirstLetters(String str){
+        return str.replaceAll("\\B.|\\P{L}", "").toUpperCase();
     }
 }

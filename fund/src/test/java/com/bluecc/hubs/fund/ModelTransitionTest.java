@@ -5,10 +5,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ModelTransitionTest {
-
+    ModelTransition modelTransition=new ModelTransition();
     @Test
     public void getTransitions() {
-        ModelTransition modelTransition=new ModelTransition();
+
         ModelTransition.ObjectStatus statusTransitions= modelTransition.getTransitions("Order");
         assertNotNull(statusTransitions);
         System.out.println(statusTransitions
@@ -33,7 +33,6 @@ public class ModelTransitionTest {
 
     @Test
     public void testStartEvent(){
-        ModelTransition modelTransition=new ModelTransition();
         ModelTransition.ObjectStatus statusTransitions= modelTransition.getTransitions("Task");
         assertNotNull(statusTransitions);
         String firstState=statusTransitions.getTransitions().getStates().get(0);
@@ -41,5 +40,13 @@ public class ModelTransitionTest {
 
         // System.out.println(statusTransitions.getStartEvent());
         assertEquals("DefaultStart", statusTransitions.getStartEvent());
+    }
+
+    @Test
+    public void testEventPrefix(){
+        ModelTransition.ObjectStatus statusTransitions= modelTransition.getTransitions("QuoteStatus");
+        System.out.println(statusTransitions.getStartEvent());
+        assertEquals("QUO", statusTransitions.getTransitions().getStatePrefix());
+
     }
 }

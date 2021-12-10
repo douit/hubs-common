@@ -9,14 +9,29 @@ package transitions;
 
 import "routines.proto";
 
-message StateProposal{
-    routines.Envelope data=1;
+enum MeshTypes{
+    DEFAULT_TYPE=0;
+    {% for obj in objs %}
+    {{obj.constName}} = {{loop.index}};
+    {%- endfor %}
 }
 
 {% for obj in objs %}
+enum {{obj.className}}Event{
+    {% for e in obj.transitions.eventSymbols %}
+    {{obj.prefix}}_{{e.constName}} = {{loop.index-1}};  // {{e.name}}
+    {%- endfor %}
+}
+
+enum {{obj.className}}State{
+    {% for e in obj.transitions.states %}
+    {{e}} = {{loop.index-1}};
+    {%- endfor %}
+}
+
 service {{obj.className}}Processor{
     {% for event in obj.transitions.eventNames %}
-    rpc {{event}}(StateProposal) returns (routines.Response) {}
+    rpc {{event}}(routines.StateProposal) returns (routines.Response) {}
     {%- endfor %}
 }
 {% endfor %}

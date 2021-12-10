@@ -25,4 +25,9 @@ public class UtilTest {
         assertEquals("ShipmentRouteSegmentCarrierService",
                 Util.wordsToClassName("ShipmentRouteSegment:CarrierService"));
     }
+
+    @Test
+    public void testFirstLetter(){
+        assertEquals("HWT", Util.getWordsFirstLetters(" hello World 18 times "));
+    }
 }

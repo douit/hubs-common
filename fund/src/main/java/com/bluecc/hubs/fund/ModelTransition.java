@@ -4,15 +4,20 @@ import com.google.common.base.CaseFormat;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.inject.Singleton;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.bluecc.hubs.fund.Util.wordsToClassName;
 
 @Singleton
 public class ModelTransition {
@@ -58,6 +63,21 @@ public class ModelTransition {
         public String getClassName(){
             return name.replaceAll("[\\-]", "");
         }
+
+        public String getConstName(){
+            return Util.toConstName(getClassName());
+        }
+
+        public String getPrefix(){
+            String constName=getConstName();
+            String prefix= Arrays.stream(constName.split("_"))
+                    .map(s -> s.substring(0, 1))
+                    .collect(Collectors.joining());
+            if(prefix.length()==1){
+                return constName;
+            }
+            return prefix;
+        }
     }
 
     static String toVar(String s){
@@ -65,14 +85,35 @@ public class ModelTransition {
     }
 
     @Data
+    @AllArgsConstructor
+    @EqualsAndHashCode
+    public static class EventSymbol{
+        @EqualsAndHashCode.Exclude
+        String name;  // name只用于注释, 不具备唯一性
+        String constName;
+    }
+
+    @Data
     @Builder
     public static class StatusTransitions {
+        // String prefix;
         Set<String> events;
         List<String> states;
         List<StatusValidChange> transitions;
 
+        public String getStatePrefix(){
+            String test=states.get(0);
+            return test.substring(0, test.indexOf('_'));
+        }
+
         public Set<String> getEventNames(){
-            return events.stream().map(e -> Util.wordsToClassName(e))
+            return events.stream().map(e -> wordsToClassName(e))
+                    .collect(Collectors.toSet());
+        }
+
+        public Set<EventSymbol> getEventSymbols(){
+            return events.stream()
+                    .map(e -> new EventSymbol(e, Util.toConstName(wordsToClassName(e))))
                     .collect(Collectors.toSet());
         }
 
@@ -137,7 +178,7 @@ public class ModelTransition {
         String parentTypeId;
 
         public String getClassName() {
-            return Util.wordsToClassName(description);
+            return wordsToClassName(description);
         }
     }
 
@@ -162,7 +203,7 @@ public class ModelTransition {
         String transitionName;
 
         public String getEventName(){
-            return Util.wordsToClassName(transitionName);
+            return wordsToClassName(transitionName);
         }
         public String getToHandler(){
             return toVar(statusIdTo);
@@ -176,6 +217,7 @@ public class ModelTransition {
         public StatusType statusType;
 
     }
+
 
 
 }

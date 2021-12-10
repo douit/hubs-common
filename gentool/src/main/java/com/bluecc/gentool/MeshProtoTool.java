@@ -27,7 +27,8 @@ public class MeshProtoTool {
         String cnt= TemplateUtil.build("templates/actor_mesh_rpc.j2", ctx);
         // System.out.println(cnt);
 
-        String targetFile="stub/src/main/proto/transitions.proto";
+        // String targetFile="stub/src/main/proto/transitions.proto";
+        String targetFile="mesh/src/main/proto/transitions.proto";
         Util.writeFile(cnt, new File(targetFile));
         System.out.println(".. write ok: "+targetFile);
     }

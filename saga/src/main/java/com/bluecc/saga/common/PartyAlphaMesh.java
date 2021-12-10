@@ -16,7 +16,7 @@ import java.util.concurrent.CompletionStage;
 import static java.lang.Thread.sleep;
 
 @Slf4j
-public class PartyActor {
+public class PartyAlphaMesh {
     public static void main(String[] args) throws InterruptedException {
         // final ActorSystem<GreeterMain.SayHello> greeterMain =
         //             ActorSystem.create(GreeterMain.create(), "helloakka");
@@ -29,7 +29,7 @@ public class PartyActor {
                                 return CompletableFuture.completedFuture(Done.getInstance());
                             }
                         },
-                        PartyActor.ReEnable.INSTANCE), "admin");
+                        PartyAlphaMesh.ReEnable.INSTANCE), "admin");
         actorMain.tell(Disable.INSTANCE);
         actorMain.tell(Disable.INSTANCE);  // cause unhandled(dead-letters)
         sleep(1000);
