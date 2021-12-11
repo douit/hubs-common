@@ -122,7 +122,8 @@ public class ChaosTool {
 
         // manual fields by name-filter and type-filter
         // System.out.println(fields);
-        Set<String> manualFields = Sets.newHashSet("description");
+        Set<String> manualFields = Sets.newHashSet("description",
+                "packagingTypeCode");
         Set<String> containManualFields = fields.stream()
                 .filter(f -> manualFields.contains(f)
                         || manualFields.stream()
@@ -217,11 +218,35 @@ public class ChaosTool {
                 .collect(Collectors.toList());
 
         fields.removeAll(specs.stream().map(s -> s.name).collect(Collectors.toSet()));
+
+        // enums
+        Map<String, Set<String>> enumTypes=ImmutableMap.of(
+                "configItemTypeId", Sets.newHashSet("MULTIPLE", "SINGLE"),
+                "configTypeId", Sets.newHashSet("QUESTION")
+        );
+        fields.removeAll(fields.stream().filter(f -> enumTypes.containsKey(f))
+                .peek(f -> System.out.format("custom-enum %s: %s\n", f, enumTypes.get(f)))
+                .collect(Collectors.toSet()));
+
+        // deform fields
+        Map<String, Set<String>> deformFields=ImmutableMap.of(
+                "FacilityLocation",
+                Sets.newHashSet("areaId", "positionId",
+                        "levelId", "sectionId", "aisleId")
+        );
+        if(deformFields.containsKey(ent)) {
+            Set<String> flds=deformFields.get(ent);
+            fields.removeAll(fields.stream().filter(f ->
+                            Objects.requireNonNull(flds).contains(f))
+                    .peek(f -> System.out.format("deform-field %s\n", f))
+                    .collect(Collectors.toSet()));
+        }
+
+        // ...
         if(fields.isEmpty()){
             return null;
         }
 
-        // ...
         return ent + " leaves: " + fields.stream()
                 .map(f -> String.format("%s: %s", f, ste.meta.getField(f).get().getType()))
                 .collect(Collectors.toList());

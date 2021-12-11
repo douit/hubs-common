@@ -2,10 +2,17 @@ package com.bluecc.income.procs;
 
 import com.bluecc.hubs.feed.FactBag;
 import com.bluecc.hubs.fund.DataSetUtil;
+import com.bluecc.hubs.fund.Tuple2;
+import com.bluecc.hubs.stub.EnumerationData;
+import com.bluecc.hubs.stub.StatusItemData;
 import com.google.common.collect.Multimap;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 
 import javax.inject.Inject;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.feed.ProtoModule.startup;
 import static com.bluecc.income.procs.GenericProcs.loadDataSet;
@@ -39,5 +46,30 @@ public class TypeEntityProcs {
                 total++;
             });
         });
+    }
+
+    // Queries
+
+    public EnumerationData getEnumeration(String enumId) throws InvalidProtocolBufferException {
+        EnumerationData.Builder typeBuilder=EnumerationData.newBuilder();
+        factBag.getEntityData(enumId, typeBuilder);
+        return typeBuilder.build();
+    }
+
+    public List<EnumerationData> getAllEnumerations(String typeId){
+        return factBag.allTypes("Enumeration", EnumerationData::parseFrom)
+                .stream().filter(e -> e.getEnumTypeId().equals(typeId))
+                .collect(Collectors.toList());
+    }
+
+    public List<Tuple2<String, String>> getAllEnumerationIds(String typeId){
+        return getAllEnumerations(typeId)
+                .stream().map(e -> Tuple2.of(e.getEnumId(), e.getDescription()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Tuple2<String, String>> getAllEnumerationIdsBySample(String enumId) throws InvalidProtocolBufferException {
+        EnumerationData e=getEnumeration(enumId);
+        return getAllEnumerationIds(e.getEnumTypeId());
     }
 }

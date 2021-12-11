@@ -3,10 +3,7 @@ package com.bluecc.income.procs;
 import com.bluecc.hubs.feed.FactBag;
 import com.bluecc.hubs.fund.FnUtil;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
-import com.bluecc.hubs.stub.CustRequestTypeData;
-import com.bluecc.hubs.stub.StatusItemData;
-import com.bluecc.hubs.stub.StatusTypeData;
-import com.bluecc.hubs.stub.StatusValidChangeData;
+import com.bluecc.hubs.stub.*;
 import com.bluecc.income.GuiceTestRunner;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.junit.Test;
@@ -23,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.FnUtil.wrap;
 import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(GuiceTestRunner.class)
 public class TypeEntityProcsTest {
@@ -38,6 +36,17 @@ public class TypeEntityProcsTest {
         CustRequestTypeData data=custReqType.build();
         System.out.println(data);
         assertEquals("Request For Bug Fix", data.getDescription());
+    }
+
+    @Test
+    public void getEnumeration() throws InvalidProtocolBufferException {
+        EnumerationData.Builder typeBuilder=EnumerationData.newBuilder();
+        typeEntityProcs.factBag.getEntityData("WEB_SALES_CHANNEL", typeBuilder);
+        EnumerationData data=typeBuilder.build();
+        System.out.println(data);
+        assertEquals("Web Channel", data.getDescription());
+        assertEquals("ORDER_SALES_CHANNEL", data.getEnumTypeId());
+
     }
 
     @Test
@@ -101,4 +110,19 @@ public class TypeEntityProcsTest {
         assertFalse(transName.isPresent());
     }
 
+    @Test
+    public void getAllEnumerationIds() throws InvalidProtocolBufferException {
+        assertThat(typeEntityProcs.getAllEnumerationIds("ORDER_SALES_CHANNEL").stream()
+                // .peek(e -> System.out.println(e))
+                .map(t -> t.f0)
+                .collect(Collectors.toSet()))
+                .contains("WEB_SALES_CHANNEL");
+
+        assertThat(typeEntityProcs.getAllEnumerationIdsBySample("PHONE_SALES_CHANNEL").stream()
+                .peek(e -> System.out.println(e))
+                .map(t -> t.f0)
+                .collect(Collectors.toSet()))
+                .contains("WEB_SALES_CHANNEL");
+    }
 }
+
