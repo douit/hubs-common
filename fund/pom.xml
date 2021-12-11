@@ -34,6 +34,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.pivovarit</groupId>
+            <artifactId>throwing-function</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.hubspot.jinjava</groupId>
             <artifactId>jinjava</artifactId>
         </dependency>

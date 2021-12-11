@@ -103,3 +103,7 @@ mesh-proto:
 		--proto_path=mesh/src/main/proto/ \
 		-Istub/src/main/proto transitions.proto
 
+# just profile proto
+profile p:
+	just gen GenProfile {{p}}
+

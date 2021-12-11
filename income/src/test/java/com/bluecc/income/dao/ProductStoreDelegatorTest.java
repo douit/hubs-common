@@ -1,5 +1,6 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.hubs.fund.model.IModel;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.Identity;
@@ -17,6 +18,7 @@ import org.junit.Test;
 import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -102,6 +104,23 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
                     .haveExactly(5, giftCard)
                     .hasAtLeastOneElementOfType(ProductStorePaymentSetting.class);
         });
+    }
+
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
+    @Test
+    public void testAgentLiveObject() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
+            agent.merge();
+            agent.mergeProductStorePaymentSetting();
+        });
+
+        // find it
+        ProductStore store=liveObjectsProvider.get().get(ProductStore.class, "9000");
+        assertNotNull(store);
+        pretty(store);
     }
 
     @Test

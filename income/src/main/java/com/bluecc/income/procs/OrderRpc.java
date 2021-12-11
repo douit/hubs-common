@@ -1,10 +1,14 @@
 package com.bluecc.income.procs;
 
 import com.bluecc.hubs.stub.*;
+import com.bluecc.income.dao.OrderHeaderDelegator;
 import com.bluecc.income.model.OrderHeader;
 import io.grpc.stub.StreamObserver;
 
 import javax.inject.Inject;
+
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import static com.bluecc.income.procs.GenericProcs.wrap;
 
@@ -13,6 +17,8 @@ public class OrderRpc extends OrderHeaderServiceGrpc.OrderHeaderServiceImplBase 
     // Orders orders;
     @Inject
     GenericProcs genericProcs;
+    @Inject
+    OrderHeaderDelegator orderHeaderDelegator;
 
     @Override
     public void create(OrderHeaderData request, StreamObserver<Response> responseObserver) {
@@ -61,5 +67,14 @@ public class OrderRpc extends OrderHeaderServiceGrpc.OrderHeaderServiceImplBase 
             }
             responseObserver.onCompleted();
         });
+    }
+
+    @Override
+    public void findRelations(QueryRelations request, StreamObserver<OrderHeaderData> responseObserver) {
+        orderHeaderDelegator.queryOrderHeaderRelations(request.getKey(),
+                new HashSet<>(request.getRelationsList()))
+                .apply("")
+                .subscribe(e -> responseObserver.onNext((OrderHeaderData) e.toData()));
+        responseObserver.onCompleted();
     }
 }

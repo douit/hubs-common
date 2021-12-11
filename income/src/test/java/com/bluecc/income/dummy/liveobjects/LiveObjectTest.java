@@ -8,6 +8,7 @@ import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.annotation.REntity;
 import org.redisson.api.annotation.RId;
 import org.redisson.api.annotation.RIndex;
+import org.redisson.api.condition.Condition;
 import org.redisson.api.condition.Conditions;
 import org.redisson.liveobject.resolver.UUIDGenerator;
 
@@ -17,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static com.bluecc.hubs.fund.Util.pretty;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LiveObjectTest extends AbstractRemoteTest{
@@ -437,6 +439,12 @@ public class LiveObjectTest extends AbstractRemoteTest{
                 Conditions.eq("name1", "common"),
                 Conditions.eq("name2", "hkf;glhsdfg")));
         assertThat(objects1).hasSize(1);
+    }
+
+    @Test
+    public void testConditionSerialize(){
+        Condition c=Conditions.eq("num1", 1);
+        pretty(c);
     }
 
     @Test

@@ -56,7 +56,7 @@ public class ProtoTool {
         if(!opts.writeAll) {
             main.genAll(tplName);
         }else{
-            String protoDir= SystemDefs.prependApiHome( "stub/src/main/proto");
+            String protoDir= SystemDefs.prependApiHome( "entity/src/main/proto");
             String targetFile=protoDir+"/hubs.proto";
             System.out.println(".. write to "+targetFile);
             log.info(".. write to "+targetFile);

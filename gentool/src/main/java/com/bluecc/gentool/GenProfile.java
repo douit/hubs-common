@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * $ just gen GenProfile proto
+ */
 public class GenProfile {
     @Data
     @AllArgsConstructor
@@ -32,6 +35,9 @@ public class GenProfile {
             switch (profile){
                 case "livecases":
                     StereotypeAddons.startGen();
+                    break;
+                case "proto":
+                    ProtoTool.startGen(new ProtoTool.ProtoGenOpts(null, true));
                     break;
                 default:
                     System.out.println("Cannot execute profile "+profile);
