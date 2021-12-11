@@ -21,9 +21,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.Util.pretty;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -169,6 +171,31 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
         cf.get().index().subscribe(e -> {
             System.out.println(e.getT1() + " -> " + e.getT2().toData());
         });
+    }
+
+    @Test
+    public void testCompletionStageWithAgent2() throws ExecutionException, InterruptedException {
+        CompletableFuture<List<IModel<?>>> cf=
+            process(c -> {
+                ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
+                // ProductStore productStore = agent.merge(); // DON'T DO THIS
+
+                c.getSubscriber().onNext(agent.getRecord());
+                agent.getProductStorePaymentSetting().forEach(e -> {
+                    c.getSubscriber().onNext(e);
+                });
+                c.getSubscriber().onComplete();
+            }).collectList().toFuture();
+
+        Set<String> allMethodTypes=cf.get().stream().peek(e -> System.out.println(e))
+                .filter(e -> e instanceof ProductStorePaymentSetting)
+                .map(e -> ((ProductStorePaymentSetting) e).getPaymentMethodTypeId())
+                .collect(Collectors.toSet());
+        System.out.println(allMethodTypes);
+        assertThat(allMethodTypes).contains("EXT_OFFLINE",
+                "EXT_PAYPAL", "EXT_WORLDPAY", "GIFT_CARD",
+                "EXT_BILLACT", "FIN_ACCOUNT", "CREDIT_CARD",
+                "EFT_ACCOUNT", "EXT_COD");
     }
 
     @Test
