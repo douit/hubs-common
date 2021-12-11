@@ -34,7 +34,19 @@ public class MetaTypeUtil {
     // );
     public static final Set<String> DATETIME_TYPES=
             Sets.newHashSet("date-time", "date", "time");
+    public static final Set<String> BLOB_TYPES=
+            Sets.newHashSet("blob", "byte-array", "object");
+
     public static final Set<String> NUMERIC_TYPES=
             Sets.newHashSet("floating-point", "double", "integer", "int32",
                     "numeric", "int64");
+    public static final Set<String> DECIMAL_TYPES=
+            Sets.newHashSet("currency-amount", // DECIMAL(18,2)
+                    "currency-precise", // DECIMAL(18,3)
+                    "fixed-point" // DECIMAL(18,6)
+            );
+    public static final Set<String> MANUAL_TYPES=
+            Sets.newHashSet("comment", "description", "name", "value",
+                    "credit-card-number", "credit-card-date", "email", "url", "tel-number"
+            );
 }

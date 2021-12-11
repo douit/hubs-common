@@ -1,18 +1,18 @@
 package com.bluecc.saga.alphaworks;
 
+import com.beust.jcommander.JCommander;
 import com.bluecc.gentool.common.TemplateUtil;
 import com.bluecc.hubs.fund.Printers;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.pubs.Exclude;
 import com.bluecc.hubs.fund.pubs.Persist;
 import com.bluecc.hubs.fund.pubs.StatusUpdater;
+import com.bluecc.income.procs.Invoices;
 import com.bluecc.income.procs.Orders;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -27,20 +27,41 @@ import static com.bluecc.hubs.fund.Util.pretty;
 import static java.util.Objects.requireNonNull;
 
 public class AlphaGenerator {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class Opts {
+        @com.beust.jcommander.Parameter(names = {"--silent", "-s"})
+        boolean silent=false;
+    }
+
     static boolean verbose=false;
     public static void main(String[] args) throws IOException {
-        Class<?> clz=Orders.class;
-        ExecutorInfo info=extractClassInfo(clz);
-        // pretty(info);
-        System.out.println(info.asTreeNode().toString());
+        Opts opts = new Opts();
+        JCommander.newBuilder()
+                .addObject(opts)
+                .build()
+                .parse(args);
 
-        String cnt= TemplateUtil.build("templates/actor_wrapper.j2",
-                ImmutableMap.of("obj", info));
-        System.out.println(cnt);
-        String targetDir="saga/src/main/java/com/bluecc/saga/meshes";
-        Path targetFile= Paths.get(targetDir,
-                String.format("%sManipulator.java", info.name));
-        Util.writeFile(cnt, targetFile);
+        genClasses(opts, Orders.class, Invoices.class);
+    }
+
+    private static void genClasses(Opts opts, Class<?>... classes) throws IOException {
+        for (Class<?> clz : classes) {
+            ExecutorInfo info = extractClassInfo(clz);
+            // pretty(info);
+            if(!opts.silent) {
+                System.out.println(info.asTreeNode().toString());
+            }
+
+            String cnt = TemplateUtil.build("templates/actor_wrapper.j2",
+                    ImmutableMap.of("obj", info));
+            // System.out.println(cnt);
+            String targetDir = "saga/src/main/java/com/bluecc/saga/meshes";
+            Path targetFile = Paths.get(targetDir,
+                    String.format("%sManipulator.java", info.name));
+            Util.writeFile(cnt, targetFile);
+        }
     }
 
     public enum ExecuteType{

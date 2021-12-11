@@ -1,5 +1,6 @@
 package com.bluecc.income.procs;
 
+import com.bluecc.hubs.fund.pubs.Persist;
 import com.bluecc.hubs.stub.InvoiceFlatData;
 import com.bluecc.hubs.stub.InvoiceStatusData;
 import com.bluecc.income.dao.InvoiceDelegator;
@@ -11,6 +12,7 @@ import static com.bluecc.hubs.ProtoTypes.nowTimestamp;
 
 public class Invoices extends InvoiceDelegator {
 
+    @Persist
     public InvoiceFlatData createInvoice(LocalDateTime dueDate) {
         return InvoiceFlatData.newBuilder()
                 .setCurrencyUomId("USD")

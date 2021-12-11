@@ -134,6 +134,9 @@ public class Util {
     }
 
     public static <T> T readJsonFile(Class<T> clz, File file) throws IOException {
+        if(!file.exists()){
+            file=SystemDefs.prependHubsHomeFile(file);
+        }
         String cnt=IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
         return GSON.fromJson(cnt, clz);
     }

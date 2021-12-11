@@ -1,0 +1,1693 @@
+{
+  "infoList": [
+    {
+      "name": "DataSource",
+      "pk": "dataSourceId"
+    },
+    {
+      "name": "EmailAddressVerification",
+      "pk": "emailAddress"
+    },
+    {
+      "name": "QuoteType",
+      "pk": "quoteTypeId"
+    },
+    {
+      "name": "ProductReview",
+      "pk": "productReviewId"
+    },
+    {
+      "name": "InvoiceTerm",
+      "pk": "invoiceTermId"
+    },
+    {
+      "name": "ProductStoreGroup",
+      "pk": "productStoreGroupId"
+    },
+    {
+      "name": "ReorderGuideline",
+      "pk": "reorderGuidelineId"
+    },
+    {
+      "name": "BudgetType",
+      "pk": "budgetTypeId"
+    },
+    {
+      "name": "UomType",
+      "pk": "uomTypeId"
+    },
+    {
+      "name": "TelecomNumber",
+      "pk": "contactMechId"
+    },
+    {
+      "name": "PaymentGatewayAuthorizeNet",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "Content",
+      "pk": "contentId"
+    },
+    {
+      "name": "EmplPositionType",
+      "pk": "emplPositionTypeId"
+    },
+    {
+      "name": "PaymentGatewaySagePay",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "GitHubUser",
+      "pk": "gitHubUserId"
+    },
+    {
+      "name": "PartyQualType",
+      "pk": "partyQualTypeId"
+    },
+    {
+      "name": "Msg91GatewayConfig",
+      "pk": "telecomGatewayConfigId"
+    },
+    {
+      "name": "QuoteAdjustment",
+      "pk": "quoteAdjustmentId"
+    },
+    {
+      "name": "FacilityCalendarType",
+      "pk": "facilityCalendarTypeId"
+    },
+    {
+      "name": "MimeType",
+      "pk": "mimeTypeId"
+    },
+    {
+      "name": "BrowserType",
+      "pk": "browserTypeId"
+    },
+    {
+      "name": "FixedAssetType",
+      "pk": "fixedAssetTypeId"
+    },
+    {
+      "name": "Lot",
+      "pk": "lotId"
+    },
+    {
+      "name": "ProductPromo",
+      "pk": "productPromoId"
+    },
+    {
+      "name": "CostComponent",
+      "pk": "costComponentId"
+    },
+    {
+      "name": "ProdCatalogCategoryType",
+      "pk": "prodCatalogCategoryTypeId"
+    },
+    {
+      "name": "PayPalPaymentMethod",
+      "pk": "paymentMethodId"
+    },
+    {
+      "name": "PartyIcsAvsOverride",
+      "pk": "partyId"
+    },
+    {
+      "name": "PayGrade",
+      "pk": "payGradeId"
+    },
+    {
+      "name": "EnumerationType",
+      "pk": "enumTypeId"
+    },
+    {
+      "name": "InventoryItemType",
+      "pk": "inventoryItemTypeId"
+    },
+    {
+      "name": "ShipmentGatewayFedex",
+      "pk": "shipmentGatewayConfigId"
+    },
+    {
+      "name": "ProtocolType",
+      "pk": "protocolTypeId"
+    },
+    {
+      "name": "PaymentGatewayPayPal",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "PaymentGatewayConfig",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "JavaResource",
+      "pk": "resourceName"
+    },
+    {
+      "name": "ShoppingListType",
+      "pk": "shoppingListTypeId"
+    },
+    {
+      "name": "InventoryItem",
+      "pk": "inventoryItemId"
+    },
+    {
+      "name": "ContentPurposeType",
+      "pk": "contentPurposeTypeId"
+    },
+    {
+      "name": "UserLoginSession",
+      "pk": "userLoginId"
+    },
+    {
+      "name": "ProductFeatureType",
+      "pk": "productFeatureTypeId"
+    },
+    {
+      "name": "EmploymentApp",
+      "pk": "applicationId"
+    },
+    {
+      "name": "ProductManufacturingRule",
+      "pk": "ruleId"
+    },
+    {
+      "name": "PortalPage",
+      "pk": "portalPageId"
+    },
+    {
+      "name": "ReturnStatus",
+      "pk": "returnStatusId"
+    },
+    {
+      "name": "ProductCategory",
+      "pk": "productCategoryId"
+    },
+    {
+      "name": "SurveyQuestionCategory",
+      "pk": "surveyQuestionCategoryId"
+    },
+    {
+      "name": "Subscription",
+      "pk": "subscriptionId"
+    },
+    {
+      "name": "ContentOperation",
+      "pk": "contentOperationId"
+    },
+    {
+      "name": "CustomScreenType",
+      "pk": "customScreenTypeId"
+    },
+    {
+      "name": "ServerHitBin",
+      "pk": "serverHitBinId"
+    },
+    {
+      "name": "CommunicationEventPrpTyp",
+      "pk": "communicationEventPrpTypId"
+    },
+    {
+      "name": "DeductionType",
+      "pk": "deductionTypeId"
+    },
+    {
+      "name": "BillingAccount",
+      "pk": "billingAccountId"
+    },
+    {
+      "name": "CustRequestStatus",
+      "pk": "custRequestStatusId"
+    },
+    {
+      "name": "ShipmentGatewayDhl",
+      "pk": "shipmentGatewayConfigId"
+    },
+    {
+      "name": "ProductPriceChange",
+      "pk": "productPriceChangeId"
+    },
+    {
+      "name": "FixedAssetIdentType",
+      "pk": "fixedAssetIdentTypeId"
+    },
+    {
+      "name": "UserAgentType",
+      "pk": "userAgentTypeId"
+    },
+    {
+      "name": "ProductMaintType",
+      "pk": "productMaintTypeId"
+    },
+    {
+      "name": "Testing",
+      "pk": "testingId"
+    },
+    {
+      "name": "WorkEffort",
+      "pk": "workEffortId"
+    },
+    {
+      "name": "TerminationType",
+      "pk": "terminationTypeId"
+    },
+    {
+      "name": "OrderItemChange",
+      "pk": "orderItemChangeId"
+    },
+    {
+      "name": "WebPreferenceType",
+      "pk": "webPreferenceTypeId"
+    },
+    {
+      "name": "UserAgent",
+      "pk": "userAgentId"
+    },
+    {
+      "name": "Agreement",
+      "pk": "agreementId"
+    },
+    {
+      "name": "InvoiceItemAssocType",
+      "pk": "invoiceItemAssocTypeId"
+    },
+    {
+      "name": "CommunicationEventType",
+      "pk": "communicationEventTypeId"
+    },
+    {
+      "name": "SurveyQuestionType",
+      "pk": "surveyQuestionTypeId"
+    },
+    {
+      "name": "DataTemplateType",
+      "pk": "dataTemplateTypeId"
+    },
+    {
+      "name": "ApplicationSandbox",
+      "pk": "applicationId"
+    },
+    {
+      "name": "PhysicalInventory",
+      "pk": "physicalInventoryId"
+    },
+    {
+      "name": "TrackingCode",
+      "pk": "trackingCodeId"
+    },
+    {
+      "name": "ProductContentType",
+      "pk": "productContentTypeId"
+    },
+    {
+      "name": "ShipmentReceipt",
+      "pk": "receiptId"
+    },
+    {
+      "name": "EmplPosition",
+      "pk": "emplPositionId"
+    },
+    {
+      "name": "AcctgTransEntryType",
+      "pk": "acctgTransEntryTypeId"
+    },
+    {
+      "name": "TermType",
+      "pk": "termTypeId"
+    },
+    {
+      "name": "EmplLeaveType",
+      "pk": "leaveTypeId"
+    },
+    {
+      "name": "CustomMethod",
+      "pk": "customMethodId"
+    },
+    {
+      "name": "PartyContentType",
+      "pk": "partyContentTypeId"
+    },
+    {
+      "name": "ContainerType",
+      "pk": "containerTypeId"
+    },
+    {
+      "name": "ProductMeterType",
+      "pk": "productMeterTypeId"
+    },
+    {
+      "name": "DataSourceType",
+      "pk": "dataSourceTypeId"
+    },
+    {
+      "name": "Addendum",
+      "pk": "addendumId"
+    },
+    {
+      "name": "PaymentContentType",
+      "pk": "paymentContentTypeId"
+    },
+    {
+      "name": "ContactMechType",
+      "pk": "contactMechTypeId"
+    },
+    {
+      "name": "ExampleType",
+      "pk": "exampleTypeId"
+    },
+    {
+      "name": "RecurrenceRule",
+      "pk": "recurrenceRuleId"
+    },
+    {
+      "name": "ReturnItemResponse",
+      "pk": "returnItemResponseId"
+    },
+    {
+      "name": "ProductPriceType",
+      "pk": "productPriceTypeId"
+    },
+    {
+      "name": "ContentSearchResult",
+      "pk": "contentSearchResultId"
+    },
+    {
+      "name": "ProductCategoryContentType",
+      "pk": "prodCatContentTypeId"
+    },
+    {
+      "name": "ContactMechPurposeType",
+      "pk": "contactMechPurposeTypeId"
+    },
+    {
+      "name": "EntitySync",
+      "pk": "entitySyncId"
+    },
+    {
+      "name": "SkillType",
+      "pk": "skillTypeId"
+    },
+    {
+      "name": "UnemploymentClaim",
+      "pk": "unemploymentClaimId"
+    },
+    {
+      "name": "PaymentGatewayWorldPay",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "StandardLanguage",
+      "pk": "standardLanguageId"
+    },
+    {
+      "name": "Visit",
+      "pk": "visitId"
+    },
+    {
+      "name": "Tenant",
+      "pk": "tenantId"
+    },
+    {
+      "name": "NeedType",
+      "pk": "needTypeId"
+    },
+    {
+      "name": "EftAccount",
+      "pk": "paymentMethodId"
+    },
+    {
+      "name": "FixedAsset",
+      "pk": "fixedAssetId"
+    },
+    {
+      "name": "PaymentGatewayOrbital",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "TestFieldType",
+      "pk": "testFieldTypeId"
+    },
+    {
+      "name": "OrderType",
+      "pk": "orderTypeId"
+    },
+    {
+      "name": "SalesForecast",
+      "pk": "salesForecastId"
+    },
+    {
+      "name": "CustRequest",
+      "pk": "custRequestId"
+    },
+    {
+      "name": "WebSite",
+      "pk": "webSiteId"
+    },
+    {
+      "name": "TaxAuthorityRateType",
+      "pk": "taxAuthorityRateTypeId"
+    },
+    {
+      "name": "CountryCode",
+      "pk": "countryCode"
+    },
+    {
+      "name": "AllocationPlanType",
+      "pk": "planTypeId"
+    },
+    {
+      "name": "DocumentType",
+      "pk": "documentTypeId"
+    },
+    {
+      "name": "CustRequestCategory",
+      "pk": "custRequestCategoryId"
+    },
+    {
+      "name": "JobRequisition",
+      "pk": "jobRequisitionId"
+    },
+    {
+      "name": "MetaDataPredicate",
+      "pk": "metaDataPredicateId"
+    },
+    {
+      "name": "WorkEffortAssocType",
+      "pk": "workEffortAssocTypeId"
+    },
+    {
+      "name": "EntityGroup",
+      "pk": "entityGroupId"
+    },
+    {
+      "name": "Delivery",
+      "pk": "deliveryId"
+    },
+    {
+      "name": "SubscriptionType",
+      "pk": "subscriptionTypeId"
+    },
+    {
+      "name": "DataResourceType",
+      "pk": "dataResourceTypeId"
+    },
+    {
+      "name": "PaymentGatewayRespMsg",
+      "pk": "paymentGatewayRespMsgId"
+    },
+    {
+      "name": "SegmentGroupType",
+      "pk": "segmentGroupTypeId"
+    },
+    {
+      "name": "PriorityType",
+      "pk": "priorityTypeId"
+    },
+    {
+      "name": "ProdConfItemContentType",
+      "pk": "confItemContentTypeId"
+    },
+    {
+      "name": "ProductPriceActionType",
+      "pk": "productPriceActionTypeId"
+    },
+    {
+      "name": "TestingCrypto",
+      "pk": "testingCryptoId"
+    },
+    {
+      "name": "ContactListType",
+      "pk": "contactListTypeId"
+    },
+    {
+      "name": "PosTerminalLog",
+      "pk": "posTerminalLogId"
+    },
+    {
+      "name": "CheckAccount",
+      "pk": "paymentMethodId"
+    },
+    {
+      "name": "GlAccountGroupType",
+      "pk": "glAccountGroupTypeId"
+    },
+    {
+      "name": "PortletCategory",
+      "pk": "portletCategoryId"
+    },
+    {
+      "name": "GeoAssocType",
+      "pk": "geoAssocTypeId"
+    },
+    {
+      "name": "Enumeration",
+      "pk": "enumId"
+    },
+    {
+      "name": "ProductFeatureIactnType",
+      "pk": "productFeatureIactnTypeId"
+    },
+    {
+      "name": "CcRule",
+      "pk": "ruleId"
+    },
+    {
+      "name": "DateDimension",
+      "pk": "dimensionId"
+    },
+    {
+      "name": "InventoryItemLabelType",
+      "pk": "inventoryItemLabelTypeId"
+    },
+    {
+      "name": "OtherDataResource",
+      "pk": "dataResourceId"
+    },
+    {
+      "name": "MarketingCampaign",
+      "pk": "marketingCampaignId"
+    },
+    {
+      "name": "Vendor",
+      "pk": "partyId"
+    },
+    {
+      "name": "ShipmentCostEstimate",
+      "pk": "shipmentCostEstimateId"
+    },
+    {
+      "name": "ContactMech",
+      "pk": "contactMechId"
+    },
+    {
+      "name": "ContactList",
+      "pk": "contactListId"
+    },
+    {
+      "name": "StatusItem",
+      "pk": "statusId"
+    },
+    {
+      "name": "GlFiscalType",
+      "pk": "glFiscalTypeId"
+    },
+    {
+      "name": "ShipmentGatewayConfig",
+      "pk": "shipmentGatewayConfigId"
+    },
+    {
+      "name": "PaymentApplication",
+      "pk": "paymentApplicationId"
+    },
+    {
+      "name": "ContentApproval",
+      "pk": "contentApprovalId"
+    },
+    {
+      "name": "ValueLinkKey",
+      "pk": "merchantId"
+    },
+    {
+      "name": "CurrencyDimension",
+      "pk": "dimensionId"
+    },
+    {
+      "name": "TestingRemoveAll",
+      "pk": "testingRemoveAllId"
+    },
+    {
+      "name": "OrderHeader",
+      "pk": "orderId"
+    },
+    {
+      "name": "MimeTypeHtmlTemplate",
+      "pk": "mimeTypeId"
+    },
+    {
+      "name": "WebSitePublishPoint",
+      "pk": "contentId"
+    },
+    {
+      "name": "OrderItemPriceInfo",
+      "pk": "orderItemPriceInfoId"
+    },
+    {
+      "name": "SettlementTerm",
+      "pk": "settlementTermId"
+    },
+    {
+      "name": "TestingNode",
+      "pk": "testingNodeId"
+    },
+    {
+      "name": "AgreementTerm",
+      "pk": "agreementTermId"
+    },
+    {
+      "name": "TechDataCalendar",
+      "pk": "calendarId"
+    },
+    {
+      "name": "JobInterviewType",
+      "pk": "jobInterviewTypeId"
+    },
+    {
+      "name": "EmplPositionClassType",
+      "pk": "emplPositionClassTypeId"
+    },
+    {
+      "name": "Workload",
+      "pk": "workloadId"
+    },
+    {
+      "name": "InvoiceContentType",
+      "pk": "invoiceContentTypeId"
+    },
+    {
+      "name": "BudgetItemType",
+      "pk": "budgetItemTypeId"
+    },
+    {
+      "name": "PartyResume",
+      "pk": "resumeId"
+    },
+    {
+      "name": "SupplierPrefOrder",
+      "pk": "supplierPrefOrderId"
+    },
+    {
+      "name": "TestingType",
+      "pk": "testingTypeId"
+    },
+    {
+      "name": "SurveyResponse",
+      "pk": "surveyResponseId"
+    },
+    {
+      "name": "WebSiteContentType",
+      "pk": "webSiteContentTypeId"
+    },
+    {
+      "name": "InventoryTransfer",
+      "pk": "inventoryTransferId"
+    },
+    {
+      "name": "PartyGroup",
+      "pk": "partyId"
+    },
+    {
+      "name": "GeoPoint",
+      "pk": "geoPointId"
+    },
+    {
+      "name": "DeliverableType",
+      "pk": "deliverableTypeId"
+    },
+    {
+      "name": "Person",
+      "pk": "partyId"
+    },
+    {
+      "name": "ProductType",
+      "pk": "productTypeId"
+    },
+    {
+      "name": "Requirement",
+      "pk": "requirementId"
+    },
+    {
+      "name": "ProductFeatureCategory",
+      "pk": "productFeatureCategoryId"
+    },
+    {
+      "name": "ProductStore",
+      "pk": "productStoreId"
+    },
+    {
+      "name": "SalesOpportunity",
+      "pk": "salesOpportunityId"
+    },
+    {
+      "name": "ProductCalculatedInfo",
+      "pk": "productId"
+    },
+    {
+      "name": "Affiliate",
+      "pk": "partyId"
+    },
+    {
+      "name": "RuntimeData",
+      "pk": "runtimeDataId"
+    },
+    {
+      "name": "VisualThemeSet",
+      "pk": "visualThemeSetId"
+    },
+    {
+      "name": "Facility",
+      "pk": "facilityId"
+    },
+    {
+      "name": "Example",
+      "pk": "exampleId"
+    },
+    {
+      "name": "BudgetReviewResultType",
+      "pk": "budgetReviewResultTypeId"
+    },
+    {
+      "name": "EntityAuditLog",
+      "pk": "auditHistorySeqId"
+    },
+    {
+      "name": "ShipmentType",
+      "pk": "shipmentTypeId"
+    },
+    {
+      "name": "TelecomGatewayConfig",
+      "pk": "telecomGatewayConfigId"
+    },
+    {
+      "name": "FacilityGroup",
+      "pk": "facilityGroupId"
+    },
+    {
+      "name": "TestingSubtype",
+      "pk": "testingTypeId"
+    },
+    {
+      "name": "GeoType",
+      "pk": "geoTypeId"
+    },
+    {
+      "name": "CatalinaSession",
+      "pk": "sessionId"
+    },
+    {
+      "name": "InventoryItemLabel",
+      "pk": "inventoryItemLabelId"
+    },
+    {
+      "name": "OrderItemType",
+      "pk": "orderItemTypeId"
+    },
+    {
+      "name": "FacilityAssocType",
+      "pk": "facilityAssocTypeId"
+    },
+    {
+      "name": "EmploymentAppSourceType",
+      "pk": "employmentAppSourceTypeId"
+    },
+    {
+      "name": "OrderAdjustmentType",
+      "pk": "orderAdjustmentTypeId"
+    },
+    {
+      "name": "BillingAccountTerm",
+      "pk": "billingAccountTermId"
+    },
+    {
+      "name": "QuantityBreak",
+      "pk": "quantityBreakId"
+    },
+    {
+      "name": "SecurityPermission",
+      "pk": "permissionId"
+    },
+    {
+      "name": "ProductPricePurpose",
+      "pk": "productPricePurposeId"
+    },
+    {
+      "name": "MrpEventType",
+      "pk": "mrpEventTypeId"
+    },
+    {
+      "name": "Deliverable",
+      "pk": "deliverableId"
+    },
+    {
+      "name": "X509IssuerProvision",
+      "pk": "certProvisionId"
+    },
+    {
+      "name": "RateType",
+      "pk": "rateTypeId"
+    },
+    {
+      "name": "AccommodationMapType",
+      "pk": "accommodationMapTypeId"
+    },
+    {
+      "name": "ServerHitType",
+      "pk": "hitTypeId"
+    },
+    {
+      "name": "FacilityGroupType",
+      "pk": "facilityGroupTypeId"
+    },
+    {
+      "name": "ShipmentBoxType",
+      "pk": "shipmentBoxTypeId"
+    },
+    {
+      "name": "PaymentMethod",
+      "pk": "paymentMethodId"
+    },
+    {
+      "name": "CustRequestResolution",
+      "pk": "custRequestResolutionId"
+    },
+    {
+      "name": "BenefitType",
+      "pk": "benefitTypeId"
+    },
+    {
+      "name": "CustomTimePeriod",
+      "pk": "customTimePeriodId"
+    },
+    {
+      "name": "ShipmentContactMechType",
+      "pk": "shipmentContactMechTypeId"
+    },
+    {
+      "name": "GlXbrlClass",
+      "pk": "glXbrlClassId"
+    },
+    {
+      "name": "Container",
+      "pk": "containerId"
+    },
+    {
+      "name": "ReturnAdjustment",
+      "pk": "returnAdjustmentId"
+    },
+    {
+      "name": "OrderDenylistType",
+      "pk": "orderDenylistTypeId"
+    },
+    {
+      "name": "JobInterview",
+      "pk": "jobInterviewId"
+    },
+    {
+      "name": "PosTerminalInternTx",
+      "pk": "posTerminalLogId"
+    },
+    {
+      "name": "AudioDataResource",
+      "pk": "dataResourceId"
+    },
+    {
+      "name": "Uom",
+      "pk": "uomId"
+    },
+    {
+      "name": "EmplLeaveReasonType",
+      "pk": "emplLeaveReasonTypeId"
+    },
+    {
+      "name": "OrderItemAssocType",
+      "pk": "orderItemAssocTypeId"
+    },
+    {
+      "name": "ShippingDocument",
+      "pk": "documentId"
+    },
+    {
+      "name": "TenantKeyEncryptingKey",
+      "pk": "tenantId"
+    },
+    {
+      "name": "ProductGroupOrder",
+      "pk": "groupOrderId"
+    },
+    {
+      "name": "CustomMethodType",
+      "pk": "customMethodTypeId"
+    },
+    {
+      "name": "ShipmentGatewayUsps",
+      "pk": "shipmentGatewayConfigId"
+    },
+    {
+      "name": "PaymentGatewayConfigType",
+      "pk": "paymentGatewayConfigTypeId"
+    },
+    {
+      "name": "TerminationReason",
+      "pk": "terminationReasonId"
+    },
+    {
+      "name": "CostComponentCalc",
+      "pk": "costComponentCalcId"
+    },
+    {
+      "name": "Component",
+      "pk": "componentName"
+    },
+    {
+      "name": "GlAccount",
+      "pk": "glAccountId"
+    },
+    {
+      "name": "ExampleFeatureApplType",
+      "pk": "exampleFeatureApplTypeId"
+    },
+    {
+      "name": "ProductConfigItem",
+      "pk": "configItemId"
+    },
+    {
+      "name": "LinkedInUser",
+      "pk": "linkedInUserId"
+    },
+    {
+      "name": "WorkEffortSearchResult",
+      "pk": "workEffortSearchResultId"
+    },
+    {
+      "name": "GlAccountCategory",
+      "pk": "glAccountCategoryId"
+    },
+    {
+      "name": "PartyPrefDocTypeTpl",
+      "pk": "partyPrefDocTypeTplId"
+    },
+    {
+      "name": "TestingStatus",
+      "pk": "testingStatusId"
+    },
+    {
+      "name": "PartyClassificationType",
+      "pk": "partyClassificationTypeId"
+    },
+    {
+      "name": "GlAccountCategoryType",
+      "pk": "glAccountCategoryTypeId"
+    },
+    {
+      "name": "ContentAssocType",
+      "pk": "contentAssocTypeId"
+    },
+    {
+      "name": "InvoiceItemType",
+      "pk": "invoiceItemTypeId"
+    },
+    {
+      "name": "WebAnalyticsType",
+      "pk": "webAnalyticsTypeId"
+    },
+    {
+      "name": "OrderNotification",
+      "pk": "orderNotificationId"
+    },
+    {
+      "name": "Quote",
+      "pk": "quoteId"
+    },
+    {
+      "name": "Document",
+      "pk": "documentId"
+    },
+    {
+      "name": "GlReconciliation",
+      "pk": "glReconciliationId"
+    },
+    {
+      "name": "RecurrenceInfo",
+      "pk": "recurrenceInfoId"
+    },
+    {
+      "name": "RequirementType",
+      "pk": "requirementTypeId"
+    },
+    {
+      "name": "PortalPortlet",
+      "pk": "portalPortletId"
+    },
+    {
+      "name": "WorkReqFulfType",
+      "pk": "workReqFulfTypeId"
+    },
+    {
+      "name": "ProductAssocType",
+      "pk": "productAssocTypeId"
+    },
+    {
+      "name": "GlJournal",
+      "pk": "glJournalId"
+    },
+    {
+      "name": "FixedAssetStdCostType",
+      "pk": "fixedAssetStdCostTypeId"
+    },
+    {
+      "name": "PartyType",
+      "pk": "partyTypeId"
+    },
+    {
+      "name": "SalesOpportunityHistory",
+      "pk": "salesOpportunityHistoryId"
+    },
+    {
+      "name": "Budget",
+      "pk": "budgetId"
+    },
+    {
+      "name": "RoleType",
+      "pk": "roleTypeId"
+    },
+    {
+      "name": "StatusType",
+      "pk": "statusTypeId"
+    },
+    {
+      "name": "FinAccount",
+      "pk": "finAccountId"
+    },
+    {
+      "name": "OrderPaymentPreference",
+      "pk": "orderPaymentPreferenceId"
+    },
+    {
+      "name": "ProductStoreGroupType",
+      "pk": "productStoreGroupTypeId"
+    },
+    {
+      "name": "TenantDomainName",
+      "pk": "domainName"
+    },
+    {
+      "name": "WorkEffortPurposeType",
+      "pk": "workEffortPurposeTypeId"
+    },
+    {
+      "name": "AgreementItemType",
+      "pk": "agreementItemTypeId"
+    },
+    {
+      "name": "PaymentGatewayFirstData",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "CreditCard",
+      "pk": "paymentMethodId"
+    },
+    {
+      "name": "PerfReviewItemType",
+      "pk": "perfReviewItemTypeId"
+    },
+    {
+      "name": "NoteData",
+      "pk": "noteId"
+    },
+    {
+      "name": "EntityKeyStore",
+      "pk": "keyName"
+    },
+    {
+      "name": "WorkEffortType",
+      "pk": "workEffortTypeId"
+    },
+    {
+      "name": "PicklistBin",
+      "pk": "picklistBinId"
+    },
+    {
+      "name": "CountryDimension",
+      "pk": "dimensionId"
+    },
+    {
+      "name": "ContentType",
+      "pk": "contentTypeId"
+    },
+    {
+      "name": "PaymentGatewayResponse",
+      "pk": "paymentGatewayResponseId"
+    },
+    {
+      "name": "GlAccountType",
+      "pk": "glAccountTypeId"
+    },
+    {
+      "name": "SurveyApplType",
+      "pk": "surveyApplTypeId"
+    },
+    {
+      "name": "OrderStatus",
+      "pk": "orderStatusId"
+    },
+    {
+      "name": "CommContentAssocType",
+      "pk": "commContentAssocTypeId"
+    },
+    {
+      "name": "ShipmentMethodType",
+      "pk": "shipmentMethodTypeId"
+    },
+    {
+      "name": "EmailTemplateSetting",
+      "pk": "emailTemplateSettingId"
+    },
+    {
+      "name": "EntitySyncRemove",
+      "pk": "entitySyncRemoveId"
+    },
+    {
+      "name": "AgreementType",
+      "pk": "agreementTypeId"
+    },
+    {
+      "name": "ContentAssocPredicate",
+      "pk": "contentAssocPredicateId"
+    },
+    {
+      "name": "AccommodationClass",
+      "pk": "accommodationClassId"
+    },
+    {
+      "name": "ProdCatalog",
+      "pk": "prodCatalogId"
+    },
+    {
+      "name": "PaymentGroup",
+      "pk": "paymentGroupId"
+    },
+    {
+      "name": "FinAccountTransType",
+      "pk": "finAccountTransTypeId"
+    },
+    {
+      "name": "CountryCapital",
+      "pk": "countryCode"
+    },
+    {
+      "name": "FinAccountAuth",
+      "pk": "finAccountAuthId"
+    },
+    {
+      "name": "TrainingClassType",
+      "pk": "trainingClassTypeId"
+    },
+    {
+      "name": "DataResource",
+      "pk": "dataResourceId"
+    },
+    {
+      "name": "VisualTheme",
+      "pk": "visualThemeId"
+    },
+    {
+      "name": "ResponsibilityType",
+      "pk": "responsibilityTypeId"
+    },
+    {
+      "name": "AccommodationMap",
+      "pk": "accommodationMapId"
+    },
+    {
+      "name": "SalesForecastHistory",
+      "pk": "salesForecastHistoryId"
+    },
+    {
+      "name": "DataCategory",
+      "pk": "dataCategoryId"
+    },
+    {
+      "name": "GoodIdentificationType",
+      "pk": "goodIdentificationTypeId"
+    },
+    {
+      "name": "PosTerminal",
+      "pk": "posTerminalId"
+    },
+    {
+      "name": "PlatformType",
+      "pk": "platformTypeId"
+    },
+    {
+      "name": "Payment",
+      "pk": "paymentId"
+    },
+    {
+      "name": "ReturnHeaderType",
+      "pk": "returnHeaderTypeId"
+    },
+    {
+      "name": "Survey",
+      "pk": "surveyId"
+    },
+    {
+      "name": "Picklist",
+      "pk": "picklistId"
+    },
+    {
+      "name": "SubscriptionResource",
+      "pk": "subscriptionResourceId"
+    },
+    {
+      "name": "GlAccountClass",
+      "pk": "glAccountClassId"
+    },
+    {
+      "name": "PerfRatingType",
+      "pk": "perfRatingTypeId"
+    },
+    {
+      "name": "FinAccountType",
+      "pk": "finAccountTypeId"
+    },
+    {
+      "name": "ReturnReason",
+      "pk": "returnReasonId"
+    },
+    {
+      "name": "VarianceReason",
+      "pk": "varianceReasonId"
+    },
+    {
+      "name": "SupplierRatingType",
+      "pk": "supplierRatingTypeId"
+    },
+    {
+      "name": "TaxAuthorityAssocType",
+      "pk": "taxAuthorityAssocTypeId"
+    },
+    {
+      "name": "FinAccountTrans",
+      "pk": "finAccountTransId"
+    },
+    {
+      "name": "PartyRelationshipType",
+      "pk": "partyRelationshipTypeId"
+    },
+    {
+      "name": "Visitor",
+      "pk": "visitorId"
+    },
+    {
+      "name": "Invoice",
+      "pk": "invoiceId"
+    },
+    {
+      "name": "ProductSearchResult",
+      "pk": "productSearchResultId"
+    },
+    {
+      "name": "SecurityGroup",
+      "pk": "groupId"
+    },
+    {
+      "name": "Geo",
+      "pk": "geoId"
+    },
+    {
+      "name": "CostComponentType",
+      "pk": "costComponentTypeId"
+    },
+    {
+      "name": "AcctgTrans",
+      "pk": "acctgTransId"
+    },
+    {
+      "name": "VideoDataResource",
+      "pk": "dataResourceId"
+    },
+    {
+      "name": "BudgetScenario",
+      "pk": "budgetScenarioId"
+    },
+    {
+      "name": "OrderContentType",
+      "pk": "orderContentTypeId"
+    },
+    {
+      "name": "ExampleFeature",
+      "pk": "exampleFeatureId"
+    },
+    {
+      "name": "AgreementContentType",
+      "pk": "agreementContentTypeId"
+    },
+    {
+      "name": "ElectronicText",
+      "pk": "dataResourceId"
+    },
+    {
+      "name": "PostalAddress",
+      "pk": "contactMechId"
+    },
+    {
+      "name": "UserPrefGroupType",
+      "pk": "userPrefGroupTypeId"
+    },
+    {
+      "name": "TrainingRequest",
+      "pk": "trainingRequestId"
+    },
+    {
+      "name": "PaymentGatewayClearCommerce",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "TelecomMethodType",
+      "pk": "telecomMethodTypeId"
+    },
+    {
+      "name": "CommunicationEvent",
+      "pk": "communicationEventId"
+    },
+    {
+      "name": "ServiceSemaphore",
+      "pk": "serviceName"
+    },
+    {
+      "name": "ProductFeatureApplType",
+      "pk": "productFeatureApplTypeId"
+    },
+    {
+      "name": "PeriodType",
+      "pk": "periodTypeId"
+    },
+    {
+      "name": "WebPage",
+      "pk": "webPageId"
+    },
+    {
+      "name": "OrderAdjustment",
+      "pk": "orderAdjustmentId"
+    },
+    {
+      "name": "WorkEffortIcalData",
+      "pk": "workEffortId"
+    },
+    {
+      "name": "QuantityBreakType",
+      "pk": "quantityBreakTypeId"
+    },
+    {
+      "name": "SegmentGroup",
+      "pk": "segmentGroupId"
+    },
+    {
+      "name": "Product",
+      "pk": "productId"
+    },
+    {
+      "name": "CustomScreen",
+      "pk": "customScreenId"
+    },
+    {
+      "name": "CustRequestType",
+      "pk": "custRequestTypeId"
+    },
+    {
+      "name": "PaymentGatewayEway",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "ReturnAdjustmentType",
+      "pk": "returnAdjustmentTypeId"
+    },
+    {
+      "name": "ImageDataResource",
+      "pk": "dataResourceId"
+    },
+    {
+      "name": "InventoryItemFact",
+      "pk": "inventoryItemId"
+    },
+    {
+      "name": "JobSandbox",
+      "pk": "jobId"
+    },
+    {
+      "name": "ProductPromoCode",
+      "pk": "productPromoCodeId"
+    },
+    {
+      "name": "GiftCardFulfillment",
+      "pk": "fulfillmentId"
+    },
+    {
+      "name": "FixedAssetProductType",
+      "pk": "fixedAssetProductTypeId"
+    },
+    {
+      "name": "CharacterSet",
+      "pk": "characterSetId"
+    },
+    {
+      "name": "WorkloadFeatureApplType",
+      "pk": "workloadFeatureApplTypeId"
+    },
+    {
+      "name": "UserLogin",
+      "pk": "userLoginId"
+    },
+    {
+      "name": "ProductFeatureGroup",
+      "pk": "productFeatureGroupId"
+    },
+    {
+      "name": "CcRuleAction",
+      "pk": "ruleActionId"
+    },
+    {
+      "name": "ReturnItemType",
+      "pk": "returnItemTypeId"
+    },
+    {
+      "name": "PartyClassificationGroup",
+      "pk": "partyClassificationGroupId"
+    },
+    {
+      "name": "SaleType",
+      "pk": "saleTypeId"
+    },
+    {
+      "name": "PartyAcctgPreference",
+      "pk": "partyId"
+    },
+    {
+      "name": "ProductPriceAutoNotice",
+      "pk": "productPriceNoticeId"
+    },
+    {
+      "name": "SurveyQuestion",
+      "pk": "surveyQuestionId"
+    },
+    {
+      "name": "FtpAddress",
+      "pk": "contactMechId"
+    },
+    {
+      "name": "FacilityType",
+      "pk": "facilityTypeId"
+    },
+    {
+      "name": "TrackingCodeType",
+      "pk": "trackingCodeTypeId"
+    },
+    {
+      "name": "AcctgTransType",
+      "pk": "acctgTransTypeId"
+    },
+    {
+      "name": "ShipmentGatewayUps",
+      "pk": "shipmentGatewayConfigId"
+    },
+    {
+      "name": "OldOrderBlacklistType",
+      "pk": "orderBlacklistTypeId"
+    },
+    {
+      "name": "SalesOpportunityStage",
+      "pk": "opportunityStageId"
+    },
+    {
+      "name": "UserAgentMethodType",
+      "pk": "userAgentMethodTypeId"
+    },
+    {
+      "name": "PaymentMethodType",
+      "pk": "paymentMethodTypeId"
+    },
+    {
+      "name": "Party",
+      "pk": "partyId"
+    },
+    {
+      "name": "Shipment",
+      "pk": "shipmentId"
+    },
+    {
+      "name": "RejectionReason",
+      "pk": "rejectionId"
+    },
+    {
+      "name": "AccommodationSpot",
+      "pk": "accommodationSpotId"
+    },
+    {
+      "name": "CountryAddressFormat",
+      "pk": "geoId"
+    },
+    {
+      "name": "ReturnHeader",
+      "pk": "returnId"
+    },
+    {
+      "name": "SequenceValueItem",
+      "pk": "seqName"
+    },
+    {
+      "name": "ShipmentGatewayConfigType",
+      "pk": "shipmentGatewayConfTypeId"
+    },
+    {
+      "name": "ProductAverageCostType",
+      "pk": "productAverageCostTypeId"
+    },
+    {
+      "name": "GiftCard",
+      "pk": "paymentMethodId"
+    },
+    {
+      "name": "TemporalExpression",
+      "pk": "tempExprId"
+    },
+    {
+      "name": "PaymentGatewayPayflowPro",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "FileExtension",
+      "pk": "fileExtensionId"
+    },
+    {
+      "name": "EbayConfig",
+      "pk": "productStoreId"
+    },
+    {
+      "name": "Timesheet",
+      "pk": "timesheetId"
+    },
+    {
+      "name": "PaymentGatewayCyberSource",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "ProductFeature",
+      "pk": "productFeatureId"
+    },
+    {
+      "name": "PartyInvitation",
+      "pk": "partyInvitationId"
+    },
+    {
+      "name": "WorkloadFeature",
+      "pk": "workloadFeatureId"
+    },
+    {
+      "name": "InvoiceType",
+      "pk": "invoiceTypeId"
+    },
+    {
+      "name": "ShoppingList",
+      "pk": "shoppingListId"
+    },
+    {
+      "name": "PartyIdentificationType",
+      "pk": "partyIdentificationTypeId"
+    },
+    {
+      "name": "WorkEffortGoodStandardType",
+      "pk": "workEffortGoodStdTypeId"
+    },
+    {
+      "name": "TimeEntry",
+      "pk": "timeEntryId"
+    },
+    {
+      "name": "PaymentType",
+      "pk": "paymentTypeId"
+    },
+    {
+      "name": "WorkloadType",
+      "pk": "workloadTypeId"
+    },
+    {
+      "name": "ProductPriceRule",
+      "pk": "productPriceRuleId"
+    },
+    {
+      "name": "ProductStoreSurveyAppl",
+      "pk": "productStoreSurveyId"
+    },
+    {
+      "name": "Deduction",
+      "pk": "deductionId"
+    },
+    {
+      "name": "SubscriptionActivity",
+      "pk": "subscriptionActivityId"
+    },
+    {
+      "name": "PaymentGroupType",
+      "pk": "paymentGroupTypeId"
+    },
+    {
+      "name": "CountryTeleCode",
+      "pk": "countryCode"
+    },
+    {
+      "name": "ReturnType",
+      "pk": "returnTypeId"
+    },
+    {
+      "name": "ProductCategoryType",
+      "pk": "productCategoryTypeId"
+    },
+    {
+      "name": "PaymentGatewaySecurePay",
+      "pk": "paymentGatewayConfigId"
+    },
+    {
+      "name": "GlAccountGroup",
+      "pk": "glAccountGroupId"
+    },
+    {
+      "name": "WorkEffortContentType",
+      "pk": "workEffortContentTypeId"
+    },
+    {
+      "name": "TechDataCalendarWeek",
+      "pk": "calendarWeekId"
+    },
+    {
+      "name": "ProductDimension",
+      "pk": "dimensionId"
+    },
+    {
+      "name": "GlResourceType",
+      "pk": "glResourceTypeId"
+    },
+    {
+      "name": "ProductStoreShipmentMeth",
+      "pk": "productStoreShipMethId"
+    },
+    {
+      "name": "ItemIssuance",
+      "pk": "itemIssuanceId"
+    },
+    {
+      "name": "TaxAuthorityRateProduct",
+      "pk": "taxAuthorityRateSeqId"
+    }
+  ],
+  "total": 422
+}

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.bluecc.gentool.StereotypeTool.convertToStereotype;
+import static com.bluecc.gentool.Stereotypes.convertToStereotype;
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static org.junit.Assert.assertEquals;
 

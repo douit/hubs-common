@@ -20,6 +20,9 @@ import static java.lang.String.format;
 @Builder
 @Slf4j
 public class EntityMeta {
+    public static final String REL_MANY = "many";
+    public static final String REL_ONE = "one";
+    public static final String REL_ONE_NOFK="one-nofk";
 
     /* move to HeadEntity
     public static final Map<String, HeadEntity> HEAD_ENTITIES = ImmutableMap.of(
@@ -288,6 +291,18 @@ public class EntityMeta {
                 .findFirst();
     }
 
+    public List<RelationMeta> findRelationsByField(String fieldName,
+                                                      String...relationType){
+        if(relationType.length==0){
+            return Lists.newArrayList();
+        }
+        Set<String> types=Sets.newHashSet(relationType);
+        return relations.stream()
+                .filter(r -> r.getRelFieldList().contains(fieldName)
+                        && types.contains(r.type))
+                .collect(Collectors.toList());
+    }
+
     public List<RelationMeta> getValidRelations(){
         Set<String> ents=MetaTypes.getAllEntities();
         return relations.stream()
@@ -364,6 +379,18 @@ public class EntityMeta {
         public boolean isNumericField(){
             return MetaTypeUtil.NUMERIC_TYPES.contains(type);
         }
+        public boolean isDecimalField(){
+            return MetaTypeUtil.DECIMAL_TYPES.contains(type);
+        }
+        public boolean isBlobField(){
+            return MetaTypeUtil.BLOB_TYPES.contains(type);
+        }
+        public boolean isManualField(){
+            return MetaTypeUtil.MANUAL_TYPES.contains(type);
+        }
+        public boolean isRawTextField(){
+            return type.endsWith("-varchar") || type.startsWith("very-");
+        }
 
         // public String getUnderscore() {
         //     return Util.toSnakecase(this.name);
@@ -383,6 +410,9 @@ public class EntityMeta {
             return name.equals("lastUpdatedStamp");
         }
 
+        public boolean isIndicator(){
+            return type.equals("indicator");
+        }
         public String getSetter(){
             return format("set%s", fixedClassName());
         }
@@ -539,7 +569,7 @@ public class EntityMeta {
         }
 
         public String getProtoDef() {
-            String prefix = this.type.equals("many") ? "repeated " : "";
+            String prefix = this.type.equals(REL_MANY) ? "repeated " : "";
             // return String.format("%s %sData %s", prefix, relEntityName,
             //         Util.toSnakecase(title) + "_" + Util.toSnakecase(name));
             return format("%s%sData %s", prefix, relEntityName, getProtoName());

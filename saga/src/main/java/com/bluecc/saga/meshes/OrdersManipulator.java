@@ -9,11 +9,11 @@ import com.bluecc.income.procs.CommonData.PartyFromTo;
 import com.bluecc.income.procs.Orders;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.bluecc.income.procs.Orders;
 
 public class OrdersManipulator {
     public interface Event {}
@@ -90,7 +90,6 @@ public class OrdersManipulator {
     }
     
 
-    @Slf4j
     public static class OrdersWrapper {
         public static Behavior<Event> create(Orders mani) {
             return Behaviors.setup(ctx -> new OrdersWrapper(ctx, mani).behavior());
@@ -104,7 +103,6 @@ public class OrdersManipulator {
         }
 
         private Behavior<Event> behavior() {
-            // System.out.println(".. orders mani");
             return Behaviors.receive(Event.class)
                     .onMessage(CreateOrderHeader.class, this::onCreateOrderHeader)
                     .onMessage(AddOrderItem.class, this::onAddOrderItem)
@@ -121,7 +119,6 @@ public class OrdersManipulator {
         
         private Behavior<Event> onCreateOrderHeader(CreateOrderHeader message) {
             context.getLog().info("CreateOrderHeader: {}", message.getClass().getSimpleName());
-            // System.out.println(".. onCreateOrderHeader");
             mani.createOrderHeader(
                 message.createdBy,
                 message.grandTotal);                
@@ -130,7 +127,7 @@ public class OrdersManipulator {
         }
         
         private Behavior<Event> onAddOrderItem(AddOrderItem message) {
-            context.getLog().info("AddOrderItem: {}", message.getClass().getName());
+            context.getLog().info("AddOrderItem: {}", message.getClass().getSimpleName());
             mani.addOrderItem(
                 message.order,
                 message.seqId,
@@ -140,7 +137,7 @@ public class OrdersManipulator {
         }
         
         private Behavior<Event> onCreateInvoice(CreateInvoice message) {
-            context.getLog().info("CreateInvoice: {}", message.getClass().getName());
+            context.getLog().info("CreateInvoice: {}", message.getClass().getSimpleName());
             mani.createInvoice(
                 message.fromTo,
                 message.paidDate);                
@@ -149,7 +146,7 @@ public class OrdersManipulator {
         }
         
         private Behavior<Event> onAddInvoiceItem(AddInvoiceItem message) {
-            context.getLog().info("AddInvoiceItem: {}", message.getClass().getName());
+            context.getLog().info("AddInvoiceItem: {}", message.getClass().getSimpleName());
             mani.addInvoiceItem(
                 message.invoice,
                 message.seqId,
@@ -161,7 +158,7 @@ public class OrdersManipulator {
         }
         
         private Behavior<Event> onAddOrderItemBilling(AddOrderItemBilling message) {
-            context.getLog().info("AddOrderItemBilling: {}", message.getClass().getName());
+            context.getLog().info("AddOrderItemBilling: {}", message.getClass().getSimpleName());
             mani.addOrderItemBilling(
                 message.orderItem,
                 message.invoiceItem,
@@ -171,7 +168,7 @@ public class OrdersManipulator {
         }
         
         private Behavior<Event> onCreateShipment(CreateShipment message) {
-            context.getLog().info("CreateShipment: {}", message.getClass().getName());
+            context.getLog().info("CreateShipment: {}", message.getClass().getSimpleName());
             mani.createShipment(
                 message.fromTo,
                 message.order,
@@ -181,7 +178,7 @@ public class OrdersManipulator {
         }
         
         private Behavior<Event> onAddShipmentItem(AddShipmentItem message) {
-            context.getLog().info("AddShipmentItem: {}", message.getClass().getName());
+            context.getLog().info("AddShipmentItem: {}", message.getClass().getSimpleName());
             mani.addShipmentItem(
                 message.shipment,
                 message.seqId,
@@ -191,7 +188,7 @@ public class OrdersManipulator {
         }
         
         private Behavior<Event> onAddOrderStatus(AddOrderStatus message) {
-            context.getLog().info("AddOrderStatus: {}", message.getClass().getName());
+            context.getLog().info("AddOrderStatus: {}", message.getClass().getSimpleName());
             mani.addOrderStatus(
                 message.order,
                 message.statusId);                
@@ -200,7 +197,7 @@ public class OrdersManipulator {
         }
         
         private Behavior<Event> onSetOrderStatus(SetOrderStatus message) {
-            context.getLog().info("SetOrderStatus: {}", message.getClass().getName());
+            context.getLog().info("SetOrderStatus: {}", message.getClass().getSimpleName());
             mani.setOrderStatus(
                 message.order,
                 message.statusId);                
