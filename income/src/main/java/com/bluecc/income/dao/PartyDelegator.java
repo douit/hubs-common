@@ -40,6 +40,18 @@ public class PartyDelegator extends AbstractProcs{
         int countParty();
     }
 
+    public Party get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getParty(id);
+    }
+
+    public List<Party> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listParty();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countParty();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

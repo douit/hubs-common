@@ -40,6 +40,18 @@ public class PersonDelegator extends AbstractProcs{
         int countPerson();
     }
 
+    public Person get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getPerson(id);
+    }
+
+    public List<Person> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listPerson();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countPerson();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

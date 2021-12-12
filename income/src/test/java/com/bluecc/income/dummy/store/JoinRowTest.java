@@ -46,12 +46,19 @@ public class JoinRowTest extends AbstractMemStoreProcTest {
             handle.registerRowMapper(BeanMapper.factory(ContactBean.class, "c"));
             handle.registerRowMapper(BeanMapper.factory(PhoneBean.class, "p"));
             handle.registerRowMapper(JoinRowMapper.forTypes(ContactBean.class, PhoneBean.class));
+            // List<JoinRow> contactPhones = handle.select("select "
+            //                 + "c.id cid, c.name cname, "
+            //                 + "p.id pid, p.name pname, p.number pnumber "
+            //                 + "from contacts c left join phones p on c.id = p.contact_id")
+            //         .mapTo(JoinRow.class)
+            //         .list();
             List<JoinRow> contactPhones = handle.select("select "
-                            + "c.id cid, c.name cname, "
-                            + "p.id pid, p.name pname, p.number pnumber "
+                            + "c.id c_id, c.name c_name, "
+                            + "p.id p_id, p.name p_name, p.number p_number "
                             + "from contacts c left join phones p on c.id = p.contact_id")
                     .mapTo(JoinRow.class)
                     .list();
+
             // end::beanMapperPrefix[]
 
             Assertions.assertThat(contactPhones)

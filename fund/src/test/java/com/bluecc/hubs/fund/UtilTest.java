@@ -16,9 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.bluecc.hubs.fund.Util.createRegexFromGlob;
 import static com.bluecc.hubs.fund.Util.flatten;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 // import static org.junit.Assert.*;
 
@@ -117,6 +118,23 @@ public class UtilTest {
 
         String[] s2 = flatten(a, b, c).toArray(String[]::new);
         System.out.println(Arrays.toString(s2));
+    }
+
+    @Test
+    public void matchString() {
+        String str = "baaabab";
+        String pattern = "*****ba*****ab";
+        assertTrue(Util.matchString(str, pattern));
+        assertFalse(Util.matchString(str, "?baaabab"));
+        assertTrue(Util.matchString(str, "?aaabab"));
+        assertTrue(Util.matchString(str, "*bab"));
+    }
+
+    @Test
+    public void testCreateRegexFromGlob() {
+        String patternString = createRegexFromGlob("abc*");
+        List<String> list = Arrays.asList("abf", "abc_fgh", "abcgafa", "fgabcafa");
+        list.forEach(it -> System.out.println(it.matches(patternString)));
     }
 
     @Data

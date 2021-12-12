@@ -40,6 +40,18 @@ public class InventoryItemDelegator extends AbstractProcs{
         int countInventoryItem();
     }
 
+    public InventoryItem get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getInventoryItem(id);
+    }
+
+    public List<InventoryItem> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listInventoryItem();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countInventoryItem();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

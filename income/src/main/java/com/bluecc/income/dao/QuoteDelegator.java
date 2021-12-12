@@ -40,6 +40,18 @@ public class QuoteDelegator extends AbstractProcs{
         int countQuote();
     }
 
+    public Quote get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getQuote(id);
+    }
+
+    public List<Quote> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listQuote();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countQuote();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

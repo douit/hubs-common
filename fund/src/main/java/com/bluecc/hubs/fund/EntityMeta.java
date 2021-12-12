@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.bluecc.hubs.fund.MetaTypes.typeList;
 import static java.lang.String.format;
@@ -89,6 +90,31 @@ public class EntityMeta {
 
     public Set<String> getFieldNames(){
         return fields.stream().map(f -> f.name).collect(Collectors.toSet());
+    }
+
+    public List<String> getColNames(String... exclude){
+        if(exclude.length>0) {
+            return fields.stream()
+                    .map(f -> f.getUnderscore())
+                    .filter(underscore -> Stream.of(exclude)
+                            .noneMatch(ex -> Util.matchString(underscore, ex)))
+                    .collect(Collectors.toList());
+        }
+
+        return fields.stream()
+                .map(f -> f.getUnderscore())
+                .collect(Collectors.toList());
+    }
+
+    public String getPrefix(){
+        String constName=getUnderscore();
+        String prefix= Arrays.stream(constName.split("_"))
+                .map(s -> s.substring(0, 1))
+                .collect(Collectors.joining());
+        if(prefix.length()==1){
+            return constName.substring(0,2);
+        }
+        return prefix;
     }
 
     public Optional<FieldMeta> getField(String fieldName){

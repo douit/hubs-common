@@ -40,6 +40,18 @@ public class FixedAssetDelegator extends AbstractProcs{
         int countFixedAsset();
     }
 
+    public FixedAsset get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getFixedAsset(id);
+    }
+
+    public List<FixedAsset> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listFixedAsset();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countFixedAsset();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

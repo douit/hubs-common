@@ -40,6 +40,18 @@ public class PaymentDelegator extends AbstractProcs{
         int countPayment();
     }
 
+    public Payment get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getPayment(id);
+    }
+
+    public List<Payment> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listPayment();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countPayment();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

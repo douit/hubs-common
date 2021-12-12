@@ -30,6 +30,10 @@ public class ProtoMeta {
         return meta;
     }
 
+    public SqlMeta getSqlMeta(String entityName){
+        return new SqlMeta(this, getEntityMeta(entityName));
+    }
+
     public EntityMeta.RelationQueryMeta findRelationQueryMeta(String entityName, String relField){
         List<EntityMeta.RelationQueryMeta>  rels=getEntityMeta(entityName).getRelationQueries();
         for (EntityMeta.RelationQueryMeta rel : rels) {

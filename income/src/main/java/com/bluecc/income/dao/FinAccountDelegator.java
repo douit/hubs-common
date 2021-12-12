@@ -40,6 +40,18 @@ public class FinAccountDelegator extends AbstractProcs{
         int countFinAccount();
     }
 
+    public FinAccount get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getFinAccount(id);
+    }
+
+    public List<FinAccount> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listFinAccount();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countFinAccount();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

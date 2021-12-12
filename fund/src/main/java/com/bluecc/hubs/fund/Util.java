@@ -39,32 +39,32 @@ import static java.util.Objects.requireNonNull;
 
 public class Util {
     public static String arrayAwareToString(Object o) {
-        final String arrayString = Arrays.deepToString(new Object[] {o});
+        final String arrayString = Arrays.deepToString(new Object[]{o});
         return arrayString.substring(1, arrayString.length() - 1);
     }
 
-    public static String snakeToCamel(String str){
+    public static String snakeToCamel(String str) {
         Preconditions.checkNotNull(str, "parameter is null");
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, str);
     }
 
-    public static String toSnakecase(String str){
+    public static String toSnakecase(String str) {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, str);
     }
 
-    public static String toConstName(String str){
+    public static String toConstName(String str) {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, str);
     }
 
-    public static String toVarName(String str){
+    public static String toVarName(String str) {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, str);
     }
 
-    public static String toClassName(String str){
+    public static String toClassName(String str) {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, str);
     }
 
-    public static String wordsToClassName(String words){
+    public static String wordsToClassName(String words) {
         return CaseFormat.LOWER_UNDERSCORE.to(
                 CaseFormat.UPPER_CAMEL,
                 toSnakecase(words.replaceAll("[ \\-,.():]", "_")));
@@ -77,12 +77,12 @@ public class Util {
      */
     private static final class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
         @Override
-        public void write(final JsonWriter jsonWriter, final LocalDateTime localDate ) throws IOException {
+        public void write(final JsonWriter jsonWriter, final LocalDateTime localDate) throws IOException {
             jsonWriter.value(localDate.toString());
         }
 
         @Override
-        public LocalDateTime read( final JsonReader jsonReader ) throws IOException {
+        public LocalDateTime read(final JsonReader jsonReader) throws IOException {
             return LocalDateTime.parse(jsonReader.nextString());
         }
     }
@@ -107,12 +107,23 @@ public class Util {
             .setPrettyPrinting()
             .setExclusionStrategies(strategy)
             .create();
+    public static final Gson GSON_NO_EXCLUDE = new GsonBuilder()
+            // .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+//            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
+            .setPrettyPrinting()
+            // .setExclusionStrategies(strategy)
+            .create();
 
-    public static void pretty(Object o){
+    public static void pretty(Object o) {
         System.out.println(GSON.toJson(o));
     }
+    public static void prettyFull(Object o) {
+        System.out.println(GSON_NO_EXCLUDE.toJson(o));
+    }
 
-    public static String prettyJson(Object o){
+    public static String prettyJson(Object o) {
         return GSON.toJson(o);
     }
 
@@ -121,7 +132,7 @@ public class Util {
     }
 
     public static void writeJsonFile(Object o, File file) throws IOException {
-        Writer writer=new FileWriter(file);
+        Writer writer = new FileWriter(file);
         writer.write(GSON.toJson(o));
         writer.close();
     }
@@ -129,31 +140,32 @@ public class Util {
     public static void writeFile(String string, Path path) throws IOException {
         writeFile(string, path.toFile());
     }
+
     public static void writeFile(String string, File file) throws IOException {
-        Writer writer=new FileWriter(file);
+        Writer writer = new FileWriter(file);
         writer.write(string);
         writer.close();
     }
 
     public static <T> T readJsonFile(Class<T> clz, File file) throws IOException {
-        if(!file.exists()){
-            file=SystemDefs.prependHubsHomeFile(file);
+        if (!file.exists()) {
+            file = SystemDefs.prependHubsHomeFile(file);
         }
-        String cnt=IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
+        String cnt = IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
         return GSON.fromJson(cnt, clz);
     }
 
     public static <T> T readJsonResource(Class<T> clz, String location) throws IOException {
-        String cnt=IOUtils.toString(dataSource(location), StandardCharsets.UTF_8);
+        String cnt = IOUtils.toString(dataSource(location), StandardCharsets.UTF_8);
         return GSON.fromJson(cnt, clz);
     }
 
     public static <T> T readJson(Class<T> clz, InputStream stream) throws IOException {
-        String cnt=IOUtils.toString(stream, StandardCharsets.UTF_8);
+        String cnt = IOUtils.toString(stream, StandardCharsets.UTF_8);
         return GSON.fromJson(cnt, clz);
     }
 
-    public static String getCurrentDirectory(){
+    public static String getCurrentDirectory() {
         return System.getProperty("user.dir");
     }
 
@@ -165,13 +177,13 @@ public class Util {
         return new String(Files.readAllBytes(file));
     }
 
-    public static List<File> listFiles(String dir, String suffix){
+    public static List<File> listFiles(String dir, String suffix) {
         return listFiles(new File(dir), suffix);
     }
 
-    public static List<File> listFiles(File dir, String suffix){
-        if(!dir.exists()){
-            dir=SystemDefs.prependHubsHomeFile(dir);
+    public static List<File> listFiles(File dir, String suffix) {
+        if (!dir.exists()) {
+            dir = SystemDefs.prependHubsHomeFile(dir);
         }
         return Arrays.stream(requireNonNull(dir.listFiles()))
                 .filter(f -> f.getName().toLowerCase(Locale.ROOT)
@@ -195,27 +207,27 @@ public class Util {
             Element root = document.getDocumentElement();
 
             return root;
-        }catch (Exception e){
-            throw new RuntimeException("Cannot read xml file "+dataFile, e);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot read xml file " + dataFile, e);
         }
     }
 
-    public static List<Element> allElements(String dataFile, Predicate<Element> filter){
+    public static List<Element> allElements(String dataFile, Predicate<Element> filter) {
         Element root = readXml(dataFile);
         return childElements(root, filter);
     }
 
     public static List<Element> childElements(Element root, Predicate<Element> filter) {
-        NodeList nodeList= root.getChildNodes();
-        List<Element> rs= Lists.newArrayList();
-        for(int i=0;i<nodeList.getLength();++i) {
+        NodeList nodeList = root.getChildNodes();
+        List<Element> rs = Lists.newArrayList();
+        for (int i = 0; i < nodeList.getLength(); ++i) {
             if (nodeList.item(i) instanceof Element) {
                 Element element = (Element) nodeList.item(i);
-                if(filter !=null){
-                    if(filter.test(element)){
+                if (filter != null) {
+                    if (filter.test(element)) {
                         rs.add(element);
                     }
-                }else {
+                } else {
                     rs.add(element);
                 }
             }
@@ -223,14 +235,14 @@ public class Util {
         return rs;
     }
 
-    public static String getWordsFirstLetters(String str){
+    public static String getWordsFirstLetters(String str) {
         return str.replaceAll("\\B.|\\P{L}", "").toUpperCase();
     }
 
     /**
      * Computes the HMAC/SHA-256 code for a given key and message.
      *
-     * @param key the key used to generate the code.
+     * @param key     the key used to generate the code.
      * @param message the message.
      * @return the code as a string.
      */
@@ -257,7 +269,7 @@ public class Util {
     }
 
     //  Flatten a map containing a list of items as values in Java
-    public static<T> Stream<T> flatten(Collection<List<T>> values) {
+    public static <T> Stream<T> flatten(Collection<List<T>> values) {
         Stream<T> stream = values.stream()
                 .flatMap(x -> x.stream());
 
@@ -266,9 +278,84 @@ public class Util {
 
     //  Flatten a stream of multiple arrays of the same type in Java
     @SafeVarargs
-    public static<T> Stream<T> flatten(T[] ... arrays) {
+    public static <T> Stream<T> flatten(T[]... arrays) {
         Stream<T> stream = Stream.of(arrays).flatMap(Arrays::stream);
         return stream;
     }
 
+    // Function that matches input str with
+    // given wildcard pattern
+    // pattern = "ba*ab"; pattern = "ba*ab****"; pattern = "aa?ab";
+    public static boolean matchString(String str, String pattern) {
+        int n=str.length();
+        int m=pattern.length();
+
+        // empty pattern can only match with
+        // empty string
+        if (m == 0)
+            return (n == 0);
+
+        // lookup table for storing results of
+        // subproblems
+        boolean[][] lookup = new boolean[n + 1][m + 1];
+
+        // initialize lookup table to false
+        for (int i = 0; i < n + 1; i++)
+            Arrays.fill(lookup[i], false);
+
+        // empty pattern can match with empty string
+        lookup[0][0] = true;
+
+        // Only '*' can match with empty string
+        for (int j = 1; j <= m; j++)
+            if (pattern.charAt(j - 1) == '*')
+                lookup[0][j] = lookup[0][j - 1];
+
+        // fill the table in bottom-up fashion
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                // Two cases if we see a '*'
+                // a) We ignore '*'' character and move
+                //    to next  character in the pattern,
+                //     i.e., '*' indicates an empty
+                //     sequence.
+                // b) '*' character matches with ith
+                //     character in input
+                if (pattern.charAt(j - 1) == '*')
+                    lookup[i][j] = lookup[i][j - 1]
+                            || lookup[i - 1][j];
+
+                    // Current characters are considered as
+                    // matching in two cases
+                    // (a) current character of pattern is '?'
+                    // (b) characters actually match
+                else if (pattern.charAt(j - 1) == '?'
+                        || str.charAt(i - 1)
+                        == pattern.charAt(j - 1))
+                    lookup[i][j] = lookup[i - 1][j - 1];
+
+                    // If characters don't match
+                else
+                    lookup[i][j] = false;
+            }
+        }
+
+        return lookup[n][m];
+    }
+
+    public static String createRegexFromGlob(String glob) {
+        StringBuilder out = new StringBuilder("^");
+        for(int i = 0; i < glob.length(); ++i) {
+            final char c = glob.charAt(i);
+            switch(c) {
+                case '*': out.append(".*"); break;
+                case '?': out.append('.'); break;
+                case '.': out.append("\\."); break;
+                case '\\': out.append("\\\\"); break;
+                default: out.append(c);
+            }
+        }
+        out.append('$');
+        return out.toString();
+    }
 }

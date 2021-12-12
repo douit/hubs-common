@@ -40,6 +40,18 @@ public class {{ent.name}}Delegator extends AbstractProcs{
         int count{{ent.name}}();
     }
 
+    public {{ent.name}} get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).get{{ent.name}}(id);
+    }
+
+    public List<{{ent.name}}> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).list{{ent.name}}();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).count{{ent.name}}();
+    }
+
 {{agent_source}}
 {{query_rels}}
     

@@ -40,6 +40,18 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
         int countProdCatalogCategory();
     }
 
+    public ProdCatalogCategory get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getProdCatalogCategory(id);
+    }
+
+    public List<ProdCatalogCategory> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listProdCatalogCategory();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countProdCatalogCategory();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

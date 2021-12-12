@@ -40,6 +40,18 @@ public class WebSiteDelegator extends AbstractProcs{
         int countWebSite();
     }
 
+    public WebSite get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getWebSite(id);
+    }
+
+    public List<WebSite> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listWebSite();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countWebSite();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

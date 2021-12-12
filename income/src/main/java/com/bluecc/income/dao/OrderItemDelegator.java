@@ -40,6 +40,18 @@ public class OrderItemDelegator extends AbstractProcs{
         int countOrderItem();
     }
 
+    public OrderItem get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getOrderItem(id);
+    }
+
+    public List<OrderItem> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listOrderItem();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countOrderItem();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

@@ -40,6 +40,18 @@ public class OrderHeaderDelegator extends AbstractProcs{
         int countOrderHeader();
     }
 
+    public OrderHeader get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getOrderHeader(id);
+    }
+
+    public List<OrderHeader> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listOrderHeader();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countOrderHeader();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

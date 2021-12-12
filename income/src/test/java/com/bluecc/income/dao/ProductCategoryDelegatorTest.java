@@ -7,11 +7,15 @@ import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Product;
 import com.bluecc.income.model.ProductCategory;
 import com.github.javafaker.Faker;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.graph.SuccessorsFunction;
 import com.google.common.graph.Traverser;
+import lombok.NonNull;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindList;
@@ -26,9 +30,8 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.junit.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class ProductCategoryDelegatorTest extends AbstractStoreProcTest {
     @Inject
@@ -117,7 +120,7 @@ public class ProductCategoryDelegatorTest extends AbstractStoreProcTest {
 
 
     @Test
-    public void testAll() {
+    public void testAllCatRollups() {
         process(c -> {
             printCatRollups(c);
             // printCatMembers(c);
@@ -216,5 +219,41 @@ public class ProductCategoryDelegatorTest extends AbstractStoreProcTest {
                 return Ordering.natural().immutableSortedCopy(graphMap.get(node));
             }
         };
+    }
+
+    @Test
+    public void testAll() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            System.out.println(productCategoryDelegator.all(c).stream()
+                    // .peek(r -> System.out.println(r.getProductCategoryId()))
+                    .filter(p -> "HotelFac".equals(p.getPrimaryParentCategoryId()))
+                    .map(cat -> cat.getProductCategoryId())
+                    .collect(Collectors.toList()));
+        });
+    }
+    @Test
+    public void testCache() {
+        process(c -> {
+
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            CacheLoader<String, List<String>> loader;
+            loader = new CacheLoader<String, List<String>>() {
+                @Override
+                public List<String> load(@NonNull String key) {
+                    return productCategoryDelegator.all(c).stream()
+                            .filter(p -> key.equals(p.getPrimaryParentCategoryId()))
+                            .map(cat -> cat.getProductCategoryId())
+                            .collect(Collectors.toList());
+                }
+            };
+
+            LoadingCache<String, List<String>> cache;
+            cache = CacheBuilder.newBuilder().build(loader);
+
+            assertEquals(0, cache.size());
+            assertTrue(cache.getUnchecked("HotelFac").size()>0);
+            assertEquals(1, cache.size());
+        });
     }
 }

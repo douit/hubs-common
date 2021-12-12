@@ -40,6 +40,18 @@ public class UserLoginDelegator extends AbstractProcs{
         int countUserLogin();
     }
 
+    public UserLogin get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getUserLogin(id);
+    }
+
+    public List<UserLogin> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listUserLogin();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countUserLogin();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

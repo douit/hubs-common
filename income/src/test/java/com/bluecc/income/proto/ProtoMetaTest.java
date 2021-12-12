@@ -3,7 +3,9 @@ package com.bluecc.income.proto;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 import com.bluecc.hubs.stub.*;
+import com.bluecc.income.dao.PartyDelegator;
 import com.google.common.collect.Maps;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
@@ -165,4 +167,40 @@ public class ProtoMetaTest {
         return values;
     }
 
+    @Test
+    public void testSqlMeta(){
+        {
+            EntityMeta meta = protoMeta.getEntityMeta("Party");
+            System.out.println(meta.getPrefix());
+            // c.id cid, c.name cname
+            String prefix = meta.getPrefix();
+            meta.getColNames("*stamp").stream()
+                    .map(f -> String.format("%s.%s %s_%s", prefix, f, prefix, f))
+                    .forEach(e -> System.out.println(e));
+        }
+        // "select "
+        //     + "c.id c_id, c.name c_name, "
+        //     + "p.id p_id, p.name p_name, p.number p_number "
+        //     + "from contacts c left join phones p on c.id = p.contact_id"
+        {
+            EntityMeta meta = protoMeta.getEntityMeta("PartyContactMech");
+            System.out.println(meta.getPrefix());
+            String prefix = meta.getPrefix();
+            meta.getColNames("*stamp", "party_id").stream()
+                    .map(f -> String.format("%s.%s %s_%s", prefix, f, prefix, f))
+                    .forEach(e -> System.out.println(e));
+        }
+
+        {
+            // testSqlMetaBuilder();
+
+        }
+    }
+
+    @Test
+    public void testSqlMetaBuilder() {
+        SqlMeta sqlMeta=protoMeta.getSqlMeta("Party");
+        System.out.println(sqlMeta.getAliases());
+        System.out.println(sqlMeta.leftJoin(PartyDelegator.PARTY_CONTACT_MECH));
+    }
 }

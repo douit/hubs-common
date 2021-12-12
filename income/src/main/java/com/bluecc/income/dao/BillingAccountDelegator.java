@@ -40,6 +40,18 @@ public class BillingAccountDelegator extends AbstractProcs{
         int countBillingAccount();
     }
 
+    public BillingAccount get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getBillingAccount(id);
+    }
+
+    public List<BillingAccount> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listBillingAccount();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countBillingAccount();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

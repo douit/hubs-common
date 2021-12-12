@@ -40,6 +40,18 @@ public class InvoiceItemDelegator extends AbstractProcs{
         int countInvoiceItem();
     }
 
+    public InvoiceItem get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getInvoiceItem(id);
+    }
+
+    public List<InvoiceItem> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listInvoiceItem();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countInvoiceItem();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

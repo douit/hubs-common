@@ -40,6 +40,18 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         int countProductCategoryRollup();
     }
 
+    public ProductCategoryRollup get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getProductCategoryRollup(id);
+    }
+
+    public List<ProductCategoryRollup> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listProductCategoryRollup();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countProductCategoryRollup();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

@@ -40,6 +40,18 @@ public class ShipmentDelegator extends AbstractProcs{
         int countShipment();
     }
 
+    public Shipment get(IProc.ProcContext ctx, String id){
+        return ctx.attach(Dao.class).getShipment(id);
+    }
+
+    public List<Shipment> all(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).listShipment();
+    }
+
+    public int count(IProc.ProcContext ctx){
+        return ctx.attach(Dao.class).countShipment();
+    }
+
 
     public class Agent{
         final IProc.ProcContext ctx;

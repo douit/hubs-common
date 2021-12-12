@@ -648,5 +648,13 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
         });
 
     }
+
+    @Test
+    public void testPriceList() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+
+        });
+    }
 }
 

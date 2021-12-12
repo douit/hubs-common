@@ -12,6 +12,9 @@ public interface IProc {
     public static class ProcContext{
         Handle handle;
         Subscriber<IModel<?>> subscriber;
+        public <T> T attach(Class<T> extensionType) {
+            return handle.attach(extensionType);
+        }
     }
     void proc(ProcContext ctx);
 }
