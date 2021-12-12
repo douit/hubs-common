@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.ShipmentFlatData;
 
 import com.bluecc.hubs.stub.ShipmentData;
+import com.bluecc.income.dao.ShipmentDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -242,6 +244,11 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     List<ShipmentRouteSegment> relShipmentRouteSegment= new ArrayList<>(); 
     List<ShipmentStatus> relShipmentStatus= new ArrayList<>();
+
+    public ShipmentDelegator.Agent agent(IProc.ProcContext ctx,
+                                             ShipmentDelegator delegator){
+        return delegator.getAgent(ctx, this.getShipmentId());
+    }
 
     public ShipmentData.Builder toHeadBuilder() {
         ShipmentData.Builder builder = ShipmentData.newBuilder();

@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 
 import com.bluecc.hubs.stub.ProductStoreData;
+import com.bluecc.income.dao.ProductStoreDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -474,6 +476,11 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
     List<Quote> relQuote= new ArrayList<>(); 
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
     List<WebSite> relWebSite= new ArrayList<>();
+
+    public ProductStoreDelegator.Agent agent(IProc.ProcContext ctx,
+                                             ProductStoreDelegator delegator){
+        return delegator.getAgent(ctx, this.getProductStoreId());
+    }
 
     public ProductStoreData.Builder toHeadBuilder() {
         ProductStoreData.Builder builder = ProductStoreData.newBuilder();

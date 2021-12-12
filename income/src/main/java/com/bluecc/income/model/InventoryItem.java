@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.InventoryItemFlatData;
 
 import com.bluecc.hubs.stub.InventoryItemData;
+import com.bluecc.income.dao.InventoryItemDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -211,6 +213,11 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
     List<OrderItem> relFromOrderItem= new ArrayList<>(); 
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
+
+    public InventoryItemDelegator.Agent agent(IProc.ProcContext ctx,
+                                             InventoryItemDelegator delegator){
+        return delegator.getAgent(ctx, this.getInventoryItemId());
+    }
 
     public InventoryItemData.Builder toHeadBuilder() {
         InventoryItemData.Builder builder = InventoryItemData.newBuilder();

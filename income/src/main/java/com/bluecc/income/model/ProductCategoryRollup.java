@@ -18,7 +18,11 @@ import org.redisson.api.annotation.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
+
 import com.bluecc.hubs.stub.ProductCategoryRollupData;
+import com.bluecc.income.dao.ProductCategoryRollupDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -28,7 +32,7 @@ import com.bluecc.hubs.stub.ProductCategoryRollupData;
 @REntity
 @MessageObject(value = ProductCategoryRollupData.class,
         symbol = EntityNames.ProductCategoryRollup)
-public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupData.Builder>, Serializable {
+public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productCategoryId;
@@ -48,7 +52,64 @@ public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupD
         return toDataBuilder().build();
     }
 
-    public ProductCategoryRollupData.Builder toDataBuilder() {
+    public ProductCategoryRollupFlatData.Builder toDataBuilder() {
+        ProductCategoryRollupFlatData.Builder builder = ProductCategoryRollupFlatData.newBuilder();
+        if (productCategoryId != null) {
+            builder.setProductCategoryId(productCategoryId);
+        }
+        if (parentProductCategoryId != null) {
+            builder.setParentProductCategoryId(parentProductCategoryId);
+        }
+        if (fromDate != null) {
+            builder.setFromDate(getTimestamp(fromDate));
+        }
+        if (thruDate != null) {
+            builder.setThruDate(getTimestamp(thruDate));
+        }
+        if (sequenceNum != null) {
+            builder.setSequenceNum(sequenceNum);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+        if (id != null) {
+            builder.setId(id);
+        }
+                    
+        return builder;
+    }
+
+    public static ProductCategoryRollup fromData(ProductCategoryRollupFlatData data) {
+        return ProductCategoryRollup.builder()
+                .productCategoryId(data.getProductCategoryId())
+                .parentProductCategoryId(data.getParentProductCategoryId())
+                .fromDate(getLocalDateTime(data.getFromDate()))
+                .thruDate(getLocalDateTime(data.getThruDate()))
+                .sequenceNum(data.getSequenceNum())
+                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
+                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .id(data.getId())
+                
+                .build();
+    }
+
+        // relations
+     
+    List<ProductCategory> relCurrentProductCategory= new ArrayList<>(); 
+    List<ProductCategory> relParentProductCategory= new ArrayList<>(); 
+    List<ProductCategoryRollup> relChildProductCategoryRollup= new ArrayList<>(); 
+    List<ProductCategoryRollup> relParentProductCategoryRollup= new ArrayList<>(); 
+    List<ProductCategoryRollup> relSiblingProductCategoryRollup= new ArrayList<>();
+
+    public ProductCategoryRollupDelegator.Agent agent(IProc.ProcContext ctx,
+                                             ProductCategoryRollupDelegator delegator){
+        return delegator.getAgent(ctx, this.getId());
+    }
+
+    public ProductCategoryRollupData.Builder toHeadBuilder() {
         ProductCategoryRollupData.Builder builder = ProductCategoryRollupData.newBuilder();
         if (productCategoryId != null) {
             builder.setProductCategoryId(productCategoryId);
@@ -78,19 +139,4 @@ public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupD
         return builder;
     }
 
-    public static ProductCategoryRollup fromData(ProductCategoryRollupData data) {
-        return ProductCategoryRollup.builder()
-                .productCategoryId(data.getProductCategoryId())
-                .parentProductCategoryId(data.getParentProductCategoryId())
-                .fromDate(getLocalDateTime(data.getFromDate()))
-                .thruDate(getLocalDateTime(data.getThruDate()))
-                .sequenceNum(data.getSequenceNum())
-                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
-                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                .id(data.getId())
-                
-                .build();
-    }
-
-    
 }

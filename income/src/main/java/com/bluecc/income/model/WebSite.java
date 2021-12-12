@@ -18,7 +18,11 @@ import org.redisson.api.annotation.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 
+import com.bluecc.hubs.stub.WebSiteFlatData;
+
 import com.bluecc.hubs.stub.WebSiteData;
+import com.bluecc.income.dao.WebSiteDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -28,7 +32,7 @@ import com.bluecc.hubs.stub.WebSiteData;
 @REntity
 @MessageObject(value = WebSiteData.class,
         symbol = EntityNames.WebSite)
-public class WebSite implements IEventModel<WebSiteData.Builder>, Serializable {
+public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     @RId String webSiteId;
@@ -59,8 +63,8 @@ public class WebSite implements IEventModel<WebSiteData.Builder>, Serializable {
         return toDataBuilder().build();
     }
 
-    public WebSiteData.Builder toDataBuilder() {
-        WebSiteData.Builder builder = WebSiteData.newBuilder();
+    public WebSiteFlatData.Builder toDataBuilder() {
+        WebSiteFlatData.Builder builder = WebSiteFlatData.newBuilder();
         if (webSiteId != null) {
             builder.setWebSiteId(webSiteId);
         }
@@ -122,7 +126,7 @@ public class WebSite implements IEventModel<WebSiteData.Builder>, Serializable {
         return builder;
     }
 
-    public static WebSite fromData(WebSiteData data) {
+    public static WebSite fromData(WebSiteFlatData data) {
         return WebSite.builder()
                 .webSiteId(data.getWebSiteId())
                 .siteName(data.getSiteName())
@@ -147,5 +151,78 @@ public class WebSite implements IEventModel<WebSiteData.Builder>, Serializable {
                 .build();
     }
 
-    
+        // relations
+     
+    List<ProductStore> relProductStore= new ArrayList<>(); 
+    List<EbayConfig> relEbayConfig= new ArrayList<>(); 
+    List<OrderHeader> relOrderHeader= new ArrayList<>(); 
+    List<SubscriptionResource> relSubscriptionResource= new ArrayList<>(); 
+    List<WebAnalyticsConfig> relWebAnalyticsConfig= new ArrayList<>(); 
+    List<WebSiteContent> relWebSiteContent= new ArrayList<>();
+
+    public WebSiteDelegator.Agent agent(IProc.ProcContext ctx,
+                                             WebSiteDelegator delegator){
+        return delegator.getAgent(ctx, this.getWebSiteId());
+    }
+
+    public WebSiteData.Builder toHeadBuilder() {
+        WebSiteData.Builder builder = WebSiteData.newBuilder();
+        if (webSiteId != null) {
+            builder.setWebSiteId(webSiteId);
+        }
+        if (siteName != null) {
+            builder.setSiteName(siteName);
+        }
+        if (httpHost != null) {
+            builder.setHttpHost(httpHost);
+        }
+        if (httpPort != null) {
+            builder.setHttpPort(httpPort);
+        }
+        if (httpsHost != null) {
+            builder.setHttpsHost(httpsHost);
+        }
+        if (httpsPort != null) {
+            builder.setHttpsPort(httpsPort);
+        }
+        if (enableHttps != null) {
+            builder.setEnableHttps(getIndicator(enableHttps));
+        }
+        if (webappPath != null) {
+            builder.setWebappPath(webappPath);
+        }
+        if (standardContentPrefix != null) {
+            builder.setStandardContentPrefix(standardContentPrefix);
+        }
+        if (secureContentPrefix != null) {
+            builder.setSecureContentPrefix(secureContentPrefix);
+        }
+        if (cookieDomain != null) {
+            builder.setCookieDomain(cookieDomain);
+        }
+        if (visualThemeSetId != null) {
+            builder.setVisualThemeSetId(visualThemeSetId);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+        if (allowProductStoreChange != null) {
+            builder.setAllowProductStoreChange(getIndicator(allowProductStoreChange));
+        }
+        if (hostedPathAlias != null) {
+            builder.setHostedPathAlias(hostedPathAlias);
+        }
+        if (isDefault != null) {
+            builder.setIsDefault(getIndicator(isDefault));
+        }
+        if (displayMaintenancePage != null) {
+            builder.setDisplayMaintenancePage(getIndicator(displayMaintenancePage));
+        }
+                    
+        return builder;
+    }
+
 }

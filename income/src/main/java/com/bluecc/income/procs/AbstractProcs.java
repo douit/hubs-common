@@ -241,7 +241,7 @@ public class AbstractProcs {
         String fieldsCondition;
     }
 
-    public ExtractedTableInfo extract(Message flatData) {
+    public static ExtractedTableInfo extract(Message flatData) {
         Map<String, Object> e = FlatMessageCollector.extract(flatData);
 
         List<String> names = new ArrayList<>(e.keySet());
@@ -392,7 +392,7 @@ public class AbstractProcs {
         return Util.toSnakecase(identity.getType());
     }
 
-    public <T> T findOne(IProc.ProcContext ctx, Message flatData, Class<T> clz) {
+    public static  <T> T findOne(IProc.ProcContext ctx, Message flatData, Class<T> clz) {
         ExtractedTableInfo tableInfo = extract(flatData);
         T rec = ctx.getHandle().createQuery("select * from <table> where <fields_cond>")
                 .define("table", tableInfo.table)
@@ -429,6 +429,10 @@ public class AbstractProcs {
         return all(c, flatData, 0);
     }
 
+    public List<Map<String, Object>> all(IProc.ProcContext c, INameSymbol symbol){
+        return all(c, symbol, 0);
+    }
+
     public List<Map<String, Object>> all(IProc.ProcContext c, INameSymbol symbol, int limit) {
         return all(c, symbol.getTable(), limit);
     }
@@ -441,7 +445,7 @@ public class AbstractProcs {
         List<Map<String, Object>> rs = c.getHandle().createQuery(
                         format("select * from %s %s",
                                 table,
-                                limit == 0 ? ":" : "limit " + limit))
+                                limit == 0 ? "" : "limit " + limit))
                 .mapToMap().list();
         return rs;
     }

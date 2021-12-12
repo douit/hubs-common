@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.BillingAccountFlatData;
 
 import com.bluecc.hubs.stub.BillingAccountData;
+import com.bluecc.income.dao.BillingAccountDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -112,6 +114,11 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
     List<Invoice> relInvoice= new ArrayList<>(); 
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     List<PaymentApplication> relPaymentApplication= new ArrayList<>();
+
+    public BillingAccountDelegator.Agent agent(IProc.ProcContext ctx,
+                                             BillingAccountDelegator delegator){
+        return delegator.getAgent(ctx, this.getBillingAccountId());
+    }
 
     public BillingAccountData.Builder toHeadBuilder() {
         BillingAccountData.Builder builder = BillingAccountData.newBuilder();

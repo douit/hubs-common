@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.PersonFlatData;
 
 import com.bluecc.hubs.stub.PersonData;
+import com.bluecc.income.dao.PersonDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -234,6 +236,11 @@ public class Person implements IEventModel<PersonFlatData.Builder>, Serializable
     List<Shipment> relFromShipment= new ArrayList<>(); 
     List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
     List<UserLogin> relUserLogin= new ArrayList<>();
+
+    public PersonDelegator.Agent agent(IProc.ProcContext ctx,
+                                             PersonDelegator delegator){
+        return delegator.getAgent(ctx, this.getPartyId());
+    }
 
     public PersonData.Builder toHeadBuilder() {
         PersonData.Builder builder = PersonData.newBuilder();

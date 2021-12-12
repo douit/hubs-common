@@ -3,6 +3,11 @@
     List<{{rel.relEntityName}}> {{rel.relVarName}}= new ArrayList<>();
     {%- endfor %}
 
+    public {{ent.name}}Delegator.Agent agent(IProc.ProcContext ctx,
+                                             {{ent.name}}Delegator delegator){
+        return delegator.getAgent(ctx, this.{{ent.pkGetter}}());
+    }
+
     public {{ent.messageType}}.Builder toHeadBuilder() {
         {{ent.messageType}}.Builder builder = {{ent.messageType}}.newBuilder();
         {% for f in ent.messageFields -%}

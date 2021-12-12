@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.OrderItemFlatData;
 
 import com.bluecc.hubs.stub.OrderItemData;
+import com.bluecc.income.dao.OrderItemDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -323,6 +325,11 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
+
+    public OrderItemDelegator.Agent agent(IProc.ProcContext ctx,
+                                             OrderItemDelegator delegator){
+        return delegator.getAgent(ctx, this.getId());
+    }
 
     public OrderItemData.Builder toHeadBuilder() {
         OrderItemData.Builder builder = OrderItemData.newBuilder();

@@ -476,12 +476,12 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
                         }
 
                         // add/set product_category_member to head entity
-                        if(relationsDemand.contains("product_category_member")) {
-                            genericProcs.getRelationValues(c, p1, "product_category_member",
-                                            ProductCategoryMember.class)
-                                    .forEach(el -> pb.addProductCategoryMember(
-                                            el.toDataBuilder().build()));
-                        }
+                        // if(relationsDemand.contains("product_category_member")) {
+                        //     genericProcs.getRelationValues(c, p1, "product_category_member",
+                        //                     ProductCategoryMember.class)
+                        //             .forEach(el -> pb.addProductCategoryMember(
+                        //                     el.toDataBuilder().build()));
+                        // }
 
                         // add/set product_product_config to head entity
                         if(relationsDemand.contains("product_product_config")) {

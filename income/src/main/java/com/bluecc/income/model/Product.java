@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.ProductFlatData;
 
 import com.bluecc.hubs.stub.ProductData;
+import com.bluecc.income.dao.ProductDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -450,6 +452,11 @@ public class Product implements IEventModel<ProductFlatData.Builder>, Serializab
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     List<SupplierProduct> relSupplierProduct= new ArrayList<>(); 
     List<WorkEffortGoodStandard> relWorkEffortGoodStandard= new ArrayList<>();
+
+    public ProductDelegator.Agent agent(IProc.ProcContext ctx,
+                                             ProductDelegator delegator){
+        return delegator.getAgent(ctx, this.getProductId());
+    }
 
     public ProductData.Builder toHeadBuilder() {
         ProductData.Builder builder = ProductData.newBuilder();

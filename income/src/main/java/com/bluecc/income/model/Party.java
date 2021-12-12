@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.PartyFlatData;
 
 import com.bluecc.hubs.stub.PartyData;
+import com.bluecc.income.dao.PartyDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -186,6 +188,11 @@ public class Party implements IEventModel<PartyFlatData.Builder>, Serializable {
     List<TaxAuthority> relTaxAuthTaxAuthority= new ArrayList<>(); 
     List<TaxAuthorityGlAccount> relOrganizationTaxAuthorityGlAccount= new ArrayList<>(); 
     List<UserLogin> relUserLogin= new ArrayList<>();
+
+    public PartyDelegator.Agent agent(IProc.ProcContext ctx,
+                                             PartyDelegator delegator){
+        return delegator.getAgent(ctx, this.getPartyId());
+    }
 
     public PartyData.Builder toHeadBuilder() {
         PartyData.Builder builder = PartyData.newBuilder();

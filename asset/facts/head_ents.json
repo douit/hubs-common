@@ -1,11 +1,27 @@
 {
   "entities": {
+    "ProdCatalog": {},
+    "ProductStore": {},
+    "ProductStoreFacility": {},
+    "ProductStoreCatalog": {},
+    "WebSite": {},
+    "ProdCatalogCategory": {},
+
+    "ProductCategory": {},
+    "ProductCategoryRollup": {},
+
+    "ProductCategoryMember": {},
+    "Product": {
+      "flatIds": []
+    },
+
     "OrderHeader": {
       "flatIds": []
     },
     "OrderItem": {
       "flatIds": []
     },
+
     "Payment": {
       "flatIds": []
     },
@@ -13,22 +29,19 @@
     "InvoiceItem": {
       "flatIds": []
     },
-    "Product": {
-      "flatIds": []
-    },
+
     "Shipment": {
       "flatIds": []
     },
     "InventoryItem": {},
-    "ProductStore": {},
+
     "Party": {
       "flatIds": []
     },
     "Person": {},
     "PartyGroup": {},
     "UserLogin": {},
-    "ProductCategory": {},
-    "ProdCatalog": {},
+
     "BillingAccount": {},
     "FinAccount": {},
     "Quote": {},

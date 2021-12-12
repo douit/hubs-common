@@ -375,7 +375,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "product_store_catalog",
                                             ProductStoreCatalog.class)
                                     .forEach(el -> pb.addProductStoreCatalog(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set product_store_email_setting to head entity                        
@@ -391,7 +391,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "product_store_facility",
                                             ProductStoreFacility.class)
                                     .forEach(el -> pb.addProductStoreFacility(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set product_store_fin_act_setting to head entity                        
@@ -463,7 +463,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "web_site",
                                             WebSite.class)
                                     .forEach(el -> pb.addWebSite(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                         
 

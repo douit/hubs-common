@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.PaymentFlatData;
 
 import com.bluecc.hubs.stub.PaymentData;
+import com.bluecc.income.dao.PaymentDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -172,6 +174,11 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     List<PaymentApplication> relToPaymentApplication= new ArrayList<>();
+
+    public PaymentDelegator.Agent agent(IProc.ProcContext ctx,
+                                             PaymentDelegator delegator){
+        return delegator.getAgent(ctx, this.getPaymentId());
+    }
 
     public PaymentData.Builder toHeadBuilder() {
         PaymentData.Builder builder = PaymentData.newBuilder();

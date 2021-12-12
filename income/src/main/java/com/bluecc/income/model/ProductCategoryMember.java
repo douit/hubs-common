@@ -18,7 +18,11 @@ import org.redisson.api.annotation.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
+
 import com.bluecc.hubs.stub.ProductCategoryMemberData;
+import com.bluecc.income.dao.ProductCategoryMemberDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -28,7 +32,7 @@ import com.bluecc.hubs.stub.ProductCategoryMemberData;
 @REntity
 @MessageObject(value = ProductCategoryMemberData.class,
         symbol = EntityNames.ProductCategoryMember)
-public class ProductCategoryMember implements IEventModel<ProductCategoryMemberData.Builder>, Serializable {
+public class ProductCategoryMember implements IEventModel<ProductCategoryMemberFlatData.Builder>, Serializable {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productCategoryId;
@@ -50,7 +54,69 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberD
         return toDataBuilder().build();
     }
 
-    public ProductCategoryMemberData.Builder toDataBuilder() {
+    public ProductCategoryMemberFlatData.Builder toDataBuilder() {
+        ProductCategoryMemberFlatData.Builder builder = ProductCategoryMemberFlatData.newBuilder();
+        if (productCategoryId != null) {
+            builder.setProductCategoryId(productCategoryId);
+        }
+        if (productId != null) {
+            builder.setProductId(productId);
+        }
+        if (fromDate != null) {
+            builder.setFromDate(getTimestamp(fromDate));
+        }
+        if (thruDate != null) {
+            builder.setThruDate(getTimestamp(thruDate));
+        }
+        if (comments != null) {
+            builder.setComments(comments);
+        }
+        if (sequenceNum != null) {
+            builder.setSequenceNum(sequenceNum);
+        }
+        if (quantity != null) {
+            builder.setQuantity(getFixedPoint(quantity));
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+        if (id != null) {
+            builder.setId(id);
+        }
+                    
+        return builder;
+    }
+
+    public static ProductCategoryMember fromData(ProductCategoryMemberFlatData data) {
+        return ProductCategoryMember.builder()
+                .productCategoryId(data.getProductCategoryId())
+                .productId(data.getProductId())
+                .fromDate(getLocalDateTime(data.getFromDate()))
+                .thruDate(getLocalDateTime(data.getThruDate()))
+                .comments(data.getComments())
+                .sequenceNum(data.getSequenceNum())
+                .quantity(getBigDecimal(data.getQuantity()))
+                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
+                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .id(data.getId())
+                
+                .build();
+    }
+
+        // relations
+     
+    List<Product> relProduct= new ArrayList<>(); 
+    List<ProductCategory> relProductCategory= new ArrayList<>();
+
+    public ProductCategoryMemberDelegator.Agent agent(IProc.ProcContext ctx,
+                                             ProductCategoryMemberDelegator delegator){
+        return delegator.getAgent(ctx, this.getId());
+    }
+
+    public ProductCategoryMemberData.Builder toHeadBuilder() {
         ProductCategoryMemberData.Builder builder = ProductCategoryMemberData.newBuilder();
         if (productCategoryId != null) {
             builder.setProductCategoryId(productCategoryId);
@@ -86,21 +152,4 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberD
         return builder;
     }
 
-    public static ProductCategoryMember fromData(ProductCategoryMemberData data) {
-        return ProductCategoryMember.builder()
-                .productCategoryId(data.getProductCategoryId())
-                .productId(data.getProductId())
-                .fromDate(getLocalDateTime(data.getFromDate()))
-                .thruDate(getLocalDateTime(data.getThruDate()))
-                .comments(data.getComments())
-                .sequenceNum(data.getSequenceNum())
-                .quantity(getBigDecimal(data.getQuantity()))
-                .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
-                .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                .id(data.getId())
-                
-                .build();
-    }
-
-    
 }

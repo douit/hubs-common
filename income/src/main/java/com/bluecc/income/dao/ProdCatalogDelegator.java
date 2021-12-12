@@ -119,7 +119,7 @@ public class ProdCatalogDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "prod_catalog_category",
                                             ProdCatalogCategory.class)
                                     .forEach(el -> pb.addProdCatalogCategory(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set product_store_catalog to head entity                        
@@ -127,7 +127,7 @@ public class ProdCatalogDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "product_store_catalog",
                                             ProductStoreCatalog.class)
                                     .forEach(el -> pb.addProductStoreCatalog(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                         
 

@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.ProdCatalogFlatData;
 
 import com.bluecc.hubs.stub.ProdCatalogData;
+import com.bluecc.income.dao.ProdCatalogDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -113,6 +115,11 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
      
     List<ProdCatalogCategory> relProdCatalogCategory= new ArrayList<>(); 
     List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>();
+
+    public ProdCatalogDelegator.Agent agent(IProc.ProcContext ctx,
+                                             ProdCatalogDelegator delegator){
+        return delegator.getAgent(ctx, this.getProdCatalogId());
+    }
 
     public ProdCatalogData.Builder toHeadBuilder() {
         ProdCatalogData.Builder builder = ProdCatalogData.newBuilder();

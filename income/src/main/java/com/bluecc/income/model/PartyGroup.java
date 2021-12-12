@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.PartyGroupFlatData;
 
 import com.bluecc.hubs.stub.PartyGroupData;
+import com.bluecc.income.dao.PartyGroupDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -119,6 +121,11 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
     List<Shipment> relFromShipment= new ArrayList<>(); 
     List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
     List<UserLogin> relUserLogin= new ArrayList<>();
+
+    public PartyGroupDelegator.Agent agent(IProc.ProcContext ctx,
+                                             PartyGroupDelegator delegator){
+        return delegator.getAgent(ctx, this.getPartyId());
+    }
 
     public PartyGroupData.Builder toHeadBuilder() {
         PartyGroupData.Builder builder = PartyGroupData.newBuilder();

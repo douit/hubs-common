@@ -364,7 +364,7 @@ public class OrderHeaderDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "web_site",
                                             WebSite.class)
                                     .forEach(el -> pb.setWebSite(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set acquire_fixed_asset to head entity                        

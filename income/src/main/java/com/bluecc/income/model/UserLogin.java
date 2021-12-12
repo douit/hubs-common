@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.UserLoginFlatData;
 
 import com.bluecc.hubs.stub.UserLoginData;
+import com.bluecc.income.dao.UserLoginDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -181,6 +183,11 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serial
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     List<ShipmentStatus> relChangeByShipmentStatus= new ArrayList<>(); 
     List<UserLoginSecurityGroup> relUserLoginSecurityGroup= new ArrayList<>();
+
+    public UserLoginDelegator.Agent agent(IProc.ProcContext ctx,
+                                             UserLoginDelegator delegator){
+        return delegator.getAgent(ctx, this.getUserLoginId());
+    }
 
     public UserLoginData.Builder toHeadBuilder() {
         UserLoginData.Builder builder = UserLoginData.newBuilder();

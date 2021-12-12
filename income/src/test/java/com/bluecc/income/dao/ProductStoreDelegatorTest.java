@@ -7,12 +7,17 @@ import com.bluecc.hubs.stub.Identity;
 import com.bluecc.hubs.stub.ProductStoreData;
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
+import com.bluecc.income.model.FixedAsset;
 import com.bluecc.income.model.ProductStore;
 import com.bluecc.income.model.ProductStorePaymentSetting;
 import com.github.javafaker.Faker;
 import com.google.common.collect.Sets;
 import com.google.protobuf.Descriptors;
+import lombok.Data;
 import org.assertj.core.api.Condition;
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.junit.Before;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
@@ -239,4 +244,56 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
             fail(e.getMessage());
         }
     }
+
+
+    @RegisterBeanMapper(value = ProductStore.class)
+    public interface QueryDao {
+        @SqlQuery("select * from product_store")
+        List<ProductStore> listProductStore();
+        @SqlQuery("select * from product_store " +
+                "where product_store_id in (" +
+                "select product_store_id from product_store_catalog " +
+                "where prod_catalog_id=:cat)")
+        List<ProductStore> getStoresByCatalog(@Bind("cat")String catalogId);
+
+        @SqlQuery("select * from product_store")
+        List<String> allIds();
+        @SqlQuery("select * from product_store where product_store_id=:id")
+        ProductStore getProductStore(@Bind("id") String id);
+
+        @SqlQuery("select count(*) from product_store")
+        int countProductStore();
+
+        @RegisterBeanMapper(StoreCatalog.class)
+        @SqlQuery("select product_store_id, prod_catalog_id from product_store_catalog")
+        List<StoreCatalog> storeCatalogs();
+    }
+
+    @Data
+    public static class StoreCatalog{
+        String productStoreId;
+        String prodCatalogId;
+    }
+
+    @Test
+    public void testQueryDao() {
+        process(c -> {
+            QueryDao dao = c.getHandle().attach(QueryDao.class);
+            System.out.println(dao.listProductStore().stream().map(ps -> ps.getProductStoreId())
+                    .collect(Collectors.toList()));
+            assertThat(dao.allIds()).isEqualTo(dao.listProductStore().stream()
+                    .map(ps -> ps.getProductStoreId())
+                    .collect(Collectors.toList()));
+
+            //
+            String prodCatalogId="RentalCatalog";
+            Condition<ProductStore> cond=new Condition<>(m ->
+                    m.getProductStoreId().equals("RentalStore"), "");
+            assertThat(dao.getStoresByCatalog(prodCatalogId)
+                    .stream().peek(e -> pretty(e)).collect(Collectors.toList()))
+                    .have(cond);
+            dao.storeCatalogs().forEach(e -> System.out.println(e));
+        });
+    }
+
 }

@@ -11,9 +11,12 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.bluecc.hubs.fund.Util.flatten;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
@@ -93,6 +96,27 @@ public class UtilTest {
                 .stream()
                 .filter(ThrowingPredicate.unchecked(Customer::hasValidProfilePhoto))
                 .collect(Collectors.toList());
+    }
+
+    @Test
+    public void flattenTest() {
+        Map<Integer, List<String>> map = new HashMap<>();
+
+        map.put(1, Arrays.asList("A", "B", "C"));
+        map.put(2, Arrays.asList("D", "E", "F"));
+
+        List<String> s = flatten(map.values())
+                .collect(Collectors.toList());
+
+        System.out.println(s);
+
+        // arrays
+        String[] a = { "A", "B" };
+        String[] b = { "C", "D" };
+        String[] c = { "E", "F" };
+
+        String[] s2 = flatten(a, b, c).toArray(String[]::new);
+        System.out.println(Arrays.toString(s2));
     }
 
     @Data

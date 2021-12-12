@@ -304,7 +304,7 @@ public class ProductCategoryDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "prod_catalog_category",
                                             ProdCatalogCategory.class)
                                     .forEach(el -> pb.addProdCatalogCategory(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set primary_product to head entity                        
@@ -336,7 +336,7 @@ public class ProductCategoryDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "product_category_member",
                                             ProductCategoryMember.class)
                                     .forEach(el -> pb.addProductCategoryMember(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set product_category_role to head entity                        
@@ -352,7 +352,7 @@ public class ProductCategoryDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "current_product_category_rollup",
                                             ProductCategoryRollup.class)
                                     .forEach(el -> pb.addCurrentProductCategoryRollup(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set parent_product_category_rollup to head entity                        
@@ -360,7 +360,7 @@ public class ProductCategoryDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "parent_product_category_rollup",
                                             ProductCategoryRollup.class)
                                     .forEach(el -> pb.addParentProductCategoryRollup(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set product_feature_category_appl to head entity                        

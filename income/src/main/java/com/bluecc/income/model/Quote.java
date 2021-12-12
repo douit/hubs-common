@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.QuoteFlatData;
 
 import com.bluecc.hubs.stub.QuoteData;
+import com.bluecc.income.dao.QuoteDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -131,6 +133,11 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable {
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     List<QuoteRole> relQuoteRole= new ArrayList<>(); 
     List<QuoteTerm> relQuoteTerm= new ArrayList<>();
+
+    public QuoteDelegator.Agent agent(IProc.ProcContext ctx,
+                                             QuoteDelegator delegator){
+        return delegator.getAgent(ctx, this.getQuoteId());
+    }
 
     public QuoteData.Builder toHeadBuilder() {
         QuoteData.Builder builder = QuoteData.newBuilder();

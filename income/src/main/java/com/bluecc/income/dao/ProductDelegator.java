@@ -647,7 +647,7 @@ public class ProductDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "product_category_member",
                                             ProductCategoryMember.class)
                                     .forEach(el -> pb.addProductCategoryMember(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set product_product_config to head entity                        

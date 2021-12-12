@@ -167,12 +167,12 @@ public class ProductStoreDelegatorBeta extends AbstractProcs{
                         }
 
                         // add/set product_store_catalog to head entity
-                        if(relationsDemand.contains("product_store_catalog")) {
-                            getRelationValues(ctx, p1, "product_store_catalog",
-                                            ProductStoreCatalog.class)
-                                    .forEach(el -> pb.addProductStoreCatalog(
-                                             el.toDataBuilder().build()));
-                        }
+                        // if(relationsDemand.contains("product_store_catalog")) {
+                        //     getRelationValues(ctx, p1, "product_store_catalog",
+                        //                     ProductStoreCatalog.class)
+                        //             .forEach(el -> pb.addProductStoreCatalog(
+                        //                      el.toDataBuilder().build()));
+                        // }
 
                         // add/set product_store_email_setting to head entity
                         if(relationsDemand.contains("product_store_email_setting")) {
@@ -183,12 +183,12 @@ public class ProductStoreDelegatorBeta extends AbstractProcs{
                         }
 
                         // add/set product_store_facility to head entity
-                        if(relationsDemand.contains("product_store_facility")) {
-                            getRelationValues(ctx, p1, "product_store_facility",
-                                            ProductStoreFacility.class)
-                                    .forEach(el -> pb.addProductStoreFacility(
-                                             el.toDataBuilder().build()));
-                        }
+                        // if(relationsDemand.contains("product_store_facility")) {
+                        //     getRelationValues(ctx, p1, "product_store_facility",
+                        //                     ProductStoreFacility.class)
+                        //             .forEach(el -> pb.addProductStoreFacility(
+                        //                      el.toDataBuilder().build()));
+                        // }
 
                         // add/set product_store_fin_act_setting to head entity
                         if(relationsDemand.contains("product_store_fin_act_setting")) {
@@ -255,12 +255,12 @@ public class ProductStoreDelegatorBeta extends AbstractProcs{
                         }
                                                
                         // add/set web_site to head entity                        
-                        if(relationsDemand.contains("web_site")) {
-                            getRelationValues(ctx, p1, "web_site",
-                                            WebSite.class)
-                                    .forEach(el -> pb.addWebSite(
-                                             el.toDataBuilder().build()));
-                        }
+                        // if(relationsDemand.contains("web_site")) {
+                        //     getRelationValues(ctx, p1, "web_site",
+                        //                     WebSite.class)
+                        //             .forEach(el -> pb.addWebSite(
+                        //                      el.toDataBuilder().build()));
+                        // }
                         
 
                         return pb;

@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.FixedAssetFlatData;
 
 import com.bluecc.hubs.stub.FixedAssetData;
+import com.bluecc.income.dao.FixedAssetDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -204,6 +206,11 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
     List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
     List<InventoryItem> relFixedAssetInventoryItem= new ArrayList<>(); 
     List<WorkEffort> relWorkEffort= new ArrayList<>();
+
+    public FixedAssetDelegator.Agent agent(IProc.ProcContext ctx,
+                                             FixedAssetDelegator delegator){
+        return delegator.getAgent(ctx, this.getFixedAssetId());
+    }
 
     public FixedAssetData.Builder toHeadBuilder() {
         FixedAssetData.Builder builder = FixedAssetData.newBuilder();

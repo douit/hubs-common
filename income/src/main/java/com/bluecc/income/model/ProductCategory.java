@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 
 import com.bluecc.hubs.stub.ProductCategoryData;
+import com.bluecc.income.dao.ProductCategoryDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -136,6 +138,11 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
     List<TaxAuthorityCategory> relTaxAuthorityCategory= new ArrayList<>(); 
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>();
+
+    public ProductCategoryDelegator.Agent agent(IProc.ProcContext ctx,
+                                             ProductCategoryDelegator delegator){
+        return delegator.getAgent(ctx, this.getProductCategoryId());
+    }
 
     public ProductCategoryData.Builder toHeadBuilder() {
         ProductCategoryData.Builder builder = ProductCategoryData.newBuilder();

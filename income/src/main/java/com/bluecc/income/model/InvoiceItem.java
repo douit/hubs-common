@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.InvoiceItemFlatData;
 
 import com.bluecc.hubs.stub.InvoiceItemData;
+import com.bluecc.income.dao.InvoiceItemDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -179,6 +181,11 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Se
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>();
+
+    public InvoiceItemDelegator.Agent agent(IProc.ProcContext ctx,
+                                             InvoiceItemDelegator delegator){
+        return delegator.getAgent(ctx, this.getId());
+    }
 
     public InvoiceItemData.Builder toHeadBuilder() {
         InvoiceItemData.Builder builder = InvoiceItemData.newBuilder();

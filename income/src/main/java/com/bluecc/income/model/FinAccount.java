@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.FinAccountFlatData;
 
 import com.bluecc.hubs.stub.FinAccountData;
+import com.bluecc.income.dao.FinAccountDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -157,6 +159,11 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
     List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     List<PaymentMethod> relPaymentMethod= new ArrayList<>();
+
+    public FinAccountDelegator.Agent agent(IProc.ProcContext ctx,
+                                             FinAccountDelegator delegator){
+        return delegator.getAgent(ctx, this.getFinAccountId());
+    }
 
     public FinAccountData.Builder toHeadBuilder() {
         FinAccountData.Builder builder = FinAccountData.newBuilder();

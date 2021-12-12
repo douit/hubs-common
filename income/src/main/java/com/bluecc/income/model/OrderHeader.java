@@ -21,6 +21,8 @@ import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.OrderHeaderFlatData;
 
 import com.bluecc.hubs.stub.OrderHeaderData;
+import com.bluecc.income.dao.OrderHeaderDelegator;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -235,6 +237,11 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     List<Shipment> relPrimaryShipment= new ArrayList<>(); 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
+
+    public OrderHeaderDelegator.Agent agent(IProc.ProcContext ctx,
+                                             OrderHeaderDelegator delegator){
+        return delegator.getAgent(ctx, this.getOrderId());
+    }
 
     public OrderHeaderData.Builder toHeadBuilder() {
         OrderHeaderData.Builder builder = OrderHeaderData.newBuilder();

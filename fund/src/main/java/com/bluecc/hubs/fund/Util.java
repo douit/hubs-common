@@ -28,10 +28,12 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
@@ -253,4 +255,20 @@ public class Util {
         long time = System.currentTimeMillis() / 1000L;
         return time;
     }
+
+    //  Flatten a map containing a list of items as values in Java
+    public static<T> Stream<T> flatten(Collection<List<T>> values) {
+        Stream<T> stream = values.stream()
+                .flatMap(x -> x.stream());
+
+        return stream;
+    }
+
+    //  Flatten a stream of multiple arrays of the same type in Java
+    @SafeVarargs
+    public static<T> Stream<T> flatten(T[] ... arrays) {
+        Stream<T> stream = Stream.of(arrays).flatMap(Arrays::stream);
+        return stream;
+    }
+
 }
