@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.ShipmentFlatData;
 
@@ -218,31 +219,57 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
 
         // relations
      
+    @Exclude
     List<WorkEffort> relEstimatedShipWorkEffort= new ArrayList<>(); 
+    @Exclude
     List<WorkEffort> relEstimatedArrivalWorkEffort= new ArrayList<>(); 
+    @Exclude
     List<ContactMech> relOriginContactMech= new ArrayList<>(); 
+    @Exclude
     List<ContactMech> relDestContactMech= new ArrayList<>(); 
+    @Exclude
     List<PostalAddress> relOriginPostalAddress= new ArrayList<>(); 
+    @Exclude
     List<TelecomNumber> relOriginTelecomNumber= new ArrayList<>(); 
+    @Exclude
     List<PostalAddress> relDestinationPostalAddress= new ArrayList<>(); 
+    @Exclude
     List<TelecomNumber> relDestinationTelecomNumber= new ArrayList<>(); 
+    @Exclude
     List<OrderHeader> relPrimaryOrderHeader= new ArrayList<>(); 
+    @Exclude
     List<OrderItemShipGroup> relPrimaryOrderItemShipGroup= new ArrayList<>(); 
+    @Exclude
     List<Party> relToParty= new ArrayList<>(); 
+    @Exclude
     List<Person> relToPerson= new ArrayList<>(); 
+    @Exclude
     List<PartyGroup> relToPartyGroup= new ArrayList<>(); 
+    @Exclude
     List<Party> relFromParty= new ArrayList<>(); 
+    @Exclude
     List<Person> relFromPerson= new ArrayList<>(); 
+    @Exclude
     List<PartyGroup> relFromPartyGroup= new ArrayList<>(); 
+    @Exclude
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    @Exclude
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
+    @Exclude
     List<ShipmentItem> relShipmentItem= new ArrayList<>(); 
+    @Exclude
     List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>(); 
+    @Exclude
     List<ShipmentPackage> relShipmentPackage= new ArrayList<>(); 
+    @Exclude
     List<ShipmentPackageContent> relShipmentPackageContent= new ArrayList<>(); 
+    @Exclude
     List<ShipmentPackageRouteSeg> relShipmentPackageRouteSeg= new ArrayList<>(); 
+    @Exclude
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    @Exclude
     List<ShipmentRouteSegment> relShipmentRouteSegment= new ArrayList<>(); 
+    @Exclude
     List<ShipmentStatus> relShipmentStatus= new ArrayList<>();
 
     public ShipmentDelegator.Agent agent(IProc.ProcContext ctx,

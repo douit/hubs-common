@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.BillingAccountFlatData;
 
@@ -108,11 +109,17 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
 
         // relations
      
+    @Exclude
     List<ContactMech> relContactMech= new ArrayList<>(); 
+    @Exclude
     List<PostalAddress> relPostalAddress= new ArrayList<>(); 
+    @Exclude
     List<BillingAccountRole> relBillingAccountRole= new ArrayList<>(); 
+    @Exclude
     List<Invoice> relInvoice= new ArrayList<>(); 
+    @Exclude
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
+    @Exclude
     List<PaymentApplication> relPaymentApplication= new ArrayList<>();
 
     public BillingAccountDelegator.Agent agent(IProc.ProcContext ctx,

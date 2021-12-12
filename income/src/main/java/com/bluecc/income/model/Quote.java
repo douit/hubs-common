@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.QuoteFlatData;
 
@@ -128,10 +129,15 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable {
 
         // relations
      
+    @Exclude
     List<Party> relParty= new ArrayList<>(); 
+    @Exclude
     List<ProductStore> relProductStore= new ArrayList<>(); 
+    @Exclude
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
+    @Exclude
     List<QuoteRole> relQuoteRole= new ArrayList<>(); 
+    @Exclude
     List<QuoteTerm> relQuoteTerm= new ArrayList<>();
 
     public QuoteDelegator.Agent agent(IProc.ProcContext ctx,

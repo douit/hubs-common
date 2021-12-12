@@ -29,8 +29,8 @@ public class ShipmentDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = Shipment.class)
-    public interface ShipmentDao {
+    @RegisterBeanMapper(Shipment.class)
+    public interface Dao {
         @SqlQuery("select * from shipment")
         List<Shipment> listShipment();
         @SqlQuery("select * from shipment where shipment_id=:id")

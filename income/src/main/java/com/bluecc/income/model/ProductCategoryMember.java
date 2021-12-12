@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 
@@ -108,7 +109,9 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberF
 
         // relations
      
+    @Exclude
     List<Product> relProduct= new ArrayList<>(); 
+    @Exclude
     List<ProductCategory> relProductCategory= new ArrayList<>();
 
     public ProductCategoryMemberDelegator.Agent agent(IProc.ProcContext ctx,

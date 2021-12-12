@@ -29,8 +29,8 @@ public class FinAccountDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = FinAccount.class)
-    public interface FinAccountDao {
+    @RegisterBeanMapper(FinAccount.class)
+    public interface Dao {
         @SqlQuery("select * from fin_account")
         List<FinAccount> listFinAccount();
         @SqlQuery("select * from fin_account where fin_account_id=:id")

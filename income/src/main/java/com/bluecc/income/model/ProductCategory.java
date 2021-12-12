@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 
@@ -123,20 +124,35 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
 
         // relations
      
+    @Exclude
     List<ProductCategory> relPrimaryParentProductCategory= new ArrayList<>(); 
+    @Exclude
     List<ProductCategory> relPrimaryChildProductCategory= new ArrayList<>(); 
+    @Exclude
     List<ProdCatalogCategory> relProdCatalogCategory= new ArrayList<>(); 
+    @Exclude
     List<Product> relPrimaryProduct= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryContent> relProductCategoryContent= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryLink> relProductCategoryLink= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryMember> relProductCategoryMember= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryRole> relProductCategoryRole= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryRollup> relCurrentProductCategoryRollup= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryRollup> relParentProductCategoryRollup= new ArrayList<>(); 
+    @Exclude
     List<ProductFeatureCategoryAppl> relProductFeatureCategoryAppl= new ArrayList<>(); 
+    @Exclude
     List<ProductPromoCategory> relProductPromoCategory= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
+    @Exclude
     List<TaxAuthorityCategory> relTaxAuthorityCategory= new ArrayList<>(); 
+    @Exclude
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>();
 
     public ProductCategoryDelegator.Agent agent(IProc.ProcContext ctx,

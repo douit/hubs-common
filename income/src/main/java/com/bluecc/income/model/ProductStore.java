@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 
@@ -458,23 +459,41 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
 
         // relations
      
+    @Exclude
     List<Party> relParty= new ArrayList<>(); 
+    @Exclude
     List<TaxAuthority> relVatTaxAuthority= new ArrayList<>(); 
+    @Exclude
     List<CustRequest> relCustRequest= new ArrayList<>(); 
+    @Exclude
     List<EbayConfig> relEbayConfig= new ArrayList<>(); 
+    @Exclude
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
+    @Exclude
     List<ProductReview> relProductReview= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreEmailSetting> relProductStoreEmailSetting= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreFacility> relProductStoreFacility= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreFinActSetting> relProductStoreFinActSetting= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreKeywordOvrd> relProductStoreKeywordOvrd= new ArrayList<>(); 
+    @Exclude
     List<ProductStorePaymentSetting> relProductStorePaymentSetting= new ArrayList<>(); 
+    @Exclude
     List<ProductStorePromoAppl> relProductStorePromoAppl= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
+    @Exclude
     List<Quote> relQuote= new ArrayList<>(); 
+    @Exclude
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
+    @Exclude
     List<WebSite> relWebSite= new ArrayList<>();
 
     public ProductStoreDelegator.Agent agent(IProc.ProcContext ctx,

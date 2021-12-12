@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.WebSiteFlatData;
 
@@ -153,11 +154,17 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializab
 
         // relations
      
+    @Exclude
     List<ProductStore> relProductStore= new ArrayList<>(); 
+    @Exclude
     List<EbayConfig> relEbayConfig= new ArrayList<>(); 
+    @Exclude
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
+    @Exclude
     List<SubscriptionResource> relSubscriptionResource= new ArrayList<>(); 
+    @Exclude
     List<WebAnalyticsConfig> relWebAnalyticsConfig= new ArrayList<>(); 
+    @Exclude
     List<WebSiteContent> relWebSiteContent= new ArrayList<>();
 
     public WebSiteDelegator.Agent agent(IProc.ProcContext ctx,

@@ -29,8 +29,8 @@ public class WebSiteDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = WebSite.class)
-    public interface WebSiteDao {
+    @RegisterBeanMapper(WebSite.class)
+    public interface Dao {
         @SqlQuery("select * from web_site")
         List<WebSite> listWebSite();
         @SqlQuery("select * from web_site where web_site_id=:id")

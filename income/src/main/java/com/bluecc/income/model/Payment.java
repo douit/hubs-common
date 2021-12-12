@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.PaymentFlatData;
 
@@ -163,16 +164,27 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
 
         // relations
      
+    @Exclude
     List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
+    @Exclude
     List<CreditCard> relCreditCard= new ArrayList<>(); 
+    @Exclude
     List<EftAccount> relEftAccount= new ArrayList<>(); 
+    @Exclude
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
+    @Exclude
     List<PaymentGatewayResponse> relPaymentGatewayResponse= new ArrayList<>(); 
+    @Exclude
     List<Party> relFromParty= new ArrayList<>(); 
+    @Exclude
     List<Party> relToParty= new ArrayList<>(); 
+    @Exclude
     List<PartyRole> relToPartyRole= new ArrayList<>(); 
+    @Exclude
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    @Exclude
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
+    @Exclude
     List<PaymentApplication> relToPaymentApplication= new ArrayList<>();
 
     public PaymentDelegator.Agent agent(IProc.ProcContext ctx,

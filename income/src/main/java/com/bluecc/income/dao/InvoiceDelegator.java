@@ -29,8 +29,8 @@ public class InvoiceDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = Invoice.class)
-    public interface InvoiceDao {
+    @RegisterBeanMapper(Invoice.class)
+    public interface Dao {
         @SqlQuery("select * from invoice")
         List<Invoice> listInvoice();
         @SqlQuery("select * from invoice where invoice_id=:id")

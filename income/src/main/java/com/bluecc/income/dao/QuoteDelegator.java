@@ -29,8 +29,8 @@ public class QuoteDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = Quote.class)
-    public interface QuoteDao {
+    @RegisterBeanMapper(Quote.class)
+    public interface Dao {
         @SqlQuery("select * from quote")
         List<Quote> listQuote();
         @SqlQuery("select * from quote where quote_id=:id")

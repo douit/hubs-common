@@ -29,8 +29,8 @@ public class FixedAssetDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = FixedAsset.class)
-    public interface FixedAssetDao {
+    @RegisterBeanMapper(FixedAsset.class)
+    public interface Dao {
         @SqlQuery("select * from fixed_asset")
         List<FixedAsset> listFixedAsset();
         @SqlQuery("select * from fixed_asset where fixed_asset_id=:id")

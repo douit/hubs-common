@@ -29,8 +29,8 @@ public class ProductDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = Product.class)
-    public interface ProductDao {
+    @RegisterBeanMapper(Product.class)
+    public interface Dao {
         @SqlQuery("select * from product")
         List<Product> listProduct();
         @SqlQuery("select * from product where product_id=:id")

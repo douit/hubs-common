@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.FixedAssetFlatData;
 
@@ -193,18 +194,31 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
 
         // relations
      
+    @Exclude
     List<FixedAsset> relParentFixedAsset= new ArrayList<>(); 
+    @Exclude
     List<Product> relInstanceOfProduct= new ArrayList<>(); 
+    @Exclude
     List<Party> relParty= new ArrayList<>(); 
+    @Exclude
     List<PartyRole> relPartyRole= new ArrayList<>(); 
+    @Exclude
     List<OrderHeader> relAcquireOrderHeader= new ArrayList<>(); 
+    @Exclude
     List<OrderItem> relAcquireOrderItem= new ArrayList<>(); 
+    @Exclude
     List<FacilityLocation> relLocatedAtFacilityLocation= new ArrayList<>(); 
+    @Exclude
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    @Exclude
     List<FixedAsset> relChildFixedAsset= new ArrayList<>(); 
+    @Exclude
     List<FixedAssetGeoPoint> relFixedAssetGeoPoint= new ArrayList<>(); 
+    @Exclude
     List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
+    @Exclude
     List<InventoryItem> relFixedAssetInventoryItem= new ArrayList<>(); 
+    @Exclude
     List<WorkEffort> relWorkEffort= new ArrayList<>();
 
     public FixedAssetDelegator.Agent agent(IProc.ProcContext ctx,

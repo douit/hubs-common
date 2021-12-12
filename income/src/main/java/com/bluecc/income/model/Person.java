@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.PersonFlatData;
 
@@ -228,13 +229,21 @@ public class Person implements IEventModel<PersonFlatData.Builder>, Serializable
 
         // relations
      
+    @Exclude
     List<Party> relParty= new ArrayList<>(); 
+    @Exclude
     List<PartyContactMech> relPartyContactMech= new ArrayList<>(); 
+    @Exclude
     List<PartyContactMechPurpose> relPartyContactMechPurpose= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
+    @Exclude
     List<Shipment> relToShipment= new ArrayList<>(); 
+    @Exclude
     List<Shipment> relFromShipment= new ArrayList<>(); 
+    @Exclude
     List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
+    @Exclude
     List<UserLogin> relUserLogin= new ArrayList<>();
 
     public PersonDelegator.Agent agent(IProc.ProcContext ctx,

@@ -3,21 +3,26 @@ package com.bluecc.income.procs;
 import com.bluecc.hubs.stub.Identity;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.hubs.stub.ProductFlatData;
+import com.bluecc.income.AbstractOnceProcTest;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.model.OrderHeader;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static com.bluecc.hubs.fund.Calcs.sum;
 import static com.bluecc.hubs.fund.Util.pretty;
+import static com.bluecc.hubs.stereotypes.PartyDemoDataList.partyContactMechPurposeList;
 import static org.junit.Assert.*;
 
-public class GenericProcsTest extends AbstractStoreProcTest {
+public class GenericProcsTest extends AbstractOnceProcTest {
     @Before
     public void setUp() throws Exception {
-        setupEntities("Person");
+        setupEntities("Person", "PartyContactMechPurpose");
     }
 
     @Test
@@ -48,6 +53,16 @@ public class GenericProcsTest extends AbstractStoreProcTest {
                     .setProductId("GZ-1001")
                     .build());
             assertFalse(rs.isEmpty());
+        });
+    }
+
+    @Test
+    public void testCreateBatch() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            int[] result=genericProcs.createBatch(c, partyContactMechPurposeList());
+            System.out.println(sum(result));
+            assertEquals(4, sum(result));
         });
     }
 

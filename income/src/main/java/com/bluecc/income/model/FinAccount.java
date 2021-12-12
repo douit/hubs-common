@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.FinAccountFlatData;
 
@@ -153,11 +154,17 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
 
         // relations
      
+    @Exclude
     List<Party> relOrganizationParty= new ArrayList<>(); 
+    @Exclude
     List<Party> relOwnerParty= new ArrayList<>(); 
+    @Exclude
     List<PaymentMethod> relReplenishPaymentMethod= new ArrayList<>(); 
+    @Exclude
     List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
+    @Exclude
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
+    @Exclude
     List<PaymentMethod> relPaymentMethod= new ArrayList<>();
 
     public FinAccountDelegator.Agent agent(IProc.ProcContext ctx,

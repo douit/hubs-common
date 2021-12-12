@@ -29,8 +29,8 @@ public class InventoryItemDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = InventoryItem.class)
-    public interface InventoryItemDao {
+    @RegisterBeanMapper(InventoryItem.class)
+    public interface Dao {
         @SqlQuery("select * from inventory_item")
         List<InventoryItem> listInventoryItem();
         @SqlQuery("select * from inventory_item where inventory_item_id=:id")

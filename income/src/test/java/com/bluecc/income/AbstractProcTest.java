@@ -32,7 +32,7 @@ public class AbstractProcTest {
     protected GenericProcs genericProcs;
 
     public static final String sourceSalesOrder= SystemDefs
-            .prependHubsHome( "dataset/sample/sales_order.xml");
+            .prependHubsHome( "dataset/sample/SimpleDatSet.xml");
 
     // protected void process(IProc proc){
     //     hubsStore.getJdbi().withHandle(handle -> {

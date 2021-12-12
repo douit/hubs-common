@@ -29,8 +29,8 @@ public class PartyGroupDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = PartyGroup.class)
-    public interface PartyGroupDao {
+    @RegisterBeanMapper(PartyGroup.class)
+    public interface Dao {
         @SqlQuery("select * from party_group")
         List<PartyGroup> listPartyGroup();
         @SqlQuery("select * from party_group where party_id=:id")

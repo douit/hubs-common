@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.InventoryItemFlatData;
 
@@ -198,20 +199,35 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
 
         // relations
      
+    @Exclude
     List<Product> relProduct= new ArrayList<>(); 
+    @Exclude
     List<Party> relParty= new ArrayList<>(); 
+    @Exclude
     List<Party> relOwnerParty= new ArrayList<>(); 
+    @Exclude
     List<ProductFacility> relProductFacility= new ArrayList<>(); 
+    @Exclude
     List<FacilityLocation> relFacilityLocation= new ArrayList<>(); 
+    @Exclude
     List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
+    @Exclude
     List<FixedAsset> relFixedAssetFixedAsset= new ArrayList<>(); 
+    @Exclude
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    @Exclude
     List<AcctgTransEntry> relAcctgTransEntry= new ArrayList<>(); 
+    @Exclude
     List<InventoryItemDetail> relInventoryItemDetail= new ArrayList<>(); 
+    @Exclude
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
+    @Exclude
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
+    @Exclude
     List<OrderItem> relFromOrderItem= new ArrayList<>(); 
+    @Exclude
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
+    @Exclude
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
 
     public InventoryItemDelegator.Agent agent(IProc.ProcContext ctx,

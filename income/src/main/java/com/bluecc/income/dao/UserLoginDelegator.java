@@ -29,8 +29,8 @@ public class UserLoginDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = UserLogin.class)
-    public interface UserLoginDao {
+    @RegisterBeanMapper(UserLogin.class)
+    public interface Dao {
         @SqlQuery("select * from user_login")
         List<UserLogin> listUserLogin();
         @SqlQuery("select * from user_login where user_login_id=:id")

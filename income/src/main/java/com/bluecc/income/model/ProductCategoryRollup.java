@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
 
@@ -98,10 +99,15 @@ public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupF
 
         // relations
      
+    @Exclude
     List<ProductCategory> relCurrentProductCategory= new ArrayList<>(); 
+    @Exclude
     List<ProductCategory> relParentProductCategory= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryRollup> relChildProductCategoryRollup= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryRollup> relParentProductCategoryRollup= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryRollup> relSiblingProductCategoryRollup= new ArrayList<>();
 
     public ProductCategoryRollupDelegator.Agent agent(IProc.ProcContext ctx,

@@ -24,6 +24,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.statement.PreparedBatch;
 import org.jdbi.v3.core.statement.SqlLogger;
 import org.jdbi.v3.core.statement.StatementContext;
 import reactor.core.publisher.Flux;
@@ -270,14 +271,22 @@ public class AbstractProcs {
                 .build();
     }
 
-    public int create(IProc.ProcContext ctx, Message flatData) {
-        ExtractedTableInfo tableInfo = extract(flatData);
-        if (ProtoTypes.isCombine(flatData)) {
-            String uid = sequence.nextStringId();
-            tableInfo.names.add("id");
-            tableInfo.placers.add(":id");
-            tableInfo.e.put("id", uid);
+    public int[] createBatch(IProc.ProcContext ctx, List<? extends Message> dataList) {
+        PreparedBatch b = ctx.getHandle().prepareBatch("insert into <table> (<columns>) values (<placers>)");
+        for (Message data : dataList) {
+            ExtractedTableInfo tableInfo = extractInsertInfo(data);
+            b.define("table", tableInfo.table)
+                    .defineList("columns", tableInfo.names)
+                    .defineList("placers", tableInfo.placers)
+                    .bindMap(tableInfo.e)
+                    .add();
         }
+
+        return b.execute();
+    }
+
+    public int create(IProc.ProcContext ctx, Message flatData) {
+        ExtractedTableInfo tableInfo = extractInsertInfo(flatData);
 
         int total = ctx.getHandle().createUpdate("insert into <table> (<columns>) values (<placers>)")
                 .define("table", tableInfo.table)
@@ -287,6 +296,17 @@ public class AbstractProcs {
                 .execute();
         assertEquals(1, total);
         return total;
+    }
+
+    private ExtractedTableInfo extractInsertInfo(Message flatData) {
+        ExtractedTableInfo tableInfo = extract(flatData);
+        if (ProtoTypes.isCombine(flatData)) {
+            String uid = sequence.nextStringId();
+            tableInfo.names.add("id");
+            tableInfo.placers.add(":id");
+            tableInfo.e.put("id", uid);
+        }
+        return tableInfo;
     }
 
     public int update(IProc.ProcContext ctx, Message flatData) {

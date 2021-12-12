@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.OrderHeaderFlatData;
 
@@ -218,24 +219,43 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
 
         // relations
      
+    @Exclude
     List<BillingAccount> relBillingAccount= new ArrayList<>(); 
+    @Exclude
     List<ProductStore> relProductStore= new ArrayList<>(); 
+    @Exclude
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
+    @Exclude
     List<WebSite> relWebSite= new ArrayList<>(); 
+    @Exclude
     List<FixedAsset> relAcquireFixedAsset= new ArrayList<>(); 
+    @Exclude
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
+    @Exclude
     List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
+    @Exclude
     List<OrderContactMech> relOrderContactMech= new ArrayList<>(); 
+    @Exclude
     List<OrderItem> relOrderItem= new ArrayList<>(); 
+    @Exclude
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
+    @Exclude
     List<OrderItemPriceInfo> relOrderItemPriceInfo= new ArrayList<>(); 
+    @Exclude
     List<OrderItemShipGroup> relOrderItemShipGroup= new ArrayList<>(); 
+    @Exclude
     List<OrderItemShipGroupAssoc> relOrderItemShipGroupAssoc= new ArrayList<>(); 
+    @Exclude
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
+    @Exclude
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
+    @Exclude
     List<OrderRole> relOrderRole= new ArrayList<>(); 
+    @Exclude
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
+    @Exclude
     List<Shipment> relPrimaryShipment= new ArrayList<>(); 
+    @Exclude
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
 
     public OrderHeaderDelegator.Agent agent(IProc.ProcContext ctx,

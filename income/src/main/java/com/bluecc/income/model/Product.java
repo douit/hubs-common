@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.ProductFlatData;
 
@@ -418,39 +419,73 @@ public class Product implements IEventModel<ProductFlatData.Builder>, Serializab
 
         // relations
      
+    @Exclude
     List<ProductCategory> relPrimaryProductCategory= new ArrayList<>(); 
+    @Exclude
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
+    @Exclude
     List<UserLogin> relLastModifiedByUserLogin= new ArrayList<>(); 
+    @Exclude
     List<ShipmentBoxType> relDefaultShipmentBoxType= new ArrayList<>(); 
+    @Exclude
     List<Agreement> relAgreement= new ArrayList<>(); 
+    @Exclude
     List<AgreementProductAppl> relAgreementProductAppl= new ArrayList<>(); 
+    @Exclude
     List<CustRequestItem> relCustRequestItem= new ArrayList<>(); 
+    @Exclude
     List<FixedAsset> relInstanceOfFixedAsset= new ArrayList<>(); 
+    @Exclude
     List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
+    @Exclude
     List<InventoryItem> relInventoryItem= new ArrayList<>(); 
+    @Exclude
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
+    @Exclude
     List<OrderItem> relOrderItem= new ArrayList<>(); 
+    @Exclude
     List<ProductAssoc> relMainProductAssoc= new ArrayList<>(); 
+    @Exclude
     List<ProductAssoc> relAssocProductAssoc= new ArrayList<>(); 
+    @Exclude
     List<ProductCategoryMember> relProductCategoryMember= new ArrayList<>(); 
+    @Exclude
     List<ProductConfig> relProductProductConfig= new ArrayList<>(); 
+    @Exclude
     List<ProductConfigProduct> relProductProductConfigProduct= new ArrayList<>(); 
+    @Exclude
     List<ProductContent> relProductContent= new ArrayList<>(); 
+    @Exclude
     List<ProductFacility> relProductFacility= new ArrayList<>(); 
+    @Exclude
     List<ProductFacilityAssoc> relProductFacilityAssoc= new ArrayList<>(); 
+    @Exclude
     List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
+    @Exclude
     List<ProductFeatureAppl> relProductFeatureAppl= new ArrayList<>(); 
+    @Exclude
     List<ProductKeyword> relProductKeyword= new ArrayList<>(); 
+    @Exclude
     List<ProductPrice> relProductPrice= new ArrayList<>(); 
+    @Exclude
     List<ProductPromoProduct> relProductPromoProduct= new ArrayList<>(); 
+    @Exclude
     List<ProductReview> relProductReview= new ArrayList<>(); 
+    @Exclude
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
+    @Exclude
     List<ProductSubscriptionResource> relProductSubscriptionResource= new ArrayList<>(); 
+    @Exclude
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
+    @Exclude
     List<ShipmentItem> relShipmentItem= new ArrayList<>(); 
+    @Exclude
     List<ShipmentPackageContent> relSubShipmentPackageContent= new ArrayList<>(); 
+    @Exclude
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    @Exclude
     List<SupplierProduct> relSupplierProduct= new ArrayList<>(); 
+    @Exclude
     List<WorkEffortGoodStandard> relWorkEffortGoodStandard= new ArrayList<>();
 
     public ProductDelegator.Agent agent(IProc.ProcContext ctx,

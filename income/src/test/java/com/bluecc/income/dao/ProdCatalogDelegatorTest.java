@@ -3,6 +3,7 @@ package com.bluecc.income.dao;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.stub.ProdCatalogFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
+import com.bluecc.income.model.Product;
 import com.bluecc.income.model.ProductStoreCatalog;
 import com.github.javafaker.Faker;
 import org.assertj.core.api.Condition;
@@ -96,6 +97,30 @@ public class ProdCatalogDelegatorTest extends AbstractStoreProcTest {
                     .flatMap(el -> el.stream())
                     .count();
             System.out.println(paymentSettsTotal);
+        });
+    }
+
+    @Inject
+    ProdCatalogCategoryDelegator prodCatalogCategoryDelegator;
+    @Inject
+    ProductCategoryDelegator productCategoryDelegator;
+    @Test
+    public void testCatCategory() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            ProdCatalogDelegator.Agent agent = prodCatalogs.getAgent(c, "RentalCatalog");
+            List<Product> products=agent.getProdCatalogCategory()
+                    .stream().peek(pcc -> pretty(pcc))
+                    .map(pcc -> pcc.agent(c, prodCatalogCategoryDelegator).getProductCategory())
+                    .flatMap(el -> el.stream())
+                    .peek(pc -> System.out.println("pc: "+ pc))
+                    // 因为没有跟随到rollup类别, 所以目前只是查找的直接绑定
+                    // .map(pc -> pc.agent(c, productCategoryDelegator).getParentProductCategoryRollup())
+                    .map(pc -> pc.agent(c, productCategoryDelegator).getPrimaryProduct())
+                    .flatMap(el -> el.stream())
+                    .peek(p -> System.out.println("p: "+p.getProductName()))
+                    .collect(Collectors.toList());
+            System.out.println(products.size());
         });
     }
 }

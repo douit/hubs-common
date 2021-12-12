@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.UserLoginFlatData;
 
@@ -148,40 +149,75 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serial
 
         // relations
      
+    @Exclude
     List<Party> relParty= new ArrayList<>(); 
+    @Exclude
     List<Person> relPerson= new ArrayList<>(); 
+    @Exclude
     List<PartyGroup> relPartyGroup= new ArrayList<>(); 
+    @Exclude
     List<Content> relCreatedByContent= new ArrayList<>(); 
+    @Exclude
     List<Content> relLastModifiedByContent= new ArrayList<>(); 
+    @Exclude
     List<ContentAssoc> relCreatedByContentAssoc= new ArrayList<>(); 
+    @Exclude
     List<ContentAssoc> relLastModifiedByContentAssoc= new ArrayList<>(); 
+    @Exclude
     List<DataResource> relCreatedByDataResource= new ArrayList<>(); 
+    @Exclude
     List<DataResource> relLastModifiedByDataResource= new ArrayList<>(); 
+    @Exclude
     List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
+    @Exclude
     List<InvoiceStatus> relChangeByInvoiceStatus= new ArrayList<>(); 
+    @Exclude
     List<ItemIssuance> relIssuedByItemIssuance= new ArrayList<>(); 
+    @Exclude
     List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
+    @Exclude
     List<OrderHeader> relCreatedByOrderHeader= new ArrayList<>(); 
+    @Exclude
     List<OrderItem> relDontCancelSetOrderItem= new ArrayList<>(); 
+    @Exclude
     List<OrderItem> relChangeByOrderItem= new ArrayList<>(); 
+    @Exclude
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
+    @Exclude
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
+    @Exclude
     List<Party> relCreatedByParty= new ArrayList<>(); 
+    @Exclude
     List<Party> relLastModifiedByParty= new ArrayList<>(); 
+    @Exclude
     List<PartyStatus> relChangeByPartyStatus= new ArrayList<>(); 
+    @Exclude
     List<Product> relCreatedByProduct= new ArrayList<>(); 
+    @Exclude
     List<Product> relLastModifiedByProduct= new ArrayList<>(); 
+    @Exclude
     List<ProductFeaturePrice> relCreatedByProductFeaturePrice= new ArrayList<>(); 
+    @Exclude
     List<ProductFeaturePrice> relLastModifiedByProductFeaturePrice= new ArrayList<>(); 
+    @Exclude
     List<ProductPrice> relCreatedByProductPrice= new ArrayList<>(); 
+    @Exclude
     List<ProductPrice> relLastModifiedByProductPrice= new ArrayList<>(); 
+    @Exclude
     List<ProductPromo> relCreatedByProductPromo= new ArrayList<>(); 
+    @Exclude
     List<ProductPromo> relLastModifiedByProductPromo= new ArrayList<>(); 
+    @Exclude
     List<ProductPromoCode> relCreatedByProductPromoCode= new ArrayList<>(); 
+    @Exclude
     List<ProductPromoCode> relLastModifiedByProductPromoCode= new ArrayList<>(); 
+    @Exclude
     List<ProductReview> relProductReview= new ArrayList<>(); 
+    @Exclude
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    @Exclude
     List<ShipmentStatus> relChangeByShipmentStatus= new ArrayList<>(); 
+    @Exclude
     List<UserLoginSecurityGroup> relUserLoginSecurityGroup= new ArrayList<>();
 
     public UserLoginDelegator.Agent agent(IProc.ProcContext ctx,

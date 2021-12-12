@@ -1,5 +1,6 @@
     // relations
     {% for rel in ent.validRelations %} 
+    @Exclude
     List<{{rel.relEntityName}}> {{rel.relVarName}}= new ArrayList<>();
     {%- endfor %}
 

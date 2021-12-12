@@ -17,6 +17,7 @@ import org.redisson.api.annotation.*;
 
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
+import com.bluecc.hubs.fund.pubs.Exclude;
 
 import com.bluecc.hubs.stub.InvoiceFlatData;
 
@@ -148,19 +149,33 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
 
         // relations
      
+    @Exclude
     List<Party> relFromParty= new ArrayList<>(); 
+    @Exclude
     List<Party> relParty= new ArrayList<>(); 
+    @Exclude
     List<PartyRole> relPartyRole= new ArrayList<>(); 
+    @Exclude
     List<BillingAccount> relBillingAccount= new ArrayList<>(); 
+    @Exclude
     List<ContactMech> relContactMech= new ArrayList<>(); 
+    @Exclude
     List<RecurrenceInfo> relRecurrenceInfo= new ArrayList<>(); 
+    @Exclude
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    @Exclude
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
+    @Exclude
     List<InvoiceRole> relInvoiceRole= new ArrayList<>(); 
+    @Exclude
     List<InvoiceStatus> relInvoiceStatus= new ArrayList<>(); 
+    @Exclude
     List<OrderAdjustmentBilling> relOrderAdjustmentBilling= new ArrayList<>(); 
+    @Exclude
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
+    @Exclude
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
+    @Exclude
     List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>();
 
     public InvoiceDelegator.Agent agent(IProc.ProcContext ctx,

@@ -29,8 +29,8 @@ public class OrderHeaderDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = OrderHeader.class)
-    public interface OrderHeaderDao {
+    @RegisterBeanMapper(OrderHeader.class)
+    public interface Dao {
         @SqlQuery("select * from order_header")
         List<OrderHeader> listOrderHeader();
         @SqlQuery("select * from order_header where order_id=:id")

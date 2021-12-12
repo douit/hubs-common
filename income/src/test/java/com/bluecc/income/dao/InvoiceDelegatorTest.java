@@ -6,7 +6,7 @@ import com.bluecc.hubs.fund.descriptor.INameSymbol;
 import com.bluecc.hubs.stub.InvoiceData;
 import com.bluecc.hubs.stub.InvoiceFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
-import com.bluecc.income.dao.InvoiceDelegator.InvoiceDao;
+import com.bluecc.income.dao.InvoiceDelegator.Dao;
 import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Invoice;
 import com.github.javafaker.Faker;
@@ -56,7 +56,7 @@ public class InvoiceDelegatorTest extends AbstractStoreProcTest {
     @Test
     public void testCount() {
         process(c -> {
-            InvoiceDao dao = c.getHandle().attach(InvoiceDao.class);
+            Dao dao = c.getHandle().attach(Dao.class);
             System.out.println(dao.countInvoice());
         });
     }

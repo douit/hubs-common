@@ -29,8 +29,8 @@ public class PersonDelegator extends AbstractProcs{
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
 
-    @RegisterBeanMapper(value = Person.class)
-    public interface PersonDao {
+    @RegisterBeanMapper(Person.class)
+    public interface Dao {
         @SqlQuery("select * from person")
         List<Person> listPerson();
         @SqlQuery("select * from person where party_id=:id")
