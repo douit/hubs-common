@@ -56,7 +56,7 @@ public class AbstractProcs {
         this.verbose = verbose;
     }
 
-    protected Flux<IModel<?>> process(IProc proc) {
+    public Flux<IModel<?>> process(IProc proc) {
         return hubsStore.getJdbi().withHandle(handle -> {
             ResultSubscriber<IModel<?>> resultSubscriber = new ResultSubscriber<>();
             proc.proc(new IProc.ProcContext(handle, resultSubscriber));

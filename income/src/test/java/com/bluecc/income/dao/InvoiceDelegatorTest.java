@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static com.bluecc.hubs.fund.Util.pretty;
+import static com.bluecc.income.procs.AbstractProcs.findOne;
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 
@@ -109,7 +110,7 @@ public class InvoiceDelegatorTest extends AbstractStoreProcTest {
             String demoFile="dataset/accounting/PaymentApplicationTestsData.xml";
             genericProcs.storeDataFile(c, demoFile);
 
-            Invoice invoice=genericProcs.findOne(c, InvoiceData.newBuilder()
+            Invoice invoice=findOne(c, InvoiceData.newBuilder()
                             .setInvoiceId("appltest10000")
                     .build(), com.bluecc.income.model.Invoice.class);
             pretty(invoice);
