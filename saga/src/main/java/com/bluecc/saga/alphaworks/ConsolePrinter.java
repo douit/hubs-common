@@ -2,25 +2,25 @@ package com.bluecc.saga.alphaworks;
 
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.Behaviors;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 public class ConsolePrinter {
-    public static class PrintMe {
-        public final String message;
-        public PrintMe(String message) {
-            this.message = message;
-        }
+    public interface PrintEvent { }
+    @Data
+    @AllArgsConstructor
+    public static class PrintMe implements PrintEvent{
+        public String message;
     }
 
-    public static Behavior<PrintMe> create() {
-        return Behaviors.setup(
-                context ->
-                        Behaviors.receive(PrintMe.class)
-                                .onMessage(
-                                        PrintMe.class,
-                                        printMe -> {
-                                            context.getLog().info(printMe.message);
-                                            return Behaviors.same();
-                                        })
-                                .build());
+    public static Behavior<PrintEvent> create() {
+        return Behaviors.setup(context ->
+                Behaviors.receive(PrintEvent.class)
+                        .onMessage(PrintMe.class, message -> {
+                            context.getLog().info(message.message);
+                            return Behaviors.same();
+                        })
+                        .build());
     }
 }
+

@@ -20,7 +20,7 @@ public interface OrdersMain {
             return Behaviors.setup(
                     context -> {
 
-                        ActorRef<ConsolePrinter.PrintMe> printer = context.spawn(ConsolePrinter.create(), "printer");
+                        ActorRef<ConsolePrinter.PrintEvent> printer = context.spawn(ConsolePrinter.create(), "printer");
                         printer.tell(new ConsolePrinter.PrintMe("hi"));
                         //
 

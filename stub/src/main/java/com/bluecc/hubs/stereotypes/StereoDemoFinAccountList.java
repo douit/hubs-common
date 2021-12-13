@@ -11,11 +11,11 @@ import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.hubs.stub.ProductPriceData;
 import com.bluecc.hubs.stub.ProductStoreSurveyApplData;
 import com.bluecc.hubs.stub.DataResourceData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
 import com.bluecc.hubs.stub.ProductContentData;
 import com.bluecc.hubs.stub.ProductStoreFinActSettingData;
 import com.bluecc.hubs.stub.SurveyData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 import com.bluecc.hubs.stub.ProductFeatureApplData;
 import com.bluecc.hubs.stub.SurveyQuestionCategoryData;
 import com.bluecc.hubs.stub.ContentData;
@@ -79,7 +79,7 @@ public final class StereoDemoFinAccountList {
             DataResource_FA_001_O_ALT,        
             DataResource_DRFA_001_O_ALTEN);
 
-    public static final List<ProductCategoryRollupData> productCategoryRollupList=ImmutableList.of(        
+    public static final List<ProductCategoryRollupFlatData> productCategoryRollupList=ImmutableList.of(        
             ProductCategoryRollup_FA_100_CATALOG1_);
 
     public static final List<ProductContentData> productContentList=ImmutableList.of(        
@@ -97,7 +97,7 @@ public final class StereoDemoFinAccountList {
     public static final List<SurveyData> surveyList=ImmutableList.of(        
             Survey_1100);
 
-    public static final List<ProductCategoryMemberData> productCategoryMemberList=ImmutableList.of(        
+    public static final List<ProductCategoryMemberFlatData> productCategoryMemberList=ImmutableList.of(        
             ProductCategoryMember_FA_100_FA_001_,        
             ProductCategoryMember_PROMOTIONS_FA_001_,        
             ProductCategoryMember_CATALOG1_SEARCH_FA_001_);

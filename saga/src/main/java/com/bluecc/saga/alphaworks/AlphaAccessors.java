@@ -23,7 +23,7 @@ public interface AlphaAccessors {
                         ActorRef<ChatRoom.SessionEvent> gabbler = context.spawn(IntroTest.Gabbler.create(), "gabbler");
 
                         //
-                        ActorRef<ConsolePrinter.PrintMe> printer=context.spawn(ConsolePrinter.create(), "printer");
+                        ActorRef<ConsolePrinter.PrintEvent> printer=context.spawn(ConsolePrinter.create(), "printer");
                         printer.tell(new ConsolePrinter.PrintMe("hi"));
                         //
                         context.watch(gabbler);

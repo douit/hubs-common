@@ -10,7 +10,7 @@ import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.hubs.stub.ProductPriceData;
 import com.bluecc.hubs.stub.PartyGroupFlatData;
 import com.bluecc.hubs.stub.ContactMechData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
 import com.bluecc.hubs.stub.SupplierProductData;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.PartyContactMechPurposeData;
@@ -24,7 +24,7 @@ import com.bluecc.hubs.stub.ProductContentData;
 import com.bluecc.hubs.stub.PostalAddressData;
 import com.bluecc.hubs.stub.AgreementData;
 import com.bluecc.hubs.stub.AgreementTermData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 import com.bluecc.hubs.stub.ContentData;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 import com.bluecc.hubs.stub.ProductCategoryContentData;
@@ -71,7 +71,7 @@ public final class StereoDemoPurchasingList {
             ContactMech_9002,        
             ContactMech_9003);
 
-    public static final List<ProductCategoryRollupData> productCategoryRollupList=ImmutableList.of(        
+    public static final List<ProductCategoryRollupFlatData> productCategoryRollupList=ImmutableList.of(        
             ProductCategoryRollup_dropShip_CATALOG1_);
 
     public static final List<SupplierProductData> supplierProductList=ImmutableList.of(        
@@ -257,7 +257,7 @@ public final class StereoDemoPurchasingList {
             AgreementTerm_1200,        
             AgreementTerm_1210);
 
-    public static final List<ProductCategoryMemberData> productCategoryMemberList=ImmutableList.of(        
+    public static final List<ProductCategoryMemberFlatData> productCategoryMemberList=ImmutableList.of(        
             ProductCategoryMember_dropShip_dropShip1_,        
             ProductCategoryMember_dropShip_dropShip2_,        
             ProductCategoryMember_dropShip_dropShip3_,        

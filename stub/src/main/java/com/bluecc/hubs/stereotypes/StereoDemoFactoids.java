@@ -9,26 +9,31 @@ import com.bluecc.hubs.stub.ContentData;
 public final class StereoDemoFactoids {
     public final static ElectronicTextData ElectronicText_FACT_1 = ElectronicTextData.newBuilder()
         .setDataResourceId("FACT_1")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_FACT_2 = ElectronicTextData.newBuilder()
         .setDataResourceId("FACT_2")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_FACT_3 = ElectronicTextData.newBuilder()
         .setDataResourceId("FACT_3")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_FACT_4 = ElectronicTextData.newBuilder()
         .setDataResourceId("FACT_4")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_FACT_5 = ElectronicTextData.newBuilder()
         .setDataResourceId("FACT_5")
+        .setTextData("...")
         .build();
 
 

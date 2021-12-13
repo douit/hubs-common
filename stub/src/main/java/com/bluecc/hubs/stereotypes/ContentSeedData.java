@@ -931,76 +931,91 @@ public final class ContentSeedData {
 
     public final static ElectronicTextData ElectronicText_STDWRAP001 = ElectronicTextData.newBuilder()
         .setDataResourceId("STDWRAP001")
+        .setTextData("<#assign mapKey=wrapMapKey?if_exists/>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_LEFTBAR = ElectronicTextData.newBuilder()
         .setDataResourceId("LEFTBAR")
+        .setTextData("<#--...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_TMPLT_IMG_CENTER = ElectronicTextData.newBuilder()
         .setDataResourceId("TMPLT_IMG_CENTER")
+        .setTextData("<table>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_TEMPLATE_IMAGE_LEFT = ElectronicTextData.newBuilder()
         .setDataResourceId("TEMPLATE_IMAGE_LEFT")
+        .setTextData("<@editRenderSubContentCache mapKey='IMAGE'>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_TEMPLATE_TEXT_ONLY = ElectronicTextData.newBuilder()
         .setDataResourceId("TEMPLATE_TEXT_ONLY")
+        .setTextData("<@renderSubContentCache mapKey='ARTICLE' wrapTemplateId=''/>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_WRAP_ARTICLE = ElectronicTextData.newBuilder()
         .setDataResourceId("WRAP_ARTICLE")
+        .setTextData("<#assign thisContentId = ''/>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_WRAP_ARTICLE_TABLE = ElectronicTextData.newBuilder()
         .setDataResourceId("WRAP_ARTICLE_TABLE")
+        .setTextData("<#assign thisContentId = ''/>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_WRAP_NEXT_PREV = ElectronicTextData.newBuilder()
         .setDataResourceId("WRAP_NEXT_PREV")
+        .setTextData("<tr><td>${wrappedContent}</td></tr>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_WRAP_STD_001 = ElectronicTextData.newBuilder()
         .setDataResourceId("WRAP_STD_001")
+        .setTextData("<#assign mapKey=wrapMapKey?if_exists/>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_WRAP_STD_LOOP = ElectronicTextData.newBuilder()
         .setDataResourceId("WRAP_STD_LOOP")
+        .setTextData("<#assign contentIdTo=contentIdTo?if_exists/>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_WRAP_VIEW = ElectronicTextData.newBuilder()
         .setDataResourceId("WRAP_VIEW")
+        .setTextData("<#assign txt=wrappedContent?default('')/>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_IMAGE_CENTERED = ElectronicTextData.newBuilder()
         .setDataResourceId("IMAGE_CENTERED")
+        .setTextData("<table>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_IMAGE_LEFT = ElectronicTextData.newBuilder()
         .setDataResourceId("IMAGE_LEFT")
+        .setTextData("<@editRenderSubContent mapKey='IMAGE'>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_TEMPLATE_TEXT = ElectronicTextData.newBuilder()
         .setDataResourceId("TEMPLATE_TEXT")
+        .setTextData("<@editRenderSubContent mapKey='ARTICLE'>...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_TMPLT_IMG_CENTER_FL = ElectronicTextData.newBuilder()
         .setDataResourceId("TMPLT_IMG_CENTER_FL")
+        .setTextData("<table>...")
         .build();
 
 

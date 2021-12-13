@@ -1,6 +1,6 @@
 package com.bluecc.income.exchange;
 
-import com.linecorp.armeria.internal.shaded.guava.collect.Lists;
+import com.google.common.collect.Lists;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Subscription;

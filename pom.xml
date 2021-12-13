@@ -96,6 +96,7 @@
         <module>fund</module>
         <module>facade</module>
         <module>content</module>
+        <module>testkit</module>
     </modules>
 
     <dependencyManagement>

@@ -154,16 +154,19 @@ public final class StereoDemoWebSitePublishPointData {
 
     public final static ElectronicTextData ElectronicText_STORE_POLICIES = ElectronicTextData.newBuilder()
         .setDataResourceId("STORE_POLICIES")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_STORE_POLICIES2 = ElectronicTextData.newBuilder()
         .setDataResourceId("STORE_POLICIES2")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_COOKIE_POLICY = ElectronicTextData.newBuilder()
         .setDataResourceId("COOKIE_POLICY")
+        .setTextData("...")
         .build();
 
 

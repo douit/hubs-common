@@ -7,7 +7,7 @@ import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.hubs.stub.ProductPriceData;
 import com.bluecc.hubs.stub.PartyGroupFlatData;
 import com.bluecc.hubs.stub.ContactMechData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
 import com.bluecc.hubs.stub.SupplierProductData;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.PartyContactMechPurposeData;
@@ -21,7 +21,7 @@ import com.bluecc.hubs.stub.ProductContentData;
 import com.bluecc.hubs.stub.PostalAddressData;
 import com.bluecc.hubs.stub.AgreementData;
 import com.bluecc.hubs.stub.AgreementTermData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 import com.bluecc.hubs.stub.ContentData;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 import com.bluecc.hubs.stub.ProductCategoryContentData;
@@ -305,7 +305,7 @@ public final class StereoDemoPurchasing {
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_dropShip_CATALOG1_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_dropShip_CATALOG1_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setParentProductCategoryId("CATALOG1")
         .setProductCategoryId("dropShip")
@@ -1939,7 +1939,7 @@ public final class StereoDemoPurchasing {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_dropShip_dropShip1_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_dropShip_dropShip1_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("dropShip")
         .setProductId("dropShip1")
@@ -1947,7 +1947,7 @@ public final class StereoDemoPurchasing {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_dropShip_dropShip2_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_dropShip_dropShip2_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("dropShip")
         .setProductId("dropShip2")
@@ -1955,7 +1955,7 @@ public final class StereoDemoPurchasing {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_dropShip_dropShip3_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_dropShip_dropShip3_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("dropShip")
         .setProductId("dropShip3")
@@ -1963,7 +1963,7 @@ public final class StereoDemoPurchasing {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_dropShip_orderWhenSold_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_dropShip_orderWhenSold_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("dropShip")
         .setProductId("orderWhenSold")

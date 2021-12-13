@@ -99,8 +99,15 @@ public class SeedReader {
         List<Element> children=Util.childElements(element, null);
         children.forEach(c -> jsonObject.addProperty(
                 camelCase?c.getTagName():Util.toSnakecase(c.getTagName()),
-                c.getTextContent()));
+                fixTextContent(c.getTextContent())));
         return jsonObject;
+    }
+
+    private static String fixTextContent(String textContent) {
+        if(textContent.contains("\n")){
+            return textContent.substring(0, textContent.indexOf('\n'))+"...";
+        }
+        return textContent;
     }
 
     public static NodeList getNodeList(String fileName) {

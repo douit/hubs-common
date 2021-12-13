@@ -7,9 +7,9 @@ import static com.bluecc.hubs.stereotypes.StereoDemoPopularCategoriesData.*;
 import com.bluecc.hubs.stub.ElectronicTextData;
 import com.bluecc.hubs.stub.ContentAssocData;
 import com.bluecc.hubs.stub.DataResourceData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
-import com.bluecc.hubs.stub.ProdCatalogCategoryData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
+import com.bluecc.hubs.stub.ProdCatalogCategoryFlatData;
 import com.bluecc.hubs.stub.ContentData;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 import com.bluecc.hubs.stub.ProductCategoryContentData;
@@ -31,14 +31,14 @@ public final class StereoDemoPopularCategoriesDataList {
             DataResource_BEST_SELL_2_ALT,        
             DataResource_DRBEST_SELL_2_ALTEN);
 
-    public static final List<ProductCategoryRollupData> productCategoryRollupList=ImmutableList.of(        
+    public static final List<ProductCategoryRollupFlatData> productCategoryRollupList=ImmutableList.of(        
             ProductCategoryRollup_BEST_SELL_1_CATALOG1_BEST_SELL_,        
             ProductCategoryRollup_BEST_SELL_2_CATALOG1_BEST_SELL_,        
             ProductCategoryRollup_101_BEST_SELL_1_,        
             ProductCategoryRollup_102_BEST_SELL_1_,        
             ProductCategoryRollup_202_BEST_SELL_2_);
 
-    public static final List<ProductCategoryMemberData> productCategoryMemberList=ImmutableList.of(        
+    public static final List<ProductCategoryMemberFlatData> productCategoryMemberList=ImmutableList.of(        
             ProductCategoryMember_BEST_SELL_1_GZ_1000_,        
             ProductCategoryMember_BEST_SELL_1_GZ_1001_,        
             ProductCategoryMember_BEST_SELL_1_GZ_1004_,        
@@ -49,7 +49,7 @@ public final class StereoDemoPopularCategoriesDataList {
             ProductCategoryMember_BEST_SELL_2_WG_1111_,        
             ProductCategoryMember_BEST_SELL_2_WG_5569_);
 
-    public static final List<ProdCatalogCategoryData> prodCatalogCategoryList=ImmutableList.of(        
+    public static final List<ProdCatalogCategoryFlatData> prodCatalogCategoryList=ImmutableList.of(        
             ProdCatalogCategory_DemoCatalog_CATALOG1_BEST_SELL_PCCT_BEST_SELL_);
 
     public static final List<ContentData> contentList=ImmutableList.of(        

@@ -10,16 +10,16 @@ import com.bluecc.hubs.stub.ProdCatalogFlatData;
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.hubs.stub.ProductPriceData;
-import com.bluecc.hubs.stub.FixedAssetData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
-import com.bluecc.hubs.stub.ProdCatalogCategoryData;
-import com.bluecc.hubs.stub.ProductStoreFacilityData;
-import com.bluecc.hubs.stub.WebSiteData;
+import com.bluecc.hubs.stub.FixedAssetFlatData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
+import com.bluecc.hubs.stub.ProdCatalogCategoryFlatData;
+import com.bluecc.hubs.stub.ProductStoreFacilityFlatData;
+import com.bluecc.hubs.stub.WebSiteFlatData;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 import com.bluecc.hubs.stub.ProductStorePaymentSettingData;
 import com.bluecc.hubs.stub.ProductStoreKeywordOvrdData;
-import com.bluecc.hubs.stub.ProductStoreCatalogData;
+import com.bluecc.hubs.stub.ProductStoreCatalogFlatData;
 import com.bluecc.hubs.stub.ProductStoreRoleData;
 
 public final class StereoDemoRentalProductList {
@@ -66,11 +66,11 @@ public final class StereoDemoRentalProductList {
             ProductPrice_BoatRowSimple_COMPETITIVE_PRICE_PURCHASE_EUR__NA__,        
             ProductPrice_Cap_DEFAULT_PRICE_PURCHASE_EUR__NA__);
 
-    public static final List<FixedAssetData> fixedAssetList=ImmutableList.of(        
+    public static final List<FixedAssetFlatData> fixedAssetList=ImmutableList.of(        
             FixedAsset_RoomStd,        
             FixedAsset_RoomLux);
 
-    public static final List<ProductCategoryRollupData> productCategoryRollupList=ImmutableList.of(        
+    public static final List<ProductCategoryRollupFlatData> productCategoryRollupList=ImmutableList.of(        
             ProductCategoryRollup_ConfRooms_HotelFac_,        
             ProductCategoryRollup_Rooms_HotelFac_,        
             ProductCategoryRollup_Suites_HotelFac_,        
@@ -79,20 +79,20 @@ public final class StereoDemoRentalProductList {
             ProductCategoryRollup_RowBoats_BoatRental_,        
             ProductCategoryRollup_SailBoats_BoatRental_);
 
-    public static final List<ProductCategoryMemberData> productCategoryMemberList=ImmutableList.of(        
+    public static final List<ProductCategoryMemberFlatData> productCategoryMemberList=ImmutableList.of(        
             ProductCategoryMember_RentalPromo_RoomLux_,        
             ProductCategoryMember_RentalPromo_RoomStd_,        
             ProductCategoryMember_RentalPromo_Cap_);
 
-    public static final List<ProdCatalogCategoryData> prodCatalogCategoryList=ImmutableList.of(        
+    public static final List<ProdCatalogCategoryFlatData> prodCatalogCategoryList=ImmutableList.of(        
             ProdCatalogCategory_RentalCatalog_RentBrowseRoot_PCCT_BROWSE_ROOT_,        
             ProdCatalogCategory_RentalCatalog_RentBrowseRoot_SRCH_PCCT_SEARCH_,        
             ProdCatalogCategory_RentalCatalog_RentalPromo_PCCT_PROMOTIONS_);
 
-    public static final List<ProductStoreFacilityData> productStoreFacilityList=ImmutableList.of(        
+    public static final List<ProductStoreFacilityFlatData> productStoreFacilityList=ImmutableList.of(        
             ProductStoreFacility_RentalStore_WebStoreWarehouse_);
 
-    public static final List<WebSiteData> webSiteList=ImmutableList.of(        
+    public static final List<WebSiteFlatData> webSiteList=ImmutableList.of(        
             WebSite_OpenTravelSystem);
 
     public static final List<ProductCategoryFlatData> productCategoryList=ImmutableList.of(        
@@ -124,7 +124,7 @@ public final class StereoDemoRentalProductList {
     public static final List<ProductStoreKeywordOvrdData> productStoreKeywordOvrdList=ImmutableList.of(        
             ProductStoreKeywordOvrd_RentalStore_gizmo_);
 
-    public static final List<ProductStoreCatalogData> productStoreCatalogList=ImmutableList.of(        
+    public static final List<ProductStoreCatalogFlatData> productStoreCatalogList=ImmutableList.of(        
             ProductStoreCatalog_RentalStore_RentalCatalog_);
 
     public static final List<ProductStoreRoleData> productStoreRoleList=ImmutableList.of(        

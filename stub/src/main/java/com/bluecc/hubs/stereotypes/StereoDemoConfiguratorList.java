@@ -13,12 +13,12 @@ import com.bluecc.hubs.stub.ProductConfigData;
 import com.bluecc.hubs.stub.ProductFeatureData;
 import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.hubs.stub.ProductPriceData;
-import com.bluecc.hubs.stub.FixedAssetData;
+import com.bluecc.hubs.stub.FixedAssetFlatData;
 import com.bluecc.hubs.stub.DataResourceData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
 import com.bluecc.hubs.stub.ProductContentData;
 import com.bluecc.hubs.stub.ProductConfigOptionData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 import com.bluecc.hubs.stub.ProductFeatureApplData;
 import com.bluecc.hubs.stub.WorkEffortData;
 import com.bluecc.hubs.stub.ContentData;
@@ -218,7 +218,7 @@ public final class StereoDemoConfiguratorList {
             ProductPrice_PEPPERS_R_DEFAULT_PRICE_COMPONENT_PRICE_USD__NA__,        
             ProductPrice_PEPPERS_R_DEFAULT_PRICE_PURCHASE_USD__NA__);
 
-    public static final List<FixedAssetData> fixedAssetList=ImmutableList.of(        
+    public static final List<FixedAssetFlatData> fixedAssetList=ImmutableList.of(        
             FixedAsset_DEMO_BOOK_GROUP,        
             FixedAsset_DEMO_MACHINE_GROUP,        
             FixedAsset_DEMO_FOOD_GROUP);
@@ -275,7 +275,7 @@ public final class StereoDemoConfiguratorList {
             DataResource_PEPPERS_R_ALT,        
             DataResource_DRPEPPERS_R_ALTEN);
 
-    public static final List<ProductCategoryRollupData> productCategoryRollupList=ImmutableList.of(        
+    public static final List<ProductCategoryRollupFlatData> productCategoryRollupList=ImmutableList.of(        
             ProductCategoryRollup_PC_100_CATALOG1_,        
             ProductCategoryRollup_FOOD_001_CATALOG1_);
 
@@ -320,7 +320,7 @@ public final class StereoDemoConfiguratorList {
             ProductConfigOption_PZ0001_PZOP003,        
             ProductConfigOption_PZ0001_PZOP002);
 
-    public static final List<ProductCategoryMemberData> productCategoryMemberList=ImmutableList.of(        
+    public static final List<ProductCategoryMemberFlatData> productCategoryMemberList=ImmutableList.of(        
             ProductCategoryMember_PROMOTIONS_PC001_,        
             ProductCategoryMember_PC_100_PC001_,        
             ProductCategoryMember_CATALOG1_SEARCH_PC001_,        

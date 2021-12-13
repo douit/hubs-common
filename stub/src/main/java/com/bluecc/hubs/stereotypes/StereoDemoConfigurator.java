@@ -10,12 +10,12 @@ import com.bluecc.hubs.stub.ProductConfigData;
 import com.bluecc.hubs.stub.ProductFeatureData;
 import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.hubs.stub.ProductPriceData;
-import com.bluecc.hubs.stub.FixedAssetData;
+import com.bluecc.hubs.stub.FixedAssetFlatData;
 import com.bluecc.hubs.stub.DataResourceData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
 import com.bluecc.hubs.stub.ProductContentData;
 import com.bluecc.hubs.stub.ProductConfigOptionData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 import com.bluecc.hubs.stub.ProductFeatureApplData;
 import com.bluecc.hubs.stub.WorkEffortData;
 import com.bluecc.hubs.stub.ContentData;
@@ -1684,21 +1684,21 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static FixedAssetData FixedAsset_DEMO_BOOK_GROUP = FixedAssetData.newBuilder()
+    public final static FixedAssetFlatData FixedAsset_DEMO_BOOK_GROUP = FixedAssetFlatData.newBuilder()
         .setFixedAssetId("DEMO_BOOK_GROUP")
         .setFixedAssetName("Demo Book Group")
         .setFixedAssetTypeId("GROUP_EQUIPMENT")
         .build();
 
 
-    public final static FixedAssetData FixedAsset_DEMO_MACHINE_GROUP = FixedAssetData.newBuilder()
+    public final static FixedAssetFlatData FixedAsset_DEMO_MACHINE_GROUP = FixedAssetFlatData.newBuilder()
         .setFixedAssetId("DEMO_MACHINE_GROUP")
         .setFixedAssetName("Demo Machine Group")
         .setFixedAssetTypeId("GROUP_EQUIPMENT")
         .build();
 
 
-    public final static FixedAssetData FixedAsset_DEMO_FOOD_GROUP = FixedAssetData.newBuilder()
+    public final static FixedAssetFlatData FixedAsset_DEMO_FOOD_GROUP = FixedAssetFlatData.newBuilder()
         .setFixedAssetId("DEMO_FOOD_GROUP")
         .setFixedAssetName("Demo Food Group")
         .setFixedAssetTypeId("GROUP_EQUIPMENT")
@@ -2055,14 +2055,14 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_PC_100_CATALOG1_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_PC_100_CATALOG1_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setParentProductCategoryId("CATALOG1")
         .setProductCategoryId("PC-100")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_FOOD_001_CATALOG1_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_FOOD_001_CATALOG1_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2007-12-27 12:00:00.0"))
         .setParentProductCategoryId("CATALOG1")
         .setProductCategoryId("FOOD-001")
@@ -2379,63 +2379,63 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_PROMOTIONS_PC001_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_PROMOTIONS_PC001_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("PROMOTIONS")
         .setProductId("PC001")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_PC_100_PC001_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_PC_100_PC001_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("PC-100")
         .setProductId("PC001")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_CATALOG1_SEARCH_PC001_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_CATALOG1_SEARCH_PC001_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("CATALOG1_SEARCH")
         .setProductId("PC001")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_PROMOTIONS_ENCHILADAS_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_PROMOTIONS_ENCHILADAS_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2007-12-27 12:00:00.0"))
         .setProductCategoryId("PROMOTIONS")
         .setProductId("ENCHILADAS")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_FOOD_001_ENCHILADAS_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_FOOD_001_ENCHILADAS_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2007-12-27 12:00:00.0"))
         .setProductCategoryId("FOOD-001")
         .setProductId("ENCHILADAS")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_CATALOG1_SEARCH_ENCHILADAS_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_CATALOG1_SEARCH_ENCHILADAS_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2007-12-27 12:00:00.0"))
         .setProductCategoryId("CATALOG1_SEARCH")
         .setProductId("ENCHILADAS")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_FOOD_001_PIZZA_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_FOOD_001_PIZZA_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-09-24 15:09:47.338"))
         .setProductCategoryId("FOOD-001")
         .setProductId("PIZZA")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_CATALOG1_SEARCH_PIZZA_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_CATALOG1_SEARCH_PIZZA_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-09-24 15:09:47.338"))
         .setProductCategoryId("CATALOG1_SEARCH")
         .setProductId("PIZZA")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_PROMOTIONS_PIZZA_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_PROMOTIONS_PIZZA_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-09-24 15:09:47.338"))
         .setProductCategoryId("PROMOTIONS")
         .setProductId("PIZZA")

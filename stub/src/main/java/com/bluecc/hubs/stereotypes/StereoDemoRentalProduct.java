@@ -7,16 +7,16 @@ import com.bluecc.hubs.stub.ProdCatalogFlatData;
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.hubs.stub.ProductPriceData;
-import com.bluecc.hubs.stub.FixedAssetData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
-import com.bluecc.hubs.stub.ProdCatalogCategoryData;
-import com.bluecc.hubs.stub.ProductStoreFacilityData;
-import com.bluecc.hubs.stub.WebSiteData;
+import com.bluecc.hubs.stub.FixedAssetFlatData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
+import com.bluecc.hubs.stub.ProdCatalogCategoryFlatData;
+import com.bluecc.hubs.stub.ProductStoreFacilityFlatData;
+import com.bluecc.hubs.stub.WebSiteFlatData;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 import com.bluecc.hubs.stub.ProductStorePaymentSettingData;
 import com.bluecc.hubs.stub.ProductStoreKeywordOvrdData;
-import com.bluecc.hubs.stub.ProductStoreCatalogData;
+import com.bluecc.hubs.stub.ProductStoreCatalogFlatData;
 import com.bluecc.hubs.stub.ProductStoreRoleData;
 
 public final class StereoDemoRentalProduct {
@@ -454,7 +454,7 @@ public final class StereoDemoRentalProduct {
         .build();
 
 
-    public final static FixedAssetData FixedAsset_RoomStd = FixedAssetData.newBuilder()
+    public final static FixedAssetFlatData FixedAsset_RoomStd = FixedAssetFlatData.newBuilder()
         .setFixedAssetId("RoomStd")
         .setFixedAssetName("Standard Room")
         .setFixedAssetTypeId("PROPERTY")
@@ -462,7 +462,7 @@ public final class StereoDemoRentalProduct {
         .build();
 
 
-    public final static FixedAssetData FixedAsset_RoomLux = FixedAssetData.newBuilder()
+    public final static FixedAssetFlatData FixedAsset_RoomLux = FixedAssetFlatData.newBuilder()
         .setFixedAssetId("RoomLux")
         .setFixedAssetName("Luxury Room")
         .setFixedAssetTypeId("PROPERTY")
@@ -470,77 +470,77 @@ public final class StereoDemoRentalProduct {
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_ConfRooms_HotelFac_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_ConfRooms_HotelFac_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:21:07.613"))
         .setParentProductCategoryId("HotelFac")
         .setProductCategoryId("ConfRooms")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_Rooms_HotelFac_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_Rooms_HotelFac_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:22:29.139"))
         .setParentProductCategoryId("HotelFac")
         .setProductCategoryId("Rooms")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_Suites_HotelFac_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_Suites_HotelFac_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:23:05.706"))
         .setParentProductCategoryId("HotelFac")
         .setProductCategoryId("Suites")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_SpeedBoats_BoatRental_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_SpeedBoats_BoatRental_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:23:54.452"))
         .setParentProductCategoryId("BoatRental")
         .setProductCategoryId("SpeedBoats")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_MotorBoats_BoatRental_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_MotorBoats_BoatRental_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:30:56.77"))
         .setParentProductCategoryId("BoatRental")
         .setProductCategoryId("MotorBoats")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_RowBoats_BoatRental_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_RowBoats_BoatRental_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:32:27.359"))
         .setParentProductCategoryId("BoatRental")
         .setProductCategoryId("RowBoats")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_SailBoats_BoatRental_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_SailBoats_BoatRental_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 15:32:48.86"))
         .setParentProductCategoryId("BoatRental")
         .setProductCategoryId("SailBoats")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_RentalPromo_RoomLux_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_RentalPromo_RoomLux_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 20:39:58.563"))
         .setProductCategoryId("RentalPromo")
         .setProductId("RoomLux")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_RentalPromo_RoomStd_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_RentalPromo_RoomStd_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 20:40:12.749"))
         .setProductCategoryId("RentalPromo")
         .setProductId("RoomStd")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_RentalPromo_Cap_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_RentalPromo_Cap_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2004-10-18 20:40:12.749"))
         .setProductCategoryId("RentalPromo")
         .setProductId("Cap")
         .build();
 
 
-    public final static ProdCatalogCategoryData ProdCatalogCategory_RentalCatalog_RentBrowseRoot_PCCT_BROWSE_ROOT_ = ProdCatalogCategoryData.newBuilder()
+    public final static ProdCatalogCategoryFlatData ProdCatalogCategory_RentalCatalog_RentBrowseRoot_PCCT_BROWSE_ROOT_ = ProdCatalogCategoryFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProdCatalogCategoryTypeId("PCCT_BROWSE_ROOT")
         .setProdCatalogId("RentalCatalog")
@@ -549,7 +549,7 @@ public final class StereoDemoRentalProduct {
         .build();
 
 
-    public final static ProdCatalogCategoryData ProdCatalogCategory_RentalCatalog_RentBrowseRoot_SRCH_PCCT_SEARCH_ = ProdCatalogCategoryData.newBuilder()
+    public final static ProdCatalogCategoryFlatData ProdCatalogCategory_RentalCatalog_RentBrowseRoot_SRCH_PCCT_SEARCH_ = ProdCatalogCategoryFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProdCatalogCategoryTypeId("PCCT_SEARCH")
         .setProdCatalogId("RentalCatalog")
@@ -558,7 +558,7 @@ public final class StereoDemoRentalProduct {
         .build();
 
 
-    public final static ProdCatalogCategoryData ProdCatalogCategory_RentalCatalog_RentalPromo_PCCT_PROMOTIONS_ = ProdCatalogCategoryData.newBuilder()
+    public final static ProdCatalogCategoryFlatData ProdCatalogCategory_RentalCatalog_RentalPromo_PCCT_PROMOTIONS_ = ProdCatalogCategoryFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProdCatalogCategoryTypeId("PCCT_PROMOTIONS")
         .setProdCatalogId("RentalCatalog")
@@ -567,14 +567,14 @@ public final class StereoDemoRentalProduct {
         .build();
 
 
-    public final static ProductStoreFacilityData ProductStoreFacility_RentalStore_WebStoreWarehouse_ = ProductStoreFacilityData.newBuilder()
+    public final static ProductStoreFacilityFlatData ProductStoreFacility_RentalStore_WebStoreWarehouse_ = ProductStoreFacilityFlatData.newBuilder()
         .setFacilityId("WebStoreWarehouse")
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductStoreId("RentalStore")
         .build();
 
 
-    public final static WebSiteData WebSite_OpenTravelSystem = WebSiteData.newBuilder()
+    public final static WebSiteFlatData WebSite_OpenTravelSystem = WebSiteFlatData.newBuilder()
         .setProductStoreId("RentalStore")
         .setSiteName("The Open source Travel System")
         .setWebSiteId("OpenTravelSystem")
@@ -787,7 +787,7 @@ public final class StereoDemoRentalProduct {
         .build();
 
 
-    public final static ProductStoreCatalogData ProductStoreCatalog_RentalStore_RentalCatalog_ = ProductStoreCatalogData.newBuilder()
+    public final static ProductStoreCatalogFlatData ProductStoreCatalog_RentalStore_RentalCatalog_ = ProductStoreCatalogFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProdCatalogId("RentalCatalog")
         .setProductStoreId("RentalStore")

@@ -4,9 +4,9 @@ import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.ElectronicTextData;
 import com.bluecc.hubs.stub.ContentAssocData;
 import com.bluecc.hubs.stub.DataResourceData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
-import com.bluecc.hubs.stub.ProdCatalogCategoryData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
+import com.bluecc.hubs.stub.ProdCatalogCategoryFlatData;
 import com.bluecc.hubs.stub.ContentData;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 import com.bluecc.hubs.stub.ProductCategoryContentData;
@@ -80,7 +80,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_BEST_SELL_1_CATALOG1_BEST_SELL_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_BEST_SELL_1_CATALOG1_BEST_SELL_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setParentProductCategoryId("CATALOG1_BEST_SELL")
         .setProductCategoryId("BEST-SELL-1")
@@ -88,7 +88,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_BEST_SELL_2_CATALOG1_BEST_SELL_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_BEST_SELL_2_CATALOG1_BEST_SELL_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setParentProductCategoryId("CATALOG1_BEST_SELL")
         .setProductCategoryId("BEST-SELL-2")
@@ -96,28 +96,28 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_101_BEST_SELL_1_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_101_BEST_SELL_1_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setParentProductCategoryId("BEST-SELL-1")
         .setProductCategoryId("101")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_102_BEST_SELL_1_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_102_BEST_SELL_1_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setParentProductCategoryId("BEST-SELL-1")
         .setProductCategoryId("102")
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_202_BEST_SELL_2_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_202_BEST_SELL_2_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setParentProductCategoryId("BEST-SELL-2")
         .setProductCategoryId("202")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_1_GZ_1000_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_1_GZ_1000_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-1")
         .setProductId("GZ-1000")
@@ -125,7 +125,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_1_GZ_1001_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_1_GZ_1001_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-1")
         .setProductId("GZ-1001")
@@ -133,7 +133,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_1_GZ_1004_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_1_GZ_1004_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-1")
         .setProductId("GZ-1004")
@@ -141,7 +141,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_1_GZ_1005_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_1_GZ_1005_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-1")
         .setProductId("GZ-1005")
@@ -149,7 +149,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_1_GZ_1006_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_1_GZ_1006_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-1")
         .setProductId("GZ-1006")
@@ -157,7 +157,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_2_WG_9943_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_2_WG_9943_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-2")
         .setProductId("WG-9943")
@@ -165,7 +165,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_2_WG_9944_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_2_WG_9944_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-2")
         .setProductId("WG-9944")
@@ -173,7 +173,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_2_WG_1111_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_2_WG_1111_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-2")
         .setProductId("WG-1111")
@@ -181,7 +181,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_BEST_SELL_2_WG_5569_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_BEST_SELL_2_WG_5569_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProductCategoryId("BEST-SELL-2")
         .setProductId("WG-5569")
@@ -189,7 +189,7 @@ public final class StereoDemoPopularCategoriesData {
         .build();
 
 
-    public final static ProdCatalogCategoryData ProdCatalogCategory_DemoCatalog_CATALOG1_BEST_SELL_PCCT_BEST_SELL_ = ProdCatalogCategoryData.newBuilder()
+    public final static ProdCatalogCategoryFlatData ProdCatalogCategory_DemoCatalog_CATALOG1_BEST_SELL_PCCT_BEST_SELL_ = ProdCatalogCategoryFlatData.newBuilder()
         .setFromDate(getTimestamp("2010-01-01 12:00:00.0"))
         .setProdCatalogCategoryTypeId("PCCT_BEST_SELL")
         .setProdCatalogId("DemoCatalog")

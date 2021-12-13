@@ -9,21 +9,25 @@ import com.bluecc.hubs.stub.ContentData;
 public final class StereoDemoRelatedData {
     public final static ElectronicTextData ElectronicText_RELATED_1 = ElectronicTextData.newBuilder()
         .setDataResourceId("RELATED_1")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_RELATED_2 = ElectronicTextData.newBuilder()
         .setDataResourceId("RELATED_2")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_RELATED_3 = ElectronicTextData.newBuilder()
         .setDataResourceId("RELATED_3")
+        .setTextData("...")
         .build();
 
 
     public final static ElectronicTextData ElectronicText_RELATED_4 = ElectronicTextData.newBuilder()
         .setDataResourceId("RELATED_4")
+        .setTextData("...")
         .build();
 
 

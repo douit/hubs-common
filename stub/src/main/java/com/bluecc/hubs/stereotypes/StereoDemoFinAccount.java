@@ -8,11 +8,11 @@ import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.hubs.stub.ProductPriceData;
 import com.bluecc.hubs.stub.ProductStoreSurveyApplData;
 import com.bluecc.hubs.stub.DataResourceData;
-import com.bluecc.hubs.stub.ProductCategoryRollupData;
+import com.bluecc.hubs.stub.ProductCategoryRollupFlatData;
 import com.bluecc.hubs.stub.ProductContentData;
 import com.bluecc.hubs.stub.ProductStoreFinActSettingData;
 import com.bluecc.hubs.stub.SurveyData;
-import com.bluecc.hubs.stub.ProductCategoryMemberData;
+import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 import com.bluecc.hubs.stub.ProductFeatureApplData;
 import com.bluecc.hubs.stub.SurveyQuestionCategoryData;
 import com.bluecc.hubs.stub.ContentData;
@@ -369,7 +369,7 @@ public final class StereoDemoFinAccount {
         .build();
 
 
-    public final static ProductCategoryRollupData ProductCategoryRollup_FA_100_CATALOG1_ = ProductCategoryRollupData.newBuilder()
+    public final static ProductCategoryRollupFlatData ProductCategoryRollup_FA_100_CATALOG1_ = ProductCategoryRollupFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setParentProductCategoryId("CATALOG1")
         .setProductCategoryId("FA-100")
@@ -476,21 +476,21 @@ public final class StereoDemoFinAccount {
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_FA_100_FA_001_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_FA_100_FA_001_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("FA-100")
         .setProductId("FA-001")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_PROMOTIONS_FA_001_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_PROMOTIONS_FA_001_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("PROMOTIONS")
         .setProductId("FA-001")
         .build();
 
 
-    public final static ProductCategoryMemberData ProductCategoryMember_CATALOG1_SEARCH_FA_001_ = ProductCategoryMemberData.newBuilder()
+    public final static ProductCategoryMemberFlatData ProductCategoryMember_CATALOG1_SEARCH_FA_001_ = ProductCategoryMemberFlatData.newBuilder()
         .setFromDate(getTimestamp("2001-05-13 12:00:00.0"))
         .setProductCategoryId("CATALOG1_SEARCH")
         .setProductId("FA-001")

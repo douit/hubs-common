@@ -32,19 +32,19 @@
             <groupId>com.bluecc</groupId>
             <artifactId>fund</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <optional>true</optional>
+<!--            <optional>true</optional>-->
         </dependency>
         <dependency>
             <groupId>com.bluecc</groupId>
             <artifactId>entity</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <optional>true</optional>
+<!--            <optional>true</optional>-->
         </dependency>
         <dependency>
             <groupId>com.bluecc</groupId>
             <artifactId>stub</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <optional>true</optional>
+<!--            <optional>true</optional>-->
         </dependency>
 
 <!--        <dependency>-->
