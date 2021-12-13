@@ -342,4 +342,8 @@ public class PaymentDelegator extends AbstractProcs{
 
 
     
+    public Payment.PaymentBuilder seed(){
+        return Payment.builder()
+                .paymentId(sequence.nextStringId());
+    }
 }

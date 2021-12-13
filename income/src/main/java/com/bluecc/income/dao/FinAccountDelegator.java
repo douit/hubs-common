@@ -237,4 +237,8 @@ public class FinAccountDelegator extends AbstractProcs{
 
 
     
+    public FinAccount.FinAccountBuilder seed(){
+        return FinAccount.builder()
+                .finAccountId(sequence.nextStringId());
+    }
 }

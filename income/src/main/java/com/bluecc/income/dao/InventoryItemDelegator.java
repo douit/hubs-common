@@ -426,4 +426,8 @@ public class InventoryItemDelegator extends AbstractProcs{
 
 
     
+    public InventoryItem.InventoryItemBuilder seed(){
+        return InventoryItem.builder()
+                .inventoryItemId(sequence.nextStringId());
+    }
 }

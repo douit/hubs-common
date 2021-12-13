@@ -170,8 +170,12 @@ public class ProductCategoryDelegatorTest extends AbstractStoreProcTest {
                                 .map(c -> c.getProductCategoryId())
                                 .collect(Collectors.toList()));
                     }).collect(Collectors.toList());
+
+            // build tree
             SuccessorsFunction<String> tree = createDirectedGraph(rs);
             Traverser<String> traverser = Traverser.forGraph(tree);
+
+            // query tree
             traverser.breadthFirst(Lists.newArrayList("BoatRental", "CATALOG1"))
                     .forEach(e -> System.out.println(e));
             assertThat(traverser.breadthFirst(Lists.newArrayList("BoatRental")))

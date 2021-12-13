@@ -384,4 +384,8 @@ public class FixedAssetDelegator extends AbstractProcs{
 
 
     
+    public FixedAsset.FixedAssetBuilder seed(){
+        return FixedAsset.builder()
+                .fixedAssetId(sequence.nextStringId());
+    }
 }

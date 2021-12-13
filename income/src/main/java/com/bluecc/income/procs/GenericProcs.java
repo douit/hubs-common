@@ -46,7 +46,7 @@ public class GenericProcs extends AbstractProcs {
 
             Response reply = Response.newBuilder()
                     .setResult(Response.Result.OK)
-                    .setMessage(result.get("_id_").getChildId())
+                    .setMessage(getResultId(result))
                     .build();
 
             responseObserver.onNext(reply);

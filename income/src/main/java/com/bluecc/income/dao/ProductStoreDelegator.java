@@ -489,4 +489,8 @@ public class ProductStoreDelegator extends AbstractProcs{
 
 
     
+    public ProductStore.ProductStoreBuilder seed(){
+        return ProductStore.builder()
+                .productStoreId(sequence.nextStringId());
+    }
 }

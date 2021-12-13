@@ -237,4 +237,8 @@ public class BillingAccountDelegator extends AbstractProcs{
 
 
     
+    public BillingAccount.BillingAccountBuilder seed(){
+        return BillingAccount.builder()
+                .billingAccountId(sequence.nextStringId());
+    }
 }

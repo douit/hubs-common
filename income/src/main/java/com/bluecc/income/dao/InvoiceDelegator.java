@@ -405,4 +405,8 @@ public class InvoiceDelegator extends AbstractProcs{
 
 
     
+    public Invoice.InvoiceBuilder seed(){
+        return Invoice.builder()
+                .invoiceId(sequence.nextStringId());
+    }
 }

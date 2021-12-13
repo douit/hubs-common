@@ -132,4 +132,8 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
 
 
     
+    public ProductStoreFacility.ProductStoreFacilityBuilder seed(){
+        return ProductStoreFacility.builder()
+                .id(sequence.nextStringId());
+    }
 }

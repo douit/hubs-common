@@ -279,4 +279,8 @@ public class PersonDelegator extends AbstractProcs{
 
 
     
+    public Person.PersonBuilder seed(){
+        return Person.builder()
+                .partyId(sequence.nextStringId());
+    }
 }

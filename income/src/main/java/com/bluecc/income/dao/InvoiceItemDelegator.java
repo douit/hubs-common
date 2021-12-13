@@ -384,4 +384,8 @@ public class InvoiceItemDelegator extends AbstractProcs{
 
 
     
+    public InvoiceItem.InvoiceItemBuilder seed(){
+        return InvoiceItem.builder()
+                .id(sequence.nextStringId());
+    }
 }

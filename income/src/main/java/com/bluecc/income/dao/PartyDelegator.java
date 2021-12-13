@@ -1371,4 +1371,8 @@ public class PartyDelegator extends AbstractProcs{
 
 
     
+    public Party.PartyBuilder seed(){
+        return Party.builder()
+                .partyId(sequence.nextStringId());
+    }
 }

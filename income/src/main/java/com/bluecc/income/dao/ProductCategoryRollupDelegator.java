@@ -216,4 +216,8 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
 
 
     
+    public ProductCategoryRollup.ProductCategoryRollupBuilder seed(){
+        return ProductCategoryRollup.builder()
+                .id(sequence.nextStringId());
+    }
 }

@@ -153,4 +153,8 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
 
 
     
+    public ProdCatalogCategory.ProdCatalogCategoryBuilder seed(){
+        return ProdCatalogCategory.builder()
+                .id(sequence.nextStringId());
+    }
 }

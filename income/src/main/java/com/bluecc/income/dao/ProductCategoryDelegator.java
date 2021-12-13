@@ -426,4 +426,8 @@ public class ProductCategoryDelegator extends AbstractProcs{
 
 
     
+    public ProductCategory.ProductCategoryBuilder seed(){
+        return ProductCategory.builder()
+                .productCategoryId(sequence.nextStringId());
+    }
 }

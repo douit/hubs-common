@@ -510,4 +510,8 @@ public class OrderHeaderDelegator extends AbstractProcs{
 
 
     
+    public OrderHeader.OrderHeaderBuilder seed(){
+        return OrderHeader.builder()
+                .orderId(sequence.nextStringId());
+    }
 }

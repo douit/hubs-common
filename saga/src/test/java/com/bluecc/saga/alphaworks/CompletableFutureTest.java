@@ -1,4 +1,4 @@
-package com.bluecc.saga.meshes;
+package com.bluecc.saga.alphaworks;
 
 import org.junit.Test;
 

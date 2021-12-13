@@ -657,4 +657,8 @@ public class ShipmentDelegator extends AbstractProcs{
 
 
     
+    public Shipment.ShipmentBuilder seed(){
+        return Shipment.builder()
+                .shipmentId(sequence.nextStringId());
+    }
 }

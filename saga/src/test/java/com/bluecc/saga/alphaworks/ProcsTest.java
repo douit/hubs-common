@@ -1,4 +1,4 @@
-package com.bluecc.saga.meshes;
+package com.bluecc.saga.alphaworks;
 
 import com.bluecc.testkit.AbstractOnceProcTest;
 import com.bluecc.testkit.AbstractProcTest;

@@ -846,4 +846,8 @@ public class UserLoginDelegator extends AbstractProcs{
 
 
     
+    public UserLogin.UserLoginBuilder seed(){
+        return UserLogin.builder()
+                .userLoginId(sequence.nextStringId());
+    }
 }

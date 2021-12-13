@@ -237,4 +237,8 @@ public class WebSiteDelegator extends AbstractProcs{
 
 
     
+    public WebSite.WebSiteBuilder seed(){
+        return WebSite.builder()
+                .webSiteId(sequence.nextStringId());
+    }
 }

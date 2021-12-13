@@ -55,4 +55,8 @@ public class {{ent.name}}Delegator extends AbstractProcs{
 {{agent_source}}
 {{query_rels}}
     
+    public {{ent.name}}.{{ent.name}}Builder seed(){
+        return {{ent.name}}.builder()
+                .{{ent.pk}}(sequence.nextStringId());
+    }
 }

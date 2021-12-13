@@ -9,7 +9,7 @@
         <encoder>
 <!--            <pattern>[%date{ISO8601}] [%level] [%logger] [%marker] [%thread] - %msg MDC: {%mdc}%n</pattern>-->
 <!--            <pattern>%highlight(%-5level) [%logger{15}] %cyan(%msg)</pattern>-->
-            <pattern>[%level] [%logger{15}] [%marker] [%thread] - %msg MDC: {%mdc}%n</pattern>
+            <pattern>[%level] [%logger{15}] - %msg MDC: {%mdc}%n</pattern>
         </encoder>
     </appender>
 
@@ -29,12 +29,12 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="com.bluecc" >
-        <appender-ref ref="STDOUT"/>
-    </logger>
+<!--    <logger name="com.bluecc" >-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </logger>-->
 
     <root level="DEBUG">
-<!--        <appender-ref ref="CapturingAppender"/>-->
+        <appender-ref ref="CapturingAppender"/>
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

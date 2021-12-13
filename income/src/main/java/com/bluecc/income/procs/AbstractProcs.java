@@ -93,6 +93,10 @@ public class AbstractProcs {
         Preconditions.checkNotNull(o, "Object is null");
     }
 
+    public static String getResultId(Map<String, MessageMapCollector.ResultData> resultDataMap){
+        return resultDataMap.get("_id_").getChildId();
+    }
+
     public Map<String, MessageMapCollector.ResultData> storeCompoundObject(IProc.ProcContext ctx, Message messageData) {
         Map<String, MessageMapCollector.ResultData> resultMap = collect((c, e) -> {
             String idval = null;

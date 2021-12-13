@@ -1,0 +1,11 @@
+public class {{ent.name}}Event extends TypedMessageEvent<{{ent.messageType}}> {
+    public PartyEvent({{ent.messageType}} data, EventType eventType, ActorRef<IMessageEvent> replyTo) {
+        super(data, eventType, replyTo);
+    }
+
+    public static void say(ActorRef<IMessageEvent> sender, ActorRef<IMessageEvent> receiver){
+        receiver.tell(new {{ent.name}}Event({{ent.messageType}}.getDefaultInstance(),
+                IMessageEvent.EventType.Talk,
+                sender));
+    }
+}

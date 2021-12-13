@@ -825,4 +825,8 @@ public class ProductDelegator extends AbstractProcs{
 
 
     
+    public Product.ProductBuilder seed(){
+        return Product.builder()
+                .productId(sequence.nextStringId());
+    }
 }

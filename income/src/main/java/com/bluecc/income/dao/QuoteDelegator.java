@@ -216,4 +216,8 @@ public class QuoteDelegator extends AbstractProcs{
 
 
     
+    public Quote.QuoteBuilder seed(){
+        return Quote.builder()
+                .quoteId(sequence.nextStringId());
+    }
 }

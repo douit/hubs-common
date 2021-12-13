@@ -1,4 +1,4 @@
-package com.bluecc.saga.meshes;
+package com.bluecc.saga.alphaworks;
 
 import akka.actor.AbstractActor;
 import akka.actor.testkit.typed.javadsl.TestProbe;

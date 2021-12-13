@@ -468,4 +468,8 @@ public class OrderItemDelegator extends AbstractProcs{
 
 
     
+    public OrderItem.OrderItemBuilder seed(){
+        return OrderItem.builder()
+                .id(sequence.nextStringId());
+    }
 }

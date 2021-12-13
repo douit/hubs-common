@@ -279,4 +279,8 @@ public class PartyGroupDelegator extends AbstractProcs{
 
 
     
+    public PartyGroup.PartyGroupBuilder seed(){
+        return PartyGroup.builder()
+                .partyId(sequence.nextStringId());
+    }
 }
