@@ -293,6 +293,11 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
         };
     }
 
+    // @Test
+    // public void testConsumerAsVar(){
+    //     Consumer<Map<String, Party>> fn=printParties("DemoCustomer");
+    // }
+
     @Test
     public void testChainInvoke() {
         process(c -> {

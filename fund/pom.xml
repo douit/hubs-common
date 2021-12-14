@@ -43,6 +43,12 @@
             <groupId>com.hubspot.jinjava</groupId>
             <artifactId>jinjava</artifactId>
         </dependency>
+        <dependency>
+            <groupId>one.util</groupId>
+            <artifactId>streamex</artifactId>
+            <version>0.8.0</version>
+        </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>org.antlr</groupId>-->
 <!--            <artifactId>ST4</artifactId>-->

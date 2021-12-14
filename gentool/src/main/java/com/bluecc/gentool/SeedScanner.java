@@ -56,7 +56,7 @@ public class SeedScanner {
         scanner.statusTypeMap.values().stream()
                 .map(t -> t.getDescription())
                 .sorted()
-                .forEach(e -> System.out.println(e));
+                .forEach(e -> System.out.println("- "+e));
         System.out.println("total transitions: " + scanner.statusValidChangeList.size());
         System.out.println("total types: " + scanner.statusTypeMap.size());
     }
@@ -65,27 +65,35 @@ public class SeedScanner {
         scanner.statusTypeMap.keySet().forEach(typ ->{
             String typeDesc= scanner.statusTypeMap.get(typ).getDescription();
             Path path=Paths.get(targetDir, Util.wordsToClassName(typeDesc)+".json");
-            List<StatusValidChange> changeList= scanner.statusValidChangeList.stream()
-                    .filter(s -> s.statusType.getStatusTypeId().equals(typ))
-                    .collect(Collectors.toList());
-            List<String> statusItems=scanner.statusItemMap.values().stream()
-                    .filter(s -> s.getStatusTypeId().equals(typ))
-                    .sorted(Comparator.comparingInt(s ->
-                            safeInt(s)))
-                    .map(s -> s.getStatusId())
-                    .collect(Collectors.toList());
-            if(!changeList.isEmpty()) {
+
+            StatusTransitions transitions = buildStatusTransitions(scanner, typ);
+
+            if(!transitions.getTransitions().isEmpty()) {
                 try {
                     System.out.format(".. write to %s\n", path);
-                    Util.writeJsonFile(StatusTransitions
-                                    .createBy(changeList, statusItems),
-                            path.toFile());
+                    Util.writeJsonFile(transitions, path.toFile());
                 } catch (IOException e) {
                     log.error(e.getMessage(), e);
                     throw new RuntimeException(e);
                 }
             }
         });
+    }
+
+    public static StatusTransitions buildStatusTransitions(SeedScanner scanner, String typ) {
+        List<StatusValidChange> changeList= scanner.statusValidChangeList.stream()
+                .filter(s -> s.statusType.getStatusTypeId().equals(typ))
+                .collect(Collectors.toList());
+        List<String> statusItems= scanner.statusItemMap.values().stream()
+                .filter(s -> s.getStatusTypeId().equals(typ))
+                .sorted(Comparator.comparingInt(s ->
+                        safeInt(s)))
+                .map(s -> s.getStatusId())
+                .collect(Collectors.toList());
+
+        StatusTransitions transitions=StatusTransitions
+                .createBy(changeList, statusItems);
+        return transitions;
     }
 
     private static int safeInt(StatusItem s) {

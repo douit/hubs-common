@@ -31,7 +31,7 @@ public class FlatMessageCollector extends MessageMapCollector{
         return map;
     }
 
-    public static Document toXmlDocument(List<Message> messageList) throws ParserConfigurationException {
+    public static Document toXmlDocument(Iterable<Message> messageList) throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.newDocument();
