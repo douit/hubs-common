@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class QuoteDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(Quote.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from quote")
         List<Quote> listQuote();
         @SqlQuery("select * from quote where quote_id=:id")
@@ -38,7 +45,217 @@ public class QuoteDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from quote")
         int countQuote();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, Quote> chainParty(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               boolean succInvoke) {
+            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, Quote> chainParty(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
+                                id -> rr.getRow(Quote.class));
+                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                            p.getRelParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        default Map<String, Quote> chainProductStore(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               boolean succInvoke) {
+            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        default Map<String, Quote> chainProductStore(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
+                                id -> rr.getRow(Quote.class));
+                        if (rr.getColumn("ps_product_store_id", String.class) != null) {
+                            p.getRelProductStore()
+                                    .add(rr.getRow(ProductStore.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qi")
+        default Map<String, Quote> chainQuoteItem(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               boolean succInvoke) {
+            return chainQuoteItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qi")
+        default Map<String, Quote> chainQuoteItem(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ITEM);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
+                                id -> rr.getRow(Quote.class));
+                        if (rr.getColumn("qi_quote_id", String.class) != null) {
+                            p.getRelQuoteItem()
+                                    .add(rr.getRow(QuoteItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qr")
+        default Map<String, Quote> chainQuoteRole(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               boolean succInvoke) {
+            return chainQuoteRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qr")
+        default Map<String, Quote> chainQuoteRole(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
+                                id -> rr.getRow(Quote.class));
+                        if (rr.getColumn("qr_quote_id", String.class) != null) {
+                            p.getRelQuoteRole()
+                                    .add(rr.getRow(QuoteRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = QuoteTerm.class, prefix = "qt")
+        default Map<String, Quote> chainQuoteTerm(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               boolean succInvoke) {
+            return chainQuoteTerm(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = QuoteTerm.class, prefix = "qt")
+        default Map<String, Quote> chainQuoteTerm(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_TERM);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
+                                id -> rr.getRow(Quote.class));
+                        if (rr.getColumn("qt_quote_id", String.class) != null) {
+                            p.getRelQuoteTerm()
+                                    .add(rr.getRow(QuoteTerm.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, Quote>> party(Dao dao, boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Quote>> party(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Quote>> productStore(Dao dao, boolean succ) {
+        return e -> dao.chainProductStore(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Quote>> productStore(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Quote>> quoteItem(Dao dao, boolean succ) {
+        return e -> dao.chainQuoteItem(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Quote>> quoteItem(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainQuoteItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Quote>> quoteRole(Dao dao, boolean succ) {
+        return e -> dao.chainQuoteRole(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Quote>> quoteRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainQuoteRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Quote>> quoteTerm(Dao dao, boolean succ) {
+        return e -> dao.chainQuoteTerm(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Quote>> quoteTerm(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainQuoteTerm(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public Quote get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getQuote(id);
@@ -140,6 +357,11 @@ public class QuoteDelegator extends AbstractProcs{
         Quote rec = findOne(ctx, p, Quote.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, Quote rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String PARTY="party";

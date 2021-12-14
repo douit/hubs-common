@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class InventoryItemDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(InventoryItem.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from inventory_item")
         List<InventoryItem> listInventoryItem();
         @SqlQuery("select * from inventory_item where inventory_item_id=:id")
@@ -38,7 +45,627 @@ public class InventoryItemDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from inventory_item")
         int countInventoryItem();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        default Map<String, InventoryItem> chainProduct(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        default Map<String, InventoryItem> chainProduct(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("pr_product_id", String.class) != null) {
+                            p.getRelProduct()
+                                    .add(rr.getRow(Product.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, InventoryItem> chainParty(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, InventoryItem> chainParty(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                            p.getRelParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        default Map<String, InventoryItem> chainOwnerParty(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainOwnerParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        default Map<String, InventoryItem> chainOwnerParty(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(OWNER_PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("op_party_id", String.class) != null) {
+                            p.getRelOwnerParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = ProductFacility.class, prefix = "pf")
+        default Map<String, InventoryItem> chainProductFacility(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainProductFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = ProductFacility.class, prefix = "pf")
+        default Map<String, InventoryItem> chainProductFacility(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("pf_product_id", String.class) != null) {
+                            p.getRelProductFacility()
+                                    .add(rr.getRow(ProductFacility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "fl")
+        default Map<String, InventoryItem> chainFacilityLocation(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainFacilityLocation(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "fl")
+        default Map<String, InventoryItem> chainFacilityLocation(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY_LOCATION);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("fl_facility_id", String.class) != null) {
+                            p.getRelFacilityLocation()
+                                    .add(rr.getRow(FacilityLocation.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pfl")
+        default Map<String, InventoryItem> chainProductFacilityLocation(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainProductFacilityLocation(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pfl")
+        default Map<String, InventoryItem> chainProductFacilityLocation(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_FACILITY_LOCATION);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("pfl_product_id", String.class) != null) {
+                            p.getRelProductFacilityLocation()
+                                    .add(rr.getRow(ProductFacilityLocation.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fafa")
+        default Map<String, InventoryItem> chainFixedAssetFixedAsset(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainFixedAssetFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fafa")
+        default Map<String, InventoryItem> chainFixedAssetFixedAsset(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_FIXED_ASSET);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("fafa_fixed_asset_id", String.class) != null) {
+                            p.getRelFixedAssetFixedAsset()
+                                    .add(rr.getRow(FixedAsset.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        default Map<String, InventoryItem> chainAcctgTrans(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        default Map<String, InventoryItem> chainAcctgTrans(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("at_inventory_item_id", String.class) != null) {
+                            p.getRelAcctgTrans()
+                                    .add(rr.getRow(AcctgTrans.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "ate")
+        default Map<String, InventoryItem> chainAcctgTransEntry(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainAcctgTransEntry(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "ate")
+        default Map<String, InventoryItem> chainAcctgTransEntry(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS_ENTRY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("ate_inventory_item_id", String.class) != null) {
+                            p.getRelAcctgTransEntry()
+                                    .add(rr.getRow(AcctgTransEntry.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iid")
+        default Map<String, InventoryItem> chainInventoryItemDetail(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainInventoryItemDetail(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iid")
+        default Map<String, InventoryItem> chainInventoryItemDetail(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVENTORY_ITEM_DETAIL);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("iid_inventory_item_id", String.class) != null) {
+                            p.getRelInventoryItemDetail()
+                                    .add(rr.getRow(InventoryItemDetail.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        default Map<String, InventoryItem> chainInvoiceItem(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainInvoiceItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        default Map<String, InventoryItem> chainInvoiceItem(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE_ITEM);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("ii_inventory_item_id", String.class) != null) {
+                            p.getRelInvoiceItem()
+                                    .add(rr.getRow(InvoiceItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        default Map<String, InventoryItem> chainItemIssuance(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainItemIssuance(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        default Map<String, InventoryItem> chainItemIssuance(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ITEM_ISSUANCE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("ii_inventory_item_id", String.class) != null) {
+                            p.getRelItemIssuance()
+                                    .add(rr.getRow(ItemIssuance.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "foi")
+        default Map<String, InventoryItem> chainFromOrderItem(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainFromOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "foi")
+        default Map<String, InventoryItem> chainFromOrderItem(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_ORDER_ITEM);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("foi_from_inventory_item_id", String.class) != null) {
+                            p.getRelFromOrderItem()
+                                    .add(rr.getRow(OrderItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgir")
+        default Map<String, InventoryItem> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainOrderItemShipGrpInvRes(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgir")
+        default Map<String, InventoryItem> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_SHIP_GRP_INV_RES);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("oisgir_inventory_item_id", String.class) != null) {
+                            p.getRelOrderItemShipGrpInvRes()
+                                    .add(rr.getRow(OrderItemShipGrpInvRes.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        default Map<String, InventoryItem> chainShipmentReceipt(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainShipmentReceipt(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        default Map<String, InventoryItem> chainShipmentReceipt(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_RECEIPT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("sr_inventory_item_id", String.class) != null) {
+                            p.getRelShipmentReceipt()
+                                    .add(rr.getRow(ShipmentReceipt.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, InventoryItem>> product(Dao dao, boolean succ) {
+        return e -> dao.chainProduct(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> product(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProduct(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> party(Dao dao, boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> party(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> ownerParty(Dao dao, boolean succ) {
+        return e -> dao.chainOwnerParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> ownerParty(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOwnerParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> productFacility(Dao dao, boolean succ) {
+        return e -> dao.chainProductFacility(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> productFacility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> facilityLocation(Dao dao, boolean succ) {
+        return e -> dao.chainFacilityLocation(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> facilityLocation(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFacilityLocation(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> productFacilityLocation(Dao dao, boolean succ) {
+        return e -> dao.chainProductFacilityLocation(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> productFacilityLocation(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductFacilityLocation(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> fixedAssetFixedAsset(Dao dao, boolean succ) {
+        return e -> dao.chainFixedAssetFixedAsset(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> fixedAssetFixedAsset(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFixedAssetFixedAsset(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> acctgTrans(Dao dao, boolean succ) {
+        return e -> dao.chainAcctgTrans(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> acctgTrans(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> acctgTransEntry(Dao dao, boolean succ) {
+        return e -> dao.chainAcctgTransEntry(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> acctgTransEntry(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAcctgTransEntry(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> inventoryItemDetail(Dao dao, boolean succ) {
+        return e -> dao.chainInventoryItemDetail(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> inventoryItemDetail(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainInventoryItemDetail(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> invoiceItem(Dao dao, boolean succ) {
+        return e -> dao.chainInvoiceItem(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> invoiceItem(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainInvoiceItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> itemIssuance(Dao dao, boolean succ) {
+        return e -> dao.chainItemIssuance(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> itemIssuance(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainItemIssuance(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> fromOrderItem(Dao dao, boolean succ) {
+        return e -> dao.chainFromOrderItem(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> fromOrderItem(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFromOrderItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> orderItemShipGrpInvRes(Dao dao, boolean succ) {
+        return e -> dao.chainOrderItemShipGrpInvRes(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> orderItemShipGrpInvRes(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderItemShipGrpInvRes(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, InventoryItem>> shipmentReceipt(Dao dao, boolean succ) {
+        return e -> dao.chainShipmentReceipt(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, InventoryItem>> shipmentReceipt(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public InventoryItem get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getInventoryItem(id);
@@ -250,6 +877,11 @@ public class InventoryItemDelegator extends AbstractProcs{
         InventoryItem rec = findOne(ctx, p, InventoryItem.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, InventoryItem rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String PRODUCT="product";

@@ -3,17 +3,16 @@ package com.bluecc.income.dao;
 import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.SqlMeta;
+import com.bluecc.hubs.fund.model.IModel;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
-import com.bluecc.income.dummy.store.ContactBean;
-import com.bluecc.income.dummy.store.PhoneBean;
-import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Party;
 import com.bluecc.income.model.PartyContactMech;
 import com.bluecc.income.model.Person;
-import com.bluecc.income.model.ProductStore;
 import com.github.javafaker.Faker;
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonObject;
 import com.google.protobuf.Message;
@@ -30,6 +29,8 @@ import org.junit.Test;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -231,11 +232,22 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
         default Map<String, Party> chainPerson(ProtoMeta protoMeta,
-                                                    Map<String, Party> inMap,
-                                                    boolean succInvoke) {
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainPerson(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        default Map<String, Party> chainPerson(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PartyDelegator.PERSON);
-            return getHandle().select(view.getSql())
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -251,12 +263,21 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
     Consumer<Map<String, Party>> contactMech(PrivatePartyDao dao, boolean succ) {
         return e -> dao.chainContactMech(protoMeta, e, succ);
     }
+
     Consumer<Map<String, Party>> person(PrivatePartyDao dao, boolean succ) {
         return e -> dao.chainPerson(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Party>> printParties(String key){
-        return e->{
+    Consumer<Map<String, Party>> person(PrivatePartyDao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPerson(protoMeta, e, whereClause, binds, succ);
+    }
+
+    Consumer<Map<String, Party>> printParties(String key) {
+        return e -> {
+
             assertNotNull(e.get(key));
             assertThat(e.get(key).getRelPerson())
                     .hasSize(1)
@@ -267,6 +288,8 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
             pretty(e.get(key));
             pretty(e.get(key).getRelPartyContactMech());
             pretty(e.get(key).getRelPerson());
+
+            System.out.println("total: " + e.size());
         };
     }
 
@@ -279,6 +302,78 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
                     .andThen(printParties("DemoCustomer"))
                     .accept(new HashMap<>());
         });
+    }
+
+    @Test
+    public void testChainInvokeWithDao() {
+        process(c -> {
+            PartyDelegator.Dao dao = c.getHandle().attach(PartyDelegator.Dao.class);
+            partyDelegator.partyContactMech(dao, false)
+                    .andThen(partyDelegator.person(dao, true))
+                    .andThen(printParties("DemoCustomer"))
+                    .accept(new HashMap<>());
+        });
+    }
+
+
+    Consumer<Map<String, Party>> checkParties(String key, int n) {
+        return e -> {
+            assertEquals(n, e.size());
+            assertNotNull(e.get(key));
+            assertThat(e.get(key).getRelPerson())
+                    .hasSize(1)
+                    .allMatch(p -> p.getPartyId().equals(key));
+            pretty(e.get(key));
+            pretty(e.get(key).getRelPerson());
+
+            for (Party p : e.values()) {
+                System.out.println(p);
+            }
+            System.out.println("total: " + e.size());
+        };
+    }
+
+
+    @Test
+    public void testChainInvokeWithCondition() {
+        process(c -> {
+            PrivatePartyDao dao = c.getHandle().attach(PrivatePartyDao.class);
+            person(dao, "where pe.last_name=:name and pa.status_id=:status",
+                    ImmutableMap.of("name", "Customer",
+                            "status", "PARTY_ENABLED"),
+                    false)
+                    .andThen(checkParties("DemoCustomer", 3))
+                    .accept(new HashMap<>());
+        });
+    }
+
+    @Test
+    public void testChainInvokeWithConditionAndDao() {
+        process(c -> {
+            PartyDelegator.Dao dao = c.getHandle().attach(PartyDelegator.Dao.class);
+            partyDelegator.person(dao, "where pe.last_name=:name" +
+                                    " and pa.status_id=:status",
+                    ImmutableMap.of("name", "Customer",
+                            "status", "PARTY_ENABLED"),
+                    false)
+                    .andThen(checkParties("DemoCustomer", 3))
+                    .accept(new HashMap<>());
+        });
+    }
+
+    @Test
+    public void testCompletableFuture() throws ExecutionException, InterruptedException {
+        // CompletableFuture
+        CompletableFuture<List<IModel<?>>> result = process(c -> {
+            PrivatePartyDao dao = c.getHandle().attach(PrivatePartyDao.class);
+            contactMech(dao, false)
+                    .andThen(person(dao, true))
+                    .andThen(e -> e.values().forEach(v -> c.getSubscriber().onNext(v)))
+                    .accept(new HashMap<>());
+            c.getSubscriber().onComplete();
+        }).collectList().toFuture();
+        System.out.println(result.get().size());
+        assertThat(result.get()).hasOnlyElementsOfType(Party.class);
     }
 
     @Test

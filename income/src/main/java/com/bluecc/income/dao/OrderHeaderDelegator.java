@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class OrderHeaderDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(OrderHeader.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from order_header")
         List<OrderHeader> listOrderHeader();
         @SqlQuery("select * from order_header where order_id=:id")
@@ -38,7 +45,791 @@ public class OrderHeaderDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from order_header")
         int countOrderHeader();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
+        default Map<String, OrderHeader> chainBillingAccount(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainBillingAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
+        default Map<String, OrderHeader> chainBillingAccount(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(BILLING_ACCOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("ba_billing_account_id", String.class) != null) {
+                            p.getRelBillingAccount()
+                                    .add(rr.getRow(BillingAccount.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        default Map<String, OrderHeader> chainProductStore(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        default Map<String, OrderHeader> chainProductStore(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("ps_product_store_id", String.class) != null) {
+                            p.getRelProductStore()
+                                    .add(rr.getRow(ProductStore.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbul")
+        default Map<String, OrderHeader> chainCreatedByUserLogin(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainCreatedByUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbul")
+        default Map<String, OrderHeader> chainCreatedByUserLogin(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_USER_LOGIN);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("cbul_user_login_id", String.class) != null) {
+                            p.getRelCreatedByUserLogin()
+                                    .add(rr.getRow(UserLogin.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        default Map<String, OrderHeader> chainWebSite(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainWebSite(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        default Map<String, OrderHeader> chainWebSite(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(WEB_SITE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("ws_web_site_id", String.class) != null) {
+                            p.getRelWebSite()
+                                    .add(rr.getRow(WebSite.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "afa")
+        default Map<String, OrderHeader> chainAcquireFixedAsset(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainAcquireFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "afa")
+        default Map<String, OrderHeader> chainAcquireFixedAsset(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACQUIRE_FIXED_ASSET);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("afa_acquire_order_id", String.class) != null) {
+                            p.getRelAcquireFixedAsset()
+                                    .add(rr.getRow(FixedAsset.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        default Map<String, OrderHeader> chainItemIssuance(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainItemIssuance(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        default Map<String, OrderHeader> chainItemIssuance(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ITEM_ISSUANCE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("ii_order_id", String.class) != null) {
+                            p.getRelItemIssuance()
+                                    .add(rr.getRow(ItemIssuance.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oa")
+        default Map<String, OrderHeader> chainOrderAdjustment(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderAdjustment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oa")
+        default Map<String, OrderHeader> chainOrderAdjustment(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ADJUSTMENT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("oa_order_id", String.class) != null) {
+                            p.getRelOrderAdjustment()
+                                    .add(rr.getRow(OrderAdjustment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderContactMech.class, prefix = "ocm")
+        default Map<String, OrderHeader> chainOrderContactMech(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderContactMech.class, prefix = "ocm")
+        default Map<String, OrderHeader> chainOrderContactMech(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_CONTACT_MECH);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("ocm_order_id", String.class) != null) {
+                            p.getRelOrderContactMech()
+                                    .add(rr.getRow(OrderContactMech.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        default Map<String, OrderHeader> chainOrderItem(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        default Map<String, OrderHeader> chainOrderItem(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("oi_order_id", String.class) != null) {
+                            p.getRelOrderItem()
+                                    .add(rr.getRow(OrderItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemBilling.class, prefix = "oib")
+        default Map<String, OrderHeader> chainOrderItemBilling(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderItemBilling(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemBilling.class, prefix = "oib")
+        default Map<String, OrderHeader> chainOrderItemBilling(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_BILLING);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("oib_order_id", String.class) != null) {
+                            p.getRelOrderItemBilling()
+                                    .add(rr.getRow(OrderItemBilling.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemPriceInfo.class, prefix = "oipi")
+        default Map<String, OrderHeader> chainOrderItemPriceInfo(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderItemPriceInfo(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemPriceInfo.class, prefix = "oipi")
+        default Map<String, OrderHeader> chainOrderItemPriceInfo(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_PRICE_INFO);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("oipi_order_id", String.class) != null) {
+                            p.getRelOrderItemPriceInfo()
+                                    .add(rr.getRow(OrderItemPriceInfo.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "oisg")
+        default Map<String, OrderHeader> chainOrderItemShipGroup(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderItemShipGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "oisg")
+        default Map<String, OrderHeader> chainOrderItemShipGroup(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_SHIP_GROUP);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("oisg_order_id", String.class) != null) {
+                            p.getRelOrderItemShipGroup()
+                                    .add(rr.getRow(OrderItemShipGroup.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemShipGroupAssoc.class, prefix = "oisga")
+        default Map<String, OrderHeader> chainOrderItemShipGroupAssoc(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderItemShipGroupAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemShipGroupAssoc.class, prefix = "oisga")
+        default Map<String, OrderHeader> chainOrderItemShipGroupAssoc(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_SHIP_GROUP_ASSOC);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("oisga_order_id", String.class) != null) {
+                            p.getRelOrderItemShipGroupAssoc()
+                                    .add(rr.getRow(OrderItemShipGroupAssoc.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgir")
+        default Map<String, OrderHeader> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderItemShipGrpInvRes(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgir")
+        default Map<String, OrderHeader> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_SHIP_GRP_INV_RES);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("oisgir_order_id", String.class) != null) {
+                            p.getRelOrderItemShipGrpInvRes()
+                                    .add(rr.getRow(OrderItemShipGrpInvRes.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        default Map<String, OrderHeader> chainOrderPaymentPreference(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderPaymentPreference(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        default Map<String, OrderHeader> chainOrderPaymentPreference(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_PAYMENT_PREFERENCE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("opp_order_id", String.class) != null) {
+                            p.getRelOrderPaymentPreference()
+                                    .add(rr.getRow(OrderPaymentPreference.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderRole.class, prefix = "or")
+        default Map<String, OrderHeader> chainOrderRole(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderRole.class, prefix = "or")
+        default Map<String, OrderHeader> chainOrderRole(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("or_order_id", String.class) != null) {
+                            p.getRelOrderRole()
+                                    .add(rr.getRow(OrderRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderStatus.class, prefix = "os")
+        default Map<String, OrderHeader> chainOrderStatus(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOrderStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderStatus.class, prefix = "os")
+        default Map<String, OrderHeader> chainOrderStatus(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_STATUS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("os_order_id", String.class) != null) {
+                            p.getRelOrderStatus()
+                                    .add(rr.getRow(OrderStatus.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "ps")
+        default Map<String, OrderHeader> chainPrimaryShipment(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainPrimaryShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "ps")
+        default Map<String, OrderHeader> chainPrimaryShipment(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRIMARY_SHIPMENT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("ps_primary_order_id", String.class) != null) {
+                            p.getRelPrimaryShipment()
+                                    .add(rr.getRow(Shipment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        default Map<String, OrderHeader> chainShipmentReceipt(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainShipmentReceipt(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        default Map<String, OrderHeader> chainShipmentReceipt(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_RECEIPT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("sr_order_id", String.class) != null) {
+                            p.getRelShipmentReceipt()
+                                    .add(rr.getRow(ShipmentReceipt.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, OrderHeader>> billingAccount(Dao dao, boolean succ) {
+        return e -> dao.chainBillingAccount(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> billingAccount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainBillingAccount(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> productStore(Dao dao, boolean succ) {
+        return e -> dao.chainProductStore(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> productStore(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> createdByUserLogin(Dao dao, boolean succ) {
+        return e -> dao.chainCreatedByUserLogin(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> createdByUserLogin(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainCreatedByUserLogin(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> webSite(Dao dao, boolean succ) {
+        return e -> dao.chainWebSite(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> webSite(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainWebSite(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> acquireFixedAsset(Dao dao, boolean succ) {
+        return e -> dao.chainAcquireFixedAsset(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> acquireFixedAsset(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAcquireFixedAsset(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> itemIssuance(Dao dao, boolean succ) {
+        return e -> dao.chainItemIssuance(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> itemIssuance(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainItemIssuance(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderAdjustment(Dao dao, boolean succ) {
+        return e -> dao.chainOrderAdjustment(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderAdjustment(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderAdjustment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderContactMech(Dao dao, boolean succ) {
+        return e -> dao.chainOrderContactMech(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderContactMech(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderContactMech(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderItem(Dao dao, boolean succ) {
+        return e -> dao.chainOrderItem(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderItem(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderItemBilling(Dao dao, boolean succ) {
+        return e -> dao.chainOrderItemBilling(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderItemBilling(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderItemBilling(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderItemPriceInfo(Dao dao, boolean succ) {
+        return e -> dao.chainOrderItemPriceInfo(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderItemPriceInfo(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderItemPriceInfo(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderItemShipGroup(Dao dao, boolean succ) {
+        return e -> dao.chainOrderItemShipGroup(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderItemShipGroup(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderItemShipGroup(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderItemShipGroupAssoc(Dao dao, boolean succ) {
+        return e -> dao.chainOrderItemShipGroupAssoc(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderItemShipGroupAssoc(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderItemShipGroupAssoc(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderItemShipGrpInvRes(Dao dao, boolean succ) {
+        return e -> dao.chainOrderItemShipGrpInvRes(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderItemShipGrpInvRes(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderItemShipGrpInvRes(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderPaymentPreference(Dao dao, boolean succ) {
+        return e -> dao.chainOrderPaymentPreference(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderPaymentPreference(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderPaymentPreference(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderRole(Dao dao, boolean succ) {
+        return e -> dao.chainOrderRole(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> orderStatus(Dao dao, boolean succ) {
+        return e -> dao.chainOrderStatus(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> orderStatus(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderStatus(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> primaryShipment(Dao dao, boolean succ) {
+        return e -> dao.chainPrimaryShipment(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> primaryShipment(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPrimaryShipment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, OrderHeader>> shipmentReceipt(Dao dao, boolean succ) {
+        return e -> dao.chainShipmentReceipt(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, OrderHeader>> shipmentReceipt(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public OrderHeader get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getOrderHeader(id);
@@ -294,6 +1085,11 @@ public class OrderHeaderDelegator extends AbstractProcs{
         OrderHeader rec = findOne(ctx, p, OrderHeader.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, OrderHeader rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String BILLING_ACCOUNT="billing_account";

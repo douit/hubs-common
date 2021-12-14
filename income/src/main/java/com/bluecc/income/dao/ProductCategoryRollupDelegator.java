@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(ProductCategoryRollup.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from product_category_rollup")
         List<ProductCategoryRollup> listProductCategoryRollup();
         @SqlQuery("select * from product_category_rollup where id=:id")
@@ -38,7 +45,217 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from product_category_rollup")
         int countProductCategoryRollup();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "cpc")
+        default Map<String, ProductCategoryRollup> chainCurrentProductCategory(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               boolean succInvoke) {
+            return chainCurrentProductCategory(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "cpc")
+        default Map<String, ProductCategoryRollup> chainCurrentProductCategory(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CURRENT_PRODUCT_CATEGORY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
+                                id -> rr.getRow(ProductCategoryRollup.class));
+                        if (rr.getColumn("cpc_product_category_id", String.class) != null) {
+                            p.getRelCurrentProductCategory()
+                                    .add(rr.getRow(ProductCategory.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "ppc")
+        default Map<String, ProductCategoryRollup> chainParentProductCategory(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               boolean succInvoke) {
+            return chainParentProductCategory(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "ppc")
+        default Map<String, ProductCategoryRollup> chainParentProductCategory(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARENT_PRODUCT_CATEGORY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
+                                id -> rr.getRow(ProductCategoryRollup.class));
+                        if (rr.getColumn("ppc_product_category_id", String.class) != null) {
+                            p.getRelParentProductCategory()
+                                    .add(rr.getRow(ProductCategory.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "cpcr")
+        default Map<String, ProductCategoryRollup> chainChildProductCategoryRollup(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               boolean succInvoke) {
+            return chainChildProductCategoryRollup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "cpcr")
+        default Map<String, ProductCategoryRollup> chainChildProductCategoryRollup(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHILD_PRODUCT_CATEGORY_ROLLUP);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
+                                id -> rr.getRow(ProductCategoryRollup.class));
+                        if (rr.getColumn("cpcr_parent_product_category_id", String.class) != null) {
+                            p.getRelChildProductCategoryRollup()
+                                    .add(rr.getRow(ProductCategoryRollup.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "ppcr")
+        default Map<String, ProductCategoryRollup> chainParentProductCategoryRollup(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               boolean succInvoke) {
+            return chainParentProductCategoryRollup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "ppcr")
+        default Map<String, ProductCategoryRollup> chainParentProductCategoryRollup(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARENT_PRODUCT_CATEGORY_ROLLUP);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
+                                id -> rr.getRow(ProductCategoryRollup.class));
+                        if (rr.getColumn("ppcr_product_category_id", String.class) != null) {
+                            p.getRelParentProductCategoryRollup()
+                                    .add(rr.getRow(ProductCategoryRollup.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "spcr")
+        default Map<String, ProductCategoryRollup> chainSiblingProductCategoryRollup(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               boolean succInvoke) {
+            return chainSiblingProductCategoryRollup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "spcr")
+        default Map<String, ProductCategoryRollup> chainSiblingProductCategoryRollup(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SIBLING_PRODUCT_CATEGORY_ROLLUP);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
+                                id -> rr.getRow(ProductCategoryRollup.class));
+                        if (rr.getColumn("spcr_parent_product_category_id", String.class) != null) {
+                            p.getRelSiblingProductCategoryRollup()
+                                    .add(rr.getRow(ProductCategoryRollup.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, ProductCategoryRollup>> currentProductCategory(Dao dao, boolean succ) {
+        return e -> dao.chainCurrentProductCategory(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductCategoryRollup>> currentProductCategory(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainCurrentProductCategory(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductCategoryRollup>> parentProductCategory(Dao dao, boolean succ) {
+        return e -> dao.chainParentProductCategory(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductCategoryRollup>> parentProductCategory(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParentProductCategory(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductCategoryRollup>> childProductCategoryRollup(Dao dao, boolean succ) {
+        return e -> dao.chainChildProductCategoryRollup(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductCategoryRollup>> childProductCategoryRollup(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainChildProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductCategoryRollup>> parentProductCategoryRollup(Dao dao, boolean succ) {
+        return e -> dao.chainParentProductCategoryRollup(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductCategoryRollup>> parentProductCategoryRollup(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParentProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductCategoryRollup>> siblingProductCategoryRollup(Dao dao, boolean succ) {
+        return e -> dao.chainSiblingProductCategoryRollup(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductCategoryRollup>> siblingProductCategoryRollup(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainSiblingProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public ProductCategoryRollup get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProductCategoryRollup(id);
@@ -140,6 +357,11 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         ProductCategoryRollup rec = findOne(ctx, p, ProductCategoryRollup.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, ProductCategoryRollup rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String CURRENT_PRODUCT_CATEGORY="current_product_category";

@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * $ just gen GenProfile proto
+ * $ just gen GenProfile heads
  */
 public class GenProfile {
     @Data
@@ -21,7 +22,7 @@ public class GenProfile {
         @Parameter(names = {"--silent", "-s"})
         boolean silent;
         @Parameter
-        public List<String> profiles = Lists.newArrayList("livecases");
+        public List<String> profiles = Lists.newArrayList("info");
     }
 
     public static void main(String[] args) throws IOException {
@@ -38,6 +39,12 @@ public class GenProfile {
                     break;
                 case "proto":
                     ProtoTool.startGen(new ProtoTool.ProtoGenOpts(null, true));
+                    break;
+                case "heads":
+                    GenHeadEntities.startGen();
+                    break;
+                case "info":
+                    System.out.println("available profiles: livecases, proto, heads");
                     break;
                 default:
                     System.out.println("Cannot execute profile "+profile);

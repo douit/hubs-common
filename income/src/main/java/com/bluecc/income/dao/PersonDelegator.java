@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class PersonDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(Person.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from person")
         List<Person> listPerson();
         @SqlQuery("select * from person where party_id=:id")
@@ -38,7 +45,340 @@ public class PersonDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from person")
         int countPerson();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, Person> chainParty(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, Person> chainParty(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                            p.getRelParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
+        default Map<String, Person> chainPartyContactMech(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainPartyContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
+        default Map<String, Person> chainPartyContactMech(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("pcm_party_id", String.class) != null) {
+                            p.getRelPartyContactMech()
+                                    .add(rr.getRow(PartyContactMech.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmp")
+        default Map<String, Person> chainPartyContactMechPurpose(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainPartyContactMechPurpose(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmp")
+        default Map<String, Person> chainPartyContactMechPurpose(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH_PURPOSE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("pcmp_party_id", String.class) != null) {
+                            p.getRelPartyContactMechPurpose()
+                                    .add(rr.getRow(PartyContactMechPurpose.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        default Map<String, Person> chainProductStoreRole(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        default Map<String, Person> chainProductStoreRole(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("psr_party_id", String.class) != null) {
+                            p.getRelProductStoreRole()
+                                    .add(rr.getRow(ProductStoreRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "ts")
+        default Map<String, Person> chainToShipment(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainToShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "ts")
+        default Map<String, Person> chainToShipment(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_SHIPMENT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("ts_party_id_to", String.class) != null) {
+                            p.getRelToShipment()
+                                    .add(rr.getRow(Shipment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "fs")
+        default Map<String, Person> chainFromShipment(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainFromShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "fs")
+        default Map<String, Person> chainFromShipment(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_SHIPMENT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("fs_party_id_from", String.class) != null) {
+                            p.getRelFromShipment()
+                                    .add(rr.getRow(Shipment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrs")
+        default Map<String, Person> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainCarrierShipmentRouteSegment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrs")
+        default Map<String, Person> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CARRIER_SHIPMENT_ROUTE_SEGMENT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("csrs_carrier_party_id", String.class) != null) {
+                            p.getRelCarrierShipmentRouteSegment()
+                                    .add(rr.getRow(ShipmentRouteSegment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        default Map<String, Person> chainUserLogin(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        default Map<String, Person> chainUserLogin(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(USER_LOGIN);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("ul_party_id", String.class) != null) {
+                            p.getRelUserLogin()
+                                    .add(rr.getRow(UserLogin.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, Person>> party(Dao dao, boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Person>> party(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Person>> partyContactMech(Dao dao, boolean succ) {
+        return e -> dao.chainPartyContactMech(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Person>> partyContactMech(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPartyContactMech(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Person>> partyContactMechPurpose(Dao dao, boolean succ) {
+        return e -> dao.chainPartyContactMechPurpose(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Person>> partyContactMechPurpose(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPartyContactMechPurpose(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Person>> productStoreRole(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreRole(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Person>> productStoreRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Person>> toShipment(Dao dao, boolean succ) {
+        return e -> dao.chainToShipment(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Person>> toShipment(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainToShipment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Person>> fromShipment(Dao dao, boolean succ) {
+        return e -> dao.chainFromShipment(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Person>> fromShipment(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFromShipment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Person>> carrierShipmentRouteSegment(Dao dao, boolean succ) {
+        return e -> dao.chainCarrierShipmentRouteSegment(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Person>> carrierShipmentRouteSegment(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainCarrierShipmentRouteSegment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Person>> userLogin(Dao dao, boolean succ) {
+        return e -> dao.chainUserLogin(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Person>> userLogin(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainUserLogin(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public Person get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getPerson(id);
@@ -173,6 +513,11 @@ public class PersonDelegator extends AbstractProcs{
         Person rec = findOne(ctx, p, Person.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, Person rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String PARTY="party";

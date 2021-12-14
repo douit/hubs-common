@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class ProductStoreDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(ProductStore.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from product_store")
         List<ProductStore> listProductStore();
         @SqlQuery("select * from product_store where product_store_id=:id")
@@ -38,7 +45,750 @@ public class ProductStoreDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from product_store")
         int countProductStore();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, ProductStore> chainParty(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, ProductStore> chainParty(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                            p.getRelParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "vta")
+        default Map<String, ProductStore> chainVatTaxAuthority(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainVatTaxAuthority(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "vta")
+        default Map<String, ProductStore> chainVatTaxAuthority(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(VAT_TAX_AUTHORITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("vta_tax_auth_geo_id", String.class) != null) {
+                            p.getRelVatTaxAuthority()
+                                    .add(rr.getRow(TaxAuthority.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = CustRequest.class, prefix = "cr")
+        default Map<String, ProductStore> chainCustRequest(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainCustRequest(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = CustRequest.class, prefix = "cr")
+        default Map<String, ProductStore> chainCustRequest(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CUST_REQUEST);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("cr_product_store_id", String.class) != null) {
+                            p.getRelCustRequest()
+                                    .add(rr.getRow(CustRequest.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ec")
+        default Map<String, ProductStore> chainEbayConfig(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainEbayConfig(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ec")
+        default Map<String, ProductStore> chainEbayConfig(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(EBAY_CONFIG);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("ec_product_store_id", String.class) != null) {
+                            p.getRelEbayConfig()
+                                    .add(rr.getRow(EbayConfig.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        default Map<String, ProductStore> chainOrderHeader(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainOrderHeader(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        default Map<String, ProductStore> chainOrderHeader(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_HEADER);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("oh_product_store_id", String.class) != null) {
+                            p.getRelOrderHeader()
+                                    .add(rr.getRow(OrderHeader.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductReview.class, prefix = "pr")
+        default Map<String, ProductStore> chainProductReview(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductReview(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductReview.class, prefix = "pr")
+        default Map<String, ProductStore> chainProductReview(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_REVIEW);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("pr_product_store_id", String.class) != null) {
+                            p.getRelProductReview()
+                                    .add(rr.getRow(ProductReview.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "psc")
+        default Map<String, ProductStore> chainProductStoreCatalog(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreCatalog(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "psc")
+        default Map<String, ProductStore> chainProductStoreCatalog(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_CATALOG);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("psc_product_store_id", String.class) != null) {
+                            p.getRelProductStoreCatalog()
+                                    .add(rr.getRow(ProductStoreCatalog.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreEmailSetting.class, prefix = "pses")
+        default Map<String, ProductStore> chainProductStoreEmailSetting(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreEmailSetting(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreEmailSetting.class, prefix = "pses")
+        default Map<String, ProductStore> chainProductStoreEmailSetting(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_EMAIL_SETTING);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("pses_product_store_id", String.class) != null) {
+                            p.getRelProductStoreEmailSetting()
+                                    .add(rr.getRow(ProductStoreEmailSetting.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        default Map<String, ProductStore> chainProductStoreFacility(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        default Map<String, ProductStore> chainProductStoreFacility(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("psf_product_store_id", String.class) != null) {
+                            p.getRelProductStoreFacility()
+                                    .add(rr.getRow(ProductStoreFacility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreFinActSetting.class, prefix = "psfas")
+        default Map<String, ProductStore> chainProductStoreFinActSetting(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreFinActSetting(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreFinActSetting.class, prefix = "psfas")
+        default Map<String, ProductStore> chainProductStoreFinActSetting(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_FIN_ACT_SETTING);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("psfas_product_store_id", String.class) != null) {
+                            p.getRelProductStoreFinActSetting()
+                                    .add(rr.getRow(ProductStoreFinActSetting.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreKeywordOvrd.class, prefix = "psko")
+        default Map<String, ProductStore> chainProductStoreKeywordOvrd(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreKeywordOvrd(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreKeywordOvrd.class, prefix = "psko")
+        default Map<String, ProductStore> chainProductStoreKeywordOvrd(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_KEYWORD_OVRD);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("psko_product_store_id", String.class) != null) {
+                            p.getRelProductStoreKeywordOvrd()
+                                    .add(rr.getRow(ProductStoreKeywordOvrd.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStorePaymentSetting.class, prefix = "psps")
+        default Map<String, ProductStore> chainProductStorePaymentSetting(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStorePaymentSetting(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStorePaymentSetting.class, prefix = "psps")
+        default Map<String, ProductStore> chainProductStorePaymentSetting(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_PAYMENT_SETTING);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("psps_product_store_id", String.class) != null) {
+                            p.getRelProductStorePaymentSetting()
+                                    .add(rr.getRow(ProductStorePaymentSetting.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStorePromoAppl.class, prefix = "pspa")
+        default Map<String, ProductStore> chainProductStorePromoAppl(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStorePromoAppl(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStorePromoAppl.class, prefix = "pspa")
+        default Map<String, ProductStore> chainProductStorePromoAppl(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_PROMO_APPL);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("pspa_product_store_id", String.class) != null) {
+                            p.getRelProductStorePromoAppl()
+                                    .add(rr.getRow(ProductStorePromoAppl.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        default Map<String, ProductStore> chainProductStoreRole(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        default Map<String, ProductStore> chainProductStoreRole(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("psr_product_store_id", String.class) != null) {
+                            p.getRelProductStoreRole()
+                                    .add(rr.getRow(ProductStoreRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreSurveyAppl.class, prefix = "pssa")
+        default Map<String, ProductStore> chainProductStoreSurveyAppl(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreSurveyAppl(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStoreSurveyAppl.class, prefix = "pssa")
+        default Map<String, ProductStore> chainProductStoreSurveyAppl(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_SURVEY_APPL);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("pssa_product_store_id", String.class) != null) {
+                            p.getRelProductStoreSurveyAppl()
+                                    .add(rr.getRow(ProductStoreSurveyAppl.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        default Map<String, ProductStore> chainQuote(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainQuote(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        default Map<String, ProductStore> chainQuote(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("qu_product_store_id", String.class) != null) {
+                            p.getRelQuote()
+                                    .add(rr.getRow(Quote.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = TaxAuthorityRateProduct.class, prefix = "tarp")
+        default Map<String, ProductStore> chainTaxAuthorityRateProduct(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainTaxAuthorityRateProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = TaxAuthorityRateProduct.class, prefix = "tarp")
+        default Map<String, ProductStore> chainTaxAuthorityRateProduct(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TAX_AUTHORITY_RATE_PRODUCT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("tarp_product_store_id", String.class) != null) {
+                            p.getRelTaxAuthorityRateProduct()
+                                    .add(rr.getRow(TaxAuthorityRateProduct.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        default Map<String, ProductStore> chainWebSite(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainWebSite(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        default Map<String, ProductStore> chainWebSite(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(WEB_SITE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("ws_product_store_id", String.class) != null) {
+                            p.getRelWebSite()
+                                    .add(rr.getRow(WebSite.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, ProductStore>> party(Dao dao, boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> party(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> vatTaxAuthority(Dao dao, boolean succ) {
+        return e -> dao.chainVatTaxAuthority(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> vatTaxAuthority(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainVatTaxAuthority(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> custRequest(Dao dao, boolean succ) {
+        return e -> dao.chainCustRequest(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> custRequest(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainCustRequest(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> ebayConfig(Dao dao, boolean succ) {
+        return e -> dao.chainEbayConfig(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> ebayConfig(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainEbayConfig(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> orderHeader(Dao dao, boolean succ) {
+        return e -> dao.chainOrderHeader(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> orderHeader(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderHeader(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productReview(Dao dao, boolean succ) {
+        return e -> dao.chainProductReview(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productReview(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductReview(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStoreCatalog(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreCatalog(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStoreCatalog(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreCatalog(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStoreEmailSetting(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreEmailSetting(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStoreEmailSetting(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreEmailSetting(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStoreFacility(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreFacility(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStoreFacility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStoreFinActSetting(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreFinActSetting(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStoreFinActSetting(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreFinActSetting(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStoreKeywordOvrd(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreKeywordOvrd(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStoreKeywordOvrd(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreKeywordOvrd(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStorePaymentSetting(Dao dao, boolean succ) {
+        return e -> dao.chainProductStorePaymentSetting(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStorePaymentSetting(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStorePaymentSetting(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStorePromoAppl(Dao dao, boolean succ) {
+        return e -> dao.chainProductStorePromoAppl(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStorePromoAppl(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStorePromoAppl(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStoreRole(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreRole(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStoreRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> productStoreSurveyAppl(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreSurveyAppl(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> productStoreSurveyAppl(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreSurveyAppl(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> quote(Dao dao, boolean succ) {
+        return e -> dao.chainQuote(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> quote(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainQuote(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> taxAuthorityRateProduct(Dao dao, boolean succ) {
+        return e -> dao.chainTaxAuthorityRateProduct(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> taxAuthorityRateProduct(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTaxAuthorityRateProduct(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProductStore>> webSite(Dao dao, boolean succ) {
+        return e -> dao.chainWebSite(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStore>> webSite(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainWebSite(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public ProductStore get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProductStore(id);
@@ -287,6 +1037,7 @@ public class ProductStoreDelegator extends AbstractProcs{
     public Agent getAgent(IProc.ProcContext ctx, ProductStore rec) {
         return new Agent(ctx, rec);
     }
+    
 
          
     public static final String PARTY="party";

@@ -108,11 +108,16 @@ public class EntityMeta {
 
     public String getPrefix(){
         String constName=getUnderscore();
+        String prefix = prefix(constName);
+        return prefix;
+    }
+
+    public static String prefix(String constName) {
         String prefix= Arrays.stream(constName.split("_"))
                 .map(s -> s.substring(0, 1))
                 .collect(Collectors.joining());
         if(prefix.length()==1){
-            return constName.substring(0,2);
+            prefix= constName.substring(0,2);
         }
         return prefix;
     }
@@ -604,6 +609,10 @@ public class EntityMeta {
         public String getProtoName(){
             return Util.toSnakecase(name);
         }
+        public String getPrefix(){
+            return prefix(getProtoName());
+        }
+
         public String getVarName(){
             return Util.toVarName(name);
         }
@@ -629,6 +638,14 @@ public class EntityMeta {
 
         public String getMainRelField(){
             return keymaps.get(0).fieldName;
+        }
+        public String getMainTargetField(){
+            return keymaps.get(0).relFieldName;
+        }
+
+        public String getMainTargetCol(){
+            return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE,
+                    keymaps.get(0).relFieldName);
         }
 
         public String getRelFields(){

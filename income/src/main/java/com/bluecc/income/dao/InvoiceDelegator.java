@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class InvoiceDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(Invoice.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from invoice")
         List<Invoice> listInvoice();
         @SqlQuery("select * from invoice where invoice_id=:id")
@@ -38,7 +45,586 @@ public class InvoiceDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from invoice")
         int countInvoice();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = Party.class, prefix = "fp")
+        default Map<String, Invoice> chainFromParty(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainFromParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = Party.class, prefix = "fp")
+        default Map<String, Invoice> chainFromParty(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("fp_party_id", String.class) != null) {
+                            p.getRelFromParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, Invoice> chainParty(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, Invoice> chainParty(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                            p.getRelParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "pr")
+        default Map<String, Invoice> chainPartyRole(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainPartyRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "pr")
+        default Map<String, Invoice> chainPartyRole(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("pr_party_id", String.class) != null) {
+                            p.getRelPartyRole()
+                                    .add(rr.getRow(PartyRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
+        default Map<String, Invoice> chainBillingAccount(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainBillingAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
+        default Map<String, Invoice> chainBillingAccount(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(BILLING_ACCOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("ba_billing_account_id", String.class) != null) {
+                            p.getRelBillingAccount()
+                                    .add(rr.getRow(BillingAccount.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = ContactMech.class, prefix = "cm")
+        default Map<String, Invoice> chainContactMech(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = ContactMech.class, prefix = "cm")
+        default Map<String, Invoice> chainContactMech(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CONTACT_MECH);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("cm_contact_mech_id", String.class) != null) {
+                            p.getRelContactMech()
+                                    .add(rr.getRow(ContactMech.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = RecurrenceInfo.class, prefix = "ri")
+        default Map<String, Invoice> chainRecurrenceInfo(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainRecurrenceInfo(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = RecurrenceInfo.class, prefix = "ri")
+        default Map<String, Invoice> chainRecurrenceInfo(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RECURRENCE_INFO);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("ri_recurrence_info_id", String.class) != null) {
+                            p.getRelRecurrenceInfo()
+                                    .add(rr.getRow(RecurrenceInfo.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        default Map<String, Invoice> chainAcctgTrans(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        default Map<String, Invoice> chainAcctgTrans(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("at_invoice_id", String.class) != null) {
+                            p.getRelAcctgTrans()
+                                    .add(rr.getRow(AcctgTrans.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        default Map<String, Invoice> chainInvoiceItem(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainInvoiceItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        default Map<String, Invoice> chainInvoiceItem(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE_ITEM);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("ii_invoice_id", String.class) != null) {
+                            p.getRelInvoiceItem()
+                                    .add(rr.getRow(InvoiceItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = InvoiceRole.class, prefix = "ir")
+        default Map<String, Invoice> chainInvoiceRole(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainInvoiceRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = InvoiceRole.class, prefix = "ir")
+        default Map<String, Invoice> chainInvoiceRole(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("ir_invoice_id", String.class) != null) {
+                            p.getRelInvoiceRole()
+                                    .add(rr.getRow(InvoiceRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = InvoiceStatus.class, prefix = "is")
+        default Map<String, Invoice> chainInvoiceStatus(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainInvoiceStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = InvoiceStatus.class, prefix = "is")
+        default Map<String, Invoice> chainInvoiceStatus(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE_STATUS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("is_invoice_id", String.class) != null) {
+                            p.getRelInvoiceStatus()
+                                    .add(rr.getRow(InvoiceStatus.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = OrderAdjustmentBilling.class, prefix = "oab")
+        default Map<String, Invoice> chainOrderAdjustmentBilling(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainOrderAdjustmentBilling(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = OrderAdjustmentBilling.class, prefix = "oab")
+        default Map<String, Invoice> chainOrderAdjustmentBilling(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ADJUSTMENT_BILLING);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("oab_invoice_id", String.class) != null) {
+                            p.getRelOrderAdjustmentBilling()
+                                    .add(rr.getRow(OrderAdjustmentBilling.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = OrderItemBilling.class, prefix = "oib")
+        default Map<String, Invoice> chainOrderItemBilling(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainOrderItemBilling(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = OrderItemBilling.class, prefix = "oib")
+        default Map<String, Invoice> chainOrderItemBilling(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_BILLING);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("oib_invoice_id", String.class) != null) {
+                            p.getRelOrderItemBilling()
+                                    .add(rr.getRow(OrderItemBilling.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "pa")
+        default Map<String, Invoice> chainPaymentApplication(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainPaymentApplication(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "pa")
+        default Map<String, Invoice> chainPaymentApplication(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_APPLICATION);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("pa_invoice_id", String.class) != null) {
+                            p.getRelPaymentApplication()
+                                    .add(rr.getRow(PaymentApplication.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = ShipmentItemBilling.class, prefix = "sib")
+        default Map<String, Invoice> chainShipmentItemBilling(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               boolean succInvoke) {
+            return chainShipmentItemBilling(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = ShipmentItemBilling.class, prefix = "sib")
+        default Map<String, Invoice> chainShipmentItemBilling(ProtoMeta protoMeta,
+                                               Map<String, Invoice> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Invoice", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_ITEM_BILLING);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Invoice p = map.computeIfAbsent(rr.getColumn("in_invoice_id", String.class),
+                                id -> rr.getRow(Invoice.class));
+                        if (rr.getColumn("sib_invoice_id", String.class) != null) {
+                            p.getRelShipmentItemBilling()
+                                    .add(rr.getRow(ShipmentItemBilling.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, Invoice>> fromParty(Dao dao, boolean succ) {
+        return e -> dao.chainFromParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> fromParty(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFromParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> party(Dao dao, boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> party(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> partyRole(Dao dao, boolean succ) {
+        return e -> dao.chainPartyRole(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> partyRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPartyRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> billingAccount(Dao dao, boolean succ) {
+        return e -> dao.chainBillingAccount(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> billingAccount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainBillingAccount(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> contactMech(Dao dao, boolean succ) {
+        return e -> dao.chainContactMech(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> contactMech(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainContactMech(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> recurrenceInfo(Dao dao, boolean succ) {
+        return e -> dao.chainRecurrenceInfo(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> recurrenceInfo(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainRecurrenceInfo(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> acctgTrans(Dao dao, boolean succ) {
+        return e -> dao.chainAcctgTrans(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> acctgTrans(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> invoiceItem(Dao dao, boolean succ) {
+        return e -> dao.chainInvoiceItem(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> invoiceItem(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainInvoiceItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> invoiceRole(Dao dao, boolean succ) {
+        return e -> dao.chainInvoiceRole(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> invoiceRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainInvoiceRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> invoiceStatus(Dao dao, boolean succ) {
+        return e -> dao.chainInvoiceStatus(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> invoiceStatus(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainInvoiceStatus(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> orderAdjustmentBilling(Dao dao, boolean succ) {
+        return e -> dao.chainOrderAdjustmentBilling(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> orderAdjustmentBilling(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderAdjustmentBilling(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> orderItemBilling(Dao dao, boolean succ) {
+        return e -> dao.chainOrderItemBilling(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> orderItemBilling(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderItemBilling(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> paymentApplication(Dao dao, boolean succ) {
+        return e -> dao.chainPaymentApplication(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> paymentApplication(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPaymentApplication(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Invoice>> shipmentItemBilling(Dao dao, boolean succ) {
+        return e -> dao.chainShipmentItemBilling(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Invoice>> shipmentItemBilling(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainShipmentItemBilling(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public Invoice get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getInvoice(id);
@@ -239,6 +825,11 @@ public class InvoiceDelegator extends AbstractProcs{
         Invoice rec = findOne(ctx, p, Invoice.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, Invoice rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String FROM_PARTY="from_party";

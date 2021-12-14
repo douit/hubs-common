@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class PaymentDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(Payment.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from payment")
         List<Payment> listPayment();
         @SqlQuery("select * from payment where payment_id=:id")
@@ -38,7 +45,463 @@ public class PaymentDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from payment")
         int countPayment();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
+        default Map<String, Payment> chainPaymentMethod(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainPaymentMethod(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
+        default Map<String, Payment> chainPaymentMethod(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_METHOD);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("pm_payment_method_id", String.class) != null) {
+                            p.getRelPaymentMethod()
+                                    .add(rr.getRow(PaymentMethod.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = CreditCard.class, prefix = "cc")
+        default Map<String, Payment> chainCreditCard(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainCreditCard(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = CreditCard.class, prefix = "cc")
+        default Map<String, Payment> chainCreditCard(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREDIT_CARD);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("cc_payment_method_id", String.class) != null) {
+                            p.getRelCreditCard()
+                                    .add(rr.getRow(CreditCard.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = EftAccount.class, prefix = "ea")
+        default Map<String, Payment> chainEftAccount(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainEftAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = EftAccount.class, prefix = "ea")
+        default Map<String, Payment> chainEftAccount(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(EFT_ACCOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("ea_payment_method_id", String.class) != null) {
+                            p.getRelEftAccount()
+                                    .add(rr.getRow(EftAccount.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        default Map<String, Payment> chainOrderPaymentPreference(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainOrderPaymentPreference(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        default Map<String, Payment> chainOrderPaymentPreference(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_PAYMENT_PREFERENCE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("opp_order_payment_preference_id", String.class) != null) {
+                            p.getRelOrderPaymentPreference()
+                                    .add(rr.getRow(OrderPaymentPreference.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentGatewayResponse.class, prefix = "pgr")
+        default Map<String, Payment> chainPaymentGatewayResponse(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainPaymentGatewayResponse(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentGatewayResponse.class, prefix = "pgr")
+        default Map<String, Payment> chainPaymentGatewayResponse(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_GATEWAY_RESPONSE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("pgr_payment_gateway_response_id", String.class) != null) {
+                            p.getRelPaymentGatewayResponse()
+                                    .add(rr.getRow(PaymentGatewayResponse.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "fp")
+        default Map<String, Payment> chainFromParty(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainFromParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "fp")
+        default Map<String, Payment> chainFromParty(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("fp_party_id", String.class) != null) {
+                            p.getRelFromParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "tp")
+        default Map<String, Payment> chainToParty(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainToParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "tp")
+        default Map<String, Payment> chainToParty(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("tp_party_id", String.class) != null) {
+                            p.getRelToParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "tpr")
+        default Map<String, Payment> chainToPartyRole(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainToPartyRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "tpr")
+        default Map<String, Payment> chainToPartyRole(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_PARTY_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("tpr_party_id", String.class) != null) {
+                            p.getRelToPartyRole()
+                                    .add(rr.getRow(PartyRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        default Map<String, Payment> chainAcctgTrans(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        default Map<String, Payment> chainAcctgTrans(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("at_payment_id", String.class) != null) {
+                            p.getRelAcctgTrans()
+                                    .add(rr.getRow(AcctgTrans.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "pa")
+        default Map<String, Payment> chainPaymentApplication(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainPaymentApplication(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "pa")
+        default Map<String, Payment> chainPaymentApplication(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_APPLICATION);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("pa_payment_id", String.class) != null) {
+                            p.getRelPaymentApplication()
+                                    .add(rr.getRow(PaymentApplication.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "tpa")
+        default Map<String, Payment> chainToPaymentApplication(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainToPaymentApplication(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "tpa")
+        default Map<String, Payment> chainToPaymentApplication(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_PAYMENT_APPLICATION);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("tpa_to_payment_id", String.class) != null) {
+                            p.getRelToPaymentApplication()
+                                    .add(rr.getRow(PaymentApplication.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, Payment>> paymentMethod(Dao dao, boolean succ) {
+        return e -> dao.chainPaymentMethod(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> paymentMethod(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPaymentMethod(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> creditCard(Dao dao, boolean succ) {
+        return e -> dao.chainCreditCard(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> creditCard(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainCreditCard(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> eftAccount(Dao dao, boolean succ) {
+        return e -> dao.chainEftAccount(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> eftAccount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainEftAccount(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> orderPaymentPreference(Dao dao, boolean succ) {
+        return e -> dao.chainOrderPaymentPreference(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> orderPaymentPreference(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderPaymentPreference(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> paymentGatewayResponse(Dao dao, boolean succ) {
+        return e -> dao.chainPaymentGatewayResponse(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> paymentGatewayResponse(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPaymentGatewayResponse(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> fromParty(Dao dao, boolean succ) {
+        return e -> dao.chainFromParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> fromParty(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFromParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> toParty(Dao dao, boolean succ) {
+        return e -> dao.chainToParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> toParty(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainToParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> toPartyRole(Dao dao, boolean succ) {
+        return e -> dao.chainToPartyRole(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> toPartyRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainToPartyRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> acctgTrans(Dao dao, boolean succ) {
+        return e -> dao.chainAcctgTrans(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> acctgTrans(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> paymentApplication(Dao dao, boolean succ) {
+        return e -> dao.chainPaymentApplication(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> paymentApplication(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPaymentApplication(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, Payment>> toPaymentApplication(Dao dao, boolean succ) {
+        return e -> dao.chainToPaymentApplication(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Payment>> toPaymentApplication(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainToPaymentApplication(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public Payment get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getPayment(id);
@@ -206,6 +669,11 @@ public class PaymentDelegator extends AbstractProcs{
         Payment rec = findOne(ctx, p, Payment.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, Payment rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String PAYMENT_METHOD="payment_method";

@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class WebSiteDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(WebSite.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from web_site")
         List<WebSite> listWebSite();
         @SqlQuery("select * from web_site where web_site_id=:id")
@@ -38,7 +45,258 @@ public class WebSiteDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from web_site")
         int countWebSite();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        default Map<String, WebSite> chainProductStore(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               boolean succInvoke) {
+            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        default Map<String, WebSite> chainProductStore(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
+                                id -> rr.getRow(WebSite.class));
+                        if (rr.getColumn("ps_product_store_id", String.class) != null) {
+                            p.getRelProductStore()
+                                    .add(rr.getRow(ProductStore.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ec")
+        default Map<String, WebSite> chainEbayConfig(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               boolean succInvoke) {
+            return chainEbayConfig(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ec")
+        default Map<String, WebSite> chainEbayConfig(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(EBAY_CONFIG);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
+                                id -> rr.getRow(WebSite.class));
+                        if (rr.getColumn("ec_web_site_id", String.class) != null) {
+                            p.getRelEbayConfig()
+                                    .add(rr.getRow(EbayConfig.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        default Map<String, WebSite> chainOrderHeader(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               boolean succInvoke) {
+            return chainOrderHeader(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        default Map<String, WebSite> chainOrderHeader(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_HEADER);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
+                                id -> rr.getRow(WebSite.class));
+                        if (rr.getColumn("oh_web_site_id", String.class) != null) {
+                            p.getRelOrderHeader()
+                                    .add(rr.getRow(OrderHeader.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = SubscriptionResource.class, prefix = "sr")
+        default Map<String, WebSite> chainSubscriptionResource(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               boolean succInvoke) {
+            return chainSubscriptionResource(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = SubscriptionResource.class, prefix = "sr")
+        default Map<String, WebSite> chainSubscriptionResource(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SUBSCRIPTION_RESOURCE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
+                                id -> rr.getRow(WebSite.class));
+                        if (rr.getColumn("sr_web_site_id", String.class) != null) {
+                            p.getRelSubscriptionResource()
+                                    .add(rr.getRow(SubscriptionResource.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = WebAnalyticsConfig.class, prefix = "wac")
+        default Map<String, WebSite> chainWebAnalyticsConfig(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               boolean succInvoke) {
+            return chainWebAnalyticsConfig(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = WebAnalyticsConfig.class, prefix = "wac")
+        default Map<String, WebSite> chainWebAnalyticsConfig(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(WEB_ANALYTICS_CONFIG);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
+                                id -> rr.getRow(WebSite.class));
+                        if (rr.getColumn("wac_web_site_id", String.class) != null) {
+                            p.getRelWebAnalyticsConfig()
+                                    .add(rr.getRow(WebAnalyticsConfig.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = WebSiteContent.class, prefix = "wsc")
+        default Map<String, WebSite> chainWebSiteContent(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               boolean succInvoke) {
+            return chainWebSiteContent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = WebSiteContent.class, prefix = "wsc")
+        default Map<String, WebSite> chainWebSiteContent(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(WEB_SITE_CONTENT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
+                                id -> rr.getRow(WebSite.class));
+                        if (rr.getColumn("wsc_web_site_id", String.class) != null) {
+                            p.getRelWebSiteContent()
+                                    .add(rr.getRow(WebSiteContent.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, WebSite>> productStore(Dao dao, boolean succ) {
+        return e -> dao.chainProductStore(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, WebSite>> productStore(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, WebSite>> ebayConfig(Dao dao, boolean succ) {
+        return e -> dao.chainEbayConfig(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, WebSite>> ebayConfig(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainEbayConfig(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, WebSite>> orderHeader(Dao dao, boolean succ) {
+        return e -> dao.chainOrderHeader(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, WebSite>> orderHeader(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderHeader(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, WebSite>> subscriptionResource(Dao dao, boolean succ) {
+        return e -> dao.chainSubscriptionResource(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, WebSite>> subscriptionResource(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainSubscriptionResource(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, WebSite>> webAnalyticsConfig(Dao dao, boolean succ) {
+        return e -> dao.chainWebAnalyticsConfig(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, WebSite>> webAnalyticsConfig(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainWebAnalyticsConfig(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, WebSite>> webSiteContent(Dao dao, boolean succ) {
+        return e -> dao.chainWebSiteContent(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, WebSite>> webSiteContent(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainWebSiteContent(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public WebSite get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getWebSite(id);
@@ -151,6 +409,11 @@ public class WebSiteDelegator extends AbstractProcs{
         WebSite rec = findOne(ctx, p, WebSite.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, WebSite rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String PRODUCT_STORE="product_store";

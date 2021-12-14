@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(ProductStoreFacility.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from product_store_facility")
         List<ProductStoreFacility> listProductStoreFacility();
         @SqlQuery("select * from product_store_facility where id=:id")
@@ -38,7 +45,53 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from product_store_facility")
         int countProductStoreFacility();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        default Map<String, ProductStoreFacility> chainProductStore(ProtoMeta protoMeta,
+                                               Map<String, ProductStoreFacility> inMap,
+                                               boolean succInvoke) {
+            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        default Map<String, ProductStoreFacility> chainProductStore(ProtoMeta protoMeta,
+                                               Map<String, ProductStoreFacility> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStoreFacility", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
+                                id -> rr.getRow(ProductStoreFacility.class));
+                        if (rr.getColumn("ps_product_store_id", String.class) != null) {
+                            p.getRelProductStore()
+                                    .add(rr.getRow(ProductStore.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, ProductStoreFacility>> productStore(Dao dao, boolean succ) {
+        return e -> dao.chainProductStore(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProductStoreFacility>> productStore(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public ProductStoreFacility get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProductStoreFacility(id);
@@ -96,6 +149,11 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
         ProductStoreFacility rec = findOne(ctx, p, ProductStoreFacility.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, ProductStoreFacility rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String PRODUCT_STORE="product_store";

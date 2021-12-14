@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class FixedAssetDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(FixedAsset.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from fixed_asset")
         List<FixedAsset> listFixedAsset();
         @SqlQuery("select * from fixed_asset where fixed_asset_id=:id")
@@ -38,7 +45,545 @@ public class FixedAssetDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from fixed_asset")
         int countFixedAsset();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "pfa")
+        default Map<String, FixedAsset> chainParentFixedAsset(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainParentFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "pfa")
+        default Map<String, FixedAsset> chainParentFixedAsset(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARENT_FIXED_ASSET);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("pfa_fixed_asset_id", String.class) != null) {
+                            p.getRelParentFixedAsset()
+                                    .add(rr.getRow(FixedAsset.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Product.class, prefix = "iop")
+        default Map<String, FixedAsset> chainInstanceOfProduct(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainInstanceOfProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Product.class, prefix = "iop")
+        default Map<String, FixedAsset> chainInstanceOfProduct(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(INSTANCE_OF_PRODUCT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("iop_product_id", String.class) != null) {
+                            p.getRelInstanceOfProduct()
+                                    .add(rr.getRow(Product.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, FixedAsset> chainParty(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        default Map<String, FixedAsset> chainParty(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                            p.getRelParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "pr")
+        default Map<String, FixedAsset> chainPartyRole(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainPartyRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "pr")
+        default Map<String, FixedAsset> chainPartyRole(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("pr_party_id", String.class) != null) {
+                            p.getRelPartyRole()
+                                    .add(rr.getRow(PartyRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "aoh")
+        default Map<String, FixedAsset> chainAcquireOrderHeader(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainAcquireOrderHeader(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "aoh")
+        default Map<String, FixedAsset> chainAcquireOrderHeader(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACQUIRE_ORDER_HEADER);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("aoh_order_id", String.class) != null) {
+                            p.getRelAcquireOrderHeader()
+                                    .add(rr.getRow(OrderHeader.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "aoi")
+        default Map<String, FixedAsset> chainAcquireOrderItem(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainAcquireOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "aoi")
+        default Map<String, FixedAsset> chainAcquireOrderItem(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACQUIRE_ORDER_ITEM);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("aoi_order_id", String.class) != null) {
+                            p.getRelAcquireOrderItem()
+                                    .add(rr.getRow(OrderItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "lafl")
+        default Map<String, FixedAsset> chainLocatedAtFacilityLocation(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainLocatedAtFacilityLocation(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "lafl")
+        default Map<String, FixedAsset> chainLocatedAtFacilityLocation(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(LOCATED_AT_FACILITY_LOCATION);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("lafl_facility_id", String.class) != null) {
+                            p.getRelLocatedAtFacilityLocation()
+                                    .add(rr.getRow(FacilityLocation.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        default Map<String, FixedAsset> chainAcctgTrans(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        default Map<String, FixedAsset> chainAcctgTrans(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("at_fixed_asset_id", String.class) != null) {
+                            p.getRelAcctgTrans()
+                                    .add(rr.getRow(AcctgTrans.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "cfa")
+        default Map<String, FixedAsset> chainChildFixedAsset(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainChildFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "cfa")
+        default Map<String, FixedAsset> chainChildFixedAsset(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHILD_FIXED_ASSET);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("cfa_parent_fixed_asset_id", String.class) != null) {
+                            p.getRelChildFixedAsset()
+                                    .add(rr.getRow(FixedAsset.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetGeoPoint.class, prefix = "fagp")
+        default Map<String, FixedAsset> chainFixedAssetGeoPoint(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainFixedAssetGeoPoint(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetGeoPoint.class, prefix = "fagp")
+        default Map<String, FixedAsset> chainFixedAssetGeoPoint(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_GEO_POINT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("fagp_fixed_asset_id", String.class) != null) {
+                            p.getRelFixedAssetGeoPoint()
+                                    .add(rr.getRow(FixedAssetGeoPoint.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetProduct.class, prefix = "fap")
+        default Map<String, FixedAsset> chainFixedAssetProduct(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainFixedAssetProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetProduct.class, prefix = "fap")
+        default Map<String, FixedAsset> chainFixedAssetProduct(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_PRODUCT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("fap_fixed_asset_id", String.class) != null) {
+                            p.getRelFixedAssetProduct()
+                                    .add(rr.getRow(FixedAssetProduct.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "faii")
+        default Map<String, FixedAsset> chainFixedAssetInventoryItem(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainFixedAssetInventoryItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "faii")
+        default Map<String, FixedAsset> chainFixedAssetInventoryItem(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_INVENTORY_ITEM);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("faii_fixed_asset_id", String.class) != null) {
+                            p.getRelFixedAssetInventoryItem()
+                                    .add(rr.getRow(InventoryItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
+        default Map<String, FixedAsset> chainWorkEffort(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainWorkEffort(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
+        default Map<String, FixedAsset> chainWorkEffort(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("we_fixed_asset_id", String.class) != null) {
+                            p.getRelWorkEffort()
+                                    .add(rr.getRow(WorkEffort.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, FixedAsset>> parentFixedAsset(Dao dao, boolean succ) {
+        return e -> dao.chainParentFixedAsset(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> parentFixedAsset(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParentFixedAsset(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> instanceOfProduct(Dao dao, boolean succ) {
+        return e -> dao.chainInstanceOfProduct(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> instanceOfProduct(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainInstanceOfProduct(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> party(Dao dao, boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> party(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> partyRole(Dao dao, boolean succ) {
+        return e -> dao.chainPartyRole(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> partyRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPartyRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> acquireOrderHeader(Dao dao, boolean succ) {
+        return e -> dao.chainAcquireOrderHeader(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> acquireOrderHeader(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAcquireOrderHeader(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> acquireOrderItem(Dao dao, boolean succ) {
+        return e -> dao.chainAcquireOrderItem(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> acquireOrderItem(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAcquireOrderItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> locatedAtFacilityLocation(Dao dao, boolean succ) {
+        return e -> dao.chainLocatedAtFacilityLocation(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> locatedAtFacilityLocation(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainLocatedAtFacilityLocation(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> acctgTrans(Dao dao, boolean succ) {
+        return e -> dao.chainAcctgTrans(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> acctgTrans(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> childFixedAsset(Dao dao, boolean succ) {
+        return e -> dao.chainChildFixedAsset(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> childFixedAsset(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainChildFixedAsset(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> fixedAssetGeoPoint(Dao dao, boolean succ) {
+        return e -> dao.chainFixedAssetGeoPoint(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> fixedAssetGeoPoint(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFixedAssetGeoPoint(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> fixedAssetProduct(Dao dao, boolean succ) {
+        return e -> dao.chainFixedAssetProduct(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> fixedAssetProduct(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFixedAssetProduct(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> fixedAssetInventoryItem(Dao dao, boolean succ) {
+        return e -> dao.chainFixedAssetInventoryItem(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> fixedAssetInventoryItem(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFixedAssetInventoryItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FixedAsset>> workEffort(Dao dao, boolean succ) {
+        return e -> dao.chainWorkEffort(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FixedAsset>> workEffort(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainWorkEffort(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public FixedAsset get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getFixedAsset(id);
@@ -228,6 +773,11 @@ public class FixedAssetDelegator extends AbstractProcs{
         FixedAsset rec = findOne(ctx, p, FixedAsset.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, FixedAsset rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String PARENT_FIXED_ASSET="parent_fixed_asset";

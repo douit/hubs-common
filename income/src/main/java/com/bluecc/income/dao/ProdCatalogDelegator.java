@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class ProdCatalogDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(ProdCatalog.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from prod_catalog")
         List<ProdCatalog> listProdCatalog();
         @SqlQuery("select * from prod_catalog where prod_catalog_id=:id")
@@ -38,7 +45,94 @@ public class ProdCatalogDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from prod_catalog")
         int countProdCatalog();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = ProdCatalog.class, prefix = "pc")
+        @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
+        default Map<String, ProdCatalog> chainProdCatalogCategory(ProtoMeta protoMeta,
+                                               Map<String, ProdCatalog> inMap,
+                                               boolean succInvoke) {
+            return chainProdCatalogCategory(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProdCatalog.class, prefix = "pc")
+        @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
+        default Map<String, ProdCatalog> chainProdCatalogCategory(ProtoMeta protoMeta,
+                                               Map<String, ProdCatalog> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProdCatalog", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PROD_CATALOG_CATEGORY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProdCatalog p = map.computeIfAbsent(rr.getColumn("pc_prod_catalog_id", String.class),
+                                id -> rr.getRow(ProdCatalog.class));
+                        if (rr.getColumn("pcc_prod_catalog_id", String.class) != null) {
+                            p.getRelProdCatalogCategory()
+                                    .add(rr.getRow(ProdCatalogCategory.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProdCatalog.class, prefix = "pc")
+        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "psc")
+        default Map<String, ProdCatalog> chainProductStoreCatalog(ProtoMeta protoMeta,
+                                               Map<String, ProdCatalog> inMap,
+                                               boolean succInvoke) {
+            return chainProductStoreCatalog(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProdCatalog.class, prefix = "pc")
+        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "psc")
+        default Map<String, ProdCatalog> chainProductStoreCatalog(ProtoMeta protoMeta,
+                                               Map<String, ProdCatalog> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProdCatalog", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_CATALOG);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProdCatalog p = map.computeIfAbsent(rr.getColumn("pc_prod_catalog_id", String.class),
+                                id -> rr.getRow(ProdCatalog.class));
+                        if (rr.getColumn("psc_prod_catalog_id", String.class) != null) {
+                            p.getRelProductStoreCatalog()
+                                    .add(rr.getRow(ProductStoreCatalog.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, ProdCatalog>> prodCatalogCategory(Dao dao, boolean succ) {
+        return e -> dao.chainProdCatalogCategory(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProdCatalog>> prodCatalogCategory(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProdCatalogCategory(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, ProdCatalog>> productStoreCatalog(Dao dao, boolean succ) {
+        return e -> dao.chainProductStoreCatalog(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, ProdCatalog>> productStoreCatalog(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainProductStoreCatalog(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public ProdCatalog get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProdCatalog(id);
@@ -107,6 +201,11 @@ public class ProdCatalogDelegator extends AbstractProcs{
         ProdCatalog rec = findOne(ctx, p, ProdCatalog.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, ProdCatalog rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String PROD_CATALOG_CATEGORY="prod_catalog_category";

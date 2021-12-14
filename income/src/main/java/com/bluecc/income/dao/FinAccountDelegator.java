@@ -4,9 +4,14 @@ import com.bluecc.income.procs.AbstractProcs;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.function.Consumer;
+import com.google.common.collect.Maps;
+
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
 
@@ -15,6 +20,8 @@ import javax.inject.Provider;
 
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.SqlMeta;
 
 import com.bluecc.hubs.fund.pubs.Action;
 import com.bluecc.hubs.fund.model.IModel;
@@ -30,7 +37,7 @@ public class FinAccountDelegator extends AbstractProcs{
     Provider<LiveObjects> liveObjectsProvider;
 
     @RegisterBeanMapper(FinAccount.class)
-    public interface Dao {
+    public interface Dao extends SqlObject{
         @SqlQuery("select * from fin_account")
         List<FinAccount> listFinAccount();
         @SqlQuery("select * from fin_account where fin_account_id=:id")
@@ -38,7 +45,258 @@ public class FinAccountDelegator extends AbstractProcs{
 
         @SqlQuery("select count(*) from fin_account")
         int countFinAccount();
+
+        // for relations
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        default Map<String, FinAccount> chainOrganizationParty(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainOrganizationParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        default Map<String, FinAccount> chainOrganizationParty(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("op_party_id", String.class) != null) {
+                            p.getRelOrganizationParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        default Map<String, FinAccount> chainOwnerParty(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainOwnerParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        default Map<String, FinAccount> chainOwnerParty(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(OWNER_PARTY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("op_party_id", String.class) != null) {
+                            p.getRelOwnerParty()
+                                    .add(rr.getRow(Party.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "rpm")
+        default Map<String, FinAccount> chainReplenishPaymentMethod(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainReplenishPaymentMethod(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "rpm")
+        default Map<String, FinAccount> chainReplenishPaymentMethod(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(REPLENISH_PAYMENT_METHOD);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("rpm_payment_method_id", String.class) != null) {
+                            p.getRelReplenishPaymentMethod()
+                                    .add(rr.getRow(PaymentMethod.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fas")
+        default Map<String, FinAccount> chainFinAccountStatus(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainFinAccountStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fas")
+        default Map<String, FinAccount> chainFinAccountStatus(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_STATUS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("fas_fin_account_id", String.class) != null) {
+                            p.getRelFinAccountStatus()
+                                    .add(rr.getRow(FinAccountStatus.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        default Map<String, FinAccount> chainOrderPaymentPreference(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainOrderPaymentPreference(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        default Map<String, FinAccount> chainOrderPaymentPreference(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_PAYMENT_PREFERENCE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("opp_fin_account_id", String.class) != null) {
+                            p.getRelOrderPaymentPreference()
+                                    .add(rr.getRow(OrderPaymentPreference.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
+        default Map<String, FinAccount> chainPaymentMethod(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainPaymentMethod(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
+        default Map<String, FinAccount> chainPaymentMethod(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_METHOD);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("pm_fin_account_id", String.class) != null) {
+                            p.getRelPaymentMethod()
+                                    .add(rr.getRow(PaymentMethod.class));
+                        }
+                        return map;
+                    });
+        }
+        
     }
+
+     
+    Consumer<Map<String, FinAccount>> organizationParty(Dao dao, boolean succ) {
+        return e -> dao.chainOrganizationParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FinAccount>> organizationParty(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrganizationParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FinAccount>> ownerParty(Dao dao, boolean succ) {
+        return e -> dao.chainOwnerParty(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FinAccount>> ownerParty(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOwnerParty(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FinAccount>> replenishPaymentMethod(Dao dao, boolean succ) {
+        return e -> dao.chainReplenishPaymentMethod(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FinAccount>> replenishPaymentMethod(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainReplenishPaymentMethod(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FinAccount>> finAccountStatus(Dao dao, boolean succ) {
+        return e -> dao.chainFinAccountStatus(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FinAccount>> finAccountStatus(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFinAccountStatus(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FinAccount>> orderPaymentPreference(Dao dao, boolean succ) {
+        return e -> dao.chainOrderPaymentPreference(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FinAccount>> orderPaymentPreference(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrderPaymentPreference(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    Consumer<Map<String, FinAccount>> paymentMethod(Dao dao, boolean succ) {
+        return e -> dao.chainPaymentMethod(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, FinAccount>> paymentMethod(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPaymentMethod(protoMeta, e, whereClause, binds, succ);
+    }
+    
 
     public FinAccount get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getFinAccount(id);
@@ -151,6 +409,11 @@ public class FinAccountDelegator extends AbstractProcs{
         FinAccount rec = findOne(ctx, p, FinAccount.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, FinAccount rec) {
+        return new Agent(ctx, rec);
+    }
+    
 
          
     public static final String ORGANIZATION_PARTY="organization_party";
