@@ -1,6 +1,7 @@
 package com.bluecc.income.dao;
 
 import com.bluecc.hubs.feed.LiveObjects;
+import com.bluecc.hubs.fund.Tuple2;
 import com.bluecc.hubs.fund.model.IModel;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.Identity;
@@ -36,11 +37,13 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.ProtoTypes.*;
+import static com.bluecc.hubs.fund.Tuple2.of;
 import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.hubs.stereotypes.OrderSeedData.StatusItem_ORDER_CANCELLED;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -322,6 +325,69 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
         }
     }
 
+    Consumer<Tuple2<IProc.ProcContext, ProductStore>> paymentSettings() {
+        return e -> {
+            productStores.getAgent(e.f0, e.f1)
+                    .getProductStorePaymentSetting()
+                    .forEach(c -> e.f1.getRelProductStorePaymentSetting().add(c));
+        };
+    }
+
+    Consumer<Tuple2<IProc.ProcContext, ProductStore>> emailSettings() {
+        return e -> {
+            productStores.getAgent(e.f0, e.f1)
+                    .getProductStoreEmailSetting()
+                    .forEach(c -> e.f1.getRelProductStoreEmailSetting().add(c));
+        };
+    }
+
+    @Test
+    public void testProductStoreRelates() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            paymentSettings()
+                    .andThen(emailSettings())
+                    .accept(of(c, productStores.get(c, "RentalStore")));
+        });
+    }
+
+
+    Consumer<ProductStore> paymentSettings2(IProc.ProcContext ctx) {
+        return e -> {
+            productStores.getAgent(ctx, e)
+                    .getProductStorePaymentSetting()
+                    .forEach(c -> e.getRelProductStorePaymentSetting().add(c));
+        };
+    }
+
+    Consumer<ProductStore> emailSettings2(IProc.ProcContext ctx) {
+        return e -> {
+            productStores.getAgent(ctx, e)
+                    .getProductStoreEmailSetting()
+                    .forEach(c -> e.getRelProductStoreEmailSetting().add(c));
+        };
+    }
+
+    Consumer<ProductStore> printStores(){
+        return e->{
+            pretty(e);
+            pretty(e.getRelProductStorePaymentSetting());
+            pretty(e.getRelProductStoreEmailSetting());
+        };
+    }
+
+
+    @Test
+    public void testProductStoreRelatesWithConsumer() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            paymentSettings2(c)
+                    .andThen(emailSettings2(c))
+                    .andThen(printStores())
+                    .accept(productStores.get(c, "RentalStore"));
+        });
+    }
+
     @Test
     public void testProductStoreMesh() {
         process(c -> {
@@ -342,16 +408,17 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
 
     @Inject
     Orders orders;
+
     @Test
     public void testReceiveOrder() {
         process(c -> {
             PrivDao dao = c.getHandle().attach(PrivDao.class);
-            String storeKey="RentalStore";
+            String storeKey = "RentalStore";
             ProductStoreDelegator.Agent agent = productStores.getAgent(c, storeKey);
 
             dao.removeOrders(storeKey);
             // System.out.println(agent.getOrderHeader().size());
-            assertEquals(0,agent.getOrderHeader().size() );
+            assertEquals(0, agent.getOrderHeader().size());
             System.out.println(agent.getRecord().getProductStoreId());
 
             genericProcs.create(c,
@@ -373,7 +440,7 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
                             .build());
 
             // System.out.println(agent.getOrderHeader().size());
-            List<OrderHeader> headers=agent.getOrderHeader();
+            List<OrderHeader> headers = agent.getOrderHeader();
             assertEquals(1, headers.size());
 
             System.out.println(headers.get(0).getStatusId());

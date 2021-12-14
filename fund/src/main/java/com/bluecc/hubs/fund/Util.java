@@ -217,6 +217,10 @@ public class Util {
         return childElements(root, filter);
     }
 
+    public static List<Element> childElements(Element root){
+        return childElements(root, null);
+    }
+
     public static List<Element> childElements(Element root, Predicate<Element> filter) {
         NodeList nodeList = root.getChildNodes();
         List<Element> rs = Lists.newArrayList();

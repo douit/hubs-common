@@ -35,10 +35,11 @@ public class ProtoTypes {
         return new BigDecimal(serialized.getValue());
     }
 
-    public static Currency getCurrency(String val){
+    public static Currency getCurrency(String val) {
         return getCurrency(new BigDecimal(val));
     }
-    public static Currency getCurrency(java.math.BigDecimal val){
+
+    public static Currency getCurrency(java.math.BigDecimal val) {
         return Currency.newBuilder()
                 .setCurrencyUomId("CNY")
                 .setValue(val.toString())
@@ -92,7 +93,7 @@ public class ProtoTypes {
                 ts.getNanos(), ZoneOffset.UTC);
     }
 
-    public static Date nowDate(){
+    public static Date nowDate() {
         return getDate(LocalDate.now());
     }
 
@@ -107,8 +108,8 @@ public class ProtoTypes {
     //     return getTimestamp()
     // }
 
-    public static com.google.type.Date getDate(LocalDate localDate){
-        if(localDate!=null) {
+    public static com.google.type.Date getDate(LocalDate localDate) {
+        if (localDate != null) {
             return Date.newBuilder()
                     .setYear(localDate.getYear())
                     .setMonth(localDate.getMonthValue())
@@ -121,8 +122,9 @@ public class ProtoTypes {
     public static TimeOfDay getTimeOfDay(String localTime) {
         return getTimeOfDay(LocalTime.parse(localTime));
     }
+
     public static TimeOfDay getTimeOfDay(LocalTime localTime) {
-        if(localTime!=null) {
+        if (localTime != null) {
             TimeOfDay timeOfDay = TimeOfDay.newBuilder()
                     .setHours(localTime.getHour())
                     .setMinutes(localTime.getMinute())
@@ -134,9 +136,10 @@ public class ProtoTypes {
         return null;
     }
 
-    public static Timestamp getTimestamp(LocalDateTime dt){
+    public static Timestamp getTimestamp(LocalDateTime dt) {
         return getTimestamp(dt.toInstant(ZoneOffset.UTC));
     }
+
     public static Timestamp getTimestamp(Instant ts) {
         Timestamp timestamp = Timestamp.newBuilder().setSeconds(ts.getEpochSecond())
                 .setNanos(ts.getNano()).build();
@@ -165,12 +168,13 @@ public class ProtoTypes {
                 .setNanos((int) ((millis % 1000) * 1000000)).build();
     }
 
-    static final ZoneOffset offsetLocal=ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now());
+    static final ZoneOffset offsetLocal = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now());
+
     public static Timestamp getTimestampAtLocal(LocalDateTime dt) {
         return ProtoTypes.getTimestamp(dt.toInstant(offsetLocal));
     }
 
-    public static Timestamp nowTimestamp(){
+    public static Timestamp nowTimestamp() {
         return getTimestamp(LocalDateTime.now());
     }
 
@@ -190,9 +194,10 @@ public class ProtoTypes {
         return java.time.LocalDate.of(dt.getYear(), dt.getMonth(), dt.getDay());
     }
 
-    public static Indicator getIndicator(Character c){
+    public static Indicator getIndicator(Character c) {
         return castIndicator(c.toString());
     }
+
     public static Indicator castIndicator(String c) {
         switch (c.toUpperCase()) {
             case "Y":
@@ -218,6 +223,14 @@ public class ProtoTypes {
         return Util.toSnakecase(getEntityTypeByMessage(msg));
     }
 
+    public static String getEntityTypeByMessage(Message msg, String defaultName) {
+        String name = getEntityTypeByMessage(msg);
+        if (name.isEmpty()) {
+            return defaultName;
+        }
+        return name;
+    }
+
     public static String getEntityTypeByMessage(Message msg) {
         Descriptors.Descriptor descriptor = msg.getDescriptorForType();
         return getEntityType(descriptor);
@@ -239,7 +252,7 @@ public class ProtoTypes {
         return keys.getCombine();
     }
 
-    public static boolean hasTable(Message msg){
+    public static boolean hasTable(Message msg) {
         return MetaTypes.hasTable(getEntityTypeByMessage(msg));
     }
 
@@ -247,6 +260,7 @@ public class ProtoTypes {
         return Arrays.stream(getEntityKeys(msg))
                 .collect(Collectors.toSet());
     }
+
     public static String[] getEntityKeys(Message msg) {
         EntityKey keys = msg.getDescriptorForType().getOptions().getExtension(RoutinesProto.keys);
         return keys.getKeys().split(", ");
@@ -279,16 +293,16 @@ public class ProtoTypes {
         return result;
     }
 
-    public static Envelope packGeneral(String dataType, Message protoMess){
-        Envelope envelope= Envelope.newBuilder()
+    public static Envelope packGeneral(String dataType, Message protoMess) {
+        Envelope envelope = Envelope.newBuilder()
                 .setDataType(dataType)
                 .setData(Any.pack(protoMess))
                 .build();
         return envelope;
     }
 
-    public static Envelope packEntity(Message protoMess){
-        Envelope envelope= Envelope.newBuilder()
+    public static Envelope packEntity(Message protoMess) {
+        Envelope envelope = Envelope.newBuilder()
                 .setDataType(getEntityTypeByMessage(protoMess))
                 .setData(Any.pack(protoMess))
                 .setFlat(isFlatMessage(protoMess))
@@ -296,31 +310,31 @@ public class ProtoTypes {
         return envelope;
     }
 
-    public static byte[] serializeEntityWithEnvelope(Message protoMess){
+    public static byte[] serializeEntityWithEnvelope(Message protoMess) {
         return packEntity(protoMess).toByteArray();
     }
 
     public static Message.Builder extractEnvelopeData(Envelope request) throws InvalidProtocolBufferException {
-        Message msg=unpackEntity(request);
-        Message.Builder builder=DataBuilder.procData(request.getDataType(),
+        Message msg = unpackEntity(request);
+        Message.Builder builder = DataBuilder.procData(request.getDataType(),
                 false, msg).getBuilder();
         return builder;
     }
 
     public static Message unpackEntity(Envelope request) throws InvalidProtocolBufferException {
-        Any any=request.getData();
-        Class<? extends Message> entityClass=
+        Any any = request.getData();
+        Class<? extends Message> entityClass =
                 DataBuilder.getEntityClass(request.getDataType(), request.getFlat());
-        Message msg= any.unpack(entityClass);
+        Message msg = any.unpack(entityClass);
         return msg;
     }
 
     public static Message deserializeEntityWithEnvelope(byte[] cnt) throws InvalidProtocolBufferException {
-        Envelope envelope=Envelope.parseFrom(cnt);
+        Envelope envelope = Envelope.parseFrom(cnt);
         return unpackEntity(envelope);
     }
 
-    public static List<String> getFilledFieldNames(Message message){
+    public static List<String> getFilledFieldNames(Message message) {
         return message.getAllFields().keySet().stream()
                 .map(f -> f.getName())
                 .collect(Collectors.toList());

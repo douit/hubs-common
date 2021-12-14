@@ -7,9 +7,11 @@ import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.dummy.store.ContactBean;
 import com.bluecc.income.dummy.store.PhoneBean;
+import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.Party;
 import com.bluecc.income.model.PartyContactMech;
 import com.bluecc.income.model.Person;
+import com.bluecc.income.model.ProductStore;
 import com.github.javafaker.Faker;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -28,13 +30,14 @@ import org.junit.Test;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.hubs.fund.Util.prettyFull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PartyDelegatorTest extends AbstractStoreProcTest {
     @Inject
@@ -191,8 +194,8 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
         @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
-        default Map<String, Party> getPartyListWithContactMech(ProtoMeta protoMeta) {
-            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party");
+        default Map<String, Party> getPartyListWithContactMech(ProtoMeta protoMeta, boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PartyDelegator.PARTY_CONTACT_MECH);
             return getHandle().select(view.getSql())
                     .reduceRows(new HashMap<>(), (map, rr) -> {
@@ -205,6 +208,77 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
                         return map;
                     });
         }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
+        default Map<String, Party> chainContactMech(ProtoMeta protoMeta,
+                                                    Map<String, Party> inMap,
+                                                    boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PartyDelegator.PARTY_CONTACT_MECH);
+            return getHandle().select(view.getSql())
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("pcm_party_id", String.class) != null) {
+                            p.getRelPartyContactMech()
+                                    .add(rr.getRow(PartyContactMech.class));
+                        }
+                        return map;
+                    });
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        default Map<String, Party> chainPerson(ProtoMeta protoMeta,
+                                                    Map<String, Party> inMap,
+                                                    boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PartyDelegator.PERSON);
+            return getHandle().select(view.getSql())
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("pe_party_id", String.class) != null) {
+                            p.getRelPerson()
+                                    .add(rr.getRow(Person.class));
+                        }
+                        return map;
+                    });
+        }
+    }
+
+    Consumer<Map<String, Party>> contactMech(PrivatePartyDao dao, boolean succ) {
+        return e -> dao.chainContactMech(protoMeta, e, succ);
+    }
+    Consumer<Map<String, Party>> person(PrivatePartyDao dao, boolean succ) {
+        return e -> dao.chainPerson(protoMeta, e, succ);
+    }
+
+    Consumer<Map<String, Party>> printParties(String key){
+        return e->{
+            assertNotNull(e.get(key));
+            assertThat(e.get(key).getRelPerson())
+                    .hasSize(1)
+                    .allMatch(p -> p.getPartyId().equals(key));
+            assertThat(e.get(key).getRelPartyContactMech())
+                    .hasAtLeastOneElementOfType(PartyContactMech.class)
+                    .allMatch(p -> p.getPartyId().equals(key));
+            pretty(e.get(key));
+            pretty(e.get(key).getRelPartyContactMech());
+            pretty(e.get(key).getRelPerson());
+        };
+    }
+
+    @Test
+    public void testChainInvoke() {
+        process(c -> {
+            PrivatePartyDao dao = c.getHandle().attach(PrivatePartyDao.class);
+            contactMech(dao, false)
+                    .andThen(person(dao, true))
+                    .andThen(printParties("DemoCustomer"))
+                    .accept(new HashMap<>());
+        });
     }
 
     @Test
@@ -222,13 +296,27 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
     public void testQueryReduceMap() {
         process(c -> {
             PrivatePartyDao dao = c.getHandle().attach(PrivatePartyDao.class);
-            Map<String, Party> ds = dao.getPartyListWithContactMech(protoMeta);
+            Map<String, Party> ds = dao.getPartyListWithContactMech(protoMeta, false);
             System.out.println(ds.keySet());
             ds.values().stream()
                     .filter(e -> !e.getRelPartyContactMech().isEmpty())
                     .forEach(p -> {
                         pretty(p);
                         pretty(p.getRelPartyContactMech());
+                    });
+
+            // ..
+            ds = dao.getPartyListWithContactMech(protoMeta, true);
+            System.out.println(ds.keySet());
+            ds.values().stream()
+                    .filter(e -> !e.getRelPartyContactMech().isEmpty())
+                    .forEach(p -> {
+                        System.out.println("---------");
+                        pretty(p);
+                        // pretty(p.getRelPartyContactMech());
+                        assertNotNull(p.getPartyId());
+                        assertNull(p.getPartyTypeId());
+                        assertFalse(p.getRelPartyContactMech().isEmpty());
                     });
         });
     }

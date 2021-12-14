@@ -31,7 +31,11 @@ public class ProtoMeta {
     }
 
     public SqlMeta getSqlMeta(String entityName){
-        return new SqlMeta(this, getEntityMeta(entityName));
+        return getSqlMeta(entityName, false);
+    }
+
+    public SqlMeta getSqlMeta(String entityName, boolean succ){
+        return new SqlMeta(this, getEntityMeta(entityName), succ);
     }
 
     public EntityMeta.RelationQueryMeta findRelationQueryMeta(String entityName, String relField){

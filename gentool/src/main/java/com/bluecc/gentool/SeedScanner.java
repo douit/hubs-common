@@ -45,7 +45,14 @@ public class SeedScanner {
         writeToFiles(scanner, targetDir);
     }
 
-    private static void printTransitions(SeedScanner scanner) {
+    public void setupChanges(){
+        statusValidChangeList.forEach(e -> setup(e));
+    }
+    public void printStatus(){
+        printTransitions(this);
+    }
+
+    public static void printTransitions(SeedScanner scanner) {
         scanner.statusTypeMap.values().stream()
                 .map(t -> t.getDescription())
                 .sorted()
@@ -102,6 +109,7 @@ public class SeedScanner {
     Map<String, StatusItem> statusItemMap = Maps.newHashMap();
     Map<String, StatusType> statusTypeMap = Maps.newHashMap();
     List<StatusValidChange> statusValidChangeList = Lists.newArrayList();
+    static final String[] PICKUP_TAGS={"StatusValidChange", "StatusItem", "StatusType"};
 
     void scan(String rootDir) {
         Stream.of("applications", "framework", "plugins").forEach(dir -> {
@@ -117,42 +125,50 @@ public class SeedScanner {
                     .flatMap(f -> extractResourceFiles(f).stream())
                     .filter(f -> f.toFile().exists())
                     .flatMap(dataFile -> pickupElements(dataFile,
-                            "StatusValidChange", "StatusItem", "StatusType").stream())
+                            PICKUP_TAGS).stream())
                     .forEach(e -> {
-                        switch (e.getTagName()) {
-                            case "StatusValidChange":
-                                statusValidChangeList.add(StatusValidChange.builder()
-                                        .statusId(e.getAttribute("statusId"))
-                                        .statusIdTo(e.getAttribute("statusIdTo"))
-                                        .transitionName(e.getAttribute("transitionName"))
-                                        .build());
-                                break;
-                            case "StatusItem":
-                                statusItemMap.put(e.getAttribute("statusId"),
-                                        StatusItem.builder()
-                                                .statusId(e.getAttribute("statusId"))
-                                                .description(e.getAttribute("description"))
-                                                .sequenceId(e.getAttribute("sequenceId"))
-                                                .statusCode(e.getAttribute("statusCode"))
-                                                .statusTypeId(e.getAttribute("statusTypeId"))
-                                                .build());
-                                break;
-                            case "StatusType":
-                                statusTypeMap.put(e.getAttribute("statusTypeId"),
-                                        StatusType.builder()
-                                                .statusTypeId(e.getAttribute("statusTypeId"))
-                                                .description(e.getAttribute("description"))
-                                                .parentTypeId(e.getAttribute("parentTypeId"))
-                                                .build()
-                                );
-                                break;
-                        }
+                        processElement(e);
                     });
             ;
         });
     }
 
+    public void processElement(Element e) {
+        switch (e.getTagName()) {
+            case "StatusValidChange":
+                statusValidChangeList.add(StatusValidChange.builder()
+                        .statusId(e.getAttribute("statusId"))
+                        .statusIdTo(e.getAttribute("statusIdTo"))
+                        .transitionName(e.getAttribute("transitionName"))
+                        .build());
+                break;
+            case "StatusItem":
+                statusItemMap.put(e.getAttribute("statusId"),
+                        StatusItem.builder()
+                                .statusId(e.getAttribute("statusId"))
+                                .description(e.getAttribute("description"))
+                                .sequenceId(e.getAttribute("sequenceId"))
+                                .statusCode(e.getAttribute("statusCode"))
+                                .statusTypeId(e.getAttribute("statusTypeId"))
+                                .build());
+                break;
+            case "StatusType":
+                statusTypeMap.put(e.getAttribute("statusTypeId"),
+                        StatusType.builder()
+                                .statusTypeId(e.getAttribute("statusTypeId"))
+                                .description(e.getAttribute("description"))
+                                .parentTypeId(e.getAttribute("parentTypeId"))
+                                .build()
+                );
+                break;
+        }
+    }
+
     private List<Element> pickupElements(Path dataFile, String... tags) {
+        if(tags.length==0){
+            tags=PICKUP_TAGS;
+        }
+
         List<Element> results = Lists.newArrayList();
         for (String tag : tags) {
             NodeList list = getElements(dataFile, tag);
