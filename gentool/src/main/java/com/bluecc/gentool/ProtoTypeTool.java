@@ -16,7 +16,7 @@ public class ProtoTypeTool {
     }
 
     public static void startGen() throws IOException {
-        String protoDir= SystemDefs.prependHubsHome( "stub/src/main/proto");
+        String protoDir= SystemDefs.protoDir();
         String targetFile=protoDir+"/entity_types.proto";
         System.out.println(".. write to "+targetFile);
         log.info(".. write to "+targetFile);

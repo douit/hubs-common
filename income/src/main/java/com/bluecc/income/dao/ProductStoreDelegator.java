@@ -284,6 +284,10 @@ public class ProductStoreDelegator extends AbstractProcs{
         return new Agent(ctx, rec);
     }
 
+    public Agent getAgent(IProc.ProcContext ctx, ProductStore rec) {
+        return new Agent(ctx, rec);
+    }
+
          
     public static final String PARTY="party";
          

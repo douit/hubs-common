@@ -10,7 +10,9 @@ public class SystemDefs {
     public static String prependApiHome(String fileOrDir){
         return "/opt/app/apiset/"+fileOrDir;
     }
-
+    public static String protoDir(){
+        return prependApiHome( "entity/src/main/proto");
+    }
     public static File prependHubsHomeFile(String fileOrDir){
         return new File(HUBS_COMMON_HOME+"/"+fileOrDir);
     }

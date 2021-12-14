@@ -4,12 +4,16 @@ import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.hubs.fund.model.IModel;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.stub.Identity;
+import com.bluecc.hubs.stub.OrderHeaderFlatData;
 import com.bluecc.hubs.stub.ProductStoreData;
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
+import com.bluecc.income.exchange.IProc;
 import com.bluecc.income.model.FixedAsset;
+import com.bluecc.income.model.OrderHeader;
 import com.bluecc.income.model.ProductStore;
 import com.bluecc.income.model.ProductStorePaymentSetting;
+import com.bluecc.income.procs.Orders;
 import com.github.javafaker.Faker;
 import com.google.common.collect.Sets;
 import com.google.protobuf.Descriptors;
@@ -18,6 +22,7 @@ import org.assertj.core.api.Condition;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.junit.Before;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
@@ -31,10 +36,13 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import static com.bluecc.hubs.ProtoTypes.*;
 import static com.bluecc.hubs.fund.Util.pretty;
+import static com.bluecc.hubs.stereotypes.OrderSeedData.StatusItem_ORDER_CANCELLED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
@@ -113,6 +121,7 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+
     @Test
     public void testAgentLiveObject() {
         process(c -> {
@@ -123,7 +132,7 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
         });
 
         // find it
-        ProductStore store=liveObjectsProvider.get().get(ProductStore.class, "9000");
+        ProductStore store = liveObjectsProvider.get().get(ProductStore.class, "9000");
         assertNotNull(store);
         pretty(store);
     }
@@ -199,19 +208,19 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
 
     @Test
     public void testCompletionStageWithAgent2() throws ExecutionException, InterruptedException {
-        CompletableFuture<List<IModel<?>>> cf=
-            process(c -> {
-                ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
-                // ProductStore productStore = agent.merge(); // DON'T DO THIS
+        CompletableFuture<List<IModel<?>>> cf =
+                process(c -> {
+                    ProductStoreDelegator.Agent agent = productStores.getAgent(c, "9000");
+                    // ProductStore productStore = agent.merge(); // DON'T DO THIS
 
-                c.getSubscriber().onNext(agent.getRecord());
-                agent.getProductStorePaymentSetting().forEach(e -> {
-                    c.getSubscriber().onNext(e);
-                });
-                c.getSubscriber().onComplete();
-            }).collectList().toFuture();
+                    c.getSubscriber().onNext(agent.getRecord());
+                    agent.getProductStorePaymentSetting().forEach(e -> {
+                        c.getSubscriber().onNext(e);
+                    });
+                    c.getSubscriber().onComplete();
+                }).collectList().toFuture();
 
-        Set<String> allMethodTypes=cf.get().stream().peek(e -> System.out.println(e))
+        Set<String> allMethodTypes = cf.get().stream().peek(e -> System.out.println(e))
                 .filter(e -> e instanceof ProductStorePaymentSetting)
                 .map(e -> ((ProductStorePaymentSetting) e).getPaymentMethodTypeId())
                 .collect(Collectors.toSet());
@@ -250,14 +259,16 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
     public interface QueryDao {
         @SqlQuery("select * from product_store")
         List<ProductStore> listProductStore();
+
         @SqlQuery("select * from product_store " +
                 "where product_store_id in (" +
                 "select product_store_id from product_store_catalog " +
                 "where prod_catalog_id=:cat)")
-        List<ProductStore> getStoresByCatalog(@Bind("cat")String catalogId);
+        List<ProductStore> getStoresByCatalog(@Bind("cat") String catalogId);
 
         @SqlQuery("select * from product_store")
         List<String> allIds();
+
         @SqlQuery("select * from product_store where product_store_id=:id")
         ProductStore getProductStore(@Bind("id") String id);
 
@@ -270,7 +281,7 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
     }
 
     @Data
-    public static class StoreCatalog{
+    public static class StoreCatalog {
         String productStoreId;
         String prodCatalogId;
     }
@@ -286,8 +297,8 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
                     .collect(Collectors.toList()));
 
             //
-            String prodCatalogId="RentalCatalog";
-            Condition<ProductStore> cond=new Condition<>(m ->
+            String prodCatalogId = "RentalCatalog";
+            Condition<ProductStore> cond = new Condition<>(m ->
                     m.getProductStoreId().equals("RentalStore"), "");
             assertThat(dao.getStoresByCatalog(prodCatalogId)
                     .stream().peek(e -> pretty(e)).collect(Collectors.toList()))
@@ -296,4 +307,83 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
         });
     }
 
+    class ProductStoreMesh {
+        ProductStore productStore;
+
+        ProductStoreMesh(ProductStore productStore) {
+            this.productStore = productStore;
+        }
+
+        Function<IProc.ProcContext, List<ProductStorePaymentSetting>> getPaymentSettings() {
+            return c -> {
+                ProductStoreDelegator.Agent agent = productStores.getAgent(c, this.productStore);
+                return agent.getProductStorePaymentSetting();
+            };
+        }
+    }
+
+    @Test
+    public void testProductStoreMesh() {
+        process(c -> {
+            ProductStoreDelegator.Dao dao = c.getHandle().attach(ProductStoreDelegator.Dao.class);
+            ProductStoreMesh mesh = new ProductStoreMesh(dao.getProductStore("RentalStore"));
+            // productStores.getAgent(c, "RentalStore").getProductStorePaymentSetting();
+            mesh.getPaymentSettings().apply(c).forEach(e -> pretty(e));
+        });
+    }
+
+    @RegisterBeanMapper(ProductStore.class)
+    public interface PrivDao {
+        // 实际上还要删除所有的订单子项, 这里只为了测试;
+        // 实际应用中所有的订单都不会被删除, 只会被标记取消
+        @SqlUpdate("delete from order_header where product_store_id=:id")
+        void removeOrders(@Bind("id") String id);
+    }
+
+    @Inject
+    Orders orders;
+    @Test
+    public void testReceiveOrder() {
+        process(c -> {
+            PrivDao dao = c.getHandle().attach(PrivDao.class);
+            String storeKey="RentalStore";
+            ProductStoreDelegator.Agent agent = productStores.getAgent(c, storeKey);
+
+            dao.removeOrders(storeKey);
+            // System.out.println(agent.getOrderHeader().size());
+            assertEquals(0,agent.getOrderHeader().size() );
+            System.out.println(agent.getRecord().getProductStoreId());
+
+            genericProcs.create(c,
+                    OrderHeaderFlatData.newBuilder()
+                            .setCreatedBy("admin")
+                            .setCurrencyUom("USD")
+                            .setEntryDate(nowTimestamp())
+                            .setGrandTotal(getCurrency("108.0"))
+                            .setOrderDate(getTimestamp("2008-06-10 13:27:07.024"))
+                            .setOrderId(sequence.nextStringId())
+                            .setOrderName("New Purchase Order")
+                            .setOrderTypeId("PURCHASE_ORDER")
+                            .setProductStoreId(agent.getRecord().getProductStoreId())
+                            .setRemainingSubTotal(getCurrency("108.0"))
+                            .setSalesChannelEnumId("UNKNWN_SALES_CHANNEL")
+                            .setStatusId("ORDER_CREATED")
+                            .setVisitId("10000")
+                            .setWebSiteId("WebStore")
+                            .build());
+
+            // System.out.println(agent.getOrderHeader().size());
+            List<OrderHeader> headers=agent.getOrderHeader();
+            assertEquals(1, headers.size());
+
+            System.out.println(headers.get(0).getStatusId());
+
+            // set-status需要在*-mesh类中调用, 这样才能发出状态修改事件,
+            // 以及确保执行正确的切换; 这儿只作测试
+            orders.setOrderStatus(headers.get(0).toDataBuilder().build(),
+                    StatusItem_ORDER_CANCELLED.getStatusId());
+            assertEquals(StatusItem_ORDER_CANCELLED.getStatusId(),
+                    agent.getOrderHeader().get(0).getStatusId());
+        });
+    }
 }

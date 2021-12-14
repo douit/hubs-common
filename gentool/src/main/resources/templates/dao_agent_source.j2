@@ -42,3 +42,8 @@
         {{ent.name}} rec = findOne(ctx, p, {{ent.name}}.class);
         return new Agent(ctx, rec);
     }
+
+    public Agent getAgent(IProc.ProcContext ctx, {{ent.name}} rec) {
+        return new Agent(ctx, rec);
+    }
+    
