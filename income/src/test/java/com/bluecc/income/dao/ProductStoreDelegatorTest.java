@@ -15,6 +15,7 @@ import com.bluecc.income.model.OrderHeader;
 import com.bluecc.income.model.ProductStore;
 import com.bluecc.income.model.ProductStorePaymentSetting;
 import com.bluecc.income.procs.Orders;
+import com.bluecc.income.procs.StatusTypes;
 import com.github.javafaker.Faker;
 import com.google.common.collect.Sets;
 import com.google.protobuf.Descriptors;
@@ -408,6 +409,8 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
 
     @Inject
     Orders orders;
+    @Inject
+    StatusTypes statusTypes;
 
     @Test
     public void testReceiveOrder() {
@@ -445,12 +448,18 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
 
             System.out.println(headers.get(0).getStatusId());
 
+            assertTrue(statusTypes.isValid("Order",
+                    "ORDER_CREATED", "ORDER_CANCELLED"));
+
             // set-status需要在*-mesh类中调用, 这样才能发出状态修改事件,
             // 以及确保执行正确的切换; 这儿只作测试
             orders.setOrderStatus(headers.get(0).toDataBuilder().build(),
                     StatusItem_ORDER_CANCELLED.getStatusId());
             assertEquals(StatusItem_ORDER_CANCELLED.getStatusId(),
                     agent.getOrderHeader().get(0).getStatusId());
+
+            // statusTypes.isValid("Budget", "BG_CREATED", "BG_REJECTED")
+
         });
     }
 }

@@ -6,13 +6,15 @@ import com.google.common.collect.Maps;
 import com.google.protobuf.Message;
 import org.junit.Test;
 import org.mvel2.MVEL;
+import org.mvel2.templates.CompiledTemplate;
+import org.mvel2.templates.TemplateCompiler;
+import org.mvel2.templates.TemplateRuntime;
 
 import java.io.Serializable;
 import java.util.Map;
 
 import static com.bluecc.income.exchange.ResourceHelper.readResource;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MVELTest {
     @Test
@@ -49,6 +51,17 @@ public class MVELTest {
     public void testEvalStringMessage(){
         StringValue val=StringValue.newBuilder().setValue("hi").build();
         assertTrue((boolean)MVEL.eval("value!=empty", val));
+    }
+
+    @Test
+    public void testMvelTemplate(){
+        String template = "1 + 1 = @{1+1}";
+
+        // compile the template
+        CompiledTemplate compiled = TemplateCompiler.compileTemplate(template);
+        // execute the template
+        String output = (String) TemplateRuntime.execute(compiled);
+        assertEquals("1 + 1 = 2", output);
     }
 }
 

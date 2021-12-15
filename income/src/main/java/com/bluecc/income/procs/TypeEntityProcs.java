@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 import static com.bluecc.hubs.feed.ProtoModule.startup;
 import static com.bluecc.income.procs.GenericProcs.loadDataSet;
 
+/**
+ * $ just i procs.TypeEntityProcs
+ */
 public class TypeEntityProcs {
     public static void main(String[] args) {
         TypeEntityProcs typeEntityProcs=startup(TypeEntityProcs.class);

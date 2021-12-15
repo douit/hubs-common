@@ -177,7 +177,7 @@ public class ProductCategoryDelegatorTest extends AbstractStoreProcTest {
 
             // query tree
             traverser.breadthFirst(Lists.newArrayList("BoatRental", "CATALOG1"))
-                    .forEach(e -> System.out.println(e));
+                    .forEach(e -> System.out.println("- "+e));
             assertThat(traverser.breadthFirst(Lists.newArrayList("BoatRental")))
                     .contains("RowBoats", "MotorBoats");
 

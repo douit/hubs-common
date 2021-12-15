@@ -1,6 +1,5 @@
 package com.bluecc.income.endpoint;
 
-import com.bluecc.hubs.feed.SharedData;
 import com.google.protobuf.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

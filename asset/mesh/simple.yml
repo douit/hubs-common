@@ -1,0 +1,36 @@
+meshes:
+  simple:
+    start: default
+    states:
+      default:
+        init: initing
+      initing:
+        ok: inited
+        fail: failed
+      inited:
+        stop: stopped
+        talk: self
+      stopped:
+        restart: initing
+      failed:
+        restart: initing
+
+  dummyStore:
+    start: closed
+    states:
+      closed:
+        open: openning
+      openning:
+        ok: opened
+        fail: failed
+      opened:
+        close: closing
+        trade: self
+      closing:
+        ok: closed
+        fail: failed
+      failed:
+        restart: openning
+
+
+

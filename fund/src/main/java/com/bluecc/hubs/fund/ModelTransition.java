@@ -32,7 +32,7 @@ public class ModelTransition {
         return transitions;
     }
 
-    public ObjectStatus loadFromAsset(String name) {
+    public static ObjectStatus loadFromAsset(String name) {
         try {
             return ObjectStatus.builder()
                     .name(name)

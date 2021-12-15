@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+import static com.bluecc.income.procs.AbstractProcs.findOne;
 import static com.bluecc.income.procs.GenericProcs.wrap;
 
 public class OrderRpc extends OrderHeaderServiceGrpc.OrderHeaderServiceImplBase {
@@ -41,7 +42,7 @@ public class OrderRpc extends OrderHeaderServiceGrpc.OrderHeaderServiceImplBase 
     @Override
     public void find(OrderHeaderFlatData request, StreamObserver<OrderHeaderFlatData> responseObserver) {
         genericProcs.process(c ->{
-            OrderHeader rec=genericProcs.findOne(c , request, OrderHeader.class);
+            OrderHeader rec=findOne(c , request, OrderHeader.class);
             if(rec!=null) {
                 responseObserver.onNext(rec.toDataBuilder().build());
             }
