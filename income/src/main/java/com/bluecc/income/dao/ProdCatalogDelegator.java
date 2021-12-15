@@ -111,22 +111,22 @@ public class ProdCatalogDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, ProdCatalog>> prodCatalogCategory(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProdCatalog>> prodCatalogCategory(Dao dao, boolean succ) {
         return e -> dao.chainProdCatalogCategory(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProdCatalog>> prodCatalogCategory(Dao dao,
+    public Consumer<Map<String, ProdCatalog>> prodCatalogCategory(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainProdCatalogCategory(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, ProdCatalog>> productStoreCatalog(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProdCatalog>> productStoreCatalog(Dao dao, boolean succ) {
         return e -> dao.chainProductStoreCatalog(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProdCatalog>> productStoreCatalog(Dao dao,
+    public Consumer<Map<String, ProdCatalog>> productStoreCatalog(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

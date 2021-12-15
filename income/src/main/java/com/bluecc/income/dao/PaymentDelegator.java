@@ -381,121 +381,121 @@ public class PaymentDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, Payment>> paymentMethod(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> paymentMethod(Dao dao, boolean succ) {
         return e -> dao.chainPaymentMethod(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> paymentMethod(Dao dao,
+    public Consumer<Map<String, Payment>> paymentMethod(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainPaymentMethod(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> creditCard(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> creditCard(Dao dao, boolean succ) {
         return e -> dao.chainCreditCard(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> creditCard(Dao dao,
+    public Consumer<Map<String, Payment>> creditCard(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainCreditCard(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> eftAccount(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> eftAccount(Dao dao, boolean succ) {
         return e -> dao.chainEftAccount(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> eftAccount(Dao dao,
+    public Consumer<Map<String, Payment>> eftAccount(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainEftAccount(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> orderPaymentPreference(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> orderPaymentPreference(Dao dao, boolean succ) {
         return e -> dao.chainOrderPaymentPreference(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> orderPaymentPreference(Dao dao,
+    public Consumer<Map<String, Payment>> orderPaymentPreference(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderPaymentPreference(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> paymentGatewayResponse(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> paymentGatewayResponse(Dao dao, boolean succ) {
         return e -> dao.chainPaymentGatewayResponse(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> paymentGatewayResponse(Dao dao,
+    public Consumer<Map<String, Payment>> paymentGatewayResponse(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainPaymentGatewayResponse(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> fromParty(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> fromParty(Dao dao, boolean succ) {
         return e -> dao.chainFromParty(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> fromParty(Dao dao,
+    public Consumer<Map<String, Payment>> fromParty(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainFromParty(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> toParty(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> toParty(Dao dao, boolean succ) {
         return e -> dao.chainToParty(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> toParty(Dao dao,
+    public Consumer<Map<String, Payment>> toParty(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainToParty(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> toPartyRole(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> toPartyRole(Dao dao, boolean succ) {
         return e -> dao.chainToPartyRole(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> toPartyRole(Dao dao,
+    public Consumer<Map<String, Payment>> toPartyRole(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainToPartyRole(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> acctgTrans(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> acctgTrans(Dao dao, boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> acctgTrans(Dao dao,
+    public Consumer<Map<String, Payment>> acctgTrans(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> paymentApplication(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> paymentApplication(Dao dao, boolean succ) {
         return e -> dao.chainPaymentApplication(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> paymentApplication(Dao dao,
+    public Consumer<Map<String, Payment>> paymentApplication(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainPaymentApplication(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Payment>> toPaymentApplication(Dao dao, boolean succ) {
+    public Consumer<Map<String, Payment>> toPaymentApplication(Dao dao, boolean succ) {
         return e -> dao.chainToPaymentApplication(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Payment>> toPaymentApplication(Dao dao,
+    public Consumer<Map<String, Payment>> toPaymentApplication(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

@@ -441,143 +441,143 @@ public class FixedAssetDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, FixedAsset>> parentFixedAsset(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> parentFixedAsset(Dao dao, boolean succ) {
         return e -> dao.chainParentFixedAsset(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> parentFixedAsset(Dao dao,
+    public Consumer<Map<String, FixedAsset>> parentFixedAsset(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainParentFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> instanceOfProduct(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> instanceOfProduct(Dao dao, boolean succ) {
         return e -> dao.chainInstanceOfProduct(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> instanceOfProduct(Dao dao,
+    public Consumer<Map<String, FixedAsset>> instanceOfProduct(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainInstanceOfProduct(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> party(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> party(Dao dao, boolean succ) {
         return e -> dao.chainParty(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> party(Dao dao,
+    public Consumer<Map<String, FixedAsset>> party(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> partyRole(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> partyRole(Dao dao, boolean succ) {
         return e -> dao.chainPartyRole(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> partyRole(Dao dao,
+    public Consumer<Map<String, FixedAsset>> partyRole(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainPartyRole(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> acquireOrderHeader(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> acquireOrderHeader(Dao dao, boolean succ) {
         return e -> dao.chainAcquireOrderHeader(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> acquireOrderHeader(Dao dao,
+    public Consumer<Map<String, FixedAsset>> acquireOrderHeader(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainAcquireOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> acquireOrderItem(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> acquireOrderItem(Dao dao, boolean succ) {
         return e -> dao.chainAcquireOrderItem(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> acquireOrderItem(Dao dao,
+    public Consumer<Map<String, FixedAsset>> acquireOrderItem(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainAcquireOrderItem(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> locatedAtFacilityLocation(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> locatedAtFacilityLocation(Dao dao, boolean succ) {
         return e -> dao.chainLocatedAtFacilityLocation(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> locatedAtFacilityLocation(Dao dao,
+    public Consumer<Map<String, FixedAsset>> locatedAtFacilityLocation(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainLocatedAtFacilityLocation(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> acctgTrans(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> acctgTrans(Dao dao, boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> acctgTrans(Dao dao,
+    public Consumer<Map<String, FixedAsset>> acctgTrans(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> childFixedAsset(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> childFixedAsset(Dao dao, boolean succ) {
         return e -> dao.chainChildFixedAsset(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> childFixedAsset(Dao dao,
+    public Consumer<Map<String, FixedAsset>> childFixedAsset(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainChildFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> fixedAssetGeoPoint(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> fixedAssetGeoPoint(Dao dao, boolean succ) {
         return e -> dao.chainFixedAssetGeoPoint(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> fixedAssetGeoPoint(Dao dao,
+    public Consumer<Map<String, FixedAsset>> fixedAssetGeoPoint(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetGeoPoint(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> fixedAssetProduct(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> fixedAssetProduct(Dao dao, boolean succ) {
         return e -> dao.chainFixedAssetProduct(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> fixedAssetProduct(Dao dao,
+    public Consumer<Map<String, FixedAsset>> fixedAssetProduct(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetProduct(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> fixedAssetInventoryItem(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> fixedAssetInventoryItem(Dao dao, boolean succ) {
         return e -> dao.chainFixedAssetInventoryItem(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> fixedAssetInventoryItem(Dao dao,
+    public Consumer<Map<String, FixedAsset>> fixedAssetInventoryItem(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetInventoryItem(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FixedAsset>> workEffort(Dao dao, boolean succ) {
+    public Consumer<Map<String, FixedAsset>> workEffort(Dao dao, boolean succ) {
         return e -> dao.chainWorkEffort(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FixedAsset>> workEffort(Dao dao,
+    public Consumer<Map<String, FixedAsset>> workEffort(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

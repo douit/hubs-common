@@ -231,66 +231,66 @@ public class BillingAccountDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, BillingAccount>> contactMech(Dao dao, boolean succ) {
+    public Consumer<Map<String, BillingAccount>> contactMech(Dao dao, boolean succ) {
         return e -> dao.chainContactMech(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, BillingAccount>> contactMech(Dao dao,
+    public Consumer<Map<String, BillingAccount>> contactMech(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainContactMech(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, BillingAccount>> postalAddress(Dao dao, boolean succ) {
+    public Consumer<Map<String, BillingAccount>> postalAddress(Dao dao, boolean succ) {
         return e -> dao.chainPostalAddress(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, BillingAccount>> postalAddress(Dao dao,
+    public Consumer<Map<String, BillingAccount>> postalAddress(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainPostalAddress(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, BillingAccount>> billingAccountRole(Dao dao, boolean succ) {
+    public Consumer<Map<String, BillingAccount>> billingAccountRole(Dao dao, boolean succ) {
         return e -> dao.chainBillingAccountRole(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, BillingAccount>> billingAccountRole(Dao dao,
+    public Consumer<Map<String, BillingAccount>> billingAccountRole(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainBillingAccountRole(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, BillingAccount>> invoice(Dao dao, boolean succ) {
+    public Consumer<Map<String, BillingAccount>> invoice(Dao dao, boolean succ) {
         return e -> dao.chainInvoice(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, BillingAccount>> invoice(Dao dao,
+    public Consumer<Map<String, BillingAccount>> invoice(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainInvoice(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, BillingAccount>> orderHeader(Dao dao, boolean succ) {
+    public Consumer<Map<String, BillingAccount>> orderHeader(Dao dao, boolean succ) {
         return e -> dao.chainOrderHeader(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, BillingAccount>> orderHeader(Dao dao,
+    public Consumer<Map<String, BillingAccount>> orderHeader(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, BillingAccount>> paymentApplication(Dao dao, boolean succ) {
+    public Consumer<Map<String, BillingAccount>> paymentApplication(Dao dao, boolean succ) {
         return e -> dao.chainPaymentApplication(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, BillingAccount>> paymentApplication(Dao dao,
+    public Consumer<Map<String, BillingAccount>> paymentApplication(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

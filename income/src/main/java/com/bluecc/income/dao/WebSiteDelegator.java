@@ -231,66 +231,66 @@ public class WebSiteDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, WebSite>> productStore(Dao dao, boolean succ) {
+    public Consumer<Map<String, WebSite>> productStore(Dao dao, boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, WebSite>> productStore(Dao dao,
+    public Consumer<Map<String, WebSite>> productStore(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, WebSite>> ebayConfig(Dao dao, boolean succ) {
+    public Consumer<Map<String, WebSite>> ebayConfig(Dao dao, boolean succ) {
         return e -> dao.chainEbayConfig(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, WebSite>> ebayConfig(Dao dao,
+    public Consumer<Map<String, WebSite>> ebayConfig(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainEbayConfig(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, WebSite>> orderHeader(Dao dao, boolean succ) {
+    public Consumer<Map<String, WebSite>> orderHeader(Dao dao, boolean succ) {
         return e -> dao.chainOrderHeader(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, WebSite>> orderHeader(Dao dao,
+    public Consumer<Map<String, WebSite>> orderHeader(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, WebSite>> subscriptionResource(Dao dao, boolean succ) {
+    public Consumer<Map<String, WebSite>> subscriptionResource(Dao dao, boolean succ) {
         return e -> dao.chainSubscriptionResource(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, WebSite>> subscriptionResource(Dao dao,
+    public Consumer<Map<String, WebSite>> subscriptionResource(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainSubscriptionResource(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, WebSite>> webAnalyticsConfig(Dao dao, boolean succ) {
+    public Consumer<Map<String, WebSite>> webAnalyticsConfig(Dao dao, boolean succ) {
         return e -> dao.chainWebAnalyticsConfig(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, WebSite>> webAnalyticsConfig(Dao dao,
+    public Consumer<Map<String, WebSite>> webAnalyticsConfig(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainWebAnalyticsConfig(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, WebSite>> webSiteContent(Dao dao, boolean succ) {
+    public Consumer<Map<String, WebSite>> webSiteContent(Dao dao, boolean succ) {
         return e -> dao.chainWebSiteContent(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, WebSite>> webSiteContent(Dao dao,
+    public Consumer<Map<String, WebSite>> webSiteContent(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

@@ -81,11 +81,11 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, ProductStoreFacility>> productStore(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProductStoreFacility>> productStore(Dao dao, boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProductStoreFacility>> productStore(Dao dao,
+    public Consumer<Map<String, ProductStoreFacility>> productStore(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

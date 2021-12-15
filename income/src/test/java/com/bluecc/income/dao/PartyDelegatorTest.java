@@ -4,16 +4,14 @@ import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.SqlMeta;
 import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.stub.PartyData;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.model.Party;
 import com.bluecc.income.model.PartyContactMech;
 import com.bluecc.income.model.Person;
 import com.github.javafaker.Faker;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.*;
 import com.google.gson.JsonObject;
 import com.google.protobuf.Message;
 import org.jdbi.v3.core.Handle;
@@ -37,6 +35,8 @@ import java.util.stream.Collectors;
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.hubs.fund.Util.prettyFull;
+import static com.bluecc.income.dao.PartyDelegator.PARTY_CONTACT_MECH;
+import static com.bluecc.income.dao.PartyDelegator.PERSON;
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -133,7 +133,7 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
             Handle handle = c.getHandle();
 
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party");
-            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PartyDelegator.PARTY_CONTACT_MECH);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH);
             System.out.println(view.getSql());
 
             handle.registerRowMapper(BeanMapper.factory(Party.class, view.getLeftPrefix()));
@@ -176,7 +176,7 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
         @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
         default Optional<Party> getPartyWithContactMech(ProtoMeta protoMeta, String id) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party");
-            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PartyDelegator.PARTY_CONTACT_MECH);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH);
             return getHandle().select(view.getSql()
                             + "where pa.party_id = :id "
                             + "order by pa.party_id")
@@ -197,7 +197,7 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
         @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
         default Map<String, Party> getPartyListWithContactMech(ProtoMeta protoMeta, boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
-            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PartyDelegator.PARTY_CONTACT_MECH);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH);
             return getHandle().select(view.getSql())
                     .reduceRows(new HashMap<>(), (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
@@ -216,7 +216,7 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
                                                     Map<String, Party> inMap,
                                                     boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
-            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PartyDelegator.PARTY_CONTACT_MECH);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH);
             return getHandle().select(view.getSql())
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
@@ -293,6 +293,12 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
         };
     }
 
+    Consumer<Map<String, Party>> convertParties(String key) {
+        return e -> {
+            assertNotNull(e.get(key));
+        };
+    }
+
     // @Test
     // public void testConsumerAsVar(){
     //     Consumer<Map<String, Party>> fn=printParties("DemoCustomer");
@@ -317,6 +323,43 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
                     .andThen(partyDelegator.person(dao, true))
                     .andThen(printParties("DemoCustomer"))
                     .accept(new HashMap<>());
+        });
+    }
+
+    @Test
+    public void testChainInvokeAndConvert() {
+        process(c -> {
+            PartyDelegator.Dao dao = c.getHandle().attach(PartyDelegator.Dao.class);
+            Map<String, Party> dataMap=Maps.newHashMap();
+
+            // partyDelegator.partyContactMech(dao, false)
+            //         .andThen(partyDelegator.person(dao, true))
+            //         .andThen(printParties("DemoCustomer"))
+            //         .accept(dataMap);
+
+            Set<String> incls= Sets.newHashSet(
+                    PARTY_CONTACT_MECH,
+                    PERSON);
+
+            // chain-queries
+            Consumer<Map<String, Party>> chain=partyDelegator.person(dao, false);
+            if(incls.contains(PARTY_CONTACT_MECH)){
+                chain=chain.andThen(partyDelegator.partyContactMech(dao, true));
+            }
+            chain.accept(dataMap);
+
+            System.out.println(dataMap.keySet());
+
+            // convert (在这个阶段可以根据权限来确定要返回的关联数据和字段,
+            // 选在这个阶段的好处是可以为所有用户只缓存一份数据)
+            List<PartyData> partyDataList = dataMap.values().stream().map(data -> {
+                PartyData.Builder partyData = data.toHeadBuilder();
+                data.getRelPerson().forEach(e -> partyData.setPerson(e.toHeadBuilder()));
+                data.getRelPartyContactMech().forEach(e -> partyData.addPartyContactMech(e.toDataBuilder()));
+                return partyData.build();
+            }).collect(Collectors.toList());
+
+            partyDataList.forEach(e -> System.out.println(e));
         });
     }
 

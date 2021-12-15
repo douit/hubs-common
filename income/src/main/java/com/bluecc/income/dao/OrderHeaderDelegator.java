@@ -621,209 +621,209 @@ public class OrderHeaderDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, OrderHeader>> billingAccount(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> billingAccount(Dao dao, boolean succ) {
         return e -> dao.chainBillingAccount(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> billingAccount(Dao dao,
+    public Consumer<Map<String, OrderHeader>> billingAccount(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainBillingAccount(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> productStore(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> productStore(Dao dao, boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> productStore(Dao dao,
+    public Consumer<Map<String, OrderHeader>> productStore(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> createdByUserLogin(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> createdByUserLogin(Dao dao, boolean succ) {
         return e -> dao.chainCreatedByUserLogin(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> createdByUserLogin(Dao dao,
+    public Consumer<Map<String, OrderHeader>> createdByUserLogin(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByUserLogin(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> webSite(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> webSite(Dao dao, boolean succ) {
         return e -> dao.chainWebSite(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> webSite(Dao dao,
+    public Consumer<Map<String, OrderHeader>> webSite(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainWebSite(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> acquireFixedAsset(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> acquireFixedAsset(Dao dao, boolean succ) {
         return e -> dao.chainAcquireFixedAsset(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> acquireFixedAsset(Dao dao,
+    public Consumer<Map<String, OrderHeader>> acquireFixedAsset(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainAcquireFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> itemIssuance(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> itemIssuance(Dao dao, boolean succ) {
         return e -> dao.chainItemIssuance(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> itemIssuance(Dao dao,
+    public Consumer<Map<String, OrderHeader>> itemIssuance(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainItemIssuance(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderAdjustment(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderAdjustment(Dao dao, boolean succ) {
         return e -> dao.chainOrderAdjustment(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderAdjustment(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderAdjustment(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderAdjustment(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderContactMech(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderContactMech(Dao dao, boolean succ) {
         return e -> dao.chainOrderContactMech(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderContactMech(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderContactMech(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderContactMech(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderItem(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderItem(Dao dao, boolean succ) {
         return e -> dao.chainOrderItem(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderItem(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderItem(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderItem(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderItemBilling(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderItemBilling(Dao dao, boolean succ) {
         return e -> dao.chainOrderItemBilling(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderItemBilling(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderItemBilling(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemBilling(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderItemPriceInfo(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderItemPriceInfo(Dao dao, boolean succ) {
         return e -> dao.chainOrderItemPriceInfo(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderItemPriceInfo(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderItemPriceInfo(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemPriceInfo(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderItemShipGroup(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderItemShipGroup(Dao dao, boolean succ) {
         return e -> dao.chainOrderItemShipGroup(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderItemShipGroup(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderItemShipGroup(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemShipGroup(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderItemShipGroupAssoc(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderItemShipGroupAssoc(Dao dao, boolean succ) {
         return e -> dao.chainOrderItemShipGroupAssoc(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderItemShipGroupAssoc(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderItemShipGroupAssoc(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemShipGroupAssoc(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderItemShipGrpInvRes(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderItemShipGrpInvRes(Dao dao, boolean succ) {
         return e -> dao.chainOrderItemShipGrpInvRes(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderItemShipGrpInvRes(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderItemShipGrpInvRes(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemShipGrpInvRes(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderPaymentPreference(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderPaymentPreference(Dao dao, boolean succ) {
         return e -> dao.chainOrderPaymentPreference(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderPaymentPreference(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderPaymentPreference(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderPaymentPreference(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderRole(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderRole(Dao dao, boolean succ) {
         return e -> dao.chainOrderRole(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderRole(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderRole(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderRole(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> orderStatus(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> orderStatus(Dao dao, boolean succ) {
         return e -> dao.chainOrderStatus(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> orderStatus(Dao dao,
+    public Consumer<Map<String, OrderHeader>> orderStatus(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderStatus(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> primaryShipment(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> primaryShipment(Dao dao, boolean succ) {
         return e -> dao.chainPrimaryShipment(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> primaryShipment(Dao dao,
+    public Consumer<Map<String, OrderHeader>> primaryShipment(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainPrimaryShipment(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, OrderHeader>> shipmentReceipt(Dao dao, boolean succ) {
+    public Consumer<Map<String, OrderHeader>> shipmentReceipt(Dao dao, boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, OrderHeader>> shipmentReceipt(Dao dao,
+    public Consumer<Map<String, OrderHeader>> shipmentReceipt(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

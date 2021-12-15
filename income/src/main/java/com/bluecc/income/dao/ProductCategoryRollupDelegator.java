@@ -201,55 +201,55 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, ProductCategoryRollup>> currentProductCategory(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProductCategoryRollup>> currentProductCategory(Dao dao, boolean succ) {
         return e -> dao.chainCurrentProductCategory(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProductCategoryRollup>> currentProductCategory(Dao dao,
+    public Consumer<Map<String, ProductCategoryRollup>> currentProductCategory(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainCurrentProductCategory(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, ProductCategoryRollup>> parentProductCategory(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProductCategoryRollup>> parentProductCategory(Dao dao, boolean succ) {
         return e -> dao.chainParentProductCategory(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProductCategoryRollup>> parentProductCategory(Dao dao,
+    public Consumer<Map<String, ProductCategoryRollup>> parentProductCategory(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainParentProductCategory(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, ProductCategoryRollup>> childProductCategoryRollup(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProductCategoryRollup>> childProductCategoryRollup(Dao dao, boolean succ) {
         return e -> dao.chainChildProductCategoryRollup(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProductCategoryRollup>> childProductCategoryRollup(Dao dao,
+    public Consumer<Map<String, ProductCategoryRollup>> childProductCategoryRollup(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainChildProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, ProductCategoryRollup>> parentProductCategoryRollup(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProductCategoryRollup>> parentProductCategoryRollup(Dao dao, boolean succ) {
         return e -> dao.chainParentProductCategoryRollup(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProductCategoryRollup>> parentProductCategoryRollup(Dao dao,
+    public Consumer<Map<String, ProductCategoryRollup>> parentProductCategoryRollup(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainParentProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, ProductCategoryRollup>> siblingProductCategoryRollup(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProductCategoryRollup>> siblingProductCategoryRollup(Dao dao, boolean succ) {
         return e -> dao.chainSiblingProductCategoryRollup(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProductCategoryRollup>> siblingProductCategoryRollup(Dao dao,
+    public Consumer<Map<String, ProductCategoryRollup>> siblingProductCategoryRollup(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

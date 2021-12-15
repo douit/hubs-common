@@ -231,66 +231,66 @@ public class FinAccountDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, FinAccount>> organizationParty(Dao dao, boolean succ) {
+    public Consumer<Map<String, FinAccount>> organizationParty(Dao dao, boolean succ) {
         return e -> dao.chainOrganizationParty(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FinAccount>> organizationParty(Dao dao,
+    public Consumer<Map<String, FinAccount>> organizationParty(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrganizationParty(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FinAccount>> ownerParty(Dao dao, boolean succ) {
+    public Consumer<Map<String, FinAccount>> ownerParty(Dao dao, boolean succ) {
         return e -> dao.chainOwnerParty(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FinAccount>> ownerParty(Dao dao,
+    public Consumer<Map<String, FinAccount>> ownerParty(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOwnerParty(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FinAccount>> replenishPaymentMethod(Dao dao, boolean succ) {
+    public Consumer<Map<String, FinAccount>> replenishPaymentMethod(Dao dao, boolean succ) {
         return e -> dao.chainReplenishPaymentMethod(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FinAccount>> replenishPaymentMethod(Dao dao,
+    public Consumer<Map<String, FinAccount>> replenishPaymentMethod(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainReplenishPaymentMethod(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FinAccount>> finAccountStatus(Dao dao, boolean succ) {
+    public Consumer<Map<String, FinAccount>> finAccountStatus(Dao dao, boolean succ) {
         return e -> dao.chainFinAccountStatus(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FinAccount>> finAccountStatus(Dao dao,
+    public Consumer<Map<String, FinAccount>> finAccountStatus(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainFinAccountStatus(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FinAccount>> orderPaymentPreference(Dao dao, boolean succ) {
+    public Consumer<Map<String, FinAccount>> orderPaymentPreference(Dao dao, boolean succ) {
         return e -> dao.chainOrderPaymentPreference(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FinAccount>> orderPaymentPreference(Dao dao,
+    public Consumer<Map<String, FinAccount>> orderPaymentPreference(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainOrderPaymentPreference(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, FinAccount>> paymentMethod(Dao dao, boolean succ) {
+    public Consumer<Map<String, FinAccount>> paymentMethod(Dao dao, boolean succ) {
         return e -> dao.chainPaymentMethod(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, FinAccount>> paymentMethod(Dao dao,
+    public Consumer<Map<String, FinAccount>> paymentMethod(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

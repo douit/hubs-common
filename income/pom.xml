@@ -206,6 +206,14 @@
             <version>3.4.12</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.casbin/jcasbin -->
+        <dependency>
+            <groupId>org.casbin</groupId>
+            <artifactId>jcasbin</artifactId>
+            <version>1.21.0</version>
+        </dependency>
+
+
         <!-- console -->
         <dependency>
             <groupId>org.jline</groupId>

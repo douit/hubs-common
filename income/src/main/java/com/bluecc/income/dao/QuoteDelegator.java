@@ -201,55 +201,55 @@ public class QuoteDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, Quote>> party(Dao dao, boolean succ) {
+    public Consumer<Map<String, Quote>> party(Dao dao, boolean succ) {
         return e -> dao.chainParty(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Quote>> party(Dao dao,
+    public Consumer<Map<String, Quote>> party(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Quote>> productStore(Dao dao, boolean succ) {
+    public Consumer<Map<String, Quote>> productStore(Dao dao, boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Quote>> productStore(Dao dao,
+    public Consumer<Map<String, Quote>> productStore(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Quote>> quoteItem(Dao dao, boolean succ) {
+    public Consumer<Map<String, Quote>> quoteItem(Dao dao, boolean succ) {
         return e -> dao.chainQuoteItem(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Quote>> quoteItem(Dao dao,
+    public Consumer<Map<String, Quote>> quoteItem(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainQuoteItem(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Quote>> quoteRole(Dao dao, boolean succ) {
+    public Consumer<Map<String, Quote>> quoteRole(Dao dao, boolean succ) {
         return e -> dao.chainQuoteRole(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Quote>> quoteRole(Dao dao,
+    public Consumer<Map<String, Quote>> quoteRole(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainQuoteRole(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, Quote>> quoteTerm(Dao dao, boolean succ) {
+    public Consumer<Map<String, Quote>> quoteTerm(Dao dao, boolean succ) {
         return e -> dao.chainQuoteTerm(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, Quote>> quoteTerm(Dao dao,
+    public Consumer<Map<String, Quote>> quoteTerm(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

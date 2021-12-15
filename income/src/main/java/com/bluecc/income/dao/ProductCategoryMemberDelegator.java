@@ -111,22 +111,22 @@ public class ProductCategoryMemberDelegator extends AbstractProcs{
     }
 
      
-    Consumer<Map<String, ProductCategoryMember>> product(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProductCategoryMember>> product(Dao dao, boolean succ) {
         return e -> dao.chainProduct(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProductCategoryMember>> product(Dao dao,
+    public Consumer<Map<String, ProductCategoryMember>> product(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainProduct(protoMeta, e, whereClause, binds, succ);
     }
      
-    Consumer<Map<String, ProductCategoryMember>> productCategory(Dao dao, boolean succ) {
+    public Consumer<Map<String, ProductCategoryMember>> productCategory(Dao dao, boolean succ) {
         return e -> dao.chainProductCategory(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, ProductCategoryMember>> productCategory(Dao dao,
+    public Consumer<Map<String, ProductCategoryMember>> productCategory(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {

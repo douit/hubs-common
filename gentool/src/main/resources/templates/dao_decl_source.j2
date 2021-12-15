@@ -81,11 +81,11 @@ public class {{ent.name}}Delegator extends AbstractProcs{
     }
 
     {% for rel in ent.validRelations %} 
-    Consumer<Map<String, {{ent.name}}>> {{rel.varName}}(Dao dao, boolean succ) {
+    public Consumer<Map<String, {{ent.name}}>> {{rel.varName}}(Dao dao, boolean succ) {
         return e -> dao.chain{{rel.name}}(protoMeta, e, succ);
     }
 
-    Consumer<Map<String, {{ent.name}}>> {{rel.varName}}(Dao dao,
+    public Consumer<Map<String, {{ent.name}}>> {{rel.varName}}(Dao dao,
                                         String whereClause,
                                         Map<String, Object> binds,
                                         boolean succ) {
