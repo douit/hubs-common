@@ -8,13 +8,21 @@ import akka.actor.typed.javadsl.ActorContext;
 import akka.actor.typed.javadsl.Behaviors;
 import com.bluecc.hubs.stub.Envelope;
 import com.bluecc.hubs.stub.StringValue;
+import com.bluecc.saga.common.IMessageEvent;
+import com.bluecc.saga.common.StateAction;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.function.Consumer;
 
 import static com.bluecc.hubs.ProtoTypes.packEntity;
 import static java.lang.Thread.sleep;
@@ -26,13 +34,11 @@ public class PartyAlphaMesh {
         //             ActorSystem.create(GreeterMain.create(), "helloakka");
         ActorSystem<Event> actorMain =
                 ActorSystem.create(Conductors.PartyConductor.create(
-                        new DataAccessor() {
-                            @Override
-                            public CompletionStage<Done> update(Event event) {
-                                log.info("update {}", event);
-                                return CompletableFuture.completedFuture(Done.getInstance());
-                            }
+                        event -> {
+                            log.info("update {}", event);
+                            return CompletableFuture.completedFuture(Done.getInstance());
                         },
+                        ArrayListMultimap.create(),
                         PartyAlphaMesh.ReEnable.INSTANCE), "admin");
         actorMain.tell(Disable.INSTANCE);
         actorMain.tell(Disable.INSTANCE);  // cause unhandled(dead-letters)
@@ -49,7 +55,7 @@ public class PartyAlphaMesh {
 
     }
 
-    public interface Event {
+    public interface Event extends IMessageEvent {
     }
 
     // general events
@@ -87,6 +93,13 @@ public class PartyAlphaMesh {
         }
     }
 
+    @Data
+    @Accessors(fluent = true)
+    public static class DerivedEvent implements Event{
+        String action;
+        Object[] params;
+    }
+
     public enum ReEnable implements Event {
         INSTANCE
     }
@@ -104,22 +117,31 @@ public class PartyAlphaMesh {
         CompletionStage<Done> update(Event event);
     }
 
+    public static final class LeadAssigned{}
+    public static final class PartyDisabled{}
+    public static final class PartyEnabled{}
+
     // --------------------
     interface Conductors {
         public class PartyConductor {
 
-            public static Behavior<Event> create(DataAccessor dataAccessor, ReEnable ev) {
-                return Behaviors.setup(ctx -> new PartyConductor(ctx, dataAccessor)
+            public static Behavior<Event> create(DataAccessor dataAccessor,
+                                                 Multimap<Class<?>, StateAction<IMessageEvent>> actionMap,
+                                                 ReEnable ev) {
+                return Behaviors.setup(ctx -> new PartyConductor(ctx, actionMap, dataAccessor)
                         .partyEnabled(ev));
             }
 
 
             ActorContext<Event> context;
             DataAccessor dataAccessor;
+            Multimap<Class<?>, StateAction<IMessageEvent>> actionMap;
 
-            PartyConductor(ActorContext<Event> context, DataAccessor dataAccessor) {
+            PartyConductor(ActorContext<Event> context, Multimap<Class<?>, StateAction<IMessageEvent>> actionMap,
+                           DataAccessor dataAccessor) {
                 this.context = context;
                 this.dataAccessor = dataAccessor;
+                this.actionMap = actionMap;
             }
 
             public ActorContext<Event> getContext() {
@@ -127,6 +149,7 @@ public class PartyAlphaMesh {
             }
 
             private Behavior<Event> leadAssignedProposal(Assigned data) {
+                log.info("leadAssignedProposal has action: {}", actionMap.get(LeadAssigned.class).size());
                 CompletionStage<Done> futureResult = dataAccessor.update(data);
                 getContext().pipeToSelf(
                         futureResult,
@@ -161,19 +184,56 @@ public class PartyAlphaMesh {
             }
 
             private Behavior<Event> partyDisabled(Disable data) {
+                log.info("partyDisabled has action: {}", actionMap.get(PartyDisabled.class).size());
                 log.info("-> partyDisabled {}/{}", data.getDeclaringClass().getSimpleName(), data);
                 return Behaviors.receive(Event.class)
                         .onMessage(ReEnable.class, message -> partyEnabled(message))
+                        .onMessage(DerivedEvent.class, message-> onDerivedEvent(PartyDisabled.class, message))
                         .build();
             }
 
             private Behavior<Event> partyEnabled(ReEnable data) {
+                log.info("partyEnabled has action: {}", actionMap.get(PartyEnabled.class).size());
                 log.info("-> partyEnabled {}/{}", data.getDeclaringClass().getSimpleName(), data);
                 return Behaviors.receive(Event.class)
-                        .onMessage(Disable.class, message -> partyDisabled(message))
-                        .onMessage(Assigned.class, message -> leadAssignedProposal(message))
-                        .onMessage(ConvertLeadToContact.class, message -> leadConverted(message))
+                        .onMessage(Disable.class, message -> {
+                            onEvent(PartyEnabled.class, Disable.class, message);
+                            return partyDisabled(message);
+                        })
+                        .onMessage(Assigned.class, message -> {
+                            onEvent(PartyEnabled.class, Assigned.class, message);
+                            return leadAssignedProposal(message);
+                        })
+                        .onMessage(ConvertLeadToContact.class, message -> {
+                            onEvent(PartyEnabled.class, ConvertLeadToContact.class, message);
+                            return leadConverted(message);
+                        })
+                        .onMessage(DerivedEvent.class, message-> onDerivedEvent(PartyEnabled.class, message))
                         .build();
+            }
+
+            private <T extends Event> void onEvent(Class<?> stateClass, Class<T> messageClass, T message) {
+                actionMap.get(stateClass).stream().filter(sta -> sta.getAccepter()[0]==messageClass)
+                        .forEach(sta -> sta.getAction()
+                                .accept(message));
+            }
+
+            private Behavior<Event> onDerivedEvent(Class<?> actionClass,DerivedEvent message) {
+                log.info("derive event: {}", message);
+                System.out.println(actionMap.keySet());
+                log.info("has action: {}", actionMap.get(actionClass).size());
+                // actionMap.get(actionClass).stream()
+                //         .filter(m -> m.getName().equals(message.action))
+                //         .forEach(m -> {
+                //             // fire it
+                //             try {
+                //                 log.info("fire it!");
+                //                 // m.invoke(dataAccessor, message.params);
+                //             } catch (Exception e) {
+                //                 e.printStackTrace();
+                //             }
+                //         });
+                return Behaviors.same();
             }
 
         }

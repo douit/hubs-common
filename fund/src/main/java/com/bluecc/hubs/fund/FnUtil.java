@@ -1,5 +1,8 @@
 package com.bluecc.hubs.fund;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
@@ -28,5 +31,14 @@ public class FnUtil {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Type[] getActualTypeArguments(Method method){
+        Type genericReturnType = method.getGenericReturnType();
+        Type[] actualTypeArguments = null;
+        if (genericReturnType instanceof ParameterizedType) {
+            actualTypeArguments = ((ParameterizedType) genericReturnType).getActualTypeArguments();
+        }
+        return actualTypeArguments;
     }
 }
