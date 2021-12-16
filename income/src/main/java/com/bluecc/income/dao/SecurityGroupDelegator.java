@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
@@ -218,6 +219,11 @@ public class SecurityGroupDelegator extends AbstractProcs{
     }
     
 
+
+    public Map<String, SecurityGroup> chainQuery(IProc.ProcContext c, String... incls) {
+        return chainQuery(c, Sets.newHashSet(incls));
+    }
+    
     public Map<String, SecurityGroup> chainQuery(IProc.ProcContext c, Set<String> incls) {
         Map<String, SecurityGroup> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
@@ -272,6 +278,20 @@ public class SecurityGroupDelegator extends AbstractProcs{
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countSecurityGroup();
+    }
+
+
+    public void store(SecurityGroup securityGroup){
+        store(securityGroup, true);
+    }
+
+    public void store(SecurityGroup securityGroup, boolean genId){
+        process(c ->{
+            if(genId){
+                securityGroup.setGroupId(sequence.nextStringId());
+            }
+            storeOrUpdate(c, securityGroup.toData());
+        });
     }
 
 

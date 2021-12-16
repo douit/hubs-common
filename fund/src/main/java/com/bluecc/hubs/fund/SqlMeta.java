@@ -28,13 +28,17 @@ public class SqlMeta {
         return getAliases("*stamp");
     }
 
-    public List<String> getAliases(String... exclude) {
-        String prefix = meta.getPrefix();
+    public List<String> getAliasesInPrefix(String prefix, String[] exclude) {
         // only pick pk if this is succeeding invoke
         List<String> cols = succInvoke ? Collections.singletonList(meta.getUnderscorePk()) : meta.getColNames(exclude);
         return cols.stream()
                 .map(f -> String.format("%s.%s %s_%s", prefix, f, prefix, f))
                 .collect(Collectors.toList());
+    }
+
+    public List<String> getAliases(String... exclude) {
+        String prefix = meta.getPrefix();
+        return getAliasesInPrefix(prefix, exclude);
     }
 
     public String getPrefix() {
@@ -82,16 +86,22 @@ public class SqlMeta {
         EntityMeta.RelationMeta rel = this.meta.findRelationByProtoName(relation).get();
         SqlMeta right = protoMeta.getSqlMeta(rel.relEntityName);
         List<String> allFields = getAliases(exclude);
-        allFields.addAll(right.getAliases(exclude));
+        // allFields.addAll(right.getAliases(exclude));
+        allFields.addAll(right.getAliasesInPrefix(rel.getPrefix(), exclude));
         String fieldDecl = String.join(", ", allFields);
         // "from contacts c left join phones p on c.id = p.contact_id"
         String joinClause = rel.getKeymaps().stream().map(km -> String.format("%s.%s = %s.%s",
                         meta.getPrefix(), km.getProtoField(),
-                        right.meta.getPrefix(), km.getProtoRelField()))
+                        // right.meta.getPrefix(),
+                        rel.getPrefix(),
+                        km.getProtoRelField()))
                 .collect(Collectors.joining(" and "));
         String joinDecl = String.format("from %s %s left join %s %s on %s",
                 meta.getUnderscore(), meta.getPrefix(),
-                right.meta.getUnderscore(), right.meta.getPrefix(), joinClause);
+                right.meta.getUnderscore(),
+                // right.meta.getPrefix(),
+                rel.getPrefix(),
+                joinClause);
         String sql = addLinebreaks(String.format("select %s \n%s", fieldDecl, joinDecl), 80);
         return ViewDecl.builder()
                 .sql(sql)

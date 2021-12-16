@@ -71,16 +71,6 @@ public class GenericProcs extends AbstractProcs {
         });
     }
 
-    public void storeOrUpdate(IProc.ProcContext c, Message e) {
-        List<Map<String, Object>> rs = findById(c, e);
-        if (rs.isEmpty()) {
-            create(c, e);
-        } else {
-            log.debug("it exists, update it: "+e);
-            update(c, e);
-        }
-    }
-
     public void storeDataFile(IProc.ProcContext c, String source) {
         Multimap<String, Message> dataMap = loadDataSet(source);
         dataMap.asMap().forEach((k, v) -> {

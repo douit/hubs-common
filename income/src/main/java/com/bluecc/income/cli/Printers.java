@@ -7,8 +7,9 @@ import java.util.List;
 
 public class Printers {
 
-    public static void printChildren(WithSuppliers obj, String indent) {
+    public static void printChildren(WithSuppliers obj) {
         System.out.println(Util.toString(obj));
+        String indent="\t";
         obj.suppliers().forEach((k, v)-> {
             List<?> values=v.get();
             if(!values.isEmpty()) {

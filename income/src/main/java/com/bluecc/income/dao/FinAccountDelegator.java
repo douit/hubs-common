@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
@@ -464,6 +465,11 @@ public class FinAccountDelegator extends AbstractProcs{
     }
     
 
+
+    public Map<String, FinAccount> chainQuery(IProc.ProcContext c, String... incls) {
+        return chainQuery(c, Sets.newHashSet(incls));
+    }
+    
     public Map<String, FinAccount> chainQuery(IProc.ProcContext c, Set<String> incls) {
         Map<String, FinAccount> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
@@ -554,6 +560,20 @@ public class FinAccountDelegator extends AbstractProcs{
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countFinAccount();
+    }
+
+
+    public void store(FinAccount finAccount){
+        store(finAccount, true);
+    }
+
+    public void store(FinAccount finAccount, boolean genId){
+        process(c ->{
+            if(genId){
+                finAccount.setFinAccountId(sequence.nextStringId());
+            }
+            storeOrUpdate(c, finAccount.toData());
+        });
     }
 
 

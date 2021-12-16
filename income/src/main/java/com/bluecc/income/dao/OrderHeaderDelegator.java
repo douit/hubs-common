@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
@@ -915,6 +916,11 @@ public class OrderHeaderDelegator extends AbstractProcs{
     }
     
 
+
+    public Map<String, OrderHeader> chainQuery(IProc.ProcContext c, String... incls) {
+        return chainQuery(c, Sets.newHashSet(incls));
+    }
+    
     public Map<String, OrderHeader> chainQuery(IProc.ProcContext c, Set<String> incls) {
         Map<String, OrderHeader> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
@@ -1071,6 +1077,20 @@ public class OrderHeaderDelegator extends AbstractProcs{
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countOrderHeader();
+    }
+
+
+    public void store(OrderHeader orderHeader){
+        store(orderHeader, true);
+    }
+
+    public void store(OrderHeader orderHeader, boolean genId){
+        process(c ->{
+            if(genId){
+                orderHeader.setOrderId(sequence.nextStringId());
+            }
+            storeOrUpdate(c, orderHeader.toData());
+        });
     }
 
 

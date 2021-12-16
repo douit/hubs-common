@@ -74,8 +74,8 @@ public class AbstractProcs {
         truncate(ctx, Arrays.asList(tableNames));
     }
 
-    public String getPk(String entityName){
-        EntityMeta meta=protoMeta.getEntityMeta(entityName);
+    public String getPk(String entityName) {
+        EntityMeta meta = protoMeta.getEntityMeta(entityName);
         Preconditions.checkNotNull(meta, "Cannot find entity %s", entityName);
         return meta.getPkCol();
     }
@@ -93,7 +93,7 @@ public class AbstractProcs {
         Preconditions.checkNotNull(o, "Object is null");
     }
 
-    public static String getResultId(Map<String, MessageMapCollector.ResultData> resultDataMap){
+    public static String getResultId(Map<String, MessageMapCollector.ResultData> resultDataMap) {
         return resultDataMap.get("_id_").getChildId();
     }
 
@@ -244,6 +244,8 @@ public class AbstractProcs {
         Map<String, Object> e;
         String idCond;
         String fieldsCondition;
+        boolean containsIdValue;
+        Set<String> keys;
     }
 
     public static ExtractedTableInfo extract(Message flatData) {
@@ -259,12 +261,21 @@ public class AbstractProcs {
 
         String table = getTableByMessage(flatData);
 
-        List<String> idCondList = Lists.newArrayList();
-        for (String entityKey : ProtoTypes.getEntityKeys(flatData)) {
-            idCondList.add(format("%s=:%s", entityKey, entityKey));
-        }
-        String idCond = String.join(" and ", idCondList);
+        Set<String> keys = ProtoTypes.getEntityKeySet(flatData);
 
+        boolean containsIdValue=false;
+        String idCond;
+        if (e.containsKey("id")) {
+            idCond = "id=:id";
+            containsIdValue=true;
+        } else {
+            List<String> idCondList = Lists.newArrayList();
+            for (String entityKey : keys) {
+                idCondList.add(format("%s=:%s", entityKey, entityKey));
+            }
+            idCond = String.join(" and ", idCondList);
+            containsIdValue=e.keySet().containsAll(keys);
+        }
         return ExtractedTableInfo.builder()
                 .table(table)
                 .names(names)
@@ -272,6 +283,8 @@ public class AbstractProcs {
                 .e(e)
                 .idCond(idCond)
                 .fieldsCondition(fieldsCond)
+                .keys(keys)
+                .containsIdValue(containsIdValue)
                 .build();
     }
 
@@ -323,7 +336,7 @@ public class AbstractProcs {
                 .map(name -> name + " = :" + name)
                 .collect(Collectors.toList());
 
-        if(fieldsCond.isEmpty()){
+        if (fieldsCond.isEmpty()) {
             log.warn("no fields to update.");
             return 0;
         }
@@ -359,8 +372,22 @@ public class AbstractProcs {
         return total;
     }
 
+    public void storeOrUpdate(IProc.ProcContext c, Message e) {
+        List<Map<String, Object>> rs = findById(c, e);
+        if (rs.isEmpty()) {
+            create(c, e);
+        } else {
+            log.debug("it exists, update it: " + e);
+            update(c, e);
+        }
+    }
+
     public List<Map<String, Object>> findById(IProc.ProcContext ctx, Message flatData) {
         ExtractedTableInfo tableInfo = extract(flatData);
+        if(!tableInfo.containsIdValue){
+            return new ArrayList<>();
+        }
+
         List<Map<String, Object>> rs = ctx.getHandle().createQuery(
                         "select * from <table> where <id_cond>")
                 .define("table", tableInfo.table)
@@ -393,8 +420,8 @@ public class AbstractProcs {
         return rs;
     }
 
-    String getIdCond(Identity identity){
-        String key= getKey(identity);
+    String getIdCond(Identity identity) {
+        String key = getKey(identity);
         return String.format("%s=:%s", key, key);
     }
 
@@ -416,7 +443,7 @@ public class AbstractProcs {
         return Util.toSnakecase(identity.getType());
     }
 
-    public static  <T> T findOne(IProc.ProcContext ctx, Message flatData, Class<T> clz) {
+    public static <T> T findOne(IProc.ProcContext ctx, Message flatData, Class<T> clz) {
         ExtractedTableInfo tableInfo = extract(flatData);
         T rec = ctx.getHandle().createQuery("select * from <table> where <fields_cond>")
                 .define("table", tableInfo.table)
@@ -453,7 +480,7 @@ public class AbstractProcs {
         return all(c, flatData, 0);
     }
 
-    public List<Map<String, Object>> all(IProc.ProcContext c, INameSymbol symbol){
+    public List<Map<String, Object>> all(IProc.ProcContext c, INameSymbol symbol) {
         return all(c, symbol, 0);
     }
 

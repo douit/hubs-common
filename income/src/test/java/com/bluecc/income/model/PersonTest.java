@@ -58,7 +58,7 @@ public class PersonTest {
         //     System.out.println(k+": "+v.get());
         // });
 
-        printChildren(person, "\t");
+        printChildren(person);
 
     }
 
