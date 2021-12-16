@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.OrderHeaderFlatData;
 
 import com.bluecc.hubs.stub.OrderHeaderData;
 import com.bluecc.income.dao.OrderHeaderDelegator;
+import static com.bluecc.income.dao.OrderHeaderDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -71,6 +78,7 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -176,6 +184,9 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -214,6 +225,7 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
                 .invoicePerShipment(getIndicatorChar(data.getInvoicePerShipment()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -221,45 +233,96 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
         // relations
      
     @Exclude
+    @Singular("addOriginFacility")
     List<Facility> relOriginFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addBillingAccount")
     List<BillingAccount> relBillingAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStore")
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
+    @Singular("addCreatedByUserLogin")
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
     @Exclude
+    @Singular("addWebSite")
     List<WebSite> relWebSite= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcquireFixedAsset")
     List<FixedAsset> relAcquireFixedAsset= new ArrayList<>(); 
     @Exclude
+    @Singular("addItemIssuance")
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderAdjustment")
     List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderContactMech")
     List<OrderContactMech> relOrderContactMech= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItem")
     List<OrderItem> relOrderItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemBilling")
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemPriceInfo")
     List<OrderItemPriceInfo> relOrderItemPriceInfo= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemShipGroup")
     List<OrderItemShipGroup> relOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemShipGroupAssoc")
     List<OrderItemShipGroupAssoc> relOrderItemShipGroupAssoc= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemShipGrpInvRes")
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderPaymentPreference")
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderRole")
     List<OrderRole> relOrderRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderStatus")
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     @Exclude
+    @Singular("addPrimaryShipment")
     List<Shipment> relPrimaryShipment= new ArrayList<>(); 
     @Exclude
-    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
+    @Singular("addShipmentReceipt")
+    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(ORIGIN_FACILITY, getter(this, OrderHeader::getRelOriginFacility)); 
+        supplierMap.put(BILLING_ACCOUNT, getter(this, OrderHeader::getRelBillingAccount)); 
+        supplierMap.put(PRODUCT_STORE, getter(this, OrderHeader::getRelProductStore)); 
+        supplierMap.put(CREATED_BY_USER_LOGIN, getter(this, OrderHeader::getRelCreatedByUserLogin)); 
+        supplierMap.put(WEB_SITE, getter(this, OrderHeader::getRelWebSite)); 
+        supplierMap.put(ACQUIRE_FIXED_ASSET, getter(this, OrderHeader::getRelAcquireFixedAsset)); 
+        supplierMap.put(ITEM_ISSUANCE, getter(this, OrderHeader::getRelItemIssuance)); 
+        supplierMap.put(ORDER_ADJUSTMENT, getter(this, OrderHeader::getRelOrderAdjustment)); 
+        supplierMap.put(ORDER_CONTACT_MECH, getter(this, OrderHeader::getRelOrderContactMech)); 
+        supplierMap.put(ORDER_ITEM, getter(this, OrderHeader::getRelOrderItem)); 
+        supplierMap.put(ORDER_ITEM_BILLING, getter(this, OrderHeader::getRelOrderItemBilling)); 
+        supplierMap.put(ORDER_ITEM_PRICE_INFO, getter(this, OrderHeader::getRelOrderItemPriceInfo)); 
+        supplierMap.put(ORDER_ITEM_SHIP_GROUP, getter(this, OrderHeader::getRelOrderItemShipGroup)); 
+        supplierMap.put(ORDER_ITEM_SHIP_GROUP_ASSOC, getter(this, OrderHeader::getRelOrderItemShipGroupAssoc)); 
+        supplierMap.put(ORDER_ITEM_SHIP_GRP_INV_RES, getter(this, OrderHeader::getRelOrderItemShipGrpInvRes)); 
+        supplierMap.put(ORDER_PAYMENT_PREFERENCE, getter(this, OrderHeader::getRelOrderPaymentPreference)); 
+        supplierMap.put(ORDER_ROLE, getter(this, OrderHeader::getRelOrderRole)); 
+        supplierMap.put(ORDER_STATUS, getter(this, OrderHeader::getRelOrderStatus)); 
+        supplierMap.put(PRIMARY_SHIPMENT, getter(this, OrderHeader::getRelPrimaryShipment)); 
+        supplierMap.put(SHIPMENT_RECEIPT, getter(this, OrderHeader::getRelShipmentReceipt)); 
+        supplierMap.put(TENANT, getter(this, OrderHeader::getRelTenant));
+
+        return supplierMap;
+    };
 
     public OrderHeaderDelegator.Agent agent(IProc.ProcContext ctx,
                                              OrderHeaderDelegator delegator){
@@ -455,5 +518,6 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
     + TrackingCodeOrder (many, autoRelation: true, keymaps: orderId)
     + TrackingCodeOrderReturn (many, autoRelation: true, keymaps: orderId)
     + WorkOrderItemFulfillment (many, autoRelation: true, keymaps: orderId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.UserLoginData;
 
 public class UserLoginDelegator extends AbstractProcs{
@@ -1187,6 +1189,66 @@ public class UserLoginDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "abwepa")
+        default Map<String, UserLogin> chainAssignedByWorkEffortPartyAssignment(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               boolean succInvoke) {
+            return chainAssignedByWorkEffortPartyAssignment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "abwepa")
+        default Map<String, UserLogin> chainAssignedByWorkEffortPartyAssignment(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ASSIGNED_BY_WORK_EFFORT_PARTY_ASSIGNMENT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
+                                id -> rr.getRow(UserLogin.class));
+                        if (rr.getColumn("abwepa_assigned_by_user_login_id", String.class) != null) {
+                            p.getRelAssignedByWorkEffortPartyAssignment()
+                                    .add(rr.getRow(WorkEffortPartyAssignment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, UserLogin> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, UserLogin> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
+                                id -> rr.getRow(UserLogin.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -1608,7 +1670,289 @@ public class UserLoginDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainUserLoginSecurityGroup(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, UserLogin>> assignedByWorkEffortPartyAssignment(Dao dao, boolean succ) {
+        return e -> dao.chainAssignedByWorkEffortPartyAssignment(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, UserLogin>> assignedByWorkEffortPartyAssignment(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAssignedByWorkEffortPartyAssignment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, UserLogin>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, UserLogin>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, UserLogin> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, UserLogin> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, UserLogin>> chain = tenant(dao, false);
+         
+        if (incls.contains(PARTY)) {
+            chain = chain.andThen(party(dao, true));
+        }
+         
+        if (incls.contains(PERSON)) {
+            chain = chain.andThen(person(dao, true));
+        }
+         
+        if (incls.contains(PARTY_GROUP)) {
+            chain = chain.andThen(partyGroup(dao, true));
+        }
+         
+        if (incls.contains(CHANGE_BY_BUDGET_STATUS)) {
+            chain = chain.andThen(changeByBudgetStatus(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_CONTENT)) {
+            chain = chain.andThen(createdByContent(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_CONTENT)) {
+            chain = chain.andThen(lastModifiedByContent(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_CONTENT_ASSOC)) {
+            chain = chain.andThen(createdByContentAssoc(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_CONTENT_ASSOC)) {
+            chain = chain.andThen(lastModifiedByContentAssoc(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_DATA_RESOURCE)) {
+            chain = chain.andThen(createdByDataResource(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_DATA_RESOURCE)) {
+            chain = chain.andThen(lastModifiedByDataResource(dao, true));
+        }
+         
+        if (incls.contains(FIN_ACCOUNT_STATUS)) {
+            chain = chain.andThen(finAccountStatus(dao, true));
+        }
+         
+        if (incls.contains(CHANGE_BY_INVOICE_STATUS)) {
+            chain = chain.andThen(changeByInvoiceStatus(dao, true));
+        }
+         
+        if (incls.contains(ISSUED_BY_ITEM_ISSUANCE)) {
+            chain = chain.andThen(issuedByItemIssuance(dao, true));
+        }
+         
+        if (incls.contains(AUTH_JOB_SANDBOX)) {
+            chain = chain.andThen(authJobSandbox(dao, true));
+        }
+         
+        if (incls.contains(RUN_AS_JOB_SANDBOX)) {
+            chain = chain.andThen(runAsJobSandbox(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ADJUSTMENT)) {
+            chain = chain.andThen(orderAdjustment(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_ORDER_HEADER)) {
+            chain = chain.andThen(createdByOrderHeader(dao, true));
+        }
+         
+        if (incls.contains(DONT_CANCEL_SET_ORDER_ITEM)) {
+            chain = chain.andThen(dontCancelSetOrderItem(dao, true));
+        }
+         
+        if (incls.contains(CHANGE_BY_ORDER_ITEM)) {
+            chain = chain.andThen(changeByOrderItem(dao, true));
+        }
+         
+        if (incls.contains(ORDER_PAYMENT_PREFERENCE)) {
+            chain = chain.andThen(orderPaymentPreference(dao, true));
+        }
+         
+        if (incls.contains(ORDER_STATUS)) {
+            chain = chain.andThen(orderStatus(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_PARTY)) {
+            chain = chain.andThen(createdByParty(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_PARTY)) {
+            chain = chain.andThen(lastModifiedByParty(dao, true));
+        }
+         
+        if (incls.contains(CHANGE_BY_PARTY_STATUS)) {
+            chain = chain.andThen(changeByPartyStatus(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_PRODUCT)) {
+            chain = chain.andThen(createdByProduct(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_PRODUCT)) {
+            chain = chain.andThen(lastModifiedByProduct(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_PRODUCT_FEATURE_PRICE)) {
+            chain = chain.andThen(createdByProductFeaturePrice(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_PRODUCT_FEATURE_PRICE)) {
+            chain = chain.andThen(lastModifiedByProductFeaturePrice(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_PRODUCT_PRICE)) {
+            chain = chain.andThen(createdByProductPrice(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_PRODUCT_PRICE)) {
+            chain = chain.andThen(lastModifiedByProductPrice(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_PRODUCT_PROMO)) {
+            chain = chain.andThen(createdByProductPromo(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_PRODUCT_PROMO)) {
+            chain = chain.andThen(lastModifiedByProductPromo(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_PRODUCT_PROMO_CODE)) {
+            chain = chain.andThen(createdByProductPromoCode(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_PRODUCT_PROMO_CODE)) {
+            chain = chain.andThen(lastModifiedByProductPromoCode(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_REVIEW)) {
+            chain = chain.andThen(productReview(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_RECEIPT)) {
+            chain = chain.andThen(shipmentReceipt(dao, true));
+        }
+         
+        if (incls.contains(CHANGE_BY_SHIPMENT_STATUS)) {
+            chain = chain.andThen(changeByShipmentStatus(dao, true));
+        }
+         
+        if (incls.contains(USER_LOGIN_SECURITY_GROUP)) {
+            chain = chain.andThen(userLoginSecurityGroup(dao, true));
+        }
+         
+        if (incls.contains(ASSIGNED_BY_WORK_EFFORT_PARTY_ASSIGNMENT)) {
+            chain = chain.andThen(assignedByWorkEffortPartyAssignment(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<UserLoginData> responseObserver) {
+        Map<String, UserLogin> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            UserLoginData.Builder userLoginData = data.toHeadBuilder();
+             
+            data.getRelParty().forEach(e -> 
+                userLoginData.setParty(e.toHeadBuilder())); 
+            data.getRelPerson().forEach(e -> 
+                userLoginData.setPerson(e.toHeadBuilder())); 
+            data.getRelPartyGroup().forEach(e -> 
+                userLoginData.setPartyGroup(e.toHeadBuilder())); 
+            data.getRelChangeByBudgetStatus().forEach(e -> 
+                userLoginData.addChangeByBudgetStatus(e.toDataBuilder())); 
+            data.getRelCreatedByContent().forEach(e -> 
+                userLoginData.addCreatedByContent(e.toDataBuilder())); 
+            data.getRelLastModifiedByContent().forEach(e -> 
+                userLoginData.addLastModifiedByContent(e.toDataBuilder())); 
+            data.getRelCreatedByContentAssoc().forEach(e -> 
+                userLoginData.addCreatedByContentAssoc(e.toDataBuilder())); 
+            data.getRelLastModifiedByContentAssoc().forEach(e -> 
+                userLoginData.addLastModifiedByContentAssoc(e.toDataBuilder())); 
+            data.getRelCreatedByDataResource().forEach(e -> 
+                userLoginData.addCreatedByDataResource(e.toDataBuilder())); 
+            data.getRelLastModifiedByDataResource().forEach(e -> 
+                userLoginData.addLastModifiedByDataResource(e.toDataBuilder())); 
+            data.getRelFinAccountStatus().forEach(e -> 
+                userLoginData.addFinAccountStatus(e.toDataBuilder())); 
+            data.getRelChangeByInvoiceStatus().forEach(e -> 
+                userLoginData.addChangeByInvoiceStatus(e.toDataBuilder())); 
+            data.getRelIssuedByItemIssuance().forEach(e -> 
+                userLoginData.addIssuedByItemIssuance(e.toDataBuilder())); 
+            data.getRelAuthJobSandbox().forEach(e -> 
+                userLoginData.addAuthJobSandbox(e.toDataBuilder())); 
+            data.getRelRunAsJobSandbox().forEach(e -> 
+                userLoginData.addRunAsJobSandbox(e.toDataBuilder())); 
+            data.getRelOrderAdjustment().forEach(e -> 
+                userLoginData.addOrderAdjustment(e.toDataBuilder())); 
+            data.getRelCreatedByOrderHeader().forEach(e -> 
+                userLoginData.addCreatedByOrderHeader(e.toHeadBuilder())); 
+            data.getRelDontCancelSetOrderItem().forEach(e -> 
+                userLoginData.addDontCancelSetOrderItem(e.toHeadBuilder())); 
+            data.getRelChangeByOrderItem().forEach(e -> 
+                userLoginData.addChangeByOrderItem(e.toHeadBuilder())); 
+            data.getRelOrderPaymentPreference().forEach(e -> 
+                userLoginData.addOrderPaymentPreference(e.toDataBuilder())); 
+            data.getRelOrderStatus().forEach(e -> 
+                userLoginData.addOrderStatus(e.toDataBuilder())); 
+            data.getRelCreatedByParty().forEach(e -> 
+                userLoginData.addCreatedByParty(e.toHeadBuilder())); 
+            data.getRelLastModifiedByParty().forEach(e -> 
+                userLoginData.addLastModifiedByParty(e.toHeadBuilder())); 
+            data.getRelChangeByPartyStatus().forEach(e -> 
+                userLoginData.addChangeByPartyStatus(e.toDataBuilder())); 
+            data.getRelCreatedByProduct().forEach(e -> 
+                userLoginData.addCreatedByProduct(e.toHeadBuilder())); 
+            data.getRelLastModifiedByProduct().forEach(e -> 
+                userLoginData.addLastModifiedByProduct(e.toHeadBuilder())); 
+            data.getRelCreatedByProductFeaturePrice().forEach(e -> 
+                userLoginData.addCreatedByProductFeaturePrice(e.toDataBuilder())); 
+            data.getRelLastModifiedByProductFeaturePrice().forEach(e -> 
+                userLoginData.addLastModifiedByProductFeaturePrice(e.toDataBuilder())); 
+            data.getRelCreatedByProductPrice().forEach(e -> 
+                userLoginData.addCreatedByProductPrice(e.toDataBuilder())); 
+            data.getRelLastModifiedByProductPrice().forEach(e -> 
+                userLoginData.addLastModifiedByProductPrice(e.toDataBuilder())); 
+            data.getRelCreatedByProductPromo().forEach(e -> 
+                userLoginData.addCreatedByProductPromo(e.toDataBuilder())); 
+            data.getRelLastModifiedByProductPromo().forEach(e -> 
+                userLoginData.addLastModifiedByProductPromo(e.toDataBuilder())); 
+            data.getRelCreatedByProductPromoCode().forEach(e -> 
+                userLoginData.addCreatedByProductPromoCode(e.toDataBuilder())); 
+            data.getRelLastModifiedByProductPromoCode().forEach(e -> 
+                userLoginData.addLastModifiedByProductPromoCode(e.toDataBuilder())); 
+            data.getRelProductReview().forEach(e -> 
+                userLoginData.addProductReview(e.toDataBuilder())); 
+            data.getRelShipmentReceipt().forEach(e -> 
+                userLoginData.addShipmentReceipt(e.toDataBuilder())); 
+            data.getRelChangeByShipmentStatus().forEach(e -> 
+                userLoginData.addChangeByShipmentStatus(e.toDataBuilder())); 
+            data.getRelUserLoginSecurityGroup().forEach(e -> 
+                userLoginData.addUserLoginSecurityGroup(e.toDataBuilder())); 
+            data.getRelAssignedByWorkEffortPartyAssignment().forEach(e -> 
+                userLoginData.addAssignedByWorkEffortPartyAssignment(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                userLoginData.setTenant(e.toDataBuilder()));
+            return userLoginData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public UserLogin get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getUserLogin(id);
@@ -2062,6 +2406,28 @@ public class UserLoginDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelUserLoginSecurityGroup().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<WorkEffortPartyAssignment> getAssignedByWorkEffortPartyAssignment(){
+            return getRelationValues(ctx, p1, "assigned_by_work_effort_party_assignment", WorkEffortPartyAssignment.class);
+        }
+
+        public List<WorkEffortPartyAssignment> mergeAssignedByWorkEffortPartyAssignment(){
+            return getAssignedByWorkEffortPartyAssignment().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelAssignedByWorkEffortPartyAssignment().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -2155,6 +2521,10 @@ public class UserLoginDelegator extends AbstractProcs{
     public static final String CHANGE_BY_SHIPMENT_STATUS="change_by_shipment_status";
          
     public static final String USER_LOGIN_SECURITY_GROUP="user_login_security_group";
+         
+    public static final String ASSIGNED_BY_WORK_EFFORT_PARTY_ASSIGNMENT="assigned_by_work_effort_party_assignment";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -2470,6 +2840,22 @@ public class UserLoginDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "user_login_security_group",
                                             UserLoginSecurityGroup.class)
                                     .forEach(el -> pb.addUserLoginSecurityGroup(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set assigned_by_work_effort_party_assignment to head entity                        
+                        if(relationsDemand.contains("assigned_by_work_effort_party_assignment")) {
+                            getRelationValues(ctx, p1, "assigned_by_work_effort_party_assignment",
+                                            WorkEffortPartyAssignment.class)
+                                    .forEach(el -> pb.addAssignedByWorkEffortPartyAssignment(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

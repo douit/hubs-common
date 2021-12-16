@@ -1,8 +1,8 @@
 package com.bluecc.saga.alphaworks;
 
 import com.beust.jcommander.JCommander;
-import com.bluecc.gentool.common.TemplateUtil;
 import com.bluecc.hubs.fund.Printers;
+import com.bluecc.hubs.fund.TemplateUtil;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.pubs.Exclude;
 import com.bluecc.hubs.fund.pubs.Persist;
@@ -10,7 +10,6 @@ import com.bluecc.hubs.fund.pubs.StatusUpdater;
 import com.bluecc.income.procs.Invoices;
 import com.bluecc.income.procs.Orders;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
@@ -23,9 +22,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.bluecc.hubs.fund.Util.pretty;
 import static java.util.Objects.requireNonNull;
 
+/**
+ * $ just saga AlphaGenerator
+ */
 public class AlphaGenerator {
     @Data
     @AllArgsConstructor
@@ -137,7 +138,7 @@ public class AlphaGenerator {
                 .name(clz.getSimpleName());
 
         for (Method method : clz.getDeclaredMethods()) {
-            ExecuteInfo.ExecuteInfoBuilder builder=ExecuteInfo.builder()
+            ExecuteInfo.ExecuteInfoBuilder builder= ExecuteInfo.builder()
                     .name(method.getName());
 
             // System.out.println(method.getName());

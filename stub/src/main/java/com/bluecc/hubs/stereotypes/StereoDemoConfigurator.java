@@ -17,7 +17,7 @@ import com.bluecc.hubs.stub.ProductContentData;
 import com.bluecc.hubs.stub.ProductConfigOptionData;
 import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 import com.bluecc.hubs.stub.ProductFeatureApplData;
-import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 import com.bluecc.hubs.stub.ContentData;
 import com.bluecc.hubs.stub.ProductFeatureCategoryData;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
@@ -2604,7 +2604,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_TASK01 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_TASK01 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Components")
         .setEstimatedMilliSeconds(600000)
@@ -2618,7 +2618,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_TASK02 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_TASK02 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Assembly")
         .setEstimatedMilliSeconds(900000)
@@ -2632,7 +2632,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_TASK03 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_TASK03 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Test")
         .setEstimatedMilliSeconds(450000)
@@ -2646,7 +2646,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_ROUT01 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_ROUT01 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("PC Assembly")
         .setQuantityToProduce(getFixedPoint("0"))
@@ -2657,7 +2657,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_TASK11 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_TASK11 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Components")
         .setEstimatedMilliSeconds(600000)
@@ -2671,7 +2671,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_TASK12 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_TASK12 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Assembly")
         .setEstimatedMilliSeconds(900000)
@@ -2685,7 +2685,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_TASK13 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_TASK13 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Test")
         .setEstimatedMilliSeconds(450000)
@@ -2699,7 +2699,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_ROUT11 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_ROUT11 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Food delivery")
         .setQuantityToProduce(getFixedPoint("0"))
@@ -2710,7 +2710,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_PZTASK01 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_PZTASK01 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Components")
         .setEstimatedMilliSeconds(600000)
@@ -2724,7 +2724,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_PZTASK02 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_PZTASK02 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Preparation")
         .setEstimatedMilliSeconds(900000)
@@ -2738,7 +2738,7 @@ public final class StereoDemoConfigurator {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_PZROUT01 = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_PZROUT01 = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Pizza preparation")
         .setQuantityToProduce(getFixedPoint("0"))

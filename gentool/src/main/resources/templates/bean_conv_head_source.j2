@@ -1,8 +1,18 @@
     // relations
     {% for rel in ent.validRelations %} 
     @Exclude
+    @Singular("add{{rel.name}}")
     List<{{rel.relEntityName}}> {{rel.relVarName}}= new ArrayList<>();
     {%- endfor %}
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+        {% for rel in ent.validRelations %} 
+        supplierMap.put({{rel.protoName|uppercase}}, getter(this, {{ent.name}}::{{rel.beanRelGetter}}));
+        {%- endfor %}
+
+        return supplierMap;
+    };
 
     public {{ent.name}}Delegator.Agent agent(IProc.ProcContext ctx,
                                              {{ent.name}}Delegator delegator){

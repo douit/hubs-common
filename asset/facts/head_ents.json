@@ -45,6 +45,10 @@
     "BillingAccount": {},
     "FinAccount": {},
     "Quote": {},
-    "FixedAsset": {}
+    "FixedAsset": {},
+
+    "SecurityGroup": {},
+
+    "WorkEffort": {}
   }
 }

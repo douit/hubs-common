@@ -16,7 +16,7 @@ import com.bluecc.hubs.stub.InvoiceItemTypeMapData;
 import com.bluecc.hubs.stub.StatusItemData;
 import com.bluecc.hubs.stub.StatusValidChangeData;
 import com.bluecc.hubs.stub.GlAccountTypeData;
-import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 import com.bluecc.hubs.stub.PaymentGroupTypeData;
 import com.bluecc.hubs.stub.GlAccountCategoryTypeData;
 import com.bluecc.hubs.stub.FixedAssetStdCostTypeData;
@@ -2967,7 +2967,7 @@ public final class AccountingSeedData {
         .build();
 
 
-    public final static WorkEffortData WorkEffort__NA_ = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort__NA_ = WorkEffortFlatData.newBuilder()
         .setWorkEffortId("_NA_")
         .build();
 

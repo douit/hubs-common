@@ -11,6 +11,7 @@ import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import com.google.type.Date;
+import com.google.type.TimeOfDay;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -150,6 +151,11 @@ public class MessageMapCollector {
                 log.debug("-> currency value " + val.getValue());
                 // System.out.println("-> currency value " + val.getValue() + ", field: " + fld.getName());
                 dataMap.put(fldName, new BigDecimal(val.getValue()));
+                break;
+            }
+            case "TimeOfDay": {
+                TimeOfDay val=(TimeOfDay) fldVal;
+                dataMap.put(fldName, ProtoTypes.getTime(val));
                 break;
             }
             case "FixedPoint":

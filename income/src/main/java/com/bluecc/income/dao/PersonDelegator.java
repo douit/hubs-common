@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.PersonData;
 
 public class PersonDelegator extends AbstractProcs{
@@ -287,6 +289,36 @@ public class PersonDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Person> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Person> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Person> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
+                                id -> rr.getRow(Person.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -378,7 +410,92 @@ public class PersonDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainUserLogin(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, Person>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Person>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, Person> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, Person> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, Person>> chain = tenant(dao, false);
+         
+        if (incls.contains(PARTY)) {
+            chain = chain.andThen(party(dao, true));
+        }
+         
+        if (incls.contains(PARTY_CONTACT_MECH)) {
+            chain = chain.andThen(partyContactMech(dao, true));
+        }
+         
+        if (incls.contains(PARTY_CONTACT_MECH_PURPOSE)) {
+            chain = chain.andThen(partyContactMechPurpose(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_ROLE)) {
+            chain = chain.andThen(productStoreRole(dao, true));
+        }
+         
+        if (incls.contains(TO_SHIPMENT)) {
+            chain = chain.andThen(toShipment(dao, true));
+        }
+         
+        if (incls.contains(FROM_SHIPMENT)) {
+            chain = chain.andThen(fromShipment(dao, true));
+        }
+         
+        if (incls.contains(CARRIER_SHIPMENT_ROUTE_SEGMENT)) {
+            chain = chain.andThen(carrierShipmentRouteSegment(dao, true));
+        }
+         
+        if (incls.contains(USER_LOGIN)) {
+            chain = chain.andThen(userLogin(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<PersonData> responseObserver) {
+        Map<String, Person> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            PersonData.Builder personData = data.toHeadBuilder();
+             
+            data.getRelParty().forEach(e -> 
+                personData.setParty(e.toHeadBuilder())); 
+            data.getRelPartyContactMech().forEach(e -> 
+                personData.addPartyContactMech(e.toDataBuilder())); 
+            data.getRelPartyContactMechPurpose().forEach(e -> 
+                personData.addPartyContactMechPurpose(e.toDataBuilder())); 
+            data.getRelProductStoreRole().forEach(e -> 
+                personData.addProductStoreRole(e.toDataBuilder())); 
+            data.getRelToShipment().forEach(e -> 
+                personData.addToShipment(e.toHeadBuilder())); 
+            data.getRelFromShipment().forEach(e -> 
+                personData.addFromShipment(e.toHeadBuilder())); 
+            data.getRelCarrierShipmentRouteSegment().forEach(e -> 
+                personData.addCarrierShipmentRouteSegment(e.toDataBuilder())); 
+            data.getRelUserLogin().forEach(e -> 
+                personData.addUserLogin(e.toHeadBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                personData.setTenant(e.toDataBuilder()));
+            return personData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public Person get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getPerson(id);
@@ -502,6 +619,17 @@ public class PersonDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelUserLogin().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -535,6 +663,8 @@ public class PersonDelegator extends AbstractProcs{
     public static final String CARRIER_SHIPMENT_ROUTE_SEGMENT="carrier_shipment_route_segment";
          
     public static final String USER_LOGIN="user_login";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -611,6 +741,14 @@ public class PersonDelegator extends AbstractProcs{
                                             UserLogin.class)
                                     .forEach(el -> pb.addUserLogin(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
+                                             el.toDataBuilder().build()));
                         }
                         
 

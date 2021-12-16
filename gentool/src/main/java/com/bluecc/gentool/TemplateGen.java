@@ -2,7 +2,7 @@ package com.bluecc.gentool;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.bluecc.gentool.common.TemplateUtil;
+import com.bluecc.hubs.fund.TemplateUtil;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -31,7 +31,7 @@ public class TemplateGen {
                 .addObject(main)
                 .build()
                 .parse(args);
-        String cnt= TemplateUtil.sourceGen(main.entity, main.template, true);
+        String cnt= TemplateUtil.sourceGen(main.entity, main.template);
         System.out.println(cnt);
         if(main.clip) {
             clip(cnt);

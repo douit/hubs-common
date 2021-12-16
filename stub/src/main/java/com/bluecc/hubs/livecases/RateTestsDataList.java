@@ -5,7 +5,7 @@ import java.util.List;
 import static com.bluecc.hubs.livecases.RateTestsData.*;
 
 import com.bluecc.hubs.stub.RateAmountData;
-import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.EmplPositionTypeData;
 import com.bluecc.hubs.stub.PartyRateData;
@@ -19,7 +19,7 @@ public final class RateTestsDataList {
             RateAmount_AVERAGE_PAY_RATE_USD_RATE_HOUR__NA___NA__TEST_EMPLOYEE_());
     }
 
-    public static List<WorkEffortData> workEffortList() {
+    public static List<WorkEffortFlatData> workEffortList() {
         return ImmutableList.of(        
             WorkEffort_Test_effort());
     }

@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.PaymentFlatData;
 
 import com.bluecc.hubs.stub.PaymentData;
 import com.bluecc.income.dao.PaymentDelegator;
+import static com.bluecc.income.dao.PaymentDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -60,6 +67,7 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -132,6 +140,9 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -159,6 +170,7 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
                 .actualCurrencyUomId(data.getActualCurrencyUomId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -166,31 +178,68 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
         // relations
      
     @Exclude
+    @Singular("addPaymentMethod")
     List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
     @Exclude
+    @Singular("addCreditCard")
     List<CreditCard> relCreditCard= new ArrayList<>(); 
     @Exclude
+    @Singular("addEftAccount")
     List<EftAccount> relEftAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderPaymentPreference")
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
+    @Singular("addPaymentGatewayResponse")
     List<PaymentGatewayResponse> relPaymentGatewayResponse= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromParty")
     List<Party> relFromParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addToParty")
     List<Party> relToParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addToPartyRole")
     List<PartyRole> relToPartyRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addFinAccountTrans")
     List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addGlAccount")
     List<GlAccount> relGlAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcctgTrans")
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addPaymentApplication")
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     @Exclude
-    List<PaymentApplication> relToPaymentApplication= new ArrayList<>();
+    @Singular("addToPaymentApplication")
+    List<PaymentApplication> relToPaymentApplication= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PAYMENT_METHOD, getter(this, Payment::getRelPaymentMethod)); 
+        supplierMap.put(CREDIT_CARD, getter(this, Payment::getRelCreditCard)); 
+        supplierMap.put(EFT_ACCOUNT, getter(this, Payment::getRelEftAccount)); 
+        supplierMap.put(ORDER_PAYMENT_PREFERENCE, getter(this, Payment::getRelOrderPaymentPreference)); 
+        supplierMap.put(PAYMENT_GATEWAY_RESPONSE, getter(this, Payment::getRelPaymentGatewayResponse)); 
+        supplierMap.put(FROM_PARTY, getter(this, Payment::getRelFromParty)); 
+        supplierMap.put(TO_PARTY, getter(this, Payment::getRelToParty)); 
+        supplierMap.put(TO_PARTY_ROLE, getter(this, Payment::getRelToPartyRole)); 
+        supplierMap.put(FIN_ACCOUNT_TRANS, getter(this, Payment::getRelFinAccountTrans)); 
+        supplierMap.put(GL_ACCOUNT, getter(this, Payment::getRelGlAccount)); 
+        supplierMap.put(ACCTG_TRANS, getter(this, Payment::getRelAcctgTrans)); 
+        supplierMap.put(PAYMENT_APPLICATION, getter(this, Payment::getRelPaymentApplication)); 
+        supplierMap.put(TO_PAYMENT_APPLICATION, getter(this, Payment::getRelToPaymentApplication)); 
+        supplierMap.put(TENANT, getter(this, Payment::getRelTenant));
+
+        return supplierMap;
+    };
 
     public PaymentDelegator.Agent agent(IProc.ProcContext ctx,
                                              PaymentDelegator delegator){
@@ -303,5 +352,6 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
     + PaymentGroupMember (many, autoRelation: true, keymaps: paymentId)
     + PerfReview (many, autoRelation: true, keymaps: paymentId)
     + ReturnItemResponse (many, autoRelation: true, keymaps: paymentId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

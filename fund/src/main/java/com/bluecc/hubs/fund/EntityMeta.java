@@ -268,6 +268,35 @@ public class EntityMeta {
                     .autoInc(true)
                     .build());
         }
+
+        if(isHeadEntity()){
+            getFields().add(FieldMeta.builder()
+                    .name("tenantId")
+                    .type("id")
+                    // .javaType("Long")
+                    // .sqlType("BIGINT auto_increment")
+                    .javaType("String")
+                    .sqlType("VARCHAR(20)")
+                    .stringLength(20)
+                    .col("TENANT_ID")
+                    .pk(false)
+                    .notNull(false)
+                    .autoCreatedInternal(true)
+                    .autoInc(false)
+                    .build());
+
+            getRelations().add(RelationMeta.builder()
+                            .name("Tenant")
+                            .relEntityName("Tenant")
+                            .type("one")
+                            .title("")
+                            .fkName("TENANT_FK")
+                            .keymap(KeymapMeta.builder()
+                                    .fieldName("tenantId")
+                                    .relFieldName("tenantId")
+                                    .build())
+                    .build());
+        }
         //
         // fields.stream().filter(f -> f.pk).forEach(f -> {
         //     f.setAutoInc(true);
@@ -638,6 +667,13 @@ public class EntityMeta {
         public String getRelVarName(){
             return "rel"+name;
         }
+        public String getBeanRelGetter(){
+            return "getRel"+name;
+        }
+
+        public static String getRelVarNameByRelation(String relUnderscore){
+            return "rel"+Util.lowerSnakeToCamel(relUnderscore);
+        }
 
         public String getTableName(){
             return Util.toSnakecase(relEntityName);
@@ -707,6 +743,10 @@ public class EntityMeta {
             // String conv=isHeadEntity()?String.format("(%sData)", relEntityName):"";
             return String.format("%s el.to%sBuilder().build()",
                     "", isHeadEntity()?"Head":"Data");
+        }
+
+        public String getToBuilder(){
+            return String.format("to%sBuilder", isHeadEntity()?"Head":"Data");
         }
     }
 

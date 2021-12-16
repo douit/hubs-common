@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.ProductCategoryData;
 
 public class ProductCategoryDelegator extends AbstractProcs{
@@ -497,6 +499,36 @@ public class ProductCategoryDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "pc")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductCategory> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductCategory> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "pc")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductCategory> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductCategory> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategory", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductCategory p = map.computeIfAbsent(rr.getColumn("pc_product_category_id", String.class),
+                                id -> rr.getRow(ProductCategory.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -665,7 +697,134 @@ public class ProductCategoryDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainTaxAuthorityRateProduct(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, ProductCategory>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, ProductCategory>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, ProductCategory> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, ProductCategory> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, ProductCategory>> chain = tenant(dao, false);
+         
+        if (incls.contains(PRIMARY_PARENT_PRODUCT_CATEGORY)) {
+            chain = chain.andThen(primaryParentProductCategory(dao, true));
+        }
+         
+        if (incls.contains(PRIMARY_CHILD_PRODUCT_CATEGORY)) {
+            chain = chain.andThen(primaryChildProductCategory(dao, true));
+        }
+         
+        if (incls.contains(PROD_CATALOG_CATEGORY)) {
+            chain = chain.andThen(prodCatalogCategory(dao, true));
+        }
+         
+        if (incls.contains(PRIMARY_PRODUCT)) {
+            chain = chain.andThen(primaryProduct(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_CATEGORY_CONTENT)) {
+            chain = chain.andThen(productCategoryContent(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_CATEGORY_LINK)) {
+            chain = chain.andThen(productCategoryLink(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_CATEGORY_MEMBER)) {
+            chain = chain.andThen(productCategoryMember(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_CATEGORY_ROLE)) {
+            chain = chain.andThen(productCategoryRole(dao, true));
+        }
+         
+        if (incls.contains(CURRENT_PRODUCT_CATEGORY_ROLLUP)) {
+            chain = chain.andThen(currentProductCategoryRollup(dao, true));
+        }
+         
+        if (incls.contains(PARENT_PRODUCT_CATEGORY_ROLLUP)) {
+            chain = chain.andThen(parentProductCategoryRollup(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FEATURE_CATEGORY_APPL)) {
+            chain = chain.andThen(productFeatureCategoryAppl(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_PROMO_CATEGORY)) {
+            chain = chain.andThen(productPromoCategory(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_SURVEY_APPL)) {
+            chain = chain.andThen(productStoreSurveyAppl(dao, true));
+        }
+         
+        if (incls.contains(TAX_AUTHORITY_CATEGORY)) {
+            chain = chain.andThen(taxAuthorityCategory(dao, true));
+        }
+         
+        if (incls.contains(TAX_AUTHORITY_RATE_PRODUCT)) {
+            chain = chain.andThen(taxAuthorityRateProduct(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<ProductCategoryData> responseObserver) {
+        Map<String, ProductCategory> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            ProductCategoryData.Builder productCategoryData = data.toHeadBuilder();
+             
+            data.getRelPrimaryParentProductCategory().forEach(e -> 
+                productCategoryData.setPrimaryParentProductCategory(e.toHeadBuilder())); 
+            data.getRelPrimaryChildProductCategory().forEach(e -> 
+                productCategoryData.addPrimaryChildProductCategory(e.toHeadBuilder())); 
+            data.getRelProdCatalogCategory().forEach(e -> 
+                productCategoryData.addProdCatalogCategory(e.toHeadBuilder())); 
+            data.getRelPrimaryProduct().forEach(e -> 
+                productCategoryData.addPrimaryProduct(e.toHeadBuilder())); 
+            data.getRelProductCategoryContent().forEach(e -> 
+                productCategoryData.addProductCategoryContent(e.toDataBuilder())); 
+            data.getRelProductCategoryLink().forEach(e -> 
+                productCategoryData.addProductCategoryLink(e.toDataBuilder())); 
+            data.getRelProductCategoryMember().forEach(e -> 
+                productCategoryData.addProductCategoryMember(e.toHeadBuilder())); 
+            data.getRelProductCategoryRole().forEach(e -> 
+                productCategoryData.addProductCategoryRole(e.toDataBuilder())); 
+            data.getRelCurrentProductCategoryRollup().forEach(e -> 
+                productCategoryData.addCurrentProductCategoryRollup(e.toHeadBuilder())); 
+            data.getRelParentProductCategoryRollup().forEach(e -> 
+                productCategoryData.addParentProductCategoryRollup(e.toHeadBuilder())); 
+            data.getRelProductFeatureCategoryAppl().forEach(e -> 
+                productCategoryData.addProductFeatureCategoryAppl(e.toDataBuilder())); 
+            data.getRelProductPromoCategory().forEach(e -> 
+                productCategoryData.addProductPromoCategory(e.toDataBuilder())); 
+            data.getRelProductStoreSurveyAppl().forEach(e -> 
+                productCategoryData.addProductStoreSurveyAppl(e.toDataBuilder())); 
+            data.getRelTaxAuthorityCategory().forEach(e -> 
+                productCategoryData.addTaxAuthorityCategory(e.toDataBuilder())); 
+            data.getRelTaxAuthorityRateProduct().forEach(e -> 
+                productCategoryData.addTaxAuthorityRateProduct(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                productCategoryData.setTenant(e.toDataBuilder()));
+            return productCategoryData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public ProductCategory get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProductCategory(id);
@@ -866,6 +1025,17 @@ public class ProductCategoryDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelTaxAuthorityRateProduct().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -913,6 +1083,8 @@ public class ProductCategoryDelegator extends AbstractProcs{
     public static final String TAX_AUTHORITY_CATEGORY="tax_authority_category";
          
     public static final String TAX_AUTHORITY_RATE_PRODUCT="tax_authority_rate_product";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -1044,6 +1216,14 @@ public class ProductCategoryDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "tax_authority_rate_product",
                                             TaxAuthorityRateProduct.class)
                                     .forEach(el -> pb.addTaxAuthorityRateProduct(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

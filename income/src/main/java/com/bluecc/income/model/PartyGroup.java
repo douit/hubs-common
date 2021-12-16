@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.PartyGroupFlatData;
 
 import com.bluecc.hubs.stub.PartyGroupData;
 import com.bluecc.income.dao.PartyGroupDelegator;
+import static com.bluecc.income.dao.PartyGroupDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -50,6 +57,7 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -92,6 +100,9 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -109,6 +120,7 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
                 .logoImageUrl(data.getLogoImageUrl())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -116,21 +128,48 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
         // relations
      
     @Exclude
+    @Singular("addParty")
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyContactMech")
     List<PartyContactMech> relPartyContactMech= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyContactMechPurpose")
     List<PartyContactMechPurpose> relPartyContactMechPurpose= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreRole")
     List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addToShipment")
     List<Shipment> relToShipment= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromShipment")
     List<Shipment> relFromShipment= new ArrayList<>(); 
     @Exclude
+    @Singular("addCarrierShipmentRouteSegment")
     List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
     @Exclude
-    List<UserLogin> relUserLogin= new ArrayList<>();
+    @Singular("addUserLogin")
+    List<UserLogin> relUserLogin= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PARTY, getter(this, PartyGroup::getRelParty)); 
+        supplierMap.put(PARTY_CONTACT_MECH, getter(this, PartyGroup::getRelPartyContactMech)); 
+        supplierMap.put(PARTY_CONTACT_MECH_PURPOSE, getter(this, PartyGroup::getRelPartyContactMechPurpose)); 
+        supplierMap.put(PRODUCT_STORE_ROLE, getter(this, PartyGroup::getRelProductStoreRole)); 
+        supplierMap.put(TO_SHIPMENT, getter(this, PartyGroup::getRelToShipment)); 
+        supplierMap.put(FROM_SHIPMENT, getter(this, PartyGroup::getRelFromShipment)); 
+        supplierMap.put(CARRIER_SHIPMENT_ROUTE_SEGMENT, getter(this, PartyGroup::getRelCarrierShipmentRouteSegment)); 
+        supplierMap.put(USER_LOGIN, getter(this, PartyGroup::getRelUserLogin)); 
+        supplierMap.put(TENANT, getter(this, PartyGroup::getRelTenant));
+
+        return supplierMap;
+    };
 
     public PartyGroupDelegator.Agent agent(IProc.ProcContext ctx,
                                              PartyGroupDelegator delegator){
@@ -208,5 +247,6 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Seri
     + CarrierShipmentRouteSegment (many, autoRelation: true, keymaps: partyId -> carrierPartyId)
     + UserLogin (many, autoRelation: true, keymaps: partyId)
     + WebSiteRole (many, autoRelation: true, keymaps: partyId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

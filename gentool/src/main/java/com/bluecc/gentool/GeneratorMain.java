@@ -28,6 +28,9 @@ public class GeneratorMain {
 
         System.out.println("* entity names (symbols)");
         ProcGen.startGen();  // generate EntityNames.java
+
+        System.out.println("* stereo data");
+        StereotypeTool.startGen();
         System.out.println("* stereo types (livecases)");
         StereotypeAddons.startGen();  // livecases
 

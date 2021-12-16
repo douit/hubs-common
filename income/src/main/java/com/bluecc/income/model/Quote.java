@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.QuoteFlatData;
 
 import com.bluecc.hubs.stub.QuoteData;
 import com.bluecc.income.dao.QuoteDelegator;
+import static com.bluecc.income.dao.QuoteDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -53,6 +60,7 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, 
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -104,6 +112,9 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, 
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -124,6 +135,7 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, 
                 .description(data.getDescription())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -131,15 +143,36 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, 
         // relations
      
     @Exclude
+    @Singular("addParty")
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStore")
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
+    @Singular("addQuoteItem")
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addQuoteRole")
     List<QuoteRole> relQuoteRole= new ArrayList<>(); 
     @Exclude
-    List<QuoteTerm> relQuoteTerm= new ArrayList<>();
+    @Singular("addQuoteTerm")
+    List<QuoteTerm> relQuoteTerm= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PARTY, getter(this, Quote::getRelParty)); 
+        supplierMap.put(PRODUCT_STORE, getter(this, Quote::getRelProductStore)); 
+        supplierMap.put(QUOTE_ITEM, getter(this, Quote::getRelQuoteItem)); 
+        supplierMap.put(QUOTE_ROLE, getter(this, Quote::getRelQuoteRole)); 
+        supplierMap.put(QUOTE_TERM, getter(this, Quote::getRelQuoteTerm)); 
+        supplierMap.put(TENANT, getter(this, Quote::getRelTenant));
+
+        return supplierMap;
+    };
 
     public QuoteDelegator.Agent agent(IProc.ProcContext ctx,
                                              QuoteDelegator delegator){
@@ -228,5 +261,6 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, 
     + QuoteTerm (many, autoRelation: true, keymaps: quoteId)
     + QuoteWorkEffort (many, autoRelation: true, keymaps: quoteId)
     + SalesOpportunityQuote (many, autoRelation: true, keymaps: quoteId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

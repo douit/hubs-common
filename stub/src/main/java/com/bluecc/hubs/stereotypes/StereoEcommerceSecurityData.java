@@ -1,11 +1,11 @@
 package com.bluecc.hubs.stereotypes;
 
 import static com.bluecc.hubs.ProtoTypes.*;
-import com.bluecc.hubs.stub.SecurityGroupData;
+import com.bluecc.hubs.stub.SecurityGroupFlatData;
 import com.bluecc.hubs.stub.SecurityGroupPermissionData;
 
 public final class StereoEcommerceSecurityData {
-    public final static SecurityGroupData SecurityGroup_ECOMMERCE_CUSTOMER = SecurityGroupData.newBuilder()
+    public final static SecurityGroupFlatData SecurityGroup_ECOMMERCE_CUSTOMER = SecurityGroupFlatData.newBuilder()
         .setDescription("Customer user of ECOMMERCE Limited access to own account")
         .setGroupId("ECOMMERCE_CUSTOMER")
         .build();

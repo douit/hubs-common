@@ -6,7 +6,6 @@ message {{ent.name}}Data {
     option (routines.flat) = {{!ent.headEntity}};
     option (routines.has_table) = {{hasTable}};
     // keys: {{ent.keyNames}}
-    {% if ent.combine %}string id = 200; {% endif %}
     // fields
     {% for f in ent.messageFields -%}
     {%- if digester.isRefField(f.name) %}

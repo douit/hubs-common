@@ -1,6 +1,6 @@
 package com.bluecc.gentool.procgen;
 
-import com.bluecc.gentool.common.TemplateUtil;
+import com.bluecc.hubs.fund.TemplateUtil;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.EntityMetaManager;
 import com.bluecc.hubs.fund.SystemDefs;
@@ -50,7 +50,7 @@ public class ProcGen {
     String gen(Set<String> entityList) throws IOException {
         List<EntityMeta> metaList = entityList.stream()
                 .sorted()
-                .map(name -> entityMetaManager.getEntityMeta(name))
+                .map(name -> entityMetaManager.readEntityMeta(name))
                 .collect(Collectors.toList());
         Map<String, Object> ctx = ImmutableMap.of("ents", metaList);
         return TemplateUtil.build("templates/symbols.j2",

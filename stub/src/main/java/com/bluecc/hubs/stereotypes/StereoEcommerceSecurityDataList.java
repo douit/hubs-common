@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import static com.bluecc.hubs.stereotypes.StereoEcommerceSecurityData.*;
 
-import com.bluecc.hubs.stub.SecurityGroupData;
+import com.bluecc.hubs.stub.SecurityGroupFlatData;
 import com.bluecc.hubs.stub.SecurityGroupPermissionData;
 
 public final class StereoEcommerceSecurityDataList {
-    public static final List<SecurityGroupData> securityGroupList=ImmutableList.of(        
+    public static final List<SecurityGroupFlatData> securityGroupList=ImmutableList.of(        
             SecurityGroup_ECOMMERCE_CUSTOMER);
 
     public static final List<SecurityGroupPermissionData> securityGroupPermissionList=ImmutableList.of(        

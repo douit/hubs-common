@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,6 +24,7 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.ContentData;
 

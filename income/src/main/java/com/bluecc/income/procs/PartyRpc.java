@@ -25,12 +25,25 @@ public class PartyRpc extends PartyServiceGrpc.PartyServiceImplBase {
     @Override
     public void findList(QueryList request, StreamObserver<PartyData> responseObserver) {
         partyDelegator.process(c -> {
+
+            Set<String> incls = new HashSet<>(request.getRelationsList());
+            partyDelegator.chainQueryDataList(c, incls, responseObserver);
+            responseObserver.onCompleted();
+
+        });
+    }
+
+
+    public void findListRaw(QueryList request, StreamObserver<PartyData> responseObserver) {
+        partyDelegator.process(c -> {
             PartyDelegator.Dao dao = c.getHandle().attach(PartyDelegator.Dao.class);
             Map<String, Party> dataMap = Maps.newHashMap();
             Set<String> incls = new HashSet<>(request.getRelationsList());
 
             // chain-queries
-            Consumer<Map<String, Party>> chain = partyDelegator.person(dao, false);
+            Consumer<Map<String, Party>> chain = partyDelegator.tenant(dao, false);
+
+            chain=chain.andThen(partyDelegator.person(dao, true));
             if (incls.contains(PARTY_CONTACT_MECH)) {
                 chain = chain.andThen(partyDelegator.partyContactMech(dao, true));
             }
@@ -44,6 +57,13 @@ public class PartyRpc extends PartyServiceGrpc.PartyServiceImplBase {
                 return partyData.build();
             }).forEach(e -> responseObserver.onNext(e));
             responseObserver.onCompleted();
+
+            /*
+            Set<String> incls = new HashSet<>(request.getRelationsList());
+            partyDelegator.chainQueryDataList(c, incls, responseObserver);
+            responseObserver.onCompleted();
+
+             */
         });
     }
 }

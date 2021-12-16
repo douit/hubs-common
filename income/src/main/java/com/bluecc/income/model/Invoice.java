@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.InvoiceFlatData;
 
 import com.bluecc.hubs.stub.InvoiceData;
 import com.bluecc.income.dao.InvoiceDelegator;
+import static com.bluecc.income.dao.InvoiceDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -57,6 +64,7 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -120,6 +128,9 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -144,6 +155,7 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
                 .recurrenceInfoId(data.getRecurrenceInfoId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -151,33 +163,72 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
         // relations
      
     @Exclude
+    @Singular("addFromParty")
     List<Party> relFromParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addParty")
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyRole")
     List<PartyRole> relPartyRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addBillingAccount")
     List<BillingAccount> relBillingAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addContactMech")
     List<ContactMech> relContactMech= new ArrayList<>(); 
     @Exclude
+    @Singular("addRecurrenceInfo")
     List<RecurrenceInfo> relRecurrenceInfo= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcctgTrans")
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addInvoiceItem")
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addInvoiceRole")
     List<InvoiceRole> relInvoiceRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addInvoiceStatus")
     List<InvoiceStatus> relInvoiceStatus= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderAdjustmentBilling")
     List<OrderAdjustmentBilling> relOrderAdjustmentBilling= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemBilling")
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     @Exclude
+    @Singular("addPaymentApplication")
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     @Exclude
-    List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>();
+    @Singular("addShipmentItemBilling")
+    List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(FROM_PARTY, getter(this, Invoice::getRelFromParty)); 
+        supplierMap.put(PARTY, getter(this, Invoice::getRelParty)); 
+        supplierMap.put(PARTY_ROLE, getter(this, Invoice::getRelPartyRole)); 
+        supplierMap.put(BILLING_ACCOUNT, getter(this, Invoice::getRelBillingAccount)); 
+        supplierMap.put(CONTACT_MECH, getter(this, Invoice::getRelContactMech)); 
+        supplierMap.put(RECURRENCE_INFO, getter(this, Invoice::getRelRecurrenceInfo)); 
+        supplierMap.put(ACCTG_TRANS, getter(this, Invoice::getRelAcctgTrans)); 
+        supplierMap.put(INVOICE_ITEM, getter(this, Invoice::getRelInvoiceItem)); 
+        supplierMap.put(INVOICE_ROLE, getter(this, Invoice::getRelInvoiceRole)); 
+        supplierMap.put(INVOICE_STATUS, getter(this, Invoice::getRelInvoiceStatus)); 
+        supplierMap.put(ORDER_ADJUSTMENT_BILLING, getter(this, Invoice::getRelOrderAdjustmentBilling)); 
+        supplierMap.put(ORDER_ITEM_BILLING, getter(this, Invoice::getRelOrderItemBilling)); 
+        supplierMap.put(PAYMENT_APPLICATION, getter(this, Invoice::getRelPaymentApplication)); 
+        supplierMap.put(SHIPMENT_ITEM_BILLING, getter(this, Invoice::getRelShipmentItemBilling)); 
+        supplierMap.put(TENANT, getter(this, Invoice::getRelTenant));
+
+        return supplierMap;
+    };
 
     public InvoiceDelegator.Agent agent(IProc.ProcContext ctx,
                                              InvoiceDelegator delegator){
@@ -283,5 +334,6 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
     + ShipmentItemBilling (many, autoRelation: true, keymaps: invoiceId)
     + TimeEntry (many, autoRelation: true, keymaps: invoiceId)
     + WorkEffortBilling (many, autoRelation: true, keymaps: invoiceId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

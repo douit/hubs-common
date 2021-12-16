@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.FinAccountFlatData;
 
 import com.bluecc.hubs.stub.FinAccountData;
 import com.bluecc.income.dao.FinAccountDelegator;
+import static com.bluecc.income.dao.FinAccountDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -58,6 +65,7 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -124,6 +132,9 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -149,6 +160,7 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
                 .availableBalance(getBigDecimal(data.getAvailableBalance()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -156,23 +168,52 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
         // relations
      
     @Exclude
+    @Singular("addOrganizationParty")
     List<Party> relOrganizationParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addOwnerParty")
     List<Party> relOwnerParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addPostToGlAccount")
     List<GlAccount> relPostToGlAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addReplenishPaymentMethod")
     List<PaymentMethod> relReplenishPaymentMethod= new ArrayList<>(); 
     @Exclude
+    @Singular("addFinAccountRole")
     List<FinAccountRole> relFinAccountRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addFinAccountStatus")
     List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
     @Exclude
+    @Singular("addFinAccountTrans")
     List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderPaymentPreference")
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
-    List<PaymentMethod> relPaymentMethod= new ArrayList<>();
+    @Singular("addPaymentMethod")
+    List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(ORGANIZATION_PARTY, getter(this, FinAccount::getRelOrganizationParty)); 
+        supplierMap.put(OWNER_PARTY, getter(this, FinAccount::getRelOwnerParty)); 
+        supplierMap.put(POST_TO_GL_ACCOUNT, getter(this, FinAccount::getRelPostToGlAccount)); 
+        supplierMap.put(REPLENISH_PAYMENT_METHOD, getter(this, FinAccount::getRelReplenishPaymentMethod)); 
+        supplierMap.put(FIN_ACCOUNT_ROLE, getter(this, FinAccount::getRelFinAccountRole)); 
+        supplierMap.put(FIN_ACCOUNT_STATUS, getter(this, FinAccount::getRelFinAccountStatus)); 
+        supplierMap.put(FIN_ACCOUNT_TRANS, getter(this, FinAccount::getRelFinAccountTrans)); 
+        supplierMap.put(ORDER_PAYMENT_PREFERENCE, getter(this, FinAccount::getRelOrderPaymentPreference)); 
+        supplierMap.put(PAYMENT_METHOD, getter(this, FinAccount::getRelPaymentMethod)); 
+        supplierMap.put(TENANT, getter(this, FinAccount::getRelTenant));
+
+        return supplierMap;
+    };
 
     public FinAccountDelegator.Agent agent(IProc.ProcContext ctx,
                                              FinAccountDelegator delegator){
@@ -273,5 +314,6 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
     + OrderPaymentPreference (many, autoRelation: true, keymaps: finAccountId)
     + PaymentMethod (many, autoRelation: true, keymaps: finAccountId)
     + ReturnHeader (many, autoRelation: true, keymaps: finAccountId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

@@ -108,6 +108,10 @@ public class ProtoTypes {
     //     return getTimestamp()
     // }
 
+    public static com.google.type.Date getDate(String localDate) {
+        return getDate(LocalDate.parse(localDate));
+    }
+
     public static com.google.type.Date getDate(LocalDate localDate) {
         if (localDate != null) {
             return Date.newBuilder()

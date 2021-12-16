@@ -9,7 +9,7 @@ import com.bluecc.hubs.stub.PartyIdentificationTypeData;
 import com.bluecc.hubs.stub.PartyStatusData;
 import com.bluecc.hubs.stub.ContactMechData;
 import com.bluecc.hubs.stub.PartyGroupFlatData;
-import com.bluecc.hubs.stub.SecurityGroupData;
+import com.bluecc.hubs.stub.SecurityGroupFlatData;
 import com.bluecc.hubs.stub.PartyIdentificationData;
 import com.bluecc.hubs.stub.PostalAddressData;
 import com.bluecc.hubs.stub.CommunicationEventRoleData;
@@ -67,7 +67,7 @@ public final class PartyDemoDataList {
             PartyGroup_DemoGovAgency());
     }
 
-    public static List<SecurityGroupData> securityGroupList() {
+    public static List<SecurityGroupFlatData> securityGroupList() {
         return ImmutableList.of(        
             SecurityGroup_PARTYADMIN(),        
             SecurityGroup_SECURITYADMIN(),        

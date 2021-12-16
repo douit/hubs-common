@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.ProductStoreCatalogFlatData;
 
 import com.bluecc.hubs.stub.ProductStoreCatalogData;
 import com.bluecc.income.dao.ProductStoreCatalogDelegator;
+import static com.bluecc.income.dao.ProductStoreCatalogDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -47,6 +54,7 @@ public class ProductStoreCatalog implements IEventModel<ProductStoreCatalogFlatD
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     @RId String id;
+    String tenantId;
     
 
         
@@ -80,6 +88,9 @@ public class ProductStoreCatalog implements IEventModel<ProductStoreCatalogFlatD
         if (id != null) {
             builder.setId(id);
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -94,6 +105,7 @@ public class ProductStoreCatalog implements IEventModel<ProductStoreCatalogFlatD
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -101,9 +113,24 @@ public class ProductStoreCatalog implements IEventModel<ProductStoreCatalogFlatD
         // relations
      
     @Exclude
+    @Singular("addProductStore")
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
-    List<ProdCatalog> relProdCatalog= new ArrayList<>();
+    @Singular("addProdCatalog")
+    List<ProdCatalog> relProdCatalog= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PRODUCT_STORE, getter(this, ProductStoreCatalog::getRelProductStore)); 
+        supplierMap.put(PROD_CATALOG, getter(this, ProductStoreCatalog::getRelProdCatalog)); 
+        supplierMap.put(TENANT, getter(this, ProductStoreCatalog::getRelTenant));
+
+        return supplierMap;
+    };
 
     public ProductStoreCatalogDelegator.Agent agent(IProc.ProcContext ctx,
                                              ProductStoreCatalogDelegator delegator){
@@ -158,5 +185,6 @@ public class ProductStoreCatalog implements IEventModel<ProductStoreCatalogFlatD
     
     - ProductStore (one, autoRelation: false, keymaps: productStoreId)
     - ProdCatalog (one, autoRelation: false, keymaps: prodCatalogId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

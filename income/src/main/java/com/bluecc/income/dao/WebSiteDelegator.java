@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.WebSiteData;
 
 public class WebSiteDelegator extends AbstractProcs{
@@ -227,6 +229,36 @@ public class WebSiteDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, WebSite> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, WebSite> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, WebSite> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
+                                id -> rr.getRow(WebSite.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -296,7 +328,80 @@ public class WebSiteDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainWebSiteContent(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, WebSite>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, WebSite>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, WebSite> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, WebSite> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, WebSite>> chain = tenant(dao, false);
+         
+        if (incls.contains(PRODUCT_STORE)) {
+            chain = chain.andThen(productStore(dao, true));
+        }
+         
+        if (incls.contains(EBAY_CONFIG)) {
+            chain = chain.andThen(ebayConfig(dao, true));
+        }
+         
+        if (incls.contains(ORDER_HEADER)) {
+            chain = chain.andThen(orderHeader(dao, true));
+        }
+         
+        if (incls.contains(SUBSCRIPTION_RESOURCE)) {
+            chain = chain.andThen(subscriptionResource(dao, true));
+        }
+         
+        if (incls.contains(WEB_ANALYTICS_CONFIG)) {
+            chain = chain.andThen(webAnalyticsConfig(dao, true));
+        }
+         
+        if (incls.contains(WEB_SITE_CONTENT)) {
+            chain = chain.andThen(webSiteContent(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<WebSiteData> responseObserver) {
+        Map<String, WebSite> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            WebSiteData.Builder webSiteData = data.toHeadBuilder();
+             
+            data.getRelProductStore().forEach(e -> 
+                webSiteData.setProductStore(e.toHeadBuilder())); 
+            data.getRelEbayConfig().forEach(e -> 
+                webSiteData.addEbayConfig(e.toDataBuilder())); 
+            data.getRelOrderHeader().forEach(e -> 
+                webSiteData.addOrderHeader(e.toHeadBuilder())); 
+            data.getRelSubscriptionResource().forEach(e -> 
+                webSiteData.addSubscriptionResource(e.toDataBuilder())); 
+            data.getRelWebAnalyticsConfig().forEach(e -> 
+                webSiteData.addWebAnalyticsConfig(e.toDataBuilder())); 
+            data.getRelWebSiteContent().forEach(e -> 
+                webSiteData.addWebSiteContent(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                webSiteData.setTenant(e.toDataBuilder()));
+            return webSiteData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public WebSite get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getWebSite(id);
@@ -398,6 +503,17 @@ public class WebSiteDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelWebSiteContent().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -427,6 +543,8 @@ public class WebSiteDelegator extends AbstractProcs{
     public static final String WEB_ANALYTICS_CONFIG="web_analytics_config";
          
     public static final String WEB_SITE_CONTENT="web_site_content";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -486,6 +604,14 @@ public class WebSiteDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "web_site_content",
                                             WebSiteContent.class)
                                     .forEach(el -> pb.addWebSiteContent(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

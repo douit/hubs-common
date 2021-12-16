@@ -1,6 +1,6 @@
 package com.bluecc.gentool;
 
-import com.bluecc.gentool.common.TemplateUtil;
+import com.bluecc.hubs.fund.TemplateUtil;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.google.common.collect.ArrayListMultimap;

@@ -9,39 +9,35 @@ import java.util.Map;
 
 @Singleton
 public class ProtoMeta {
-    Map<String, EntityMeta> metaMap= Maps.newHashMap();
+    Map<String, EntityMeta> metaMap = Maps.newHashMap();
 
     public Map<String, EntityMeta> getMetaMap() {
         return metaMap;
     }
 
-    public EntityMeta getEntityMeta(String entityName){
-        EntityMeta meta=metaMap.get(entityName);
-        if(meta==null) {
+    public EntityMeta getEntityMeta(String entityName) {
+        EntityMeta meta = metaMap.get(entityName);
+        if (meta == null) {
             synchronized (ProtoMeta.class) {
-                try {
-                    meta = EntityMetaManager.getEntityMeta(entityName, false);
-                    metaMap.put(entityName, meta);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                meta = EntityMetaManager.readEntityMeta(entityName);
+                metaMap.put(entityName, meta);
             }
         }
         return meta;
     }
 
-    public SqlMeta getSqlMeta(String entityName){
+    public SqlMeta getSqlMeta(String entityName) {
         return getSqlMeta(entityName, false);
     }
 
-    public SqlMeta getSqlMeta(String entityName, boolean succ){
+    public SqlMeta getSqlMeta(String entityName, boolean succ) {
         return new SqlMeta(this, getEntityMeta(entityName), succ);
     }
 
-    public EntityMeta.RelationQueryMeta findRelationQueryMeta(String entityName, String relField){
-        List<EntityMeta.RelationQueryMeta>  rels=getEntityMeta(entityName).getRelationQueries();
+    public EntityMeta.RelationQueryMeta findRelationQueryMeta(String entityName, String relField) {
+        List<EntityMeta.RelationQueryMeta> rels = getEntityMeta(entityName).getRelationQueries();
         for (EntityMeta.RelationQueryMeta rel : rels) {
-            if(rel.getRelationFieldName().equals(relField)){
+            if (rel.getRelationFieldName().equals(relField)) {
                 return rel;
             }
         }

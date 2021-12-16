@@ -14,26 +14,26 @@ import static org.junit.Assert.*;
 
 public class EntityMetaManagerTest {
 
-    EntityMetaManager entityMetaManager;
+    // EntityMetaManager entityMetaManager;
     MetaTool main = new MetaTool();
     @Before
     public void setUp() throws Exception {
         System.out.println(Util.getCurrentDirectory());
-        entityMetaManager=new EntityMetaManager();
+        // entityMetaManager=new EntityMetaManager();
     }
 
     @Test
     public void getEntityMeta() {
-        EntityMeta meta=entityMetaManager.getEntityMeta("Party");
+        EntityMeta meta=EntityMetaManager.readEntityMeta("Party");
         main.digest(meta);
     }
 
     @Test
     public void getOrderEntityMeta() {
-        EntityMeta meta=entityMetaManager.getEntityMeta("OrderHeader");
+        EntityMeta meta=EntityMetaManager.readEntityMeta("OrderHeader");
         main.digest(meta);
         System.out.println("=====================");
-        meta=entityMetaManager.getEntityMeta("OrderItem");
+        meta=EntityMetaManager.readEntityMeta("OrderItem");
         main.digest(meta);
     }
 

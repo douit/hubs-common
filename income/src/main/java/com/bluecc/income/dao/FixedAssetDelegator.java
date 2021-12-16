@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.FixedAssetData;
 
 public class FixedAssetDelegator extends AbstractProcs{
@@ -229,6 +231,36 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = TechDataCalendar.class, prefix = "tdc")
+        default Map<String, FixedAsset> chainTechDataCalendar(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainTechDataCalendar(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = TechDataCalendar.class, prefix = "tdc")
+        default Map<String, FixedAsset> chainTechDataCalendar(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TECH_DATA_CALENDAR);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("tdc_calendar_id", String.class) != null) {
+                            p.getRelTechDataCalendar()
+                                    .add(rr.getRow(TechDataCalendar.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
         @RegisterBeanMapper(value = Facility.class, prefix = "laf")
         default Map<String, FixedAsset> chainLocatedAtFacility(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
@@ -343,6 +375,36 @@ public class FixedAssetDelegator extends AbstractProcs{
                         if (rr.getColumn("cfa_parent_fixed_asset_id", String.class) != null) {
                             p.getRelChildFixedAsset()
                                     .add(rr.getRow(FixedAsset.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetDepMethod.class, prefix = "fadm")
+        default Map<String, FixedAsset> chainFixedAssetDepMethod(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainFixedAssetDepMethod(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetDepMethod.class, prefix = "fadm")
+        default Map<String, FixedAsset> chainFixedAssetDepMethod(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_DEP_METHOD);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("fadm_fixed_asset_id", String.class) != null) {
+                            p.getRelFixedAssetDepMethod()
+                                    .add(rr.getRow(FixedAssetDepMethod.class));
                         }
                         return map;
                     });
@@ -527,6 +589,66 @@ public class FixedAssetDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaa")
+        default Map<String, FixedAsset> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainWorkEffortFixedAssetAssign(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaa")
+        default Map<String, FixedAsset> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_FIXED_ASSET_ASSIGN);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("wefaa_fixed_asset_id", String.class) != null) {
+                            p.getRelWorkEffortFixedAssetAssign()
+                                    .add(rr.getRow(WorkEffortFixedAssetAssign.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, FixedAsset> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, FixedAsset> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -597,6 +719,17 @@ public class FixedAssetDelegator extends AbstractProcs{
         return e -> dao.chainAcquireOrderItem(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, FixedAsset>> techDataCalendar(Dao dao, boolean succ) {
+        return e -> dao.chainTechDataCalendar(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FixedAsset>> techDataCalendar(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTechDataCalendar(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, FixedAsset>> locatedAtFacility(Dao dao, boolean succ) {
         return e -> dao.chainLocatedAtFacility(protoMeta, e, succ);
     }
@@ -639,6 +772,17 @@ public class FixedAssetDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainChildFixedAsset(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, FixedAsset>> fixedAssetDepMethod(Dao dao, boolean succ) {
+        return e -> dao.chainFixedAssetDepMethod(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FixedAsset>> fixedAssetDepMethod(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFixedAssetDepMethod(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, FixedAsset>> fixedAssetGeoPoint(Dao dao, boolean succ) {
@@ -706,7 +850,169 @@ public class FixedAssetDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainWorkEffort(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, FixedAsset>> workEffortFixedAssetAssign(Dao dao, boolean succ) {
+        return e -> dao.chainWorkEffortFixedAssetAssign(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FixedAsset>> workEffortFixedAssetAssign(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainWorkEffortFixedAssetAssign(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, FixedAsset>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FixedAsset>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, FixedAsset> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, FixedAsset> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, FixedAsset>> chain = tenant(dao, false);
+         
+        if (incls.contains(PARENT_FIXED_ASSET)) {
+            chain = chain.andThen(parentFixedAsset(dao, true));
+        }
+         
+        if (incls.contains(INSTANCE_OF_PRODUCT)) {
+            chain = chain.andThen(instanceOfProduct(dao, true));
+        }
+         
+        if (incls.contains(PARTY)) {
+            chain = chain.andThen(party(dao, true));
+        }
+         
+        if (incls.contains(PARTY_ROLE)) {
+            chain = chain.andThen(partyRole(dao, true));
+        }
+         
+        if (incls.contains(ACQUIRE_ORDER_HEADER)) {
+            chain = chain.andThen(acquireOrderHeader(dao, true));
+        }
+         
+        if (incls.contains(ACQUIRE_ORDER_ITEM)) {
+            chain = chain.andThen(acquireOrderItem(dao, true));
+        }
+         
+        if (incls.contains(TECH_DATA_CALENDAR)) {
+            chain = chain.andThen(techDataCalendar(dao, true));
+        }
+         
+        if (incls.contains(LOCATED_AT_FACILITY)) {
+            chain = chain.andThen(locatedAtFacility(dao, true));
+        }
+         
+        if (incls.contains(LOCATED_AT_FACILITY_LOCATION)) {
+            chain = chain.andThen(locatedAtFacilityLocation(dao, true));
+        }
+         
+        if (incls.contains(ACCTG_TRANS)) {
+            chain = chain.andThen(acctgTrans(dao, true));
+        }
+         
+        if (incls.contains(CHILD_FIXED_ASSET)) {
+            chain = chain.andThen(childFixedAsset(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET_DEP_METHOD)) {
+            chain = chain.andThen(fixedAssetDepMethod(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET_GEO_POINT)) {
+            chain = chain.andThen(fixedAssetGeoPoint(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET_PRODUCT)) {
+            chain = chain.andThen(fixedAssetProduct(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET_REGISTRATION)) {
+            chain = chain.andThen(fixedAssetRegistration(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET_STD_COST)) {
+            chain = chain.andThen(fixedAssetStdCost(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET_INVENTORY_ITEM)) {
+            chain = chain.andThen(fixedAssetInventoryItem(dao, true));
+        }
+         
+        if (incls.contains(WORK_EFFORT)) {
+            chain = chain.andThen(workEffort(dao, true));
+        }
+         
+        if (incls.contains(WORK_EFFORT_FIXED_ASSET_ASSIGN)) {
+            chain = chain.andThen(workEffortFixedAssetAssign(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<FixedAssetData> responseObserver) {
+        Map<String, FixedAsset> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            FixedAssetData.Builder fixedAssetData = data.toHeadBuilder();
+             
+            data.getRelParentFixedAsset().forEach(e -> 
+                fixedAssetData.setParentFixedAsset(e.toHeadBuilder())); 
+            data.getRelInstanceOfProduct().forEach(e -> 
+                fixedAssetData.setInstanceOfProduct(e.toHeadBuilder())); 
+            data.getRelParty().forEach(e -> 
+                fixedAssetData.setParty(e.toHeadBuilder())); 
+            data.getRelPartyRole().forEach(e -> 
+                fixedAssetData.setPartyRole(e.toDataBuilder())); 
+            data.getRelAcquireOrderHeader().forEach(e -> 
+                fixedAssetData.setAcquireOrderHeader(e.toHeadBuilder())); 
+            data.getRelAcquireOrderItem().forEach(e -> 
+                fixedAssetData.setAcquireOrderItem(e.toHeadBuilder())); 
+            data.getRelTechDataCalendar().forEach(e -> 
+                fixedAssetData.setTechDataCalendar(e.toDataBuilder())); 
+            data.getRelLocatedAtFacility().forEach(e -> 
+                fixedAssetData.setLocatedAtFacility(e.toDataBuilder())); 
+            data.getRelLocatedAtFacilityLocation().forEach(e -> 
+                fixedAssetData.setLocatedAtFacilityLocation(e.toDataBuilder())); 
+            data.getRelAcctgTrans().forEach(e -> 
+                fixedAssetData.addAcctgTrans(e.toDataBuilder())); 
+            data.getRelChildFixedAsset().forEach(e -> 
+                fixedAssetData.addChildFixedAsset(e.toHeadBuilder())); 
+            data.getRelFixedAssetDepMethod().forEach(e -> 
+                fixedAssetData.addFixedAssetDepMethod(e.toDataBuilder())); 
+            data.getRelFixedAssetGeoPoint().forEach(e -> 
+                fixedAssetData.addFixedAssetGeoPoint(e.toDataBuilder())); 
+            data.getRelFixedAssetProduct().forEach(e -> 
+                fixedAssetData.addFixedAssetProduct(e.toDataBuilder())); 
+            data.getRelFixedAssetRegistration().forEach(e -> 
+                fixedAssetData.addFixedAssetRegistration(e.toDataBuilder())); 
+            data.getRelFixedAssetStdCost().forEach(e -> 
+                fixedAssetData.addFixedAssetStdCost(e.toDataBuilder())); 
+            data.getRelFixedAssetInventoryItem().forEach(e -> 
+                fixedAssetData.addFixedAssetInventoryItem(e.toHeadBuilder())); 
+            data.getRelWorkEffort().forEach(e -> 
+                fixedAssetData.addWorkEffort(e.toHeadBuilder())); 
+            data.getRelWorkEffortFixedAssetAssign().forEach(e -> 
+                fixedAssetData.addWorkEffortFixedAssetAssign(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                fixedAssetData.setTenant(e.toDataBuilder()));
+            return fixedAssetData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public FixedAsset get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getFixedAsset(id);
@@ -809,6 +1115,17 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<TechDataCalendar> getTechDataCalendar(){
+            return getRelationValues(ctx, p1, "tech_data_calendar", TechDataCalendar.class);
+        }
+
+        public List<TechDataCalendar> mergeTechDataCalendar(){
+            return getTechDataCalendar().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTechDataCalendar().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<Facility> getLocatedAtFacility(){
             return getRelationValues(ctx, p1, "located_at_facility", Facility.class);
         }
@@ -850,6 +1167,17 @@ public class FixedAssetDelegator extends AbstractProcs{
             return getChildFixedAsset().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelChildFixedAsset().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FixedAssetDepMethod> getFixedAssetDepMethod(){
+            return getRelationValues(ctx, p1, "fixed_asset_dep_method", FixedAssetDepMethod.class);
+        }
+
+        public List<FixedAssetDepMethod> mergeFixedAssetDepMethod(){
+            return getFixedAssetDepMethod().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFixedAssetDepMethod().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -918,6 +1246,28 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelWorkEffort().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<WorkEffortFixedAssetAssign> getWorkEffortFixedAssetAssign(){
+            return getRelationValues(ctx, p1, "work_effort_fixed_asset_assign", WorkEffortFixedAssetAssign.class);
+        }
+
+        public List<WorkEffortFixedAssetAssign> mergeWorkEffortFixedAssetAssign(){
+            return getWorkEffortFixedAssetAssign().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelWorkEffortFixedAssetAssign().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -948,6 +1298,8 @@ public class FixedAssetDelegator extends AbstractProcs{
          
     public static final String ACQUIRE_ORDER_ITEM="acquire_order_item";
          
+    public static final String TECH_DATA_CALENDAR="tech_data_calendar";
+         
     public static final String LOCATED_AT_FACILITY="located_at_facility";
          
     public static final String LOCATED_AT_FACILITY_LOCATION="located_at_facility_location";
@@ -955,6 +1307,8 @@ public class FixedAssetDelegator extends AbstractProcs{
     public static final String ACCTG_TRANS="acctg_trans";
          
     public static final String CHILD_FIXED_ASSET="child_fixed_asset";
+         
+    public static final String FIXED_ASSET_DEP_METHOD="fixed_asset_dep_method";
          
     public static final String FIXED_ASSET_GEO_POINT="fixed_asset_geo_point";
          
@@ -967,6 +1321,10 @@ public class FixedAssetDelegator extends AbstractProcs{
     public static final String FIXED_ASSET_INVENTORY_ITEM="fixed_asset_inventory_item";
          
     public static final String WORK_EFFORT="work_effort";
+         
+    public static final String WORK_EFFORT_FIXED_ASSET_ASSIGN="work_effort_fixed_asset_assign";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -1029,6 +1387,14 @@ public class FixedAssetDelegator extends AbstractProcs{
                                              el.toHeadBuilder().build()));
                         }
                                                
+                        // add/set tech_data_calendar to head entity                        
+                        if(relationsDemand.contains("tech_data_calendar")) {
+                            getRelationValues(ctx, p1, "tech_data_calendar",
+                                            TechDataCalendar.class)
+                                    .forEach(el -> pb.setTechDataCalendar(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set located_at_facility to head entity                        
                         if(relationsDemand.contains("located_at_facility")) {
                             getRelationValues(ctx, p1, "located_at_facility",
@@ -1059,6 +1425,14 @@ public class FixedAssetDelegator extends AbstractProcs{
                                             FixedAsset.class)
                                     .forEach(el -> pb.addChildFixedAsset(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set fixed_asset_dep_method to head entity                        
+                        if(relationsDemand.contains("fixed_asset_dep_method")) {
+                            getRelationValues(ctx, p1, "fixed_asset_dep_method",
+                                            FixedAssetDepMethod.class)
+                                    .forEach(el -> pb.addFixedAssetDepMethod(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set fixed_asset_geo_point to head entity                        
@@ -1106,6 +1480,22 @@ public class FixedAssetDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "work_effort",
                                             WorkEffort.class)
                                     .forEach(el -> pb.addWorkEffort(
+                                             el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set work_effort_fixed_asset_assign to head entity                        
+                        if(relationsDemand.contains("work_effort_fixed_asset_assign")) {
+                            getRelationValues(ctx, p1, "work_effort_fixed_asset_assign",
+                                            WorkEffortFixedAssetAssign.class)
+                                    .forEach(el -> pb.addWorkEffortFixedAssetAssign(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

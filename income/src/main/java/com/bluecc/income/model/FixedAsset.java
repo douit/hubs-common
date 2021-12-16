@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.FixedAssetFlatData;
 
 import com.bluecc.hubs.stub.FixedAssetData;
 import com.bluecc.income.dao.FixedAssetDelegator;
+import static com.bluecc.income.dao.FixedAssetDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -66,6 +73,7 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -156,6 +164,9 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -189,6 +200,7 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
                 .purchaseCostUomId(data.getPurchaseCostUomId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -196,37 +208,92 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
         // relations
      
     @Exclude
+    @Singular("addParentFixedAsset")
     List<FixedAsset> relParentFixedAsset= new ArrayList<>(); 
     @Exclude
+    @Singular("addInstanceOfProduct")
     List<Product> relInstanceOfProduct= new ArrayList<>(); 
     @Exclude
+    @Singular("addParty")
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyRole")
     List<PartyRole> relPartyRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcquireOrderHeader")
     List<OrderHeader> relAcquireOrderHeader= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcquireOrderItem")
     List<OrderItem> relAcquireOrderItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addTechDataCalendar")
+    List<TechDataCalendar> relTechDataCalendar= new ArrayList<>(); 
+    @Exclude
+    @Singular("addLocatedAtFacility")
     List<Facility> relLocatedAtFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addLocatedAtFacilityLocation")
     List<FacilityLocation> relLocatedAtFacilityLocation= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcctgTrans")
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addChildFixedAsset")
     List<FixedAsset> relChildFixedAsset= new ArrayList<>(); 
     @Exclude
+    @Singular("addFixedAssetDepMethod")
+    List<FixedAssetDepMethod> relFixedAssetDepMethod= new ArrayList<>(); 
+    @Exclude
+    @Singular("addFixedAssetGeoPoint")
     List<FixedAssetGeoPoint> relFixedAssetGeoPoint= new ArrayList<>(); 
     @Exclude
+    @Singular("addFixedAssetProduct")
     List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
     @Exclude
+    @Singular("addFixedAssetRegistration")
     List<FixedAssetRegistration> relFixedAssetRegistration= new ArrayList<>(); 
     @Exclude
+    @Singular("addFixedAssetStdCost")
     List<FixedAssetStdCost> relFixedAssetStdCost= new ArrayList<>(); 
     @Exclude
+    @Singular("addFixedAssetInventoryItem")
     List<InventoryItem> relFixedAssetInventoryItem= new ArrayList<>(); 
     @Exclude
-    List<WorkEffort> relWorkEffort= new ArrayList<>();
+    @Singular("addWorkEffort")
+    List<WorkEffort> relWorkEffort= new ArrayList<>(); 
+    @Exclude
+    @Singular("addWorkEffortFixedAssetAssign")
+    List<WorkEffortFixedAssetAssign> relWorkEffortFixedAssetAssign= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PARENT_FIXED_ASSET, getter(this, FixedAsset::getRelParentFixedAsset)); 
+        supplierMap.put(INSTANCE_OF_PRODUCT, getter(this, FixedAsset::getRelInstanceOfProduct)); 
+        supplierMap.put(PARTY, getter(this, FixedAsset::getRelParty)); 
+        supplierMap.put(PARTY_ROLE, getter(this, FixedAsset::getRelPartyRole)); 
+        supplierMap.put(ACQUIRE_ORDER_HEADER, getter(this, FixedAsset::getRelAcquireOrderHeader)); 
+        supplierMap.put(ACQUIRE_ORDER_ITEM, getter(this, FixedAsset::getRelAcquireOrderItem)); 
+        supplierMap.put(TECH_DATA_CALENDAR, getter(this, FixedAsset::getRelTechDataCalendar)); 
+        supplierMap.put(LOCATED_AT_FACILITY, getter(this, FixedAsset::getRelLocatedAtFacility)); 
+        supplierMap.put(LOCATED_AT_FACILITY_LOCATION, getter(this, FixedAsset::getRelLocatedAtFacilityLocation)); 
+        supplierMap.put(ACCTG_TRANS, getter(this, FixedAsset::getRelAcctgTrans)); 
+        supplierMap.put(CHILD_FIXED_ASSET, getter(this, FixedAsset::getRelChildFixedAsset)); 
+        supplierMap.put(FIXED_ASSET_DEP_METHOD, getter(this, FixedAsset::getRelFixedAssetDepMethod)); 
+        supplierMap.put(FIXED_ASSET_GEO_POINT, getter(this, FixedAsset::getRelFixedAssetGeoPoint)); 
+        supplierMap.put(FIXED_ASSET_PRODUCT, getter(this, FixedAsset::getRelFixedAssetProduct)); 
+        supplierMap.put(FIXED_ASSET_REGISTRATION, getter(this, FixedAsset::getRelFixedAssetRegistration)); 
+        supplierMap.put(FIXED_ASSET_STD_COST, getter(this, FixedAsset::getRelFixedAssetStdCost)); 
+        supplierMap.put(FIXED_ASSET_INVENTORY_ITEM, getter(this, FixedAsset::getRelFixedAssetInventoryItem)); 
+        supplierMap.put(WORK_EFFORT, getter(this, FixedAsset::getRelWorkEffort)); 
+        supplierMap.put(WORK_EFFORT_FIXED_ASSET_ASSIGN, getter(this, FixedAsset::getRelWorkEffortFixedAssetAssign)); 
+        supplierMap.put(TENANT, getter(this, FixedAsset::getRelTenant));
+
+        return supplierMap;
+    };
 
     public FixedAssetDelegator.Agent agent(IProc.ProcContext ctx,
                                              FixedAssetDelegator delegator){
@@ -273,9 +340,6 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
         }
         if (uomId != null) {
             builder.setUomId(uomId);
-        }
-        if (calendarId != null) {
-            builder.setCalendarId(calendarId);
         }
         if (serialNumber != null) {
             builder.setSerialNumber(serialNumber);
@@ -376,5 +440,6 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
     + Requirement (many, autoRelation: true, keymaps: fixedAssetId)
     + WorkEffort (many, autoRelation: true, keymaps: fixedAssetId)
     + WorkEffortFixedAssetAssign (many, autoRelation: true, keymaps: fixedAssetId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

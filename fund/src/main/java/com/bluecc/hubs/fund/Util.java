@@ -48,6 +48,11 @@ public class Util {
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, str);
     }
 
+    public static String lowerSnakeToCamel(String str) {
+        Preconditions.checkNotNull(str, "parameter is null");
+        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, str);
+    }
+
     public static String toSnakecase(String str) {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, str);
     }

@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.OrderItemData;
 
 public class OrderItemDelegator extends AbstractProcs{
@@ -617,6 +619,36 @@ public class OrderItemDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, OrderItem> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, OrderItem> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
+                                id -> rr.getRow(OrderItem.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -829,7 +861,158 @@ public class OrderItemDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, OrderItem>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderItem>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, OrderItem> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, OrderItem> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, OrderItem>> chain = tenant(dao, false);
+         
+        if (incls.contains(ORDER_HEADER)) {
+            chain = chain.andThen(orderHeader(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT)) {
+            chain = chain.andThen(product(dao, true));
+        }
+         
+        if (incls.contains(FROM_INVENTORY_ITEM)) {
+            chain = chain.andThen(fromInventoryItem(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FACILITY_LOCATION)) {
+            chain = chain.andThen(productFacilityLocation(dao, true));
+        }
+         
+        if (incls.contains(DONT_CANCEL_SET_USER_LOGIN)) {
+            chain = chain.andThen(dontCancelSetUserLogin(dao, true));
+        }
+         
+        if (incls.contains(QUOTE_ITEM)) {
+            chain = chain.andThen(quoteItem(dao, true));
+        }
+         
+        if (incls.contains(OVERRIDE_GL_ACCOUNT)) {
+            chain = chain.andThen(overrideGlAccount(dao, true));
+        }
+         
+        if (incls.contains(CHANGE_BY_USER_LOGIN)) {
+            chain = chain.andThen(changeByUserLogin(dao, true));
+        }
+         
+        if (incls.contains(FIN_ACCOUNT_TRANS)) {
+            chain = chain.andThen(finAccountTrans(dao, true));
+        }
+         
+        if (incls.contains(ACQUIRE_FIXED_ASSET)) {
+            chain = chain.andThen(acquireFixedAsset(dao, true));
+        }
+         
+        if (incls.contains(ITEM_ISSUANCE)) {
+            chain = chain.andThen(itemIssuance(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ADJUSTMENT)) {
+            chain = chain.andThen(orderAdjustment(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_BILLING)) {
+            chain = chain.andThen(orderItemBilling(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_PRICE_INFO)) {
+            chain = chain.andThen(orderItemPriceInfo(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_SHIP_GROUP_ASSOC)) {
+            chain = chain.andThen(orderItemShipGroupAssoc(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_SHIP_GRP_INV_RES)) {
+            chain = chain.andThen(orderItemShipGrpInvRes(dao, true));
+        }
+         
+        if (incls.contains(ORDER_PAYMENT_PREFERENCE)) {
+            chain = chain.andThen(orderPaymentPreference(dao, true));
+        }
+         
+        if (incls.contains(ORDER_STATUS)) {
+            chain = chain.andThen(orderStatus(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_RECEIPT)) {
+            chain = chain.andThen(shipmentReceipt(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<OrderItemData> responseObserver) {
+        Map<String, OrderItem> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            OrderItemData.Builder orderItemData = data.toHeadBuilder();
+             
+            data.getRelOrderHeader().forEach(e -> 
+                orderItemData.setOrderHeader(e.toHeadBuilder())); 
+            data.getRelProduct().forEach(e -> 
+                orderItemData.setProduct(e.toHeadBuilder())); 
+            data.getRelFromInventoryItem().forEach(e -> 
+                orderItemData.setFromInventoryItem(e.toHeadBuilder())); 
+            data.getRelProductFacilityLocation().forEach(e -> 
+                orderItemData.addProductFacilityLocation(e.toDataBuilder())); 
+            data.getRelDontCancelSetUserLogin().forEach(e -> 
+                orderItemData.setDontCancelSetUserLogin(e.toHeadBuilder())); 
+            data.getRelQuoteItem().forEach(e -> 
+                orderItemData.setQuoteItem(e.toDataBuilder())); 
+            data.getRelOverrideGlAccount().forEach(e -> 
+                orderItemData.setOverrideGlAccount(e.toDataBuilder())); 
+            data.getRelChangeByUserLogin().forEach(e -> 
+                orderItemData.setChangeByUserLogin(e.toHeadBuilder())); 
+            data.getRelFinAccountTrans().forEach(e -> 
+                orderItemData.addFinAccountTrans(e.toDataBuilder())); 
+            data.getRelAcquireFixedAsset().forEach(e -> 
+                orderItemData.addAcquireFixedAsset(e.toHeadBuilder())); 
+            data.getRelItemIssuance().forEach(e -> 
+                orderItemData.addItemIssuance(e.toDataBuilder())); 
+            data.getRelOrderAdjustment().forEach(e -> 
+                orderItemData.addOrderAdjustment(e.toDataBuilder())); 
+            data.getRelOrderItemBilling().forEach(e -> 
+                orderItemData.addOrderItemBilling(e.toDataBuilder())); 
+            data.getRelOrderItemPriceInfo().forEach(e -> 
+                orderItemData.addOrderItemPriceInfo(e.toDataBuilder())); 
+            data.getRelOrderItemShipGroupAssoc().forEach(e -> 
+                orderItemData.addOrderItemShipGroupAssoc(e.toDataBuilder())); 
+            data.getRelOrderItemShipGrpInvRes().forEach(e -> 
+                orderItemData.addOrderItemShipGrpInvRes(e.toDataBuilder())); 
+            data.getRelOrderPaymentPreference().forEach(e -> 
+                orderItemData.addOrderPaymentPreference(e.toDataBuilder())); 
+            data.getRelOrderStatus().forEach(e -> 
+                orderItemData.addOrderStatus(e.toDataBuilder())); 
+            data.getRelShipmentReceipt().forEach(e -> 
+                orderItemData.addShipmentReceipt(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                orderItemData.setTenant(e.toDataBuilder()));
+            return orderItemData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public OrderItem get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getOrderItem(id);
@@ -1074,6 +1257,17 @@ public class OrderItemDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelShipmentReceipt().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -1129,6 +1323,8 @@ public class OrderItemDelegator extends AbstractProcs{
     public static final String ORDER_STATUS="order_status";
          
     public static final String SHIPMENT_RECEIPT="shipment_receipt";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -1292,6 +1488,14 @@ public class OrderItemDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "shipment_receipt",
                                             ShipmentReceipt.class)
                                     .forEach(el -> pb.addShipmentReceipt(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

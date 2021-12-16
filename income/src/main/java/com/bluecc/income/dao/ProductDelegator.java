@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.ProductData;
 
 public class ProductDelegator extends AbstractProcs{
@@ -1097,6 +1099,36 @@ public class ProductDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Product> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Product> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
+                                id -> rr.getRow(Product.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -1485,7 +1517,254 @@ public class ProductDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainWorkEffortGoodStandard(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, Product>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Product>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, Product> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, Product> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, Product>> chain = tenant(dao, false);
+         
+        if (incls.contains(PRIMARY_PRODUCT_CATEGORY)) {
+            chain = chain.andThen(primaryProductCategory(dao, true));
+        }
+         
+        if (incls.contains(FACILITY)) {
+            chain = chain.andThen(facility(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_USER_LOGIN)) {
+            chain = chain.andThen(createdByUserLogin(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_USER_LOGIN)) {
+            chain = chain.andThen(lastModifiedByUserLogin(dao, true));
+        }
+         
+        if (incls.contains(DEFAULT_SHIPMENT_BOX_TYPE)) {
+            chain = chain.andThen(defaultShipmentBoxType(dao, true));
+        }
+         
+        if (incls.contains(AGREEMENT)) {
+            chain = chain.andThen(agreement(dao, true));
+        }
+         
+        if (incls.contains(AGREEMENT_PRODUCT_APPL)) {
+            chain = chain.andThen(agreementProductAppl(dao, true));
+        }
+         
+        if (incls.contains(CUST_REQUEST_ITEM)) {
+            chain = chain.andThen(custRequestItem(dao, true));
+        }
+         
+        if (incls.contains(INSTANCE_OF_FIXED_ASSET)) {
+            chain = chain.andThen(instanceOfFixedAsset(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET_PRODUCT)) {
+            chain = chain.andThen(fixedAssetProduct(dao, true));
+        }
+         
+        if (incls.contains(INVENTORY_ITEM)) {
+            chain = chain.andThen(inventoryItem(dao, true));
+        }
+         
+        if (incls.contains(INVOICE_ITEM)) {
+            chain = chain.andThen(invoiceItem(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM)) {
+            chain = chain.andThen(orderItem(dao, true));
+        }
+         
+        if (incls.contains(MAIN_PRODUCT_ASSOC)) {
+            chain = chain.andThen(mainProductAssoc(dao, true));
+        }
+         
+        if (incls.contains(ASSOC_PRODUCT_ASSOC)) {
+            chain = chain.andThen(assocProductAssoc(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_CATEGORY_MEMBER)) {
+            chain = chain.andThen(productCategoryMember(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_PRODUCT_CONFIG)) {
+            chain = chain.andThen(productProductConfig(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_PRODUCT_CONFIG_PRODUCT)) {
+            chain = chain.andThen(productProductConfigProduct(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_CONTENT)) {
+            chain = chain.andThen(productContent(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FACILITY)) {
+            chain = chain.andThen(productFacility(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FACILITY_ASSOC)) {
+            chain = chain.andThen(productFacilityAssoc(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FACILITY_LOCATION)) {
+            chain = chain.andThen(productFacilityLocation(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FEATURE_APPL)) {
+            chain = chain.andThen(productFeatureAppl(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_KEYWORD)) {
+            chain = chain.andThen(productKeyword(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_PRICE)) {
+            chain = chain.andThen(productPrice(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_PROMO_PRODUCT)) {
+            chain = chain.andThen(productPromoProduct(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_REVIEW)) {
+            chain = chain.andThen(productReview(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_SURVEY_APPL)) {
+            chain = chain.andThen(productStoreSurveyAppl(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_SUBSCRIPTION_RESOURCE)) {
+            chain = chain.andThen(productSubscriptionResource(dao, true));
+        }
+         
+        if (incls.contains(QUOTE_ITEM)) {
+            chain = chain.andThen(quoteItem(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_ITEM)) {
+            chain = chain.andThen(shipmentItem(dao, true));
+        }
+         
+        if (incls.contains(SUB_SHIPMENT_PACKAGE_CONTENT)) {
+            chain = chain.andThen(subShipmentPackageContent(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_RECEIPT)) {
+            chain = chain.andThen(shipmentReceipt(dao, true));
+        }
+         
+        if (incls.contains(SUPPLIER_PRODUCT)) {
+            chain = chain.andThen(supplierProduct(dao, true));
+        }
+         
+        if (incls.contains(WORK_EFFORT_GOOD_STANDARD)) {
+            chain = chain.andThen(workEffortGoodStandard(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<ProductData> responseObserver) {
+        Map<String, Product> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            ProductData.Builder productData = data.toHeadBuilder();
+             
+            data.getRelPrimaryProductCategory().forEach(e -> 
+                productData.setPrimaryProductCategory(e.toHeadBuilder())); 
+            data.getRelFacility().forEach(e -> 
+                productData.setFacility(e.toDataBuilder())); 
+            data.getRelCreatedByUserLogin().forEach(e -> 
+                productData.setCreatedByUserLogin(e.toHeadBuilder())); 
+            data.getRelLastModifiedByUserLogin().forEach(e -> 
+                productData.setLastModifiedByUserLogin(e.toHeadBuilder())); 
+            data.getRelDefaultShipmentBoxType().forEach(e -> 
+                productData.setDefaultShipmentBoxType(e.toDataBuilder())); 
+            data.getRelAgreement().forEach(e -> 
+                productData.addAgreement(e.toDataBuilder())); 
+            data.getRelAgreementProductAppl().forEach(e -> 
+                productData.addAgreementProductAppl(e.toDataBuilder())); 
+            data.getRelCustRequestItem().forEach(e -> 
+                productData.addCustRequestItem(e.toDataBuilder())); 
+            data.getRelInstanceOfFixedAsset().forEach(e -> 
+                productData.addInstanceOfFixedAsset(e.toHeadBuilder())); 
+            data.getRelFixedAssetProduct().forEach(e -> 
+                productData.addFixedAssetProduct(e.toDataBuilder())); 
+            data.getRelInventoryItem().forEach(e -> 
+                productData.addInventoryItem(e.toHeadBuilder())); 
+            data.getRelInvoiceItem().forEach(e -> 
+                productData.addInvoiceItem(e.toHeadBuilder())); 
+            data.getRelOrderItem().forEach(e -> 
+                productData.addOrderItem(e.toHeadBuilder())); 
+            data.getRelMainProductAssoc().forEach(e -> 
+                productData.addMainProductAssoc(e.toDataBuilder())); 
+            data.getRelAssocProductAssoc().forEach(e -> 
+                productData.addAssocProductAssoc(e.toDataBuilder())); 
+            data.getRelProductCategoryMember().forEach(e -> 
+                productData.addProductCategoryMember(e.toHeadBuilder())); 
+            data.getRelProductProductConfig().forEach(e -> 
+                productData.addProductProductConfig(e.toDataBuilder())); 
+            data.getRelProductProductConfigProduct().forEach(e -> 
+                productData.addProductProductConfigProduct(e.toDataBuilder())); 
+            data.getRelProductContent().forEach(e -> 
+                productData.addProductContent(e.toDataBuilder())); 
+            data.getRelProductFacility().forEach(e -> 
+                productData.addProductFacility(e.toDataBuilder())); 
+            data.getRelProductFacilityAssoc().forEach(e -> 
+                productData.addProductFacilityAssoc(e.toDataBuilder())); 
+            data.getRelProductFacilityLocation().forEach(e -> 
+                productData.addProductFacilityLocation(e.toDataBuilder())); 
+            data.getRelProductFeatureAppl().forEach(e -> 
+                productData.addProductFeatureAppl(e.toDataBuilder())); 
+            data.getRelProductKeyword().forEach(e -> 
+                productData.addProductKeyword(e.toDataBuilder())); 
+            data.getRelProductPrice().forEach(e -> 
+                productData.addProductPrice(e.toDataBuilder())); 
+            data.getRelProductPromoProduct().forEach(e -> 
+                productData.addProductPromoProduct(e.toDataBuilder())); 
+            data.getRelProductReview().forEach(e -> 
+                productData.addProductReview(e.toDataBuilder())); 
+            data.getRelProductStoreSurveyAppl().forEach(e -> 
+                productData.addProductStoreSurveyAppl(e.toDataBuilder())); 
+            data.getRelProductSubscriptionResource().forEach(e -> 
+                productData.addProductSubscriptionResource(e.toDataBuilder())); 
+            data.getRelQuoteItem().forEach(e -> 
+                productData.addQuoteItem(e.toDataBuilder())); 
+            data.getRelShipmentItem().forEach(e -> 
+                productData.addShipmentItem(e.toDataBuilder())); 
+            data.getRelSubShipmentPackageContent().forEach(e -> 
+                productData.addSubShipmentPackageContent(e.toDataBuilder())); 
+            data.getRelShipmentReceipt().forEach(e -> 
+                productData.addShipmentReceipt(e.toDataBuilder())); 
+            data.getRelSupplierProduct().forEach(e -> 
+                productData.addSupplierProduct(e.toDataBuilder())); 
+            data.getRelWorkEffortGoodStandard().forEach(e -> 
+                productData.addWorkEffortGoodStandard(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                productData.setTenant(e.toDataBuilder()));
+            return productData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public Product get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProduct(id);
@@ -1906,6 +2185,17 @@ public class ProductDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelWorkEffortGoodStandard().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -1993,6 +2283,8 @@ public class ProductDelegator extends AbstractProcs{
     public static final String SUPPLIER_PRODUCT="supplier_product";
          
     public static final String WORK_EFFORT_GOOD_STANDARD="work_effort_good_standard";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -2284,6 +2576,14 @@ public class ProductDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "work_effort_good_standard",
                                             WorkEffortGoodStandard.class)
                                     .forEach(el -> pb.addWorkEffortGoodStandard(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

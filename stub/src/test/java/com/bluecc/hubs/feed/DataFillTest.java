@@ -26,7 +26,7 @@ public class DataFillTest {
     @Test
     public void fillData() throws IOException {
         String entName="Person";
-        EntityMeta meta= EntityMetaManager.getEntityMeta(entName, false);
+        EntityMeta meta= EntityMetaManager.readEntityMeta(entName);
         EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
 
         // setup the entity-meta-info

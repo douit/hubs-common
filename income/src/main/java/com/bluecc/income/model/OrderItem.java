@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.OrderItemFlatData;
 
 import com.bluecc.hubs.stub.OrderItemData;
 import com.bluecc.income.dao.OrderItemDelegator;
+import static com.bluecc.income.dao.OrderItemDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -89,6 +96,7 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     @RId String id;
+    String tenantId;
     
 
         
@@ -248,6 +256,9 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
         if (id != null) {
             builder.setId(id);
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -304,6 +315,7 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -311,43 +323,92 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
         // relations
      
     @Exclude
+    @Singular("addOrderHeader")
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     @Exclude
+    @Singular("addProduct")
     List<Product> relProduct= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromInventoryItem")
     List<InventoryItem> relFromInventoryItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductFacilityLocation")
     List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
     @Exclude
+    @Singular("addDontCancelSetUserLogin")
     List<UserLogin> relDontCancelSetUserLogin= new ArrayList<>(); 
     @Exclude
+    @Singular("addQuoteItem")
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addOverrideGlAccount")
     List<GlAccount> relOverrideGlAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addChangeByUserLogin")
     List<UserLogin> relChangeByUserLogin= new ArrayList<>(); 
     @Exclude
+    @Singular("addFinAccountTrans")
     List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcquireFixedAsset")
     List<FixedAsset> relAcquireFixedAsset= new ArrayList<>(); 
     @Exclude
+    @Singular("addItemIssuance")
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderAdjustment")
     List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemBilling")
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemPriceInfo")
     List<OrderItemPriceInfo> relOrderItemPriceInfo= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemShipGroupAssoc")
     List<OrderItemShipGroupAssoc> relOrderItemShipGroupAssoc= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemShipGrpInvRes")
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderPaymentPreference")
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderStatus")
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     @Exclude
-    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
+    @Singular("addShipmentReceipt")
+    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(ORDER_HEADER, getter(this, OrderItem::getRelOrderHeader)); 
+        supplierMap.put(PRODUCT, getter(this, OrderItem::getRelProduct)); 
+        supplierMap.put(FROM_INVENTORY_ITEM, getter(this, OrderItem::getRelFromInventoryItem)); 
+        supplierMap.put(PRODUCT_FACILITY_LOCATION, getter(this, OrderItem::getRelProductFacilityLocation)); 
+        supplierMap.put(DONT_CANCEL_SET_USER_LOGIN, getter(this, OrderItem::getRelDontCancelSetUserLogin)); 
+        supplierMap.put(QUOTE_ITEM, getter(this, OrderItem::getRelQuoteItem)); 
+        supplierMap.put(OVERRIDE_GL_ACCOUNT, getter(this, OrderItem::getRelOverrideGlAccount)); 
+        supplierMap.put(CHANGE_BY_USER_LOGIN, getter(this, OrderItem::getRelChangeByUserLogin)); 
+        supplierMap.put(FIN_ACCOUNT_TRANS, getter(this, OrderItem::getRelFinAccountTrans)); 
+        supplierMap.put(ACQUIRE_FIXED_ASSET, getter(this, OrderItem::getRelAcquireFixedAsset)); 
+        supplierMap.put(ITEM_ISSUANCE, getter(this, OrderItem::getRelItemIssuance)); 
+        supplierMap.put(ORDER_ADJUSTMENT, getter(this, OrderItem::getRelOrderAdjustment)); 
+        supplierMap.put(ORDER_ITEM_BILLING, getter(this, OrderItem::getRelOrderItemBilling)); 
+        supplierMap.put(ORDER_ITEM_PRICE_INFO, getter(this, OrderItem::getRelOrderItemPriceInfo)); 
+        supplierMap.put(ORDER_ITEM_SHIP_GROUP_ASSOC, getter(this, OrderItem::getRelOrderItemShipGroupAssoc)); 
+        supplierMap.put(ORDER_ITEM_SHIP_GRP_INV_RES, getter(this, OrderItem::getRelOrderItemShipGrpInvRes)); 
+        supplierMap.put(ORDER_PAYMENT_PREFERENCE, getter(this, OrderItem::getRelOrderPaymentPreference)); 
+        supplierMap.put(ORDER_STATUS, getter(this, OrderItem::getRelOrderStatus)); 
+        supplierMap.put(SHIPMENT_RECEIPT, getter(this, OrderItem::getRelShipmentReceipt)); 
+        supplierMap.put(TENANT, getter(this, OrderItem::getRelTenant));
+
+        return supplierMap;
+    };
 
     public OrderItemDelegator.Agent agent(IProc.ProcContext ctx,
                                              OrderItemDelegator delegator){
@@ -599,5 +660,6 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
     + Subscription (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
     + SurveyResponse (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
     + WorkOrderItemFulfillment (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

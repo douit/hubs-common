@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.WebSiteFlatData;
 
 import com.bluecc.hubs.stub.WebSiteData;
 import com.bluecc.income.dao.WebSiteDelegator;
+import static com.bluecc.income.dao.WebSiteDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -58,6 +65,7 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializab
     String hostedPathAlias;
     Character isDefault;
     Character displayMaintenancePage;
+    String tenantId;
     
 
         
@@ -124,6 +132,9 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializab
         if (displayMaintenancePage != null) {
             builder.setDisplayMaintenancePage(getIndicator(displayMaintenancePage));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -149,6 +160,7 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializab
                 .hostedPathAlias(data.getHostedPathAlias())
                 .isDefault(getIndicatorChar(data.getIsDefault()))
                 .displayMaintenancePage(getIndicatorChar(data.getDisplayMaintenancePage()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -156,17 +168,40 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializab
         // relations
      
     @Exclude
+    @Singular("addProductStore")
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
+    @Singular("addEbayConfig")
     List<EbayConfig> relEbayConfig= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderHeader")
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     @Exclude
+    @Singular("addSubscriptionResource")
     List<SubscriptionResource> relSubscriptionResource= new ArrayList<>(); 
     @Exclude
+    @Singular("addWebAnalyticsConfig")
     List<WebAnalyticsConfig> relWebAnalyticsConfig= new ArrayList<>(); 
     @Exclude
-    List<WebSiteContent> relWebSiteContent= new ArrayList<>();
+    @Singular("addWebSiteContent")
+    List<WebSiteContent> relWebSiteContent= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PRODUCT_STORE, getter(this, WebSite::getRelProductStore)); 
+        supplierMap.put(EBAY_CONFIG, getter(this, WebSite::getRelEbayConfig)); 
+        supplierMap.put(ORDER_HEADER, getter(this, WebSite::getRelOrderHeader)); 
+        supplierMap.put(SUBSCRIPTION_RESOURCE, getter(this, WebSite::getRelSubscriptionResource)); 
+        supplierMap.put(WEB_ANALYTICS_CONFIG, getter(this, WebSite::getRelWebAnalyticsConfig)); 
+        supplierMap.put(WEB_SITE_CONTENT, getter(this, WebSite::getRelWebSiteContent)); 
+        supplierMap.put(TENANT, getter(this, WebSite::getRelTenant));
+
+        return supplierMap;
+    };
 
     public WebSiteDelegator.Agent agent(IProc.ProcContext ctx,
                                              WebSiteDelegator delegator){
@@ -272,5 +307,6 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializab
     + WebSiteContent (many, autoRelation: true, keymaps: webSiteId)
     + WebSitePathAlias (many, autoRelation: true, keymaps: webSiteId)
     + WebSiteRole (many, autoRelation: true, keymaps: webSiteId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

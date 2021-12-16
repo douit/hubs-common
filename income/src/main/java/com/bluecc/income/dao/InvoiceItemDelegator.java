@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.InvoiceItemData;
 
 public class InvoiceItemDelegator extends AbstractProcs{
@@ -467,6 +469,36 @@ public class InvoiceItemDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, InvoiceItem> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, InvoiceItem> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, InvoiceItem> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, InvoiceItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InvoiceItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InvoiceItem p = map.computeIfAbsent(rr.getColumn("ii_id", String.class),
+                                id -> rr.getRow(InvoiceItem.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -624,7 +656,128 @@ public class InvoiceItemDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainShipmentItemBilling(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, InvoiceItem>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, InvoiceItem>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, InvoiceItem> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, InvoiceItem> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, InvoiceItem>> chain = tenant(dao, false);
+         
+        if (incls.contains(INVOICE)) {
+            chain = chain.andThen(invoice(dao, true));
+        }
+         
+        if (incls.contains(INVENTORY_ITEM)) {
+            chain = chain.andThen(inventoryItem(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT)) {
+            chain = chain.andThen(product(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FEATURE)) {
+            chain = chain.andThen(productFeature(dao, true));
+        }
+         
+        if (incls.contains(INVOICE_ITEM)) {
+            chain = chain.andThen(invoiceItem(dao, true));
+        }
+         
+        if (incls.contains(CHILDREN_INVOICE_ITEM)) {
+            chain = chain.andThen(childrenInvoiceItem(dao, true));
+        }
+         
+        if (incls.contains(OVERRIDE_GL_ACCOUNT)) {
+            chain = chain.andThen(overrideGlAccount(dao, true));
+        }
+         
+        if (incls.contains(TAX_AUTHORITY_PARTY)) {
+            chain = chain.andThen(taxAuthorityParty(dao, true));
+        }
+         
+        if (incls.contains(TAX_AUTHORITY_RATE_PRODUCT)) {
+            chain = chain.andThen(taxAuthorityRateProduct(dao, true));
+        }
+         
+        if (incls.contains(OVERRIDE_ORG_PARTY)) {
+            chain = chain.andThen(overrideOrgParty(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ADJUSTMENT_BILLING)) {
+            chain = chain.andThen(orderAdjustmentBilling(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_BILLING)) {
+            chain = chain.andThen(orderItemBilling(dao, true));
+        }
+         
+        if (incls.contains(PAYMENT_APPLICATION)) {
+            chain = chain.andThen(paymentApplication(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_ITEM_BILLING)) {
+            chain = chain.andThen(shipmentItemBilling(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<InvoiceItemData> responseObserver) {
+        Map<String, InvoiceItem> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            InvoiceItemData.Builder invoiceItemData = data.toHeadBuilder();
+             
+            data.getRelInvoice().forEach(e -> 
+                invoiceItemData.setInvoice(e.toHeadBuilder())); 
+            data.getRelInventoryItem().forEach(e -> 
+                invoiceItemData.setInventoryItem(e.toHeadBuilder())); 
+            data.getRelProduct().forEach(e -> 
+                invoiceItemData.setProduct(e.toHeadBuilder())); 
+            data.getRelProductFeature().forEach(e -> 
+                invoiceItemData.setProductFeature(e.toDataBuilder())); 
+            data.getRelInvoiceItem().forEach(e -> 
+                invoiceItemData.setInvoiceItem(e.toHeadBuilder())); 
+            data.getRelChildrenInvoiceItem().forEach(e -> 
+                invoiceItemData.addChildrenInvoiceItem(e.toHeadBuilder())); 
+            data.getRelOverrideGlAccount().forEach(e -> 
+                invoiceItemData.setOverrideGlAccount(e.toDataBuilder())); 
+            data.getRelTaxAuthorityParty().forEach(e -> 
+                invoiceItemData.setTaxAuthorityParty(e.toHeadBuilder())); 
+            data.getRelTaxAuthorityRateProduct().forEach(e -> 
+                invoiceItemData.setTaxAuthorityRateProduct(e.toDataBuilder())); 
+            data.getRelOverrideOrgParty().forEach(e -> 
+                invoiceItemData.setOverrideOrgParty(e.toHeadBuilder())); 
+            data.getRelOrderAdjustmentBilling().forEach(e -> 
+                invoiceItemData.addOrderAdjustmentBilling(e.toDataBuilder())); 
+            data.getRelOrderItemBilling().forEach(e -> 
+                invoiceItemData.addOrderItemBilling(e.toDataBuilder())); 
+            data.getRelPaymentApplication().forEach(e -> 
+                invoiceItemData.addPaymentApplication(e.toDataBuilder())); 
+            data.getRelShipmentItemBilling().forEach(e -> 
+                invoiceItemData.addShipmentItemBilling(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                invoiceItemData.setTenant(e.toDataBuilder()));
+            return invoiceItemData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public InvoiceItem get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getInvoiceItem(id);
@@ -814,6 +967,17 @@ public class InvoiceItemDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelShipmentItemBilling().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -859,6 +1023,8 @@ public class InvoiceItemDelegator extends AbstractProcs{
     public static final String PAYMENT_APPLICATION="payment_application";
          
     public static final String SHIPMENT_ITEM_BILLING="shipment_item_billing";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -982,6 +1148,14 @@ public class InvoiceItemDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "shipment_item_billing",
                                             ShipmentItemBilling.class)
                                     .forEach(el -> pb.addShipmentItemBilling(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

@@ -2,7 +2,7 @@ package com.bluecc.hubs.livecases;
 
 import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.RateAmountData;
-import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.EmplPositionTypeData;
 import com.bluecc.hubs.stub.PartyRateData;
@@ -61,8 +61,8 @@ public final class RateTestsData {
     }
 
 
-    public static WorkEffortData WorkEffort_Test_effort() {
-        return WorkEffortData.newBuilder()
+    public static WorkEffortFlatData WorkEffort_Test_effort() {
+        return WorkEffortFlatData.newBuilder()
             .setWorkEffortId("Test_effort")
             .setWorkEffortName("Test workeffort")
             .build();

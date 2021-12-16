@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.ShipmentData;
 
 public class ShipmentDelegator extends AbstractProcs{
@@ -887,6 +889,36 @@ public class ShipmentDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Shipment> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Shipment> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Shipment> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Shipment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
+                                id -> rr.getRow(Shipment.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -1198,7 +1230,212 @@ public class ShipmentDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainShipmentStatus(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, Shipment>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Shipment>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, Shipment> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, Shipment> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, Shipment>> chain = tenant(dao, false);
+         
+        if (incls.contains(ESTIMATED_SHIP_WORK_EFFORT)) {
+            chain = chain.andThen(estimatedShipWorkEffort(dao, true));
+        }
+         
+        if (incls.contains(ESTIMATED_ARRIVAL_WORK_EFFORT)) {
+            chain = chain.andThen(estimatedArrivalWorkEffort(dao, true));
+        }
+         
+        if (incls.contains(ORIGIN_FACILITY)) {
+            chain = chain.andThen(originFacility(dao, true));
+        }
+         
+        if (incls.contains(DESTINATION_FACILITY)) {
+            chain = chain.andThen(destinationFacility(dao, true));
+        }
+         
+        if (incls.contains(ORIGIN_CONTACT_MECH)) {
+            chain = chain.andThen(originContactMech(dao, true));
+        }
+         
+        if (incls.contains(DEST_CONTACT_MECH)) {
+            chain = chain.andThen(destContactMech(dao, true));
+        }
+         
+        if (incls.contains(ORIGIN_POSTAL_ADDRESS)) {
+            chain = chain.andThen(originPostalAddress(dao, true));
+        }
+         
+        if (incls.contains(ORIGIN_TELECOM_NUMBER)) {
+            chain = chain.andThen(originTelecomNumber(dao, true));
+        }
+         
+        if (incls.contains(DESTINATION_POSTAL_ADDRESS)) {
+            chain = chain.andThen(destinationPostalAddress(dao, true));
+        }
+         
+        if (incls.contains(DESTINATION_TELECOM_NUMBER)) {
+            chain = chain.andThen(destinationTelecomNumber(dao, true));
+        }
+         
+        if (incls.contains(PRIMARY_ORDER_HEADER)) {
+            chain = chain.andThen(primaryOrderHeader(dao, true));
+        }
+         
+        if (incls.contains(PRIMARY_ORDER_ITEM_SHIP_GROUP)) {
+            chain = chain.andThen(primaryOrderItemShipGroup(dao, true));
+        }
+         
+        if (incls.contains(TO_PARTY)) {
+            chain = chain.andThen(toParty(dao, true));
+        }
+         
+        if (incls.contains(TO_PERSON)) {
+            chain = chain.andThen(toPerson(dao, true));
+        }
+         
+        if (incls.contains(TO_PARTY_GROUP)) {
+            chain = chain.andThen(toPartyGroup(dao, true));
+        }
+         
+        if (incls.contains(FROM_PARTY)) {
+            chain = chain.andThen(fromParty(dao, true));
+        }
+         
+        if (incls.contains(FROM_PERSON)) {
+            chain = chain.andThen(fromPerson(dao, true));
+        }
+         
+        if (incls.contains(FROM_PARTY_GROUP)) {
+            chain = chain.andThen(fromPartyGroup(dao, true));
+        }
+         
+        if (incls.contains(ACCTG_TRANS)) {
+            chain = chain.andThen(acctgTrans(dao, true));
+        }
+         
+        if (incls.contains(ITEM_ISSUANCE)) {
+            chain = chain.andThen(itemIssuance(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_ITEM)) {
+            chain = chain.andThen(shipmentItem(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_ITEM_BILLING)) {
+            chain = chain.andThen(shipmentItemBilling(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_PACKAGE)) {
+            chain = chain.andThen(shipmentPackage(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_PACKAGE_CONTENT)) {
+            chain = chain.andThen(shipmentPackageContent(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_PACKAGE_ROUTE_SEG)) {
+            chain = chain.andThen(shipmentPackageRouteSeg(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_RECEIPT)) {
+            chain = chain.andThen(shipmentReceipt(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_ROUTE_SEGMENT)) {
+            chain = chain.andThen(shipmentRouteSegment(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_STATUS)) {
+            chain = chain.andThen(shipmentStatus(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<ShipmentData> responseObserver) {
+        Map<String, Shipment> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            ShipmentData.Builder shipmentData = data.toHeadBuilder();
+             
+            data.getRelEstimatedShipWorkEffort().forEach(e -> 
+                shipmentData.setEstimatedShipWorkEffort(e.toHeadBuilder())); 
+            data.getRelEstimatedArrivalWorkEffort().forEach(e -> 
+                shipmentData.setEstimatedArrivalWorkEffort(e.toHeadBuilder())); 
+            data.getRelOriginFacility().forEach(e -> 
+                shipmentData.setOriginFacility(e.toDataBuilder())); 
+            data.getRelDestinationFacility().forEach(e -> 
+                shipmentData.setDestinationFacility(e.toDataBuilder())); 
+            data.getRelOriginContactMech().forEach(e -> 
+                shipmentData.setOriginContactMech(e.toDataBuilder())); 
+            data.getRelDestContactMech().forEach(e -> 
+                shipmentData.setDestContactMech(e.toDataBuilder())); 
+            data.getRelOriginPostalAddress().forEach(e -> 
+                shipmentData.setOriginPostalAddress(e.toDataBuilder())); 
+            data.getRelOriginTelecomNumber().forEach(e -> 
+                shipmentData.setOriginTelecomNumber(e.toDataBuilder())); 
+            data.getRelDestinationPostalAddress().forEach(e -> 
+                shipmentData.setDestinationPostalAddress(e.toDataBuilder())); 
+            data.getRelDestinationTelecomNumber().forEach(e -> 
+                shipmentData.setDestinationTelecomNumber(e.toDataBuilder())); 
+            data.getRelPrimaryOrderHeader().forEach(e -> 
+                shipmentData.setPrimaryOrderHeader(e.toHeadBuilder())); 
+            data.getRelPrimaryOrderItemShipGroup().forEach(e -> 
+                shipmentData.setPrimaryOrderItemShipGroup(e.toDataBuilder())); 
+            data.getRelToParty().forEach(e -> 
+                shipmentData.setToParty(e.toHeadBuilder())); 
+            data.getRelToPerson().forEach(e -> 
+                shipmentData.setToPerson(e.toHeadBuilder())); 
+            data.getRelToPartyGroup().forEach(e -> 
+                shipmentData.setToPartyGroup(e.toHeadBuilder())); 
+            data.getRelFromParty().forEach(e -> 
+                shipmentData.setFromParty(e.toHeadBuilder())); 
+            data.getRelFromPerson().forEach(e -> 
+                shipmentData.setFromPerson(e.toHeadBuilder())); 
+            data.getRelFromPartyGroup().forEach(e -> 
+                shipmentData.setFromPartyGroup(e.toHeadBuilder())); 
+            data.getRelAcctgTrans().forEach(e -> 
+                shipmentData.addAcctgTrans(e.toDataBuilder())); 
+            data.getRelItemIssuance().forEach(e -> 
+                shipmentData.addItemIssuance(e.toDataBuilder())); 
+            data.getRelShipmentItem().forEach(e -> 
+                shipmentData.addShipmentItem(e.toDataBuilder())); 
+            data.getRelShipmentItemBilling().forEach(e -> 
+                shipmentData.addShipmentItemBilling(e.toDataBuilder())); 
+            data.getRelShipmentPackage().forEach(e -> 
+                shipmentData.addShipmentPackage(e.toDataBuilder())); 
+            data.getRelShipmentPackageContent().forEach(e -> 
+                shipmentData.addShipmentPackageContent(e.toDataBuilder())); 
+            data.getRelShipmentPackageRouteSeg().forEach(e -> 
+                shipmentData.addShipmentPackageRouteSeg(e.toDataBuilder())); 
+            data.getRelShipmentReceipt().forEach(e -> 
+                shipmentData.addShipmentReceipt(e.toDataBuilder())); 
+            data.getRelShipmentRouteSegment().forEach(e -> 
+                shipmentData.addShipmentRouteSegment(e.toDataBuilder())); 
+            data.getRelShipmentStatus().forEach(e -> 
+                shipmentData.addShipmentStatus(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                shipmentData.setTenant(e.toDataBuilder()));
+            return shipmentData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public Shipment get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getShipment(id);
@@ -1542,6 +1779,17 @@ public class ShipmentDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelShipmentStatus().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -1615,6 +1863,8 @@ public class ShipmentDelegator extends AbstractProcs{
     public static final String SHIPMENT_ROUTE_SEGMENT="shipment_route_segment";
          
     public static final String SHIPMENT_STATUS="shipment_status";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -1634,7 +1884,7 @@ public class ShipmentDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "estimated_ship_work_effort",
                                             WorkEffort.class)
                                     .forEach(el -> pb.setEstimatedShipWorkEffort(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set estimated_arrival_work_effort to head entity                        
@@ -1642,7 +1892,7 @@ public class ShipmentDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "estimated_arrival_work_effort",
                                             WorkEffort.class)
                                     .forEach(el -> pb.setEstimatedArrivalWorkEffort(
-                                             el.toDataBuilder().build()));
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set origin_facility to head entity                        
@@ -1850,6 +2100,14 @@ public class ShipmentDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "shipment_status",
                                             ShipmentStatus.class)
                                     .forEach(el -> pb.addShipmentStatus(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

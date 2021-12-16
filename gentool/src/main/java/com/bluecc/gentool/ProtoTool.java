@@ -2,7 +2,7 @@ package com.bluecc.gentool;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.bluecc.gentool.common.TemplateUtil;
+import com.bluecc.hubs.fund.TemplateUtil;
 import com.bluecc.hubs.fund.*;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -75,7 +75,7 @@ public class ProtoTool {
         writeProtoFileHeader(writer);
 
         for (String headEnt : HeadEntityResources.allHeads()) {
-            EntityMeta meta= EntityMetaManager.getEntityMeta(headEnt, false);
+            EntityMeta meta= EntityMetaManager.readEntityMeta(headEnt);
             writer.write(TemplateUtil.build("templates/proto_service_source.j2",
                     ImmutableMap.of("ent", meta)));
         }
@@ -108,7 +108,7 @@ public class ProtoTool {
     }
 
     String sourceGen(String entName, String tplName, boolean hasTable) throws IOException {
-        EntityMeta meta= EntityMetaManager.getEntityMeta(entName, false);
+        EntityMeta meta= EntityMetaManager.readEntityMeta(entName);
         EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
 
         // setup the entity-meta-info
@@ -120,7 +120,7 @@ public class ProtoTool {
     }
 
     public static String flatSourceGen(String entName, String suffix, boolean hasTable) throws IOException {
-        EntityMeta meta= EntityMetaManager.getEntityMeta(entName, false);
+        EntityMeta meta= EntityMetaManager.readEntityMeta(entName);
         EntityMetaDigester digester=new EntityMetaDigester(meta, typeList);
         return TemplateUtil.build("templates/proto_flat_source.j2",
                 ImmutableMap.of("ent", meta,

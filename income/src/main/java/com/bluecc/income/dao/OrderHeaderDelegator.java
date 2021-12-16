@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.OrderHeaderData;
 
 public class OrderHeaderDelegator extends AbstractProcs{
@@ -647,6 +649,36 @@ public class OrderHeaderDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, OrderHeader> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, OrderHeader> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -870,7 +902,164 @@ public class OrderHeaderDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, OrderHeader>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderHeader>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, OrderHeader> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, OrderHeader> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, OrderHeader>> chain = tenant(dao, false);
+         
+        if (incls.contains(ORIGIN_FACILITY)) {
+            chain = chain.andThen(originFacility(dao, true));
+        }
+         
+        if (incls.contains(BILLING_ACCOUNT)) {
+            chain = chain.andThen(billingAccount(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE)) {
+            chain = chain.andThen(productStore(dao, true));
+        }
+         
+        if (incls.contains(CREATED_BY_USER_LOGIN)) {
+            chain = chain.andThen(createdByUserLogin(dao, true));
+        }
+         
+        if (incls.contains(WEB_SITE)) {
+            chain = chain.andThen(webSite(dao, true));
+        }
+         
+        if (incls.contains(ACQUIRE_FIXED_ASSET)) {
+            chain = chain.andThen(acquireFixedAsset(dao, true));
+        }
+         
+        if (incls.contains(ITEM_ISSUANCE)) {
+            chain = chain.andThen(itemIssuance(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ADJUSTMENT)) {
+            chain = chain.andThen(orderAdjustment(dao, true));
+        }
+         
+        if (incls.contains(ORDER_CONTACT_MECH)) {
+            chain = chain.andThen(orderContactMech(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM)) {
+            chain = chain.andThen(orderItem(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_BILLING)) {
+            chain = chain.andThen(orderItemBilling(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_PRICE_INFO)) {
+            chain = chain.andThen(orderItemPriceInfo(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_SHIP_GROUP)) {
+            chain = chain.andThen(orderItemShipGroup(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_SHIP_GROUP_ASSOC)) {
+            chain = chain.andThen(orderItemShipGroupAssoc(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_SHIP_GRP_INV_RES)) {
+            chain = chain.andThen(orderItemShipGrpInvRes(dao, true));
+        }
+         
+        if (incls.contains(ORDER_PAYMENT_PREFERENCE)) {
+            chain = chain.andThen(orderPaymentPreference(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ROLE)) {
+            chain = chain.andThen(orderRole(dao, true));
+        }
+         
+        if (incls.contains(ORDER_STATUS)) {
+            chain = chain.andThen(orderStatus(dao, true));
+        }
+         
+        if (incls.contains(PRIMARY_SHIPMENT)) {
+            chain = chain.andThen(primaryShipment(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_RECEIPT)) {
+            chain = chain.andThen(shipmentReceipt(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<OrderHeaderData> responseObserver) {
+        Map<String, OrderHeader> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            OrderHeaderData.Builder orderHeaderData = data.toHeadBuilder();
+             
+            data.getRelOriginFacility().forEach(e -> 
+                orderHeaderData.setOriginFacility(e.toDataBuilder())); 
+            data.getRelBillingAccount().forEach(e -> 
+                orderHeaderData.setBillingAccount(e.toHeadBuilder())); 
+            data.getRelProductStore().forEach(e -> 
+                orderHeaderData.setProductStore(e.toHeadBuilder())); 
+            data.getRelCreatedByUserLogin().forEach(e -> 
+                orderHeaderData.setCreatedByUserLogin(e.toHeadBuilder())); 
+            data.getRelWebSite().forEach(e -> 
+                orderHeaderData.setWebSite(e.toHeadBuilder())); 
+            data.getRelAcquireFixedAsset().forEach(e -> 
+                orderHeaderData.addAcquireFixedAsset(e.toHeadBuilder())); 
+            data.getRelItemIssuance().forEach(e -> 
+                orderHeaderData.addItemIssuance(e.toDataBuilder())); 
+            data.getRelOrderAdjustment().forEach(e -> 
+                orderHeaderData.addOrderAdjustment(e.toDataBuilder())); 
+            data.getRelOrderContactMech().forEach(e -> 
+                orderHeaderData.addOrderContactMech(e.toDataBuilder())); 
+            data.getRelOrderItem().forEach(e -> 
+                orderHeaderData.addOrderItem(e.toHeadBuilder())); 
+            data.getRelOrderItemBilling().forEach(e -> 
+                orderHeaderData.addOrderItemBilling(e.toDataBuilder())); 
+            data.getRelOrderItemPriceInfo().forEach(e -> 
+                orderHeaderData.addOrderItemPriceInfo(e.toDataBuilder())); 
+            data.getRelOrderItemShipGroup().forEach(e -> 
+                orderHeaderData.addOrderItemShipGroup(e.toDataBuilder())); 
+            data.getRelOrderItemShipGroupAssoc().forEach(e -> 
+                orderHeaderData.addOrderItemShipGroupAssoc(e.toDataBuilder())); 
+            data.getRelOrderItemShipGrpInvRes().forEach(e -> 
+                orderHeaderData.addOrderItemShipGrpInvRes(e.toDataBuilder())); 
+            data.getRelOrderPaymentPreference().forEach(e -> 
+                orderHeaderData.addOrderPaymentPreference(e.toDataBuilder())); 
+            data.getRelOrderRole().forEach(e -> 
+                orderHeaderData.addOrderRole(e.toDataBuilder())); 
+            data.getRelOrderStatus().forEach(e -> 
+                orderHeaderData.addOrderStatus(e.toDataBuilder())); 
+            data.getRelPrimaryShipment().forEach(e -> 
+                orderHeaderData.addPrimaryShipment(e.toHeadBuilder())); 
+            data.getRelShipmentReceipt().forEach(e -> 
+                orderHeaderData.addShipmentReceipt(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                orderHeaderData.setTenant(e.toDataBuilder()));
+            return orderHeaderData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public OrderHeader get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getOrderHeader(id);
@@ -1126,6 +1315,17 @@ public class OrderHeaderDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelShipmentReceipt().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -1183,6 +1383,8 @@ public class OrderHeaderDelegator extends AbstractProcs{
     public static final String PRIMARY_SHIPMENT="primary_shipment";
          
     public static final String SHIPMENT_RECEIPT="shipment_receipt";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -1354,6 +1556,14 @@ public class OrderHeaderDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "shipment_receipt",
                                             ShipmentReceipt.class)
                                     .forEach(el -> pb.addShipmentReceipt(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

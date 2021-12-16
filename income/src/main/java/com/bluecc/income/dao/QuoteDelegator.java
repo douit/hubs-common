@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.QuoteData;
 
 public class QuoteDelegator extends AbstractProcs{
@@ -197,6 +199,36 @@ public class QuoteDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Quote> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Quote> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
+                                id -> rr.getRow(Quote.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -255,7 +287,74 @@ public class QuoteDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainQuoteTerm(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, Quote>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Quote>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, Quote> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, Quote> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, Quote>> chain = tenant(dao, false);
+         
+        if (incls.contains(PARTY)) {
+            chain = chain.andThen(party(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE)) {
+            chain = chain.andThen(productStore(dao, true));
+        }
+         
+        if (incls.contains(QUOTE_ITEM)) {
+            chain = chain.andThen(quoteItem(dao, true));
+        }
+         
+        if (incls.contains(QUOTE_ROLE)) {
+            chain = chain.andThen(quoteRole(dao, true));
+        }
+         
+        if (incls.contains(QUOTE_TERM)) {
+            chain = chain.andThen(quoteTerm(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<QuoteData> responseObserver) {
+        Map<String, Quote> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            QuoteData.Builder quoteData = data.toHeadBuilder();
+             
+            data.getRelParty().forEach(e -> 
+                quoteData.setParty(e.toHeadBuilder())); 
+            data.getRelProductStore().forEach(e -> 
+                quoteData.setProductStore(e.toHeadBuilder())); 
+            data.getRelQuoteItem().forEach(e -> 
+                quoteData.addQuoteItem(e.toDataBuilder())); 
+            data.getRelQuoteRole().forEach(e -> 
+                quoteData.addQuoteRole(e.toDataBuilder())); 
+            data.getRelQuoteTerm().forEach(e -> 
+                quoteData.addQuoteTerm(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                quoteData.setTenant(e.toDataBuilder()));
+            return quoteData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public Quote get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getQuote(id);
@@ -346,6 +445,17 @@ public class QuoteDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelQuoteTerm().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -373,6 +483,8 @@ public class QuoteDelegator extends AbstractProcs{
     public static final String QUOTE_ROLE="quote_role";
          
     public static final String QUOTE_TERM="quote_term";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -424,6 +536,14 @@ public class QuoteDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "quote_term",
                                             QuoteTerm.class)
                                     .forEach(el -> pb.addQuoteTerm(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

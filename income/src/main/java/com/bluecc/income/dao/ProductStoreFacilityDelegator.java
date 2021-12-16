@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.ProductStoreFacilityData;
 
 public class ProductStoreFacilityDelegator extends AbstractProcs{
@@ -107,6 +109,36 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductStoreFacility> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductStoreFacility> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductStoreFacility> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductStoreFacility> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStoreFacility", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
+                                id -> rr.getRow(ProductStoreFacility.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -132,7 +164,56 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, ProductStoreFacility>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, ProductStoreFacility>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, ProductStoreFacility> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, ProductStoreFacility> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, ProductStoreFacility>> chain = tenant(dao, false);
+         
+        if (incls.contains(PRODUCT_STORE)) {
+            chain = chain.andThen(productStore(dao, true));
+        }
+         
+        if (incls.contains(FACILITY)) {
+            chain = chain.andThen(facility(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<ProductStoreFacilityData> responseObserver) {
+        Map<String, ProductStoreFacility> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            ProductStoreFacilityData.Builder productStoreFacilityData = data.toHeadBuilder();
+             
+            data.getRelProductStore().forEach(e -> 
+                productStoreFacilityData.setProductStore(e.toHeadBuilder())); 
+            data.getRelFacility().forEach(e -> 
+                productStoreFacilityData.setFacility(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                productStoreFacilityData.setTenant(e.toDataBuilder()));
+            return productStoreFacilityData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public ProductStoreFacility get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProductStoreFacility(id);
@@ -190,6 +271,17 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelFacility().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -211,6 +303,8 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
     public static final String PRODUCT_STORE="product_store";
          
     public static final String FACILITY="facility";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -238,6 +332,14 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "facility",
                                             Facility.class)
                                     .forEach(el -> pb.setFacility(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

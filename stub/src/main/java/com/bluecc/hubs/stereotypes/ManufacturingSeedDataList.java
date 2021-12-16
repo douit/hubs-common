@@ -7,7 +7,7 @@ import static com.bluecc.hubs.stereotypes.ManufacturingSeedData.*;
 import com.bluecc.hubs.stub.EnumerationData;
 import com.bluecc.hubs.stub.TechDataCalendarData;
 import com.bluecc.hubs.stub.MrpEventTypeData;
-import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 import com.bluecc.hubs.stub.CustomMethodTypeData;
 import com.bluecc.hubs.stub.TechDataCalendarWeekData;
 import com.bluecc.hubs.stub.WorkEffortAssocData;
@@ -36,7 +36,7 @@ public final class ManufacturingSeedDataList {
             MrpEventType_ERROR,        
             MrpEventType_PROP_TRANSFER_RECP);
 
-    public static final List<WorkEffortData> workEffortList=ImmutableList.of(        
+    public static final List<WorkEffortFlatData> workEffortList=ImmutableList.of(        
             WorkEffort_DEFAULT_ROUTING,        
             WorkEffort_DEFAULT_TASK);
 

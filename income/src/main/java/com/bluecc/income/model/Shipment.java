@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.ShipmentFlatData;
 
 import com.bluecc.hubs.stub.ShipmentData;
 import com.bluecc.income.dao.ShipmentDelegator;
+import static com.bluecc.income.dao.ShipmentDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -71,6 +78,7 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -176,6 +184,9 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -214,6 +225,7 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
                 .lastModifiedByUserLogin(data.getLastModifiedByUserLogin())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -221,61 +233,128 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
         // relations
      
     @Exclude
+    @Singular("addEstimatedShipWorkEffort")
     List<WorkEffort> relEstimatedShipWorkEffort= new ArrayList<>(); 
     @Exclude
+    @Singular("addEstimatedArrivalWorkEffort")
     List<WorkEffort> relEstimatedArrivalWorkEffort= new ArrayList<>(); 
     @Exclude
+    @Singular("addOriginFacility")
     List<Facility> relOriginFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addDestinationFacility")
     List<Facility> relDestinationFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addOriginContactMech")
     List<ContactMech> relOriginContactMech= new ArrayList<>(); 
     @Exclude
+    @Singular("addDestContactMech")
     List<ContactMech> relDestContactMech= new ArrayList<>(); 
     @Exclude
+    @Singular("addOriginPostalAddress")
     List<PostalAddress> relOriginPostalAddress= new ArrayList<>(); 
     @Exclude
+    @Singular("addOriginTelecomNumber")
     List<TelecomNumber> relOriginTelecomNumber= new ArrayList<>(); 
     @Exclude
+    @Singular("addDestinationPostalAddress")
     List<PostalAddress> relDestinationPostalAddress= new ArrayList<>(); 
     @Exclude
+    @Singular("addDestinationTelecomNumber")
     List<TelecomNumber> relDestinationTelecomNumber= new ArrayList<>(); 
     @Exclude
+    @Singular("addPrimaryOrderHeader")
     List<OrderHeader> relPrimaryOrderHeader= new ArrayList<>(); 
     @Exclude
+    @Singular("addPrimaryOrderItemShipGroup")
     List<OrderItemShipGroup> relPrimaryOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
+    @Singular("addToParty")
     List<Party> relToParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addToPerson")
     List<Person> relToPerson= new ArrayList<>(); 
     @Exclude
+    @Singular("addToPartyGroup")
     List<PartyGroup> relToPartyGroup= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromParty")
     List<Party> relFromParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromPerson")
     List<Person> relFromPerson= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromPartyGroup")
     List<PartyGroup> relFromPartyGroup= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcctgTrans")
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addItemIssuance")
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
     @Exclude
+    @Singular("addShipmentItem")
     List<ShipmentItem> relShipmentItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addShipmentItemBilling")
     List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>(); 
     @Exclude
+    @Singular("addShipmentPackage")
     List<ShipmentPackage> relShipmentPackage= new ArrayList<>(); 
     @Exclude
+    @Singular("addShipmentPackageContent")
     List<ShipmentPackageContent> relShipmentPackageContent= new ArrayList<>(); 
     @Exclude
+    @Singular("addShipmentPackageRouteSeg")
     List<ShipmentPackageRouteSeg> relShipmentPackageRouteSeg= new ArrayList<>(); 
     @Exclude
+    @Singular("addShipmentReceipt")
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     @Exclude
+    @Singular("addShipmentRouteSegment")
     List<ShipmentRouteSegment> relShipmentRouteSegment= new ArrayList<>(); 
     @Exclude
-    List<ShipmentStatus> relShipmentStatus= new ArrayList<>();
+    @Singular("addShipmentStatus")
+    List<ShipmentStatus> relShipmentStatus= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(ESTIMATED_SHIP_WORK_EFFORT, getter(this, Shipment::getRelEstimatedShipWorkEffort)); 
+        supplierMap.put(ESTIMATED_ARRIVAL_WORK_EFFORT, getter(this, Shipment::getRelEstimatedArrivalWorkEffort)); 
+        supplierMap.put(ORIGIN_FACILITY, getter(this, Shipment::getRelOriginFacility)); 
+        supplierMap.put(DESTINATION_FACILITY, getter(this, Shipment::getRelDestinationFacility)); 
+        supplierMap.put(ORIGIN_CONTACT_MECH, getter(this, Shipment::getRelOriginContactMech)); 
+        supplierMap.put(DEST_CONTACT_MECH, getter(this, Shipment::getRelDestContactMech)); 
+        supplierMap.put(ORIGIN_POSTAL_ADDRESS, getter(this, Shipment::getRelOriginPostalAddress)); 
+        supplierMap.put(ORIGIN_TELECOM_NUMBER, getter(this, Shipment::getRelOriginTelecomNumber)); 
+        supplierMap.put(DESTINATION_POSTAL_ADDRESS, getter(this, Shipment::getRelDestinationPostalAddress)); 
+        supplierMap.put(DESTINATION_TELECOM_NUMBER, getter(this, Shipment::getRelDestinationTelecomNumber)); 
+        supplierMap.put(PRIMARY_ORDER_HEADER, getter(this, Shipment::getRelPrimaryOrderHeader)); 
+        supplierMap.put(PRIMARY_ORDER_ITEM_SHIP_GROUP, getter(this, Shipment::getRelPrimaryOrderItemShipGroup)); 
+        supplierMap.put(TO_PARTY, getter(this, Shipment::getRelToParty)); 
+        supplierMap.put(TO_PERSON, getter(this, Shipment::getRelToPerson)); 
+        supplierMap.put(TO_PARTY_GROUP, getter(this, Shipment::getRelToPartyGroup)); 
+        supplierMap.put(FROM_PARTY, getter(this, Shipment::getRelFromParty)); 
+        supplierMap.put(FROM_PERSON, getter(this, Shipment::getRelFromPerson)); 
+        supplierMap.put(FROM_PARTY_GROUP, getter(this, Shipment::getRelFromPartyGroup)); 
+        supplierMap.put(ACCTG_TRANS, getter(this, Shipment::getRelAcctgTrans)); 
+        supplierMap.put(ITEM_ISSUANCE, getter(this, Shipment::getRelItemIssuance)); 
+        supplierMap.put(SHIPMENT_ITEM, getter(this, Shipment::getRelShipmentItem)); 
+        supplierMap.put(SHIPMENT_ITEM_BILLING, getter(this, Shipment::getRelShipmentItemBilling)); 
+        supplierMap.put(SHIPMENT_PACKAGE, getter(this, Shipment::getRelShipmentPackage)); 
+        supplierMap.put(SHIPMENT_PACKAGE_CONTENT, getter(this, Shipment::getRelShipmentPackageContent)); 
+        supplierMap.put(SHIPMENT_PACKAGE_ROUTE_SEG, getter(this, Shipment::getRelShipmentPackageRouteSeg)); 
+        supplierMap.put(SHIPMENT_RECEIPT, getter(this, Shipment::getRelShipmentReceipt)); 
+        supplierMap.put(SHIPMENT_ROUTE_SEGMENT, getter(this, Shipment::getRelShipmentRouteSegment)); 
+        supplierMap.put(SHIPMENT_STATUS, getter(this, Shipment::getRelShipmentStatus)); 
+        supplierMap.put(TENANT, getter(this, Shipment::getRelTenant));
+
+        return supplierMap;
+    };
 
     public ShipmentDelegator.Agent agent(IProc.ProcContext ctx,
                                              ShipmentDelegator delegator){
@@ -432,5 +511,6 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
     + ShipmentReceipt (many, autoRelation: true, keymaps: shipmentId)
     + ShipmentRouteSegment (many, autoRelation: true, keymaps: shipmentId)
     + ShipmentStatus (many, autoRelation: true, keymaps: shipmentId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

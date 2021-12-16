@@ -13,6 +13,7 @@ import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3.Builder;
 import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
+import com.google.type.Date;
 import com.google.type.TimeOfDay;
 import jodd.util.StringUtil;
 import lombok.AllArgsConstructor;
@@ -290,6 +291,10 @@ public class DataFill {
                 case "TimeOfDay":
                     TimeOfDay timeOfDay=ProtoTypes.getTimeOfDay(LocalTime.parse(val.getAsString()));
                     msg.setField(fld, timeOfDay);
+                    break;
+                case "Date":
+                    Date dt=ProtoTypes.getDate(val.getAsString());
+                    msg.setField(fld, dt);
                     break;
                 case "DecimalValue":
                     DecimalValue serialized = getDecimalValue(val);

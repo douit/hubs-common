@@ -1,5 +1,6 @@
 {
   "entities": [
+    "CustomMethod",
     "EmplPositionType",
     "ElectronicText",
     "Party",
@@ -18,7 +19,9 @@
     "SystemProperty",
     "PaymentGlAccountTypeMap",
     "DataResource",
+    "TechDataCalendar",
     "PartyAcctgPreference",
+    "TechDataCalendarWeek",
     "Content",
     "WorkEffort",
     "CustRequestType",

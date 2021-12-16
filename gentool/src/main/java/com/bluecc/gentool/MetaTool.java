@@ -31,7 +31,7 @@ public class MetaTool {
 
         EntityMetaManager entityMetaManager=new EntityMetaManager();
         main.entities.forEach(e -> {
-            EntityMeta meta=entityMetaManager.getEntityMeta(e);
+            EntityMeta meta=entityMetaManager.readEntityMeta(e);
             main.digest(meta);
             System.out.println("=====================");
         });

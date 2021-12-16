@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,8 +24,14 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
+
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 
 import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.income.dao.WorkEffortDelegator;
+import static com.bluecc.income.dao.WorkEffortDelegator.*;
+import com.bluecc.income.exchange.IProc;
 
 
 @Data
@@ -30,7 +41,7 @@ import com.bluecc.hubs.stub.WorkEffortData;
 @REntity
 @MessageObject(value = WorkEffortData.class,
         symbol = EntityNames.WorkEffort)
-public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializable, WithSchedule, WithDescription {
+public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, Serializable, WithSchedule, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String workEffortId;
@@ -89,6 +100,7 @@ public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializ
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     Long sequenceNum;
+    String tenantId;
     
 
         
@@ -96,8 +108,8 @@ public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializ
         return toDataBuilder().build();
     }
 
-    public WorkEffortData.Builder toDataBuilder() {
-        WorkEffortData.Builder builder = WorkEffortData.newBuilder();
+    public WorkEffortFlatData.Builder toDataBuilder() {
+        WorkEffortFlatData.Builder builder = WorkEffortFlatData.newBuilder();
         if (workEffortId != null) {
             builder.setWorkEffortId(workEffortId);
         }
@@ -260,11 +272,14 @@ public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializ
         if (sequenceNum != null) {
             builder.setSequenceNum(sequenceNum);
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
 
-    public static WorkEffort fromData(WorkEffortData data) {
+    public static WorkEffort fromData(WorkEffortFlatData data) {
         return WorkEffort.builder()
                 .workEffortId(data.getWorkEffortId())
                 .workEffortTypeId(data.getWorkEffortTypeId())
@@ -320,11 +335,260 @@ public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializ
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .sequenceNum(data.getSequenceNum())
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
 
-    
+        // relations
+     
+    @Exclude
+    @Singular("addParentWorkEffort")
+    List<WorkEffort> relParentWorkEffort= new ArrayList<>(); 
+    @Exclude
+    @Singular("addFixedAsset")
+    List<FixedAsset> relFixedAsset= new ArrayList<>(); 
+    @Exclude
+    @Singular("addFacility")
+    List<Facility> relFacility= new ArrayList<>(); 
+    @Exclude
+    @Singular("addRecurrenceInfo")
+    List<RecurrenceInfo> relRecurrenceInfo= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTemporalExpression")
+    List<TemporalExpression> relTemporalExpression= new ArrayList<>(); 
+    @Exclude
+    @Singular("addCustomMethod")
+    List<CustomMethod> relCustomMethod= new ArrayList<>(); 
+    @Exclude
+    @Singular("addAcctgTrans")
+    List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
+    @Exclude
+    @Singular("addInventoryItemDetail")
+    List<InventoryItemDetail> relInventoryItemDetail= new ArrayList<>(); 
+    @Exclude
+    @Singular("addRoutingProductAssoc")
+    List<ProductAssoc> relRoutingProductAssoc= new ArrayList<>(); 
+    @Exclude
+    @Singular("addQuoteItem")
+    List<QuoteItem> relQuoteItem= new ArrayList<>(); 
+    @Exclude
+    @Singular("addRateAmount")
+    List<RateAmount> relRateAmount= new ArrayList<>(); 
+    @Exclude
+    @Singular("addEstimatedShipShipment")
+    List<Shipment> relEstimatedShipShipment= new ArrayList<>(); 
+    @Exclude
+    @Singular("addEstimatedArrivalShipment")
+    List<Shipment> relEstimatedArrivalShipment= new ArrayList<>(); 
+    @Exclude
+    @Singular("addChildWorkEffort")
+    List<WorkEffort> relChildWorkEffort= new ArrayList<>(); 
+    @Exclude
+    @Singular("addFromWorkEffortAssoc")
+    List<WorkEffortAssoc> relFromWorkEffortAssoc= new ArrayList<>(); 
+    @Exclude
+    @Singular("addToWorkEffortAssoc")
+    List<WorkEffortAssoc> relToWorkEffortAssoc= new ArrayList<>(); 
+    @Exclude
+    @Singular("addWorkEffortFixedAssetAssign")
+    List<WorkEffortFixedAssetAssign> relWorkEffortFixedAssetAssign= new ArrayList<>(); 
+    @Exclude
+    @Singular("addWorkEffortGoodStandard")
+    List<WorkEffortGoodStandard> relWorkEffortGoodStandard= new ArrayList<>(); 
+    @Exclude
+    @Singular("addWorkEffortPartyAssignment")
+    List<WorkEffortPartyAssignment> relWorkEffortPartyAssignment= new ArrayList<>(); 
+    @Exclude
+    @Singular("addWorkEffortSkillStandard")
+    List<WorkEffortSkillStandard> relWorkEffortSkillStandard= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PARENT_WORK_EFFORT, getter(this, WorkEffort::getRelParentWorkEffort)); 
+        supplierMap.put(FIXED_ASSET, getter(this, WorkEffort::getRelFixedAsset)); 
+        supplierMap.put(FACILITY, getter(this, WorkEffort::getRelFacility)); 
+        supplierMap.put(RECURRENCE_INFO, getter(this, WorkEffort::getRelRecurrenceInfo)); 
+        supplierMap.put(TEMPORAL_EXPRESSION, getter(this, WorkEffort::getRelTemporalExpression)); 
+        supplierMap.put(CUSTOM_METHOD, getter(this, WorkEffort::getRelCustomMethod)); 
+        supplierMap.put(ACCTG_TRANS, getter(this, WorkEffort::getRelAcctgTrans)); 
+        supplierMap.put(INVENTORY_ITEM_DETAIL, getter(this, WorkEffort::getRelInventoryItemDetail)); 
+        supplierMap.put(ROUTING_PRODUCT_ASSOC, getter(this, WorkEffort::getRelRoutingProductAssoc)); 
+        supplierMap.put(QUOTE_ITEM, getter(this, WorkEffort::getRelQuoteItem)); 
+        supplierMap.put(RATE_AMOUNT, getter(this, WorkEffort::getRelRateAmount)); 
+        supplierMap.put(ESTIMATED_SHIP_SHIPMENT, getter(this, WorkEffort::getRelEstimatedShipShipment)); 
+        supplierMap.put(ESTIMATED_ARRIVAL_SHIPMENT, getter(this, WorkEffort::getRelEstimatedArrivalShipment)); 
+        supplierMap.put(CHILD_WORK_EFFORT, getter(this, WorkEffort::getRelChildWorkEffort)); 
+        supplierMap.put(FROM_WORK_EFFORT_ASSOC, getter(this, WorkEffort::getRelFromWorkEffortAssoc)); 
+        supplierMap.put(TO_WORK_EFFORT_ASSOC, getter(this, WorkEffort::getRelToWorkEffortAssoc)); 
+        supplierMap.put(WORK_EFFORT_FIXED_ASSET_ASSIGN, getter(this, WorkEffort::getRelWorkEffortFixedAssetAssign)); 
+        supplierMap.put(WORK_EFFORT_GOOD_STANDARD, getter(this, WorkEffort::getRelWorkEffortGoodStandard)); 
+        supplierMap.put(WORK_EFFORT_PARTY_ASSIGNMENT, getter(this, WorkEffort::getRelWorkEffortPartyAssignment)); 
+        supplierMap.put(WORK_EFFORT_SKILL_STANDARD, getter(this, WorkEffort::getRelWorkEffortSkillStandard)); 
+        supplierMap.put(TENANT, getter(this, WorkEffort::getRelTenant));
+
+        return supplierMap;
+    };
+
+    public WorkEffortDelegator.Agent agent(IProc.ProcContext ctx,
+                                             WorkEffortDelegator delegator){
+        return delegator.getAgent(ctx, this.getWorkEffortId());
+    }
+
+    public WorkEffortData.Builder toHeadBuilder() {
+        WorkEffortData.Builder builder = WorkEffortData.newBuilder();
+        if (workEffortId != null) {
+            builder.setWorkEffortId(workEffortId);
+        }
+        if (workEffortTypeId != null) {
+            builder.setWorkEffortTypeId(workEffortTypeId);
+        }
+        if (currentStatusId != null) {
+            builder.setCurrentStatusId(currentStatusId);
+        }
+        if (lastStatusUpdate != null) {
+            builder.setLastStatusUpdate(getTimestamp(lastStatusUpdate));
+        }
+        if (workEffortPurposeTypeId != null) {
+            builder.setWorkEffortPurposeTypeId(workEffortPurposeTypeId);
+        }
+        if (scopeEnumId != null) {
+            builder.setScopeEnumId(scopeEnumId);
+        }
+        if (priority != null) {
+            builder.setPriority(priority);
+        }
+        if (percentComplete != null) {
+            builder.setPercentComplete(percentComplete);
+        }
+        if (workEffortName != null) {
+            builder.setWorkEffortName(workEffortName);
+        }
+        if (showAsEnumId != null) {
+            builder.setShowAsEnumId(showAsEnumId);
+        }
+        if (sendNotificationEmail != null) {
+            builder.setSendNotificationEmail(getIndicator(sendNotificationEmail));
+        }
+        if (description != null) {
+            builder.setDescription(description);
+        }
+        if (locationDesc != null) {
+            builder.setLocationDesc(locationDesc);
+        }
+        if (estimatedStartDate != null) {
+            builder.setEstimatedStartDate(getTimestamp(estimatedStartDate));
+        }
+        if (estimatedCompletionDate != null) {
+            builder.setEstimatedCompletionDate(getTimestamp(estimatedCompletionDate));
+        }
+        if (actualStartDate != null) {
+            builder.setActualStartDate(getTimestamp(actualStartDate));
+        }
+        if (actualCompletionDate != null) {
+            builder.setActualCompletionDate(getTimestamp(actualCompletionDate));
+        }
+        if (estimatedMilliSeconds != null) {
+            builder.setEstimatedMilliSeconds(estimatedMilliSeconds);
+        }
+        if (estimatedSetupMillis != null) {
+            builder.setEstimatedSetupMillis(estimatedSetupMillis);
+        }
+        if (actualMilliSeconds != null) {
+            builder.setActualMilliSeconds(actualMilliSeconds);
+        }
+        if (actualSetupMillis != null) {
+            builder.setActualSetupMillis(actualSetupMillis);
+        }
+        if (totalMilliSecondsAllowed != null) {
+            builder.setTotalMilliSecondsAllowed(totalMilliSecondsAllowed);
+        }
+        if (totalMoneyAllowed != null) {
+            builder.setTotalMoneyAllowed(getCurrency(totalMoneyAllowed));
+        }
+        if (moneyUomId != null) {
+            builder.setMoneyUomId(moneyUomId);
+        }
+        if (specialTerms != null) {
+            builder.setSpecialTerms(specialTerms);
+        }
+        if (timeTransparency != null) {
+            builder.setTimeTransparency(timeTransparency);
+        }
+        if (universalId != null) {
+            builder.setUniversalId(universalId);
+        }
+        if (sourceReferenceId != null) {
+            builder.setSourceReferenceId(sourceReferenceId);
+        }
+        if (infoUrl != null) {
+            builder.setInfoUrl(infoUrl);
+        }
+        if (runtimeDataId != null) {
+            builder.setRuntimeDataId(runtimeDataId);
+        }
+        if (noteId != null) {
+            builder.setNoteId(noteId);
+        }
+        if (serviceLoaderName != null) {
+            builder.setServiceLoaderName(serviceLoaderName);
+        }
+        if (quantityToProduce != null) {
+            builder.setQuantityToProduce(getFixedPoint(quantityToProduce));
+        }
+        if (quantityProduced != null) {
+            builder.setQuantityProduced(getFixedPoint(quantityProduced));
+        }
+        if (quantityRejected != null) {
+            builder.setQuantityRejected(getFixedPoint(quantityRejected));
+        }
+        if (reservPersons != null) {
+            builder.setReservPersons(getFixedPoint(reservPersons));
+        }
+        if (reserv2ndPPPerc != null) {
+            builder.setReserv2NdPPPerc(getFixedPoint(reserv2ndPPPerc));
+        }
+        if (reservNthPPPerc != null) {
+            builder.setReservNthPPPerc(getFixedPoint(reservNthPPPerc));
+        }
+        if (accommodationMapId != null) {
+            builder.setAccommodationMapId(accommodationMapId);
+        }
+        if (accommodationSpotId != null) {
+            builder.setAccommodationSpotId(accommodationSpotId);
+        }
+        if (revisionNumber != null) {
+            builder.setRevisionNumber(revisionNumber);
+        }
+        if (createdDate != null) {
+            builder.setCreatedDate(getTimestamp(createdDate));
+        }
+        if (createdByUserLogin != null) {
+            builder.setCreatedByUserLogin(createdByUserLogin);
+        }
+        if (lastModifiedDate != null) {
+            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        }
+        if (lastModifiedByUserLogin != null) {
+            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        }
+        if (lastUpdatedTxStamp != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        }
+        if (createdTxStamp != null) {
+            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        }
+        if (sequenceNum != null) {
+            builder.setSequenceNum(sequenceNum);
+        }
+                    
+        return builder;
+    }
+
 }
 
 
@@ -450,5 +714,6 @@ public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializ
     + WorkEffortTransBox (many, autoRelation: true, keymaps: workEffortId -> processWorkEffortId)
     + WorkOrderItemFulfillment (many, autoRelation: true, keymaps: workEffortId)
     + WorkRequirementFulfillment (many, autoRelation: true, keymaps: workEffortId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

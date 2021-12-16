@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.PaymentData;
 
 public class PaymentDelegator extends AbstractProcs{
@@ -437,6 +439,36 @@ public class PaymentDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Payment> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Payment.class, prefix = "pa")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Payment> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Payment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Payment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Payment p = map.computeIfAbsent(rr.getColumn("pa_payment_id", String.class),
+                                id -> rr.getRow(Payment.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -583,7 +615,122 @@ public class PaymentDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainToPaymentApplication(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, Payment>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Payment>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, Payment> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, Payment> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, Payment>> chain = tenant(dao, false);
+         
+        if (incls.contains(PAYMENT_METHOD)) {
+            chain = chain.andThen(paymentMethod(dao, true));
+        }
+         
+        if (incls.contains(CREDIT_CARD)) {
+            chain = chain.andThen(creditCard(dao, true));
+        }
+         
+        if (incls.contains(EFT_ACCOUNT)) {
+            chain = chain.andThen(eftAccount(dao, true));
+        }
+         
+        if (incls.contains(ORDER_PAYMENT_PREFERENCE)) {
+            chain = chain.andThen(orderPaymentPreference(dao, true));
+        }
+         
+        if (incls.contains(PAYMENT_GATEWAY_RESPONSE)) {
+            chain = chain.andThen(paymentGatewayResponse(dao, true));
+        }
+         
+        if (incls.contains(FROM_PARTY)) {
+            chain = chain.andThen(fromParty(dao, true));
+        }
+         
+        if (incls.contains(TO_PARTY)) {
+            chain = chain.andThen(toParty(dao, true));
+        }
+         
+        if (incls.contains(TO_PARTY_ROLE)) {
+            chain = chain.andThen(toPartyRole(dao, true));
+        }
+         
+        if (incls.contains(FIN_ACCOUNT_TRANS)) {
+            chain = chain.andThen(finAccountTrans(dao, true));
+        }
+         
+        if (incls.contains(GL_ACCOUNT)) {
+            chain = chain.andThen(glAccount(dao, true));
+        }
+         
+        if (incls.contains(ACCTG_TRANS)) {
+            chain = chain.andThen(acctgTrans(dao, true));
+        }
+         
+        if (incls.contains(PAYMENT_APPLICATION)) {
+            chain = chain.andThen(paymentApplication(dao, true));
+        }
+         
+        if (incls.contains(TO_PAYMENT_APPLICATION)) {
+            chain = chain.andThen(toPaymentApplication(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<PaymentData> responseObserver) {
+        Map<String, Payment> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            PaymentData.Builder paymentData = data.toHeadBuilder();
+             
+            data.getRelPaymentMethod().forEach(e -> 
+                paymentData.setPaymentMethod(e.toDataBuilder())); 
+            data.getRelCreditCard().forEach(e -> 
+                paymentData.setCreditCard(e.toDataBuilder())); 
+            data.getRelEftAccount().forEach(e -> 
+                paymentData.setEftAccount(e.toDataBuilder())); 
+            data.getRelOrderPaymentPreference().forEach(e -> 
+                paymentData.setOrderPaymentPreference(e.toDataBuilder())); 
+            data.getRelPaymentGatewayResponse().forEach(e -> 
+                paymentData.setPaymentGatewayResponse(e.toDataBuilder())); 
+            data.getRelFromParty().forEach(e -> 
+                paymentData.setFromParty(e.toHeadBuilder())); 
+            data.getRelToParty().forEach(e -> 
+                paymentData.setToParty(e.toHeadBuilder())); 
+            data.getRelToPartyRole().forEach(e -> 
+                paymentData.setToPartyRole(e.toDataBuilder())); 
+            data.getRelFinAccountTrans().forEach(e -> 
+                paymentData.setFinAccountTrans(e.toDataBuilder())); 
+            data.getRelGlAccount().forEach(e -> 
+                paymentData.setGlAccount(e.toDataBuilder())); 
+            data.getRelAcctgTrans().forEach(e -> 
+                paymentData.addAcctgTrans(e.toDataBuilder())); 
+            data.getRelPaymentApplication().forEach(e -> 
+                paymentData.addPaymentApplication(e.toDataBuilder())); 
+            data.getRelToPaymentApplication().forEach(e -> 
+                paymentData.addToPaymentApplication(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                paymentData.setTenant(e.toDataBuilder()));
+            return paymentData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public Payment get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getPayment(id);
@@ -762,6 +909,17 @@ public class PaymentDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelToPaymentApplication().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -805,6 +963,8 @@ public class PaymentDelegator extends AbstractProcs{
     public static final String PAYMENT_APPLICATION="payment_application";
          
     public static final String TO_PAYMENT_APPLICATION="to_payment_application";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -920,6 +1080,14 @@ public class PaymentDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "to_payment_application",
                                             PaymentApplication.class)
                                     .forEach(el -> pb.addToPaymentApplication(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

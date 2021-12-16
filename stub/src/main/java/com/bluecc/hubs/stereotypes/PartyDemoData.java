@@ -6,7 +6,7 @@ import com.bluecc.hubs.stub.PartyIdentificationTypeData;
 import com.bluecc.hubs.stub.PartyStatusData;
 import com.bluecc.hubs.stub.ContactMechData;
 import com.bluecc.hubs.stub.PartyGroupFlatData;
-import com.bluecc.hubs.stub.SecurityGroupData;
+import com.bluecc.hubs.stub.SecurityGroupFlatData;
 import com.bluecc.hubs.stub.PartyIdentificationData;
 import com.bluecc.hubs.stub.PostalAddressData;
 import com.bluecc.hubs.stub.CommunicationEventRoleData;
@@ -210,8 +210,8 @@ public final class PartyDemoData {
     }
 
 
-    public static SecurityGroupData SecurityGroup_PARTYADMIN() {
-        return SecurityGroupData.newBuilder()
+    public static SecurityGroupFlatData SecurityGroup_PARTYADMIN() {
+        return SecurityGroupFlatData.newBuilder()
             .setDescription("Party Admin group, has all party permissions.")
             .setGroupId("PARTYADMIN")
             .setGroupName("Party Admin")
@@ -219,8 +219,8 @@ public final class PartyDemoData {
     }
 
 
-    public static SecurityGroupData SecurityGroup_SECURITYADMIN() {
-        return SecurityGroupData.newBuilder()
+    public static SecurityGroupFlatData SecurityGroup_SECURITYADMIN() {
+        return SecurityGroupFlatData.newBuilder()
             .setDescription("Security Admin group, has all permissions to modify security settings in party manager.")
             .setGroupId("SECURITYADMIN")
             .setGroupName("Security Admin")
@@ -228,8 +228,8 @@ public final class PartyDemoData {
     }
 
 
-    public static SecurityGroupData SecurityGroup_AUDITOR() {
-        return SecurityGroupData.newBuilder()
+    public static SecurityGroupFlatData SecurityGroup_AUDITOR() {
+        return SecurityGroupFlatData.newBuilder()
             .setDescription("Auditors group, having only VIEW permissions.")
             .setGroupId("AUDITOR")
             .setGroupName("Auditor")

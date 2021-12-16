@@ -6,7 +6,6 @@ message {{ent.name}}{{suffix}} {
     option (routines.flat) = true;
     option (routines.has_table) = {{hasTable}};
     // keys: {{ent.keyNames}}
-    {% if ent.combine %}string id = 150; {% endif -%}
     {% for f in ent.messageFields -%}
     {%- if digester.isRefField(f.name) %}
     {{f.protoType}} {{f.underscore}} = {{loop.index}}; // {{digester.getEntityRef(f.name)}}

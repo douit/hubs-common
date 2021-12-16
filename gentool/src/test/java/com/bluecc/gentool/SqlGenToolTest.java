@@ -12,17 +12,17 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class SqlGenToolTest {
-    EntityMetaManager entityMetaManager;
+    // EntityMetaManager entityMetaManager;
     // MetaTool main = new MetaTool();
     @Before
     public void setUp() throws Exception {
         System.out.println(Util.getCurrentDirectory());
-        entityMetaManager=new EntityMetaManager();
+        // entityMetaManager=new EntityMetaManager();
     }
 
     @Test
     public void genDDL() {
-        EntityMeta meta=entityMetaManager.getEntityMeta("Quote");
+        EntityMeta meta=EntityMetaManager.readEntityMeta("Quote");
         DummyTemplateProcs procs=new DummyTemplateProcs();
         try {
             String cnt=procs.procSql("mysql", meta);

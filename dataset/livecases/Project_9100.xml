@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-engine-xml>
+
+    <!-- Second Demo project for customer 2 and employee 1,3-->
+    <WorkEffort workEffortId="9100" workEffortTypeId="PROJECT" currentStatusId="_NA_" lastStatusUpdate="2007-12-14 15:07:52.911" scopeEnumId="WES_PRIVATE" workEffortName="Demo Project2 Cust 2" revisionNumber="1"/>
+    <WorkEffortPartyAssignment  workEffortId="9100" partyId="admin" statusId="PAS_ASSIGNED" roleTypeId="PROVIDER_MANAGER" fromDate="2007-12-14 16:45:21.831"/>
+    <WorkEffortPartyAssignment workEffortId="9100" partyId="Company" roleTypeId="INTERNAL_ORGANIZATIO" fromDate="2009-04-05 20:27:52.818"/>
+    <WorkEffortPartyAssignment  workEffortId="9100" partyId="DemoCustomer2" statusId="PAS_ASSIGNED" roleTypeId="CLIENT_MANAGER" fromDate="2007-12-14 16:45:21.831"/>
+    <WorkEffortPartyAssignment  workEffortId="9100" partyId="DemoCustomer3" statusId="PAS_ASSIGNED" roleTypeId="CLIENT_BILLING" fromDate="2007-12-14 16:45:21.831"/>
+    <WorkEffortPartyAssignment  workEffortId="9100" partyId="DemoEmployee1" statusId="PAS_ASSIGNED" roleTypeId="PROVIDER_MANAGER" fromDate="2007-12-14 16:45:21.831"/>
+    <WorkEffortPartyAssignment  workEffortId="9100" partyId="DemoEmployee3" statusId="PAS_ASSIGNED" roleTypeId="PROVIDER_ANALYST" fromDate="2007-12-14 16:45:21.831"/>
+    <WorkEffort workEffortId="9101" sequenceNum="1" workEffortTypeId="PHASE" currentStatusId="_NA_" lastStatusUpdate="2007-12-14 16:45:14.226" workEffortParentId="9100" workEffortName="phase1" revisionNumber="1"/>
+    <WorkEffort workEffortId="9102" sequenceNum="1" workEffortTypeId="TASK" currentStatusId="PTS_CREATED" lastStatusUpdate="2007-12-14 16:45:21.831" workEffortParentId="9101" scopeEnumId="WES_PRIVATE" workEffortName="task1" estimatedStartDate="2007-12-03 00:00:00.0" estimatedCompletionDate="2007-12-05 00:00:00.0" revisionNumber="1"/>
+    <WorkEffortSkillStandard workEffortId="9102" skillTypeId="9000" estimatedDuration="16.0"/>
+    <WorkEffort workEffortId="9103" sequenceNum="2" workEffortTypeId="TASK" currentStatusId="PTS_CREATED" lastStatusUpdate="2007-12-14 16:45:29.453" workEffortParentId="9101" scopeEnumId="WES_PRIVATE" workEffortName="task2" estimatedStartDate="2007-12-05 00:00:00.0" estimatedCompletionDate="2007-12-16 00:00:00.0" revisionNumber="1"/>
+    <WorkEffortSkillStandard workEffortId="9103" skillTypeId="9000" estimatedDuration="24.0"/>
+    <WorkEffort workEffortId="9104" sequenceNum="2" workEffortTypeId="PHASE" currentStatusId="_NA_" lastStatusUpdate="2007-12-14 16:45:35.939" workEffortParentId="9100" workEffortName="phase2" revisionNumber="1"/>
+    <WorkEffort workEffortId="9105" sequenceNum="1" workEffortTypeId="TASK" currentStatusId="PTS_CREATED" lastStatusUpdate="2007-12-14 16:45:50.84" workEffortParentId="9104" scopeEnumId="WES_PRIVATE" workEffortName="task3" estimatedStartDate="2007-12-16 00:00:00.0" estimatedCompletionDate="2007-12-17 00:00:00.0" revisionNumber="1"/>
+    <WorkEffortSkillStandard workEffortId="9105" skillTypeId="9000" estimatedDuration="32.0"/>
+    <WorkEffort workEffortId="9106"  sequenceNum="2" workEffortTypeId="TASK" currentStatusId="PTS_CREATED" lastStatusUpdate="2007-12-14 16:45:58.857" workEffortParentId="9104" scopeEnumId="WES_PRIVATE" workEffortName="task4" estimatedStartDate="2007-12-18 00:00:00.0" estimatedCompletionDate="2007-12-20 00:00:00.0" revisionNumber="1"/>
+    <WorkEffortSkillStandard workEffortId="9106" skillTypeId="9000" estimatedDuration="40.0"/>
+
+    <!-- task dependencies project 2 -->
+    <WorkEffortAssoc workEffortIdFrom="9102" workEffortIdTo="9103" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" sequenceNum="0" fromDate="2000-01-01 00:00:00.0"/>
+    <WorkEffortAssoc workEffortIdFrom="9103" workEffortIdTo="9105" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" sequenceNum="0" fromDate="2000-01-01 00:00:00.0"/>
+    <WorkEffortAssoc workEffortIdFrom="9105" workEffortIdTo="9106" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" sequenceNum="0" fromDate="2000-01-01 00:00:00.0"/>
+
+</entity-engine-xml>

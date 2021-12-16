@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.InventoryItemData;
 
 public class InventoryItemDelegator extends AbstractProcs{
@@ -527,6 +529,36 @@ public class InventoryItemDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, InventoryItem> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, InventoryItem> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -706,7 +738,140 @@ public class InventoryItemDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, InventoryItem>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, InventoryItem>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, InventoryItem> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, InventoryItem> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, InventoryItem>> chain = tenant(dao, false);
+         
+        if (incls.contains(PRODUCT)) {
+            chain = chain.andThen(product(dao, true));
+        }
+         
+        if (incls.contains(PARTY)) {
+            chain = chain.andThen(party(dao, true));
+        }
+         
+        if (incls.contains(OWNER_PARTY)) {
+            chain = chain.andThen(ownerParty(dao, true));
+        }
+         
+        if (incls.contains(FACILITY)) {
+            chain = chain.andThen(facility(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FACILITY)) {
+            chain = chain.andThen(productFacility(dao, true));
+        }
+         
+        if (incls.contains(FACILITY_LOCATION)) {
+            chain = chain.andThen(facilityLocation(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_FACILITY_LOCATION)) {
+            chain = chain.andThen(productFacilityLocation(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET_FIXED_ASSET)) {
+            chain = chain.andThen(fixedAssetFixedAsset(dao, true));
+        }
+         
+        if (incls.contains(ACCTG_TRANS)) {
+            chain = chain.andThen(acctgTrans(dao, true));
+        }
+         
+        if (incls.contains(ACCTG_TRANS_ENTRY)) {
+            chain = chain.andThen(acctgTransEntry(dao, true));
+        }
+         
+        if (incls.contains(INVENTORY_ITEM_DETAIL)) {
+            chain = chain.andThen(inventoryItemDetail(dao, true));
+        }
+         
+        if (incls.contains(INVOICE_ITEM)) {
+            chain = chain.andThen(invoiceItem(dao, true));
+        }
+         
+        if (incls.contains(ITEM_ISSUANCE)) {
+            chain = chain.andThen(itemIssuance(dao, true));
+        }
+         
+        if (incls.contains(FROM_ORDER_ITEM)) {
+            chain = chain.andThen(fromOrderItem(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ITEM_SHIP_GRP_INV_RES)) {
+            chain = chain.andThen(orderItemShipGrpInvRes(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_RECEIPT)) {
+            chain = chain.andThen(shipmentReceipt(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<InventoryItemData> responseObserver) {
+        Map<String, InventoryItem> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            InventoryItemData.Builder inventoryItemData = data.toHeadBuilder();
+             
+            data.getRelProduct().forEach(e -> 
+                inventoryItemData.setProduct(e.toHeadBuilder())); 
+            data.getRelParty().forEach(e -> 
+                inventoryItemData.setParty(e.toHeadBuilder())); 
+            data.getRelOwnerParty().forEach(e -> 
+                inventoryItemData.setOwnerParty(e.toHeadBuilder())); 
+            data.getRelFacility().forEach(e -> 
+                inventoryItemData.setFacility(e.toDataBuilder())); 
+            data.getRelProductFacility().forEach(e -> 
+                inventoryItemData.setProductFacility(e.toDataBuilder())); 
+            data.getRelFacilityLocation().forEach(e -> 
+                inventoryItemData.setFacilityLocation(e.toDataBuilder())); 
+            data.getRelProductFacilityLocation().forEach(e -> 
+                inventoryItemData.setProductFacilityLocation(e.toDataBuilder())); 
+            data.getRelFixedAssetFixedAsset().forEach(e -> 
+                inventoryItemData.setFixedAssetFixedAsset(e.toHeadBuilder())); 
+            data.getRelAcctgTrans().forEach(e -> 
+                inventoryItemData.addAcctgTrans(e.toDataBuilder())); 
+            data.getRelAcctgTransEntry().forEach(e -> 
+                inventoryItemData.addAcctgTransEntry(e.toDataBuilder())); 
+            data.getRelInventoryItemDetail().forEach(e -> 
+                inventoryItemData.addInventoryItemDetail(e.toDataBuilder())); 
+            data.getRelInvoiceItem().forEach(e -> 
+                inventoryItemData.addInvoiceItem(e.toHeadBuilder())); 
+            data.getRelItemIssuance().forEach(e -> 
+                inventoryItemData.addItemIssuance(e.toDataBuilder())); 
+            data.getRelFromOrderItem().forEach(e -> 
+                inventoryItemData.addFromOrderItem(e.toHeadBuilder())); 
+            data.getRelOrderItemShipGrpInvRes().forEach(e -> 
+                inventoryItemData.addOrderItemShipGrpInvRes(e.toDataBuilder())); 
+            data.getRelShipmentReceipt().forEach(e -> 
+                inventoryItemData.addShipmentReceipt(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                inventoryItemData.setTenant(e.toDataBuilder()));
+            return inventoryItemData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public InventoryItem get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getInventoryItem(id);
@@ -918,6 +1083,17 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelShipmentReceipt().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -967,6 +1143,8 @@ public class InventoryItemDelegator extends AbstractProcs{
     public static final String ORDER_ITEM_SHIP_GRP_INV_RES="order_item_ship_grp_inv_res";
          
     public static final String SHIPMENT_RECEIPT="shipment_receipt";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -1106,6 +1284,14 @@ public class InventoryItemDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "shipment_receipt",
                                             ShipmentReceipt.class)
                                     .forEach(el -> pb.addShipmentReceipt(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

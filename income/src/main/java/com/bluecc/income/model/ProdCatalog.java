@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.ProdCatalogFlatData;
 
 import com.bluecc.hubs.stub.ProdCatalogData;
 import com.bluecc.income.dao.ProdCatalogDelegator;
+import static com.bluecc.income.dao.ProdCatalogDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -50,6 +57,7 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -92,6 +100,9 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -109,6 +120,7 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
                 .purchaseAllowPermReqd(getIndicatorChar(data.getPurchaseAllowPermReqd()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -116,9 +128,24 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
         // relations
      
     @Exclude
+    @Singular("addProdCatalogCategory")
     List<ProdCatalogCategory> relProdCatalogCategory= new ArrayList<>(); 
     @Exclude
-    List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>();
+    @Singular("addProductStoreCatalog")
+    List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PROD_CATALOG_CATEGORY, getter(this, ProdCatalog::getRelProdCatalogCategory)); 
+        supplierMap.put(PRODUCT_STORE_CATALOG, getter(this, ProdCatalog::getRelProductStoreCatalog)); 
+        supplierMap.put(TENANT, getter(this, ProdCatalog::getRelTenant));
+
+        return supplierMap;
+    };
 
     public ProdCatalogDelegator.Agent agent(IProc.ProcContext ctx,
                                              ProdCatalogDelegator delegator){
@@ -189,5 +216,6 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
     + ProdCatalogInvFacility (many, autoRelation: true, keymaps: prodCatalogId)
     + ProdCatalogRole (many, autoRelation: true, keymaps: prodCatalogId)
     + ProductStoreCatalog (many, autoRelation: true, keymaps: prodCatalogId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

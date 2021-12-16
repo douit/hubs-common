@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.ProductStoreCatalogData;
 
 public class ProductStoreCatalogDelegator extends AbstractProcs{
@@ -107,6 +109,36 @@ public class ProductStoreCatalogDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "psc")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductStoreCatalog> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductStoreCatalog> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "psc")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductStoreCatalog> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductStoreCatalog> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStoreCatalog", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStoreCatalog p = map.computeIfAbsent(rr.getColumn("psc_id", String.class),
+                                id -> rr.getRow(ProductStoreCatalog.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -132,7 +164,56 @@ public class ProductStoreCatalogDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainProdCatalog(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, ProductStoreCatalog>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, ProductStoreCatalog>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, ProductStoreCatalog> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, ProductStoreCatalog> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, ProductStoreCatalog>> chain = tenant(dao, false);
+         
+        if (incls.contains(PRODUCT_STORE)) {
+            chain = chain.andThen(productStore(dao, true));
+        }
+         
+        if (incls.contains(PROD_CATALOG)) {
+            chain = chain.andThen(prodCatalog(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<ProductStoreCatalogData> responseObserver) {
+        Map<String, ProductStoreCatalog> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            ProductStoreCatalogData.Builder productStoreCatalogData = data.toHeadBuilder();
+             
+            data.getRelProductStore().forEach(e -> 
+                productStoreCatalogData.setProductStore(e.toHeadBuilder())); 
+            data.getRelProdCatalog().forEach(e -> 
+                productStoreCatalogData.setProdCatalog(e.toHeadBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                productStoreCatalogData.setTenant(e.toDataBuilder()));
+            return productStoreCatalogData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public ProductStoreCatalog get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProductStoreCatalog(id);
@@ -190,6 +271,17 @@ public class ProductStoreCatalogDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelProdCatalog().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -211,6 +303,8 @@ public class ProductStoreCatalogDelegator extends AbstractProcs{
     public static final String PRODUCT_STORE="product_store";
          
     public static final String PROD_CATALOG="prod_catalog";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -239,6 +333,14 @@ public class ProductStoreCatalogDelegator extends AbstractProcs{
                                             ProdCatalog.class)
                                     .forEach(el -> pb.setProdCatalog(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
+                                             el.toDataBuilder().build()));
                         }
                         
 

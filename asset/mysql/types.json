@@ -1,7 +1,6 @@
 {
   "entities": [
     "ContentAssocType",
-    "CustomMethod",
     "CreditCardTypeGlAccount",
     "CostComponentCalc",
     "PaymentGroupType",
@@ -101,6 +100,7 @@
     "DataTemplateType",
     "UserPreference",
     "ShipmentGatewayFedex",
+    "SkillType",
     "Geo",
     "ContactMechTypePurpose",
     "TrackingCodeType",
@@ -124,9 +124,7 @@
     "CountryTeleCode",
     "ProductAssocType",
     "FinAccountTypeGlAccount",
-    "TechDataCalendar",
     "GlXbrlClass",
-    "TechDataCalendarWeek",
     "PaymentGatewayConfigType",
     "FacilityType",
     "InventoryItemType",

@@ -4,7 +4,10 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.concurrent.Callable;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class FnUtil {
 
@@ -40,5 +43,12 @@ public class FnUtil {
             actualTypeArguments = ((ParameterizedType) genericReturnType).getActualTypeArguments();
         }
         return actualTypeArguments;
+    }
+
+    public static <O,F> Supplier<F> getter(O obj, Function<O,F> extractor) {
+        return () -> extractor.apply(obj);
+    }
+    public static <O,F> Consumer<F> setter(O obj, BiConsumer<O,F> modifier) {
+        return field -> modifier.accept(obj,field);
     }
 }

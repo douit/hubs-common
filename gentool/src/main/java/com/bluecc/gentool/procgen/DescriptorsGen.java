@@ -1,6 +1,6 @@
 package com.bluecc.gentool.procgen;
 
-import com.bluecc.gentool.common.TemplateUtil;
+import com.bluecc.hubs.fund.TemplateUtil;
 import com.google.common.collect.ImmutableMap;
 
 import java.io.IOException;

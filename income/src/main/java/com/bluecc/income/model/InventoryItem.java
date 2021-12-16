@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.InventoryItemFlatData;
 
 import com.bluecc.hubs.stub.InventoryItemData;
 import com.bluecc.income.dao.InventoryItemDelegator;
+import static com.bluecc.income.dao.InventoryItemDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -67,6 +74,7 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -160,6 +168,9 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -194,6 +205,7 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
                 .fixedAssetId(data.getFixedAssetId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -201,37 +213,80 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
         // relations
      
     @Exclude
+    @Singular("addProduct")
     List<Product> relProduct= new ArrayList<>(); 
     @Exclude
+    @Singular("addParty")
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addOwnerParty")
     List<Party> relOwnerParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addFacility")
     List<Facility> relFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductFacility")
     List<ProductFacility> relProductFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addFacilityLocation")
     List<FacilityLocation> relFacilityLocation= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductFacilityLocation")
     List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
     @Exclude
+    @Singular("addFixedAssetFixedAsset")
     List<FixedAsset> relFixedAssetFixedAsset= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcctgTrans")
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcctgTransEntry")
     List<AcctgTransEntry> relAcctgTransEntry= new ArrayList<>(); 
     @Exclude
+    @Singular("addInventoryItemDetail")
     List<InventoryItemDetail> relInventoryItemDetail= new ArrayList<>(); 
     @Exclude
+    @Singular("addInvoiceItem")
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addItemIssuance")
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromOrderItem")
     List<OrderItem> relFromOrderItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemShipGrpInvRes")
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
     @Exclude
-    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>();
+    @Singular("addShipmentReceipt")
+    List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PRODUCT, getter(this, InventoryItem::getRelProduct)); 
+        supplierMap.put(PARTY, getter(this, InventoryItem::getRelParty)); 
+        supplierMap.put(OWNER_PARTY, getter(this, InventoryItem::getRelOwnerParty)); 
+        supplierMap.put(FACILITY, getter(this, InventoryItem::getRelFacility)); 
+        supplierMap.put(PRODUCT_FACILITY, getter(this, InventoryItem::getRelProductFacility)); 
+        supplierMap.put(FACILITY_LOCATION, getter(this, InventoryItem::getRelFacilityLocation)); 
+        supplierMap.put(PRODUCT_FACILITY_LOCATION, getter(this, InventoryItem::getRelProductFacilityLocation)); 
+        supplierMap.put(FIXED_ASSET_FIXED_ASSET, getter(this, InventoryItem::getRelFixedAssetFixedAsset)); 
+        supplierMap.put(ACCTG_TRANS, getter(this, InventoryItem::getRelAcctgTrans)); 
+        supplierMap.put(ACCTG_TRANS_ENTRY, getter(this, InventoryItem::getRelAcctgTransEntry)); 
+        supplierMap.put(INVENTORY_ITEM_DETAIL, getter(this, InventoryItem::getRelInventoryItemDetail)); 
+        supplierMap.put(INVOICE_ITEM, getter(this, InventoryItem::getRelInvoiceItem)); 
+        supplierMap.put(ITEM_ISSUANCE, getter(this, InventoryItem::getRelItemIssuance)); 
+        supplierMap.put(FROM_ORDER_ITEM, getter(this, InventoryItem::getRelFromOrderItem)); 
+        supplierMap.put(ORDER_ITEM_SHIP_GRP_INV_RES, getter(this, InventoryItem::getRelOrderItemShipGrpInvRes)); 
+        supplierMap.put(SHIPMENT_RECEIPT, getter(this, InventoryItem::getRelShipmentReceipt)); 
+        supplierMap.put(TENANT, getter(this, InventoryItem::getRelTenant));
+
+        return supplierMap;
+    };
 
     public InventoryItemDelegator.Agent agent(IProc.ProcContext ctx,
                                              InventoryItemDelegator delegator){
@@ -382,5 +437,6 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
     + Subscription (many, autoRelation: true, keymaps: inventoryItemId)
     + WorkEffortInventoryAssign (many, autoRelation: true, keymaps: inventoryItemId)
     + WorkEffortInventoryProduced (many, autoRelation: true, keymaps: inventoryItemId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.PartyData;
 
 public class PartyDelegator extends AbstractProcs{
@@ -2207,6 +2209,66 @@ public class PartyDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepa")
+        default Map<String, Party> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainWorkEffortPartyAssignment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepa")
+        default Map<String, Party> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_PARTY_ASSIGNMENT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("wepa_party_id", String.class) != null) {
+                            p.getRelWorkEffortPartyAssignment()
+                                    .add(rr.getRow(WorkEffortPartyAssignment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Party> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, Party> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -3002,7 +3064,493 @@ public class PartyDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainUserLogin(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, Party>> workEffortPartyAssignment(Dao dao, boolean succ) {
+        return e -> dao.chainWorkEffortPartyAssignment(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> workEffortPartyAssignment(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainWorkEffortPartyAssignment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, Party> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, Party> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, Party>> chain = tenant(dao, false);
+         
+        if (incls.contains(CREATED_BY_USER_LOGIN)) {
+            chain = chain.andThen(createdByUserLogin(dao, true));
+        }
+         
+        if (incls.contains(LAST_MODIFIED_BY_USER_LOGIN)) {
+            chain = chain.andThen(lastModifiedByUserLogin(dao, true));
+        }
+         
+        if (incls.contains(ACCTG_TRANS)) {
+            chain = chain.andThen(acctgTrans(dao, true));
+        }
+         
+        if (incls.contains(ACCTG_TRANS_ENTRY)) {
+            chain = chain.andThen(acctgTransEntry(dao, true));
+        }
+         
+        if (incls.contains(FROM_AGREEMENT)) {
+            chain = chain.andThen(fromAgreement(dao, true));
+        }
+         
+        if (incls.contains(TO_AGREEMENT)) {
+            chain = chain.andThen(toAgreement(dao, true));
+        }
+         
+        if (incls.contains(BILLING_ACCOUNT_ROLE)) {
+            chain = chain.andThen(billingAccountRole(dao, true));
+        }
+         
+        if (incls.contains(CARRIER_SHIPMENT_BOX_TYPE)) {
+            chain = chain.andThen(carrierShipmentBoxType(dao, true));
+        }
+         
+        if (incls.contains(CARRIER_SHIPMENT_METHOD)) {
+            chain = chain.andThen(carrierShipmentMethod(dao, true));
+        }
+         
+        if (incls.contains(TO_COMMUNICATION_EVENT)) {
+            chain = chain.andThen(toCommunicationEvent(dao, true));
+        }
+         
+        if (incls.contains(FROM_COMMUNICATION_EVENT)) {
+            chain = chain.andThen(fromCommunicationEvent(dao, true));
+        }
+         
+        if (incls.contains(COMMUNICATION_EVENT_ROLE)) {
+            chain = chain.andThen(communicationEventRole(dao, true));
+        }
+         
+        if (incls.contains(CONTENT_ROLE)) {
+            chain = chain.andThen(contentRole(dao, true));
+        }
+         
+        if (incls.contains(FROM_CUST_REQUEST)) {
+            chain = chain.andThen(fromCustRequest(dao, true));
+        }
+         
+        if (incls.contains(CUST_REQUEST_TYPE)) {
+            chain = chain.andThen(custRequestType(dao, true));
+        }
+         
+        if (incls.contains(OWNER_FACILITY)) {
+            chain = chain.andThen(ownerFacility(dao, true));
+        }
+         
+        if (incls.contains(ORGANIZATION_FIN_ACCOUNT)) {
+            chain = chain.andThen(organizationFinAccount(dao, true));
+        }
+         
+        if (incls.contains(OWNER_FIN_ACCOUNT)) {
+            chain = chain.andThen(ownerFinAccount(dao, true));
+        }
+         
+        if (incls.contains(FIN_ACCOUNT_ROLE)) {
+            chain = chain.andThen(finAccountRole(dao, true));
+        }
+         
+        if (incls.contains(FIN_ACCOUNT_TRANS)) {
+            chain = chain.andThen(finAccountTrans(dao, true));
+        }
+         
+        if (incls.contains(PERFORMED_BY_FIN_ACCOUNT_TRANS)) {
+            chain = chain.andThen(performedByFinAccountTrans(dao, true));
+        }
+         
+        if (incls.contains(FIXED_ASSET)) {
+            chain = chain.andThen(fixedAsset(dao, true));
+        }
+         
+        if (incls.contains(GOV_AGENCY_FIXED_ASSET_REGISTRATION)) {
+            chain = chain.andThen(govAgencyFixedAssetRegistration(dao, true));
+        }
+         
+        if (incls.contains(ORGANIZATION_GL_ACCOUNT_TYPE_DEFAULT)) {
+            chain = chain.andThen(organizationGlAccountTypeDefault(dao, true));
+        }
+         
+        if (incls.contains(INVENTORY_ITEM)) {
+            chain = chain.andThen(inventoryItem(dao, true));
+        }
+         
+        if (incls.contains(OWNER_INVENTORY_ITEM)) {
+            chain = chain.andThen(ownerInventoryItem(dao, true));
+        }
+         
+        if (incls.contains(FROM_INVOICE)) {
+            chain = chain.andThen(fromInvoice(dao, true));
+        }
+         
+        if (incls.contains(INVOICE)) {
+            chain = chain.andThen(invoice(dao, true));
+        }
+         
+        if (incls.contains(TAX_AUTHORITY_INVOICE_ITEM)) {
+            chain = chain.andThen(taxAuthorityInvoiceItem(dao, true));
+        }
+         
+        if (incls.contains(OVERRIDE_ORG_INVOICE_ITEM)) {
+            chain = chain.andThen(overrideOrgInvoiceItem(dao, true));
+        }
+         
+        if (incls.contains(ORGANIZATION_INVOICE_ITEM_TYPE_GL_ACCOUNT)) {
+            chain = chain.andThen(organizationInvoiceItemTypeGlAccount(dao, true));
+        }
+         
+        if (incls.contains(INVOICE_ROLE)) {
+            chain = chain.andThen(invoiceRole(dao, true));
+        }
+         
+        if (incls.contains(SUPPLIER_ORDER_ITEM_SHIP_GROUP)) {
+            chain = chain.andThen(supplierOrderItemShipGroup(dao, true));
+        }
+         
+        if (incls.contains(VENDOR_ORDER_ITEM_SHIP_GROUP)) {
+            chain = chain.andThen(vendorOrderItemShipGroup(dao, true));
+        }
+         
+        if (incls.contains(CARRIER_ORDER_ITEM_SHIP_GROUP)) {
+            chain = chain.andThen(carrierOrderItemShipGroup(dao, true));
+        }
+         
+        if (incls.contains(ORDER_ROLE)) {
+            chain = chain.andThen(orderRole(dao, true));
+        }
+         
+        if (incls.contains(PARTY_ACCTG_PREFERENCE)) {
+            chain = chain.andThen(partyAcctgPreference(dao, true));
+        }
+         
+        if (incls.contains(PARTY_CONTACT_MECH)) {
+            chain = chain.andThen(partyContactMech(dao, true));
+        }
+         
+        if (incls.contains(PARTY_CONTACT_MECH_PURPOSE)) {
+            chain = chain.andThen(partyContactMechPurpose(dao, true));
+        }
+         
+        if (incls.contains(PARTY_GEO_POINT)) {
+            chain = chain.andThen(partyGeoPoint(dao, true));
+        }
+         
+        if (incls.contains(PARTY_GROUP)) {
+            chain = chain.andThen(partyGroup(dao, true));
+        }
+         
+        if (incls.contains(PARTY_IDENTIFICATION)) {
+            chain = chain.andThen(partyIdentification(dao, true));
+        }
+         
+        if (incls.contains(PARTY_RATE)) {
+            chain = chain.andThen(partyRate(dao, true));
+        }
+         
+        if (incls.contains(FROM_PARTY_RELATIONSHIP)) {
+            chain = chain.andThen(fromPartyRelationship(dao, true));
+        }
+         
+        if (incls.contains(TO_PARTY_RELATIONSHIP)) {
+            chain = chain.andThen(toPartyRelationship(dao, true));
+        }
+         
+        if (incls.contains(PARTY_ROLE)) {
+            chain = chain.andThen(partyRole(dao, true));
+        }
+         
+        if (incls.contains(PARTY_STATUS)) {
+            chain = chain.andThen(partyStatus(dao, true));
+        }
+         
+        if (incls.contains(PARTY_TAX_AUTH_INFO)) {
+            chain = chain.andThen(partyTaxAuthInfo(dao, true));
+        }
+         
+        if (incls.contains(FROM_PAYMENT)) {
+            chain = chain.andThen(fromPayment(dao, true));
+        }
+         
+        if (incls.contains(TO_PAYMENT)) {
+            chain = chain.andThen(toPayment(dao, true));
+        }
+         
+        if (incls.contains(PAYMENT_GL_ACCOUNT_TYPE_MAP)) {
+            chain = chain.andThen(paymentGlAccountTypeMap(dao, true));
+        }
+         
+        if (incls.contains(PAYMENT_METHOD)) {
+            chain = chain.andThen(paymentMethod(dao, true));
+        }
+         
+        if (incls.contains(ORGANIZATION_PAYMENT_METHOD_TYPE_GL_ACCOUNT)) {
+            chain = chain.andThen(organizationPaymentMethodTypeGlAccount(dao, true));
+        }
+         
+        if (incls.contains(PERSON)) {
+            chain = chain.andThen(person(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_CATEGORY_ROLE)) {
+            chain = chain.andThen(productCategoryRole(dao, true));
+        }
+         
+        if (incls.contains(TAX_AUTHORITY_PRODUCT_PRICE)) {
+            chain = chain.andThen(taxAuthorityProductPrice(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_PROMO)) {
+            chain = chain.andThen(productPromo(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE)) {
+            chain = chain.andThen(productStore(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_ROLE)) {
+            chain = chain.andThen(productStoreRole(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_SHIPMENT_METH)) {
+            chain = chain.andThen(productStoreShipmentMeth(dao, true));
+        }
+         
+        if (incls.contains(QUOTE)) {
+            chain = chain.andThen(quote(dao, true));
+        }
+         
+        if (incls.contains(QUOTE_ROLE)) {
+            chain = chain.andThen(quoteRole(dao, true));
+        }
+         
+        if (incls.contains(RATE_AMOUNT)) {
+            chain = chain.andThen(rateAmount(dao, true));
+        }
+         
+        if (incls.contains(TO_SHIPMENT)) {
+            chain = chain.andThen(toShipment(dao, true));
+        }
+         
+        if (incls.contains(FROM_SHIPMENT)) {
+            chain = chain.andThen(fromShipment(dao, true));
+        }
+         
+        if (incls.contains(SHIPMENT_COST_ESTIMATE)) {
+            chain = chain.andThen(shipmentCostEstimate(dao, true));
+        }
+         
+        if (incls.contains(CARRIER_SHIPMENT_ROUTE_SEGMENT)) {
+            chain = chain.andThen(carrierShipmentRouteSegment(dao, true));
+        }
+         
+        if (incls.contains(SUPPLIER_PRODUCT)) {
+            chain = chain.andThen(supplierProduct(dao, true));
+        }
+         
+        if (incls.contains(SUPPLIER_PRODUCT_FEATURE)) {
+            chain = chain.andThen(supplierProductFeature(dao, true));
+        }
+         
+        if (incls.contains(TAX_AUTH_TAX_AUTHORITY)) {
+            chain = chain.andThen(taxAuthTaxAuthority(dao, true));
+        }
+         
+        if (incls.contains(ORGANIZATION_TAX_AUTHORITY_GL_ACCOUNT)) {
+            chain = chain.andThen(organizationTaxAuthorityGlAccount(dao, true));
+        }
+         
+        if (incls.contains(USER_LOGIN)) {
+            chain = chain.andThen(userLogin(dao, true));
+        }
+         
+        if (incls.contains(WORK_EFFORT_PARTY_ASSIGNMENT)) {
+            chain = chain.andThen(workEffortPartyAssignment(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<PartyData> responseObserver) {
+        Map<String, Party> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            PartyData.Builder partyData = data.toHeadBuilder();
+             
+            data.getRelCreatedByUserLogin().forEach(e -> 
+                partyData.setCreatedByUserLogin(e.toHeadBuilder())); 
+            data.getRelLastModifiedByUserLogin().forEach(e -> 
+                partyData.setLastModifiedByUserLogin(e.toHeadBuilder())); 
+            data.getRelAcctgTrans().forEach(e -> 
+                partyData.addAcctgTrans(e.toDataBuilder())); 
+            data.getRelAcctgTransEntry().forEach(e -> 
+                partyData.addAcctgTransEntry(e.toDataBuilder())); 
+            data.getRelFromAgreement().forEach(e -> 
+                partyData.addFromAgreement(e.toDataBuilder())); 
+            data.getRelToAgreement().forEach(e -> 
+                partyData.addToAgreement(e.toDataBuilder())); 
+            data.getRelBillingAccountRole().forEach(e -> 
+                partyData.addBillingAccountRole(e.toDataBuilder())); 
+            data.getRelCarrierShipmentBoxType().forEach(e -> 
+                partyData.addCarrierShipmentBoxType(e.toDataBuilder())); 
+            data.getRelCarrierShipmentMethod().forEach(e -> 
+                partyData.addCarrierShipmentMethod(e.toDataBuilder())); 
+            data.getRelToCommunicationEvent().forEach(e -> 
+                partyData.addToCommunicationEvent(e.toDataBuilder())); 
+            data.getRelFromCommunicationEvent().forEach(e -> 
+                partyData.addFromCommunicationEvent(e.toDataBuilder())); 
+            data.getRelCommunicationEventRole().forEach(e -> 
+                partyData.addCommunicationEventRole(e.toDataBuilder())); 
+            data.getRelContentRole().forEach(e -> 
+                partyData.addContentRole(e.toDataBuilder())); 
+            data.getRelFromCustRequest().forEach(e -> 
+                partyData.addFromCustRequest(e.toDataBuilder())); 
+            data.getRelCustRequestType().forEach(e -> 
+                partyData.addCustRequestType(e.toDataBuilder())); 
+            data.getRelOwnerFacility().forEach(e -> 
+                partyData.addOwnerFacility(e.toDataBuilder())); 
+            data.getRelOrganizationFinAccount().forEach(e -> 
+                partyData.addOrganizationFinAccount(e.toHeadBuilder())); 
+            data.getRelOwnerFinAccount().forEach(e -> 
+                partyData.addOwnerFinAccount(e.toHeadBuilder())); 
+            data.getRelFinAccountRole().forEach(e -> 
+                partyData.addFinAccountRole(e.toDataBuilder())); 
+            data.getRelFinAccountTrans().forEach(e -> 
+                partyData.addFinAccountTrans(e.toDataBuilder())); 
+            data.getRelPerformedByFinAccountTrans().forEach(e -> 
+                partyData.addPerformedByFinAccountTrans(e.toDataBuilder())); 
+            data.getRelFixedAsset().forEach(e -> 
+                partyData.addFixedAsset(e.toHeadBuilder())); 
+            data.getRelGovAgencyFixedAssetRegistration().forEach(e -> 
+                partyData.addGovAgencyFixedAssetRegistration(e.toDataBuilder())); 
+            data.getRelOrganizationGlAccountTypeDefault().forEach(e -> 
+                partyData.addOrganizationGlAccountTypeDefault(e.toDataBuilder())); 
+            data.getRelInventoryItem().forEach(e -> 
+                partyData.addInventoryItem(e.toHeadBuilder())); 
+            data.getRelOwnerInventoryItem().forEach(e -> 
+                partyData.addOwnerInventoryItem(e.toHeadBuilder())); 
+            data.getRelFromInvoice().forEach(e -> 
+                partyData.addFromInvoice(e.toHeadBuilder())); 
+            data.getRelInvoice().forEach(e -> 
+                partyData.addInvoice(e.toHeadBuilder())); 
+            data.getRelTaxAuthorityInvoiceItem().forEach(e -> 
+                partyData.addTaxAuthorityInvoiceItem(e.toHeadBuilder())); 
+            data.getRelOverrideOrgInvoiceItem().forEach(e -> 
+                partyData.addOverrideOrgInvoiceItem(e.toHeadBuilder())); 
+            data.getRelOrganizationInvoiceItemTypeGlAccount().forEach(e -> 
+                partyData.addOrganizationInvoiceItemTypeGlAccount(e.toDataBuilder())); 
+            data.getRelInvoiceRole().forEach(e -> 
+                partyData.addInvoiceRole(e.toDataBuilder())); 
+            data.getRelSupplierOrderItemShipGroup().forEach(e -> 
+                partyData.addSupplierOrderItemShipGroup(e.toDataBuilder())); 
+            data.getRelVendorOrderItemShipGroup().forEach(e -> 
+                partyData.addVendorOrderItemShipGroup(e.toDataBuilder())); 
+            data.getRelCarrierOrderItemShipGroup().forEach(e -> 
+                partyData.addCarrierOrderItemShipGroup(e.toDataBuilder())); 
+            data.getRelOrderRole().forEach(e -> 
+                partyData.addOrderRole(e.toDataBuilder())); 
+            data.getRelPartyAcctgPreference().forEach(e -> 
+                partyData.setPartyAcctgPreference(e.toDataBuilder())); 
+            data.getRelPartyContactMech().forEach(e -> 
+                partyData.addPartyContactMech(e.toDataBuilder())); 
+            data.getRelPartyContactMechPurpose().forEach(e -> 
+                partyData.addPartyContactMechPurpose(e.toDataBuilder())); 
+            data.getRelPartyGeoPoint().forEach(e -> 
+                partyData.addPartyGeoPoint(e.toDataBuilder())); 
+            data.getRelPartyGroup().forEach(e -> 
+                partyData.setPartyGroup(e.toHeadBuilder())); 
+            data.getRelPartyIdentification().forEach(e -> 
+                partyData.addPartyIdentification(e.toDataBuilder())); 
+            data.getRelPartyRate().forEach(e -> 
+                partyData.addPartyRate(e.toDataBuilder())); 
+            data.getRelFromPartyRelationship().forEach(e -> 
+                partyData.addFromPartyRelationship(e.toDataBuilder())); 
+            data.getRelToPartyRelationship().forEach(e -> 
+                partyData.addToPartyRelationship(e.toDataBuilder())); 
+            data.getRelPartyRole().forEach(e -> 
+                partyData.addPartyRole(e.toDataBuilder())); 
+            data.getRelPartyStatus().forEach(e -> 
+                partyData.addPartyStatus(e.toDataBuilder())); 
+            data.getRelPartyTaxAuthInfo().forEach(e -> 
+                partyData.addPartyTaxAuthInfo(e.toDataBuilder())); 
+            data.getRelFromPayment().forEach(e -> 
+                partyData.addFromPayment(e.toHeadBuilder())); 
+            data.getRelToPayment().forEach(e -> 
+                partyData.addToPayment(e.toHeadBuilder())); 
+            data.getRelPaymentGlAccountTypeMap().forEach(e -> 
+                partyData.addPaymentGlAccountTypeMap(e.toDataBuilder())); 
+            data.getRelPaymentMethod().forEach(e -> 
+                partyData.addPaymentMethod(e.toDataBuilder())); 
+            data.getRelOrganizationPaymentMethodTypeGlAccount().forEach(e -> 
+                partyData.addOrganizationPaymentMethodTypeGlAccount(e.toDataBuilder())); 
+            data.getRelPerson().forEach(e -> 
+                partyData.setPerson(e.toHeadBuilder())); 
+            data.getRelProductCategoryRole().forEach(e -> 
+                partyData.addProductCategoryRole(e.toDataBuilder())); 
+            data.getRelTaxAuthorityProductPrice().forEach(e -> 
+                partyData.addTaxAuthorityProductPrice(e.toDataBuilder())); 
+            data.getRelProductPromo().forEach(e -> 
+                partyData.addProductPromo(e.toDataBuilder())); 
+            data.getRelProductStore().forEach(e -> 
+                partyData.addProductStore(e.toHeadBuilder())); 
+            data.getRelProductStoreRole().forEach(e -> 
+                partyData.addProductStoreRole(e.toDataBuilder())); 
+            data.getRelProductStoreShipmentMeth().forEach(e -> 
+                partyData.addProductStoreShipmentMeth(e.toDataBuilder())); 
+            data.getRelQuote().forEach(e -> 
+                partyData.addQuote(e.toHeadBuilder())); 
+            data.getRelQuoteRole().forEach(e -> 
+                partyData.addQuoteRole(e.toDataBuilder())); 
+            data.getRelRateAmount().forEach(e -> 
+                partyData.addRateAmount(e.toDataBuilder())); 
+            data.getRelToShipment().forEach(e -> 
+                partyData.addToShipment(e.toHeadBuilder())); 
+            data.getRelFromShipment().forEach(e -> 
+                partyData.addFromShipment(e.toHeadBuilder())); 
+            data.getRelShipmentCostEstimate().forEach(e -> 
+                partyData.addShipmentCostEstimate(e.toDataBuilder())); 
+            data.getRelCarrierShipmentRouteSegment().forEach(e -> 
+                partyData.addCarrierShipmentRouteSegment(e.toDataBuilder())); 
+            data.getRelSupplierProduct().forEach(e -> 
+                partyData.addSupplierProduct(e.toDataBuilder())); 
+            data.getRelSupplierProductFeature().forEach(e -> 
+                partyData.addSupplierProductFeature(e.toDataBuilder())); 
+            data.getRelTaxAuthTaxAuthority().forEach(e -> 
+                partyData.addTaxAuthTaxAuthority(e.toDataBuilder())); 
+            data.getRelOrganizationTaxAuthorityGlAccount().forEach(e -> 
+                partyData.addOrganizationTaxAuthorityGlAccount(e.toDataBuilder())); 
+            data.getRelUserLogin().forEach(e -> 
+                partyData.addUserLogin(e.toHeadBuilder())); 
+            data.getRelWorkEffortPartyAssignment().forEach(e -> 
+                partyData.addWorkEffortPartyAssignment(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                partyData.setTenant(e.toDataBuilder()));
+            return partyData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public Party get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getParty(id);
@@ -3830,6 +4378,28 @@ public class PartyDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelUserLogin().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<WorkEffortPartyAssignment> getWorkEffortPartyAssignment(){
+            return getRelationValues(ctx, p1, "work_effort_party_assignment", WorkEffortPartyAssignment.class);
+        }
+
+        public List<WorkEffortPartyAssignment> mergeWorkEffortPartyAssignment(){
+            return getWorkEffortPartyAssignment().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelWorkEffortPartyAssignment().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -3991,6 +4561,10 @@ public class PartyDelegator extends AbstractProcs{
     public static final String ORGANIZATION_TAX_AUTHORITY_GL_ACCOUNT="organization_tax_authority_gl_account";
          
     public static final String USER_LOGIN="user_login";
+         
+    public static final String WORK_EFFORT_PARTY_ASSIGNMENT="work_effort_party_assignment";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -4579,6 +5153,22 @@ public class PartyDelegator extends AbstractProcs{
                                             UserLogin.class)
                                     .forEach(el -> pb.addUserLogin(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set work_effort_party_assignment to head entity                        
+                        if(relationsDemand.contains("work_effort_party_assignment")) {
+                            getRelationValues(ctx, p1, "work_effort_party_assignment",
+                                            WorkEffortPartyAssignment.class)
+                                    .forEach(el -> pb.addWorkEffortPartyAssignment(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
+                                             el.toDataBuilder().build()));
                         }
                         
 

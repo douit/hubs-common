@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.BillingAccountFlatData;
 
 import com.bluecc.hubs.stub.BillingAccountData;
 import com.bluecc.income.dao.BillingAccountDelegator;
+import static com.bluecc.income.dao.BillingAccountDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -49,6 +56,7 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -88,6 +96,9 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -104,6 +115,7 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
                 .externalAccountId(data.getExternalAccountId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -111,17 +123,40 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
         // relations
      
     @Exclude
+    @Singular("addContactMech")
     List<ContactMech> relContactMech= new ArrayList<>(); 
     @Exclude
+    @Singular("addPostalAddress")
     List<PostalAddress> relPostalAddress= new ArrayList<>(); 
     @Exclude
+    @Singular("addBillingAccountRole")
     List<BillingAccountRole> relBillingAccountRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addInvoice")
     List<Invoice> relInvoice= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderHeader")
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     @Exclude
-    List<PaymentApplication> relPaymentApplication= new ArrayList<>();
+    @Singular("addPaymentApplication")
+    List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(CONTACT_MECH, getter(this, BillingAccount::getRelContactMech)); 
+        supplierMap.put(POSTAL_ADDRESS, getter(this, BillingAccount::getRelPostalAddress)); 
+        supplierMap.put(BILLING_ACCOUNT_ROLE, getter(this, BillingAccount::getRelBillingAccountRole)); 
+        supplierMap.put(INVOICE, getter(this, BillingAccount::getRelInvoice)); 
+        supplierMap.put(ORDER_HEADER, getter(this, BillingAccount::getRelOrderHeader)); 
+        supplierMap.put(PAYMENT_APPLICATION, getter(this, BillingAccount::getRelPaymentApplication)); 
+        supplierMap.put(TENANT, getter(this, BillingAccount::getRelTenant));
+
+        return supplierMap;
+    };
 
     public BillingAccountDelegator.Agent agent(IProc.ProcContext ctx,
                                              BillingAccountDelegator delegator){
@@ -190,5 +225,6 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
     + PaymentApplication (many, autoRelation: true, keymaps: billingAccountId)
     + ReturnHeader (many, autoRelation: true, keymaps: billingAccountId)
     + ReturnItemResponse (many, autoRelation: true, keymaps: billingAccountId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

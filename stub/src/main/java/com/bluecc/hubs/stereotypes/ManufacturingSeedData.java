@@ -4,7 +4,7 @@ import static com.bluecc.hubs.ProtoTypes.*;
 import com.bluecc.hubs.stub.EnumerationData;
 import com.bluecc.hubs.stub.TechDataCalendarData;
 import com.bluecc.hubs.stub.MrpEventTypeData;
-import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 import com.bluecc.hubs.stub.CustomMethodTypeData;
 import com.bluecc.hubs.stub.TechDataCalendarWeekData;
 import com.bluecc.hubs.stub.WorkEffortAssocData;
@@ -120,7 +120,7 @@ public final class ManufacturingSeedData {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_DEFAULT_ROUTING = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_DEFAULT_ROUTING = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Default Routing")
         .setQuantityToProduce(getFixedPoint("0"))
@@ -131,7 +131,7 @@ public final class ManufacturingSeedData {
         .build();
 
 
-    public final static WorkEffortData WorkEffort_DEFAULT_TASK = WorkEffortData.newBuilder()
+    public final static WorkEffortFlatData WorkEffort_DEFAULT_TASK = WorkEffortFlatData.newBuilder()
         .setCurrentStatusId("ROU_ACTIVE")
         .setDescription("Default Routing Task")
         .setEstimatedMilliSeconds(0)

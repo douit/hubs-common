@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.ProductStoreData;
 
 public class ProductStoreDelegator extends AbstractProcs{
@@ -617,6 +619,36 @@ public class ProductStoreDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductStore> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductStore> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -829,7 +861,158 @@ public class ProductStoreDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainWebSite(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, ProductStore>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, ProductStore>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, ProductStore> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, ProductStore> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, ProductStore>> chain = tenant(dao, false);
+         
+        if (incls.contains(FACILITY)) {
+            chain = chain.andThen(facility(dao, true));
+        }
+         
+        if (incls.contains(PARTY)) {
+            chain = chain.andThen(party(dao, true));
+        }
+         
+        if (incls.contains(VAT_TAX_AUTHORITY)) {
+            chain = chain.andThen(vatTaxAuthority(dao, true));
+        }
+         
+        if (incls.contains(CUST_REQUEST)) {
+            chain = chain.andThen(custRequest(dao, true));
+        }
+         
+        if (incls.contains(EBAY_CONFIG)) {
+            chain = chain.andThen(ebayConfig(dao, true));
+        }
+         
+        if (incls.contains(ORDER_HEADER)) {
+            chain = chain.andThen(orderHeader(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_REVIEW)) {
+            chain = chain.andThen(productReview(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_CATALOG)) {
+            chain = chain.andThen(productStoreCatalog(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_EMAIL_SETTING)) {
+            chain = chain.andThen(productStoreEmailSetting(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_FACILITY)) {
+            chain = chain.andThen(productStoreFacility(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_FIN_ACT_SETTING)) {
+            chain = chain.andThen(productStoreFinActSetting(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_KEYWORD_OVRD)) {
+            chain = chain.andThen(productStoreKeywordOvrd(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_PAYMENT_SETTING)) {
+            chain = chain.andThen(productStorePaymentSetting(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_PROMO_APPL)) {
+            chain = chain.andThen(productStorePromoAppl(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_ROLE)) {
+            chain = chain.andThen(productStoreRole(dao, true));
+        }
+         
+        if (incls.contains(PRODUCT_STORE_SURVEY_APPL)) {
+            chain = chain.andThen(productStoreSurveyAppl(dao, true));
+        }
+         
+        if (incls.contains(QUOTE)) {
+            chain = chain.andThen(quote(dao, true));
+        }
+         
+        if (incls.contains(TAX_AUTHORITY_RATE_PRODUCT)) {
+            chain = chain.andThen(taxAuthorityRateProduct(dao, true));
+        }
+         
+        if (incls.contains(WEB_SITE)) {
+            chain = chain.andThen(webSite(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<ProductStoreData> responseObserver) {
+        Map<String, ProductStore> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            ProductStoreData.Builder productStoreData = data.toHeadBuilder();
+             
+            data.getRelFacility().forEach(e -> 
+                productStoreData.setFacility(e.toDataBuilder())); 
+            data.getRelParty().forEach(e -> 
+                productStoreData.setParty(e.toHeadBuilder())); 
+            data.getRelVatTaxAuthority().forEach(e -> 
+                productStoreData.setVatTaxAuthority(e.toDataBuilder())); 
+            data.getRelCustRequest().forEach(e -> 
+                productStoreData.addCustRequest(e.toDataBuilder())); 
+            data.getRelEbayConfig().forEach(e -> 
+                productStoreData.setEbayConfig(e.toDataBuilder())); 
+            data.getRelOrderHeader().forEach(e -> 
+                productStoreData.addOrderHeader(e.toHeadBuilder())); 
+            data.getRelProductReview().forEach(e -> 
+                productStoreData.addProductReview(e.toDataBuilder())); 
+            data.getRelProductStoreCatalog().forEach(e -> 
+                productStoreData.addProductStoreCatalog(e.toHeadBuilder())); 
+            data.getRelProductStoreEmailSetting().forEach(e -> 
+                productStoreData.addProductStoreEmailSetting(e.toDataBuilder())); 
+            data.getRelProductStoreFacility().forEach(e -> 
+                productStoreData.addProductStoreFacility(e.toHeadBuilder())); 
+            data.getRelProductStoreFinActSetting().forEach(e -> 
+                productStoreData.addProductStoreFinActSetting(e.toDataBuilder())); 
+            data.getRelProductStoreKeywordOvrd().forEach(e -> 
+                productStoreData.addProductStoreKeywordOvrd(e.toDataBuilder())); 
+            data.getRelProductStorePaymentSetting().forEach(e -> 
+                productStoreData.addProductStorePaymentSetting(e.toDataBuilder())); 
+            data.getRelProductStorePromoAppl().forEach(e -> 
+                productStoreData.addProductStorePromoAppl(e.toDataBuilder())); 
+            data.getRelProductStoreRole().forEach(e -> 
+                productStoreData.addProductStoreRole(e.toDataBuilder())); 
+            data.getRelProductStoreSurveyAppl().forEach(e -> 
+                productStoreData.addProductStoreSurveyAppl(e.toDataBuilder())); 
+            data.getRelQuote().forEach(e -> 
+                productStoreData.addQuote(e.toHeadBuilder())); 
+            data.getRelTaxAuthorityRateProduct().forEach(e -> 
+                productStoreData.addTaxAuthorityRateProduct(e.toDataBuilder())); 
+            data.getRelWebSite().forEach(e -> 
+                productStoreData.addWebSite(e.toHeadBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                productStoreData.setTenant(e.toDataBuilder()));
+            return productStoreData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public ProductStore get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProductStore(id);
@@ -1074,6 +1257,17 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelWebSite().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -1129,6 +1323,8 @@ public class ProductStoreDelegator extends AbstractProcs{
     public static final String TAX_AUTHORITY_RATE_PRODUCT="tax_authority_rate_product";
          
     public static final String WEB_SITE="web_site";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -1293,6 +1489,14 @@ public class ProductStoreDelegator extends AbstractProcs{
                                             WebSite.class)
                                     .forEach(el -> pb.addWebSite(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
+                                             el.toDataBuilder().build()));
                         }
                         
 

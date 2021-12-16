@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
 
 import com.bluecc.hubs.stub.ProductCategoryData;
 import com.bluecc.income.dao.ProductCategoryDelegator;
+import static com.bluecc.income.dao.ProductCategoryDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -52,6 +59,7 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -100,6 +108,9 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -119,6 +130,7 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
                 .showInSelect(getIndicatorChar(data.getShowInSelect()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -126,35 +138,76 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
         // relations
      
     @Exclude
+    @Singular("addPrimaryParentProductCategory")
     List<ProductCategory> relPrimaryParentProductCategory= new ArrayList<>(); 
     @Exclude
+    @Singular("addPrimaryChildProductCategory")
     List<ProductCategory> relPrimaryChildProductCategory= new ArrayList<>(); 
     @Exclude
+    @Singular("addProdCatalogCategory")
     List<ProdCatalogCategory> relProdCatalogCategory= new ArrayList<>(); 
     @Exclude
+    @Singular("addPrimaryProduct")
     List<Product> relPrimaryProduct= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductCategoryContent")
     List<ProductCategoryContent> relProductCategoryContent= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductCategoryLink")
     List<ProductCategoryLink> relProductCategoryLink= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductCategoryMember")
     List<ProductCategoryMember> relProductCategoryMember= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductCategoryRole")
     List<ProductCategoryRole> relProductCategoryRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addCurrentProductCategoryRollup")
     List<ProductCategoryRollup> relCurrentProductCategoryRollup= new ArrayList<>(); 
     @Exclude
+    @Singular("addParentProductCategoryRollup")
     List<ProductCategoryRollup> relParentProductCategoryRollup= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductFeatureCategoryAppl")
     List<ProductFeatureCategoryAppl> relProductFeatureCategoryAppl= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductPromoCategory")
     List<ProductPromoCategory> relProductPromoCategory= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreSurveyAppl")
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
     @Exclude
+    @Singular("addTaxAuthorityCategory")
     List<TaxAuthorityCategory> relTaxAuthorityCategory= new ArrayList<>(); 
     @Exclude
-    List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>();
+    @Singular("addTaxAuthorityRateProduct")
+    List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PRIMARY_PARENT_PRODUCT_CATEGORY, getter(this, ProductCategory::getRelPrimaryParentProductCategory)); 
+        supplierMap.put(PRIMARY_CHILD_PRODUCT_CATEGORY, getter(this, ProductCategory::getRelPrimaryChildProductCategory)); 
+        supplierMap.put(PROD_CATALOG_CATEGORY, getter(this, ProductCategory::getRelProdCatalogCategory)); 
+        supplierMap.put(PRIMARY_PRODUCT, getter(this, ProductCategory::getRelPrimaryProduct)); 
+        supplierMap.put(PRODUCT_CATEGORY_CONTENT, getter(this, ProductCategory::getRelProductCategoryContent)); 
+        supplierMap.put(PRODUCT_CATEGORY_LINK, getter(this, ProductCategory::getRelProductCategoryLink)); 
+        supplierMap.put(PRODUCT_CATEGORY_MEMBER, getter(this, ProductCategory::getRelProductCategoryMember)); 
+        supplierMap.put(PRODUCT_CATEGORY_ROLE, getter(this, ProductCategory::getRelProductCategoryRole)); 
+        supplierMap.put(CURRENT_PRODUCT_CATEGORY_ROLLUP, getter(this, ProductCategory::getRelCurrentProductCategoryRollup)); 
+        supplierMap.put(PARENT_PRODUCT_CATEGORY_ROLLUP, getter(this, ProductCategory::getRelParentProductCategoryRollup)); 
+        supplierMap.put(PRODUCT_FEATURE_CATEGORY_APPL, getter(this, ProductCategory::getRelProductFeatureCategoryAppl)); 
+        supplierMap.put(PRODUCT_PROMO_CATEGORY, getter(this, ProductCategory::getRelProductPromoCategory)); 
+        supplierMap.put(PRODUCT_STORE_SURVEY_APPL, getter(this, ProductCategory::getRelProductStoreSurveyAppl)); 
+        supplierMap.put(TAX_AUTHORITY_CATEGORY, getter(this, ProductCategory::getRelTaxAuthorityCategory)); 
+        supplierMap.put(TAX_AUTHORITY_RATE_PRODUCT, getter(this, ProductCategory::getRelTaxAuthorityRateProduct)); 
+        supplierMap.put(TENANT, getter(this, ProductCategory::getRelTenant));
+
+        return supplierMap;
+    };
 
     public ProductCategoryDelegator.Agent agent(IProc.ProcContext ctx,
                                              ProductCategoryDelegator delegator){
@@ -249,5 +302,6 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
     + Subscription (many, autoRelation: true, keymaps: productCategoryId)
     + TaxAuthorityCategory (many, autoRelation: true, keymaps: productCategoryId)
     + TaxAuthorityRateProduct (many, autoRelation: true, keymaps: productCategoryId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

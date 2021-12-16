@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.ProductStoreFlatData;
 
 import com.bluecc.hubs.stub.ProductStoreData;
 import com.bluecc.income.dao.ProductStoreDelegator;
+import static com.bluecc.income.dao.ProductStoreDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -119,6 +126,7 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -368,6 +376,9 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -454,6 +465,7 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
                 .allocateInventory(getIndicatorChar(data.getAllocateInventory()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -461,43 +473,92 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
         // relations
      
     @Exclude
+    @Singular("addFacility")
     List<Facility> relFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addParty")
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addVatTaxAuthority")
     List<TaxAuthority> relVatTaxAuthority= new ArrayList<>(); 
     @Exclude
+    @Singular("addCustRequest")
     List<CustRequest> relCustRequest= new ArrayList<>(); 
     @Exclude
+    @Singular("addEbayConfig")
     List<EbayConfig> relEbayConfig= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderHeader")
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductReview")
     List<ProductReview> relProductReview= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreCatalog")
     List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreEmailSetting")
     List<ProductStoreEmailSetting> relProductStoreEmailSetting= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreFacility")
     List<ProductStoreFacility> relProductStoreFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreFinActSetting")
     List<ProductStoreFinActSetting> relProductStoreFinActSetting= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreKeywordOvrd")
     List<ProductStoreKeywordOvrd> relProductStoreKeywordOvrd= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStorePaymentSetting")
     List<ProductStorePaymentSetting> relProductStorePaymentSetting= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStorePromoAppl")
     List<ProductStorePromoAppl> relProductStorePromoAppl= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreRole")
     List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreSurveyAppl")
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
     @Exclude
+    @Singular("addQuote")
     List<Quote> relQuote= new ArrayList<>(); 
     @Exclude
+    @Singular("addTaxAuthorityRateProduct")
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
     @Exclude
-    List<WebSite> relWebSite= new ArrayList<>();
+    @Singular("addWebSite")
+    List<WebSite> relWebSite= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(FACILITY, getter(this, ProductStore::getRelFacility)); 
+        supplierMap.put(PARTY, getter(this, ProductStore::getRelParty)); 
+        supplierMap.put(VAT_TAX_AUTHORITY, getter(this, ProductStore::getRelVatTaxAuthority)); 
+        supplierMap.put(CUST_REQUEST, getter(this, ProductStore::getRelCustRequest)); 
+        supplierMap.put(EBAY_CONFIG, getter(this, ProductStore::getRelEbayConfig)); 
+        supplierMap.put(ORDER_HEADER, getter(this, ProductStore::getRelOrderHeader)); 
+        supplierMap.put(PRODUCT_REVIEW, getter(this, ProductStore::getRelProductReview)); 
+        supplierMap.put(PRODUCT_STORE_CATALOG, getter(this, ProductStore::getRelProductStoreCatalog)); 
+        supplierMap.put(PRODUCT_STORE_EMAIL_SETTING, getter(this, ProductStore::getRelProductStoreEmailSetting)); 
+        supplierMap.put(PRODUCT_STORE_FACILITY, getter(this, ProductStore::getRelProductStoreFacility)); 
+        supplierMap.put(PRODUCT_STORE_FIN_ACT_SETTING, getter(this, ProductStore::getRelProductStoreFinActSetting)); 
+        supplierMap.put(PRODUCT_STORE_KEYWORD_OVRD, getter(this, ProductStore::getRelProductStoreKeywordOvrd)); 
+        supplierMap.put(PRODUCT_STORE_PAYMENT_SETTING, getter(this, ProductStore::getRelProductStorePaymentSetting)); 
+        supplierMap.put(PRODUCT_STORE_PROMO_APPL, getter(this, ProductStore::getRelProductStorePromoAppl)); 
+        supplierMap.put(PRODUCT_STORE_ROLE, getter(this, ProductStore::getRelProductStoreRole)); 
+        supplierMap.put(PRODUCT_STORE_SURVEY_APPL, getter(this, ProductStore::getRelProductStoreSurveyAppl)); 
+        supplierMap.put(QUOTE, getter(this, ProductStore::getRelQuote)); 
+        supplierMap.put(TAX_AUTHORITY_RATE_PRODUCT, getter(this, ProductStore::getRelTaxAuthorityRateProduct)); 
+        supplierMap.put(WEB_SITE, getter(this, ProductStore::getRelWebSite)); 
+        supplierMap.put(TENANT, getter(this, ProductStore::getRelTenant));
+
+        return supplierMap;
+    };
 
     public ProductStoreDelegator.Agent agent(IProc.ProcContext ctx,
                                              ProductStoreDelegator delegator){
@@ -876,5 +937,6 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
     + TaxAuthorityRateProduct (many, autoRelation: true, keymaps: productStoreId)
     + ThirdPartyLogin (many, autoRelation: true, keymaps: productStoreId)
     + WebSite (many, autoRelation: true, keymaps: productStoreId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

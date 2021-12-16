@@ -2,8 +2,8 @@ package com.bluecc.gentool;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.bluecc.gentool.common.TemplateUtil;
 import com.bluecc.hubs.fund.ModelTransition;
+import com.bluecc.hubs.fund.TemplateUtil;
 import com.bluecc.hubs.fund.Util;
 import com.google.common.collect.ImmutableMap;
 import lombok.*;
@@ -60,7 +60,7 @@ public class StatusTool {
 
     private static boolean genAndWrite(Opts opts) throws IOException {
         Map<String, Object> ctx = getBuildContext(opts);
-        String eventDecl=TemplateUtil.build("templates/actor_event_source.j2", ctx);
+        String eventDecl= TemplateUtil.build("templates/actor_event_source.j2", ctx);
         String conductorDecl=TemplateUtil.build("templates/actor_transitions_source.j2", ctx);
 
         String source=TemplateUtil.build("templates/actor_source.j2",

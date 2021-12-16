@@ -19,7 +19,7 @@ import com.bluecc.hubs.stub.InvoiceItemTypeMapData;
 import com.bluecc.hubs.stub.StatusItemData;
 import com.bluecc.hubs.stub.StatusValidChangeData;
 import com.bluecc.hubs.stub.GlAccountTypeData;
-import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 import com.bluecc.hubs.stub.PaymentGroupTypeData;
 import com.bluecc.hubs.stub.GlAccountCategoryTypeData;
 import com.bluecc.hubs.stub.FixedAssetStdCostTypeData;
@@ -468,7 +468,7 @@ public final class AccountingSeedDataList {
             GlAccountType_FX_GAIN_ACCOUNT,        
             GlAccountType_FX_LOSS_ACCOUNT);
 
-    public static final List<WorkEffortData> workEffortList=ImmutableList.of(        
+    public static final List<WorkEffortFlatData> workEffortList=ImmutableList.of(        
             WorkEffort__NA_);
 
     public static final List<PaymentGroupTypeData> paymentGroupTypeList=ImmutableList.of(        

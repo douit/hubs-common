@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-engine-xml>
+
+    <!-- Another Demo project for DemoCustomeCompanyr and employee 1,3-->
+    <WorkEffort workEffortId="9200" workEffortTypeId="PROJECT" currentStatusId="_NA_" lastStatusUpdate="2007-12-14 15:07:52.911" scopeEnumId="WES_PRIVATE" workEffortName="Demo Project3 DemoCustomerCompany" revisionNumber="1"/>
+    <WorkEffortPartyAssignment workEffortId="9200" partyId="DemoEmployee3" roleTypeId="PROVIDER_ANALYST" fromDate="2007-12-14 16:45:21.831" statusId="PAS_ASSIGNED"/>
+    <WorkEffortPartyAssignment workEffortId="9200" partyId="Company" roleTypeId="INTERNAL_ORGANIZATIO" fromDate="2009-04-05 20:27:52.818"/>
+    <WorkEffortPartyAssignment workEffortId="9200" partyId="DemoCustCompany" roleTypeId="CLIENT_BILLING" fromDate="2009-04-05 20:27:52.893"/>
+    <WorkEffortPartyAssignment  workEffortId="9200" partyId="DemoEmployee1" statusId="PAS_ASSIGNED" roleTypeId="PROVIDER_MANAGER" fromDate="2007-12-14 16:45:21.831"/>
+    <WorkEffort workEffortId="9201" workEffortTypeId="PHASE" currentStatusId="_NA_" lastStatusUpdate="2007-12-14 16:45:14.226" workEffortParentId="9200" workEffortName="phase1" revisionNumber="1"/>
+    <WorkEffort workEffortId="9202" workEffortTypeId="TASK" currentStatusId="PTS_CREATED" lastStatusUpdate="2007-12-14 16:45:21.831" workEffortParentId="9201" scopeEnumId="WES_PRIVATE" workEffortName="task1" estimatedStartDate="2007-12-03 00:00:00.0" estimatedCompletionDate="2007-12-05 00:00:00.0" revisionNumber="1"/>
+    <WorkEffortSkillStandard workEffortId="9202" skillTypeId="9000" estimatedDuration="16.0"/>
+
+</entity-engine-xml>

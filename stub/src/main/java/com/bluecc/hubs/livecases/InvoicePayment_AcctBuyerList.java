@@ -9,7 +9,7 @@ import com.bluecc.hubs.stub.PaymentApplicationData;
 import com.bluecc.hubs.stub.InvoiceFlatData;
 import com.bluecc.hubs.stub.InvoiceItemFlatData;
 import com.bluecc.hubs.stub.PartyGroupFlatData;
-import com.bluecc.hubs.stub.SecurityGroupData;
+import com.bluecc.hubs.stub.SecurityGroupFlatData;
 import com.bluecc.hubs.stub.PaymentFlatData;
 import com.bluecc.hubs.stub.PartyFlatData;
 import com.bluecc.hubs.stub.UserLoginSecurityGroupData;
@@ -56,7 +56,7 @@ public final class InvoicePayment_AcctBuyerList {
             PartyGroup_AcctBigSupplier());
     }
 
-    public static List<SecurityGroupData> securityGroupList() {
+    public static List<SecurityGroupFlatData> securityGroupList() {
         return ImmutableList.of(        
             SecurityGroup_ORDERPURCH());
     }

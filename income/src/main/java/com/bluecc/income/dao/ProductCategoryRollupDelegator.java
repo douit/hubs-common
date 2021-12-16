@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.ProductCategoryRollupData;
 
 public class ProductCategoryRollupDelegator extends AbstractProcs{
@@ -197,6 +199,36 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductCategoryRollup> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, ProductCategoryRollup> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, ProductCategoryRollup> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
+                                id -> rr.getRow(ProductCategoryRollup.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -255,7 +287,74 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainSiblingProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, ProductCategoryRollup>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, ProductCategoryRollup>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, ProductCategoryRollup> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, ProductCategoryRollup> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, ProductCategoryRollup>> chain = tenant(dao, false);
+         
+        if (incls.contains(CURRENT_PRODUCT_CATEGORY)) {
+            chain = chain.andThen(currentProductCategory(dao, true));
+        }
+         
+        if (incls.contains(PARENT_PRODUCT_CATEGORY)) {
+            chain = chain.andThen(parentProductCategory(dao, true));
+        }
+         
+        if (incls.contains(CHILD_PRODUCT_CATEGORY_ROLLUP)) {
+            chain = chain.andThen(childProductCategoryRollup(dao, true));
+        }
+         
+        if (incls.contains(PARENT_PRODUCT_CATEGORY_ROLLUP)) {
+            chain = chain.andThen(parentProductCategoryRollup(dao, true));
+        }
+         
+        if (incls.contains(SIBLING_PRODUCT_CATEGORY_ROLLUP)) {
+            chain = chain.andThen(siblingProductCategoryRollup(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<ProductCategoryRollupData> responseObserver) {
+        Map<String, ProductCategoryRollup> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            ProductCategoryRollupData.Builder productCategoryRollupData = data.toHeadBuilder();
+             
+            data.getRelCurrentProductCategory().forEach(e -> 
+                productCategoryRollupData.setCurrentProductCategory(e.toHeadBuilder())); 
+            data.getRelParentProductCategory().forEach(e -> 
+                productCategoryRollupData.setParentProductCategory(e.toHeadBuilder())); 
+            data.getRelChildProductCategoryRollup().forEach(e -> 
+                productCategoryRollupData.addChildProductCategoryRollup(e.toHeadBuilder())); 
+            data.getRelParentProductCategoryRollup().forEach(e -> 
+                productCategoryRollupData.addParentProductCategoryRollup(e.toHeadBuilder())); 
+            data.getRelSiblingProductCategoryRollup().forEach(e -> 
+                productCategoryRollupData.addSiblingProductCategoryRollup(e.toHeadBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                productCategoryRollupData.setTenant(e.toDataBuilder()));
+            return productCategoryRollupData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public ProductCategoryRollup get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getProductCategoryRollup(id);
@@ -346,6 +445,17 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelSiblingProductCategoryRollup().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -373,6 +483,8 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
     public static final String PARENT_PRODUCT_CATEGORY_ROLLUP="parent_product_category_rollup";
          
     public static final String SIBLING_PRODUCT_CATEGORY_ROLLUP="sibling_product_category_rollup";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -425,6 +537,14 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                                             ProductCategoryRollup.class)
                                     .forEach(el -> pb.addSiblingProductCategoryRollup(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
+                                             el.toDataBuilder().build()));
                         }
                         
 

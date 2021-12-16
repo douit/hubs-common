@@ -20,7 +20,7 @@ import com.bluecc.hubs.stub.ProductContentData;
 import com.bluecc.hubs.stub.ProductConfigOptionData;
 import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 import com.bluecc.hubs.stub.ProductFeatureApplData;
-import com.bluecc.hubs.stub.WorkEffortData;
+import com.bluecc.hubs.stub.WorkEffortFlatData;
 import com.bluecc.hubs.stub.ContentData;
 import com.bluecc.hubs.stub.ProductFeatureCategoryData;
 import com.bluecc.hubs.stub.ProductCategoryFlatData;
@@ -351,7 +351,7 @@ public final class StereoDemoConfiguratorList {
             ProductFeatureAppl_PEPPERS_H_3011_,        
             ProductFeatureAppl_PEPPERS_R_3012_);
 
-    public static final List<WorkEffortData> workEffortList=ImmutableList.of(        
+    public static final List<WorkEffortFlatData> workEffortList=ImmutableList.of(        
             WorkEffort_TASK01,        
             WorkEffort_TASK02,        
             WorkEffort_TASK03,        

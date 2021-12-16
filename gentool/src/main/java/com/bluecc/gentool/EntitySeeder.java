@@ -15,6 +15,7 @@ import org.redisson.config.Config;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class EntitySeeder {
                 }
             });
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         EntitySeeder seeder=injector.getInstance(EntitySeeder.class);
         seeder.start();
@@ -42,8 +43,6 @@ public class EntitySeeder {
         seeder.shutdown();
     }
 
-    @Inject
-    EntityMetaManager metaManager;
     RedissonClient redisson;
 
     EntitySeeder() {
@@ -57,7 +56,7 @@ public class EntitySeeder {
         redisson = Redisson.create(config);
     }
 
-    void start() {
+    void start() throws IOException {
          String dataFile="dataset/seed/PartySeedData.xml";
 
          // clear
@@ -74,7 +73,7 @@ public class EntitySeeder {
             Map<String, String> valueMap= Maps.newHashMap();
             for (JsonObject jsonObject : dataList.get(key)) {
                 // pretty(jsonObject);
-                String keyString=metaManager.getKeys(key).stream()
+                String keyString=EntityMetaManager.getKeys(key).stream()
                         .map(k -> jsonObject.get(k).getAsString())
                         .collect(Collectors.joining(":"));
                 String valString=GSON.toJson(jsonObject);

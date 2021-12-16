@@ -29,6 +29,8 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
+import io.grpc.stub.StreamObserver;
+
 import com.bluecc.hubs.stub.FinAccountData;
 
 public class FinAccountDelegator extends AbstractProcs{
@@ -317,6 +319,36 @@ public class FinAccountDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, FinAccount> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        default Map<String, FinAccount> chainTenant(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                            p.getRelTenant()
+                                    .add(rr.getRow(Tenant.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -419,7 +451,98 @@ public class FinAccountDelegator extends AbstractProcs{
                                         boolean succ) {
         return e -> dao.chainPaymentMethod(protoMeta, e, whereClause, binds, succ);
     }
+     
+    public Consumer<Map<String, FinAccount>> tenant(Dao dao, boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FinAccount>> tenant(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
+    }
     
+
+    public Map<String, FinAccount> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        Map<String, FinAccount> dataMap = Maps.newHashMap();
+        Dao dao = c.getHandle().attach(Dao.class);
+        Consumer<Map<String, FinAccount>> chain = tenant(dao, false);
+         
+        if (incls.contains(ORGANIZATION_PARTY)) {
+            chain = chain.andThen(organizationParty(dao, true));
+        }
+         
+        if (incls.contains(OWNER_PARTY)) {
+            chain = chain.andThen(ownerParty(dao, true));
+        }
+         
+        if (incls.contains(POST_TO_GL_ACCOUNT)) {
+            chain = chain.andThen(postToGlAccount(dao, true));
+        }
+         
+        if (incls.contains(REPLENISH_PAYMENT_METHOD)) {
+            chain = chain.andThen(replenishPaymentMethod(dao, true));
+        }
+         
+        if (incls.contains(FIN_ACCOUNT_ROLE)) {
+            chain = chain.andThen(finAccountRole(dao, true));
+        }
+         
+        if (incls.contains(FIN_ACCOUNT_STATUS)) {
+            chain = chain.andThen(finAccountStatus(dao, true));
+        }
+         
+        if (incls.contains(FIN_ACCOUNT_TRANS)) {
+            chain = chain.andThen(finAccountTrans(dao, true));
+        }
+         
+        if (incls.contains(ORDER_PAYMENT_PREFERENCE)) {
+            chain = chain.andThen(orderPaymentPreference(dao, true));
+        }
+         
+        if (incls.contains(PAYMENT_METHOD)) {
+            chain = chain.andThen(paymentMethod(dao, true));
+        }
+         
+        if (incls.contains(TENANT)) {
+            chain = chain.andThen(tenant(dao, true));
+        }
+        
+        chain.accept(dataMap);
+        return dataMap;
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   StreamObserver<FinAccountData> responseObserver) {
+        Map<String, FinAccount> dataMap = chainQuery(c, incls);
+        dataMap.values().stream().map(data -> {
+            FinAccountData.Builder finAccountData = data.toHeadBuilder();
+             
+            data.getRelOrganizationParty().forEach(e -> 
+                finAccountData.setOrganizationParty(e.toHeadBuilder())); 
+            data.getRelOwnerParty().forEach(e -> 
+                finAccountData.setOwnerParty(e.toHeadBuilder())); 
+            data.getRelPostToGlAccount().forEach(e -> 
+                finAccountData.setPostToGlAccount(e.toDataBuilder())); 
+            data.getRelReplenishPaymentMethod().forEach(e -> 
+                finAccountData.setReplenishPaymentMethod(e.toDataBuilder())); 
+            data.getRelFinAccountRole().forEach(e -> 
+                finAccountData.addFinAccountRole(e.toDataBuilder())); 
+            data.getRelFinAccountStatus().forEach(e -> 
+                finAccountData.addFinAccountStatus(e.toDataBuilder())); 
+            data.getRelFinAccountTrans().forEach(e -> 
+                finAccountData.addFinAccountTrans(e.toDataBuilder())); 
+            data.getRelOrderPaymentPreference().forEach(e -> 
+                finAccountData.addOrderPaymentPreference(e.toDataBuilder())); 
+            data.getRelPaymentMethod().forEach(e -> 
+                finAccountData.addPaymentMethod(e.toDataBuilder())); 
+            data.getRelTenant().forEach(e -> 
+                finAccountData.setTenant(e.toDataBuilder()));
+            return finAccountData.build();
+        }).forEach(e -> responseObserver.onNext(e));
+    }    
 
     public FinAccount get(IProc.ProcContext ctx, String id){
         return ctx.attach(Dao.class).getFinAccount(id);
@@ -554,6 +677,17 @@ public class FinAccountDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelPaymentMethod().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Tenant> getTenant(){
+            return getRelationValues(ctx, p1, "tenant", Tenant.class);
+        }
+
+        public List<Tenant> mergeTenant(){
+            return getTenant().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelTenant().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -589,6 +723,8 @@ public class FinAccountDelegator extends AbstractProcs{
     public static final String ORDER_PAYMENT_PREFERENCE="order_payment_preference";
          
     public static final String PAYMENT_METHOD="payment_method";
+         
+    public static final String TENANT="tenant";
     
 
     @Action
@@ -672,6 +808,14 @@ public class FinAccountDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "payment_method",
                                             PaymentMethod.class)
                                     .forEach(el -> pb.addPaymentMethod(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set tenant to head entity                        
+                        if(relationsDemand.contains("tenant")) {
+                            getRelationValues(ctx, p1, "tenant",
+                                            Tenant.class)
+                                    .forEach(el -> pb.setTenant(
                                              el.toDataBuilder().build()));
                         }
                         

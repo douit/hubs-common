@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.PartyFlatData;
 
 import com.bluecc.hubs.stub.PartyData;
 import com.bluecc.income.dao.PartyDelegator;
+import static com.bluecc.income.dao.PartyDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -53,6 +60,7 @@ public class Party implements IEventModel<PartyFlatData.Builder>, Serializable, 
     java.time.LocalDateTime lastUpdatedTxStamp;
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
+    String tenantId;
     
 
         
@@ -104,6 +112,9 @@ public class Party implements IEventModel<PartyFlatData.Builder>, Serializable, 
         if (createdTxStamp != null) {
             builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -124,6 +135,7 @@ public class Party implements IEventModel<PartyFlatData.Builder>, Serializable, 
                 .isUnread(getIndicatorChar(data.getIsUnread()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -131,149 +143,308 @@ public class Party implements IEventModel<PartyFlatData.Builder>, Serializable, 
         // relations
      
     @Exclude
+    @Singular("addCreatedByUserLogin")
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
     @Exclude
+    @Singular("addLastModifiedByUserLogin")
     List<UserLogin> relLastModifiedByUserLogin= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcctgTrans")
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addAcctgTransEntry")
     List<AcctgTransEntry> relAcctgTransEntry= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromAgreement")
     List<Agreement> relFromAgreement= new ArrayList<>(); 
     @Exclude
+    @Singular("addToAgreement")
     List<Agreement> relToAgreement= new ArrayList<>(); 
     @Exclude
+    @Singular("addBillingAccountRole")
     List<BillingAccountRole> relBillingAccountRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addCarrierShipmentBoxType")
     List<CarrierShipmentBoxType> relCarrierShipmentBoxType= new ArrayList<>(); 
     @Exclude
+    @Singular("addCarrierShipmentMethod")
     List<CarrierShipmentMethod> relCarrierShipmentMethod= new ArrayList<>(); 
     @Exclude
+    @Singular("addToCommunicationEvent")
     List<CommunicationEvent> relToCommunicationEvent= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromCommunicationEvent")
     List<CommunicationEvent> relFromCommunicationEvent= new ArrayList<>(); 
     @Exclude
+    @Singular("addCommunicationEventRole")
     List<CommunicationEventRole> relCommunicationEventRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addContentRole")
     List<ContentRole> relContentRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromCustRequest")
     List<CustRequest> relFromCustRequest= new ArrayList<>(); 
     @Exclude
+    @Singular("addCustRequestType")
     List<CustRequestType> relCustRequestType= new ArrayList<>(); 
     @Exclude
+    @Singular("addOwnerFacility")
     List<Facility> relOwnerFacility= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrganizationFinAccount")
     List<FinAccount> relOrganizationFinAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addOwnerFinAccount")
     List<FinAccount> relOwnerFinAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addFinAccountRole")
     List<FinAccountRole> relFinAccountRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addFinAccountTrans")
     List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addPerformedByFinAccountTrans")
     List<FinAccountTrans> relPerformedByFinAccountTrans= new ArrayList<>(); 
     @Exclude
+    @Singular("addFixedAsset")
     List<FixedAsset> relFixedAsset= new ArrayList<>(); 
     @Exclude
+    @Singular("addGovAgencyFixedAssetRegistration")
     List<FixedAssetRegistration> relGovAgencyFixedAssetRegistration= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrganizationGlAccountTypeDefault")
     List<GlAccountTypeDefault> relOrganizationGlAccountTypeDefault= new ArrayList<>(); 
     @Exclude
+    @Singular("addInventoryItem")
     List<InventoryItem> relInventoryItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addOwnerInventoryItem")
     List<InventoryItem> relOwnerInventoryItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromInvoice")
     List<Invoice> relFromInvoice= new ArrayList<>(); 
     @Exclude
+    @Singular("addInvoice")
     List<Invoice> relInvoice= new ArrayList<>(); 
     @Exclude
+    @Singular("addTaxAuthorityInvoiceItem")
     List<InvoiceItem> relTaxAuthorityInvoiceItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addOverrideOrgInvoiceItem")
     List<InvoiceItem> relOverrideOrgInvoiceItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrganizationInvoiceItemTypeGlAccount")
     List<InvoiceItemTypeGlAccount> relOrganizationInvoiceItemTypeGlAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addInvoiceRole")
     List<InvoiceRole> relInvoiceRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addSupplierOrderItemShipGroup")
     List<OrderItemShipGroup> relSupplierOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
+    @Singular("addVendorOrderItemShipGroup")
     List<OrderItemShipGroup> relVendorOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
+    @Singular("addCarrierOrderItemShipGroup")
     List<OrderItemShipGroup> relCarrierOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderRole")
     List<OrderRole> relOrderRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyAcctgPreference")
     List<PartyAcctgPreference> relPartyAcctgPreference= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyContactMech")
     List<PartyContactMech> relPartyContactMech= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyContactMechPurpose")
     List<PartyContactMechPurpose> relPartyContactMechPurpose= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyGeoPoint")
     List<PartyGeoPoint> relPartyGeoPoint= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyGroup")
     List<PartyGroup> relPartyGroup= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyIdentification")
     List<PartyIdentification> relPartyIdentification= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyRate")
     List<PartyRate> relPartyRate= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromPartyRelationship")
     List<PartyRelationship> relFromPartyRelationship= new ArrayList<>(); 
     @Exclude
+    @Singular("addToPartyRelationship")
     List<PartyRelationship> relToPartyRelationship= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyRole")
     List<PartyRole> relPartyRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyStatus")
     List<PartyStatus> relPartyStatus= new ArrayList<>(); 
     @Exclude
+    @Singular("addPartyTaxAuthInfo")
     List<PartyTaxAuthInfo> relPartyTaxAuthInfo= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromPayment")
     List<Payment> relFromPayment= new ArrayList<>(); 
     @Exclude
+    @Singular("addToPayment")
     List<Payment> relToPayment= new ArrayList<>(); 
     @Exclude
+    @Singular("addPaymentGlAccountTypeMap")
     List<PaymentGlAccountTypeMap> relPaymentGlAccountTypeMap= new ArrayList<>(); 
     @Exclude
+    @Singular("addPaymentMethod")
     List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrganizationPaymentMethodTypeGlAccount")
     List<PaymentMethodTypeGlAccount> relOrganizationPaymentMethodTypeGlAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addPerson")
     List<Person> relPerson= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductCategoryRole")
     List<ProductCategoryRole> relProductCategoryRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addTaxAuthorityProductPrice")
     List<ProductPrice> relTaxAuthorityProductPrice= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductPromo")
     List<ProductPromo> relProductPromo= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStore")
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreRole")
     List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductStoreShipmentMeth")
     List<ProductStoreShipmentMeth> relProductStoreShipmentMeth= new ArrayList<>(); 
     @Exclude
+    @Singular("addQuote")
     List<Quote> relQuote= new ArrayList<>(); 
     @Exclude
+    @Singular("addQuoteRole")
     List<QuoteRole> relQuoteRole= new ArrayList<>(); 
     @Exclude
+    @Singular("addRateAmount")
     List<RateAmount> relRateAmount= new ArrayList<>(); 
     @Exclude
+    @Singular("addToShipment")
     List<Shipment> relToShipment= new ArrayList<>(); 
     @Exclude
+    @Singular("addFromShipment")
     List<Shipment> relFromShipment= new ArrayList<>(); 
     @Exclude
+    @Singular("addShipmentCostEstimate")
     List<ShipmentCostEstimate> relShipmentCostEstimate= new ArrayList<>(); 
     @Exclude
+    @Singular("addCarrierShipmentRouteSegment")
     List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
     @Exclude
+    @Singular("addSupplierProduct")
     List<SupplierProduct> relSupplierProduct= new ArrayList<>(); 
     @Exclude
+    @Singular("addSupplierProductFeature")
     List<SupplierProductFeature> relSupplierProductFeature= new ArrayList<>(); 
     @Exclude
+    @Singular("addTaxAuthTaxAuthority")
     List<TaxAuthority> relTaxAuthTaxAuthority= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrganizationTaxAuthorityGlAccount")
     List<TaxAuthorityGlAccount> relOrganizationTaxAuthorityGlAccount= new ArrayList<>(); 
     @Exclude
-    List<UserLogin> relUserLogin= new ArrayList<>();
+    @Singular("addUserLogin")
+    List<UserLogin> relUserLogin= new ArrayList<>(); 
+    @Exclude
+    @Singular("addWorkEffortPartyAssignment")
+    List<WorkEffortPartyAssignment> relWorkEffortPartyAssignment= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(CREATED_BY_USER_LOGIN, getter(this, Party::getRelCreatedByUserLogin)); 
+        supplierMap.put(LAST_MODIFIED_BY_USER_LOGIN, getter(this, Party::getRelLastModifiedByUserLogin)); 
+        supplierMap.put(ACCTG_TRANS, getter(this, Party::getRelAcctgTrans)); 
+        supplierMap.put(ACCTG_TRANS_ENTRY, getter(this, Party::getRelAcctgTransEntry)); 
+        supplierMap.put(FROM_AGREEMENT, getter(this, Party::getRelFromAgreement)); 
+        supplierMap.put(TO_AGREEMENT, getter(this, Party::getRelToAgreement)); 
+        supplierMap.put(BILLING_ACCOUNT_ROLE, getter(this, Party::getRelBillingAccountRole)); 
+        supplierMap.put(CARRIER_SHIPMENT_BOX_TYPE, getter(this, Party::getRelCarrierShipmentBoxType)); 
+        supplierMap.put(CARRIER_SHIPMENT_METHOD, getter(this, Party::getRelCarrierShipmentMethod)); 
+        supplierMap.put(TO_COMMUNICATION_EVENT, getter(this, Party::getRelToCommunicationEvent)); 
+        supplierMap.put(FROM_COMMUNICATION_EVENT, getter(this, Party::getRelFromCommunicationEvent)); 
+        supplierMap.put(COMMUNICATION_EVENT_ROLE, getter(this, Party::getRelCommunicationEventRole)); 
+        supplierMap.put(CONTENT_ROLE, getter(this, Party::getRelContentRole)); 
+        supplierMap.put(FROM_CUST_REQUEST, getter(this, Party::getRelFromCustRequest)); 
+        supplierMap.put(CUST_REQUEST_TYPE, getter(this, Party::getRelCustRequestType)); 
+        supplierMap.put(OWNER_FACILITY, getter(this, Party::getRelOwnerFacility)); 
+        supplierMap.put(ORGANIZATION_FIN_ACCOUNT, getter(this, Party::getRelOrganizationFinAccount)); 
+        supplierMap.put(OWNER_FIN_ACCOUNT, getter(this, Party::getRelOwnerFinAccount)); 
+        supplierMap.put(FIN_ACCOUNT_ROLE, getter(this, Party::getRelFinAccountRole)); 
+        supplierMap.put(FIN_ACCOUNT_TRANS, getter(this, Party::getRelFinAccountTrans)); 
+        supplierMap.put(PERFORMED_BY_FIN_ACCOUNT_TRANS, getter(this, Party::getRelPerformedByFinAccountTrans)); 
+        supplierMap.put(FIXED_ASSET, getter(this, Party::getRelFixedAsset)); 
+        supplierMap.put(GOV_AGENCY_FIXED_ASSET_REGISTRATION, getter(this, Party::getRelGovAgencyFixedAssetRegistration)); 
+        supplierMap.put(ORGANIZATION_GL_ACCOUNT_TYPE_DEFAULT, getter(this, Party::getRelOrganizationGlAccountTypeDefault)); 
+        supplierMap.put(INVENTORY_ITEM, getter(this, Party::getRelInventoryItem)); 
+        supplierMap.put(OWNER_INVENTORY_ITEM, getter(this, Party::getRelOwnerInventoryItem)); 
+        supplierMap.put(FROM_INVOICE, getter(this, Party::getRelFromInvoice)); 
+        supplierMap.put(INVOICE, getter(this, Party::getRelInvoice)); 
+        supplierMap.put(TAX_AUTHORITY_INVOICE_ITEM, getter(this, Party::getRelTaxAuthorityInvoiceItem)); 
+        supplierMap.put(OVERRIDE_ORG_INVOICE_ITEM, getter(this, Party::getRelOverrideOrgInvoiceItem)); 
+        supplierMap.put(ORGANIZATION_INVOICE_ITEM_TYPE_GL_ACCOUNT, getter(this, Party::getRelOrganizationInvoiceItemTypeGlAccount)); 
+        supplierMap.put(INVOICE_ROLE, getter(this, Party::getRelInvoiceRole)); 
+        supplierMap.put(SUPPLIER_ORDER_ITEM_SHIP_GROUP, getter(this, Party::getRelSupplierOrderItemShipGroup)); 
+        supplierMap.put(VENDOR_ORDER_ITEM_SHIP_GROUP, getter(this, Party::getRelVendorOrderItemShipGroup)); 
+        supplierMap.put(CARRIER_ORDER_ITEM_SHIP_GROUP, getter(this, Party::getRelCarrierOrderItemShipGroup)); 
+        supplierMap.put(ORDER_ROLE, getter(this, Party::getRelOrderRole)); 
+        supplierMap.put(PARTY_ACCTG_PREFERENCE, getter(this, Party::getRelPartyAcctgPreference)); 
+        supplierMap.put(PARTY_CONTACT_MECH, getter(this, Party::getRelPartyContactMech)); 
+        supplierMap.put(PARTY_CONTACT_MECH_PURPOSE, getter(this, Party::getRelPartyContactMechPurpose)); 
+        supplierMap.put(PARTY_GEO_POINT, getter(this, Party::getRelPartyGeoPoint)); 
+        supplierMap.put(PARTY_GROUP, getter(this, Party::getRelPartyGroup)); 
+        supplierMap.put(PARTY_IDENTIFICATION, getter(this, Party::getRelPartyIdentification)); 
+        supplierMap.put(PARTY_RATE, getter(this, Party::getRelPartyRate)); 
+        supplierMap.put(FROM_PARTY_RELATIONSHIP, getter(this, Party::getRelFromPartyRelationship)); 
+        supplierMap.put(TO_PARTY_RELATIONSHIP, getter(this, Party::getRelToPartyRelationship)); 
+        supplierMap.put(PARTY_ROLE, getter(this, Party::getRelPartyRole)); 
+        supplierMap.put(PARTY_STATUS, getter(this, Party::getRelPartyStatus)); 
+        supplierMap.put(PARTY_TAX_AUTH_INFO, getter(this, Party::getRelPartyTaxAuthInfo)); 
+        supplierMap.put(FROM_PAYMENT, getter(this, Party::getRelFromPayment)); 
+        supplierMap.put(TO_PAYMENT, getter(this, Party::getRelToPayment)); 
+        supplierMap.put(PAYMENT_GL_ACCOUNT_TYPE_MAP, getter(this, Party::getRelPaymentGlAccountTypeMap)); 
+        supplierMap.put(PAYMENT_METHOD, getter(this, Party::getRelPaymentMethod)); 
+        supplierMap.put(ORGANIZATION_PAYMENT_METHOD_TYPE_GL_ACCOUNT, getter(this, Party::getRelOrganizationPaymentMethodTypeGlAccount)); 
+        supplierMap.put(PERSON, getter(this, Party::getRelPerson)); 
+        supplierMap.put(PRODUCT_CATEGORY_ROLE, getter(this, Party::getRelProductCategoryRole)); 
+        supplierMap.put(TAX_AUTHORITY_PRODUCT_PRICE, getter(this, Party::getRelTaxAuthorityProductPrice)); 
+        supplierMap.put(PRODUCT_PROMO, getter(this, Party::getRelProductPromo)); 
+        supplierMap.put(PRODUCT_STORE, getter(this, Party::getRelProductStore)); 
+        supplierMap.put(PRODUCT_STORE_ROLE, getter(this, Party::getRelProductStoreRole)); 
+        supplierMap.put(PRODUCT_STORE_SHIPMENT_METH, getter(this, Party::getRelProductStoreShipmentMeth)); 
+        supplierMap.put(QUOTE, getter(this, Party::getRelQuote)); 
+        supplierMap.put(QUOTE_ROLE, getter(this, Party::getRelQuoteRole)); 
+        supplierMap.put(RATE_AMOUNT, getter(this, Party::getRelRateAmount)); 
+        supplierMap.put(TO_SHIPMENT, getter(this, Party::getRelToShipment)); 
+        supplierMap.put(FROM_SHIPMENT, getter(this, Party::getRelFromShipment)); 
+        supplierMap.put(SHIPMENT_COST_ESTIMATE, getter(this, Party::getRelShipmentCostEstimate)); 
+        supplierMap.put(CARRIER_SHIPMENT_ROUTE_SEGMENT, getter(this, Party::getRelCarrierShipmentRouteSegment)); 
+        supplierMap.put(SUPPLIER_PRODUCT, getter(this, Party::getRelSupplierProduct)); 
+        supplierMap.put(SUPPLIER_PRODUCT_FEATURE, getter(this, Party::getRelSupplierProductFeature)); 
+        supplierMap.put(TAX_AUTH_TAX_AUTHORITY, getter(this, Party::getRelTaxAuthTaxAuthority)); 
+        supplierMap.put(ORGANIZATION_TAX_AUTHORITY_GL_ACCOUNT, getter(this, Party::getRelOrganizationTaxAuthorityGlAccount)); 
+        supplierMap.put(USER_LOGIN, getter(this, Party::getRelUserLogin)); 
+        supplierMap.put(WORK_EFFORT_PARTY_ASSIGNMENT, getter(this, Party::getRelWorkEffortPartyAssignment)); 
+        supplierMap.put(TENANT, getter(this, Party::getRelTenant));
+
+        return supplierMap;
+    };
 
     public PartyDelegator.Agent agent(IProc.ProcContext ctx,
                                              PartyDelegator delegator){
@@ -532,5 +703,6 @@ public class Party implements IEventModel<PartyFlatData.Builder>, Serializable, 
     + WebUserPreference (many, autoRelation: true, keymaps: partyId)
     + WorkEffortEventReminder (many, autoRelation: true, keymaps: partyId)
     + WorkEffortPartyAssignment (many, autoRelation: true, keymaps: partyId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

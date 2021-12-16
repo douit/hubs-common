@@ -1,7 +1,7 @@
 package com.bluecc.gentool;
 
 import com.bluecc.gentool.Stereotypes.Stereotype;
-import com.bluecc.gentool.common.TemplateUtil;
+import com.bluecc.hubs.fund.TemplateUtil;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.Util;
@@ -29,7 +29,11 @@ import static java.lang.String.format;
 public class StereotypeTool {
     public static void main(String[] args) throws IOException {
         // testWriter();
+        startGen();
 
+    }
+
+    public static void startGen() throws IOException {
         String targetDir = "stub/src/main/java/com/bluecc/hubs/stereotypes";
         // String sourceDir="dataset/ecommerce";
         String prefix = "Stereo";
@@ -44,7 +48,6 @@ public class StereotypeTool {
             datafileWriter(new File(file),
                     targetDir, "", true, "stereotypes");
         });
-
     }
 
     private static void datasetWriter(String sourceDir, String targetDir,

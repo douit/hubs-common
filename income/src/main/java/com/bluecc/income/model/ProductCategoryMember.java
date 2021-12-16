@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.ProductCategoryMemberFlatData;
 
 import com.bluecc.hubs.stub.ProductCategoryMemberData;
 import com.bluecc.income.dao.ProductCategoryMemberDelegator;
+import static com.bluecc.income.dao.ProductCategoryMemberDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -49,6 +56,7 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberF
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     @RId String id;
+    String tenantId;
     
 
         
@@ -88,6 +96,9 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberF
         if (id != null) {
             builder.setId(id);
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -104,6 +115,7 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberF
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -111,9 +123,24 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberF
         // relations
      
     @Exclude
+    @Singular("addProduct")
     List<Product> relProduct= new ArrayList<>(); 
     @Exclude
-    List<ProductCategory> relProductCategory= new ArrayList<>();
+    @Singular("addProductCategory")
+    List<ProductCategory> relProductCategory= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(PRODUCT, getter(this, ProductCategoryMember::getRelProduct)); 
+        supplierMap.put(PRODUCT_CATEGORY, getter(this, ProductCategoryMember::getRelProductCategory)); 
+        supplierMap.put(TENANT, getter(this, ProductCategoryMember::getRelTenant));
+
+        return supplierMap;
+    };
 
     public ProductCategoryMemberDelegator.Agent agent(IProc.ProcContext ctx,
                                              ProductCategoryMemberDelegator delegator){
@@ -176,5 +203,6 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberF
     
     - Product (one, autoRelation: false, keymaps: productId)
     - ProductCategory (one, autoRelation: false, keymaps: productCategoryId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 

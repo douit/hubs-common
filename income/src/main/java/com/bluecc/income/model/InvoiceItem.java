@@ -1,3 +1,4 @@
+//// Generated, DO NOT EDIT
 package com.bluecc.income.model;
 
 import lombok.*;
@@ -7,9 +8,13 @@ import java.sql.Date;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
+// import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -19,11 +24,13 @@ import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
+import static com.bluecc.hubs.fund.FnUtil.getter;
 
 import com.bluecc.hubs.stub.InvoiceItemFlatData;
 
 import com.bluecc.hubs.stub.InvoiceItemData;
 import com.bluecc.income.dao.InvoiceItemDelegator;
+import static com.bluecc.income.dao.InvoiceItemDelegator.*;
 import com.bluecc.income.exchange.IProc;
 
 
@@ -61,6 +68,7 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Se
     java.time.LocalDateTime createdStamp;
     java.time.LocalDateTime createdTxStamp;
     @RId String id;
+    String tenantId;
     
 
         
@@ -136,6 +144,9 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Se
         if (id != null) {
             builder.setId(id);
         }
+        if (tenantId != null) {
+            builder.setTenantId(tenantId);
+        }
                     
         return builder;
     }
@@ -164,6 +175,7 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Se
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
+                .tenantId(data.getTenantId())
                 
                 .build();
     }
@@ -171,33 +183,72 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Se
         // relations
      
     @Exclude
+    @Singular("addInvoice")
     List<Invoice> relInvoice= new ArrayList<>(); 
     @Exclude
+    @Singular("addInventoryItem")
     List<InventoryItem> relInventoryItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addProduct")
     List<Product> relProduct= new ArrayList<>(); 
     @Exclude
+    @Singular("addProductFeature")
     List<ProductFeature> relProductFeature= new ArrayList<>(); 
     @Exclude
+    @Singular("addInvoiceItem")
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addChildrenInvoiceItem")
     List<InvoiceItem> relChildrenInvoiceItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addOverrideGlAccount")
     List<GlAccount> relOverrideGlAccount= new ArrayList<>(); 
     @Exclude
+    @Singular("addTaxAuthorityParty")
     List<Party> relTaxAuthorityParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addTaxAuthorityRateProduct")
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
     @Exclude
+    @Singular("addOverrideOrgParty")
     List<Party> relOverrideOrgParty= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderAdjustmentBilling")
     List<OrderAdjustmentBilling> relOrderAdjustmentBilling= new ArrayList<>(); 
     @Exclude
+    @Singular("addOrderItemBilling")
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     @Exclude
+    @Singular("addPaymentApplication")
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     @Exclude
-    List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>();
+    @Singular("addShipmentItemBilling")
+    List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>(); 
+    @Exclude
+    @Singular("addTenant")
+    List<Tenant> relTenant= new ArrayList<>();
+
+    public Map<String, Supplier<List<?>>> suppliers(){
+        Map<String, Supplier<List<?>>> supplierMap=Maps.newHashMap();
+         
+        supplierMap.put(INVOICE, getter(this, InvoiceItem::getRelInvoice)); 
+        supplierMap.put(INVENTORY_ITEM, getter(this, InvoiceItem::getRelInventoryItem)); 
+        supplierMap.put(PRODUCT, getter(this, InvoiceItem::getRelProduct)); 
+        supplierMap.put(PRODUCT_FEATURE, getter(this, InvoiceItem::getRelProductFeature)); 
+        supplierMap.put(INVOICE_ITEM, getter(this, InvoiceItem::getRelInvoiceItem)); 
+        supplierMap.put(CHILDREN_INVOICE_ITEM, getter(this, InvoiceItem::getRelChildrenInvoiceItem)); 
+        supplierMap.put(OVERRIDE_GL_ACCOUNT, getter(this, InvoiceItem::getRelOverrideGlAccount)); 
+        supplierMap.put(TAX_AUTHORITY_PARTY, getter(this, InvoiceItem::getRelTaxAuthorityParty)); 
+        supplierMap.put(TAX_AUTHORITY_RATE_PRODUCT, getter(this, InvoiceItem::getRelTaxAuthorityRateProduct)); 
+        supplierMap.put(OVERRIDE_ORG_PARTY, getter(this, InvoiceItem::getRelOverrideOrgParty)); 
+        supplierMap.put(ORDER_ADJUSTMENT_BILLING, getter(this, InvoiceItem::getRelOrderAdjustmentBilling)); 
+        supplierMap.put(ORDER_ITEM_BILLING, getter(this, InvoiceItem::getRelOrderItemBilling)); 
+        supplierMap.put(PAYMENT_APPLICATION, getter(this, InvoiceItem::getRelPaymentApplication)); 
+        supplierMap.put(SHIPMENT_ITEM_BILLING, getter(this, InvoiceItem::getRelShipmentItemBilling)); 
+        supplierMap.put(TENANT, getter(this, InvoiceItem::getRelTenant));
+
+        return supplierMap;
+    };
 
     public InvoiceItemDelegator.Agent agent(IProc.ProcContext ctx,
                                              InvoiceItemDelegator delegator){
@@ -308,5 +359,6 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Se
     + ShipmentItemBilling (many, autoRelation: true, keymaps: invoiceId, invoiceItemSeqId)
     + TimeEntry (many, autoRelation: true, keymaps: invoiceId, invoiceItemSeqId)
     + WorkEffortBilling (many, autoRelation: true, keymaps: invoiceId, invoiceItemSeqId)
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
 */
 
