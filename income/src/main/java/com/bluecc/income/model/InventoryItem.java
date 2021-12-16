@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = InventoryItemData.class,
         symbol = EntityNames.InventoryItem)
-public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>, Serializable {
+public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
     @RId String inventoryItemId;

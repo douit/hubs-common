@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ShipmentData.class,
         symbol = EntityNames.Shipment)
-public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializable {
+public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
     @RId String shipmentId;

@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = FixedAssetData.class,
         symbol = EntityNames.FixedAsset)
-public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Serializable {
+public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
     @RId String fixedAssetId;

@@ -20,6 +20,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -130,6 +134,28 @@ public class Util {
 
     public static String prettyJson(Object o) {
         return GSON.toJson(o);
+    }
+
+    public static String toString(Object o){
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        Field[] fields = o.getClass().getDeclaredFields();
+        StringBuilder res = new StringBuilder();
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                MethodHandle handle = lookup.unreflectGetter(field);
+                if(!Modifier.isStatic(field.getModifiers())) {
+                    Object val=handle.invoke(o);
+                    if(!(val instanceof List)) {
+                        res.append(val != null ? field.getName()
+                                + "=" + (val.toString()) + "; " : "");
+                    }
+                }
+            } catch (Throwable ex) {
+                throw new RuntimeException(ex.getMessage(), ex);
+            }
+        }
+        return res.toString();
     }
 
     public static InputStream dataSource(String src) throws IOException {

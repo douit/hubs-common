@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = WorkEffortData.class,
         symbol = EntityNames.WorkEffort)
-public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, Serializable, WithSchedule, WithDescription {
+public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, Serializable, WithSuppliers, WithSchedule, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String workEffortId;

@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = PartyGroupData.class,
         symbol = EntityNames.PartyGroup)
-public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Serializable {
+public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
     @RId String partyId;

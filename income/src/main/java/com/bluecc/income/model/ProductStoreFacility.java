@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductStoreFacilityData.class,
         symbol = EntityNames.ProductStoreFacility)
-public class ProductStoreFacility implements IEventModel<ProductStoreFacilityFlatData.Builder>, Serializable, WithPeriod {
+public class ProductStoreFacility implements IEventModel<ProductStoreFacilityFlatData.Builder>, Serializable, WithSuppliers, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productStoreId;

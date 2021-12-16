@@ -1,5 +1,7 @@
 package com.bluecc.income.model;
 
+import com.bluecc.hubs.fund.Util;
+import com.bluecc.hubs.fund.model.WithSuppliers;
 import com.bluecc.income.dao.PartyDelegator;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
@@ -16,6 +18,9 @@ import java.util.function.Supplier;
 import static com.bluecc.hubs.fund.EntityMeta.RelationMeta.getRelVarNameByRelation;
 import static com.bluecc.hubs.fund.FnUtil.getter;
 import static com.bluecc.hubs.fund.FnUtil.setter;
+import static com.bluecc.hubs.fund.Util.pretty;
+import static com.bluecc.hubs.fund.Util.prettyJson;
+import static com.bluecc.income.cli.Printers.printChildren;
 import static com.bluecc.income.dao.PartyDelegator.PARTY_CONTACT_MECH;
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,17 +51,16 @@ public class PersonTest {
         Consumer<Double> setWeight = setter(person, (a, w) -> a.weight = w);
         setWeight.accept(90.9);
 
-        Map<String, Supplier<List<?>>> suppliers= ImmutableMap.of(
-                PARTY_CONTACT_MECH, getter(person, Person::getRelPartyContactMech)
-        );
-        suppliers.forEach((k, v)-> {
-            System.out.println(k+": "+v.get());
-        });
+        // Map<String, Supplier<List<?>>> suppliers= ImmutableMap.of(
+        //         PARTY_CONTACT_MECH, getter(person, Person::getRelPartyContactMech)
+        // );
+        // suppliers.forEach((k, v)-> {
+        //     System.out.println(k+": "+v.get());
+        // });
 
-        person.suppliers().forEach((k, v)-> {
-            System.out.println(k+": "+v.get());
-        });
+        printChildren(person, "\t");
 
     }
+
 
 }

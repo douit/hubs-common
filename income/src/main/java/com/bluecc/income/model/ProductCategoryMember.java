@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductCategoryMemberData.class,
         symbol = EntityNames.ProductCategoryMember)
-public class ProductCategoryMember implements IEventModel<ProductCategoryMemberFlatData.Builder>, Serializable, WithPeriod {
+public class ProductCategoryMember implements IEventModel<ProductCategoryMemberFlatData.Builder>, Serializable, WithSuppliers, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productCategoryId;

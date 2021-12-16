@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = PaymentData.class,
         symbol = EntityNames.Payment)
-public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializable {
+public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
     @RId String paymentId;

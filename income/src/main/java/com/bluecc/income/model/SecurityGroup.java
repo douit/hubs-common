@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = SecurityGroupData.class,
         symbol = EntityNames.SecurityGroup)
-public class SecurityGroup implements IEventModel<SecurityGroupFlatData.Builder>, Serializable, WithDescription {
+public class SecurityGroup implements IEventModel<SecurityGroupFlatData.Builder>, Serializable, WithSuppliers, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String groupId;

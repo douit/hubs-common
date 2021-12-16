@@ -24,7 +24,8 @@ public class CatalogsTest extends AbstractStoreProcTest {
         process(c -> {
             // Dao dao = c.getHandle().attach(// Dao.class);
             assertThat(catalogs.getProductsInCatalog(c, "HotelFac")
-                    .stream().peek(p -> System.out.println(p)))
+                    .stream()
+                    .peek(p -> System.out.println(p)))
                     .contains("RoomLarge", "RoomLux", "RoomStd");
         });
     }

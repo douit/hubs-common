@@ -9,6 +9,7 @@ import io.grpc.ServerInterceptors;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +31,34 @@ public class ServiceFacade {
     Tenants.TenantConf conf;
 
     // # Services
-
+    
+    @Inject Provider<ProdCatalogRpc> prodCatalogRpc;
+    @Inject Provider<ProductStoreRpc> productStoreRpc;
+    @Inject Provider<ProductStoreFacilityRpc> productStoreFacilityRpc;
+    @Inject Provider<ProductStoreCatalogRpc> productStoreCatalogRpc;
+    @Inject Provider<WebSiteRpc> webSiteRpc;
+    @Inject Provider<ProdCatalogCategoryRpc> prodCatalogCategoryRpc;
+    @Inject Provider<ProductCategoryRpc> productCategoryRpc;
+    @Inject Provider<ProductCategoryRollupRpc> productCategoryRollupRpc;
+    @Inject Provider<ProductCategoryMemberRpc> productCategoryMemberRpc;
+    @Inject Provider<ProductRpc> productRpc;
+    @Inject Provider<OrderHeaderRpc> orderHeaderRpc;
+    @Inject Provider<OrderItemRpc> orderItemRpc;
+    @Inject Provider<PaymentRpc> paymentRpc;
+    @Inject Provider<InvoiceRpc> invoiceRpc;
+    @Inject Provider<InvoiceItemRpc> invoiceItemRpc;
+    @Inject Provider<ShipmentRpc> shipmentRpc;
+    @Inject Provider<InventoryItemRpc> inventoryItemRpc;
+    @Inject Provider<PartyRpc> partyRpc;
+    @Inject Provider<PersonRpc> personRpc;
+    @Inject Provider<PartyGroupRpc> partyGroupRpc;
+    @Inject Provider<UserLoginRpc> userLoginRpc;
+    @Inject Provider<BillingAccountRpc> billingAccountRpc;
+    @Inject Provider<FinAccountRpc> finAccountRpc;
+    @Inject Provider<QuoteRpc> quoteRpc;
+    @Inject Provider<FixedAssetRpc> fixedAssetRpc;
+    @Inject Provider<SecurityGroupRpc> securityGroupRpc;
+    @Inject Provider<WorkEffortRpc> workEffortRpc;
     // # Services
 
     public void start() throws IOException {
@@ -41,8 +69,36 @@ public class ServiceFacade {
         server = ServerBuilder.forPort(port)
                 .addService(greeter)
                 .addService(ServerInterceptors.intercept(routines, interceptor))
+                .addService(ServerInterceptors.intercept(prodCatalogRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(productStoreRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(productStoreFacilityRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(productStoreCatalogRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(webSiteRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(prodCatalogCategoryRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(productCategoryRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(productCategoryRollupRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(productCategoryMemberRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(productRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(orderHeaderRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(orderItemRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(paymentRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(invoiceRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(invoiceItemRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(shipmentRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(inventoryItemRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(partyRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(personRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(partyGroupRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(userLoginRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(billingAccountRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(finAccountRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(quoteRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(fixedAssetRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(securityGroupRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(workEffortRpc.get(), interceptor))
                 .build()
                 .start();
+
         log.info("Server started, listening on " + port);
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override

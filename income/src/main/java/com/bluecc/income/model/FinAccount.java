@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = FinAccountData.class,
         symbol = EntityNames.FinAccount)
-public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Serializable, WithPeriod {
+public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Serializable, WithSuppliers, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String finAccountId;

@@ -382,6 +382,9 @@ public class EntityMeta {
 
     public String getFacets(){
         List<String> facets=Lists.newArrayList("Serializable");
+        if(isHeadEntity()){
+            facets.add("WithSuppliers");
+        }
         if(getField("geoPointId").isPresent()){
             facets.add("WithLocation");
         }

@@ -34,6 +34,9 @@ public class GeneratorMain {
         System.out.println("* stereo types (livecases)");
         StereotypeAddons.startGen();  // livecases
 
+        System.out.println("* rpc");
+        RpcGenTool.startGen();
+
         // reimportSql("hubs");
     }
 

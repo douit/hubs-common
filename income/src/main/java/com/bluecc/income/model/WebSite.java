@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = WebSiteData.class,
         symbol = EntityNames.WebSite)
-public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializable {
+public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
     @RId String webSiteId;

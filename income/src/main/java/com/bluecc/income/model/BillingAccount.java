@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = BillingAccountData.class,
         symbol = EntityNames.BillingAccount)
-public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, Serializable, WithDescription, WithPeriod {
+public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, Serializable, WithSuppliers, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String billingAccountId;

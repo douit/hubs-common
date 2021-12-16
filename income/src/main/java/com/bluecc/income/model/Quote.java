@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = QuoteData.class,
         symbol = EntityNames.Quote)
-public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, WithDescription {
+public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, WithSuppliers, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String quoteId;

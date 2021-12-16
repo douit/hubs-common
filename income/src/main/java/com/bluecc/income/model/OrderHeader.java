@@ -41,7 +41,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = OrderHeaderData.class,
         symbol = EntityNames.OrderHeader)
-public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Serializable {
+public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
     @RId String orderId;
