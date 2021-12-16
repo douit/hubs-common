@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.OrderAdjustmentData;
 @REntity
 @MessageObject(value = OrderAdjustmentData.class,
         symbol = EntityNames.OrderAdjustment)
-public class OrderAdjustment implements IEventModel<OrderAdjustmentData.Builder>, Serializable {
+public class OrderAdjustment implements IEventModel<OrderAdjustmentData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String orderAdjustmentId;
@@ -230,3 +231,67 @@ public class OrderAdjustment implements IEventModel<OrderAdjustmentData.Builder>
 
     
 }
+
+
+/*
+-- keys: orderAdjustmentId
+
+-- fields --
+    
+    String orderAdjustmentId
+    String orderAdjustmentTypeId
+    String orderId
+    String orderItemSeqId
+    String shipGroupSeqId
+    String comments
+    String description
+    java.math.BigDecimal amount
+    java.math.BigDecimal recurringAmount
+    java.math.BigDecimal amountAlreadyIncluded
+    String productPromoId
+    String productPromoRuleId
+    String productPromoActionSeqId
+    String productFeatureId
+    String correspondingProductId
+    String taxAuthorityRateSeqId
+    String sourceReferenceId
+    java.math.BigDecimal sourcePercentage
+    String customerReferenceId
+    String primaryGeoId
+    String secondaryGeoId
+    java.math.BigDecimal exemptAmount
+    String taxAuthGeoId
+    String taxAuthPartyId
+    String overrideGlAccountId
+    Character includeInTax
+    Character includeInShipping
+    Character isManual
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+    String originalAdjustmentId
+
+-- relations --
+    
+    - OrderAdjustmentType (one, autoRelation: false, keymaps: orderAdjustmentTypeId)
+    + OrderAdjustmentTypeAttr (many, autoRelation: false, keymaps: orderAdjustmentTypeId)
+    - OrderHeader (one, autoRelation: false, keymaps: orderId)
+    - UserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - OrderItem (one-nofk, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - OrderItemShipGroup (one-nofk, autoRelation: false, keymaps: orderId, shipGroupSeqId)
+    - OrderItemShipGroupAssoc (one-nofk, autoRelation: false, keymaps: orderId, orderItemSeqId, shipGroupSeqId)
+    - ProductPromo (one, autoRelation: false, keymaps: productPromoId)
+    - ProductPromoRule (one-nofk, autoRelation: false, keymaps: productPromoId, productPromoRuleId)
+    - ProductPromoAction (one-nofk, autoRelation: false, keymaps: productPromoId, productPromoRuleId, productPromoActionSeqId)
+    - PrimaryGeo (one, autoRelation: false, keymaps: primaryGeoId -> geoId)
+    - SecondaryGeo (one, autoRelation: false, keymaps: secondaryGeoId -> geoId)
+    - TaxAuthority (one, autoRelation: false, keymaps: taxAuthGeoId, taxAuthPartyId)
+    - OverrideGlAccount (one, autoRelation: false, keymaps: overrideGlAccountId -> glAccountId)
+    - TaxAuthorityRateProduct (one, autoRelation: false, keymaps: taxAuthorityRateSeqId)
+    - OrderAdjustment (one-nofk, autoRelation: false, keymaps: originalAdjustmentId -> orderAdjustmentId)
+    + OrderAdjustmentAttribute (many, autoRelation: true, keymaps: orderAdjustmentId)
+    + OrderAdjustmentBilling (many, autoRelation: true, keymaps: orderAdjustmentId)
+    + ReturnAdjustment (many, autoRelation: true, keymaps: orderAdjustmentId)
+*/
+

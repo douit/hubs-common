@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -85,3 +86,20 @@ public class PartyIdentification implements IEventModel<PartyIdentificationData.
 
     
 }
+
+
+/*
+-- keys: partyId, partyIdentificationTypeId
+
+-- fields --
+    
+    String partyId
+    String partyIdentificationTypeId
+    String idValue
+
+-- relations --
+    
+    - PartyIdentificationType (one, autoRelation: false, keymaps: partyIdentificationTypeId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+*/
+

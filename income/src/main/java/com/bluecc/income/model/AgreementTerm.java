@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.AgreementTermData;
 @REntity
 @MessageObject(value = AgreementTermData.class,
         symbol = EntityNames.AgreementTerm)
-public class AgreementTerm implements IEventModel<AgreementTermData.Builder>, Serializable {
+public class AgreementTerm implements IEventModel<AgreementTermData.Builder>, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String agreementTermId;
@@ -130,3 +131,33 @@ public class AgreementTerm implements IEventModel<AgreementTermData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: agreementTermId
+
+-- fields --
+    
+    String agreementTermId
+    String termTypeId
+    String agreementId
+    String agreementItemSeqId
+    String invoiceItemTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    java.math.BigDecimal termValue
+    Long termDays
+    String textValue
+    Double minQuantity
+    Double maxQuantity
+    String description
+
+-- relations --
+    
+    - TermType (one, autoRelation: false, keymaps: termTypeId)
+    - Agreement (one, autoRelation: false, keymaps: agreementId)
+    - AgreementItem (one, autoRelation: false, keymaps: agreementId, agreementItemSeqId)
+    - InvoiceItemType (one, autoRelation: false, keymaps: invoiceItemTypeId)
+    + AgreementTermAttribute (many, autoRelation: true, keymaps: agreementTermId)
+*/
+

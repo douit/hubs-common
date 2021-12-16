@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductContentData;
 @REntity
 @MessageObject(value = ProductContentData.class,
         symbol = EntityNames.ProductContent)
-public class ProductContent implements IEventModel<ProductContentData.Builder>, Serializable {
+public class ProductContent implements IEventModel<ProductContentData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productId;
@@ -130,3 +131,32 @@ public class ProductContent implements IEventModel<ProductContentData.Builder>, 
 
     
 }
+
+
+/*
+-- keys: productId, contentId, productContentTypeId, fromDate
+
+-- fields --
+    
+    String productId
+    String contentId
+    String productContentTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    java.time.LocalDateTime purchaseFromDate
+    java.time.LocalDateTime purchaseThruDate
+    Long useCountLimit
+    Long useTime
+    String useTimeUomId
+    String useRoleTypeId
+    Long sequenceNum
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - Content (one, autoRelation: false, keymaps: contentId)
+    - ProductContentType (one, autoRelation: false, keymaps: productContentTypeId)
+    - UseRoleType (one, autoRelation: false, keymaps: useRoleTypeId -> roleTypeId)
+    - UseTimeUom (one, autoRelation: false, keymaps: useTimeUomId -> uomId)
+*/
+

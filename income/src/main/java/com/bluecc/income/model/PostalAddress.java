@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.PostalAddressData;
 @REntity
 @MessageObject(value = PostalAddressData.class,
         symbol = EntityNames.PostalAddress)
-public class PostalAddress implements IEventModel<PostalAddressData.Builder>, Serializable {
+public class PostalAddress implements IEventModel<PostalAddressData.Builder>, Serializable, WithLocation {
     private static final long serialVersionUID = 1L;
 
     @RId String contactMechId;
@@ -155,3 +156,57 @@ public class PostalAddress implements IEventModel<PostalAddressData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: contactMechId
+
+-- fields --
+    
+    String contactMechId
+    String toName
+    String attnName
+    String address1
+    String address2
+    Long houseNumber
+    String houseNumberExt
+    String directions
+    String city
+    String cityGeoId
+    String postalCode
+    String postalCodeExt
+    String countryGeoId
+    String stateProvinceGeoId
+    String countyGeoId
+    String municipalityGeoId
+    String postalCodeGeoId
+    String geoPointId
+
+-- relations --
+    
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - CountryGeo (one, autoRelation: false, keymaps: countryGeoId -> geoId)
+    - StateProvinceGeo (one, autoRelation: false, keymaps: stateProvinceGeoId -> geoId)
+    - CountyGeo (one, autoRelation: false, keymaps: countyGeoId -> geoId)
+    - MunicipalityGeo (one, autoRelation: false, keymaps: municipalityGeoId -> geoId)
+    - CityGeo (one, autoRelation: false, keymaps: cityGeoId -> geoId)
+    - PostalCodeGeo (one, autoRelation: false, keymaps: postalCodeGeoId -> geoId)
+    - GeoPoint (one, autoRelation: false, keymaps: geoPointId)
+    + BillingAccount (many, autoRelation: true, keymaps: contactMechId)
+    + CheckAccount (many, autoRelation: true, keymaps: contactMechId)
+    + CreditCard (many, autoRelation: true, keymaps: contactMechId)
+    + EftAccount (many, autoRelation: true, keymaps: contactMechId)
+    + GiftCard (many, autoRelation: true, keymaps: contactMechId)
+    + OrderItemShipGroup (many, autoRelation: true, keymaps: contactMechId)
+    + PartyContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + PartyContactMechPurpose (many, autoRelation: true, keymaps: contactMechId)
+    + PayPalPaymentMethod (many, autoRelation: true, keymaps: contactMechId)
+    + PostalAddressBoundary (many, autoRelation: true, keymaps: contactMechId)
+    + ReturnHeader (many, autoRelation: true, keymaps: contactMechId -> originContactMechId)
+    + OriginShipment (many, autoRelation: true, keymaps: contactMechId -> originContactMechId)
+    + DestinationShipment (many, autoRelation: true, keymaps: contactMechId -> destinationContactMechId)
+    + OriginShipmentRouteSegment (many, autoRelation: true, keymaps: contactMechId -> originContactMechId)
+    + DestShipmentRouteSegment (many, autoRelation: true, keymaps: contactMechId -> destContactMechId)
+    + ShoppingList (many, autoRelation: true, keymaps: contactMechId)
+*/
+

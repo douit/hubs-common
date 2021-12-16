@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -100,3 +101,25 @@ public class ShipmentPackageContent implements IEventModel<ShipmentPackageConten
 
     
 }
+
+
+/*
+-- keys: shipmentId, shipmentPackageSeqId, shipmentItemSeqId
+
+-- fields --
+    
+    String shipmentId
+    String shipmentPackageSeqId
+    String shipmentItemSeqId
+    java.math.BigDecimal quantity
+    String subProductId
+    java.math.BigDecimal subProductQuantity
+
+-- relations --
+    
+    - ShipmentPackage (one, autoRelation: false, keymaps: shipmentId, shipmentPackageSeqId)
+    - Shipment (one-nofk, autoRelation: false, keymaps: shipmentId)
+    - ShipmentItem (one, autoRelation: false, keymaps: shipmentId, shipmentItemSeqId)
+    - SubProduct (one, autoRelation: false, keymaps: subProductId -> productId)
+*/
+

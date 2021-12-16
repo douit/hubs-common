@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -145,3 +146,34 @@ public class ProductStoreFinActSetting implements IEventModel<ProductStoreFinAct
 
     
 }
+
+
+/*
+-- keys: productStoreId, finAccountTypeId
+
+-- fields --
+    
+    String productStoreId
+    String finAccountTypeId
+    Character requirePinCode
+    Character validateGCFinAcct
+    Long accountCodeLength
+    Long pinCodeLength
+    Long accountValidDays
+    Long authValidDays
+    String purchaseSurveyId
+    String purchSurveySendTo
+    String purchSurveyCopyMe
+    Character allowAuthToNegative
+    java.math.BigDecimal minBalance
+    java.math.BigDecimal replenishThreshold
+    String replenishMethodEnumId
+
+-- relations --
+    
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - FinAccountType (one, autoRelation: false, keymaps: finAccountTypeId)
+    - Survey (one, autoRelation: false, keymaps: purchaseSurveyId -> surveyId)
+    - ReplenishMethodEnumeration (one, autoRelation: false, keymaps: replenishMethodEnumId -> enumId)
+*/
+

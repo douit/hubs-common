@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductData.class,
         symbol = EntityNames.Product)
-public class Product implements IEventModel<ProductFlatData.Builder>, Serializable {
+public class Product implements IEventModel<ProductFlatData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String productId;
@@ -422,6 +423,8 @@ public class Product implements IEventModel<ProductFlatData.Builder>, Serializab
     @Exclude
     List<ProductCategory> relPrimaryProductCategory= new ArrayList<>(); 
     @Exclude
+    List<Facility> relFacility= new ArrayList<>(); 
+    @Exclude
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
     @Exclude
     List<UserLogin> relLastModifiedByUserLogin= new ArrayList<>(); 
@@ -500,9 +503,6 @@ public class Product implements IEventModel<ProductFlatData.Builder>, Serializab
         }
         if (productTypeId != null) {
             builder.setProductTypeId(productTypeId);
-        }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
         }
         if (introductionDate != null) {
             builder.setIntroductionDate(getTimestamp(introductionDate));
@@ -704,3 +704,168 @@ public class Product implements IEventModel<ProductFlatData.Builder>, Serializab
     }
 
 }
+
+
+/*
+-- keys: productId
+
+-- fields --
+    
+    String productId
+    String productTypeId
+    String primaryProductCategoryId
+    String facilityId
+    java.time.LocalDateTime introductionDate
+    java.time.LocalDateTime releaseDate
+    java.time.LocalDateTime supportDiscontinuationDate
+    java.time.LocalDateTime salesDiscontinuationDate
+    Character salesDiscWhenNotAvail
+    String internalName
+    String brandName
+    String comments
+    String productName
+    String description
+    String longDescription
+    String priceDetailText
+    String smallImageUrl
+    String mediumImageUrl
+    String largeImageUrl
+    String detailImageUrl
+    String originalImageUrl
+    String detailScreen
+    String inventoryMessage
+    String inventoryItemTypeId
+    Character requireInventory
+    String quantityUomId
+    java.math.BigDecimal quantityIncluded
+    Long piecesIncluded
+    Character requireAmount
+    java.math.BigDecimal fixedAmount
+    String amountUomTypeId
+    String weightUomId
+    java.math.BigDecimal shippingWeight
+    java.math.BigDecimal productWeight
+    String heightUomId
+    java.math.BigDecimal productHeight
+    java.math.BigDecimal shippingHeight
+    String widthUomId
+    java.math.BigDecimal productWidth
+    java.math.BigDecimal shippingWidth
+    String depthUomId
+    java.math.BigDecimal productDepth
+    java.math.BigDecimal shippingDepth
+    String diameterUomId
+    java.math.BigDecimal productDiameter
+    java.math.BigDecimal productRating
+    String ratingTypeEnum
+    Character returnable
+    Character taxable
+    Character chargeShipping
+    Character autoCreateKeywords
+    Character includeInPromotions
+    Character isVirtual
+    Character isVariant
+    String virtualVariantMethodEnum
+    String originGeoId
+    String requirementMethodEnumId
+    Long billOfMaterialLevel
+    java.math.BigDecimal reservMaxPersons
+    java.math.BigDecimal reserv2ndPPPerc
+    java.math.BigDecimal reservNthPPPerc
+    String configId
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+    Character inShippingBox
+    String defaultShipmentBoxTypeId
+    String lotIdFilledIn
+    Character orderDecimalQuantity
+
+-- relations --
+    
+    - ProductType (one, autoRelation: false, keymaps: productTypeId)
+    + ProductTypeAttr (many, autoRelation: false, keymaps: productTypeId)
+    - PrimaryProductCategory (one, autoRelation: false, keymaps: primaryProductCategoryId -> productCategoryId)
+    - Facility (one, autoRelation: false, keymaps: facilityId)
+    - QuantityUom (one, autoRelation: false, keymaps: quantityUomId -> uomId)
+    - AmountUomType (one, autoRelation: false, keymaps: amountUomTypeId -> uomTypeId)
+    - WeightUom (one, autoRelation: false, keymaps: weightUomId -> uomId)
+    - HeightUom (one, autoRelation: false, keymaps: heightUomId -> uomId)
+    - WidthUom (one, autoRelation: false, keymaps: widthUomId -> uomId)
+    - DepthUom (one, autoRelation: false, keymaps: depthUomId -> uomId)
+    - DiameterUom (one, autoRelation: false, keymaps: diameterUomId -> uomId)
+    - VirtualVariantMethodEnumeration (one, autoRelation: false, keymaps: virtualVariantMethodEnum -> enumId)
+    - RatingEnumeration (one, autoRelation: false, keymaps: ratingTypeEnum -> enumId)
+    - RequirementMethodEnumeration (one, autoRelation: false, keymaps: requirementMethodEnumId -> enumId)
+    - OriginGeo (one, autoRelation: false, keymaps: originGeoId -> geoId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - LastModifiedByUserLogin (one, autoRelation: false, keymaps: lastModifiedByUserLogin -> userLoginId)
+    + ProductFeatureAndAppl (many, autoRelation: false, keymaps: productId)
+    - DefaultShipmentBoxType (one, autoRelation: false, keymaps: defaultShipmentBoxTypeId -> shipmentBoxTypeId)
+    - InventoryItemType (one, autoRelation: false, keymaps: inventoryItemTypeId)
+    + Agreement (many, autoRelation: true, keymaps: productId)
+    + AgreementProductAppl (many, autoRelation: true, keymaps: productId)
+    + CartAbandonedLine (many, autoRelation: true, keymaps: productId)
+    + CommunicationEventProduct (many, autoRelation: true, keymaps: productId)
+    + CostComponent (many, autoRelation: true, keymaps: productId)
+    + CustRequestItem (many, autoRelation: true, keymaps: productId)
+    + InstanceOfFixedAsset (many, autoRelation: true, keymaps: productId -> instanceOfProductId)
+    + FixedAssetProduct (many, autoRelation: true, keymaps: productId)
+    + GoodIdentification (many, autoRelation: true, keymaps: productId)
+    + InventoryItem (many, autoRelation: true, keymaps: productId)
+    + InventoryItemTempRes (many, autoRelation: true, keymaps: productId)
+    + InvoiceItem (many, autoRelation: true, keymaps: productId)
+    + MrpEvent (many, autoRelation: true, keymaps: productId)
+    + OrderItem (many, autoRelation: true, keymaps: productId)
+    + OrderSummaryEntry (many, autoRelation: true, keymaps: productId)
+    + PartyNeed (many, autoRelation: true, keymaps: productId)
+    + MainProductAssoc (many, autoRelation: true, keymaps: productId)
+    + AssocProductAssoc (many, autoRelation: true, keymaps: productId -> productIdTo)
+    + ProductAttribute (many, autoRelation: true, keymaps: productId)
+    + ProductAverageCost (many, autoRelation: true, keymaps: productId)
+    - ProductCalculatedInfo (one-nofk, autoRelation: true, keymaps: productId)
+    + ProductCategoryMember (many, autoRelation: true, keymaps: productId)
+    + ProductProductConfig (many, autoRelation: true, keymaps: productId)
+    + ProductProductConfigProduct (many, autoRelation: true, keymaps: productId)
+    + ProductProductConfigStats (many, autoRelation: true, keymaps: productId)
+    + ProductContent (many, autoRelation: true, keymaps: productId)
+    + ProductCostComponentCalc (many, autoRelation: true, keymaps: productId)
+    + ProductFacility (many, autoRelation: true, keymaps: productId)
+    + ProductFacilityAssoc (many, autoRelation: true, keymaps: productId)
+    + ProductFacilityLocation (many, autoRelation: true, keymaps: productId)
+    + ProductFeatureAppl (many, autoRelation: true, keymaps: productId)
+    + ProductFeatureApplAttr (many, autoRelation: true, keymaps: productId)
+    + ProductGeo (many, autoRelation: true, keymaps: productId)
+    + ProductGlAccount (many, autoRelation: true, keymaps: productId)
+    + ProductGroupOrder (many, autoRelation: true, keymaps: productId)
+    + ProductKeyword (many, autoRelation: true, keymaps: productId)
+    + ProductMaint (many, autoRelation: true, keymaps: productId)
+    + ProductManufacturingRule (many, autoRelation: true, keymaps: productId)
+    + ProductForProductManufacturingRule (many, autoRelation: true, keymaps: productId -> productIdFor)
+    + ProductInProductManufacturingRule (many, autoRelation: true, keymaps: productId -> productIdIn)
+    + ProductSubstProductManufacturingRule (many, autoRelation: true, keymaps: productId -> productIdInSubst)
+    + ProductMeter (many, autoRelation: true, keymaps: productId)
+    + ProductOrderItem (many, autoRelation: true, keymaps: productId)
+    + ProductPaymentMethodType (many, autoRelation: true, keymaps: productId)
+    + ProductPrice (many, autoRelation: true, keymaps: productId)
+    + ProductPromoProduct (many, autoRelation: true, keymaps: productId)
+    + ProductReview (many, autoRelation: true, keymaps: productId)
+    + ProductRole (many, autoRelation: true, keymaps: productId)
+    + ProductStoreSurveyAppl (many, autoRelation: true, keymaps: productId)
+    + ProductSubscriptionResource (many, autoRelation: true, keymaps: productId)
+    + QuoteItem (many, autoRelation: true, keymaps: productId)
+    + ReorderGuideline (many, autoRelation: true, keymaps: productId)
+    + Requirement (many, autoRelation: true, keymaps: productId)
+    + ReturnItem (many, autoRelation: true, keymaps: productId)
+    + SalesForecastDetail (many, autoRelation: true, keymaps: productId)
+    + ShipmentItem (many, autoRelation: true, keymaps: productId)
+    + SubShipmentPackageContent (many, autoRelation: true, keymaps: productId -> subProductId)
+    + ShipmentReceipt (many, autoRelation: true, keymaps: productId)
+    + ShoppingListItem (many, autoRelation: true, keymaps: productId)
+    + Subscription (many, autoRelation: true, keymaps: productId)
+    + SupplierProduct (many, autoRelation: true, keymaps: productId)
+    + VendorProduct (many, autoRelation: true, keymaps: productId)
+    + WorkEffortGoodStandard (many, autoRelation: true, keymaps: productId)
+*/
+

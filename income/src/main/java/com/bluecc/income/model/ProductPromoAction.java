@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -130,3 +131,37 @@ public class ProductPromoAction implements IEventModel<ProductPromoActionData.Bu
 
     
 }
+
+
+/*
+-- keys: productPromoId, productPromoRuleId, productPromoActionSeqId
+
+-- fields --
+    
+    String productPromoId
+    String productPromoRuleId
+    String productPromoActionSeqId
+    String productPromoActionEnumId
+    String customMethodId
+    String orderAdjustmentTypeId
+    String serviceName
+    java.math.BigDecimal quantity
+    java.math.BigDecimal amount
+    String productId
+    String partyId
+    Character useCartQuantity
+
+-- relations --
+    
+    - ActionEnumeration (one, autoRelation: false, keymaps: productPromoActionEnumId -> enumId)
+    - CustomMethod (one, autoRelation: false, keymaps: customMethodId)
+    - ProductPromo (one, autoRelation: false, keymaps: productPromoId)
+    - ProductPromoRule (one, autoRelation: false, keymaps: productPromoId, productPromoRuleId)
+    - OrderAdjustmentType (one, autoRelation: false, keymaps: orderAdjustmentTypeId)
+    + ProductPromoCategory (many, autoRelation: false, keymaps: productPromoId, productPromoRuleId, productPromoActionSeqId)
+    + ProductPromoProduct (many, autoRelation: false, keymaps: productPromoId, productPromoRuleId, productPromoActionSeqId)
+    + OrderAdjustment (many, autoRelation: true, keymaps: productPromoId, productPromoRuleId, productPromoActionSeqId)
+    + QuoteAdjustment (many, autoRelation: true, keymaps: productPromoId, productPromoRuleId, productPromoActionSeqId)
+    + ReturnAdjustment (many, autoRelation: true, keymaps: productPromoId, productPromoRuleId, productPromoActionSeqId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ShipmentMethodTypeData;
 @REntity
 @MessageObject(value = ShipmentMethodTypeData.class,
         symbol = EntityNames.ShipmentMethodType)
-public class ShipmentMethodType implements IEventModel<ShipmentMethodTypeData.Builder>, Serializable {
+public class ShipmentMethodType implements IEventModel<ShipmentMethodTypeData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String shipmentMethodTypeId;
@@ -80,3 +81,26 @@ public class ShipmentMethodType implements IEventModel<ShipmentMethodTypeData.Bu
 
     
 }
+
+
+/*
+-- keys: shipmentMethodTypeId
+
+-- fields --
+    
+    String shipmentMethodTypeId
+    String description
+    Long sequenceNum
+
+-- relations --
+    
+    + CarrierShipmentMethod (many, autoRelation: true, keymaps: shipmentMethodTypeId)
+    + EbayShippingMethod (many, autoRelation: true, keymaps: shipmentMethodTypeId)
+    + FacilityCarrierShipment (many, autoRelation: true, keymaps: shipmentMethodTypeId)
+    + OrderItemShipGroup (many, autoRelation: true, keymaps: shipmentMethodTypeId)
+    + Picklist (many, autoRelation: true, keymaps: shipmentMethodTypeId)
+    + ProductStoreShipmentMeth (many, autoRelation: true, keymaps: shipmentMethodTypeId)
+    + ProductStoreVendorShipment (many, autoRelation: true, keymaps: shipmentMethodTypeId)
+    + ShipmentRouteSegment (many, autoRelation: true, keymaps: shipmentMethodTypeId)
+*/
+

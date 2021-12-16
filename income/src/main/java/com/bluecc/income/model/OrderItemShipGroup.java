@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -170,3 +171,57 @@ public class OrderItemShipGroup implements IEventModel<OrderItemShipGroupData.Bu
 
     
 }
+
+
+/*
+-- keys: orderId, shipGroupSeqId
+
+-- fields --
+    
+    String orderId
+    String shipGroupSeqId
+    String shipmentMethodTypeId
+    String supplierPartyId
+    String supplierAgreementId
+    String vendorPartyId
+    String carrierPartyId
+    String carrierRoleTypeId
+    String facilityId
+    String contactMechId
+    String telecomContactMechId
+    String trackingNumber
+    String shippingInstructions
+    Character maySplit
+    String giftMessage
+    Character isGift
+    java.time.LocalDateTime shipAfterDate
+    java.time.LocalDateTime shipByDate
+    java.time.LocalDateTime estimatedShipDate
+    java.time.LocalDateTime estimatedDeliveryDate
+
+-- relations --
+    
+    - OrderHeader (one, autoRelation: false, keymaps: orderId)
+    - SupplierParty (one, autoRelation: false, keymaps: supplierPartyId -> partyId)
+    - SupplierAgreement (one, autoRelation: false, keymaps: supplierAgreementId -> agreementId)
+    - VendorParty (one, autoRelation: false, keymaps: vendorPartyId -> partyId)
+    - CarrierShipmentMethod (one, autoRelation: false, keymaps: shipmentMethodTypeId, carrierPartyId -> partyId, carrierRoleTypeId -> roleTypeId)
+    - CarrierParty (one, autoRelation: false, keymaps: carrierPartyId -> partyId)
+    - CarrierPartyRole (one, autoRelation: false, keymaps: carrierPartyId -> partyId, carrierRoleTypeId -> roleTypeId)
+    - Facility (one, autoRelation: false, keymaps: facilityId)
+    - ShipmentMethodType (one, autoRelation: false, keymaps: shipmentMethodTypeId)
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - PostalAddress (one, autoRelation: false, keymaps: contactMechId)
+    - TelecomContactMech (one, autoRelation: false, keymaps: telecomContactMechId -> contactMechId)
+    - TelecomTelecomNumber (one, autoRelation: false, keymaps: telecomContactMechId -> contactMechId)
+    + OrderAdjustment (many, autoRelation: true, keymaps: orderId, shipGroupSeqId)
+    + FromOrderItemAssoc (many, autoRelation: true, keymaps: orderId, shipGroupSeqId)
+    + ToOrderItemAssoc (many, autoRelation: true, keymaps: orderId -> toOrderId, shipGroupSeqId -> toShipGroupSeqId)
+    + OrderItemShipGroupAssoc (many, autoRelation: true, keymaps: orderId, shipGroupSeqId)
+    + OrderItemShipGrpInvRes (many, autoRelation: true, keymaps: orderId, shipGroupSeqId)
+    + OrderPaymentPreference (many, autoRelation: true, keymaps: orderId, shipGroupSeqId)
+    + PrimaryPicklistBin (many, autoRelation: true, keymaps: orderId -> primaryOrderId, shipGroupSeqId -> primaryShipGroupSeqId)
+    + PicklistItem (many, autoRelation: true, keymaps: orderId, shipGroupSeqId)
+    + PrimaryShipment (many, autoRelation: true, keymaps: orderId -> primaryOrderId, shipGroupSeqId -> primaryShipGroupSeqId)
+*/
+

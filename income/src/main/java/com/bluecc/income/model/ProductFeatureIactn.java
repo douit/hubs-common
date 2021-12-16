@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,22 @@ public class ProductFeatureIactn implements IEventModel<ProductFeatureIactnData.
 
     
 }
+
+
+/*
+-- keys: productFeatureId, productFeatureIdTo
+
+-- fields --
+    
+    String productFeatureId
+    String productFeatureIdTo
+    String productFeatureIactnTypeId
+    String productId
+
+-- relations --
+    
+    - ProductFeatureIactnType (one, autoRelation: false, keymaps: productFeatureIactnTypeId)
+    - MainProductFeature (one, autoRelation: false, keymaps: productFeatureId)
+    - AssocProductFeature (one, autoRelation: false, keymaps: productFeatureIdTo -> productFeatureId)
+*/
+

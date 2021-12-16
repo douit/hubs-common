@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SurveyQuestionApplData;
 @REntity
 @MessageObject(value = SurveyQuestionApplData.class,
         symbol = EntityNames.SurveyQuestionAppl)
-public class SurveyQuestionAppl implements IEventModel<SurveyQuestionApplData.Builder>, Serializable {
+public class SurveyQuestionAppl implements IEventModel<SurveyQuestionApplData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String surveyId;
@@ -130,3 +131,33 @@ public class SurveyQuestionAppl implements IEventModel<SurveyQuestionApplData.Bu
 
     
 }
+
+
+/*
+-- keys: surveyId, surveyQuestionId, fromDate
+
+-- fields --
+    
+    String surveyId
+    String surveyQuestionId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String surveyPageSeqId
+    String surveyMultiRespId
+    String surveyMultiRespColId
+    Character requiredField
+    Long sequenceNum
+    String externalFieldRef
+    String withSurveyQuestionId
+    String withSurveyOptionSeqId
+
+-- relations --
+    
+    - Survey (one, autoRelation: false, keymaps: surveyId)
+    - SurveyQuestion (one, autoRelation: false, keymaps: surveyQuestionId)
+    - WithSurveyQuestionOption (one, autoRelation: false, keymaps: withSurveyQuestionId -> surveyQuestionId, withSurveyOptionSeqId -> surveyOptionSeqId)
+    - SurveyPage (one-nofk, autoRelation: false, keymaps: surveyId, surveyPageSeqId)
+    - SurveyMultiResp (one-nofk, autoRelation: false, keymaps: surveyId, surveyMultiRespId)
+    - SurveyMultiRespColumn (one-nofk, autoRelation: false, keymaps: surveyId, surveyMultiRespId, surveyMultiRespColId)
+*/
+

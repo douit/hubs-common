@@ -77,6 +77,36 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                         return map;
                     });
         }
+         
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        default Map<String, ProductStoreFacility> chainFacility(ProtoMeta protoMeta,
+                                               Map<String, ProductStoreFacility> inMap,
+                                               boolean succInvoke) {
+            return chainFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        default Map<String, ProductStoreFacility> chainFacility(ProtoMeta protoMeta,
+                                               Map<String, ProductStoreFacility> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStoreFacility", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
+                                id -> rr.getRow(ProductStoreFacility.class));
+                        if (rr.getColumn("fa_facility_id", String.class) != null) {
+                            p.getRelFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
         
     }
 
@@ -90,6 +120,17 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, ProductStoreFacility>> facility(Dao dao, boolean succ) {
+        return e -> dao.chainFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, ProductStoreFacility>> facility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
     }
     
 
@@ -138,6 +179,17 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                     .peek(c -> persistObject.getRelProductStore().add(c))
                     .collect(Collectors.toList());
         }
+         
+        public List<Facility> getFacility(){
+            return getRelationValues(ctx, p1, "facility", Facility.class);
+        }
+
+        public List<Facility> mergeFacility(){
+            return getFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFacility().add(c))
+                    .collect(Collectors.toList());
+        }
         
 
     }
@@ -157,6 +209,8 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
 
          
     public static final String PRODUCT_STORE="product_store";
+         
+    public static final String FACILITY="facility";
     
 
     @Action
@@ -177,6 +231,14 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                                             ProductStore.class)
                                     .forEach(el -> pb.setProductStore(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set facility to head entity                        
+                        if(relationsDemand.contains("facility")) {
+                            getRelationValues(ctx, p1, "facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.setFacility(
+                                             el.toDataBuilder().build()));
                         }
                         
 

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.FixedAssetProductData;
 @REntity
 @MessageObject(value = FixedAssetProductData.class,
         symbol = EntityNames.FixedAssetProduct)
-public class FixedAssetProduct implements IEventModel<FixedAssetProductData.Builder>, Serializable {
+public class FixedAssetProduct implements IEventModel<FixedAssetProductData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String fixedAssetId;
@@ -115,3 +116,28 @@ public class FixedAssetProduct implements IEventModel<FixedAssetProductData.Buil
 
     
 }
+
+
+/*
+-- keys: fixedAssetId, productId, fixedAssetProductTypeId, fromDate
+
+-- fields --
+    
+    String fixedAssetId
+    String productId
+    String fixedAssetProductTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String comments
+    Long sequenceNum
+    java.math.BigDecimal quantity
+    String quantityUomId
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - FixedAsset (one, autoRelation: false, keymaps: fixedAssetId)
+    - FixedAssetProductType (one, autoRelation: false, keymaps: fixedAssetProductTypeId)
+    - Uom (one, autoRelation: false, keymaps: quantityUomId -> uomId)
+*/
+

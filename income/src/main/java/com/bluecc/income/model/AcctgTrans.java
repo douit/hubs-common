@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.AcctgTransData;
 @REntity
 @MessageObject(value = AcctgTransData.class,
         symbol = EntityNames.AcctgTrans)
-public class AcctgTrans implements IEventModel<AcctgTransData.Builder>, Serializable {
+public class AcctgTrans implements IEventModel<AcctgTransData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String acctgTransId;
@@ -205,3 +206,64 @@ public class AcctgTrans implements IEventModel<AcctgTransData.Builder>, Serializ
 
     
 }
+
+
+/*
+-- keys: acctgTransId
+
+-- fields --
+    
+    String acctgTransId
+    String acctgTransTypeId
+    String description
+    java.time.LocalDateTime transactionDate
+    Character isPosted
+    java.time.LocalDateTime postedDate
+    java.time.LocalDateTime scheduledPostingDate
+    String glJournalId
+    String glFiscalTypeId
+    String voucherRef
+    java.time.LocalDateTime voucherDate
+    String groupStatusId
+    String fixedAssetId
+    String inventoryItemId
+    String physicalInventoryId
+    String partyId
+    String roleTypeId
+    String invoiceId
+    String paymentId
+    String finAccountTransId
+    String shipmentId
+    String receiptId
+    String workEffortId
+    String theirAcctgTransId
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - AcctgTransType (one, autoRelation: false, keymaps: acctgTransTypeId)
+    - GlJournal (one, autoRelation: false, keymaps: glJournalId)
+    - GlFiscalType (one, autoRelation: false, keymaps: glFiscalTypeId)
+    - StatusItem (one, autoRelation: false, keymaps: groupStatusId -> statusId)
+    - FixedAsset (one, autoRelation: false, keymaps: fixedAssetId)
+    - PhysicalInventory (one, autoRelation: false, keymaps: physicalInventoryId)
+    - InventoryItem (one, autoRelation: false, keymaps: inventoryItemId)
+    - InventoryItemVariance (one, autoRelation: false, keymaps: inventoryItemId, physicalInventoryId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one-nofk, autoRelation: false, keymaps: partyId, roleTypeId)
+    - Invoice (one, autoRelation: false, keymaps: invoiceId)
+    - Payment (one, autoRelation: false, keymaps: paymentId)
+    - FinAccountTrans (one, autoRelation: false, keymaps: finAccountTransId)
+    - Shipment (one, autoRelation: false, keymaps: shipmentId)
+    - ShipmentReceipt (one, autoRelation: false, keymaps: receiptId)
+    - WorkEffort (one, autoRelation: false, keymaps: workEffortId)
+    + AcctgTransTypeAttr (many, autoRelation: false, keymaps: acctgTransTypeId)
+    + AcctgTransAttribute (many, autoRelation: true, keymaps: acctgTransId)
+    + AcctgTransEntry (many, autoRelation: true, keymaps: acctgTransId)
+    + GlReconciliationEntry (many, autoRelation: true, keymaps: acctgTransId)
+*/
+

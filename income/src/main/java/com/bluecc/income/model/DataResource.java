@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -160,3 +161,60 @@ public class DataResource implements IEventModel<DataResourceData.Builder>, Seri
 
     
 }
+
+
+/*
+-- keys: dataResourceId
+
+-- fields --
+    
+    String dataResourceId
+    String dataResourceTypeId
+    String dataTemplateTypeId
+    String dataCategoryId
+    String dataSourceId
+    String statusId
+    String dataResourceName
+    String localeString
+    String mimeTypeId
+    String characterSetId
+    String objectInfo
+    String surveyId
+    String surveyResponseId
+    String relatedDetailId
+    Character isPublic
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - DataResourceType (one, autoRelation: false, keymaps: dataResourceTypeId)
+    - DataTemplateType (one, autoRelation: false, keymaps: dataTemplateTypeId)
+    - DataCategory (one, autoRelation: false, keymaps: dataCategoryId)
+    - DataSource (one, autoRelation: false, keymaps: dataSourceId)
+    - MimeType (one-nofk, autoRelation: false, keymaps: mimeTypeId)
+    - CharacterSet (one, autoRelation: false, keymaps: characterSetId)
+    + DataResourceTypeAttr (many, autoRelation: false, keymaps: dataResourceTypeId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - LastModifiedByUserLogin (one, autoRelation: false, keymaps: lastModifiedByUserLogin -> userLoginId)
+    - Survey (one, autoRelation: false, keymaps: surveyId)
+    - SurveyResponse (one, autoRelation: false, keymaps: surveyResponseId)
+    - AudioDataResource (one-nofk, autoRelation: true, keymaps: dataResourceId)
+    + Content (many, autoRelation: true, keymaps: dataResourceId)
+    + TemplateContent (many, autoRelation: true, keymaps: dataResourceId -> templateDataResourceId)
+    + OldContentRevisionItem (many, autoRelation: true, keymaps: dataResourceId -> oldDataResourceId)
+    + NewContentRevisionItem (many, autoRelation: true, keymaps: dataResourceId -> newDataResourceId)
+    + DataResourceAttribute (many, autoRelation: true, keymaps: dataResourceId)
+    + DataResourceMetaData (many, autoRelation: true, keymaps: dataResourceId)
+    + DataResourcePurpose (many, autoRelation: true, keymaps: dataResourceId)
+    + DataResourceRole (many, autoRelation: true, keymaps: dataResourceId)
+    - ElectronicText (one-nofk, autoRelation: true, keymaps: dataResourceId)
+    - ImageDataResource (one-nofk, autoRelation: true, keymaps: dataResourceId)
+    - OtherDataResource (one-nofk, autoRelation: true, keymaps: dataResourceId)
+    + ProductFeatureDataResource (many, autoRelation: true, keymaps: dataResourceId)
+    - VideoDataResource (one-nofk, autoRelation: true, keymaps: dataResourceId)
+*/
+

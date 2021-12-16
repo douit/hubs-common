@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -110,3 +111,31 @@ public class PaymentApplication implements IEventModel<PaymentApplicationData.Bu
 
     
 }
+
+
+/*
+-- keys: paymentApplicationId
+
+-- fields --
+    
+    String paymentApplicationId
+    String paymentId
+    String invoiceId
+    String invoiceItemSeqId
+    String billingAccountId
+    String overrideGlAccountId
+    String toPaymentId
+    String taxAuthGeoId
+    java.math.BigDecimal amountApplied
+
+-- relations --
+    
+    - Payment (one, autoRelation: false, keymaps: paymentId)
+    - Invoice (one, autoRelation: false, keymaps: invoiceId)
+    - InvoiceItem (one-nofk, autoRelation: false, keymaps: invoiceId, invoiceItemSeqId)
+    - BillingAccount (one, autoRelation: false, keymaps: billingAccountId)
+    - ToPayment (one, autoRelation: false, keymaps: toPaymentId -> paymentId)
+    - Geo (one, autoRelation: false, keymaps: taxAuthGeoId -> geoId)
+    - GlAccount (one, autoRelation: false, keymaps: overrideGlAccountId -> glAccountId)
+*/
+

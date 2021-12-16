@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SystemPropertyData;
 @REntity
 @MessageObject(value = SystemPropertyData.class,
         symbol = EntityNames.SystemProperty)
-public class SystemProperty implements IEventModel<SystemPropertyData.Builder>, Serializable {
+public class SystemProperty implements IEventModel<SystemPropertyData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RIndex String systemResourceId;
@@ -90,3 +91,19 @@ public class SystemProperty implements IEventModel<SystemPropertyData.Builder>, 
 
     
 }
+
+
+/*
+-- keys: systemResourceId, systemPropertyId
+
+-- fields --
+    
+    String systemResourceId
+    String systemPropertyId
+    String systemPropertyValue
+    String description
+
+-- relations --
+    
+*/
+

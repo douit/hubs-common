@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ContentData;
 @REntity
 @MessageObject(value = ContentData.class,
         symbol = EntityNames.Content)
-public class Content implements IEventModel<ContentData.Builder>, Serializable {
+public class Content implements IEventModel<ContentData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String contentId;
@@ -180,3 +181,86 @@ public class Content implements IEventModel<ContentData.Builder>, Serializable {
 
     
 }
+
+
+/*
+-- keys: contentId
+
+-- fields --
+    
+    String contentId
+    String contentTypeId
+    String ownerContentId
+    String decoratorContentId
+    String instanceOfContentId
+    String dataResourceId
+    String templateDataResourceId
+    String dataSourceId
+    String statusId
+    String privilegeEnumId
+    String serviceName
+    String customMethodId
+    String contentName
+    String description
+    String localeString
+    String mimeTypeId
+    String characterSetId
+    Long childLeafCount
+    Long childBranchCount
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - ContentType (one, autoRelation: false, keymaps: contentTypeId)
+    - DataResource (one, autoRelation: false, keymaps: dataResourceId)
+    - TemplateDataResource (one, autoRelation: false, keymaps: templateDataResourceId -> dataResourceId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - PrivilegeEnumeration (one, autoRelation: false, keymaps: privilegeEnumId -> enumId)
+    - CustomMethod (one, autoRelation: false, keymaps: customMethodId)
+    - MimeType (one-nofk, autoRelation: false, keymaps: mimeTypeId)
+    - CharacterSet (one, autoRelation: false, keymaps: characterSetId)
+    + ContentTypeAttr (many, autoRelation: false, keymaps: contentTypeId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - LastModifiedByUserLogin (one, autoRelation: false, keymaps: lastModifiedByUserLogin -> userLoginId)
+    + ProductFeatureDataResource (many, autoRelation: false, keymaps: dataResourceId)
+    - DataSource (one, autoRelation: false, keymaps: dataSourceId)
+    - DecoratorContent (one, autoRelation: false, keymaps: decoratorContentId -> contentId)
+    - OwnerContent (one, autoRelation: false, keymaps: ownerContentId -> contentId)
+    - InstanceOfContent (one, autoRelation: false, keymaps: instanceOfContentId -> contentId)
+    + ContentAssocDataResourceViewFrom (many, autoRelation: false, keymaps: contentId -> contentIdStart)
+    + ContentAssocDataResourceViewTo (many, autoRelation: false, keymaps: contentId -> contentIdStart)
+    + AgreementContent (many, autoRelation: true, keymaps: contentId)
+    + FromCommEventContentAssoc (many, autoRelation: true, keymaps: contentId)
+    + ContentApproval (many, autoRelation: true, keymaps: contentId)
+    + FromContentAssoc (many, autoRelation: true, keymaps: contentId)
+    + ToContentAssoc (many, autoRelation: true, keymaps: contentId -> contentIdTo)
+    + ContentAttribute (many, autoRelation: true, keymaps: contentId)
+    + ContentKeyword (many, autoRelation: true, keymaps: contentId)
+    + ContentMetaData (many, autoRelation: true, keymaps: contentId)
+    + ContentPurpose (many, autoRelation: true, keymaps: contentId)
+    + ContentRevision (many, autoRelation: true, keymaps: contentId)
+    + ContentRole (many, autoRelation: true, keymaps: contentId)
+    + CustRequestContent (many, autoRelation: true, keymaps: contentId)
+    + FacilityContent (many, autoRelation: true, keymaps: contentId)
+    + InvoiceContent (many, autoRelation: true, keymaps: contentId)
+    + OrderContent (many, autoRelation: true, keymaps: contentId)
+    + PartyContent (many, autoRelation: true, keymaps: contentId)
+    + PartyResume (many, autoRelation: true, keymaps: contentId)
+    + PaymentContent (many, autoRelation: true, keymaps: contentId)
+    + PortalPage (many, autoRelation: true, keymaps: contentId -> helpContentId)
+    + ProdConfItemContent (many, autoRelation: true, keymaps: contentId)
+    + ProductCategoryContent (many, autoRelation: true, keymaps: contentId)
+    + ProductContent (many, autoRelation: true, keymaps: contentId)
+    + ProductPromoContent (many, autoRelation: true, keymaps: contentId)
+    + SubscriptionResource (many, autoRelation: true, keymaps: contentId)
+    + SurveyResponseAnswer (many, autoRelation: true, keymaps: contentId)
+    + WebPage (many, autoRelation: true, keymaps: contentId)
+    + WebSiteContent (many, autoRelation: true, keymaps: contentId)
+    + WebSitePathAlias (many, autoRelation: true, keymaps: contentId)
+    - WebSitePublishPoint (one-nofk, autoRelation: true, keymaps: contentId)
+    + WorkEffortContent (many, autoRelation: true, keymaps: contentId)
+*/
+

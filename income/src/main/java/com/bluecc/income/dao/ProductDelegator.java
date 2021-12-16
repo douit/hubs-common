@@ -79,6 +79,36 @@ public class ProductDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        default Map<String, Product> chainFacility(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               boolean succInvoke) {
+            return chainFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        default Map<String, Product> chainFacility(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
+                                id -> rr.getRow(Product.class));
+                        if (rr.getColumn("fa_facility_id", String.class) != null) {
+                            p.getRelFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
         @RegisterBeanMapper(value = UserLogin.class, prefix = "cbul")
         default Map<String, Product> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
@@ -1082,6 +1112,17 @@ public class ProductDelegator extends AbstractProcs{
         return e -> dao.chainPrimaryProductCategory(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Product>> facility(Dao dao, boolean succ) {
+        return e -> dao.chainFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Product>> facility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Product>> createdByUserLogin(Dao dao, boolean succ) {
         return e -> dao.chainCreatedByUserLogin(protoMeta, e, succ);
     }
@@ -1492,6 +1533,17 @@ public class ProductDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<Facility> getFacility(){
+            return getRelationValues(ctx, p1, "facility", Facility.class);
+        }
+
+        public List<Facility> mergeFacility(){
+            return getFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<UserLogin> getCreatedByUserLogin(){
             return getRelationValues(ctx, p1, "created_by_user_login", UserLogin.class);
         }
@@ -1874,6 +1926,8 @@ public class ProductDelegator extends AbstractProcs{
          
     public static final String PRIMARY_PRODUCT_CATEGORY="primary_product_category";
          
+    public static final String FACILITY="facility";
+         
     public static final String CREATED_BY_USER_LOGIN="created_by_user_login";
          
     public static final String LAST_MODIFIED_BY_USER_LOGIN="last_modified_by_user_login";
@@ -1959,6 +2013,14 @@ public class ProductDelegator extends AbstractProcs{
                                             ProductCategory.class)
                                     .forEach(el -> pb.setPrimaryProductCategory(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set facility to head entity                        
+                        if(relationsDemand.contains("facility")) {
+                            getRelationValues(ctx, p1, "facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.setFacility(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set created_by_user_login to head entity                        

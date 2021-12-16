@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = BillingAccountData.class,
         symbol = EntityNames.BillingAccount)
-public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, Serializable {
+public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String billingAccountId;
@@ -161,3 +162,33 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
     }
 
 }
+
+
+/*
+-- keys: billingAccountId
+
+-- fields --
+    
+    String billingAccountId
+    java.math.BigDecimal accountLimit
+    String accountCurrencyUomId
+    String contactMechId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String description
+    String externalAccountId
+
+-- relations --
+    
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - Uom (one, autoRelation: false, keymaps: accountCurrencyUomId -> uomId)
+    - PostalAddress (one, autoRelation: false, keymaps: contactMechId)
+    + BillingAccountRole (many, autoRelation: true, keymaps: billingAccountId)
+    + BillingAccountTerm (many, autoRelation: true, keymaps: billingAccountId)
+    + Invoice (many, autoRelation: true, keymaps: billingAccountId)
+    + OrderHeader (many, autoRelation: true, keymaps: billingAccountId)
+    + PaymentApplication (many, autoRelation: true, keymaps: billingAccountId)
+    + ReturnHeader (many, autoRelation: true, keymaps: billingAccountId)
+    + ReturnItemResponse (many, autoRelation: true, keymaps: billingAccountId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -175,3 +176,48 @@ public class QuoteItem implements IEventModel<QuoteItemData.Builder>, Serializab
 
     
 }
+
+
+/*
+-- keys: quoteId, quoteItemSeqId
+
+-- fields --
+    
+    String quoteId
+    String quoteItemSeqId
+    String productId
+    String productFeatureId
+    String deliverableTypeId
+    String skillTypeId
+    String uomId
+    String workEffortId
+    String custRequestId
+    String custRequestItemSeqId
+    java.math.BigDecimal quantity
+    java.math.BigDecimal selectedAmount
+    java.math.BigDecimal quoteUnitPrice
+    java.time.LocalDateTime reservStart
+    java.math.BigDecimal reservLength
+    java.math.BigDecimal reservPersons
+    String configId
+    java.time.LocalDateTime estimatedDeliveryDate
+    String comments
+    Character isPromo
+    Long leadTimeDays
+
+-- relations --
+    
+    - Quote (one, autoRelation: false, keymaps: quoteId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    - ProductFeature (one, autoRelation: false, keymaps: productFeatureId)
+    - DeliverableType (one, autoRelation: false, keymaps: deliverableTypeId)
+    - SkillType (one, autoRelation: false, keymaps: skillTypeId)
+    - Uom (one, autoRelation: false, keymaps: uomId)
+    - WorkEffort (one, autoRelation: false, keymaps: workEffortId)
+    - CustRequest (one, autoRelation: false, keymaps: custRequestId)
+    - CustRequestItem (one, autoRelation: false, keymaps: custRequestId, custRequestItemSeqId)
+    + OrderItem (many, autoRelation: true, keymaps: quoteId, quoteItemSeqId)
+    + QuoteAdjustment (many, autoRelation: true, keymaps: quoteId, quoteItemSeqId)
+    + QuoteTerm (many, autoRelation: true, keymaps: quoteId, quoteItemSeqId)
+*/
+

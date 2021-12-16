@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -206,6 +207,8 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
     @Exclude
     List<Party> relOwnerParty= new ArrayList<>(); 
     @Exclude
+    List<Facility> relFacility= new ArrayList<>(); 
+    @Exclude
     List<ProductFacility> relProductFacility= new ArrayList<>(); 
     @Exclude
     List<FacilityLocation> relFacilityLocation= new ArrayList<>(); 
@@ -311,3 +314,73 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
     }
 
 }
+
+
+/*
+-- keys: inventoryItemId
+
+-- fields --
+    
+    String inventoryItemId
+    String inventoryItemTypeId
+    String productId
+    String partyId
+    String ownerPartyId
+    String statusId
+    java.time.LocalDateTime datetimeReceived
+    java.time.LocalDateTime datetimeManufactured
+    java.time.LocalDateTime expireDate
+    String facilityId
+    String containerId
+    String lotId
+    String uomId
+    String binNumber
+    String locationSeqId
+    String comments
+    java.math.BigDecimal quantityOnHandTotal
+    java.math.BigDecimal availableToPromiseTotal
+    java.math.BigDecimal accountingQuantityTotal
+    String serialNumber
+    String softIdentifier
+    String activationNumber
+    java.time.LocalDateTime activationValidThru
+    java.math.BigDecimal unitCost
+    String currencyUomId
+    String fixedAssetId
+
+-- relations --
+    
+    - InventoryItemType (one, autoRelation: false, keymaps: inventoryItemTypeId)
+    + InventoryItemTypeAttr (many, autoRelation: false, keymaps: inventoryItemTypeId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - OwnerParty (one, autoRelation: false, keymaps: ownerPartyId -> partyId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - Facility (one, autoRelation: false, keymaps: facilityId)
+    - Container (one, autoRelation: false, keymaps: containerId)
+    - Lot (one, autoRelation: false, keymaps: lotId)
+    - ProductFacility (one-nofk, autoRelation: false, keymaps: productId, facilityId)
+    - FacilityLocation (one-nofk, autoRelation: false, keymaps: facilityId, locationSeqId)
+    - ProductFacilityLocation (one-nofk, autoRelation: false, keymaps: productId, facilityId, locationSeqId)
+    - Uom (one, autoRelation: false, keymaps: uomId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - FixedAssetFixedAsset (one, autoRelation: false, keymaps: fixedAssetId)
+    + AcctgTrans (many, autoRelation: true, keymaps: inventoryItemId)
+    + AcctgTransEntry (many, autoRelation: true, keymaps: inventoryItemId)
+    + InventoryItemAttribute (many, autoRelation: true, keymaps: inventoryItemId)
+    + InventoryItemDetail (many, autoRelation: true, keymaps: inventoryItemId)
+    + InventoryItemLabelAppl (many, autoRelation: true, keymaps: inventoryItemId)
+    + InventoryItemStatus (many, autoRelation: true, keymaps: inventoryItemId)
+    + InventoryItemVariance (many, autoRelation: true, keymaps: inventoryItemId)
+    + InventoryTransfer (many, autoRelation: true, keymaps: inventoryItemId)
+    + InvoiceItem (many, autoRelation: true, keymaps: inventoryItemId)
+    + ItemIssuance (many, autoRelation: true, keymaps: inventoryItemId)
+    + FromOrderItem (many, autoRelation: true, keymaps: inventoryItemId -> fromInventoryItemId)
+    + OrderItemShipGrpInvRes (many, autoRelation: true, keymaps: inventoryItemId)
+    + PicklistItem (many, autoRelation: true, keymaps: inventoryItemId)
+    + ShipmentReceipt (many, autoRelation: true, keymaps: inventoryItemId)
+    + Subscription (many, autoRelation: true, keymaps: inventoryItemId)
+    + WorkEffortInventoryAssign (many, autoRelation: true, keymaps: inventoryItemId)
+    + WorkEffortInventoryProduced (many, autoRelation: true, keymaps: inventoryItemId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -224,6 +225,10 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
     @Exclude
     List<WorkEffort> relEstimatedArrivalWorkEffort= new ArrayList<>(); 
     @Exclude
+    List<Facility> relOriginFacility= new ArrayList<>(); 
+    @Exclude
+    List<Facility> relDestinationFacility= new ArrayList<>(); 
+    @Exclude
     List<ContactMech> relOriginContactMech= new ArrayList<>(); 
     @Exclude
     List<ContactMech> relDestContactMech= new ArrayList<>(); 
@@ -318,12 +323,6 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
         if (handlingInstructions != null) {
             builder.setHandlingInstructions(handlingInstructions);
         }
-        if (originFacilityId != null) {
-            builder.setOriginFacilityId(originFacilityId);
-        }
-        if (destinationFacilityId != null) {
-            builder.setDestinationFacilityId(destinationFacilityId);
-        }
         if (additionalShippingCharge != null) {
             builder.setAdditionalShippingCharge(getCurrency(additionalShippingCharge));
         }
@@ -353,3 +352,85 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializ
     }
 
 }
+
+
+/*
+-- keys: shipmentId
+
+-- fields --
+    
+    String shipmentId
+    String shipmentTypeId
+    String statusId
+    String primaryOrderId
+    String primaryReturnId
+    String primaryShipGroupSeqId
+    String picklistBinId
+    java.time.LocalDateTime estimatedReadyDate
+    java.time.LocalDateTime estimatedShipDate
+    String estimatedShipWorkEffId
+    java.time.LocalDateTime estimatedArrivalDate
+    String estimatedArrivalWorkEffId
+    java.time.LocalDateTime latestCancelDate
+    java.math.BigDecimal estimatedShipCost
+    String currencyUomId
+    String handlingInstructions
+    String originFacilityId
+    String destinationFacilityId
+    String originContactMechId
+    String originTelecomNumberId
+    String destinationContactMechId
+    String destinationTelecomNumberId
+    String partyIdTo
+    String partyIdFrom
+    java.math.BigDecimal additionalShippingCharge
+    String addtlShippingChargeDesc
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - ShipmentType (one, autoRelation: false, keymaps: shipmentTypeId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - EstimatedShipWorkEffort (one, autoRelation: false, keymaps: estimatedShipWorkEffId -> workEffortId)
+    - EstimatedArrivalWorkEffort (one, autoRelation: false, keymaps: estimatedArrivalWorkEffId -> workEffortId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - OriginFacility (one, autoRelation: false, keymaps: originFacilityId -> facilityId)
+    - DestinationFacility (one, autoRelation: false, keymaps: destinationFacilityId -> facilityId)
+    - OriginContactMech (one-nofk, autoRelation: false, keymaps: originContactMechId -> contactMechId)
+    - DestContactMech (one-nofk, autoRelation: false, keymaps: destinationContactMechId -> contactMechId)
+    - OriginPostalAddress (one, autoRelation: false, keymaps: originContactMechId -> contactMechId)
+    - OriginTelecomNumber (one, autoRelation: false, keymaps: originTelecomNumberId -> contactMechId)
+    - DestinationPostalAddress (one, autoRelation: false, keymaps: destinationContactMechId -> contactMechId)
+    - DestinationTelecomNumber (one, autoRelation: false, keymaps: destinationTelecomNumberId -> contactMechId)
+    - PrimaryOrderHeader (one, autoRelation: false, keymaps: primaryOrderId -> orderId)
+    - PrimaryReturnHeader (one, autoRelation: false, keymaps: primaryReturnId -> returnId)
+    - PicklistBin (one, autoRelation: false, keymaps: picklistBinId)
+    - PrimaryOrderItemShipGroup (one-nofk, autoRelation: false, keymaps: primaryOrderId -> orderId, primaryShipGroupSeqId -> shipGroupSeqId)
+    + ShipmentTypeAttr (many, autoRelation: false, keymaps: shipmentTypeId)
+    - ToParty (one, autoRelation: false, keymaps: partyIdTo -> partyId)
+    - ToPerson (one-nofk, autoRelation: false, keymaps: partyIdTo -> partyId)
+    - ToPartyGroup (one-nofk, autoRelation: false, keymaps: partyIdTo -> partyId)
+    - FromParty (one, autoRelation: false, keymaps: partyIdFrom -> partyId)
+    - FromPerson (one-nofk, autoRelation: false, keymaps: partyIdFrom -> partyId)
+    - FromPartyGroup (one-nofk, autoRelation: false, keymaps: partyIdFrom -> partyId)
+    + ShipmentManifestView (many, autoRelation: false, keymaps: shipmentId)
+    + AcctgTrans (many, autoRelation: true, keymaps: shipmentId)
+    + ItemIssuance (many, autoRelation: true, keymaps: shipmentId)
+    + OrderShipment (many, autoRelation: true, keymaps: shipmentId)
+    + ReturnItemShipment (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentAttribute (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentContactMech (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentItem (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentItemBilling (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentItemFeature (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentPackage (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentPackageContent (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentPackageRouteSeg (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentReceipt (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentRouteSegment (many, autoRelation: true, keymaps: shipmentId)
+    + ShipmentStatus (many, autoRelation: true, keymaps: shipmentId)
+*/
+

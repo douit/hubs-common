@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.PartyRelationshipData;
 @REntity
 @MessageObject(value = PartyRelationshipData.class,
         symbol = EntityNames.PartyRelationship)
-public class PartyRelationship implements IEventModel<PartyRelationshipData.Builder>, Serializable {
+public class PartyRelationship implements IEventModel<PartyRelationshipData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String partyIdFrom;
@@ -140,3 +141,39 @@ public class PartyRelationship implements IEventModel<PartyRelationshipData.Buil
 
     
 }
+
+
+/*
+-- keys: partyIdFrom, partyIdTo, roleTypeIdFrom, roleTypeIdTo, fromDate
+
+-- fields --
+    
+    String partyIdFrom
+    String partyIdTo
+    String roleTypeIdFrom
+    String roleTypeIdTo
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String statusId
+    String relationshipName
+    String securityGroupId
+    String priorityTypeId
+    String partyRelationshipTypeId
+    String permissionsEnumId
+    String positionTitle
+    String comments
+
+-- relations --
+    
+    - FromParty (one-nofk, autoRelation: false, keymaps: partyIdFrom -> partyId)
+    - ToParty (one-nofk, autoRelation: false, keymaps: partyIdTo -> partyId)
+    - FromRoleType (one-nofk, autoRelation: false, keymaps: roleTypeIdFrom -> roleTypeId)
+    - ToRoleType (one-nofk, autoRelation: false, keymaps: roleTypeIdTo -> roleTypeId)
+    - FromPartyRole (one, autoRelation: false, keymaps: partyIdFrom -> partyId, roleTypeIdFrom -> roleTypeId)
+    - ToPartyRole (one, autoRelation: false, keymaps: partyIdTo -> partyId, roleTypeIdTo -> roleTypeId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - PriorityType (one, autoRelation: false, keymaps: priorityTypeId)
+    - PartyRelationshipType (one, autoRelation: false, keymaps: partyRelationshipTypeId)
+    - SecurityGroup (one, autoRelation: false, keymaps: securityGroupId -> groupId)
+*/
+

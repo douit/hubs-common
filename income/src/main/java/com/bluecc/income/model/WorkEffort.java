@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.WorkEffortData;
 @REntity
 @MessageObject(value = WorkEffortData.class,
         symbol = EntityNames.WorkEffort)
-public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializable {
+public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializable, WithSchedule, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String workEffortId;
@@ -325,3 +326,129 @@ public class WorkEffort implements IEventModel<WorkEffortData.Builder>, Serializ
 
     
 }
+
+
+/*
+-- keys: workEffortId
+
+-- fields --
+    
+    String workEffortId
+    String workEffortTypeId
+    String currentStatusId
+    java.time.LocalDateTime lastStatusUpdate
+    String workEffortPurposeTypeId
+    String workEffortParentId
+    String scopeEnumId
+    Long priority
+    Long percentComplete
+    String workEffortName
+    String showAsEnumId
+    Character sendNotificationEmail
+    String description
+    String locationDesc
+    java.time.LocalDateTime estimatedStartDate
+    java.time.LocalDateTime estimatedCompletionDate
+    java.time.LocalDateTime actualStartDate
+    java.time.LocalDateTime actualCompletionDate
+    Double estimatedMilliSeconds
+    Double estimatedSetupMillis
+    String estimateCalcMethod
+    Double actualMilliSeconds
+    Double actualSetupMillis
+    Double totalMilliSecondsAllowed
+    java.math.BigDecimal totalMoneyAllowed
+    String moneyUomId
+    String specialTerms
+    Long timeTransparency
+    String universalId
+    String sourceReferenceId
+    String fixedAssetId
+    String facilityId
+    String infoUrl
+    String recurrenceInfoId
+    String tempExprId
+    String runtimeDataId
+    String noteId
+    String serviceLoaderName
+    java.math.BigDecimal quantityToProduce
+    java.math.BigDecimal quantityProduced
+    java.math.BigDecimal quantityRejected
+    java.math.BigDecimal reservPersons
+    java.math.BigDecimal reserv2ndPPPerc
+    java.math.BigDecimal reservNthPPPerc
+    String accommodationMapId
+    String accommodationSpotId
+    Long revisionNumber
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+    Long sequenceNum
+
+-- relations --
+    
+    - WorkEffortType (one, autoRelation: false, keymaps: workEffortTypeId)
+    - WorkEffortPurposeType (one, autoRelation: false, keymaps: workEffortPurposeTypeId)
+    - ParentWorkEffort (one, autoRelation: false, keymaps: workEffortParentId -> workEffortId)
+    + WorkEffortTypeAttr (many, autoRelation: false, keymaps: workEffortTypeId)
+    - CurrentStatusItem (one, autoRelation: false, keymaps: currentStatusId -> statusId)
+    - ScopeEnumeration (one, autoRelation: false, keymaps: scopeEnumId -> enumId)
+    - FixedAsset (one, autoRelation: false, keymaps: fixedAssetId)
+    - Facility (one, autoRelation: false, keymaps: facilityId)
+    - MoneyUom (one, autoRelation: false, keymaps: moneyUomId -> uomId)
+    - RecurrenceInfo (one, autoRelation: false, keymaps: recurrenceInfoId)
+    - TemporalExpression (one, autoRelation: false, keymaps: tempExprId)
+    - RuntimeData (one, autoRelation: false, keymaps: runtimeDataId)
+    - NoteData (one, autoRelation: false, keymaps: noteId)
+    - CustomMethod (one, autoRelation: false, keymaps: estimateCalcMethod -> customMethodId)
+    - AccommodationMap (one, autoRelation: false, keymaps: accommodationMapId)
+    - AccommodationSpot (one, autoRelation: false, keymaps: accommodationSpotId)
+    + AcctgTrans (many, autoRelation: true, keymaps: workEffortId)
+    + AgreementWorkEffortApplic (many, autoRelation: true, keymaps: workEffortId)
+    + CommunicationEventWorkEff (many, autoRelation: true, keymaps: workEffortId)
+    + CostComponent (many, autoRelation: true, keymaps: workEffortId)
+    + CustRequestItemWorkEffort (many, autoRelation: true, keymaps: workEffortId)
+    + CustRequestWorkEffort (many, autoRelation: true, keymaps: workEffortId)
+    + ScheduleFixedAssetMaint (many, autoRelation: true, keymaps: workEffortId -> scheduleWorkEffortId)
+    + InventoryItemDetail (many, autoRelation: true, keymaps: workEffortId)
+    + OrderHeaderWorkEffort (many, autoRelation: true, keymaps: workEffortId)
+    + PersonTraining (many, autoRelation: true, keymaps: workEffortId)
+    + RoutingProductAssoc (many, autoRelation: true, keymaps: workEffortId -> routingWorkEffortId)
+    + MaintTemplateProductMaint (many, autoRelation: true, keymaps: workEffortId -> maintTemplateWorkEffortId)
+    + QuoteItem (many, autoRelation: true, keymaps: workEffortId)
+    + QuoteWorkEffort (many, autoRelation: true, keymaps: workEffortId)
+    + RateAmount (many, autoRelation: true, keymaps: workEffortId)
+    + SalesOpportunityWorkEffort (many, autoRelation: true, keymaps: workEffortId)
+    + EstimatedShipShipment (many, autoRelation: true, keymaps: workEffortId -> estimatedShipWorkEffId)
+    + EstimatedArrivalShipment (many, autoRelation: true, keymaps: workEffortId -> estimatedArrivalWorkEffId)
+    + ShoppingListWorkEffort (many, autoRelation: true, keymaps: workEffortId)
+    + TimeEntry (many, autoRelation: true, keymaps: workEffortId)
+    + ChildWorkEffort (many, autoRelation: true, keymaps: workEffortId -> workEffortParentId)
+    + FromWorkEffortAssoc (many, autoRelation: true, keymaps: workEffortId -> workEffortIdFrom)
+    + ToWorkEffortAssoc (many, autoRelation: true, keymaps: workEffortId -> workEffortIdTo)
+    + WorkEffortAttribute (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortBilling (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortContactMech (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortContent (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortCostCalc (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortDeliverableProd (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortEventReminder (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortFixedAssetAssign (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortFixedAssetStd (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortGoodStandard (many, autoRelation: true, keymaps: workEffortId)
+    - WorkEffortIcalData (one-nofk, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortInventoryAssign (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortInventoryProduced (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortKeyword (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortNote (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortPartyAssignment (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortReview (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortSkillStandard (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortStatus (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortSurveyAppl (many, autoRelation: true, keymaps: workEffortId)
+    + WorkEffortTransBox (many, autoRelation: true, keymaps: workEffortId -> processWorkEffortId)
+    + WorkOrderItemFulfillment (many, autoRelation: true, keymaps: workEffortId)
+    + WorkRequirementFulfillment (many, autoRelation: true, keymaps: workEffortId)
+*/
+

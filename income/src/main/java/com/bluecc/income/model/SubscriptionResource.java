@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SubscriptionResourceData;
 @REntity
 @MessageObject(value = SubscriptionResourceData.class,
         symbol = EntityNames.SubscriptionResource)
-public class SubscriptionResource implements IEventModel<SubscriptionResourceData.Builder>, Serializable {
+public class SubscriptionResource implements IEventModel<SubscriptionResourceData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String subscriptionResourceId;
@@ -95,3 +96,27 @@ public class SubscriptionResource implements IEventModel<SubscriptionResourceDat
 
     
 }
+
+
+/*
+-- keys: subscriptionResourceId
+
+-- fields --
+    
+    String subscriptionResourceId
+    String parentResourceId
+    String description
+    String contentId
+    String webSiteId
+    String serviceNameOnExpiry
+
+-- relations --
+    
+    - ParentSubscriptionResource (one, autoRelation: false, keymaps: parentResourceId -> subscriptionResourceId)
+    - Content (one, autoRelation: false, keymaps: contentId)
+    - WebSite (one, autoRelation: false, keymaps: webSiteId)
+    + ProductSubscriptionResource (many, autoRelation: true, keymaps: subscriptionResourceId)
+    + Subscription (many, autoRelation: true, keymaps: subscriptionResourceId)
+    + ChildSubscriptionResource (many, autoRelation: true, keymaps: subscriptionResourceId -> parentResourceId)
+*/
+

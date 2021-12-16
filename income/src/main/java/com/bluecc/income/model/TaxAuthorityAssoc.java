@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.TaxAuthorityAssocData;
 @REntity
 @MessageObject(value = TaxAuthorityAssocData.class,
         symbol = EntityNames.TaxAuthorityAssoc)
-public class TaxAuthorityAssoc implements IEventModel<TaxAuthorityAssocData.Builder>, Serializable {
+public class TaxAuthorityAssoc implements IEventModel<TaxAuthorityAssocData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String taxAuthGeoId;
@@ -105,3 +106,25 @@ public class TaxAuthorityAssoc implements IEventModel<TaxAuthorityAssocData.Buil
 
     
 }
+
+
+/*
+-- keys: taxAuthGeoId, taxAuthPartyId, toTaxAuthGeoId, toTaxAuthPartyId, fromDate
+
+-- fields --
+    
+    String taxAuthGeoId
+    String taxAuthPartyId
+    String toTaxAuthGeoId
+    String toTaxAuthPartyId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String taxAuthorityAssocTypeId
+
+-- relations --
+    
+    - TaxAuthority (one, autoRelation: false, keymaps: taxAuthGeoId, taxAuthPartyId)
+    - ToTaxAuthority (one, autoRelation: false, keymaps: toTaxAuthGeoId -> taxAuthGeoId, toTaxAuthPartyId -> taxAuthPartyId)
+    - TaxAuthorityAssocType (one, autoRelation: false, keymaps: taxAuthorityAssocTypeId)
+*/
+

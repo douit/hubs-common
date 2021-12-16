@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.PartyTaxAuthInfoData;
 @REntity
 @MessageObject(value = PartyTaxAuthInfoData.class,
         symbol = EntityNames.PartyTaxAuthInfo)
-public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builder>, Serializable {
+public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String partyId;
@@ -110,3 +111,25 @@ public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builde
 
     
 }
+
+
+/*
+-- keys: partyId, taxAuthGeoId, taxAuthPartyId, fromDate
+
+-- fields --
+    
+    String partyId
+    String taxAuthGeoId
+    String taxAuthPartyId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String partyTaxId
+    Character isExempt
+    Character isNexus
+
+-- relations --
+    
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - TaxAuthority (one, autoRelation: false, keymaps: taxAuthGeoId, taxAuthPartyId)
+*/
+

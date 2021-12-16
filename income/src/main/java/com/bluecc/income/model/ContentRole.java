@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ContentRoleData;
 @REntity
 @MessageObject(value = ContentRoleData.class,
         symbol = EntityNames.ContentRole)
-public class ContentRole implements IEventModel<ContentRoleData.Builder>, Serializable {
+public class ContentRole implements IEventModel<ContentRoleData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String contentId;
@@ -95,3 +96,23 @@ public class ContentRole implements IEventModel<ContentRoleData.Builder>, Serial
 
     
 }
+
+
+/*
+-- keys: contentId, partyId, roleTypeId, fromDate
+
+-- fields --
+    
+    String contentId
+    String partyId
+    String roleTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - Content (one, autoRelation: false, keymaps: contentId)
+    - Party (one-nofk, autoRelation: false, keymaps: partyId)
+    - PartyRole (one, autoRelation: false, keymaps: partyId, roleTypeId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -100,3 +101,24 @@ public class ProductPromoProduct implements IEventModel<ProductPromoProductData.
 
     
 }
+
+
+/*
+-- keys: productPromoId, productPromoRuleId, productPromoActionSeqId, productPromoCondSeqId, productId
+
+-- fields --
+    
+    String productPromoId
+    String productPromoRuleId
+    String productPromoActionSeqId
+    String productPromoCondSeqId
+    String productId
+    String productPromoApplEnumId
+
+-- relations --
+    
+    - ProductPromo (one, autoRelation: false, keymaps: productPromoId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    - ApplEnumeration (one, autoRelation: false, keymaps: productPromoApplEnumId -> enumId)
+*/
+

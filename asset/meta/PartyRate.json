@@ -2,7 +2,7 @@
   "name": "PartyRate",
   "title": "Party Rate",
   "description": "None",
-  "tableName": "PARTY_RATE_NEW",
+  "tableName": "PARTY_RATE",
   "fields": [
     {
       "name": "partyId",

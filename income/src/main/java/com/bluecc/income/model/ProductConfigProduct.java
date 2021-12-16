@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,24 @@ public class ProductConfigProduct implements IEventModel<ProductConfigProductDat
 
     
 }
+
+
+/*
+-- keys: configItemId, configOptionId, productId
+
+-- fields --
+    
+    String configItemId
+    String configOptionId
+    String productId
+    java.math.BigDecimal quantity
+    Long sequenceNum
+
+-- relations --
+    
+    - ConfigItemProductConfigItem (one, autoRelation: false, keymaps: configItemId)
+    - ConfigOptionProductConfigOption (one, autoRelation: false, keymaps: configItemId, configOptionId)
+    - ProductProduct (one, autoRelation: false, keymaps: productId)
+    + ProductConfigOptionProductOption (many, autoRelation: true, keymaps: configItemId, configOptionId, productId)
+*/
+

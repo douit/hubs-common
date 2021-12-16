@@ -1,14 +1,44 @@
 package com.bluecc.hubs.fund;
 
+import com.google.common.collect.Streams;
 import one.util.streamex.EntryStream;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
+
+import com.google.common.truth.IterableSubject;
+import com.google.common.truth.Truth;
 
 import static org.junit.Assert.assertEquals;
 
 public class StreamTest {
+
+    @Test
+    public void testZipFiniteWithInfinite() {
+        assertThat(
+                Streams.zip(
+                        Stream.of("a", "b", "c"),
+                        Stream.iterate(1, i -> i + 1),
+                        (a, b) -> a + ":" + b))
+                .containsExactly("a:1", "b:2", "c:3")
+                .inOrder();
+    }
+
+    @Test
+    public void testForEachPair_differingLengths2() {
+        List<String> list = new ArrayList<>();
+        Streams.forEachPair(
+                Stream.of("a", "b", "c"), Stream.of(1, 2, 3, 4), (a, b) -> list.add(a + ":" + b));
+        Truth.assertThat(list).containsExactly("a:1", "b:2", "c:3");
+    }
+
+    private static IterableSubject assertThat(Stream<?> stream) {
+        return Truth.assertThat(stream.toArray()).asList();
+    }
+
     public List<String> getEvenIndexedStringsVersionTwo(List<String> names) {
         return EntryStream.of(names)
                 .filterKeyValue((index, name) -> index % 2 == 0)
@@ -29,7 +59,7 @@ public class StreamTest {
     }
 
     @Test
-    public void testShortcuts(){
+    public void testShortcuts() {
         // List<String> userNames = StreamEx.of(users).map(User::getName).toList();
         // Map<Role, List<User>> role2users = StreamEx.of(users).groupingBy(User::getRole);
         // StreamEx.of(1,2,3).joining("; "); // "1; 2; 3"

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -460,6 +461,8 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
         // relations
      
     @Exclude
+    List<Facility> relFacility= new ArrayList<>(); 
+    @Exclude
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
     List<TaxAuthority> relVatTaxAuthority= new ArrayList<>(); 
@@ -547,9 +550,6 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
         }
         if (isImmediatelyFulfilled != null) {
             builder.setIsImmediatelyFulfilled(getIndicator(isImmediatelyFulfilled));
-        }
-        if (inventoryFacilityId != null) {
-            builder.setInventoryFacilityId(inventoryFacilityId);
         }
         if (oneInventoryFacility != null) {
             builder.setOneInventoryFacility(getIndicator(oneInventoryFacility));
@@ -742,3 +742,139 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
     }
 
 }
+
+
+/*
+-- keys: productStoreId
+
+-- fields --
+    
+    String productStoreId
+    String primaryStoreGroupId
+    String storeName
+    String companyName
+    String title
+    String subtitle
+    String payToPartyId
+    Long daysToCancelNonPay
+    Character manualAuthIsCapture
+    Character prorateShipping
+    Character prorateTaxes
+    Character viewCartOnAdd
+    Character autoSaveCart
+    Character autoApproveReviews
+    Character isDemoStore
+    Character isImmediatelyFulfilled
+    String inventoryFacilityId
+    Character oneInventoryFacility
+    Character checkInventory
+    Character reserveInventory
+    String reserveOrderEnumId
+    Character requireInventory
+    Character balanceResOnOrderCreation
+    String requirementMethodEnumId
+    String orderNumberPrefix
+    String defaultLocaleString
+    String defaultCurrencyUomId
+    String defaultTimeZoneString
+    String defaultSalesChannelEnumId
+    Character allowPassword
+    String defaultPassword
+    Character explodeOrderItems
+    Character checkGcBalance
+    Character retryFailedAuths
+    String headerApprovedStatus
+    String itemApprovedStatus
+    String digitalItemApprovedStatus
+    String headerDeclinedStatus
+    String itemDeclinedStatus
+    String headerCancelStatus
+    String itemCancelStatus
+    String authDeclinedMessage
+    String authFraudMessage
+    String authErrorMessage
+    String visualThemeId
+    String storeCreditAccountEnumId
+    Character usePrimaryEmailUsername
+    Character requireCustomerRole
+    Character autoInvoiceDigitalItems
+    Character reqShipAddrForDigItems
+    Character showCheckoutGiftOptions
+    Character selectPaymentTypePerItem
+    Character showPricesWithVatTax
+    Character showTaxIsExempt
+    String vatTaxAuthGeoId
+    String vatTaxAuthPartyId
+    Character enableAutoSuggestionList
+    Character enableDigProdUpload
+    Character prodSearchExcludeVariants
+    String digProdUploadCategoryId
+    Character autoOrderCcTryExp
+    Character autoOrderCcTryOtherCards
+    Character autoOrderCcTryLaterNsf
+    Long autoOrderCcTryLaterMax
+    Long storeCreditValidDays
+    Character autoApproveInvoice
+    Character autoApproveOrder
+    Character shipIfCaptureFails
+    Character setOwnerUponIssuance
+    Character reqReturnInventoryReceive
+    Character addToCartRemoveIncompat
+    Character addToCartReplaceUpsell
+    Character splitPayPrefPerShpGrp
+    Character managedByLot
+    Character showOutOfStockProducts
+    Character orderDecimalQuantity
+    Character allowComment
+    Character allocateInventory
+
+-- relations --
+    
+    - PrimaryProductStoreGroup (one, autoRelation: false, keymaps: primaryStoreGroupId -> productStoreGroupId)
+    - Facility (one, autoRelation: false, keymaps: inventoryFacilityId -> facilityId)
+    - ReserveOrderEnumeration (one, autoRelation: false, keymaps: reserveOrderEnumId -> enumId)
+    - RequirementMethodEnumeration (one, autoRelation: false, keymaps: requirementMethodEnumId -> enumId)
+    - Party (one, autoRelation: false, keymaps: payToPartyId -> partyId)
+    - Uom (one, autoRelation: false, keymaps: defaultCurrencyUomId -> uomId)
+    - DefaultSalesChannelEnumeration (one, autoRelation: false, keymaps: defaultSalesChannelEnumId -> enumId)
+    - HeaderApprovedStatusItem (one, autoRelation: false, keymaps: headerApprovedStatus -> statusId)
+    - ItemApprovedStatusItem (one, autoRelation: false, keymaps: itemApprovedStatus -> statusId)
+    - DigitalItemApprovedStatusItem (one, autoRelation: false, keymaps: digitalItemApprovedStatus -> statusId)
+    - HeaderDeclinedStatusItem (one, autoRelation: false, keymaps: headerDeclinedStatus -> statusId)
+    - ItemDeclinedStatusItem (one, autoRelation: false, keymaps: itemDeclinedStatus -> statusId)
+    - HeaderCancelStatusItem (one, autoRelation: false, keymaps: headerCancelStatus -> statusId)
+    - ItemCancelStatusItem (one, autoRelation: false, keymaps: itemCancelStatus -> statusId)
+    - VatTaxAuthority (one, autoRelation: false, keymaps: vatTaxAuthGeoId -> taxAuthGeoId, vatTaxAuthPartyId -> taxAuthPartyId)
+    - StoreCreditAccountEnumeration (one, autoRelation: false, keymaps: storeCreditAccountEnumId -> enumId)
+    + CustRequest (many, autoRelation: true, keymaps: productStoreId)
+    - EbayConfig (one-nofk, autoRelation: true, keymaps: productStoreId)
+    + EbayShippingMethod (many, autoRelation: true, keymaps: productStoreId)
+    + GitHubUser (many, autoRelation: true, keymaps: productStoreId)
+    + InventoryItemTempRes (many, autoRelation: true, keymaps: productStoreId)
+    + LinkedInUser (many, autoRelation: true, keymaps: productStoreId)
+    + OAuth2GitHub (many, autoRelation: true, keymaps: productStoreId)
+    + OAuth2LinkedIn (many, autoRelation: true, keymaps: productStoreId)
+    + OrderHeader (many, autoRelation: true, keymaps: productStoreId)
+    + PartyProfileDefault (many, autoRelation: true, keymaps: productStoreId)
+    + ProductReview (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreCatalog (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreEmailSetting (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreFacility (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreFinActSetting (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreGroupMember (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreKeywordOvrd (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStorePaymentSetting (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStorePromoAppl (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreRole (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreSurveyAppl (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreTelecomSetting (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreVendorPayment (many, autoRelation: true, keymaps: productStoreId)
+    + ProductStoreVendorShipment (many, autoRelation: true, keymaps: productStoreId)
+    + Quote (many, autoRelation: true, keymaps: productStoreId)
+    + SegmentGroup (many, autoRelation: true, keymaps: productStoreId)
+    + ShoppingList (many, autoRelation: true, keymaps: productStoreId)
+    + TaxAuthorityRateProduct (many, autoRelation: true, keymaps: productStoreId)
+    + ThirdPartyLogin (many, autoRelation: true, keymaps: productStoreId)
+    + WebSite (many, autoRelation: true, keymaps: productStoreId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -110,3 +111,29 @@ public class OrderItemBilling implements IEventModel<OrderItemBillingData.Builde
 
     
 }
+
+
+/*
+-- keys: orderId, orderItemSeqId, invoiceId, invoiceItemSeqId
+
+-- fields --
+    
+    String orderId
+    String orderItemSeqId
+    String invoiceId
+    String invoiceItemSeqId
+    String itemIssuanceId
+    String shipmentReceiptId
+    java.math.BigDecimal quantity
+    java.math.BigDecimal amount
+
+-- relations --
+    
+    - OrderHeader (one, autoRelation: false, keymaps: orderId)
+    - OrderItem (one, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - Invoice (one-nofk, autoRelation: false, keymaps: invoiceId)
+    - InvoiceItem (one, autoRelation: false, keymaps: invoiceId, invoiceItemSeqId)
+    - ShipmentReceipt (one, autoRelation: false, keymaps: shipmentReceiptId -> receiptId)
+    - ItemIssuance (one, autoRelation: false, keymaps: itemIssuanceId)
+*/
+

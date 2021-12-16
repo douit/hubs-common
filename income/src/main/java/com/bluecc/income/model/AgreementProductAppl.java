@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,22 @@ public class AgreementProductAppl implements IEventModel<AgreementProductApplDat
 
     
 }
+
+
+/*
+-- keys: agreementId, agreementItemSeqId, productId
+
+-- fields --
+    
+    String agreementId
+    String agreementItemSeqId
+    String productId
+    java.math.BigDecimal price
+
+-- relations --
+    
+    - Agreement (one-nofk, autoRelation: false, keymaps: agreementId)
+    - AgreementItem (one, autoRelation: false, keymaps: agreementId, agreementItemSeqId)
+    - Product (one, autoRelation: false, keymaps: productId)
+*/
+

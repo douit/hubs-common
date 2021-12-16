@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,21 @@ public class CarrierShipmentBoxType implements IEventModel<CarrierShipmentBoxTyp
 
     
 }
+
+
+/*
+-- keys: shipmentBoxTypeId, partyId
+
+-- fields --
+    
+    String shipmentBoxTypeId
+    String partyId
+    String packagingTypeCode
+    String oversizeCode
+
+-- relations --
+    
+    - ShipmentBoxType (one, autoRelation: false, keymaps: shipmentBoxTypeId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+*/
+

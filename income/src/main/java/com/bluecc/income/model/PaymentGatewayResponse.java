@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -175,3 +176,45 @@ public class PaymentGatewayResponse implements IEventModel<PaymentGatewayRespons
 
     
 }
+
+
+/*
+-- keys: paymentGatewayResponseId
+
+-- fields --
+    
+    String paymentGatewayResponseId
+    String paymentServiceTypeEnumId
+    String orderPaymentPreferenceId
+    String paymentMethodTypeId
+    String paymentMethodId
+    String transCodeEnumId
+    java.math.BigDecimal amount
+    String currencyUomId
+    String referenceNum
+    String altReference
+    String subReference
+    String gatewayCode
+    String gatewayFlag
+    String gatewayAvsResult
+    String gatewayCvResult
+    String gatewayScoreResult
+    String gatewayMessage
+    java.time.LocalDateTime transactionDate
+    Character resultDeclined
+    Character resultNsf
+    Character resultBadExpire
+    Character resultBadCardNumber
+
+-- relations --
+    
+    - ServiceTypeEnumeration (one, autoRelation: false, keymaps: paymentServiceTypeEnumId -> enumId)
+    - TranCodeEnumeration (one, autoRelation: false, keymaps: transCodeEnumId -> enumId)
+    - Uom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - OrderPaymentPreference (one, autoRelation: false, keymaps: orderPaymentPreferenceId)
+    - PaymentMethodType (one, autoRelation: false, keymaps: paymentMethodTypeId)
+    - PaymentMethod (one, autoRelation: false, keymaps: paymentMethodId)
+    + Payment (many, autoRelation: true, keymaps: paymentGatewayResponseId)
+    + PaymentGatewayRespMsg (many, autoRelation: true, keymaps: paymentGatewayResponseId)
+*/
+

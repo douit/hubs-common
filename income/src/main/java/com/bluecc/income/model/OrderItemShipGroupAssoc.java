@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,29 @@ public class OrderItemShipGroupAssoc implements IEventModel<OrderItemShipGroupAs
 
     
 }
+
+
+/*
+-- keys: orderId, orderItemSeqId, shipGroupSeqId
+
+-- fields --
+    
+    String orderId
+    String orderItemSeqId
+    String shipGroupSeqId
+    java.math.BigDecimal quantity
+    java.math.BigDecimal cancelQuantity
+
+-- relations --
+    
+    - OrderHeader (one, autoRelation: false, keymaps: orderId)
+    - OrderItem (one, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - OrderItemShipGroup (one, autoRelation: false, keymaps: orderId, shipGroupSeqId)
+    + OrderAdjustment (many, autoRelation: true, keymaps: orderId, orderItemSeqId, shipGroupSeqId)
+    + FromOrderItemAssoc (many, autoRelation: true, keymaps: orderId, orderItemSeqId, shipGroupSeqId)
+    + ToOrderItemAssoc (many, autoRelation: true, keymaps: orderId -> toOrderId, orderItemSeqId -> toOrderItemSeqId, shipGroupSeqId -> toShipGroupSeqId)
+    + OrderItemShipGrpInvRes (many, autoRelation: true, keymaps: orderId, orderItemSeqId, shipGroupSeqId)
+    + OrderShipment (many, autoRelation: true, keymaps: orderId, orderItemSeqId, shipGroupSeqId)
+    + WorkOrderItemFulfillment (many, autoRelation: true, keymaps: orderId, orderItemSeqId, shipGroupSeqId)
+*/
+

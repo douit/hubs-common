@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -105,3 +106,28 @@ public class OrderStatus implements IEventModel<OrderStatusData.Builder>, Serial
 
     
 }
+
+
+/*
+-- keys: orderStatusId
+
+-- fields --
+    
+    String orderStatusId
+    String statusId
+    String orderId
+    String orderItemSeqId
+    String orderPaymentPreferenceId
+    java.time.LocalDateTime statusDatetime
+    String statusUserLogin
+    String changeReason
+
+-- relations --
+    
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - OrderHeader (one, autoRelation: false, keymaps: orderId)
+    - OrderItem (one-nofk, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - OrderPaymentPreference (one-nofk, autoRelation: false, keymaps: orderPaymentPreferenceId)
+    - UserLogin (one, autoRelation: false, keymaps: statusUserLogin -> userLoginId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -85,3 +86,23 @@ public class Tenant implements IEventModel<TenantData.Builder>, Serializable {
 
     
 }
+
+
+/*
+-- keys: tenantId
+
+-- fields --
+    
+    String tenantId
+    String tenantName
+    String initialPath
+    Character disabled
+
+-- relations --
+    
+    + TenantComponent (many, autoRelation: true, keymaps: tenantId)
+    + TenantDataSource (many, autoRelation: true, keymaps: tenantId)
+    + TenantDomainName (many, autoRelation: true, keymaps: tenantId)
+    - TenantKeyEncryptingKey (one-nofk, autoRelation: true, keymaps: tenantId)
+*/
+

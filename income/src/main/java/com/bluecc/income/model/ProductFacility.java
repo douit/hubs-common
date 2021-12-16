@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -110,3 +111,28 @@ public class ProductFacility implements IEventModel<ProductFacilityData.Builder>
 
     
 }
+
+
+/*
+-- keys: productId, facilityId
+
+-- fields --
+    
+    String productId
+    String facilityId
+    java.math.BigDecimal minimumStock
+    java.math.BigDecimal reorderQuantity
+    Long daysToShip
+    String replenishMethodEnumId
+    java.math.BigDecimal lastInventoryCount
+    String requirementMethodEnumId
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - Facility (one, autoRelation: false, keymaps: facilityId)
+    - RequirementMethodEnumeration (one, autoRelation: false, keymaps: requirementMethodEnumId -> enumId)
+    - Enumeration (one, autoRelation: false, keymaps: replenishMethodEnumId -> enumId)
+    + InventoryItem (many, autoRelation: true, keymaps: productId, facilityId)
+*/
+

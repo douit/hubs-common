@@ -49,6 +49,36 @@ public class OrderHeaderDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        default Map<String, OrderHeader> chainOriginFacility(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainOriginFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        default Map<String, OrderHeader> chainOriginFacility(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORIGIN_FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("of_facility_id", String.class) != null) {
+                            p.getRelOriginFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
         default Map<String, OrderHeader> chainBillingAccount(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
@@ -621,6 +651,17 @@ public class OrderHeaderDelegator extends AbstractProcs{
     }
 
      
+    public Consumer<Map<String, OrderHeader>> originFacility(Dao dao, boolean succ) {
+        return e -> dao.chainOriginFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderHeader>> originFacility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOriginFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, OrderHeader>> billingAccount(Dao dao, boolean succ) {
         return e -> dao.chainBillingAccount(protoMeta, e, succ);
     }
@@ -866,6 +907,17 @@ public class OrderHeaderDelegator extends AbstractProcs{
         }
 
          
+        public List<Facility> getOriginFacility(){
+            return getRelationValues(ctx, p1, "origin_facility", Facility.class);
+        }
+
+        public List<Facility> mergeOriginFacility(){
+            return getOriginFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOriginFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<BillingAccount> getBillingAccount(){
             return getRelationValues(ctx, p1, "billing_account", BillingAccount.class);
         }
@@ -1092,6 +1144,8 @@ public class OrderHeaderDelegator extends AbstractProcs{
     
 
          
+    public static final String ORIGIN_FACILITY="origin_facility";
+         
     public static final String BILLING_ACCOUNT="billing_account";
          
     public static final String PRODUCT_STORE="product_store";
@@ -1142,6 +1196,14 @@ public class OrderHeaderDelegator extends AbstractProcs{
                         OrderHeaderData.Builder pb = e.toHeadBuilder();
                         Message p1=e.toData();
 
+                                               
+                        // add/set origin_facility to head entity                        
+                        if(relationsDemand.contains("origin_facility")) {
+                            getRelationValues(ctx, p1, "origin_facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.setOriginFacility(
+                                             el.toDataBuilder().build()));
+                        }
                                                
                         // add/set billing_account to head entity                        
                         if(relationsDemand.contains("billing_account")) {

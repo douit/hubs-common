@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.WorkEffortGoodStandardData;
 @REntity
 @MessageObject(value = WorkEffortGoodStandardData.class,
         symbol = EntityNames.WorkEffortGoodStandard)
-public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandardData.Builder>, Serializable {
+public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandardData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String workEffortId;
@@ -110,3 +111,27 @@ public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandar
 
     
 }
+
+
+/*
+-- keys: workEffortId, productId, workEffortGoodStdTypeId, fromDate
+
+-- fields --
+    
+    String workEffortId
+    String productId
+    String workEffortGoodStdTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String statusId
+    Double estimatedQuantity
+    java.math.BigDecimal estimatedCost
+
+-- relations --
+    
+    - WorkEffort (one, autoRelation: false, keymaps: workEffortId)
+    - WorkEffortGoodStandardType (one, autoRelation: false, keymaps: workEffortGoodStdTypeId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+*/
+

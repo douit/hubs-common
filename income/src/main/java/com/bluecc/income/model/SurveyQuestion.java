@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SurveyQuestionData;
 @REntity
 @MessageObject(value = SurveyQuestionData.class,
         symbol = EntityNames.SurveyQuestion)
-public class SurveyQuestion implements IEventModel<SurveyQuestionData.Builder>, Serializable {
+public class SurveyQuestion implements IEventModel<SurveyQuestionData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String surveyQuestionId;
@@ -110,3 +111,31 @@ public class SurveyQuestion implements IEventModel<SurveyQuestionData.Builder>, 
 
     
 }
+
+
+/*
+-- keys: surveyQuestionId
+
+-- fields --
+    
+    String surveyQuestionId
+    String surveyQuestionCategoryId
+    String surveyQuestionTypeId
+    String description
+    String question
+    String hint
+    String enumTypeId
+    String geoId
+    String formatString
+
+-- relations --
+    
+    - SurveyQuestionType (one, autoRelation: false, keymaps: surveyQuestionTypeId)
+    - SurveyQuestionCategory (one, autoRelation: false, keymaps: surveyQuestionCategoryId)
+    - Geo (one, autoRelation: false, keymaps: geoId)
+    + Enumeration (many, autoRelation: false, keymaps: enumTypeId)
+    + SurveyQuestionAppl (many, autoRelation: true, keymaps: surveyQuestionId)
+    + SurveyQuestionOption (many, autoRelation: true, keymaps: surveyQuestionId)
+    + SurveyResponseAnswer (many, autoRelation: true, keymaps: surveyQuestionId)
+*/
+

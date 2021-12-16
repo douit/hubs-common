@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = FinAccountData.class,
         symbol = EntityNames.FinAccount)
-public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Serializable {
+public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String finAccountId;
@@ -159,9 +160,15 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
     @Exclude
     List<Party> relOwnerParty= new ArrayList<>(); 
     @Exclude
+    List<GlAccount> relPostToGlAccount= new ArrayList<>(); 
+    @Exclude
     List<PaymentMethod> relReplenishPaymentMethod= new ArrayList<>(); 
     @Exclude
+    List<FinAccountRole> relFinAccountRole= new ArrayList<>(); 
+    @Exclude
     List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
+    @Exclude
+    List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
@@ -195,9 +202,6 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
         if (currencyUomId != null) {
             builder.setCurrencyUomId(currencyUomId);
         }
-        if (postToGlAccountId != null) {
-            builder.setPostToGlAccountId(postToGlAccountId);
-        }
         if (fromDate != null) {
             builder.setFromDate(getTimestamp(fromDate));
         }
@@ -227,3 +231,47 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Seri
     }
 
 }
+
+
+/*
+-- keys: finAccountId
+
+-- fields --
+    
+    String finAccountId
+    String finAccountTypeId
+    String statusId
+    String finAccountName
+    String finAccountCode
+    String finAccountPin
+    String currencyUomId
+    String organizationPartyId
+    String ownerPartyId
+    String postToGlAccountId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    Character isRefundable
+    String replenishPaymentId
+    java.math.BigDecimal replenishLevel
+    java.math.BigDecimal actualBalance
+    java.math.BigDecimal availableBalance
+
+-- relations --
+    
+    - FinAccountType (one, autoRelation: false, keymaps: finAccountTypeId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - OrganizationParty (one, autoRelation: false, keymaps: organizationPartyId -> partyId)
+    - OwnerParty (one, autoRelation: false, keymaps: ownerPartyId -> partyId)
+    - PostToGlAccount (one, autoRelation: false, keymaps: postToGlAccountId -> glAccountId)
+    - ReplenishPaymentMethod (one, autoRelation: false, keymaps: replenishPaymentId -> paymentMethodId)
+    + FinAccountTypeAttr (many, autoRelation: false, keymaps: finAccountTypeId)
+    + FinAccountAttribute (many, autoRelation: true, keymaps: finAccountId)
+    + FinAccountAuth (many, autoRelation: true, keymaps: finAccountId)
+    + FinAccountRole (many, autoRelation: true, keymaps: finAccountId)
+    + FinAccountStatus (many, autoRelation: true, keymaps: finAccountId)
+    + FinAccountTrans (many, autoRelation: true, keymaps: finAccountId)
+    + OrderPaymentPreference (many, autoRelation: true, keymaps: finAccountId)
+    + PaymentMethod (many, autoRelation: true, keymaps: finAccountId)
+    + ReturnHeader (many, autoRelation: true, keymaps: finAccountId)
+*/
+

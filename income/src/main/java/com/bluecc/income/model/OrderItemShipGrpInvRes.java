@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -135,3 +136,36 @@ public class OrderItemShipGrpInvRes implements IEventModel<OrderItemShipGrpInvRe
 
     
 }
+
+
+/*
+-- keys: orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId
+
+-- fields --
+    
+    String orderId
+    String shipGroupSeqId
+    String orderItemSeqId
+    String inventoryItemId
+    String reserveOrderEnumId
+    java.math.BigDecimal quantity
+    java.math.BigDecimal quantityNotAvailable
+    java.time.LocalDateTime reservedDatetime
+    java.time.LocalDateTime createdDatetime
+    java.time.LocalDateTime promisedDatetime
+    java.time.LocalDateTime currentPromisedDate
+    Character priority
+    Long sequenceId
+
+-- relations --
+    
+    - OrderHeader (one-nofk, autoRelation: false, keymaps: orderId)
+    - OrderItem (one, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - OrderItemShipGroup (one-nofk, autoRelation: false, keymaps: orderId, shipGroupSeqId)
+    - OrderItemShipGroupAssoc (one-nofk, autoRelation: false, keymaps: orderId, orderItemSeqId, shipGroupSeqId)
+    - InventoryItem (one, autoRelation: false, keymaps: inventoryItemId)
+    + InventoryItemDetail (many, autoRelation: true, keymaps: orderId, orderItemSeqId, shipGroupSeqId, inventoryItemId)
+    + ItemIssuance (many, autoRelation: true, keymaps: orderId, orderItemSeqId, shipGroupSeqId, inventoryItemId)
+    + PicklistItem (many, autoRelation: true, keymaps: orderId, orderItemSeqId, shipGroupSeqId, inventoryItemId)
+*/
+

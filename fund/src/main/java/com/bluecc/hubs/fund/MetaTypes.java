@@ -33,6 +33,7 @@ public class MetaTypes {
 
     public static void reloadMetaList(){
         metaList=getAvailableEntities();
+        typeList=types();
     }
 
     public static Set<String> getAllEntities(){

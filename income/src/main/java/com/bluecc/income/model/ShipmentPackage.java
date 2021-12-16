@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -125,3 +126,35 @@ public class ShipmentPackage implements IEventModel<ShipmentPackageData.Builder>
 
     
 }
+
+
+/*
+-- keys: shipmentId, shipmentPackageSeqId
+
+-- fields --
+    
+    String shipmentId
+    String shipmentPackageSeqId
+    String shipmentBoxTypeId
+    java.time.LocalDateTime dateCreated
+    java.math.BigDecimal boxLength
+    java.math.BigDecimal boxHeight
+    java.math.BigDecimal boxWidth
+    String dimensionUomId
+    java.math.BigDecimal weight
+    String weightUomId
+    java.math.BigDecimal insuredValue
+
+-- relations --
+    
+    - Shipment (one, autoRelation: false, keymaps: shipmentId)
+    - ShipmentBoxType (one, autoRelation: false, keymaps: shipmentBoxTypeId)
+    + CarrierShipmentBoxType (many, autoRelation: false, keymaps: shipmentBoxTypeId)
+    - DimensionUom (one, autoRelation: false, keymaps: dimensionUomId -> uomId)
+    - WeightUom (one, autoRelation: false, keymaps: weightUomId -> uomId)
+    + ShipmentPackageContent (many, autoRelation: true, keymaps: shipmentId, shipmentPackageSeqId)
+    + ShipmentPackageRouteSeg (many, autoRelation: true, keymaps: shipmentId, shipmentPackageSeqId)
+    + ShipmentReceipt (many, autoRelation: true, keymaps: shipmentId, shipmentPackageSeqId)
+    + ShippingDocument (many, autoRelation: true, keymaps: shipmentId, shipmentPackageSeqId)
+*/
+

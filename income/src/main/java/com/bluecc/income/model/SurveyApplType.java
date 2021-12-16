@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SurveyApplTypeData;
 @REntity
 @MessageObject(value = SurveyApplTypeData.class,
         symbol = EntityNames.SurveyApplType)
-public class SurveyApplType implements IEventModel<SurveyApplTypeData.Builder>, Serializable {
+public class SurveyApplType implements IEventModel<SurveyApplTypeData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String surveyApplTypeId;
@@ -75,3 +76,19 @@ public class SurveyApplType implements IEventModel<SurveyApplTypeData.Builder>, 
 
     
 }
+
+
+/*
+-- keys: surveyApplTypeId
+
+-- fields --
+    
+    String surveyApplTypeId
+    String description
+
+-- relations --
+    
+    + ProductStoreSurveyAppl (many, autoRelation: true, keymaps: surveyApplTypeId)
+    + SurveyTrigger (many, autoRelation: true, keymaps: surveyApplTypeId)
+*/
+

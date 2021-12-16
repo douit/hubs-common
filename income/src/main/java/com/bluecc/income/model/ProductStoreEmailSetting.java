@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -115,3 +116,26 @@ public class ProductStoreEmailSetting implements IEventModel<ProductStoreEmailSe
 
     
 }
+
+
+/*
+-- keys: productStoreId, emailType
+
+-- fields --
+    
+    String productStoreId
+    String emailType
+    String bodyScreenLocation
+    String xslfoAttachScreenLocation
+    String fromAddress
+    String ccAddress
+    String bccAddress
+    String subject
+    String contentType
+
+-- relations --
+    
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - Enumeration (one, autoRelation: false, keymaps: emailType -> enumId)
+*/
+

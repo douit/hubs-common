@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SurveyQuestionCategoryData;
 @REntity
 @MessageObject(value = SurveyQuestionCategoryData.class,
         symbol = EntityNames.SurveyQuestionCategory)
-public class SurveyQuestionCategory implements IEventModel<SurveyQuestionCategoryData.Builder>, Serializable {
+public class SurveyQuestionCategory implements IEventModel<SurveyQuestionCategoryData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String surveyQuestionCategoryId;
@@ -80,3 +81,21 @@ public class SurveyQuestionCategory implements IEventModel<SurveyQuestionCategor
 
     
 }
+
+
+/*
+-- keys: surveyQuestionCategoryId
+
+-- fields --
+    
+    String surveyQuestionCategoryId
+    String parentCategoryId
+    String description
+
+-- relations --
+    
+    - ParentSurveyQuestionCategory (one, autoRelation: false, keymaps: parentCategoryId -> surveyQuestionCategoryId)
+    + SurveyQuestion (many, autoRelation: true, keymaps: surveyQuestionCategoryId)
+    + ChildSurveyQuestionCategory (many, autoRelation: true, keymaps: surveyQuestionCategoryId -> parentCategoryId)
+*/
+

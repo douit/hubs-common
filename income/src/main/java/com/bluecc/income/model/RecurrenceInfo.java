@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -100,3 +101,29 @@ public class RecurrenceInfo implements IEventModel<RecurrenceInfoData.Builder>, 
 
     
 }
+
+
+/*
+-- keys: recurrenceInfoId
+
+-- fields --
+    
+    String recurrenceInfoId
+    java.time.LocalDateTime startDateTime
+    String exceptionDateTimes
+    String recurrenceDateTimes
+    String exceptionRuleId
+    String recurrenceRuleId
+    Long recurrenceCount
+
+-- relations --
+    
+    - RecurrenceRule (one, autoRelation: false, keymaps: recurrenceRuleId)
+    - ExceptionRecurrenceRule (one, autoRelation: false, keymaps: exceptionRuleId -> recurrenceRuleId)
+    + Invoice (many, autoRelation: true, keymaps: recurrenceInfoId)
+    + JobSandbox (many, autoRelation: true, keymaps: recurrenceInfoId)
+    + ProductAssoc (many, autoRelation: true, keymaps: recurrenceInfoId)
+    + ShoppingList (many, autoRelation: true, keymaps: recurrenceInfoId)
+    + WorkEffort (many, autoRelation: true, keymaps: recurrenceInfoId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,23 @@ public class FinAccountStatus implements IEventModel<FinAccountStatusData.Builde
 
     
 }
+
+
+/*
+-- keys: finAccountId, statusId, statusDate
+
+-- fields --
+    
+    String finAccountId
+    String statusId
+    java.time.LocalDateTime statusDate
+    java.time.LocalDateTime statusEndDate
+    String changeByUserLoginId
+
+-- relations --
+    
+    - FinAccount (one, autoRelation: false, keymaps: finAccountId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - UserLogin (one, autoRelation: false, keymaps: changeByUserLoginId -> userLoginId)
+*/
+

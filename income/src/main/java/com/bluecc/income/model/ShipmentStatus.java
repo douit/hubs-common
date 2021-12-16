@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,22 @@ public class ShipmentStatus implements IEventModel<ShipmentStatusData.Builder>, 
 
     
 }
+
+
+/*
+-- keys: statusId, shipmentId
+
+-- fields --
+    
+    String statusId
+    String shipmentId
+    java.time.LocalDateTime statusDate
+    String changeByUserLoginId
+
+-- relations --
+    
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - Shipment (one, autoRelation: false, keymaps: shipmentId)
+    - ChangeByUserLogin (one, autoRelation: false, keymaps: changeByUserLoginId -> userLoginId)
+*/
+

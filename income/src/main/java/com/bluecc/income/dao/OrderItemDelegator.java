@@ -229,6 +229,36 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "oga")
+        default Map<String, OrderItem> chainOverrideGlAccount(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               boolean succInvoke) {
+            return chainOverrideGlAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "oga")
+        default Map<String, OrderItem> chainOverrideGlAccount(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(OVERRIDE_GL_ACCOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
+                                id -> rr.getRow(OrderItem.class));
+                        if (rr.getColumn("oga_gl_account_id", String.class) != null) {
+                            p.getRelOverrideGlAccount()
+                                    .add(rr.getRow(GlAccount.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
         @RegisterBeanMapper(value = UserLogin.class, prefix = "cbul")
         default Map<String, OrderItem> chainChangeByUserLogin(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
@@ -253,6 +283,36 @@ public class OrderItemDelegator extends AbstractProcs{
                         if (rr.getColumn("cbul_user_login_id", String.class) != null) {
                             p.getRelChangeByUserLogin()
                                     .add(rr.getRow(UserLogin.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        default Map<String, OrderItem> chainFinAccountTrans(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               boolean succInvoke) {
+            return chainFinAccountTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        default Map<String, OrderItem> chainFinAccountTrans(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_TRANS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
+                                id -> rr.getRow(OrderItem.class));
+                        if (rr.getColumn("fat_order_id", String.class) != null) {
+                            p.getRelFinAccountTrans()
+                                    .add(rr.getRow(FinAccountTrans.class));
                         }
                         return map;
                     });
@@ -627,6 +687,17 @@ public class OrderItemDelegator extends AbstractProcs{
         return e -> dao.chainQuoteItem(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, OrderItem>> overrideGlAccount(Dao dao, boolean succ) {
+        return e -> dao.chainOverrideGlAccount(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderItem>> overrideGlAccount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOverrideGlAccount(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, OrderItem>> changeByUserLogin(Dao dao, boolean succ) {
         return e -> dao.chainChangeByUserLogin(protoMeta, e, succ);
     }
@@ -636,6 +707,17 @@ public class OrderItemDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainChangeByUserLogin(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, OrderItem>> finAccountTrans(Dao dao, boolean succ) {
+        return e -> dao.chainFinAccountTrans(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderItem>> finAccountTrans(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFinAccountTrans(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, OrderItem>> acquireFixedAsset(Dao dao, boolean succ) {
@@ -850,6 +932,17 @@ public class OrderItemDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<GlAccount> getOverrideGlAccount(){
+            return getRelationValues(ctx, p1, "override_gl_account", GlAccount.class);
+        }
+
+        public List<GlAccount> mergeOverrideGlAccount(){
+            return getOverrideGlAccount().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOverrideGlAccount().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<UserLogin> getChangeByUserLogin(){
             return getRelationValues(ctx, p1, "change_by_user_login", UserLogin.class);
         }
@@ -858,6 +951,17 @@ public class OrderItemDelegator extends AbstractProcs{
             return getChangeByUserLogin().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelChangeByUserLogin().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FinAccountTrans> getFinAccountTrans(){
+            return getRelationValues(ctx, p1, "fin_account_trans", FinAccountTrans.class);
+        }
+
+        public List<FinAccountTrans> mergeFinAccountTrans(){
+            return getFinAccountTrans().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFinAccountTrans().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -1000,7 +1104,11 @@ public class OrderItemDelegator extends AbstractProcs{
          
     public static final String QUOTE_ITEM="quote_item";
          
+    public static final String OVERRIDE_GL_ACCOUNT="override_gl_account";
+         
     public static final String CHANGE_BY_USER_LOGIN="change_by_user_login";
+         
+    public static final String FIN_ACCOUNT_TRANS="fin_account_trans";
          
     public static final String ACQUIRE_FIXED_ASSET="acquire_fixed_asset";
          
@@ -1083,12 +1191,28 @@ public class OrderItemDelegator extends AbstractProcs{
                                              el.toDataBuilder().build()));
                         }
                                                
+                        // add/set override_gl_account to head entity                        
+                        if(relationsDemand.contains("override_gl_account")) {
+                            getRelationValues(ctx, p1, "override_gl_account",
+                                            GlAccount.class)
+                                    .forEach(el -> pb.setOverrideGlAccount(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set change_by_user_login to head entity                        
                         if(relationsDemand.contains("change_by_user_login")) {
                             getRelationValues(ctx, p1, "change_by_user_login",
                                             UserLogin.class)
                                     .forEach(el -> pb.setChangeByUserLogin(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set fin_account_trans to head entity                        
+                        if(relationsDemand.contains("fin_account_trans")) {
+                            getRelationValues(ctx, p1, "fin_account_trans",
+                                            FinAccountTrans.class)
+                                    .forEach(el -> pb.addFinAccountTrans(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set acquire_fixed_asset to head entity                        

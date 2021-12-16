@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.AcctgTransEntryData;
 @REntity
 @MessageObject(value = AcctgTransEntryData.class,
         symbol = EntityNames.AcctgTransEntry)
-public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>, Serializable {
+public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RIndex String acctgTransId;
@@ -195,3 +196,54 @@ public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>
 
     
 }
+
+
+/*
+-- keys: acctgTransId, acctgTransEntrySeqId
+
+-- fields --
+    
+    String acctgTransId
+    String acctgTransEntrySeqId
+    String acctgTransEntryTypeId
+    String description
+    String voucherRef
+    String partyId
+    String roleTypeId
+    String theirPartyId
+    String productId
+    String theirProductId
+    String inventoryItemId
+    String glAccountTypeId
+    String glAccountId
+    String organizationPartyId
+    java.math.BigDecimal amount
+    String currencyUomId
+    java.math.BigDecimal origAmount
+    String origCurrencyUomId
+    Character debitCreditFlag
+    java.time.LocalDate dueDate
+    String groupId
+    String taxId
+    String reconcileStatusId
+    String settlementTermId
+    Character isSummary
+
+-- relations --
+    
+    - AcctgTransEntryType (one, autoRelation: false, keymaps: acctgTransEntryTypeId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - OrigCurrencyUom (one, autoRelation: false, keymaps: origCurrencyUomId -> uomId)
+    - AcctgTrans (one, autoRelation: false, keymaps: acctgTransId)
+    - InventoryItem (one, autoRelation: false, keymaps: inventoryItemId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one-nofk, autoRelation: false, keymaps: partyId, roleTypeId)
+    - GlAccountType (one, autoRelation: false, keymaps: glAccountTypeId)
+    - GlAccount (one, autoRelation: false, keymaps: glAccountId)
+    - GlAccountOrganization (one, autoRelation: false, keymaps: glAccountId, organizationPartyId)
+    - StatusItem (one, autoRelation: false, keymaps: reconcileStatusId -> statusId)
+    - SettlementTerm (one, autoRelation: false, keymaps: settlementTermId)
+    + GlReconciliationEntry (many, autoRelation: true, keymaps: acctgTransId, acctgTransEntrySeqId)
+*/
+

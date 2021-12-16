@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductConfigOptionData;
 @REntity
 @MessageObject(value = ProductConfigOptionData.class,
         symbol = EntityNames.ProductConfigOption)
-public class ProductConfigOption implements IEventModel<ProductConfigOptionData.Builder>, Serializable {
+public class ProductConfigOption implements IEventModel<ProductConfigOptionData.Builder>, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String configItemId;
@@ -105,3 +106,27 @@ public class ProductConfigOption implements IEventModel<ProductConfigOptionData.
 
     
 }
+
+
+/*
+-- keys: configItemId, configOptionId
+
+-- fields --
+    
+    String configItemId
+    String configOptionId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String configOptionName
+    String description
+    Long sequenceNum
+
+-- relations --
+    
+    - ConfigItemProductConfigItem (one, autoRelation: false, keymaps: configItemId)
+    + ConfigOptionProductConfigConfig (many, autoRelation: true, keymaps: configItemId, configOptionId)
+    + ConfigOptionProductConfigOptionIactn (many, autoRelation: true, keymaps: configItemId, configOptionId)
+    + ConfigOptionToProductConfigOptionIactn (many, autoRelation: true, keymaps: configItemId -> configItemIdTo, configOptionId -> configOptionIdTo)
+    + ConfigOptionProductConfigProduct (many, autoRelation: true, keymaps: configItemId, configOptionId)
+*/
+

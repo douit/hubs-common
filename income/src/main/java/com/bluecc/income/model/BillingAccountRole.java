@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.BillingAccountRoleData;
 @REntity
 @MessageObject(value = BillingAccountRoleData.class,
         symbol = EntityNames.BillingAccountRole)
-public class BillingAccountRole implements IEventModel<BillingAccountRoleData.Builder>, Serializable {
+public class BillingAccountRole implements IEventModel<BillingAccountRoleData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String billingAccountId;
@@ -95,3 +96,24 @@ public class BillingAccountRole implements IEventModel<BillingAccountRoleData.Bu
 
     
 }
+
+
+/*
+-- keys: billingAccountId, partyId, roleTypeId, fromDate
+
+-- fields --
+    
+    String billingAccountId
+    String partyId
+    String roleTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - BillingAccount (one, autoRelation: false, keymaps: billingAccountId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one-nofk, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one, autoRelation: false, keymaps: partyId, roleTypeId)
+*/
+

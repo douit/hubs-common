@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -150,3 +151,35 @@ public class ShipmentPackageRouteSeg implements IEventModel<ShipmentPackageRoute
 
     
 }
+
+
+/*
+-- keys: shipmentId, shipmentPackageSeqId, shipmentRouteSegmentId
+
+-- fields --
+    
+    String shipmentId
+    String shipmentPackageSeqId
+    String shipmentRouteSegmentId
+    String trackingCode
+    String boxNumber
+    byte[] labelImage
+    byte[] labelIntlSignImage
+    String labelHtml
+    Character labelPrinted
+    byte[] internationalInvoice
+    java.math.BigDecimal packageTransportCost
+    java.math.BigDecimal packageServiceCost
+    java.math.BigDecimal packageOtherCost
+    java.math.BigDecimal codAmount
+    java.math.BigDecimal insuredAmount
+    String currencyUomId
+
+-- relations --
+    
+    - ShipmentPackage (one, autoRelation: false, keymaps: shipmentId, shipmentPackageSeqId)
+    - Shipment (one-nofk, autoRelation: false, keymaps: shipmentId)
+    - ShipmentRouteSegment (one, autoRelation: false, keymaps: shipmentId, shipmentRouteSegmentId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+*/
+

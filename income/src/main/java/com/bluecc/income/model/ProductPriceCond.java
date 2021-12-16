@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,23 @@ public class ProductPriceCond implements IEventModel<ProductPriceCondData.Builde
 
     
 }
+
+
+/*
+-- keys: productPriceRuleId, productPriceCondSeqId
+
+-- fields --
+    
+    String productPriceRuleId
+    String productPriceCondSeqId
+    String inputParamEnumId
+    String operatorEnumId
+    String condValue
+
+-- relations --
+    
+    - ProductPriceRule (one, autoRelation: false, keymaps: productPriceRuleId)
+    - InputParamEnumeration (one, autoRelation: false, keymaps: inputParamEnumId -> enumId)
+    - OperatorEnumeration (one, autoRelation: false, keymaps: operatorEnumId -> enumId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.InventoryItemDetailData;
 @REntity
 @MessageObject(value = InventoryItemDetailData.class,
         symbol = EntityNames.InventoryItemDetail)
-public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.Builder>, Serializable {
+public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RIndex String inventoryItemId;
@@ -180,3 +181,48 @@ public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.
 
     
 }
+
+
+/*
+-- keys: inventoryItemId, inventoryItemDetailSeqId
+
+-- fields --
+    
+    String inventoryItemId
+    String inventoryItemDetailSeqId
+    java.time.LocalDateTime effectiveDate
+    java.math.BigDecimal quantityOnHandDiff
+    java.math.BigDecimal availableToPromiseDiff
+    java.math.BigDecimal accountingQuantityDiff
+    java.math.BigDecimal unitCost
+    String orderId
+    String orderItemSeqId
+    String shipGroupSeqId
+    String shipmentId
+    String shipmentItemSeqId
+    String returnId
+    String returnItemSeqId
+    String workEffortId
+    String fixedAssetId
+    String maintHistSeqId
+    String itemIssuanceId
+    String receiptId
+    String physicalInventoryId
+    String reasonEnumId
+    String description
+
+-- relations --
+    
+    - InventoryItem (one, autoRelation: false, keymaps: inventoryItemId)
+    - WorkEffort (one, autoRelation: false, keymaps: workEffortId)
+    - OrderItemShipGrpInvRes (one-nofk, autoRelation: false, keymaps: orderId, orderItemSeqId, shipGroupSeqId, inventoryItemId)
+    - FixedAssetMaint (one, autoRelation: false, keymaps: fixedAssetId, maintHistSeqId)
+    - ItemIssuance (one, autoRelation: false, keymaps: itemIssuanceId)
+    - WorkEffortInventoryAssign (one-nofk, autoRelation: false, keymaps: workEffortId, inventoryItemId)
+    - WorkEffortInventoryProduced (one-nofk, autoRelation: false, keymaps: workEffortId, inventoryItemId)
+    - ShipmentReceipt (one, autoRelation: false, keymaps: receiptId)
+    - PhysicalInventory (one, autoRelation: false, keymaps: physicalInventoryId)
+    - ReasonEnumeration (one, autoRelation: false, keymaps: reasonEnumId -> enumId)
+    - InventoryItemVariance (one-nofk, autoRelation: false, keymaps: inventoryItemId, physicalInventoryId)
+*/
+

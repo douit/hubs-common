@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = InvoiceData.class,
         symbol = EntityNames.Invoice)
-public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializable {
+public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String invoiceId;
@@ -229,3 +230,58 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializab
     }
 
 }
+
+
+/*
+-- keys: invoiceId
+
+-- fields --
+    
+    String invoiceId
+    String invoiceTypeId
+    String partyIdFrom
+    String partyId
+    String roleTypeId
+    String statusId
+    String billingAccountId
+    String contactMechId
+    java.time.LocalDateTime invoiceDate
+    java.time.LocalDateTime dueDate
+    java.time.LocalDateTime paidDate
+    String invoiceMessage
+    String referenceNumber
+    String description
+    String currencyUomId
+    String recurrenceInfoId
+
+-- relations --
+    
+    - InvoiceType (one, autoRelation: false, keymaps: invoiceTypeId)
+    + InvoiceTypeAttr (many, autoRelation: false, keymaps: invoiceTypeId)
+    - FromParty (one, autoRelation: false, keymaps: partyIdFrom -> partyId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one-nofk, autoRelation: false, keymaps: partyId, roleTypeId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - BillingAccount (one, autoRelation: false, keymaps: billingAccountId)
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - RecurrenceInfo (one, autoRelation: false, keymaps: recurrenceInfoId)
+    + AcctgTrans (many, autoRelation: true, keymaps: invoiceId)
+    + InvoiceAttribute (many, autoRelation: true, keymaps: invoiceId)
+    + InvoiceContactMech (many, autoRelation: true, keymaps: invoiceId)
+    + InvoiceContent (many, autoRelation: true, keymaps: invoiceId)
+    + InvoiceItem (many, autoRelation: true, keymaps: invoiceId)
+    + InvoiceNote (many, autoRelation: true, keymaps: invoiceId)
+    + InvoiceRole (many, autoRelation: true, keymaps: invoiceId)
+    + InvoiceStatus (many, autoRelation: true, keymaps: invoiceId)
+    + InvoiceTerm (many, autoRelation: true, keymaps: invoiceId)
+    + OrderAdjustmentBilling (many, autoRelation: true, keymaps: invoiceId)
+    + OrderItemBilling (many, autoRelation: true, keymaps: invoiceId)
+    + PaymentApplication (many, autoRelation: true, keymaps: invoiceId)
+    + ReturnItemBilling (many, autoRelation: true, keymaps: invoiceId)
+    + ShipmentItemBilling (many, autoRelation: true, keymaps: invoiceId)
+    + TimeEntry (many, autoRelation: true, keymaps: invoiceId)
+    + WorkEffortBilling (many, autoRelation: true, keymaps: invoiceId)
+*/
+

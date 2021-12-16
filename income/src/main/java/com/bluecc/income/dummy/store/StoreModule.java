@@ -1,6 +1,7 @@
 package com.bluecc.income.dummy.store;
 
 import com.bluecc.income.helper.TenantHubs;
+import com.bluecc.income.helper.TenantId;
 import com.bluecc.income.helper.TestHubs;
 import com.bluecc.hubs.fund.tenant.Tenants;
 import com.google.inject.AbstractModule;
@@ -27,6 +28,8 @@ public class StoreModule extends AbstractFacModule {
                 .to(MysqlTestFac.class);
         bind(IDataSourceFac.class).annotatedWith(TenantHubs.class)
                 .to(MysqlFac.class);
+        bind(String.class).annotatedWith(TenantId.class)
+                .toInstance(this.tenant);
 
         try {
             Tenants tenants = Tenants.load();

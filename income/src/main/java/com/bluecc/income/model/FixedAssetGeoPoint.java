@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.FixedAssetGeoPointData;
 @REntity
 @MessageObject(value = FixedAssetGeoPointData.class,
         symbol = EntityNames.FixedAssetGeoPoint)
-public class FixedAssetGeoPoint implements IEventModel<FixedAssetGeoPointData.Builder>, Serializable {
+public class FixedAssetGeoPoint implements IEventModel<FixedAssetGeoPointData.Builder>, Serializable, WithLocation, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String fixedAssetId;
@@ -90,3 +91,21 @@ public class FixedAssetGeoPoint implements IEventModel<FixedAssetGeoPointData.Bu
 
     
 }
+
+
+/*
+-- keys: fixedAssetId, geoPointId, fromDate
+
+-- fields --
+    
+    String fixedAssetId
+    String geoPointId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - FixedAsset (one, autoRelation: false, keymaps: fixedAssetId)
+    - GeoPoint (one, autoRelation: false, keymaps: geoPointId)
+*/
+

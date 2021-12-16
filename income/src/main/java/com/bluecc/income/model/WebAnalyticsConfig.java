@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -85,3 +86,20 @@ public class WebAnalyticsConfig implements IEventModel<WebAnalyticsConfigData.Bu
 
     
 }
+
+
+/*
+-- keys: webSiteId, webAnalyticsTypeId
+
+-- fields --
+    
+    String webSiteId
+    String webAnalyticsTypeId
+    String webAnalyticsCode
+
+-- relations --
+    
+    - WebAnalyticsType (one-nofk, autoRelation: false, keymaps: webAnalyticsTypeId)
+    - WebSite (one-nofk, autoRelation: false, keymaps: webSiteId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductPromoCodeData;
 @REntity
 @MessageObject(value = ProductPromoCodeData.class,
         symbol = EntityNames.ProductPromoCode)
-public class ProductPromoCode implements IEventModel<ProductPromoCodeData.Builder>, Serializable {
+public class ProductPromoCode implements IEventModel<ProductPromoCodeData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String productPromoCodeId;
@@ -125,3 +126,36 @@ public class ProductPromoCode implements IEventModel<ProductPromoCodeData.Builde
 
     
 }
+
+
+/*
+-- keys: productPromoCodeId
+
+-- fields --
+    
+    String productPromoCodeId
+    String productPromoId
+    Character userEntered
+    Character requireEmailOrParty
+    Long useLimitPerCode
+    Long useLimitPerCustomer
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - ProductPromo (one, autoRelation: false, keymaps: productPromoId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - LastModifiedByUserLogin (one, autoRelation: false, keymaps: lastModifiedByUserLogin -> userLoginId)
+    + OldProductPromoCodeEmail (many, autoRelation: true, keymaps: productPromoCodeId)
+    + OrderProductPromoCode (many, autoRelation: true, keymaps: productPromoCodeId)
+    + ProdPromoCodeContactMech (many, autoRelation: true, keymaps: productPromoCodeId)
+    + ProductPromoCodeParty (many, autoRelation: true, keymaps: productPromoCodeId)
+    + ProductPromoUse (many, autoRelation: true, keymaps: productPromoCodeId)
+    + ShoppingList (many, autoRelation: true, keymaps: productPromoCodeId)
+*/
+

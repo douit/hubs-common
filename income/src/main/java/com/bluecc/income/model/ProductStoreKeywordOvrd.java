@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductStoreKeywordOvrdData;
 @REntity
 @MessageObject(value = ProductStoreKeywordOvrdData.class,
         symbol = EntityNames.ProductStoreKeywordOvrd)
-public class ProductStoreKeywordOvrd implements IEventModel<ProductStoreKeywordOvrdData.Builder>, Serializable {
+public class ProductStoreKeywordOvrd implements IEventModel<ProductStoreKeywordOvrdData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productStoreId;
@@ -100,3 +101,23 @@ public class ProductStoreKeywordOvrd implements IEventModel<ProductStoreKeywordO
 
     
 }
+
+
+/*
+-- keys: productStoreId, keyword, fromDate
+
+-- fields --
+    
+    String productStoreId
+    String keyword
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String target
+    String targetTypeEnumId
+
+-- relations --
+    
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - Enumeration (one, autoRelation: false, keymaps: targetTypeEnumId -> enumId)
+*/
+

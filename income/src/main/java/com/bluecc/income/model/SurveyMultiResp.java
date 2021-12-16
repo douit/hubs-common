@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -85,3 +86,21 @@ public class SurveyMultiResp implements IEventModel<SurveyMultiRespData.Builder>
 
     
 }
+
+
+/*
+-- keys: surveyId, surveyMultiRespId
+
+-- fields --
+    
+    String surveyId
+    String surveyMultiRespId
+    String multiRespTitle
+
+-- relations --
+    
+    - Survey (one, autoRelation: false, keymaps: surveyId)
+    + SurveyMultiRespColumn (many, autoRelation: true, keymaps: surveyId, surveyMultiRespId)
+    + SurveyQuestionAppl (many, autoRelation: true, keymaps: surveyId, surveyMultiRespId)
+*/
+

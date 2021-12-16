@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.FacilityLocationData;
 @REntity
 @MessageObject(value = FacilityLocationData.class,
         symbol = EntityNames.FacilityLocation)
-public class FacilityLocation implements IEventModel<FacilityLocationData.Builder>, Serializable {
+public class FacilityLocation implements IEventModel<FacilityLocationData.Builder>, Serializable, WithLocation {
     private static final long serialVersionUID = 1L;
 
     @RIndex String facilityId;
@@ -115,3 +116,33 @@ public class FacilityLocation implements IEventModel<FacilityLocationData.Builde
 
     
 }
+
+
+/*
+-- keys: facilityId, locationSeqId
+
+-- fields --
+    
+    String facilityId
+    String locationSeqId
+    String locationTypeEnumId
+    String areaId
+    String aisleId
+    String sectionId
+    String levelId
+    String positionId
+    String geoPointId
+
+-- relations --
+    
+    - Facility (one, autoRelation: false, keymaps: facilityId)
+    - TypeEnumeration (one, autoRelation: false, keymaps: locationTypeEnumId -> enumId)
+    - GeoPoint (one, autoRelation: false, keymaps: geoPointId)
+    + FacilityLocationGeoPoint (many, autoRelation: true, keymaps: facilityId, locationSeqId)
+    + LocatedAtFixedAsset (many, autoRelation: true, keymaps: facilityId -> locatedAtFacilityId, locationSeqId -> locatedAtLocationSeqId)
+    + InventoryItem (many, autoRelation: true, keymaps: facilityId, locationSeqId)
+    + InventoryTransfer (many, autoRelation: true, keymaps: facilityId, locationSeqId)
+    + ToInventoryTransfer (many, autoRelation: true, keymaps: facilityId -> facilityIdTo, locationSeqId -> locationSeqIdTo)
+    + ProductFacilityLocation (many, autoRelation: true, keymaps: facilityId, locationSeqId)
+*/
+

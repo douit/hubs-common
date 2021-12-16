@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -110,3 +111,30 @@ public class ProductPromoCond implements IEventModel<ProductPromoCondData.Builde
 
     
 }
+
+
+/*
+-- keys: productPromoId, productPromoRuleId, productPromoCondSeqId
+
+-- fields --
+    
+    String productPromoId
+    String productPromoRuleId
+    String productPromoCondSeqId
+    String customMethodId
+    String inputParamEnumId
+    String operatorEnumId
+    String condValue
+    String otherValue
+
+-- relations --
+    
+    - ProductPromo (one, autoRelation: false, keymaps: productPromoId)
+    - ProductPromoRule (one, autoRelation: false, keymaps: productPromoId, productPromoRuleId)
+    - CustomMethod (one, autoRelation: false, keymaps: customMethodId)
+    - InputParamEnumeration (one, autoRelation: false, keymaps: inputParamEnumId -> enumId)
+    - OperatorEnumeration (one, autoRelation: false, keymaps: operatorEnumId -> enumId)
+    + ProductPromoCategory (many, autoRelation: false, keymaps: productPromoId, productPromoRuleId, productPromoCondSeqId)
+    + ProductPromoProduct (many, autoRelation: false, keymaps: productPromoId, productPromoRuleId, productPromoCondSeqId)
+*/
+

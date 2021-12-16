@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -207,6 +208,8 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
     @Exclude
     List<OrderItem> relAcquireOrderItem= new ArrayList<>(); 
     @Exclude
+    List<Facility> relLocatedAtFacility= new ArrayList<>(); 
+    @Exclude
     List<FacilityLocation> relLocatedAtFacilityLocation= new ArrayList<>(); 
     @Exclude
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
@@ -216,6 +219,10 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
     List<FixedAssetGeoPoint> relFixedAssetGeoPoint= new ArrayList<>(); 
     @Exclude
     List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
+    @Exclude
+    List<FixedAssetRegistration> relFixedAssetRegistration= new ArrayList<>(); 
+    @Exclude
+    List<FixedAssetStdCost> relFixedAssetStdCost= new ArrayList<>(); 
     @Exclude
     List<InventoryItem> relFixedAssetInventoryItem= new ArrayList<>(); 
     @Exclude
@@ -299,3 +306,75 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Seri
     }
 
 }
+
+
+/*
+-- keys: fixedAssetId
+
+-- fields --
+    
+    String fixedAssetId
+    String fixedAssetTypeId
+    String parentFixedAssetId
+    String instanceOfProductId
+    String classEnumId
+    String partyId
+    String roleTypeId
+    String fixedAssetName
+    String acquireOrderId
+    String acquireOrderItemSeqId
+    java.time.LocalDateTime dateAcquired
+    java.time.LocalDateTime dateLastServiced
+    java.time.LocalDateTime dateNextService
+    java.time.LocalDate expectedEndOfLife
+    java.time.LocalDate actualEndOfLife
+    java.math.BigDecimal productionCapacity
+    String uomId
+    String calendarId
+    String serialNumber
+    String locatedAtFacilityId
+    String locatedAtLocationSeqId
+    java.math.BigDecimal salvageValue
+    java.math.BigDecimal depreciation
+    java.math.BigDecimal purchaseCost
+    String purchaseCostUomId
+
+-- relations --
+    
+    - FixedAssetType (one, autoRelation: false, keymaps: fixedAssetTypeId)
+    + FixedAssetTypeAttr (many, autoRelation: false, keymaps: fixedAssetTypeId)
+    - ParentFixedAsset (one, autoRelation: false, keymaps: parentFixedAssetId -> fixedAssetId)
+    - InstanceOfProduct (one, autoRelation: false, keymaps: instanceOfProductId -> productId)
+    - ClassEnumeration (one, autoRelation: false, keymaps: classEnumId -> enumId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one-nofk, autoRelation: false, keymaps: partyId, roleTypeId)
+    - AcquireOrderHeader (one, autoRelation: false, keymaps: acquireOrderId -> orderId)
+    - AcquireOrderItem (one, autoRelation: false, keymaps: acquireOrderId -> orderId, acquireOrderItemSeqId -> orderItemSeqId)
+    - Uom (one, autoRelation: false, keymaps: uomId)
+    - TechDataCalendar (one, autoRelation: false, keymaps: calendarId)
+    - LocatedAtFacility (one, autoRelation: false, keymaps: locatedAtFacilityId -> facilityId)
+    - LocatedAtFacilityLocation (one-nofk, autoRelation: false, keymaps: locatedAtFacilityId -> facilityId, locatedAtLocationSeqId -> locationSeqId)
+    + AccommodationMap (many, autoRelation: true, keymaps: fixedAssetId)
+    + AccommodationSpot (many, autoRelation: true, keymaps: fixedAssetId)
+    + AcctgTrans (many, autoRelation: true, keymaps: fixedAssetId)
+    + CostComponent (many, autoRelation: true, keymaps: fixedAssetId)
+    + Delivery (many, autoRelation: true, keymaps: fixedAssetId)
+    + ChildFixedAsset (many, autoRelation: true, keymaps: fixedAssetId -> parentFixedAssetId)
+    + FixedAssetAttribute (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetDepMethod (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetGeoPoint (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetIdent (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetMaint (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetMaintOrder (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetProduct (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetRegistration (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetStdCost (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetTypeGlAccount (many, autoRelation: true, keymaps: fixedAssetId)
+    + FixedAssetInventoryItem (many, autoRelation: true, keymaps: fixedAssetId)
+    + PartyFixedAssetAssignment (many, autoRelation: true, keymaps: fixedAssetId)
+    + Requirement (many, autoRelation: true, keymaps: fixedAssetId)
+    + WorkEffort (many, autoRelation: true, keymaps: fixedAssetId)
+    + WorkEffortFixedAssetAssign (many, autoRelation: true, keymaps: fixedAssetId)
+*/
+

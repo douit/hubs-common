@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -140,3 +141,47 @@ public class ProductPromo implements IEventModel<ProductPromoData.Builder>, Seri
 
     
 }
+
+
+/*
+-- keys: productPromoId
+
+-- fields --
+    
+    String productPromoId
+    String promoName
+    String promoText
+    Character userEntered
+    Character showToCustomer
+    Character requireCode
+    Long useLimitPerOrder
+    Long useLimitPerCustomer
+    Long useLimitPerPromotion
+    java.math.BigDecimal billbackFactor
+    String overrideOrgPartyId
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - Party (one, autoRelation: false, keymaps: overrideOrgPartyId -> partyId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - LastModifiedByUserLogin (one, autoRelation: false, keymaps: lastModifiedByUserLogin -> userLoginId)
+    + AgreementPromoAppl (many, autoRelation: true, keymaps: productPromoId)
+    + MarketingCampaignPromo (many, autoRelation: true, keymaps: productPromoId)
+    + OrderAdjustment (many, autoRelation: true, keymaps: productPromoId)
+    + ProductPromoAction (many, autoRelation: true, keymaps: productPromoId)
+    + ProductPromoCategory (many, autoRelation: true, keymaps: productPromoId)
+    + ProductPromoCode (many, autoRelation: true, keymaps: productPromoId)
+    + ProductPromoCond (many, autoRelation: true, keymaps: productPromoId)
+    + ProductPromoContent (many, autoRelation: true, keymaps: productPromoId)
+    + ProductPromoProduct (many, autoRelation: true, keymaps: productPromoId)
+    + ProductPromoRule (many, autoRelation: true, keymaps: productPromoId)
+    + ProductPromoUse (many, autoRelation: true, keymaps: productPromoId)
+    + ProductStorePromoAppl (many, autoRelation: true, keymaps: productPromoId)
+    + QuoteAdjustment (many, autoRelation: true, keymaps: productPromoId)
+    + ReturnAdjustment (many, autoRelation: true, keymaps: productPromoId)
+*/
+

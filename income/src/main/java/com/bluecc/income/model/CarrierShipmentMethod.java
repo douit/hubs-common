@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,28 @@ public class CarrierShipmentMethod implements IEventModel<CarrierShipmentMethodD
 
     
 }
+
+
+/*
+-- keys: shipmentMethodTypeId, partyId, roleTypeId
+
+-- fields --
+    
+    String shipmentMethodTypeId
+    String partyId
+    String roleTypeId
+    Long sequenceNumber
+    String carrierServiceCode
+
+-- relations --
+    
+    - ShipmentMethodType (one, autoRelation: false, keymaps: shipmentMethodTypeId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - PartyRole (one, autoRelation: false, keymaps: partyId, roleTypeId)
+    + FacilityCarrierShipment (many, autoRelation: true, keymaps: shipmentMethodTypeId, partyId, roleTypeId)
+    + OrderItemShipGroup (many, autoRelation: true, keymaps: shipmentMethodTypeId, partyId -> carrierPartyId, roleTypeId -> carrierRoleTypeId)
+    + ShipmentCostEstimate (many, autoRelation: true, keymaps: shipmentMethodTypeId, partyId -> carrierPartyId, roleTypeId -> carrierRoleTypeId)
+    + ShipmentTimeEstimate (many, autoRelation: true, keymaps: shipmentMethodTypeId, partyId, roleTypeId)
+    + ShoppingList (many, autoRelation: true, keymaps: shipmentMethodTypeId, partyId -> carrierPartyId, roleTypeId -> carrierRoleTypeId)
+*/
+

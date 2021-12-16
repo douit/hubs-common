@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -80,3 +81,61 @@ public class ContactMech implements IEventModel<ContactMechData.Builder>, Serial
 
     
 }
+
+
+/*
+-- keys: contactMechId
+
+-- fields --
+    
+    String contactMechId
+    String contactMechTypeId
+    String infoString
+
+-- relations --
+    
+    - ContactMechType (one, autoRelation: false, keymaps: contactMechTypeId)
+    + ContactMechTypeAttr (many, autoRelation: false, keymaps: contactMechTypeId)
+    + BillingAccount (many, autoRelation: true, keymaps: contactMechId)
+    + CheckAccount (many, autoRelation: true, keymaps: contactMechId)
+    + FromCommunicationEvent (many, autoRelation: true, keymaps: contactMechId -> contactMechIdFrom)
+    + ToCommunicationEvent (many, autoRelation: true, keymaps: contactMechId -> contactMechIdTo)
+    + CommunicationEventRole (many, autoRelation: true, keymaps: contactMechId)
+    + ContactListCommStatus (many, autoRelation: true, keymaps: contactMechId)
+    + PreferredContactListParty (many, autoRelation: true, keymaps: contactMechId -> preferredContactMechId)
+    + ContactMechAttribute (many, autoRelation: true, keymaps: contactMechId)
+    + FromContactMechLink (many, autoRelation: true, keymaps: contactMechId -> contactMechIdFrom)
+    + ToContactMechLink (many, autoRelation: true, keymaps: contactMechId -> contactMechIdTo)
+    + CreditCard (many, autoRelation: true, keymaps: contactMechId)
+    + FulfillCustRequest (many, autoRelation: true, keymaps: contactMechId -> fulfillContactMechId)
+    + EftAccount (many, autoRelation: true, keymaps: contactMechId)
+    + FacilityContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + FacilityContactMechPurpose (many, autoRelation: true, keymaps: contactMechId)
+    - FtpAddress (one-nofk, autoRelation: true, keymaps: contactMechId)
+    + GiftCard (many, autoRelation: true, keymaps: contactMechId)
+    + Invoice (many, autoRelation: true, keymaps: contactMechId)
+    + InvoiceContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + OrderContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + OrderItemContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + OrderItemShipGroup (many, autoRelation: true, keymaps: contactMechId)
+    + TelecomOrderItemShipGroup (many, autoRelation: true, keymaps: contactMechId -> telecomContactMechId)
+    + PartyContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + PartyContactMechPurpose (many, autoRelation: true, keymaps: contactMechId)
+    + PayPalPaymentMethod (many, autoRelation: true, keymaps: contactMechId)
+    - PostalAddress (one-nofk, autoRelation: true, keymaps: contactMechId)
+    + ProdPromoCodeContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + RespondingParty (many, autoRelation: true, keymaps: contactMechId)
+    + ReturnContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + ReturnHeader (many, autoRelation: true, keymaps: contactMechId -> originContactMechId)
+    + OriginShipment (many, autoRelation: true, keymaps: contactMechId -> originContactMechId)
+    + DestShipment (many, autoRelation: true, keymaps: contactMechId -> destinationContactMechId)
+    + ShipmentContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + OriginShipmentRouteSegment (many, autoRelation: true, keymaps: contactMechId -> originContactMechId)
+    + DestShipmentRouteSegment (many, autoRelation: true, keymaps: contactMechId -> destContactMechId)
+    + ShoppingList (many, autoRelation: true, keymaps: contactMechId)
+    + Subscription (many, autoRelation: true, keymaps: contactMechId)
+    - TelecomNumber (one-nofk, autoRelation: true, keymaps: contactMechId)
+    + WorkEffortContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + WorkEffortEventReminder (many, autoRelation: true, keymaps: contactMechId)
+*/
+

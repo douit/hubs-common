@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -85,3 +86,23 @@ public class QuantityBreak implements IEventModel<QuantityBreakData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: quantityBreakId
+
+-- fields --
+    
+    String quantityBreakId
+    String quantityBreakTypeId
+    java.math.BigDecimal fromQuantity
+    java.math.BigDecimal thruQuantity
+
+-- relations --
+    
+    - QuantityBreakType (one, autoRelation: false, keymaps: quantityBreakTypeId)
+    + WeightShipmentCostEstimate (many, autoRelation: true, keymaps: quantityBreakId -> weightBreakId)
+    + QuantityShipmentCostEstimate (many, autoRelation: true, keymaps: quantityBreakId)
+    + PriceShipmentCostEstimate (many, autoRelation: true, keymaps: quantityBreakId -> priceBreakId)
+*/
+

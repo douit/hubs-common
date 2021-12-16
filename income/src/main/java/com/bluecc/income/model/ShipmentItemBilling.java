@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,23 @@ public class ShipmentItemBilling implements IEventModel<ShipmentItemBillingData.
 
     
 }
+
+
+/*
+-- keys: shipmentId, shipmentItemSeqId, invoiceId, invoiceItemSeqId
+
+-- fields --
+    
+    String shipmentId
+    String shipmentItemSeqId
+    String invoiceId
+    String invoiceItemSeqId
+
+-- relations --
+    
+    - Shipment (one-nofk, autoRelation: false, keymaps: shipmentId)
+    - ShipmentItem (one, autoRelation: false, keymaps: shipmentId, shipmentItemSeqId)
+    - Invoice (one-nofk, autoRelation: false, keymaps: invoiceId)
+    - InvoiceItem (one, autoRelation: false, keymaps: invoiceId, invoiceItemSeqId)
+*/
+

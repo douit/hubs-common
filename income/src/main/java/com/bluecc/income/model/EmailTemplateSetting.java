@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.EmailTemplateSettingData;
 @REntity
 @MessageObject(value = EmailTemplateSettingData.class,
         symbol = EntityNames.EmailTemplateSetting)
-public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingData.Builder>, Serializable {
+public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String emailTemplateSettingId;
@@ -115,3 +116,26 @@ public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingDat
 
     
 }
+
+
+/*
+-- keys: emailTemplateSettingId
+
+-- fields --
+    
+    String emailTemplateSettingId
+    String emailType
+    String description
+    String bodyScreenLocation
+    String xslfoAttachScreenLocation
+    String fromAddress
+    String ccAddress
+    String bccAddress
+    String subject
+    String contentType
+
+-- relations --
+    
+    - Enumeration (one, autoRelation: false, keymaps: emailType -> enumId)
+*/
+

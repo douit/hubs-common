@@ -351,6 +351,25 @@ public class EntityMeta {
         return "";
     }
 
+    public String getFacets(){
+        List<String> facets=Lists.newArrayList("Serializable");
+        if(getField("geoPointId").isPresent()){
+            facets.add("WithLocation");
+        }
+        // tempExprId
+        if(getField("tempExprId").isPresent()){
+            facets.add("WithSchedule");
+        }
+        // WithDescription
+        if(getField("description").isPresent()){
+            facets.add("WithDescription");
+        }
+        Set<String> periodFields= Sets.newHashSet("fromDate", "thruDate");
+        if(getFieldNames().containsAll(periodFields)){
+            facets.add("WithPeriod");
+        }
+        return String.join(", ", facets);
+    }
 
     @Data
     @Builder

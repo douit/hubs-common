@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.WebSiteContentData;
 @REntity
 @MessageObject(value = WebSiteContentData.class,
         symbol = EntityNames.WebSiteContent)
-public class WebSiteContent implements IEventModel<WebSiteContentData.Builder>, Serializable {
+public class WebSiteContent implements IEventModel<WebSiteContentData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String webSiteId;
@@ -95,3 +96,23 @@ public class WebSiteContent implements IEventModel<WebSiteContentData.Builder>, 
 
     
 }
+
+
+/*
+-- keys: webSiteId, contentId, webSiteContentTypeId, fromDate
+
+-- fields --
+    
+    String webSiteId
+    String contentId
+    String webSiteContentTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - WebSite (one, autoRelation: false, keymaps: webSiteId)
+    - Content (one, autoRelation: false, keymaps: contentId)
+    - WebSiteContentType (one, autoRelation: false, keymaps: webSiteContentTypeId)
+*/
+

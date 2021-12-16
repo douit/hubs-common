@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.WorkEffortAssocData;
 @REntity
 @MessageObject(value = WorkEffortAssocData.class,
         symbol = EntityNames.WorkEffortAssoc)
-public class WorkEffortAssoc implements IEventModel<WorkEffortAssocData.Builder>, Serializable {
+public class WorkEffortAssoc implements IEventModel<WorkEffortAssocData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String workEffortIdFrom;
@@ -100,3 +101,26 @@ public class WorkEffortAssoc implements IEventModel<WorkEffortAssocData.Builder>
 
     
 }
+
+
+/*
+-- keys: workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate
+
+-- fields --
+    
+    String workEffortIdFrom
+    String workEffortIdTo
+    String workEffortAssocTypeId
+    Long sequenceNum
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - WorkEffortAssocType (one, autoRelation: false, keymaps: workEffortAssocTypeId)
+    + WorkEffortAssocTypeAttr (many, autoRelation: false, keymaps: workEffortAssocTypeId)
+    - FromWorkEffort (one, autoRelation: false, keymaps: workEffortIdFrom -> workEffortId)
+    - ToWorkEffort (one, autoRelation: false, keymaps: workEffortIdTo -> workEffortId)
+    + WorkEffortAssocAttribute (many, autoRelation: true, keymaps: workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate)
+*/
+

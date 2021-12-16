@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,21 @@ public class TenantDataSource implements IEventModel<TenantDataSourceData.Builde
 
     
 }
+
+
+/*
+-- keys: tenantId, entityGroupName
+
+-- fields --
+    
+    String tenantId
+    String entityGroupName
+    String jdbcUri
+    String jdbcUsername
+    String jdbcPassword
+
+-- relations --
+    
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
+*/
+

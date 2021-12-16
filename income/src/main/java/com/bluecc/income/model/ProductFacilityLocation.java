@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,24 @@ public class ProductFacilityLocation implements IEventModel<ProductFacilityLocat
 
     
 }
+
+
+/*
+-- keys: productId, facilityId, locationSeqId
+
+-- fields --
+    
+    String productId
+    String facilityId
+    String locationSeqId
+    java.math.BigDecimal minimumStock
+    java.math.BigDecimal moveQuantity
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - Facility (one-nofk, autoRelation: false, keymaps: facilityId)
+    - FacilityLocation (one, autoRelation: false, keymaps: facilityId, locationSeqId)
+    + InventoryItem (many, autoRelation: true, keymaps: productId, facilityId, locationSeqId)
+*/
+

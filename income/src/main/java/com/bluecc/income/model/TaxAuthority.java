@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,32 @@ public class TaxAuthority implements IEventModel<TaxAuthorityData.Builder>, Seri
 
     
 }
+
+
+/*
+-- keys: taxAuthGeoId, taxAuthPartyId
+
+-- fields --
+    
+    String taxAuthGeoId
+    String taxAuthPartyId
+    Character requireTaxIdForExemption
+    String taxIdFormatPattern
+    Character includeTaxInPrice
+
+-- relations --
+    
+    - TaxAuthGeo (one, autoRelation: false, keymaps: taxAuthGeoId -> geoId)
+    - TaxAuthParty (one, autoRelation: false, keymaps: taxAuthPartyId -> partyId)
+    + OrderAdjustment (many, autoRelation: true, keymaps: taxAuthGeoId, taxAuthPartyId)
+    + PartyTaxAuthInfo (many, autoRelation: true, keymaps: taxAuthGeoId, taxAuthPartyId)
+    + VatProductStore (many, autoRelation: true, keymaps: taxAuthGeoId -> vatTaxAuthGeoId, taxAuthPartyId -> vatTaxAuthPartyId)
+    + QuoteAdjustment (many, autoRelation: true, keymaps: taxAuthGeoId, taxAuthPartyId)
+    + ReturnAdjustment (many, autoRelation: true, keymaps: taxAuthGeoId, taxAuthPartyId)
+    + TaxAuthorityAssoc (many, autoRelation: true, keymaps: taxAuthGeoId, taxAuthPartyId)
+    + ToTaxAuthorityAssoc (many, autoRelation: true, keymaps: taxAuthGeoId -> toTaxAuthGeoId, taxAuthPartyId -> toTaxAuthPartyId)
+    + TaxAuthorityCategory (many, autoRelation: true, keymaps: taxAuthGeoId, taxAuthPartyId)
+    + TaxAuthorityGlAccount (many, autoRelation: true, keymaps: taxAuthGeoId, taxAuthPartyId)
+    + TaxAuthorityRateProduct (many, autoRelation: true, keymaps: taxAuthGeoId, taxAuthPartyId)
+*/
+

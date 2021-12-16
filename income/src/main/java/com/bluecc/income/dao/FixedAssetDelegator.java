@@ -229,6 +229,36 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "laf")
+        default Map<String, FixedAsset> chainLocatedAtFacility(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainLocatedAtFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "laf")
+        default Map<String, FixedAsset> chainLocatedAtFacility(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(LOCATED_AT_FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("laf_facility_id", String.class) != null) {
+                            p.getRelLocatedAtFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
         @RegisterBeanMapper(value = FacilityLocation.class, prefix = "lafl")
         default Map<String, FixedAsset> chainLocatedAtFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
@@ -379,6 +409,66 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "far")
+        default Map<String, FixedAsset> chainFixedAssetRegistration(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainFixedAssetRegistration(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "far")
+        default Map<String, FixedAsset> chainFixedAssetRegistration(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_REGISTRATION);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("far_fixed_asset_id", String.class) != null) {
+                            p.getRelFixedAssetRegistration()
+                                    .add(rr.getRow(FixedAssetRegistration.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetStdCost.class, prefix = "fasc")
+        default Map<String, FixedAsset> chainFixedAssetStdCost(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainFixedAssetStdCost(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAssetStdCost.class, prefix = "fasc")
+        default Map<String, FixedAsset> chainFixedAssetStdCost(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_STD_COST);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("fasc_fixed_asset_id", String.class) != null) {
+                            p.getRelFixedAssetStdCost()
+                                    .add(rr.getRow(FixedAssetStdCost.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "faii")
         default Map<String, FixedAsset> chainFixedAssetInventoryItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
@@ -507,6 +597,17 @@ public class FixedAssetDelegator extends AbstractProcs{
         return e -> dao.chainAcquireOrderItem(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, FixedAsset>> locatedAtFacility(Dao dao, boolean succ) {
+        return e -> dao.chainLocatedAtFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FixedAsset>> locatedAtFacility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainLocatedAtFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, FixedAsset>> locatedAtFacilityLocation(Dao dao, boolean succ) {
         return e -> dao.chainLocatedAtFacilityLocation(protoMeta, e, succ);
     }
@@ -560,6 +661,28 @@ public class FixedAssetDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetProduct(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, FixedAsset>> fixedAssetRegistration(Dao dao, boolean succ) {
+        return e -> dao.chainFixedAssetRegistration(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FixedAsset>> fixedAssetRegistration(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFixedAssetRegistration(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, FixedAsset>> fixedAssetStdCost(Dao dao, boolean succ) {
+        return e -> dao.chainFixedAssetStdCost(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FixedAsset>> fixedAssetStdCost(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFixedAssetStdCost(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, FixedAsset>> fixedAssetInventoryItem(Dao dao, boolean succ) {
@@ -686,6 +809,17 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<Facility> getLocatedAtFacility(){
+            return getRelationValues(ctx, p1, "located_at_facility", Facility.class);
+        }
+
+        public List<Facility> mergeLocatedAtFacility(){
+            return getLocatedAtFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelLocatedAtFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<FacilityLocation> getLocatedAtFacilityLocation(){
             return getRelationValues(ctx, p1, "located_at_facility_location", FacilityLocation.class);
         }
@@ -741,6 +875,28 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<FixedAssetRegistration> getFixedAssetRegistration(){
+            return getRelationValues(ctx, p1, "fixed_asset_registration", FixedAssetRegistration.class);
+        }
+
+        public List<FixedAssetRegistration> mergeFixedAssetRegistration(){
+            return getFixedAssetRegistration().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFixedAssetRegistration().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FixedAssetStdCost> getFixedAssetStdCost(){
+            return getRelationValues(ctx, p1, "fixed_asset_std_cost", FixedAssetStdCost.class);
+        }
+
+        public List<FixedAssetStdCost> mergeFixedAssetStdCost(){
+            return getFixedAssetStdCost().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFixedAssetStdCost().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<InventoryItem> getFixedAssetInventoryItem(){
             return getRelationValues(ctx, p1, "fixed_asset_inventory_item", InventoryItem.class);
         }
@@ -792,6 +948,8 @@ public class FixedAssetDelegator extends AbstractProcs{
          
     public static final String ACQUIRE_ORDER_ITEM="acquire_order_item";
          
+    public static final String LOCATED_AT_FACILITY="located_at_facility";
+         
     public static final String LOCATED_AT_FACILITY_LOCATION="located_at_facility_location";
          
     public static final String ACCTG_TRANS="acctg_trans";
@@ -801,6 +959,10 @@ public class FixedAssetDelegator extends AbstractProcs{
     public static final String FIXED_ASSET_GEO_POINT="fixed_asset_geo_point";
          
     public static final String FIXED_ASSET_PRODUCT="fixed_asset_product";
+         
+    public static final String FIXED_ASSET_REGISTRATION="fixed_asset_registration";
+         
+    public static final String FIXED_ASSET_STD_COST="fixed_asset_std_cost";
          
     public static final String FIXED_ASSET_INVENTORY_ITEM="fixed_asset_inventory_item";
          
@@ -867,6 +1029,14 @@ public class FixedAssetDelegator extends AbstractProcs{
                                              el.toHeadBuilder().build()));
                         }
                                                
+                        // add/set located_at_facility to head entity                        
+                        if(relationsDemand.contains("located_at_facility")) {
+                            getRelationValues(ctx, p1, "located_at_facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.setLocatedAtFacility(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set located_at_facility_location to head entity                        
                         if(relationsDemand.contains("located_at_facility_location")) {
                             getRelationValues(ctx, p1, "located_at_facility_location",
@@ -904,6 +1074,22 @@ public class FixedAssetDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "fixed_asset_product",
                                             FixedAssetProduct.class)
                                     .forEach(el -> pb.addFixedAssetProduct(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set fixed_asset_registration to head entity                        
+                        if(relationsDemand.contains("fixed_asset_registration")) {
+                            getRelationValues(ctx, p1, "fixed_asset_registration",
+                                            FixedAssetRegistration.class)
+                                    .forEach(el -> pb.addFixedAssetRegistration(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set fixed_asset_std_cost to head entity                        
+                        if(relationsDemand.contains("fixed_asset_std_cost")) {
+                            getRelationValues(ctx, p1, "fixed_asset_std_cost",
+                                            FixedAssetStdCost.class)
+                                    .forEach(el -> pb.addFixedAssetStdCost(
                                              el.toDataBuilder().build()));
                         }
                                                

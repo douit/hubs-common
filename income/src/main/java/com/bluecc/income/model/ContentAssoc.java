@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ContentAssocData;
 @REntity
 @MessageObject(value = ContentAssocData.class,
         symbol = EntityNames.ContentAssoc)
-public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, Serializable {
+public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String contentId;
@@ -145,3 +146,37 @@ public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, Seri
 
     
 }
+
+
+/*
+-- keys: contentId, contentIdTo, contentAssocTypeId, fromDate
+
+-- fields --
+    
+    String contentId
+    String contentIdTo
+    String contentAssocTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String contentAssocPredicateId
+    String dataSourceId
+    Long sequenceNum
+    String mapKey
+    Long upperCoordinate
+    Long leftCoordinate
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - FromContent (one, autoRelation: false, keymaps: contentId)
+    - ToContent (one, autoRelation: false, keymaps: contentIdTo -> contentId)
+    - ContentAssocType (one, autoRelation: false, keymaps: contentAssocTypeId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - LastModifiedByUserLogin (one, autoRelation: false, keymaps: lastModifiedByUserLogin -> userLoginId)
+    - ContentAssocPredicate (one, autoRelation: false, keymaps: contentAssocPredicateId)
+    - DataSource (one, autoRelation: false, keymaps: dataSourceId)
+*/
+

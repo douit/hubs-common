@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SurveyQuestionOptionData;
 @REntity
 @MessageObject(value = SurveyQuestionOptionData.class,
         symbol = EntityNames.SurveyQuestionOption)
-public class SurveyQuestionOption implements IEventModel<SurveyQuestionOptionData.Builder>, Serializable {
+public class SurveyQuestionOption implements IEventModel<SurveyQuestionOptionData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RIndex String surveyQuestionId;
@@ -115,3 +116,27 @@ public class SurveyQuestionOption implements IEventModel<SurveyQuestionOptionDat
 
     
 }
+
+
+/*
+-- keys: surveyQuestionId, surveyOptionSeqId
+
+-- fields --
+    
+    String surveyQuestionId
+    String surveyOptionSeqId
+    String description
+    Long sequenceNum
+    java.math.BigDecimal amountBase
+    String amountBaseUomId
+    Double weightFactor
+    Long duration
+    String durationUomId
+
+-- relations --
+    
+    - SurveyQuestion (one, autoRelation: false, keymaps: surveyQuestionId)
+    + WithSurveyQuestionAppl (many, autoRelation: true, keymaps: surveyQuestionId -> withSurveyQuestionId, surveyOptionSeqId -> withSurveyOptionSeqId)
+    + SurveyResponseAnswer (many, autoRelation: true, keymaps: surveyQuestionId, surveyOptionSeqId)
+*/
+

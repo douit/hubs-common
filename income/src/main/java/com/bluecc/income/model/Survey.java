@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SurveyData;
 @REntity
 @MessageObject(value = SurveyData.class,
         symbol = EntityNames.Survey)
-public class Survey implements IEventModel<SurveyData.Builder>, Serializable {
+public class Survey implements IEventModel<SurveyData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String surveyId;
@@ -115,3 +116,34 @@ public class Survey implements IEventModel<SurveyData.Builder>, Serializable {
 
     
 }
+
+
+/*
+-- keys: surveyId
+
+-- fields --
+    
+    String surveyId
+    String surveyName
+    String description
+    String comments
+    String submitCaption
+    String responseService
+    Character isAnonymous
+    Character allowMultiple
+    Character allowUpdate
+    String acroFormContentId
+
+-- relations --
+    
+    + DataResource (many, autoRelation: true, keymaps: surveyId)
+    + ProductStoreFinActSetting (many, autoRelation: true, keymaps: surveyId -> purchaseSurveyId)
+    + ProductStoreSurveyAppl (many, autoRelation: true, keymaps: surveyId)
+    + SurveyMultiResp (many, autoRelation: true, keymaps: surveyId)
+    + SurveyPage (many, autoRelation: true, keymaps: surveyId)
+    + SurveyQuestionAppl (many, autoRelation: true, keymaps: surveyId)
+    + SurveyResponse (many, autoRelation: true, keymaps: surveyId)
+    + SurveyTrigger (many, autoRelation: true, keymaps: surveyId)
+    + WorkEffortSurveyAppl (many, autoRelation: true, keymaps: surveyId)
+*/
+

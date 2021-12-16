@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductFeaturePriceData;
 @REntity
 @MessageObject(value = ProductFeaturePriceData.class,
         symbol = EntityNames.ProductFeaturePrice)
-public class ProductFeaturePrice implements IEventModel<ProductFeaturePriceData.Builder>, Serializable {
+public class ProductFeaturePrice implements IEventModel<ProductFeaturePriceData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productFeatureId;
@@ -120,3 +121,29 @@ public class ProductFeaturePrice implements IEventModel<ProductFeaturePriceData.
 
     
 }
+
+
+/*
+-- keys: productFeatureId, productPriceTypeId, currencyUomId, fromDate
+
+-- fields --
+    
+    String productFeatureId
+    String productPriceTypeId
+    String currencyUomId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    java.math.BigDecimal price
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - ProductPriceType (one, autoRelation: false, keymaps: productPriceTypeId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - LastModifiedByUserLogin (one, autoRelation: false, keymaps: lastModifiedByUserLogin -> userLoginId)
+*/
+

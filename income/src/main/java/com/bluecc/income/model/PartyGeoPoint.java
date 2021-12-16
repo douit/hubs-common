@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.PartyGeoPointData;
 @REntity
 @MessageObject(value = PartyGeoPointData.class,
         symbol = EntityNames.PartyGeoPoint)
-public class PartyGeoPoint implements IEventModel<PartyGeoPointData.Builder>, Serializable {
+public class PartyGeoPoint implements IEventModel<PartyGeoPointData.Builder>, Serializable, WithLocation, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String partyId;
@@ -90,3 +91,21 @@ public class PartyGeoPoint implements IEventModel<PartyGeoPointData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: partyId, geoPointId, fromDate
+
+-- fields --
+    
+    String partyId
+    String geoPointId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - GeoPoint (one, autoRelation: false, keymaps: geoPointId)
+*/
+

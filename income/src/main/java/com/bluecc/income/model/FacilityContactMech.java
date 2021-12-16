@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.FacilityContactMechData;
 @REntity
 @MessageObject(value = FacilityContactMechData.class,
         symbol = EntityNames.FacilityContactMech)
-public class FacilityContactMech implements IEventModel<FacilityContactMechData.Builder>, Serializable {
+public class FacilityContactMech implements IEventModel<FacilityContactMechData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String facilityId;
@@ -100,3 +101,25 @@ public class FacilityContactMech implements IEventModel<FacilityContactMechData.
 
     
 }
+
+
+/*
+-- keys: facilityId, contactMechId, fromDate
+
+-- fields --
+    
+    String facilityId
+    String contactMechId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String extension
+    String comments
+
+-- relations --
+    
+    - Facility (one, autoRelation: false, keymaps: facilityId)
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - TelecomNumber (one-nofk, autoRelation: false, keymaps: contactMechId)
+    + FacilityContactMechPurpose (many, autoRelation: false, keymaps: facilityId, contactMechId)
+*/
+

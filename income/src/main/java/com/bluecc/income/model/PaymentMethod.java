@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.PaymentMethodData;
 @REntity
 @MessageObject(value = PaymentMethodData.class,
         symbol = EntityNames.PaymentMethod)
-public class PaymentMethod implements IEventModel<PaymentMethodData.Builder>, Serializable {
+public class PaymentMethod implements IEventModel<PaymentMethodData.Builder>, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String paymentMethodId;
@@ -105,3 +106,39 @@ public class PaymentMethod implements IEventModel<PaymentMethodData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: paymentMethodId
+
+-- fields --
+    
+    String paymentMethodId
+    String paymentMethodTypeId
+    String partyId
+    String glAccountId
+    String finAccountId
+    String description
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - PaymentMethodType (one, autoRelation: false, keymaps: paymentMethodTypeId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - GlAccount (one, autoRelation: false, keymaps: glAccountId)
+    - FinAccount (one, autoRelation: false, keymaps: finAccountId)
+    - CheckAccount (one-nofk, autoRelation: true, keymaps: paymentMethodId)
+    - CreditCard (one-nofk, autoRelation: true, keymaps: paymentMethodId)
+    - EftAccount (one-nofk, autoRelation: true, keymaps: paymentMethodId)
+    + ReplenishFinAccount (many, autoRelation: true, keymaps: paymentMethodId -> replenishPaymentId)
+    - GiftCard (one-nofk, autoRelation: true, keymaps: paymentMethodId)
+    + OrderPaymentPreference (many, autoRelation: true, keymaps: paymentMethodId)
+    + PartyAcctgPreference (many, autoRelation: true, keymaps: paymentMethodId -> refundPaymentMethodId)
+    - PayPalPaymentMethod (one-nofk, autoRelation: true, keymaps: paymentMethodId)
+    + Payment (many, autoRelation: true, keymaps: paymentMethodId)
+    + PaymentGatewayResponse (many, autoRelation: true, keymaps: paymentMethodId)
+    + ReturnHeader (many, autoRelation: true, keymaps: paymentMethodId)
+    + ShoppingList (many, autoRelation: true, keymaps: paymentMethodId)
+*/
+

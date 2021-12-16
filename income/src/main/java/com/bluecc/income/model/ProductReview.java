@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -110,3 +111,28 @@ public class ProductReview implements IEventModel<ProductReviewData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: productReviewId
+
+-- fields --
+    
+    String productReviewId
+    String productStoreId
+    String productId
+    String userLoginId
+    String statusId
+    Character postedAnonymous
+    java.time.LocalDateTime postedDateTime
+    java.math.BigDecimal productRating
+    String productReview
+
+-- relations --
+    
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    - UserLogin (one, autoRelation: false, keymaps: userLoginId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+*/
+

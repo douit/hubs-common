@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.QuoteTermData;
 @REntity
 @MessageObject(value = QuoteTermData.class,
         symbol = EntityNames.QuoteTerm)
-public class QuoteTerm implements IEventModel<QuoteTermData.Builder>, Serializable {
+public class QuoteTerm implements IEventModel<QuoteTermData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RIndex String termTypeId;
@@ -110,3 +111,27 @@ public class QuoteTerm implements IEventModel<QuoteTermData.Builder>, Serializab
 
     
 }
+
+
+/*
+-- keys: termTypeId, quoteId, quoteItemSeqId
+
+-- fields --
+    
+    String termTypeId
+    String quoteId
+    String quoteItemSeqId
+    Long termValue
+    String uomId
+    Long termDays
+    String textValue
+    String description
+
+-- relations --
+    
+    - Quote (one, autoRelation: false, keymaps: quoteId)
+    - QuoteItem (one-nofk, autoRelation: false, keymaps: quoteId, quoteItemSeqId)
+    - TermType (one, autoRelation: false, keymaps: termTypeId)
+    + QuoteTermAttribute (many, autoRelation: true, keymaps: termTypeId, quoteId, quoteItemSeqId)
+*/
+

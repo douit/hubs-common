@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -130,3 +131,40 @@ public class ItemIssuance implements IEventModel<ItemIssuanceData.Builder>, Seri
 
     
 }
+
+
+/*
+-- keys: itemIssuanceId
+
+-- fields --
+    
+    String itemIssuanceId
+    String orderId
+    String orderItemSeqId
+    String shipGroupSeqId
+    String inventoryItemId
+    String shipmentId
+    String shipmentItemSeqId
+    String fixedAssetId
+    String maintHistSeqId
+    java.time.LocalDateTime issuedDateTime
+    String issuedByUserLoginId
+    java.math.BigDecimal quantity
+    java.math.BigDecimal cancelQuantity
+
+-- relations --
+    
+    - InventoryItem (one, autoRelation: false, keymaps: inventoryItemId)
+    - OrderItemShipGrpInvRes (one-nofk, autoRelation: false, keymaps: orderId, orderItemSeqId, shipGroupSeqId, inventoryItemId)
+    - Shipment (one-nofk, autoRelation: false, keymaps: shipmentId)
+    - ShipmentItem (one, autoRelation: false, keymaps: shipmentId, shipmentItemSeqId)
+    - FixedAssetMaint (one, autoRelation: false, keymaps: fixedAssetId, maintHistSeqId)
+    - OrderHeader (one-nofk, autoRelation: false, keymaps: orderId)
+    - OrderItem (one, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - IssuedByUserLogin (one, autoRelation: false, keymaps: issuedByUserLoginId -> userLoginId)
+    + InventoryItemDetail (many, autoRelation: true, keymaps: itemIssuanceId)
+    + InventoryTransfer (many, autoRelation: true, keymaps: itemIssuanceId)
+    + ItemIssuanceRole (many, autoRelation: true, keymaps: itemIssuanceId)
+    + OrderItemBilling (many, autoRelation: true, keymaps: itemIssuanceId)
+*/
+

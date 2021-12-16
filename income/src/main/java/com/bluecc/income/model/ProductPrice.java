@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductPriceData;
 @REntity
 @MessageObject(value = ProductPriceData.class,
         symbol = EntityNames.ProductPrice)
-public class ProductPrice implements IEventModel<ProductPriceData.Builder>, Serializable {
+public class ProductPrice implements IEventModel<ProductPriceData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productId;
@@ -175,3 +176,48 @@ public class ProductPrice implements IEventModel<ProductPriceData.Builder>, Seri
 
     
 }
+
+
+/*
+-- keys: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate
+
+-- fields --
+    
+    String productId
+    String productPriceTypeId
+    String productPricePurposeId
+    String currencyUomId
+    String productStoreGroupId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    java.math.BigDecimal price
+    String termUomId
+    String customPriceCalcService
+    java.math.BigDecimal priceWithoutTax
+    java.math.BigDecimal priceWithTax
+    java.math.BigDecimal taxAmount
+    java.math.BigDecimal taxPercentage
+    String taxAuthPartyId
+    String taxAuthGeoId
+    Character taxInPrice
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - ProductPriceType (one, autoRelation: false, keymaps: productPriceTypeId)
+    - ProductPricePurpose (one, autoRelation: false, keymaps: productPricePurposeId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - TermUom (one, autoRelation: false, keymaps: termUomId -> uomId)
+    - ProductStoreGroup (one, autoRelation: false, keymaps: productStoreGroupId)
+    - CustomMethod (one, autoRelation: false, keymaps: customPriceCalcService -> customMethodId)
+    - TaxAuthorityParty (one, autoRelation: false, keymaps: taxAuthPartyId -> partyId)
+    - TaxAuthorityGeo (one, autoRelation: false, keymaps: taxAuthGeoId -> geoId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - LastModifiedByUserLogin (one, autoRelation: false, keymaps: lastModifiedByUserLogin -> userLoginId)
+    + ProductPriceChange (many, autoRelation: true, keymaps: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate)
+*/
+

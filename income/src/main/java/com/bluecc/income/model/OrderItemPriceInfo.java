@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.OrderItemPriceInfoData;
 @REntity
 @MessageObject(value = OrderItemPriceInfoData.class,
         symbol = EntityNames.OrderItemPriceInfo)
-public class OrderItemPriceInfo implements IEventModel<OrderItemPriceInfoData.Builder>, Serializable {
+public class OrderItemPriceInfo implements IEventModel<OrderItemPriceInfoData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String orderItemPriceInfoId;
@@ -105,3 +106,27 @@ public class OrderItemPriceInfo implements IEventModel<OrderItemPriceInfoData.Bu
 
     
 }
+
+
+/*
+-- keys: orderItemPriceInfoId
+
+-- fields --
+    
+    String orderItemPriceInfoId
+    String orderId
+    String orderItemSeqId
+    String productPriceRuleId
+    String productPriceActionSeqId
+    java.math.BigDecimal modifyAmount
+    String description
+    String rateCode
+
+-- relations --
+    
+    - OrderHeader (one-nofk, autoRelation: false, keymaps: orderId)
+    - OrderItem (one, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - ProductPriceRule (one-nofk, autoRelation: false, keymaps: productPriceRuleId)
+    - ProductPriceAction (one, autoRelation: false, keymaps: productPriceRuleId, productPriceActionSeqId)
+*/
+

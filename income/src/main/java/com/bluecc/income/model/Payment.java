@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -181,6 +182,10 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
     @Exclude
     List<PartyRole> relToPartyRole= new ArrayList<>(); 
     @Exclude
+    List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
+    @Exclude
+    List<GlAccount> relGlAccount= new ArrayList<>(); 
+    @Exclude
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
@@ -224,12 +229,6 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
         if (comments != null) {
             builder.setComments(comments);
         }
-        if (finAccountTransId != null) {
-            builder.setFinAccountTransId(finAccountTransId);
-        }
-        if (overrideGlAccountId != null) {
-            builder.setOverrideGlAccountId(overrideGlAccountId);
-        }
         if (actualCurrencyAmount != null) {
             builder.setActualCurrencyAmount(getCurrency(actualCurrencyAmount));
         }
@@ -247,3 +246,62 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializab
     }
 
 }
+
+
+/*
+-- keys: paymentId
+
+-- fields --
+    
+    String paymentId
+    String paymentTypeId
+    String paymentMethodTypeId
+    String paymentMethodId
+    String paymentGatewayResponseId
+    String paymentPreferenceId
+    String partyIdFrom
+    String partyIdTo
+    String roleTypeIdTo
+    String statusId
+    java.time.LocalDateTime effectiveDate
+    String paymentRefNum
+    java.math.BigDecimal amount
+    String currencyUomId
+    String comments
+    String finAccountTransId
+    String overrideGlAccountId
+    java.math.BigDecimal actualCurrencyAmount
+    String actualCurrencyUomId
+
+-- relations --
+    
+    - PaymentType (one, autoRelation: false, keymaps: paymentTypeId)
+    + PaymentTypeAttr (many, autoRelation: false, keymaps: paymentTypeId)
+    - PaymentMethodType (one, autoRelation: false, keymaps: paymentMethodTypeId)
+    - PaymentMethod (one, autoRelation: false, keymaps: paymentMethodId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - ActualCurrencyUom (one, autoRelation: false, keymaps: actualCurrencyUomId -> uomId)
+    - CreditCard (one-nofk, autoRelation: false, keymaps: paymentMethodId)
+    - EftAccount (one-nofk, autoRelation: false, keymaps: paymentMethodId)
+    - GiftCard (one-nofk, autoRelation: false, keymaps: paymentMethodId)
+    - OrderPaymentPreference (one, autoRelation: false, keymaps: paymentPreferenceId -> orderPaymentPreferenceId)
+    - PaymentGatewayResponse (one, autoRelation: false, keymaps: paymentGatewayResponseId)
+    - FromParty (one, autoRelation: false, keymaps: partyIdFrom -> partyId)
+    - ToParty (one, autoRelation: false, keymaps: partyIdTo -> partyId)
+    - ToRoleType (one, autoRelation: false, keymaps: roleTypeIdTo -> roleTypeId)
+    - ToPartyRole (one-nofk, autoRelation: false, keymaps: partyIdTo -> partyId, roleTypeIdTo -> roleTypeId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - FinAccountTrans (one, autoRelation: false, keymaps: finAccountTransId)
+    - GlAccount (one, autoRelation: false, keymaps: overrideGlAccountId -> glAccountId)
+    + AcctgTrans (many, autoRelation: true, keymaps: paymentId)
+    + Deduction (many, autoRelation: true, keymaps: paymentId)
+    + PaymentApplication (many, autoRelation: true, keymaps: paymentId)
+    + ToPaymentApplication (many, autoRelation: true, keymaps: paymentId -> toPaymentId)
+    + PaymentAttribute (many, autoRelation: true, keymaps: paymentId)
+    + PaymentBudgetAllocation (many, autoRelation: true, keymaps: paymentId)
+    + PaymentContent (many, autoRelation: true, keymaps: paymentId)
+    + PaymentGroupMember (many, autoRelation: true, keymaps: paymentId)
+    + PerfReview (many, autoRelation: true, keymaps: paymentId)
+    + ReturnItemResponse (many, autoRelation: true, keymaps: paymentId)
+*/
+

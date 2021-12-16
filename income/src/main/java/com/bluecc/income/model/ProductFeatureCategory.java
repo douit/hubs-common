@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductFeatureCategoryData;
 @REntity
 @MessageObject(value = ProductFeatureCategoryData.class,
         symbol = EntityNames.ProductFeatureCategory)
-public class ProductFeatureCategory implements IEventModel<ProductFeatureCategoryData.Builder>, Serializable {
+public class ProductFeatureCategory implements IEventModel<ProductFeatureCategoryData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String productFeatureCategoryId;
@@ -80,3 +81,22 @@ public class ProductFeatureCategory implements IEventModel<ProductFeatureCategor
 
     
 }
+
+
+/*
+-- keys: productFeatureCategoryId
+
+-- fields --
+    
+    String productFeatureCategoryId
+    String parentCategoryId
+    String description
+
+-- relations --
+    
+    - ParentProductFeatureCategory (one, autoRelation: false, keymaps: parentCategoryId -> productFeatureCategoryId)
+    + ProductFeature (many, autoRelation: true, keymaps: productFeatureCategoryId)
+    + ChildProductFeatureCategory (many, autoRelation: true, keymaps: productFeatureCategoryId -> parentCategoryId)
+    + ProductFeatureCategoryAppl (many, autoRelation: true, keymaps: productFeatureCategoryId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -170,3 +171,42 @@ public class SupplierProduct implements IEventModel<SupplierProductData.Builder>
 
     
 }
+
+
+/*
+-- keys: productId, partyId, currencyUomId, minimumOrderQuantity, availableFromDate
+
+-- fields --
+    
+    String productId
+    String partyId
+    java.time.LocalDateTime availableFromDate
+    java.time.LocalDateTime availableThruDate
+    String supplierPrefOrderId
+    String supplierRatingTypeId
+    java.math.BigDecimal standardLeadTimeDays
+    java.math.BigDecimal minimumOrderQuantity
+    java.math.BigDecimal orderQtyIncrements
+    java.math.BigDecimal unitsIncluded
+    String quantityUomId
+    String agreementId
+    String agreementItemSeqId
+    java.math.BigDecimal lastPrice
+    java.math.BigDecimal shippingPrice
+    String currencyUomId
+    String supplierProductName
+    String supplierProductId
+    Character canDropShip
+    String comments
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - SupplierPrefOrder (one, autoRelation: false, keymaps: supplierPrefOrderId)
+    - SupplierRatingType (one, autoRelation: false, keymaps: supplierRatingTypeId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - QuantityUom (one, autoRelation: false, keymaps: quantityUomId -> uomId)
+    - AgreementItem (one, autoRelation: false, keymaps: agreementId, agreementItemSeqId)
+*/
+

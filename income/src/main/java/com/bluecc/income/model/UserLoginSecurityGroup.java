@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.UserLoginSecurityGroupData;
 @REntity
 @MessageObject(value = UserLoginSecurityGroupData.class,
         symbol = EntityNames.UserLoginSecurityGroup)
-public class UserLoginSecurityGroup implements IEventModel<UserLoginSecurityGroupData.Builder>, Serializable {
+public class UserLoginSecurityGroup implements IEventModel<UserLoginSecurityGroupData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String userLoginId;
@@ -90,3 +91,22 @@ public class UserLoginSecurityGroup implements IEventModel<UserLoginSecurityGrou
 
     
 }
+
+
+/*
+-- keys: userLoginId, groupId, fromDate
+
+-- fields --
+    
+    String userLoginId
+    String groupId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - UserLogin (one, autoRelation: false, keymaps: userLoginId)
+    - SecurityGroup (one, autoRelation: false, keymaps: groupId)
+    + SecurityGroupPermission (many, autoRelation: false, keymaps: groupId)
+*/
+

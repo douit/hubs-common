@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductAssocData;
 @REntity
 @MessageObject(value = ProductAssocData.class,
         symbol = EntityNames.ProductAssoc)
-public class ProductAssoc implements IEventModel<ProductAssocData.Builder>, Serializable {
+public class ProductAssoc implements IEventModel<ProductAssocData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productId;
@@ -135,3 +136,34 @@ public class ProductAssoc implements IEventModel<ProductAssocData.Builder>, Seri
 
     
 }
+
+
+/*
+-- keys: productId, productIdTo, productAssocTypeId, fromDate
+
+-- fields --
+    
+    String productId
+    String productIdTo
+    String productAssocTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    Long sequenceNum
+    String reason
+    java.math.BigDecimal quantity
+    java.math.BigDecimal scrapFactor
+    String instruction
+    String routingWorkEffortId
+    String estimateCalcMethod
+    String recurrenceInfoId
+
+-- relations --
+    
+    - ProductAssocType (one, autoRelation: false, keymaps: productAssocTypeId)
+    - MainProduct (one, autoRelation: false, keymaps: productId)
+    - AssocProduct (one, autoRelation: false, keymaps: productIdTo -> productId)
+    - RoutingWorkEffort (one, autoRelation: false, keymaps: routingWorkEffortId -> workEffortId)
+    - CustomMethod (one, autoRelation: false, keymaps: estimateCalcMethod -> customMethodId)
+    - RecurrenceInfo (one, autoRelation: false, keymaps: recurrenceInfoId)
+*/
+

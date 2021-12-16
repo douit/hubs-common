@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = QuoteData.class,
         symbol = EntityNames.Quote)
-public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable {
+public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String quoteId;
@@ -188,3 +189,44 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable {
     }
 
 }
+
+
+/*
+-- keys: quoteId
+
+-- fields --
+    
+    String quoteId
+    String quoteTypeId
+    String partyId
+    java.time.LocalDateTime issueDate
+    String statusId
+    String currencyUomId
+    String productStoreId
+    String salesChannelEnumId
+    java.time.LocalDateTime validFromDate
+    java.time.LocalDateTime validThruDate
+    String quoteName
+    String description
+
+-- relations --
+    
+    - QuoteType (one, autoRelation: false, keymaps: quoteTypeId)
+    + QuoteTypeAttr (many, autoRelation: false, keymaps: quoteTypeId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - Uom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - SalesChannelEnumeration (one, autoRelation: false, keymaps: salesChannelEnumId -> enumId)
+    + QuoteNoteView (many, autoRelation: false, keymaps: quoteId)
+    + QuoteAdjustment (many, autoRelation: true, keymaps: quoteId)
+    + QuoteAttribute (many, autoRelation: true, keymaps: quoteId)
+    + QuoteCoefficient (many, autoRelation: true, keymaps: quoteId)
+    + QuoteItem (many, autoRelation: true, keymaps: quoteId)
+    + QuoteNote (many, autoRelation: true, keymaps: quoteId)
+    + QuoteRole (many, autoRelation: true, keymaps: quoteId)
+    + QuoteTerm (many, autoRelation: true, keymaps: quoteId)
+    + QuoteWorkEffort (many, autoRelation: true, keymaps: quoteId)
+    + SalesOpportunityQuote (many, autoRelation: true, keymaps: quoteId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -145,3 +146,33 @@ public class RecurrenceRule implements IEventModel<RecurrenceRuleData.Builder>, 
 
     
 }
+
+
+/*
+-- keys: recurrenceRuleId
+
+-- fields --
+    
+    String recurrenceRuleId
+    String frequency
+    java.time.LocalDateTime untilDateTime
+    Long countNumber
+    Long intervalNumber
+    String bySecondList
+    String byMinuteList
+    String byHourList
+    String byDayList
+    String byMonthDayList
+    String byYearDayList
+    String byWeekNoList
+    String byMonthList
+    String bySetPosList
+    String weekStart
+    String xName
+
+-- relations --
+    
+    + RecurrenceInfo (many, autoRelation: true, keymaps: recurrenceRuleId)
+    + ExceptionRecurrenceInfo (many, autoRelation: true, keymaps: recurrenceRuleId -> exceptionRuleId)
+*/
+

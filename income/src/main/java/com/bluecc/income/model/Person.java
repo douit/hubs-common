@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -360,3 +361,61 @@ public class Person implements IEventModel<PersonFlatData.Builder>, Serializable
     }
 
 }
+
+
+/*
+-- keys: partyId
+
+-- fields --
+    
+    String partyId
+    String salutation
+    String firstName
+    String middleName
+    String lastName
+    String personalTitle
+    String suffix
+    String nickname
+    String firstNameLocal
+    String middleNameLocal
+    String lastNameLocal
+    String otherLocal
+    String memberId
+    Character gender
+    java.time.LocalDate birthDate
+    java.time.LocalDate deceasedDate
+    Double height
+    Double weight
+    String mothersMaidenName
+    String maritalStatusEnumId
+    String socialSecurityNumber
+    String passportNumber
+    java.time.LocalDate passportExpireDate
+    Double totalYearsWorkExperience
+    String comments
+    String employmentStatusEnumId
+    String residenceStatusEnumId
+    String occupation
+    Long yearsWithEmployer
+    Long monthsWithEmployer
+    Character existingCustomer
+    String cardId
+
+-- relations --
+    
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - EmploymentStatusEnumeration (one, autoRelation: false, keymaps: employmentStatusEnumId -> enumId)
+    - ResidenceStatusEnumeration (one, autoRelation: false, keymaps: residenceStatusEnumId -> enumId)
+    - MaritalStatusEnumeration (one, autoRelation: false, keymaps: maritalStatusEnumId -> enumId)
+    + PartyContactMech (many, autoRelation: true, keymaps: partyId)
+    + PartyContactMechPurpose (many, autoRelation: true, keymaps: partyId)
+    + ApproverPersonTraining (many, autoRelation: true, keymaps: partyId -> approverId)
+    + ProdCatalogRole (many, autoRelation: true, keymaps: partyId)
+    + ProductStoreRole (many, autoRelation: true, keymaps: partyId)
+    + ToShipment (many, autoRelation: true, keymaps: partyId -> partyIdTo)
+    + FromShipment (many, autoRelation: true, keymaps: partyId -> partyIdFrom)
+    + CarrierShipmentRouteSegment (many, autoRelation: true, keymaps: partyId -> carrierPartyId)
+    + UserLogin (many, autoRelation: true, keymaps: partyId)
+    + WebSiteRole (many, autoRelation: true, keymaps: partyId)
+*/
+

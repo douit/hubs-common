@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductConfigData;
 @REntity
 @MessageObject(value = ProductConfigData.class,
         symbol = EntityNames.ProductConfig)
-public class ProductConfig implements IEventModel<ProductConfigData.Builder>, Serializable {
+public class ProductConfig implements IEventModel<ProductConfigData.Builder>, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productId;
@@ -120,3 +121,27 @@ public class ProductConfig implements IEventModel<ProductConfigData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: productId, configItemId, sequenceNum, fromDate
+
+-- fields --
+    
+    String productId
+    String configItemId
+    Long sequenceNum
+    java.time.LocalDateTime fromDate
+    String description
+    String longDescription
+    String configTypeId
+    String defaultConfigOptionId
+    java.time.LocalDateTime thruDate
+    Character isMandatory
+
+-- relations --
+    
+    - ProductProduct (one, autoRelation: false, keymaps: productId)
+    - ConfigItemProductConfigItem (one, autoRelation: false, keymaps: configItemId)
+*/
+

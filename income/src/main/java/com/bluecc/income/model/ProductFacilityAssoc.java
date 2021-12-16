@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductFacilityAssocData;
 @REntity
 @MessageObject(value = ProductFacilityAssocData.class,
         symbol = EntityNames.ProductFacilityAssoc)
-public class ProductFacilityAssoc implements IEventModel<ProductFacilityAssocData.Builder>, Serializable {
+public class ProductFacilityAssoc implements IEventModel<ProductFacilityAssocData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productId;
@@ -110,3 +111,27 @@ public class ProductFacilityAssoc implements IEventModel<ProductFacilityAssocDat
 
     
 }
+
+
+/*
+-- keys: productId, facilityId, facilityIdTo, facilityAssocTypeId, fromDate
+
+-- fields --
+    
+    String productId
+    String facilityId
+    String facilityIdTo
+    String facilityAssocTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    Long sequenceNum
+    Long transitTime
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - FromFacility (one, autoRelation: false, keymaps: facilityId)
+    - ToFacility (one, autoRelation: false, keymaps: facilityIdTo -> facilityId)
+    - FacilityAssocType (one, autoRelation: false, keymaps: facilityAssocTypeId)
+*/
+

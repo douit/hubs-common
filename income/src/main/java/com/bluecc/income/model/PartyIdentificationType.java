@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.PartyIdentificationTypeData;
 @REntity
 @MessageObject(value = PartyIdentificationTypeData.class,
         symbol = EntityNames.PartyIdentificationType)
-public class PartyIdentificationType implements IEventModel<PartyIdentificationTypeData.Builder>, Serializable {
+public class PartyIdentificationType implements IEventModel<PartyIdentificationTypeData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String partyIdentificationTypeId;
@@ -85,3 +86,22 @@ public class PartyIdentificationType implements IEventModel<PartyIdentificationT
 
     
 }
+
+
+/*
+-- keys: partyIdentificationTypeId
+
+-- fields --
+    
+    String partyIdentificationTypeId
+    String parentTypeId
+    Character hasTable
+    String description
+
+-- relations --
+    
+    - ParentPartyIdentificationType (one, autoRelation: false, keymaps: parentTypeId -> partyIdentificationTypeId)
+    + PartyIdentification (many, autoRelation: true, keymaps: partyIdentificationTypeId)
+    + ChildPartyIdentificationType (many, autoRelation: true, keymaps: partyIdentificationTypeId -> parentTypeId)
+*/
+

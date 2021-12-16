@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ShipmentBoxTypeData;
 @REntity
 @MessageObject(value = ShipmentBoxTypeData.class,
         symbol = EntityNames.ShipmentBoxType)
-public class ShipmentBoxType implements IEventModel<ShipmentBoxTypeData.Builder>, Serializable {
+public class ShipmentBoxType implements IEventModel<ShipmentBoxTypeData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String shipmentBoxTypeId;
@@ -105,3 +106,28 @@ public class ShipmentBoxType implements IEventModel<ShipmentBoxTypeData.Builder>
 
     
 }
+
+
+/*
+-- keys: shipmentBoxTypeId
+
+-- fields --
+    
+    String shipmentBoxTypeId
+    String description
+    String dimensionUomId
+    java.math.BigDecimal boxLength
+    java.math.BigDecimal boxWidth
+    java.math.BigDecimal boxHeight
+    String weightUomId
+    java.math.BigDecimal boxWeight
+
+-- relations --
+    
+    - DimensionUom (one, autoRelation: false, keymaps: dimensionUomId -> uomId)
+    - WeightUom (one, autoRelation: false, keymaps: weightUomId -> uomId)
+    + CarrierShipmentBoxType (many, autoRelation: true, keymaps: shipmentBoxTypeId)
+    + DefaultProduct (many, autoRelation: true, keymaps: shipmentBoxTypeId -> defaultShipmentBoxTypeId)
+    + ShipmentPackage (many, autoRelation: true, keymaps: shipmentBoxTypeId)
+*/
+

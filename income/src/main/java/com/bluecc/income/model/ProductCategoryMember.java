@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductCategoryMemberData.class,
         symbol = EntityNames.ProductCategoryMember)
-public class ProductCategoryMember implements IEventModel<ProductCategoryMemberFlatData.Builder>, Serializable {
+public class ProductCategoryMember implements IEventModel<ProductCategoryMemberFlatData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productCategoryId;
@@ -156,3 +157,24 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberF
     }
 
 }
+
+
+/*
+-- keys: productCategoryId, productId, fromDate
+
+-- fields --
+    
+    String productCategoryId
+    String productId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String comments
+    Long sequenceNum
+    java.math.BigDecimal quantity
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - ProductCategory (one, autoRelation: false, keymaps: productCategoryId)
+*/
+

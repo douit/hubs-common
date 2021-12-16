@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -110,3 +111,28 @@ public class ProductStorePaymentSetting implements IEventModel<ProductStorePayme
 
     
 }
+
+
+/*
+-- keys: productStoreId, paymentMethodTypeId, paymentServiceTypeEnumId
+
+-- fields --
+    
+    String productStoreId
+    String paymentMethodTypeId
+    String paymentServiceTypeEnumId
+    String paymentService
+    String paymentCustomMethodId
+    String paymentGatewayConfigId
+    String paymentPropertiesPath
+    Character applyToAllProducts
+
+-- relations --
+    
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - PaymentMethodType (one, autoRelation: false, keymaps: paymentMethodTypeId)
+    - Enumeration (one, autoRelation: false, keymaps: paymentServiceTypeEnumId -> enumId)
+    - PaymentGatewayConfig (one, autoRelation: false, keymaps: paymentGatewayConfigId)
+    - CustomMethod (one, autoRelation: false, keymaps: paymentCustomMethodId -> customMethodId)
+*/
+

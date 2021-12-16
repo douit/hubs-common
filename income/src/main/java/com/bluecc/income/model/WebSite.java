@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -233,3 +234,43 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializab
     }
 
 }
+
+
+/*
+-- keys: webSiteId
+
+-- fields --
+    
+    String webSiteId
+    String siteName
+    String httpHost
+    String httpPort
+    String httpsHost
+    String httpsPort
+    Character enableHttps
+    String webappPath
+    String standardContentPrefix
+    String secureContentPrefix
+    String cookieDomain
+    String visualThemeSetId
+    String productStoreId
+    Character allowProductStoreChange
+    String hostedPathAlias
+    Character isDefault
+    Character displayMaintenancePage
+
+-- relations --
+    
+    - VisualThemeSet (one, autoRelation: false, keymaps: visualThemeSetId)
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    + EbayConfig (many, autoRelation: true, keymaps: webSiteId)
+    + OrderHeader (many, autoRelation: true, keymaps: webSiteId)
+    + SubscriptionResource (many, autoRelation: true, keymaps: webSiteId)
+    + WebAnalyticsConfig (many, autoRelation: true, keymaps: webSiteId)
+    + WebPage (many, autoRelation: true, keymaps: webSiteId)
+    + WebSiteContactList (many, autoRelation: true, keymaps: webSiteId)
+    + WebSiteContent (many, autoRelation: true, keymaps: webSiteId)
+    + WebSitePathAlias (many, autoRelation: true, keymaps: webSiteId)
+    + WebSiteRole (many, autoRelation: true, keymaps: webSiteId)
+*/
+

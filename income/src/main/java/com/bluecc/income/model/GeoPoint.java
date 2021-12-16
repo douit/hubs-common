@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.GeoPointData;
 @REntity
 @MessageObject(value = GeoPointData.class,
         symbol = EntityNames.GeoPoint)
-public class GeoPoint implements IEventModel<GeoPointData.Builder>, Serializable {
+public class GeoPoint implements IEventModel<GeoPointData.Builder>, Serializable, WithLocation, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String geoPointId;
@@ -110,3 +111,34 @@ public class GeoPoint implements IEventModel<GeoPointData.Builder>, Serializable
 
     
 }
+
+
+/*
+-- keys: geoPointId
+
+-- fields --
+    
+    String geoPointId
+    String geoPointTypeEnumId
+    String description
+    String dataSourceId
+    String latitude
+    String longitude
+    java.math.BigDecimal elevation
+    String elevationUomId
+    String information
+
+-- relations --
+    
+    - DataSource (one, autoRelation: false, keymaps: dataSourceId)
+    - GeoPointTypeEnumeration (one, autoRelation: false, keymaps: geoPointTypeEnumId -> enumId)
+    - ElevationUom (one, autoRelation: false, keymaps: elevationUomId -> uomId)
+    + ContainerGeoPoint (many, autoRelation: true, keymaps: geoPointId)
+    + Facility (many, autoRelation: true, keymaps: geoPointId)
+    + FacilityLocation (many, autoRelation: true, keymaps: geoPointId)
+    + FacilityLocationGeoPoint (many, autoRelation: true, keymaps: geoPointId)
+    + FixedAssetGeoPoint (many, autoRelation: true, keymaps: geoPointId)
+    + PartyGeoPoint (many, autoRelation: true, keymaps: geoPointId)
+    + PostalAddress (many, autoRelation: true, keymaps: geoPointId)
+*/
+

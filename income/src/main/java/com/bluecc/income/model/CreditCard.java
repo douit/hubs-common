@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -150,3 +151,37 @@ public class CreditCard implements IEventModel<CreditCardData.Builder>, Serializ
 
     
 }
+
+
+/*
+-- keys: paymentMethodId
+
+-- fields --
+    
+    String paymentMethodId
+    String cardType
+    String cardNumber
+    String validFromDate
+    String expireDate
+    String issueNumber
+    String companyNameOnCard
+    String titleOnCard
+    String firstNameOnCard
+    String middleNameOnCard
+    String lastNameOnCard
+    String suffixOnCard
+    String contactMechId
+    Long consecutiveFailedAuths
+    java.time.LocalDateTime lastFailedAuthDate
+    Long consecutiveFailedNsf
+    java.time.LocalDateTime lastFailedNsfDate
+
+-- relations --
+    
+    - PaymentMethod (one, autoRelation: false, keymaps: paymentMethodId)
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - PostalAddress (one, autoRelation: false, keymaps: contactMechId)
+    + OrderPaymentPreference (many, autoRelation: true, keymaps: paymentMethodId)
+    + Payment (many, autoRelation: true, keymaps: paymentMethodId)
+*/
+

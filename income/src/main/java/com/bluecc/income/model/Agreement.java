@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.AgreementData;
 @REntity
 @MessageObject(value = AgreementData.class,
         symbol = EntityNames.Agreement)
-public class Agreement implements IEventModel<AgreementData.Builder>, Serializable {
+public class Agreement implements IEventModel<AgreementData.Builder>, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String agreementId;
@@ -125,3 +126,50 @@ public class Agreement implements IEventModel<AgreementData.Builder>, Serializab
 
     
 }
+
+
+/*
+-- keys: agreementId
+
+-- fields --
+    
+    String agreementId
+    String productId
+    String partyIdFrom
+    String partyIdTo
+    String roleTypeIdFrom
+    String roleTypeIdTo
+    String agreementTypeId
+    java.time.LocalDateTime agreementDate
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String description
+    String textData
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - FromParty (one-nofk, autoRelation: false, keymaps: partyIdFrom -> partyId)
+    - FromRoleType (one-nofk, autoRelation: false, keymaps: roleTypeIdFrom -> roleTypeId)
+    - FromPartyRole (one, autoRelation: false, keymaps: partyIdFrom -> partyId, roleTypeIdFrom -> roleTypeId)
+    - ToParty (one-nofk, autoRelation: false, keymaps: partyIdTo -> partyId)
+    - ToRoleType (one-nofk, autoRelation: false, keymaps: roleTypeIdTo -> roleTypeId)
+    - ToPartyRole (one, autoRelation: false, keymaps: partyIdTo -> partyId, roleTypeIdTo -> roleTypeId)
+    + PartyRelationship (many, autoRelation: false, keymaps: roleTypeIdFrom, roleTypeIdTo, partyIdFrom, partyIdTo)
+    - AgreementType (one, autoRelation: false, keymaps: agreementTypeId)
+    + AgreementTypeAttr (many, autoRelation: false, keymaps: agreementTypeId)
+    + Addendum (many, autoRelation: true, keymaps: agreementId)
+    + AgreementAttribute (many, autoRelation: true, keymaps: agreementId)
+    + AgreementContent (many, autoRelation: true, keymaps: agreementId)
+    + AgreementFacilityAppl (many, autoRelation: true, keymaps: agreementId)
+    + AgreementGeographicalApplic (many, autoRelation: true, keymaps: agreementId)
+    + AgreementItem (many, autoRelation: true, keymaps: agreementId)
+    + AgreementPartyApplic (many, autoRelation: true, keymaps: agreementId)
+    + AgreementProductAppl (many, autoRelation: true, keymaps: agreementId)
+    + AgreementPromoAppl (many, autoRelation: true, keymaps: agreementId)
+    + AgreementRole (many, autoRelation: true, keymaps: agreementId)
+    + AgreementTerm (many, autoRelation: true, keymaps: agreementId)
+    + AgreementWorkEffortApplic (many, autoRelation: true, keymaps: agreementId)
+    + SupplierOrderItemShipGroup (many, autoRelation: true, keymaps: agreementId -> supplierAgreementId)
+*/
+

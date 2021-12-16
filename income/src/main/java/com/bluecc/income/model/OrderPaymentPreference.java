@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -185,3 +186,55 @@ public class OrderPaymentPreference implements IEventModel<OrderPaymentPreferenc
 
     
 }
+
+
+/*
+-- keys: orderPaymentPreferenceId
+
+-- fields --
+    
+    String orderPaymentPreferenceId
+    String orderId
+    String orderItemSeqId
+    String shipGroupSeqId
+    String productPricePurposeId
+    String paymentMethodTypeId
+    String paymentMethodId
+    String finAccountId
+    String securityCode
+    String track2
+    Character presentFlag
+    Character swipedFlag
+    Character overflowFlag
+    java.math.BigDecimal maxAmount
+    Long processAttempt
+    String billingPostalCode
+    String manualAuthCode
+    String manualRefNum
+    String statusId
+    Character needsNsfRetry
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+
+-- relations --
+    
+    - OrderHeader (one, autoRelation: false, keymaps: orderId)
+    - OrderItem (one-nofk, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - OrderItemShipGroup (one-nofk, autoRelation: false, keymaps: orderId, shipGroupSeqId)
+    - ProductPricePurpose (one, autoRelation: false, keymaps: productPricePurposeId)
+    - PaymentMethodType (one, autoRelation: false, keymaps: paymentMethodTypeId)
+    - PaymentMethod (one, autoRelation: false, keymaps: paymentMethodId)
+    - FinAccount (one, autoRelation: false, keymaps: finAccountId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - UserLogin (one, autoRelation: false, keymaps: createdByUserLogin -> userLoginId)
+    - CreditCard (one-nofk, autoRelation: false, keymaps: paymentMethodId)
+    - EftAccount (one-nofk, autoRelation: false, keymaps: paymentMethodId)
+    - GiftCard (one-nofk, autoRelation: false, keymaps: paymentMethodId)
+    + OrderStatus (many, autoRelation: true, keymaps: orderPaymentPreferenceId)
+    + Payment (many, autoRelation: true, keymaps: orderPaymentPreferenceId -> paymentPreferenceId)
+    + PaymentGatewayResponse (many, autoRelation: true, keymaps: orderPaymentPreferenceId)
+    + ReturnItemResponse (many, autoRelation: true, keymaps: orderPaymentPreferenceId)
+*/
+

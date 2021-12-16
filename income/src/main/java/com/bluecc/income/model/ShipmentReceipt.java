@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -145,3 +146,46 @@ public class ShipmentReceipt implements IEventModel<ShipmentReceiptData.Builder>
 
     
 }
+
+
+/*
+-- keys: receiptId
+
+-- fields --
+    
+    String receiptId
+    String inventoryItemId
+    String productId
+    String shipmentId
+    String shipmentItemSeqId
+    String shipmentPackageSeqId
+    String orderId
+    String orderItemSeqId
+    String returnId
+    String returnItemSeqId
+    String rejectionId
+    String receivedByUserLoginId
+    java.time.LocalDateTime datetimeReceived
+    String itemDescription
+    java.math.BigDecimal quantityAccepted
+    java.math.BigDecimal quantityRejected
+
+-- relations --
+    
+    - InventoryItem (one, autoRelation: false, keymaps: inventoryItemId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    - ShipmentPackage (one, autoRelation: false, keymaps: shipmentId, shipmentPackageSeqId)
+    - OrderHeader (one-nofk, autoRelation: false, keymaps: orderId)
+    - OrderItem (one, autoRelation: false, keymaps: orderId, orderItemSeqId)
+    - RejectionReason (one, autoRelation: false, keymaps: rejectionId)
+    - UserLogin (one, autoRelation: false, keymaps: receivedByUserLoginId -> userLoginId)
+    - Shipment (one-nofk, autoRelation: false, keymaps: shipmentId)
+    - ShipmentItem (one-nofk, autoRelation: false, keymaps: shipmentId, shipmentItemSeqId)
+    - ReturnItem (one, autoRelation: false, keymaps: returnId, returnItemSeqId)
+    + AcctgTrans (many, autoRelation: true, keymaps: receiptId)
+    + InventoryItemDetail (many, autoRelation: true, keymaps: receiptId)
+    + OrderItemBilling (many, autoRelation: true, keymaps: receiptId -> shipmentReceiptId)
+    + ReturnItemBilling (many, autoRelation: true, keymaps: receiptId -> shipmentReceiptId)
+    + ShipmentReceiptRole (many, autoRelation: true, keymaps: receiptId)
+*/
+

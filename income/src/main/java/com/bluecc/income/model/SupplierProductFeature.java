@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SupplierProductFeatureData;
 @REntity
 @MessageObject(value = SupplierProductFeatureData.class,
         symbol = EntityNames.SupplierProductFeature)
-public class SupplierProductFeature implements IEventModel<SupplierProductFeatureData.Builder>, Serializable {
+public class SupplierProductFeature implements IEventModel<SupplierProductFeatureData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RIndex String partyId;
@@ -95,3 +96,23 @@ public class SupplierProductFeature implements IEventModel<SupplierProductFeatur
 
     
 }
+
+
+/*
+-- keys: partyId, productFeatureId
+
+-- fields --
+    
+    String partyId
+    String productFeatureId
+    String description
+    String uomId
+    String idCode
+
+-- relations --
+    
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - ProductFeature (one, autoRelation: false, keymaps: productFeatureId)
+    - Uom (one, autoRelation: false, keymaps: uomId)
+*/
+

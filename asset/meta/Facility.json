@@ -96,19 +96,6 @@
       "validators": []
     },
     {
-      "name": "oldSquareFootage",
-      "type": "numeric",
-      "col": "SQUARE_FOOTAGE",
-      "pk": false,
-      "notNull": false,
-      "encrypt": false,
-      "autoCreatedInternal": false,
-      "javaType": "Long",
-      "sqlType": "NUMERIC(20,0)",
-      "stringLength": 20,
-      "validators": []
-    },
-    {
       "name": "facilitySize",
       "type": "fixed-point",
       "col": "FACILITY_SIZE",

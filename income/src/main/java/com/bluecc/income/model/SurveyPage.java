@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,21 @@ public class SurveyPage implements IEventModel<SurveyPageData.Builder>, Serializ
 
     
 }
+
+
+/*
+-- keys: surveyId, surveyPageSeqId
+
+-- fields --
+    
+    String surveyId
+    String surveyPageSeqId
+    String pageName
+    Long sequenceNum
+
+-- relations --
+    
+    - Survey (one, autoRelation: false, keymaps: surveyId)
+    + SurveyQuestionAppl (many, autoRelation: true, keymaps: surveyId, surveyPageSeqId)
+*/
+

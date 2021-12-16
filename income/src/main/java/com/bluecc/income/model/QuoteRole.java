@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.QuoteRoleData;
 @REntity
 @MessageObject(value = QuoteRoleData.class,
         symbol = EntityNames.QuoteRole)
-public class QuoteRole implements IEventModel<QuoteRoleData.Builder>, Serializable {
+public class QuoteRole implements IEventModel<QuoteRoleData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String quoteId;
@@ -95,3 +96,24 @@ public class QuoteRole implements IEventModel<QuoteRoleData.Builder>, Serializab
 
     
 }
+
+
+/*
+-- keys: quoteId, partyId, roleTypeId
+
+-- fields --
+    
+    String quoteId
+    String partyId
+    String roleTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - Quote (one, autoRelation: false, keymaps: quoteId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one-nofk, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one, autoRelation: false, keymaps: partyId, roleTypeId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -205,3 +206,50 @@ public class ProductStoreShipmentMeth implements IEventModel<ProductStoreShipmen
 
     
 }
+
+
+/*
+-- keys: productStoreShipMethId
+
+-- fields --
+    
+    String productStoreShipMethId
+    String productStoreId
+    String shipmentMethodTypeId
+    String partyId
+    String roleTypeId
+    String companyPartyId
+    java.math.BigDecimal minWeight
+    java.math.BigDecimal maxWeight
+    java.math.BigDecimal minSize
+    java.math.BigDecimal maxSize
+    java.math.BigDecimal minTotal
+    java.math.BigDecimal maxTotal
+    Character allowUspsAddr
+    Character requireUspsAddr
+    Character allowCompanyAddr
+    Character requireCompanyAddr
+    Character includeNoChargeItems
+    String includeFeatureGroup
+    String excludeFeatureGroup
+    String includeGeoId
+    String excludeGeoId
+    String serviceName
+    String configProps
+    String shipmentCustomMethodId
+    String shipmentGatewayConfigId
+    Long sequenceNumber
+    java.math.BigDecimal allowancePercent
+    java.math.BigDecimal minimumPrice
+
+-- relations --
+    
+    - Party (one-nofk, autoRelation: false, keymaps: companyPartyId -> partyId)
+    - ShipmentMethodType (one, autoRelation: false, keymaps: shipmentMethodTypeId)
+    - IncludeGeo (one-nofk, autoRelation: false, keymaps: includeGeoId -> geoId)
+    - ExcludeGeo (one-nofk, autoRelation: false, keymaps: excludeGeoId -> geoId)
+    - ShipmentGatewayConfig (one, autoRelation: false, keymaps: shipmentGatewayConfigId)
+    - CustomMethod (one, autoRelation: false, keymaps: shipmentCustomMethodId -> customMethodId)
+    + ShipmentCostEstimate (many, autoRelation: true, keymaps: productStoreShipMethId)
+*/
+

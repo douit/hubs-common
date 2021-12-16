@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductCategoryLinkData;
 @REntity
 @MessageObject(value = ProductCategoryLinkData.class,
         symbol = EntityNames.ProductCategoryLink)
-public class ProductCategoryLink implements IEventModel<ProductCategoryLinkData.Builder>, Serializable {
+public class ProductCategoryLink implements IEventModel<ProductCategoryLinkData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productCategoryId;
@@ -135,3 +136,30 @@ public class ProductCategoryLink implements IEventModel<ProductCategoryLinkData.
 
     
 }
+
+
+/*
+-- keys: productCategoryId, linkSeqId, fromDate
+
+-- fields --
+    
+    String productCategoryId
+    String linkSeqId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String comments
+    Long sequenceNum
+    String titleText
+    String detailText
+    String imageUrl
+    String imageTwoUrl
+    String linkTypeEnumId
+    String linkInfo
+    String detailSubScreen
+
+-- relations --
+    
+    - ProductCategory (one, autoRelation: false, keymaps: productCategoryId)
+    - LinkTypeEnumeration (one, autoRelation: false, keymaps: linkTypeEnumId -> enumId)
+*/
+

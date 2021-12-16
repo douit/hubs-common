@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.SecurityGroupPermissionData;
 @REntity
 @MessageObject(value = SecurityGroupPermissionData.class,
         symbol = EntityNames.SecurityGroupPermission)
-public class SecurityGroupPermission implements IEventModel<SecurityGroupPermissionData.Builder>, Serializable {
+public class SecurityGroupPermission implements IEventModel<SecurityGroupPermissionData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String groupId;
@@ -90,3 +91,21 @@ public class SecurityGroupPermission implements IEventModel<SecurityGroupPermiss
 
     
 }
+
+
+/*
+-- keys: groupId, permissionId, fromDate
+
+-- fields --
+    
+    String groupId
+    String permissionId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - SecurityGroup (one, autoRelation: false, keymaps: groupId)
+    - SecurityPermission (one-nofk, autoRelation: false, keymaps: permissionId)
+*/
+

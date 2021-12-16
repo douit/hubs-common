@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,22 @@ public class OrderAdjustmentBilling implements IEventModel<OrderAdjustmentBillin
 
     
 }
+
+
+/*
+-- keys: orderAdjustmentId, invoiceId, invoiceItemSeqId
+
+-- fields --
+    
+    String orderAdjustmentId
+    String invoiceId
+    String invoiceItemSeqId
+    java.math.BigDecimal amount
+
+-- relations --
+    
+    - OrderAdjustment (one, autoRelation: false, keymaps: orderAdjustmentId)
+    - Invoice (one-nofk, autoRelation: false, keymaps: invoiceId)
+    - InvoiceItem (one, autoRelation: false, keymaps: invoiceId, invoiceItemSeqId)
+*/
+

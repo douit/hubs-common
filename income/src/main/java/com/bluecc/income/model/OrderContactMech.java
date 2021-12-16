@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -85,3 +86,21 @@ public class OrderContactMech implements IEventModel<OrderContactMechData.Builde
 
     
 }
+
+
+/*
+-- keys: orderId, contactMechPurposeTypeId, contactMechId
+
+-- fields --
+    
+    String orderId
+    String contactMechPurposeTypeId
+    String contactMechId
+
+-- relations --
+    
+    - OrderHeader (one, autoRelation: false, keymaps: orderId)
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - ContactMechPurposeType (one, autoRelation: false, keymaps: contactMechPurposeTypeId)
+*/
+

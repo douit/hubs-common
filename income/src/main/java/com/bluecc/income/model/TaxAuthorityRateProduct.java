@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.TaxAuthorityRateProductData;
 @REntity
 @MessageObject(value = TaxAuthorityRateProductData.class,
         symbol = EntityNames.TaxAuthorityRateProduct)
-public class TaxAuthorityRateProduct implements IEventModel<TaxAuthorityRateProductData.Builder>, Serializable {
+public class TaxAuthorityRateProduct implements IEventModel<TaxAuthorityRateProductData.Builder>, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String taxAuthorityRateSeqId;
@@ -145,3 +146,38 @@ public class TaxAuthorityRateProduct implements IEventModel<TaxAuthorityRateProd
 
     
 }
+
+
+/*
+-- keys: taxAuthorityRateSeqId
+
+-- fields --
+    
+    String taxAuthorityRateSeqId
+    String taxAuthGeoId
+    String taxAuthPartyId
+    String taxAuthorityRateTypeId
+    String productStoreId
+    String productCategoryId
+    String titleTransferEnumId
+    java.math.BigDecimal minItemPrice
+    java.math.BigDecimal minPurchase
+    Character taxShipping
+    java.math.BigDecimal taxPercentage
+    Character taxPromotions
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String description
+    Character isTaxInShippingPrice
+
+-- relations --
+    
+    - TaxAuthority (one, autoRelation: false, keymaps: taxAuthGeoId, taxAuthPartyId)
+    - TaxAuthorityRateType (one, autoRelation: false, keymaps: taxAuthorityRateTypeId)
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - ProductCategory (one, autoRelation: false, keymaps: productCategoryId)
+    + InvoiceItem (many, autoRelation: true, keymaps: taxAuthorityRateSeqId)
+    + OrderAdjustment (many, autoRelation: true, keymaps: taxAuthorityRateSeqId)
+    + ReturnAdjustment (many, autoRelation: true, keymaps: taxAuthorityRateSeqId)
+*/
+

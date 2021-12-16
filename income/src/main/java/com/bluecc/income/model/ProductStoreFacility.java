@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductStoreFacilityData.class,
         symbol = EntityNames.ProductStoreFacility)
-public class ProductStoreFacility implements IEventModel<ProductStoreFacilityFlatData.Builder>, Serializable {
+public class ProductStoreFacility implements IEventModel<ProductStoreFacilityFlatData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productStoreId;
@@ -100,7 +101,9 @@ public class ProductStoreFacility implements IEventModel<ProductStoreFacilityFla
         // relations
      
     @Exclude
-    List<ProductStore> relProductStore= new ArrayList<>();
+    List<ProductStore> relProductStore= new ArrayList<>(); 
+    @Exclude
+    List<Facility> relFacility= new ArrayList<>();
 
     public ProductStoreFacilityDelegator.Agent agent(IProc.ProcContext ctx,
                                              ProductStoreFacilityDelegator delegator){
@@ -138,3 +141,22 @@ public class ProductStoreFacility implements IEventModel<ProductStoreFacilityFla
     }
 
 }
+
+
+/*
+-- keys: productStoreId, facilityId, fromDate
+
+-- fields --
+    
+    String productStoreId
+    String facilityId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    Long sequenceNum
+
+-- relations --
+    
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - Facility (one, autoRelation: false, keymaps: facilityId)
+*/
+

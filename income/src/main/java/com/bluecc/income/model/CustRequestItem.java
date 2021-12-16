@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.CustRequestItemData;
 @REntity
 @MessageObject(value = CustRequestItemData.class,
         symbol = EntityNames.CustRequestItem)
-public class CustRequestItem implements IEventModel<CustRequestItemData.Builder>, Serializable {
+public class CustRequestItem implements IEventModel<CustRequestItemData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RIndex String custRequestId;
@@ -155,3 +156,41 @@ public class CustRequestItem implements IEventModel<CustRequestItemData.Builder>
 
     
 }
+
+
+/*
+-- keys: custRequestId, custRequestItemSeqId
+
+-- fields --
+    
+    String custRequestId
+    String custRequestItemSeqId
+    String custRequestResolutionId
+    String statusId
+    Long priority
+    Long sequenceNum
+    java.time.LocalDateTime requiredByDate
+    String productId
+    java.math.BigDecimal quantity
+    java.math.BigDecimal selectedAmount
+    java.math.BigDecimal maximumAmount
+    java.time.LocalDateTime reservStart
+    java.math.BigDecimal reservLength
+    java.math.BigDecimal reservPersons
+    String configId
+    String description
+    String story
+
+-- relations --
+    
+    - CustRequest (one, autoRelation: false, keymaps: custRequestId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - CustRequestResolution (one, autoRelation: false, keymaps: custRequestResolutionId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    + CustRequestItemNote (many, autoRelation: true, keymaps: custRequestId, custRequestItemSeqId)
+    + CustRequestItemWorkEffort (many, autoRelation: true, keymaps: custRequestId, custRequestItemSeqId)
+    + CustRequestStatus (many, autoRelation: true, keymaps: custRequestId, custRequestItemSeqId)
+    + QuoteItem (many, autoRelation: true, keymaps: custRequestId, custRequestItemSeqId)
+    + RequirementCustRequest (many, autoRelation: true, keymaps: custRequestId, custRequestItemSeqId)
+*/
+

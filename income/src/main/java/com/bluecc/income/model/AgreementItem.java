@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -100,3 +101,35 @@ public class AgreementItem implements IEventModel<AgreementItemData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: agreementId, agreementItemSeqId
+
+-- fields --
+    
+    String agreementId
+    String agreementItemSeqId
+    String agreementItemTypeId
+    String currencyUomId
+    String agreementText
+    byte[] agreementImage
+
+-- relations --
+    
+    - Agreement (one, autoRelation: false, keymaps: agreementId)
+    - AgreementItemType (one, autoRelation: false, keymaps: agreementItemTypeId)
+    + AgreementItemTypeAttr (many, autoRelation: false, keymaps: agreementItemTypeId)
+    + Addendum (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementEmploymentAppl (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementFacilityAppl (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementGeographicalApplic (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementItemAttribute (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementPartyApplic (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementProductAppl (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementPromoAppl (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementTerm (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + AgreementWorkEffortApplic (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+    + SupplierProduct (many, autoRelation: true, keymaps: agreementId, agreementItemSeqId)
+*/
+

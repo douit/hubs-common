@@ -1,10 +1,13 @@
 package com.bluecc.hubs.feed;
 
 import org.redisson.api.RLiveObjectService;
+import org.redisson.api.RQueue;
+import org.redisson.api.RedissonClient;
 import org.redisson.api.condition.Condition;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +21,10 @@ public class LiveObjects {
     LiveObjects(SharedData sharedData){
         this.sharedData=sharedData;
         this.service=sharedData.getClient().getLiveObjectService();
+    }
+
+    public RedissonClient redisson(){
+        return this.sharedData.getClient();
     }
 
     public RLiveObjectService getService() {
@@ -54,5 +61,22 @@ public class LiveObjects {
 
     public <T> Collection<T> find(Class<T> entityClass, Condition condition){
         return service.find(entityClass, condition);
+    }
+
+    @SafeVarargs
+    public final <T> void addQueue(String queueName, T... data){
+        RQueue<T> queue = redisson().getQueue(queueName);
+        queue.addAll(Arrays.asList(data));
+    }
+
+    /**
+     * Retrieves and removes the head of this queue,
+     * or returns {@code null} if this queue is empty.
+     *
+     * @return the head of this queue, or {@code null} if this queue is empty
+     */
+    public <T> T pollQueue(String queueName){
+        RQueue<T> queue = redisson().getQueue(queueName);
+        return queue.poll();
     }
 }

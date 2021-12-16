@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -75,3 +76,18 @@ public class TenantDomainName implements IEventModel<TenantDomainNameData.Builde
 
     
 }
+
+
+/*
+-- keys: domainName
+
+-- fields --
+    
+    String tenantId
+    String domainName
+
+-- relations --
+    
+    - Tenant (one, autoRelation: false, keymaps: tenantId)
+*/
+

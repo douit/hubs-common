@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,22 @@ public class TaxAuthorityGlAccount implements IEventModel<TaxAuthorityGlAccountD
 
     
 }
+
+
+/*
+-- keys: taxAuthGeoId, taxAuthPartyId, organizationPartyId
+
+-- fields --
+    
+    String taxAuthGeoId
+    String taxAuthPartyId
+    String organizationPartyId
+    String glAccountId
+
+-- relations --
+    
+    - TaxAuthority (one, autoRelation: false, keymaps: taxAuthGeoId, taxAuthPartyId)
+    - OrganizationParty (one, autoRelation: false, keymaps: organizationPartyId -> partyId)
+    - GlAccount (one, autoRelation: false, keymaps: glAccountId)
+*/
+

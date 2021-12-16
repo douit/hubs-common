@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.PartyContactMechData;
 @REntity
 @MessageObject(value = PartyContactMechData.class,
         symbol = EntityNames.PartyContactMech)
-public class PartyContactMech implements IEventModel<PartyContactMechData.Builder>, Serializable {
+public class PartyContactMech implements IEventModel<PartyContactMechData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String partyId;
@@ -125,3 +126,35 @@ public class PartyContactMech implements IEventModel<PartyContactMechData.Builde
 
     
 }
+
+
+/*
+-- keys: partyId, contactMechId, fromDate
+
+-- fields --
+    
+    String partyId
+    String contactMechId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String roleTypeId
+    Character allowSolicitation
+    String extension
+    Character verified
+    String comments
+    Long yearsWithContactMech
+    Long monthsWithContactMech
+
+-- relations --
+    
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - Person (one-nofk, autoRelation: false, keymaps: partyId)
+    - PartyGroup (one-nofk, autoRelation: false, keymaps: partyId)
+    - PartyRole (one, autoRelation: false, keymaps: partyId, roleTypeId)
+    - RoleType (one, autoRelation: false, keymaps: roleTypeId)
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - TelecomNumber (one-nofk, autoRelation: false, keymaps: contactMechId)
+    - PostalAddress (one-nofk, autoRelation: false, keymaps: contactMechId)
+    + PartyContactMechPurpose (many, autoRelation: false, keymaps: partyId, contactMechId)
+*/
+

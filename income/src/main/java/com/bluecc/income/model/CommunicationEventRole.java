@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,26 @@ public class CommunicationEventRole implements IEventModel<CommunicationEventRol
 
     
 }
+
+
+/*
+-- keys: communicationEventId, partyId, roleTypeId
+
+-- fields --
+    
+    String communicationEventId
+    String partyId
+    String roleTypeId
+    String contactMechId
+    String statusId
+
+-- relations --
+    
+    - CommunicationEvent (one, autoRelation: false, keymaps: communicationEventId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one-nofk, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one, autoRelation: false, keymaps: partyId, roleTypeId)
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+*/
+

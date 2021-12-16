@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductFeatureCategoryApplData;
 @REntity
 @MessageObject(value = ProductFeatureCategoryApplData.class,
         symbol = EntityNames.ProductFeatureCategoryAppl)
-public class ProductFeatureCategoryAppl implements IEventModel<ProductFeatureCategoryApplData.Builder>, Serializable {
+public class ProductFeatureCategoryAppl implements IEventModel<ProductFeatureCategoryApplData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productCategoryId;
@@ -90,3 +91,21 @@ public class ProductFeatureCategoryAppl implements IEventModel<ProductFeatureCat
 
     
 }
+
+
+/*
+-- keys: productCategoryId, productFeatureCategoryId, fromDate
+
+-- fields --
+    
+    String productCategoryId
+    String productFeatureCategoryId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    - ProductCategory (one, autoRelation: false, keymaps: productCategoryId)
+    - ProductFeatureCategory (one, autoRelation: false, keymaps: productFeatureCategoryId)
+*/
+

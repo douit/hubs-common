@@ -49,6 +49,36 @@ public class ProductStoreDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        default Map<String, ProductStore> chainFacility(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        default Map<String, ProductStore> chainFacility(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("fa_facility_id", String.class) != null) {
+                            p.getRelFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
         default Map<String, ProductStore> chainParty(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
@@ -591,6 +621,17 @@ public class ProductStoreDelegator extends AbstractProcs{
     }
 
      
+    public Consumer<Map<String, ProductStore>> facility(Dao dao, boolean succ) {
+        return e -> dao.chainFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, ProductStore>> facility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, ProductStore>> party(Dao dao, boolean succ) {
         return e -> dao.chainParty(protoMeta, e, succ);
     }
@@ -825,6 +866,17 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
          
+        public List<Facility> getFacility(){
+            return getRelationValues(ctx, p1, "facility", Facility.class);
+        }
+
+        public List<Facility> mergeFacility(){
+            return getFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<Party> getParty(){
             return getRelationValues(ctx, p1, "party", Party.class);
         }
@@ -1040,6 +1092,8 @@ public class ProductStoreDelegator extends AbstractProcs{
     
 
          
+    public static final String FACILITY="facility";
+         
     public static final String PARTY="party";
          
     public static final String VAT_TAX_AUTHORITY="vat_tax_authority";
@@ -1088,6 +1142,14 @@ public class ProductStoreDelegator extends AbstractProcs{
                         ProductStoreData.Builder pb = e.toHeadBuilder();
                         Message p1=e.toData();
 
+                                               
+                        // add/set facility to head entity                        
+                        if(relationsDemand.contains("facility")) {
+                            getRelationValues(ctx, p1, "facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.setFacility(
+                                             el.toDataBuilder().build()));
+                        }
                                                
                         // add/set party to head entity                        
                         if(relationsDemand.contains("party")) {

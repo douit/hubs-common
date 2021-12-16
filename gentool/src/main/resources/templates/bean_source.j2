@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = {{ent.messageType}}.class,
         symbol = EntityNames.{{ent.name}})
-public class {{ent.name}} implements IEventModel<{{ent.flatMessageType}}.Builder>, Serializable {
+public class {{ent.name}} implements IEventModel<{{ent.flatMessageType}}.Builder>, {{ent.facets}} {
     private static final long serialVersionUID = 1L;
 
     {% for f in ent.fields -%}
@@ -43,3 +44,19 @@ public class {{ent.name}} implements IEventModel<{{ent.flatMessageType}}.Builder
     {{conv_part}}
     {{head_part}}
 }
+
+
+/*
+-- keys: {{ent.keyNames}}
+
+-- fields --
+    {% for f in ent.publicFields %}
+    {{f.javaType}} {{f.name}}
+    {%- endfor %}
+
+-- relations --
+    {% for rel in ent.relations %}
+    {% if rel.type=='many' %}+{% else %}-{% endif %} {{rel.name}} ({{rel.type}}, autoRelation: {{rel.autoRelation}}, keymaps: {{rel.desc}})
+    {%- endfor %}
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductCategoryRollupData.class,
         symbol = EntityNames.ProductCategoryRollup)
-public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupFlatData.Builder>, Serializable {
+public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupFlatData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productCategoryId;
@@ -146,3 +147,25 @@ public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupF
     }
 
 }
+
+
+/*
+-- keys: productCategoryId, parentProductCategoryId, fromDate
+
+-- fields --
+    
+    String productCategoryId
+    String parentProductCategoryId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    Long sequenceNum
+
+-- relations --
+    
+    - CurrentProductCategory (one, autoRelation: false, keymaps: productCategoryId)
+    - ParentProductCategory (one, autoRelation: false, keymaps: parentProductCategoryId -> productCategoryId)
+    + ChildProductCategoryRollup (many, autoRelation: false, keymaps: productCategoryId -> parentProductCategoryId)
+    + ParentProductCategoryRollup (many, autoRelation: false, keymaps: parentProductCategoryId -> productCategoryId)
+    + SiblingProductCategoryRollup (many, autoRelation: false, keymaps: parentProductCategoryId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductFeatureApplData;
 @REntity
 @MessageObject(value = ProductFeatureApplData.class,
         symbol = EntityNames.ProductFeatureAppl)
-public class ProductFeatureAppl implements IEventModel<ProductFeatureApplData.Builder>, Serializable {
+public class ProductFeatureAppl implements IEventModel<ProductFeatureApplData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productId;
@@ -110,3 +111,27 @@ public class ProductFeatureAppl implements IEventModel<ProductFeatureApplData.Bu
 
     
 }
+
+
+/*
+-- keys: productId, productFeatureId, fromDate
+
+-- fields --
+    
+    String productId
+    String productFeatureId
+    String productFeatureApplTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    Long sequenceNum
+    java.math.BigDecimal amount
+    java.math.BigDecimal recurringAmount
+
+-- relations --
+    
+    - ProductFeatureApplType (one, autoRelation: false, keymaps: productFeatureApplTypeId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    - ProductFeature (one, autoRelation: false, keymaps: productFeatureId)
+    + ProductFeatureApplAttr (many, autoRelation: true, keymaps: productId, productFeatureId, fromDate)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductPriceRuleData;
 @REntity
 @MessageObject(value = ProductPriceRuleData.class,
         symbol = EntityNames.ProductPriceRule)
-public class ProductPriceRule implements IEventModel<ProductPriceRuleData.Builder>, Serializable {
+public class ProductPriceRule implements IEventModel<ProductPriceRuleData.Builder>, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String productPriceRuleId;
@@ -95,3 +96,25 @@ public class ProductPriceRule implements IEventModel<ProductPriceRuleData.Builde
 
     
 }
+
+
+/*
+-- keys: productPriceRuleId
+
+-- fields --
+    
+    String productPriceRuleId
+    String ruleName
+    String description
+    Character isSale
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+
+-- relations --
+    
+    + MarketingCampaignPrice (many, autoRelation: true, keymaps: productPriceRuleId)
+    + OrderItemPriceInfo (many, autoRelation: true, keymaps: productPriceRuleId)
+    + ProductPriceAction (many, autoRelation: true, keymaps: productPriceRuleId)
+    + ProductPriceCond (many, autoRelation: true, keymaps: productPriceRuleId)
+*/
+

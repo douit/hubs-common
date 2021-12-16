@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.CustRequestData;
 @REntity
 @MessageObject(value = CustRequestData.class,
         symbol = EntityNames.CustRequest)
-public class CustRequest implements IEventModel<CustRequestData.Builder>, Serializable {
+public class CustRequest implements IEventModel<CustRequestData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String custRequestId;
@@ -200,3 +201,66 @@ public class CustRequest implements IEventModel<CustRequestData.Builder>, Serial
 
     
 }
+
+
+/*
+-- keys: custRequestId
+
+-- fields --
+    
+    String custRequestId
+    String custRequestTypeId
+    String custRequestCategoryId
+    String statusId
+    String fromPartyId
+    Long priority
+    java.time.LocalDateTime custRequestDate
+    java.time.LocalDateTime responseRequiredDate
+    String custRequestName
+    String description
+    String maximumAmountUomId
+    String productStoreId
+    String salesChannelEnumId
+    String fulfillContactMechId
+    String currencyUomId
+    java.time.LocalDateTime openDateTime
+    java.time.LocalDateTime closedDateTime
+    String internalComment
+    String reason
+    java.time.LocalDateTime createdDate
+    String createdByUserLogin
+    java.time.LocalDateTime lastModifiedDate
+    String lastModifiedByUserLogin
+    Double custEstimatedMilliSeconds
+    Long custSequenceNum
+    String parentCustRequestId
+    Character billed
+
+-- relations --
+    
+    - CustRequestType (one, autoRelation: false, keymaps: custRequestTypeId)
+    - CustRequestCategory (one, autoRelation: false, keymaps: custRequestCategoryId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - FromParty (one, autoRelation: false, keymaps: fromPartyId -> partyId)
+    - MaximumAmountUom (one, autoRelation: false, keymaps: maximumAmountUomId -> uomId)
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - SalesChannelEnumeration (one, autoRelation: false, keymaps: salesChannelEnumId -> enumId)
+    + CustRequestTypeAttr (many, autoRelation: false, keymaps: custRequestTypeId)
+    - FulfillContactMech (one, autoRelation: false, keymaps: fulfillContactMechId -> contactMechId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - ParentCustRequest (one, autoRelation: false, keymaps: parentCustRequestId -> custRequestId)
+    + ChildCustRequest (many, autoRelation: true, keymaps: custRequestId -> parentCustRequestId)
+    + CustRequestAttribute (many, autoRelation: true, keymaps: custRequestId)
+    + CustRequestCommEvent (many, autoRelation: true, keymaps: custRequestId)
+    + CustRequestContent (many, autoRelation: true, keymaps: custRequestId)
+    + CustRequestItem (many, autoRelation: true, keymaps: custRequestId)
+    + CustRequestItemWorkEffort (many, autoRelation: true, keymaps: custRequestId)
+    + CustRequestNote (many, autoRelation: true, keymaps: custRequestId)
+    + CustRequestParty (many, autoRelation: true, keymaps: custRequestId)
+    + CustRequestStatus (many, autoRelation: true, keymaps: custRequestId)
+    + CustRequestWorkEffort (many, autoRelation: true, keymaps: custRequestId)
+    + QuoteItem (many, autoRelation: true, keymaps: custRequestId)
+    + RequirementCustRequest (many, autoRelation: true, keymaps: custRequestId)
+    + RespondingParty (many, autoRelation: true, keymaps: custRequestId)
+*/
+

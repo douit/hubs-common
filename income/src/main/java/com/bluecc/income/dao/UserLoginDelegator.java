@@ -139,6 +139,36 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = BudgetStatus.class, prefix = "cbbs")
+        default Map<String, UserLogin> chainChangeByBudgetStatus(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               boolean succInvoke) {
+            return chainChangeByBudgetStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = BudgetStatus.class, prefix = "cbbs")
+        default Map<String, UserLogin> chainChangeByBudgetStatus(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHANGE_BY_BUDGET_STATUS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
+                                id -> rr.getRow(UserLogin.class));
+                        if (rr.getColumn("cbbs_change_by_user_login_id", String.class) != null) {
+                            p.getRelChangeByBudgetStatus()
+                                    .add(rr.getRow(BudgetStatus.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
         @RegisterBeanMapper(value = Content.class, prefix = "cbc")
         default Map<String, UserLogin> chainCreatedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
@@ -403,6 +433,66 @@ public class UserLoginDelegator extends AbstractProcs{
                         if (rr.getColumn("ibii_issued_by_user_login_id", String.class) != null) {
                             p.getRelIssuedByItemIssuance()
                                     .add(rr.getRow(ItemIssuance.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = JobSandbox.class, prefix = "ajs")
+        default Map<String, UserLogin> chainAuthJobSandbox(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               boolean succInvoke) {
+            return chainAuthJobSandbox(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = JobSandbox.class, prefix = "ajs")
+        default Map<String, UserLogin> chainAuthJobSandbox(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(AUTH_JOB_SANDBOX);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
+                                id -> rr.getRow(UserLogin.class));
+                        if (rr.getColumn("ajs_auth_user_login_id", String.class) != null) {
+                            p.getRelAuthJobSandbox()
+                                    .add(rr.getRow(JobSandbox.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = JobSandbox.class, prefix = "rajs")
+        default Map<String, UserLogin> chainRunAsJobSandbox(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               boolean succInvoke) {
+            return chainRunAsJobSandbox(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = JobSandbox.class, prefix = "rajs")
+        default Map<String, UserLogin> chainRunAsJobSandbox(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RUN_AS_JOB_SANDBOX);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
+                                id -> rr.getRow(UserLogin.class));
+                        if (rr.getColumn("rajs_run_as_user", String.class) != null) {
+                            p.getRelRunAsJobSandbox()
+                                    .add(rr.getRow(JobSandbox.class));
                         }
                         return map;
                     });
@@ -1134,6 +1224,17 @@ public class UserLoginDelegator extends AbstractProcs{
         return e -> dao.chainPartyGroup(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, UserLogin>> changeByBudgetStatus(Dao dao, boolean succ) {
+        return e -> dao.chainChangeByBudgetStatus(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, UserLogin>> changeByBudgetStatus(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainChangeByBudgetStatus(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, UserLogin>> createdByContent(Dao dao, boolean succ) {
         return e -> dao.chainCreatedByContent(protoMeta, e, succ);
     }
@@ -1231,6 +1332,28 @@ public class UserLoginDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainIssuedByItemIssuance(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, UserLogin>> authJobSandbox(Dao dao, boolean succ) {
+        return e -> dao.chainAuthJobSandbox(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, UserLogin>> authJobSandbox(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainAuthJobSandbox(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, UserLogin>> runAsJobSandbox(Dao dao, boolean succ) {
+        return e -> dao.chainRunAsJobSandbox(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, UserLogin>> runAsJobSandbox(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainRunAsJobSandbox(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, UserLogin>> orderAdjustment(Dao dao, boolean succ) {
@@ -1555,6 +1678,17 @@ public class UserLoginDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<BudgetStatus> getChangeByBudgetStatus(){
+            return getRelationValues(ctx, p1, "change_by_budget_status", BudgetStatus.class);
+        }
+
+        public List<BudgetStatus> mergeChangeByBudgetStatus(){
+            return getChangeByBudgetStatus().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelChangeByBudgetStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<Content> getCreatedByContent(){
             return getRelationValues(ctx, p1, "created_by_content", Content.class);
         }
@@ -1651,6 +1785,28 @@ public class UserLoginDelegator extends AbstractProcs{
             return getIssuedByItemIssuance().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelIssuedByItemIssuance().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<JobSandbox> getAuthJobSandbox(){
+            return getRelationValues(ctx, p1, "auth_job_sandbox", JobSandbox.class);
+        }
+
+        public List<JobSandbox> mergeAuthJobSandbox(){
+            return getAuthJobSandbox().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelAuthJobSandbox().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<JobSandbox> getRunAsJobSandbox(){
+            return getRelationValues(ctx, p1, "run_as_job_sandbox", JobSandbox.class);
+        }
+
+        public List<JobSandbox> mergeRunAsJobSandbox(){
+            return getRunAsJobSandbox().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelRunAsJobSandbox().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -1930,6 +2086,8 @@ public class UserLoginDelegator extends AbstractProcs{
          
     public static final String PARTY_GROUP="party_group";
          
+    public static final String CHANGE_BY_BUDGET_STATUS="change_by_budget_status";
+         
     public static final String CREATED_BY_CONTENT="created_by_content";
          
     public static final String LAST_MODIFIED_BY_CONTENT="last_modified_by_content";
@@ -1947,6 +2105,10 @@ public class UserLoginDelegator extends AbstractProcs{
     public static final String CHANGE_BY_INVOICE_STATUS="change_by_invoice_status";
          
     public static final String ISSUED_BY_ITEM_ISSUANCE="issued_by_item_issuance";
+         
+    public static final String AUTH_JOB_SANDBOX="auth_job_sandbox";
+         
+    public static final String RUN_AS_JOB_SANDBOX="run_as_job_sandbox";
          
     public static final String ORDER_ADJUSTMENT="order_adjustment";
          
@@ -2031,6 +2193,14 @@ public class UserLoginDelegator extends AbstractProcs{
                                              el.toHeadBuilder().build()));
                         }
                                                
+                        // add/set change_by_budget_status to head entity                        
+                        if(relationsDemand.contains("change_by_budget_status")) {
+                            getRelationValues(ctx, p1, "change_by_budget_status",
+                                            BudgetStatus.class)
+                                    .forEach(el -> pb.addChangeByBudgetStatus(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set created_by_content to head entity                        
                         if(relationsDemand.contains("created_by_content")) {
                             getRelationValues(ctx, p1, "created_by_content",
@@ -2100,6 +2270,22 @@ public class UserLoginDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "issued_by_item_issuance",
                                             ItemIssuance.class)
                                     .forEach(el -> pb.addIssuedByItemIssuance(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set auth_job_sandbox to head entity                        
+                        if(relationsDemand.contains("auth_job_sandbox")) {
+                            getRelationValues(ctx, p1, "auth_job_sandbox",
+                                            JobSandbox.class)
+                                    .forEach(el -> pb.addAuthJobSandbox(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set run_as_job_sandbox to head entity                        
+                        if(relationsDemand.contains("run_as_job_sandbox")) {
+                            getRelationValues(ctx, p1, "run_as_job_sandbox",
+                                            JobSandbox.class)
+                                    .forEach(el -> pb.addRunAsJobSandbox(
                                              el.toDataBuilder().build()));
                         }
                                                

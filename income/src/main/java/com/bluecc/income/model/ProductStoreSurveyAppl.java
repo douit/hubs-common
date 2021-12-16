@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductStoreSurveyApplData;
 @REntity
 @MessageObject(value = ProductStoreSurveyApplData.class,
         symbol = EntityNames.ProductStoreSurveyAppl)
-public class ProductStoreSurveyAppl implements IEventModel<ProductStoreSurveyApplData.Builder>, Serializable {
+public class ProductStoreSurveyAppl implements IEventModel<ProductStoreSurveyApplData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RId String productStoreSurveyId;
@@ -125,3 +126,33 @@ public class ProductStoreSurveyAppl implements IEventModel<ProductStoreSurveyApp
 
     
 }
+
+
+/*
+-- keys: productStoreSurveyId
+
+-- fields --
+    
+    String productStoreSurveyId
+    String productStoreId
+    String surveyApplTypeId
+    String groupName
+    String surveyId
+    String productId
+    String productCategoryId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    String surveyTemplate
+    String resultTemplate
+    Long sequenceNum
+
+-- relations --
+    
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - Survey (one, autoRelation: false, keymaps: surveyId)
+    - SurveyApplType (one, autoRelation: false, keymaps: surveyApplTypeId)
+    - Product (one-nofk, autoRelation: false, keymaps: productId)
+    - ProductCategory (one-nofk, autoRelation: false, keymaps: productCategoryId)
+    + WorkEffortSurveyAppl (many, autoRelation: true, keymaps: productStoreSurveyId -> surveyId)
+*/
+

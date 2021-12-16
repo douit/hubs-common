@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -90,3 +91,30 @@ public class TelecomNumber implements IEventModel<TelecomNumberData.Builder>, Se
 
     
 }
+
+
+/*
+-- keys: contactMechId
+
+-- fields --
+    
+    String contactMechId
+    String countryCode
+    String areaCode
+    String contactNumber
+    String askForName
+
+-- relations --
+    
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    + FacilityContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + TelecomOrderItemShipGroup (many, autoRelation: true, keymaps: contactMechId -> telecomContactMechId)
+    + PartyContactMech (many, autoRelation: true, keymaps: contactMechId)
+    + PartyContactMechPurpose (many, autoRelation: true, keymaps: contactMechId)
+    + OriginShipment (many, autoRelation: true, keymaps: contactMechId -> originTelecomNumberId)
+    + DestinationShipment (many, autoRelation: true, keymaps: contactMechId -> destinationTelecomNumberId)
+    + OriginShipmentRouteSegment (many, autoRelation: true, keymaps: contactMechId -> originTelecomNumberId)
+    + DestShipmentRouteSegment (many, autoRelation: true, keymaps: contactMechId -> destTelecomNumberId)
+    + WorkEffortContactMech (many, autoRelation: true, keymaps: contactMechId)
+*/
+

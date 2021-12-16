@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -250,3 +251,69 @@ public class ShipmentRouteSegment implements IEventModel<ShipmentRouteSegmentDat
 
     
 }
+
+
+/*
+-- keys: shipmentId, shipmentRouteSegmentId
+
+-- fields --
+    
+    String shipmentId
+    String shipmentRouteSegmentId
+    String deliveryId
+    String originFacilityId
+    String destFacilityId
+    String originContactMechId
+    String originTelecomNumberId
+    String destContactMechId
+    String destTelecomNumberId
+    String carrierPartyId
+    String shipmentMethodTypeId
+    String carrierServiceStatusId
+    String carrierDeliveryZone
+    String carrierRestrictionCodes
+    String carrierRestrictionDesc
+    java.math.BigDecimal billingWeight
+    String billingWeightUomId
+    java.math.BigDecimal actualTransportCost
+    java.math.BigDecimal actualServiceCost
+    java.math.BigDecimal actualOtherCost
+    java.math.BigDecimal actualCost
+    String currencyUomId
+    java.time.LocalDateTime actualStartDate
+    java.time.LocalDateTime actualArrivalDate
+    java.time.LocalDateTime estimatedStartDate
+    java.time.LocalDateTime estimatedArrivalDate
+    String trackingIdNumber
+    String trackingDigest
+    String updatedByUserLoginId
+    java.time.LocalDateTime lastUpdatedDate
+    String homeDeliveryType
+    java.time.LocalDateTime homeDeliveryDate
+    String thirdPartyAccountNumber
+    String thirdPartyPostalCode
+    String thirdPartyCountryGeoCode
+    byte[] upsHighValueReport
+
+-- relations --
+    
+    - Shipment (one, autoRelation: false, keymaps: shipmentId)
+    - Delivery (one, autoRelation: false, keymaps: deliveryId)
+    - CarrierParty (one, autoRelation: false, keymaps: carrierPartyId -> partyId)
+    - CarrierPerson (one-nofk, autoRelation: false, keymaps: carrierPartyId -> partyId)
+    - CarrierPartyGroup (one-nofk, autoRelation: false, keymaps: carrierPartyId -> partyId)
+    - ShipmentMethodType (one, autoRelation: false, keymaps: shipmentMethodTypeId)
+    - OriginFacility (one, autoRelation: false, keymaps: originFacilityId -> facilityId)
+    - DestFacility (one, autoRelation: false, keymaps: destFacilityId -> facilityId)
+    - OriginContactMech (one-nofk, autoRelation: false, keymaps: originContactMechId -> contactMechId)
+    - DestContactMech (one-nofk, autoRelation: false, keymaps: destContactMechId -> contactMechId)
+    - OriginPostalAddress (one, autoRelation: false, keymaps: originContactMechId -> contactMechId)
+    - OriginTelecomNumber (one, autoRelation: false, keymaps: originTelecomNumberId -> contactMechId)
+    - DestPostalAddress (one, autoRelation: false, keymaps: destContactMechId -> contactMechId)
+    - DestTelecomNumber (one, autoRelation: false, keymaps: destTelecomNumberId -> contactMechId)
+    - CarrierServiceStatusItem (one, autoRelation: false, keymaps: carrierServiceStatusId -> statusId)
+    - CurrencyUom (one, autoRelation: false, keymaps: currencyUomId -> uomId)
+    - BillingWeightUom (one, autoRelation: false, keymaps: billingWeightUomId -> uomId)
+    + ShipmentPackageRouteSeg (many, autoRelation: true, keymaps: shipmentId, shipmentRouteSegmentId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -33,7 +34,7 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductCategoryData.class,
         symbol = EntityNames.ProductCategory)
-public class ProductCategory implements IEventModel<ProductCategoryFlatData.Builder>, Serializable {
+public class ProductCategory implements IEventModel<ProductCategoryFlatData.Builder>, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
     @RId String productCategoryId;
@@ -203,3 +204,50 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
     }
 
 }
+
+
+/*
+-- keys: productCategoryId
+
+-- fields --
+    
+    String productCategoryId
+    String productCategoryTypeId
+    String primaryParentCategoryId
+    String categoryName
+    String description
+    String longDescription
+    String categoryImageUrl
+    String linkOneImageUrl
+    String linkTwoImageUrl
+    String detailScreen
+    Character showInSelect
+
+-- relations --
+    
+    - ProductCategoryType (one, autoRelation: false, keymaps: productCategoryTypeId)
+    + ProductCategoryTypeAttr (many, autoRelation: false, keymaps: productCategoryTypeId)
+    - PrimaryParentProductCategory (one, autoRelation: false, keymaps: primaryParentCategoryId -> productCategoryId)
+    + PrimaryChildProductCategory (many, autoRelation: false, keymaps: productCategoryId -> primaryParentCategoryId)
+    + MarketInterest (many, autoRelation: true, keymaps: productCategoryId)
+    + PartyNeed (many, autoRelation: true, keymaps: productCategoryId)
+    + ProdCatalogCategory (many, autoRelation: true, keymaps: productCategoryId)
+    + PrimaryProduct (many, autoRelation: true, keymaps: productCategoryId -> primaryProductCategoryId)
+    + ProductCategoryAttribute (many, autoRelation: true, keymaps: productCategoryId)
+    + ProductCategoryContent (many, autoRelation: true, keymaps: productCategoryId)
+    + ProductCategoryGlAccount (many, autoRelation: true, keymaps: productCategoryId)
+    + ProductCategoryLink (many, autoRelation: true, keymaps: productCategoryId)
+    + ProductCategoryMember (many, autoRelation: true, keymaps: productCategoryId)
+    + ProductCategoryRole (many, autoRelation: true, keymaps: productCategoryId)
+    + CurrentProductCategoryRollup (many, autoRelation: true, keymaps: productCategoryId)
+    + ParentProductCategoryRollup (many, autoRelation: true, keymaps: productCategoryId -> parentProductCategoryId)
+    + ProductFeatureCatGrpAppl (many, autoRelation: true, keymaps: productCategoryId)
+    + ProductFeatureCategoryAppl (many, autoRelation: true, keymaps: productCategoryId)
+    + ProductPromoCategory (many, autoRelation: true, keymaps: productCategoryId)
+    + ProductStoreSurveyAppl (many, autoRelation: true, keymaps: productCategoryId)
+    + SalesForecastDetail (many, autoRelation: true, keymaps: productCategoryId)
+    + Subscription (many, autoRelation: true, keymaps: productCategoryId)
+    + TaxAuthorityCategory (many, autoRelation: true, keymaps: productCategoryId)
+    + TaxAuthorityRateProduct (many, autoRelation: true, keymaps: productCategoryId)
+*/
+

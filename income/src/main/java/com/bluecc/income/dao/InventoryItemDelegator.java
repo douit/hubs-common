@@ -139,6 +139,36 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        default Map<String, InventoryItem> chainFacility(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               boolean succInvoke) {
+            return chainFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        default Map<String, InventoryItem> chainFacility(ProtoMeta protoMeta,
+                                               Map<String, InventoryItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
+                                id -> rr.getRow(InventoryItem.class));
+                        if (rr.getColumn("fa_facility_id", String.class) != null) {
+                            p.getRelFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
         @RegisterBeanMapper(value = ProductFacility.class, prefix = "pf")
         default Map<String, InventoryItem> chainProductFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
@@ -534,6 +564,17 @@ public class InventoryItemDelegator extends AbstractProcs{
         return e -> dao.chainOwnerParty(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, InventoryItem>> facility(Dao dao, boolean succ) {
+        return e -> dao.chainFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, InventoryItem>> facility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, InventoryItem>> productFacility(Dao dao, boolean succ) {
         return e -> dao.chainProductFacility(protoMeta, e, succ);
     }
@@ -735,6 +776,17 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<Facility> getFacility(){
+            return getRelationValues(ctx, p1, "facility", Facility.class);
+        }
+
+        public List<Facility> mergeFacility(){
+            return getFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<ProductFacility> getProductFacility(){
             return getRelationValues(ctx, p1, "product_facility", ProductFacility.class);
         }
@@ -890,6 +942,8 @@ public class InventoryItemDelegator extends AbstractProcs{
          
     public static final String OWNER_PARTY="owner_party";
          
+    public static final String FACILITY="facility";
+         
     public static final String PRODUCT_FACILITY="product_facility";
          
     public static final String FACILITY_LOCATION="facility_location";
@@ -949,6 +1003,14 @@ public class InventoryItemDelegator extends AbstractProcs{
                                             Party.class)
                                     .forEach(el -> pb.setOwnerParty(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set facility to head entity                        
+                        if(relationsDemand.contains("facility")) {
+                            getRelationValues(ctx, p1, "facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.setFacility(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set product_facility to head entity                        

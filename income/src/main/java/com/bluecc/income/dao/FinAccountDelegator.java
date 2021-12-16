@@ -109,6 +109,36 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "ptga")
+        default Map<String, FinAccount> chainPostToGlAccount(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainPostToGlAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "ptga")
+        default Map<String, FinAccount> chainPostToGlAccount(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(POST_TO_GL_ACCOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("ptga_gl_account_id", String.class) != null) {
+                            p.getRelPostToGlAccount()
+                                    .add(rr.getRow(GlAccount.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
         @RegisterBeanMapper(value = PaymentMethod.class, prefix = "rpm")
         default Map<String, FinAccount> chainReplenishPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
@@ -139,6 +169,36 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "far")
+        default Map<String, FinAccount> chainFinAccountRole(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainFinAccountRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "far")
+        default Map<String, FinAccount> chainFinAccountRole(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("far_fin_account_id", String.class) != null) {
+                            p.getRelFinAccountRole()
+                                    .add(rr.getRow(FinAccountRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
         @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fas")
         default Map<String, FinAccount> chainFinAccountStatus(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
@@ -163,6 +223,36 @@ public class FinAccountDelegator extends AbstractProcs{
                         if (rr.getColumn("fas_fin_account_id", String.class) != null) {
                             p.getRelFinAccountStatus()
                                     .add(rr.getRow(FinAccountStatus.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        default Map<String, FinAccount> chainFinAccountTrans(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainFinAccountTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        default Map<String, FinAccount> chainFinAccountTrans(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_TRANS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("fat_fin_account_id", String.class) != null) {
+                            p.getRelFinAccountTrans()
+                                    .add(rr.getRow(FinAccountTrans.class));
                         }
                         return map;
                     });
@@ -253,6 +343,17 @@ public class FinAccountDelegator extends AbstractProcs{
         return e -> dao.chainOwnerParty(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, FinAccount>> postToGlAccount(Dao dao, boolean succ) {
+        return e -> dao.chainPostToGlAccount(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FinAccount>> postToGlAccount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPostToGlAccount(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, FinAccount>> replenishPaymentMethod(Dao dao, boolean succ) {
         return e -> dao.chainReplenishPaymentMethod(protoMeta, e, succ);
     }
@@ -264,6 +365,17 @@ public class FinAccountDelegator extends AbstractProcs{
         return e -> dao.chainReplenishPaymentMethod(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, FinAccount>> finAccountRole(Dao dao, boolean succ) {
+        return e -> dao.chainFinAccountRole(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FinAccount>> finAccountRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFinAccountRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, FinAccount>> finAccountStatus(Dao dao, boolean succ) {
         return e -> dao.chainFinAccountStatus(protoMeta, e, succ);
     }
@@ -273,6 +385,17 @@ public class FinAccountDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainFinAccountStatus(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, FinAccount>> finAccountTrans(Dao dao, boolean succ) {
+        return e -> dao.chainFinAccountTrans(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FinAccount>> finAccountTrans(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFinAccountTrans(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, FinAccount>> orderPaymentPreference(Dao dao, boolean succ) {
@@ -355,6 +478,17 @@ public class FinAccountDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<GlAccount> getPostToGlAccount(){
+            return getRelationValues(ctx, p1, "post_to_gl_account", GlAccount.class);
+        }
+
+        public List<GlAccount> mergePostToGlAccount(){
+            return getPostToGlAccount().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPostToGlAccount().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<PaymentMethod> getReplenishPaymentMethod(){
             return getRelationValues(ctx, p1, "replenish_payment_method", PaymentMethod.class);
         }
@@ -366,6 +500,17 @@ public class FinAccountDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<FinAccountRole> getFinAccountRole(){
+            return getRelationValues(ctx, p1, "fin_account_role", FinAccountRole.class);
+        }
+
+        public List<FinAccountRole> mergeFinAccountRole(){
+            return getFinAccountRole().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFinAccountRole().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<FinAccountStatus> getFinAccountStatus(){
             return getRelationValues(ctx, p1, "fin_account_status", FinAccountStatus.class);
         }
@@ -374,6 +519,17 @@ public class FinAccountDelegator extends AbstractProcs{
             return getFinAccountStatus().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelFinAccountStatus().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FinAccountTrans> getFinAccountTrans(){
+            return getRelationValues(ctx, p1, "fin_account_trans", FinAccountTrans.class);
+        }
+
+        public List<FinAccountTrans> mergeFinAccountTrans(){
+            return getFinAccountTrans().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFinAccountTrans().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -420,9 +576,15 @@ public class FinAccountDelegator extends AbstractProcs{
          
     public static final String OWNER_PARTY="owner_party";
          
+    public static final String POST_TO_GL_ACCOUNT="post_to_gl_account";
+         
     public static final String REPLENISH_PAYMENT_METHOD="replenish_payment_method";
          
+    public static final String FIN_ACCOUNT_ROLE="fin_account_role";
+         
     public static final String FIN_ACCOUNT_STATUS="fin_account_status";
+         
+    public static final String FIN_ACCOUNT_TRANS="fin_account_trans";
          
     public static final String ORDER_PAYMENT_PREFERENCE="order_payment_preference";
          
@@ -457,6 +619,14 @@ public class FinAccountDelegator extends AbstractProcs{
                                              el.toHeadBuilder().build()));
                         }
                                                
+                        // add/set post_to_gl_account to head entity                        
+                        if(relationsDemand.contains("post_to_gl_account")) {
+                            getRelationValues(ctx, p1, "post_to_gl_account",
+                                            GlAccount.class)
+                                    .forEach(el -> pb.setPostToGlAccount(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set replenish_payment_method to head entity                        
                         if(relationsDemand.contains("replenish_payment_method")) {
                             getRelationValues(ctx, p1, "replenish_payment_method",
@@ -465,11 +635,27 @@ public class FinAccountDelegator extends AbstractProcs{
                                              el.toDataBuilder().build()));
                         }
                                                
+                        // add/set fin_account_role to head entity                        
+                        if(relationsDemand.contains("fin_account_role")) {
+                            getRelationValues(ctx, p1, "fin_account_role",
+                                            FinAccountRole.class)
+                                    .forEach(el -> pb.addFinAccountRole(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set fin_account_status to head entity                        
                         if(relationsDemand.contains("fin_account_status")) {
                             getRelationValues(ctx, p1, "fin_account_status",
                                             FinAccountStatus.class)
                                     .forEach(el -> pb.addFinAccountStatus(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set fin_account_trans to head entity                        
+                        if(relationsDemand.contains("fin_account_trans")) {
+                            getRelationValues(ctx, p1, "fin_account_trans",
+                                            FinAccountTrans.class)
+                                    .forEach(el -> pb.addFinAccountTrans(
                                              el.toDataBuilder().build()));
                         }
                                                

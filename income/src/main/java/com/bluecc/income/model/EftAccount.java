@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -110,3 +111,29 @@ public class EftAccount implements IEventModel<EftAccountData.Builder>, Serializ
 
     
 }
+
+
+/*
+-- keys: paymentMethodId
+
+-- fields --
+    
+    String paymentMethodId
+    String bankName
+    String routingNumber
+    String accountType
+    String accountNumber
+    String nameOnAccount
+    String companyNameOnAccount
+    String contactMechId
+    Long yearsAtBank
+
+-- relations --
+    
+    - PaymentMethod (one, autoRelation: false, keymaps: paymentMethodId)
+    - ContactMech (one, autoRelation: false, keymaps: contactMechId)
+    - PostalAddress (one, autoRelation: false, keymaps: contactMechId)
+    + OrderPaymentPreference (many, autoRelation: true, keymaps: paymentMethodId)
+    + Payment (many, autoRelation: true, keymaps: paymentMethodId)
+*/
+

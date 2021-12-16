@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -205,3 +206,56 @@ public class ShipmentCostEstimate implements IEventModel<ShipmentCostEstimateDat
 
     
 }
+
+
+/*
+-- keys: shipmentCostEstimateId
+
+-- fields --
+    
+    String shipmentCostEstimateId
+    String shipmentMethodTypeId
+    String carrierPartyId
+    String carrierRoleTypeId
+    String productStoreShipMethId
+    String productStoreId
+    String partyId
+    String roleTypeId
+    String geoIdTo
+    String geoIdFrom
+    String weightBreakId
+    String weightUomId
+    java.math.BigDecimal weightUnitPrice
+    String quantityBreakId
+    String quantityUomId
+    java.math.BigDecimal quantityUnitPrice
+    String priceBreakId
+    String priceUomId
+    java.math.BigDecimal priceUnitPrice
+    java.math.BigDecimal orderFlatPrice
+    java.math.BigDecimal orderPricePercent
+    java.math.BigDecimal orderItemFlatPrice
+    java.math.BigDecimal shippingPricePercent
+    String productFeatureGroupId
+    java.math.BigDecimal oversizeUnit
+    java.math.BigDecimal oversizePrice
+    java.math.BigDecimal featurePercent
+    java.math.BigDecimal featurePrice
+
+-- relations --
+    
+    - CarrierShipmentMethod (one, autoRelation: false, keymaps: shipmentMethodTypeId, carrierPartyId -> partyId, carrierRoleTypeId -> roleTypeId)
+    - ProductStoreShipmentMeth (one, autoRelation: false, keymaps: productStoreShipMethId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one-nofk, autoRelation: false, keymaps: partyId, roleTypeId)
+    - WeightUom (one, autoRelation: false, keymaps: weightUomId -> uomId)
+    - QuantityUom (one, autoRelation: false, keymaps: quantityUomId -> uomId)
+    - PriceUom (one, autoRelation: false, keymaps: priceUomId -> uomId)
+    - ToGeo (one, autoRelation: false, keymaps: geoIdTo -> geoId)
+    - FromGeo (one, autoRelation: false, keymaps: geoIdFrom -> geoId)
+    - WeightQuantityBreak (one, autoRelation: false, keymaps: weightBreakId -> quantityBreakId)
+    - QuantityQuantityBreak (one, autoRelation: false, keymaps: quantityBreakId)
+    - PriceQuantityBreak (one, autoRelation: false, keymaps: priceBreakId -> quantityBreakId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductStoreRoleData;
 @REntity
 @MessageObject(value = ProductStoreRoleData.class,
         symbol = EntityNames.ProductStoreRole)
-public class ProductStoreRole implements IEventModel<ProductStoreRoleData.Builder>, Serializable {
+public class ProductStoreRole implements IEventModel<ProductStoreRoleData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String partyId;
@@ -100,3 +101,27 @@ public class ProductStoreRole implements IEventModel<ProductStoreRoleData.Builde
 
     
 }
+
+
+/*
+-- keys: partyId, roleTypeId, productStoreId, fromDate
+
+-- fields --
+    
+    String partyId
+    String roleTypeId
+    String productStoreId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    Long sequenceNum
+
+-- relations --
+    
+    - Party (one-nofk, autoRelation: false, keymaps: partyId)
+    - RoleType (one-nofk, autoRelation: false, keymaps: roleTypeId)
+    - Person (one-nofk, autoRelation: false, keymaps: partyId)
+    - PartyGroup (one-nofk, autoRelation: false, keymaps: partyId)
+    - PartyRole (one, autoRelation: false, keymaps: partyId, roleTypeId)
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -200,3 +201,67 @@ public class CommunicationEvent implements IEventModel<CommunicationEventData.Bu
 
     
 }
+
+
+/*
+-- keys: communicationEventId
+
+-- fields --
+    
+    String communicationEventId
+    String communicationEventTypeId
+    String origCommEventId
+    String parentCommEventId
+    String statusId
+    String contactMechTypeId
+    String contactMechIdFrom
+    String contactMechIdTo
+    String roleTypeIdFrom
+    String roleTypeIdTo
+    String partyIdFrom
+    String partyIdTo
+    java.time.LocalDateTime entryDate
+    java.time.LocalDateTime datetimeStarted
+    java.time.LocalDateTime datetimeEnded
+    String subject
+    String contentMimeTypeId
+    String content
+    String note
+    String reasonEnumId
+    String contactListId
+    String headerString
+    String fromText
+    String toText
+    String ccString
+    String bccString
+    String messageId
+
+-- relations --
+    
+    - CommunicationEventType (one, autoRelation: false, keymaps: communicationEventTypeId)
+    - ToParty (one, autoRelation: false, keymaps: partyIdTo -> partyId)
+    - ToRoleType (one, autoRelation: false, keymaps: roleTypeIdTo -> roleTypeId)
+    - ToPartyRole (one-nofk, autoRelation: false, keymaps: partyIdTo -> partyId, roleTypeIdTo -> roleTypeId)
+    - FromParty (one, autoRelation: false, keymaps: partyIdFrom -> partyId)
+    - FromRoleType (one, autoRelation: false, keymaps: roleTypeIdFrom -> roleTypeId)
+    - FromPartyRole (one-nofk, autoRelation: false, keymaps: partyIdFrom -> partyId, roleTypeIdFrom -> roleTypeId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - ContactMechType (one, autoRelation: false, keymaps: contactMechTypeId)
+    - FromContactMech (one, autoRelation: false, keymaps: contactMechIdFrom -> contactMechId)
+    - ToContactMech (one, autoRelation: false, keymaps: contactMechIdTo -> contactMechId)
+    - ContactList (one, autoRelation: false, keymaps: contactListId)
+    - MimeType (one, autoRelation: false, keymaps: contentMimeTypeId -> mimeTypeId)
+    - Enumeration (one, autoRelation: false, keymaps: reasonEnumId -> enumId)
+    + CommEventContentAssoc (many, autoRelation: true, keymaps: communicationEventId)
+    + CommunicationEventOrder (many, autoRelation: true, keymaps: communicationEventId)
+    + CommunicationEventProduct (many, autoRelation: true, keymaps: communicationEventId)
+    + CommunicationEventPurpose (many, autoRelation: true, keymaps: communicationEventId)
+    + CommunicationEventReturn (many, autoRelation: true, keymaps: communicationEventId)
+    + CommunicationEventRole (many, autoRelation: true, keymaps: communicationEventId)
+    + CommunicationEventWorkEff (many, autoRelation: true, keymaps: communicationEventId)
+    + ContactListCommStatus (many, autoRelation: true, keymaps: communicationEventId)
+    + CustRequestCommEvent (many, autoRelation: true, keymaps: communicationEventId)
+    + PartyNeed (many, autoRelation: true, keymaps: communicationEventId)
+    + SubscriptionCommEvent (many, autoRelation: true, keymaps: communicationEventId)
+*/
+

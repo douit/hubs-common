@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -220,6 +221,8 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
         // relations
      
     @Exclude
+    List<Facility> relOriginFacility= new ArrayList<>(); 
+    @Exclude
     List<BillingAccount> relBillingAccount= new ArrayList<>(); 
     @Exclude
     List<ProductStore> relProductStore= new ArrayList<>(); 
@@ -307,9 +310,6 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
         if (syncStatusId != null) {
             builder.setSyncStatusId(syncStatusId);
         }
-        if (originFacilityId != null) {
-            builder.setOriginFacilityId(originFacilityId);
-        }
         if (agreementId != null) {
             builder.setAgreementId(agreementId);
         }
@@ -354,3 +354,106 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Se
     }
 
 }
+
+
+/*
+-- keys: orderId
+
+-- fields --
+    
+    String orderId
+    String orderTypeId
+    String orderName
+    String externalId
+    String salesChannelEnumId
+    java.time.LocalDateTime orderDate
+    Character priority
+    java.time.LocalDateTime entryDate
+    java.time.LocalDateTime pickSheetPrintedDate
+    String visitId
+    String statusId
+    String createdBy
+    String firstAttemptOrderId
+    String currencyUom
+    String syncStatusId
+    String billingAccountId
+    String originFacilityId
+    String webSiteId
+    String productStoreId
+    String agreementId
+    String terminalId
+    String transactionId
+    String autoOrderShoppingListId
+    Character needsInventoryIssuance
+    Character isRushOrder
+    String internalCode
+    java.math.BigDecimal remainingSubTotal
+    java.math.BigDecimal grandTotal
+    Character isViewed
+    Character invoicePerShipment
+
+-- relations --
+    
+    - OrderType (one, autoRelation: false, keymaps: orderTypeId)
+    - SalesChannelEnumeration (one, autoRelation: false, keymaps: salesChannelEnumId -> enumId)
+    - OriginFacility (one, autoRelation: false, keymaps: originFacilityId -> facilityId)
+    + OrderTypeAttr (many, autoRelation: false, keymaps: orderTypeId)
+    - BillingAccount (one, autoRelation: false, keymaps: billingAccountId)
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - AutoOrderShoppingList (one, autoRelation: false, keymaps: autoOrderShoppingListId -> shoppingListId)
+    - CreatedByUserLogin (one, autoRelation: false, keymaps: createdBy -> userLoginId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    - SyncStatusItem (one, autoRelation: false, keymaps: syncStatusId -> statusId)
+    - Uom (one, autoRelation: false, keymaps: currencyUom -> uomId)
+    - WebSite (one, autoRelation: false, keymaps: webSiteId)
+    + Order IdAllocationPlanItem (many, autoRelation: true, keymaps: orderId)
+    + CommunicationEventOrder (many, autoRelation: true, keymaps: orderId)
+    + AcquireFixedAsset (many, autoRelation: true, keymaps: orderId -> acquireOrderId)
+    + PurchaseFixedAssetMaint (many, autoRelation: true, keymaps: orderId -> purchaseOrderId)
+    + FixedAssetMaintOrder (many, autoRelation: true, keymaps: orderId)
+    + GiftCardFulfillment (many, autoRelation: true, keymaps: orderId)
+    + ItemIssuance (many, autoRelation: true, keymaps: orderId)
+    + OrderAdjustment (many, autoRelation: true, keymaps: orderId)
+    + OrderAttribute (many, autoRelation: true, keymaps: orderId)
+    + OrderContactMech (many, autoRelation: true, keymaps: orderId)
+    + OrderContent (many, autoRelation: true, keymaps: orderId)
+    + OrderDeliverySchedule (many, autoRelation: true, keymaps: orderId)
+    + OrderHeaderNote (many, autoRelation: true, keymaps: orderId)
+    + OrderHeaderWorkEffort (many, autoRelation: true, keymaps: orderId)
+    + OrderItem (many, autoRelation: true, keymaps: orderId)
+    + FromOrderItemAssoc (many, autoRelation: true, keymaps: orderId)
+    + ToOrderItemAssoc (many, autoRelation: true, keymaps: orderId -> toOrderId)
+    + OrderItemBilling (many, autoRelation: true, keymaps: orderId)
+    + OrderItemChange (many, autoRelation: true, keymaps: orderId)
+    + OrderItemContactMech (many, autoRelation: true, keymaps: orderId)
+    + OrderItemGroup (many, autoRelation: true, keymaps: orderId)
+    + OrderItemPriceInfo (many, autoRelation: true, keymaps: orderId)
+    + OrderItemRole (many, autoRelation: true, keymaps: orderId)
+    + OrderItemShipGroup (many, autoRelation: true, keymaps: orderId)
+    + OrderItemShipGroupAssoc (many, autoRelation: true, keymaps: orderId)
+    + OrderItemShipGrpInvRes (many, autoRelation: true, keymaps: orderId)
+    + OrderNotification (many, autoRelation: true, keymaps: orderId)
+    + OrderPaymentPreference (many, autoRelation: true, keymaps: orderId)
+    + OrderProductPromoCode (many, autoRelation: true, keymaps: orderId)
+    + OrderRequirementCommitment (many, autoRelation: true, keymaps: orderId)
+    + OrderRole (many, autoRelation: true, keymaps: orderId)
+    + OrderShipment (many, autoRelation: true, keymaps: orderId)
+    + OrderStatus (many, autoRelation: true, keymaps: orderId)
+    + OrderTerm (many, autoRelation: true, keymaps: orderId)
+    + PrimaryPicklistBin (many, autoRelation: true, keymaps: orderId -> primaryOrderId)
+    + PicklistItem (many, autoRelation: true, keymaps: orderId)
+    + PosTerminalLog (many, autoRelation: true, keymaps: orderId)
+    + ProductOrderItem (many, autoRelation: true, keymaps: orderId)
+    + EngagementProductOrderItem (many, autoRelation: true, keymaps: orderId -> engagementId)
+    + ProductPromoUse (many, autoRelation: true, keymaps: orderId)
+    + ReturnItem (many, autoRelation: true, keymaps: orderId)
+    + ReplacementReturnItemResponse (many, autoRelation: true, keymaps: orderId -> replacementOrderId)
+    + PrimaryShipment (many, autoRelation: true, keymaps: orderId -> primaryOrderId)
+    + ShipmentReceipt (many, autoRelation: true, keymaps: orderId)
+    + Subscription (many, autoRelation: true, keymaps: orderId)
+    + SurveyResponse (many, autoRelation: true, keymaps: orderId)
+    + TrackingCodeOrder (many, autoRelation: true, keymaps: orderId)
+    + TrackingCodeOrderReturn (many, autoRelation: true, keymaps: orderId)
+    + WorkOrderItemFulfillment (many, autoRelation: true, keymaps: orderId)
+*/
+

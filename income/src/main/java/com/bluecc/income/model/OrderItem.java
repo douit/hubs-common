@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -322,7 +323,11 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
     @Exclude
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
+    List<GlAccount> relOverrideGlAccount= new ArrayList<>(); 
+    @Exclude
     List<UserLogin> relChangeByUserLogin= new ArrayList<>(); 
+    @Exclude
+    List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
     List<FixedAsset> relAcquireFixedAsset= new ArrayList<>(); 
     @Exclude
@@ -471,9 +476,6 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
         if (cancelBackOrderDate != null) {
             builder.setCancelBackOrderDate(getTimestamp(cancelBackOrderDate));
         }
-        if (overrideGlAccountId != null) {
-            builder.setOverrideGlAccountId(overrideGlAccountId);
-        }
         if (salesOpportunityId != null) {
             builder.setSalesOpportunityId(salesOpportunityId);
         }
@@ -491,3 +493,111 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serial
     }
 
 }
+
+
+/*
+-- keys: orderId, orderItemSeqId
+
+-- fields --
+    
+    String orderId
+    String orderItemSeqId
+    String externalId
+    String orderItemTypeId
+    String orderItemGroupSeqId
+    Character isItemGroupPrimary
+    String fromInventoryItemId
+    String budgetId
+    String budgetItemSeqId
+    String productId
+    String supplierProductId
+    String productFeatureId
+    String prodCatalogId
+    String productCategoryId
+    Character isPromo
+    String quoteId
+    String quoteItemSeqId
+    String shoppingListId
+    String shoppingListItemSeqId
+    String subscriptionId
+    String deploymentId
+    java.math.BigDecimal quantity
+    java.math.BigDecimal cancelQuantity
+    java.math.BigDecimal selectedAmount
+    java.math.BigDecimal unitPrice
+    java.math.BigDecimal unitListPrice
+    java.math.BigDecimal unitAverageCost
+    java.math.BigDecimal unitRecurringPrice
+    Character isModifiedPrice
+    String recurringFreqUomId
+    String itemDescription
+    String comments
+    String correspondingPoId
+    String statusId
+    String syncStatusId
+    java.time.LocalDateTime estimatedShipDate
+    java.time.LocalDateTime estimatedDeliveryDate
+    java.time.LocalDateTime autoCancelDate
+    java.time.LocalDateTime dontCancelSetDate
+    String dontCancelSetUserLogin
+    java.time.LocalDateTime shipBeforeDate
+    java.time.LocalDateTime shipAfterDate
+    java.time.LocalDateTime reserveAfterDate
+    java.time.LocalDateTime cancelBackOrderDate
+    String overrideGlAccountId
+    String salesOpportunityId
+    String changeByUserLoginId
+
+-- relations --
+    
+    - OrderHeader (one, autoRelation: false, keymaps: orderId)
+    - OrderItemType (one, autoRelation: false, keymaps: orderItemTypeId)
+    - OrderItemGroup (one, autoRelation: false, keymaps: orderId, orderItemGroupSeqId)
+    + OrderItemTypeAttr (many, autoRelation: false, keymaps: orderItemTypeId)
+    - Product (one, autoRelation: false, keymaps: productId)
+    - FromInventoryItem (one, autoRelation: false, keymaps: fromInventoryItemId -> inventoryItemId)
+    - RecurringFreqUom (one, autoRelation: false, keymaps: recurringFreqUomId -> uomId)
+    - StatusItem (one, autoRelation: false, keymaps: statusId)
+    + ProductFacilityLocation (many, autoRelation: false, keymaps: productId)
+    + StatusValidChange (many, autoRelation: false, keymaps: statusId)
+    - SyncStatusItem (one, autoRelation: false, keymaps: syncStatusId -> statusId)
+    - DontCancelSetUserLogin (one, autoRelation: false, keymaps: dontCancelSetUserLogin -> userLoginId)
+    - QuoteItem (one, autoRelation: false, keymaps: quoteId, quoteItemSeqId)
+    - ShoppingListItem (one-nofk, autoRelation: false, keymaps: shoppingListId, shoppingListItemSeqId)
+    - OverrideGlAccount (one, autoRelation: false, keymaps: overrideGlAccountId -> glAccountId)
+    - SalesOpportunity (one, autoRelation: false, keymaps: salesOpportunityId)
+    - ChangeByUserLogin (one, autoRelation: false, keymaps: changeByUserLoginId -> userLoginId)
+    + Order ItemAllocationPlanItem (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + FinAccountTrans (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + AcquireFixedAsset (many, autoRelation: true, keymaps: orderId -> acquireOrderId, orderItemSeqId -> acquireOrderItemSeqId)
+    + FixedAssetMaintOrder (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + GiftCardFulfillment (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + ItemIssuance (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderAdjustment (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    - OrderDeliverySchedule (one-nofk, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + FromOrderItemAssoc (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + ToOrderItemAssoc (many, autoRelation: true, keymaps: orderId -> toOrderId, orderItemSeqId -> toOrderItemSeqId)
+    + OrderItemAttribute (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderItemBilling (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderItemChange (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderItemContactMech (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderItemGroupOrder (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderItemPriceInfo (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderItemRole (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderItemShipGroupAssoc (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderItemShipGrpInvRes (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderPaymentPreference (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderRequirementCommitment (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderShipment (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderStatus (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + OrderTerm (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + PicklistItem (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + ProductOrderItem (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + EngagementProductOrderItem (many, autoRelation: true, keymaps: orderId -> engagementId, orderItemSeqId -> engagementItemSeqId)
+    + ReturnItem (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + ShipmentReceipt (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + Subscription (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + SurveyResponse (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+    + WorkOrderItemFulfillment (many, autoRelation: true, keymaps: orderId, orderItemSeqId)
+*/
+

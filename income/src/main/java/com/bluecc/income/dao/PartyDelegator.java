@@ -499,6 +499,36 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        default Map<String, Party> chainOwnerFacility(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainOwnerFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        default Map<String, Party> chainOwnerFacility(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(OWNER_FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("of_owner_party_id", String.class) != null) {
+                            p.getRelOwnerFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
         @RegisterBeanMapper(value = FinAccount.class, prefix = "ofa")
         default Map<String, Party> chainOrganizationFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
@@ -559,6 +589,96 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "far")
+        default Map<String, Party> chainFinAccountRole(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainFinAccountRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "far")
+        default Map<String, Party> chainFinAccountRole(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_ROLE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("far_party_id", String.class) != null) {
+                            p.getRelFinAccountRole()
+                                    .add(rr.getRow(FinAccountRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        default Map<String, Party> chainFinAccountTrans(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainFinAccountTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        default Map<String, Party> chainFinAccountTrans(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_TRANS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("fat_party_id", String.class) != null) {
+                            p.getRelFinAccountTrans()
+                                    .add(rr.getRow(FinAccountTrans.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "pbfat")
+        default Map<String, Party> chainPerformedByFinAccountTrans(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainPerformedByFinAccountTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "pbfat")
+        default Map<String, Party> chainPerformedByFinAccountTrans(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PERFORMED_BY_FIN_ACCOUNT_TRANS);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("pbfat_performed_by_party_id", String.class) != null) {
+                            p.getRelPerformedByFinAccountTrans()
+                                    .add(rr.getRow(FinAccountTrans.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
         default Map<String, Party> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
@@ -583,6 +703,66 @@ public class PartyDelegator extends AbstractProcs{
                         if (rr.getColumn("fa_party_id", String.class) != null) {
                             p.getRelFixedAsset()
                                     .add(rr.getRow(FixedAsset.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "gafar")
+        default Map<String, Party> chainGovAgencyFixedAssetRegistration(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainGovAgencyFixedAssetRegistration(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "gafar")
+        default Map<String, Party> chainGovAgencyFixedAssetRegistration(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(GOV_AGENCY_FIXED_ASSET_REGISTRATION);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("gafar_gov_agency_party_id", String.class) != null) {
+                            p.getRelGovAgencyFixedAssetRegistration()
+                                    .add(rr.getRow(FixedAssetRegistration.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = GlAccountTypeDefault.class, prefix = "ogatd")
+        default Map<String, Party> chainOrganizationGlAccountTypeDefault(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainOrganizationGlAccountTypeDefault(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = GlAccountTypeDefault.class, prefix = "ogatd")
+        default Map<String, Party> chainOrganizationGlAccountTypeDefault(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_GL_ACCOUNT_TYPE_DEFAULT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("ogatd_organization_party_id", String.class) != null) {
+                            p.getRelOrganizationGlAccountTypeDefault()
+                                    .add(rr.getRow(GlAccountTypeDefault.class));
                         }
                         return map;
                     });
@@ -769,6 +949,36 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = InvoiceItemTypeGlAccount.class, prefix = "oiitga")
+        default Map<String, Party> chainOrganizationInvoiceItemTypeGlAccount(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainOrganizationInvoiceItemTypeGlAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = InvoiceItemTypeGlAccount.class, prefix = "oiitga")
+        default Map<String, Party> chainOrganizationInvoiceItemTypeGlAccount(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_INVOICE_ITEM_TYPE_GL_ACCOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("oiitga_organization_party_id", String.class) != null) {
+                            p.getRelOrganizationInvoiceItemTypeGlAccount()
+                                    .add(rr.getRow(InvoiceItemTypeGlAccount.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
         @RegisterBeanMapper(value = InvoiceRole.class, prefix = "ir")
         default Map<String, Party> chainInvoiceRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
@@ -919,6 +1129,36 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PartyAcctgPreference.class, prefix = "pap")
+        default Map<String, Party> chainPartyAcctgPreference(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainPartyAcctgPreference(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PartyAcctgPreference.class, prefix = "pap")
+        default Map<String, Party> chainPartyAcctgPreference(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_ACCTG_PREFERENCE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("pap_party_id", String.class) != null) {
+                            p.getRelPartyAcctgPreference()
+                                    .add(rr.getRow(PartyAcctgPreference.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
         @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
         default Map<String, Party> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
@@ -1063,6 +1303,36 @@ public class PartyDelegator extends AbstractProcs{
                         if (rr.getColumn("pi_party_id", String.class) != null) {
                             p.getRelPartyIdentification()
                                     .add(rr.getRow(PartyIdentification.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PartyRate.class, prefix = "pr")
+        default Map<String, Party> chainPartyRate(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainPartyRate(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PartyRate.class, prefix = "pr")
+        default Map<String, Party> chainPartyRate(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_RATE);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("pr_party_id", String.class) != null) {
+                            p.getRelPartyRate()
+                                    .add(rr.getRow(PartyRate.class));
                         }
                         return map;
                     });
@@ -1279,6 +1549,36 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentGlAccountTypeMap.class, prefix = "pgatm")
+        default Map<String, Party> chainPaymentGlAccountTypeMap(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainPaymentGlAccountTypeMap(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentGlAccountTypeMap.class, prefix = "pgatm")
+        default Map<String, Party> chainPaymentGlAccountTypeMap(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_GL_ACCOUNT_TYPE_MAP);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("pgatm_organization_party_id", String.class) != null) {
+                            p.getRelPaymentGlAccountTypeMap()
+                                    .add(rr.getRow(PaymentGlAccountTypeMap.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
         @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
         default Map<String, Party> chainPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
@@ -1303,6 +1603,36 @@ public class PartyDelegator extends AbstractProcs{
                         if (rr.getColumn("pm_party_id", String.class) != null) {
                             p.getRelPaymentMethod()
                                     .add(rr.getRow(PaymentMethod.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentMethodTypeGlAccount.class, prefix = "opmtga")
+        default Map<String, Party> chainOrganizationPaymentMethodTypeGlAccount(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainOrganizationPaymentMethodTypeGlAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentMethodTypeGlAccount.class, prefix = "opmtga")
+        default Map<String, Party> chainOrganizationPaymentMethodTypeGlAccount(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_PAYMENT_METHOD_TYPE_GL_ACCOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("opmtga_organization_party_id", String.class) != null) {
+                            p.getRelOrganizationPaymentMethodTypeGlAccount()
+                                    .add(rr.getRow(PaymentMethodTypeGlAccount.class));
                         }
                         return map;
                     });
@@ -1573,6 +1903,36 @@ public class PartyDelegator extends AbstractProcs{
                         if (rr.getColumn("qr_party_id", String.class) != null) {
                             p.getRelQuoteRole()
                                     .add(rr.getRow(QuoteRole.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = RateAmount.class, prefix = "ra")
+        default Map<String, Party> chainRateAmount(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainRateAmount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = RateAmount.class, prefix = "ra")
+        default Map<String, Party> chainRateAmount(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RATE_AMOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("ra_party_id", String.class) != null) {
+                            p.getRelRateAmount()
+                                    .add(rr.getRow(RateAmount.class));
                         }
                         return map;
                     });
@@ -2016,6 +2376,17 @@ public class PartyDelegator extends AbstractProcs{
         return e -> dao.chainCustRequestType(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Party>> ownerFacility(Dao dao, boolean succ) {
+        return e -> dao.chainOwnerFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> ownerFacility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOwnerFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Party>> organizationFinAccount(Dao dao, boolean succ) {
         return e -> dao.chainOrganizationFinAccount(protoMeta, e, succ);
     }
@@ -2038,6 +2409,39 @@ public class PartyDelegator extends AbstractProcs{
         return e -> dao.chainOwnerFinAccount(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Party>> finAccountRole(Dao dao, boolean succ) {
+        return e -> dao.chainFinAccountRole(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> finAccountRole(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFinAccountRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> finAccountTrans(Dao dao, boolean succ) {
+        return e -> dao.chainFinAccountTrans(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> finAccountTrans(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainFinAccountTrans(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> performedByFinAccountTrans(Dao dao, boolean succ) {
+        return e -> dao.chainPerformedByFinAccountTrans(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> performedByFinAccountTrans(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPerformedByFinAccountTrans(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Party>> fixedAsset(Dao dao, boolean succ) {
         return e -> dao.chainFixedAsset(protoMeta, e, succ);
     }
@@ -2047,6 +2451,28 @@ public class PartyDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainFixedAsset(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> govAgencyFixedAssetRegistration(Dao dao, boolean succ) {
+        return e -> dao.chainGovAgencyFixedAssetRegistration(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> govAgencyFixedAssetRegistration(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainGovAgencyFixedAssetRegistration(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> organizationGlAccountTypeDefault(Dao dao, boolean succ) {
+        return e -> dao.chainOrganizationGlAccountTypeDefault(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> organizationGlAccountTypeDefault(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrganizationGlAccountTypeDefault(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, Party>> inventoryItem(Dao dao, boolean succ) {
@@ -2115,6 +2541,17 @@ public class PartyDelegator extends AbstractProcs{
         return e -> dao.chainOverrideOrgInvoiceItem(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Party>> organizationInvoiceItemTypeGlAccount(Dao dao, boolean succ) {
+        return e -> dao.chainOrganizationInvoiceItemTypeGlAccount(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> organizationInvoiceItemTypeGlAccount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrganizationInvoiceItemTypeGlAccount(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Party>> invoiceRole(Dao dao, boolean succ) {
         return e -> dao.chainInvoiceRole(protoMeta, e, succ);
     }
@@ -2170,6 +2607,17 @@ public class PartyDelegator extends AbstractProcs{
         return e -> dao.chainOrderRole(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Party>> partyAcctgPreference(Dao dao, boolean succ) {
+        return e -> dao.chainPartyAcctgPreference(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> partyAcctgPreference(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPartyAcctgPreference(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Party>> partyContactMech(Dao dao, boolean succ) {
         return e -> dao.chainPartyContactMech(protoMeta, e, succ);
     }
@@ -2223,6 +2671,17 @@ public class PartyDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainPartyIdentification(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> partyRate(Dao dao, boolean succ) {
+        return e -> dao.chainPartyRate(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> partyRate(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPartyRate(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, Party>> fromPartyRelationship(Dao dao, boolean succ) {
@@ -2302,6 +2761,17 @@ public class PartyDelegator extends AbstractProcs{
         return e -> dao.chainToPayment(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Party>> paymentGlAccountTypeMap(Dao dao, boolean succ) {
+        return e -> dao.chainPaymentGlAccountTypeMap(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> paymentGlAccountTypeMap(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainPaymentGlAccountTypeMap(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Party>> paymentMethod(Dao dao, boolean succ) {
         return e -> dao.chainPaymentMethod(protoMeta, e, succ);
     }
@@ -2311,6 +2781,17 @@ public class PartyDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainPaymentMethod(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> organizationPaymentMethodTypeGlAccount(Dao dao, boolean succ) {
+        return e -> dao.chainOrganizationPaymentMethodTypeGlAccount(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> organizationPaymentMethodTypeGlAccount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOrganizationPaymentMethodTypeGlAccount(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, Party>> person(Dao dao, boolean succ) {
@@ -2410,6 +2891,17 @@ public class PartyDelegator extends AbstractProcs{
                                         Map<String, Object> binds,
                                         boolean succ) {
         return e -> dao.chainQuoteRole(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> rateAmount(Dao dao, boolean succ) {
+        return e -> dao.chainRateAmount(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> rateAmount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainRateAmount(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, Party>> toShipment(Dao dao, boolean succ) {
@@ -2712,6 +3204,17 @@ public class PartyDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<Facility> getOwnerFacility(){
+            return getRelationValues(ctx, p1, "owner_facility", Facility.class);
+        }
+
+        public List<Facility> mergeOwnerFacility(){
+            return getOwnerFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOwnerFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<FinAccount> getOrganizationFinAccount(){
             return getRelationValues(ctx, p1, "organization_fin_account", FinAccount.class);
         }
@@ -2734,6 +3237,39 @@ public class PartyDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<FinAccountRole> getFinAccountRole(){
+            return getRelationValues(ctx, p1, "fin_account_role", FinAccountRole.class);
+        }
+
+        public List<FinAccountRole> mergeFinAccountRole(){
+            return getFinAccountRole().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFinAccountRole().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FinAccountTrans> getFinAccountTrans(){
+            return getRelationValues(ctx, p1, "fin_account_trans", FinAccountTrans.class);
+        }
+
+        public List<FinAccountTrans> mergeFinAccountTrans(){
+            return getFinAccountTrans().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelFinAccountTrans().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FinAccountTrans> getPerformedByFinAccountTrans(){
+            return getRelationValues(ctx, p1, "performed_by_fin_account_trans", FinAccountTrans.class);
+        }
+
+        public List<FinAccountTrans> mergePerformedByFinAccountTrans(){
+            return getPerformedByFinAccountTrans().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPerformedByFinAccountTrans().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<FixedAsset> getFixedAsset(){
             return getRelationValues(ctx, p1, "fixed_asset", FixedAsset.class);
         }
@@ -2742,6 +3278,28 @@ public class PartyDelegator extends AbstractProcs{
             return getFixedAsset().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelFixedAsset().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<FixedAssetRegistration> getGovAgencyFixedAssetRegistration(){
+            return getRelationValues(ctx, p1, "gov_agency_fixed_asset_registration", FixedAssetRegistration.class);
+        }
+
+        public List<FixedAssetRegistration> mergeGovAgencyFixedAssetRegistration(){
+            return getGovAgencyFixedAssetRegistration().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelGovAgencyFixedAssetRegistration().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<GlAccountTypeDefault> getOrganizationGlAccountTypeDefault(){
+            return getRelationValues(ctx, p1, "organization_gl_account_type_default", GlAccountTypeDefault.class);
+        }
+
+        public List<GlAccountTypeDefault> mergeOrganizationGlAccountTypeDefault(){
+            return getOrganizationGlAccountTypeDefault().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrganizationGlAccountTypeDefault().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -2811,6 +3369,17 @@ public class PartyDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<InvoiceItemTypeGlAccount> getOrganizationInvoiceItemTypeGlAccount(){
+            return getRelationValues(ctx, p1, "organization_invoice_item_type_gl_account", InvoiceItemTypeGlAccount.class);
+        }
+
+        public List<InvoiceItemTypeGlAccount> mergeOrganizationInvoiceItemTypeGlAccount(){
+            return getOrganizationInvoiceItemTypeGlAccount().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrganizationInvoiceItemTypeGlAccount().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<InvoiceRole> getInvoiceRole(){
             return getRelationValues(ctx, p1, "invoice_role", InvoiceRole.class);
         }
@@ -2866,6 +3435,17 @@ public class PartyDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<PartyAcctgPreference> getPartyAcctgPreference(){
+            return getRelationValues(ctx, p1, "party_acctg_preference", PartyAcctgPreference.class);
+        }
+
+        public List<PartyAcctgPreference> mergePartyAcctgPreference(){
+            return getPartyAcctgPreference().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPartyAcctgPreference().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<PartyContactMech> getPartyContactMech(){
             return getRelationValues(ctx, p1, "party_contact_mech", PartyContactMech.class);
         }
@@ -2918,6 +3498,17 @@ public class PartyDelegator extends AbstractProcs{
             return getPartyIdentification().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelPartyIdentification().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PartyRate> getPartyRate(){
+            return getRelationValues(ctx, p1, "party_rate", PartyRate.class);
+        }
+
+        public List<PartyRate> mergePartyRate(){
+            return getPartyRate().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPartyRate().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -2998,6 +3589,17 @@ public class PartyDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<PaymentGlAccountTypeMap> getPaymentGlAccountTypeMap(){
+            return getRelationValues(ctx, p1, "payment_gl_account_type_map", PaymentGlAccountTypeMap.class);
+        }
+
+        public List<PaymentGlAccountTypeMap> mergePaymentGlAccountTypeMap(){
+            return getPaymentGlAccountTypeMap().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPaymentGlAccountTypeMap().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<PaymentMethod> getPaymentMethod(){
             return getRelationValues(ctx, p1, "payment_method", PaymentMethod.class);
         }
@@ -3006,6 +3608,17 @@ public class PartyDelegator extends AbstractProcs{
             return getPaymentMethod().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelPaymentMethod().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<PaymentMethodTypeGlAccount> getOrganizationPaymentMethodTypeGlAccount(){
+            return getRelationValues(ctx, p1, "organization_payment_method_type_gl_account", PaymentMethodTypeGlAccount.class);
+        }
+
+        public List<PaymentMethodTypeGlAccount> mergeOrganizationPaymentMethodTypeGlAccount(){
+            return getOrganizationPaymentMethodTypeGlAccount().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOrganizationPaymentMethodTypeGlAccount().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -3105,6 +3718,17 @@ public class PartyDelegator extends AbstractProcs{
             return getQuoteRole().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelQuoteRole().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<RateAmount> getRateAmount(){
+            return getRelationValues(ctx, p1, "rate_amount", RateAmount.class);
+        }
+
+        public List<RateAmount> mergeRateAmount(){
+            return getRateAmount().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelRateAmount().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -3254,11 +3878,23 @@ public class PartyDelegator extends AbstractProcs{
          
     public static final String CUST_REQUEST_TYPE="cust_request_type";
          
+    public static final String OWNER_FACILITY="owner_facility";
+         
     public static final String ORGANIZATION_FIN_ACCOUNT="organization_fin_account";
          
     public static final String OWNER_FIN_ACCOUNT="owner_fin_account";
          
+    public static final String FIN_ACCOUNT_ROLE="fin_account_role";
+         
+    public static final String FIN_ACCOUNT_TRANS="fin_account_trans";
+         
+    public static final String PERFORMED_BY_FIN_ACCOUNT_TRANS="performed_by_fin_account_trans";
+         
     public static final String FIXED_ASSET="fixed_asset";
+         
+    public static final String GOV_AGENCY_FIXED_ASSET_REGISTRATION="gov_agency_fixed_asset_registration";
+         
+    public static final String ORGANIZATION_GL_ACCOUNT_TYPE_DEFAULT="organization_gl_account_type_default";
          
     public static final String INVENTORY_ITEM="inventory_item";
          
@@ -3272,6 +3908,8 @@ public class PartyDelegator extends AbstractProcs{
          
     public static final String OVERRIDE_ORG_INVOICE_ITEM="override_org_invoice_item";
          
+    public static final String ORGANIZATION_INVOICE_ITEM_TYPE_GL_ACCOUNT="organization_invoice_item_type_gl_account";
+         
     public static final String INVOICE_ROLE="invoice_role";
          
     public static final String SUPPLIER_ORDER_ITEM_SHIP_GROUP="supplier_order_item_ship_group";
@@ -3282,6 +3920,8 @@ public class PartyDelegator extends AbstractProcs{
          
     public static final String ORDER_ROLE="order_role";
          
+    public static final String PARTY_ACCTG_PREFERENCE="party_acctg_preference";
+         
     public static final String PARTY_CONTACT_MECH="party_contact_mech";
          
     public static final String PARTY_CONTACT_MECH_PURPOSE="party_contact_mech_purpose";
@@ -3291,6 +3931,8 @@ public class PartyDelegator extends AbstractProcs{
     public static final String PARTY_GROUP="party_group";
          
     public static final String PARTY_IDENTIFICATION="party_identification";
+         
+    public static final String PARTY_RATE="party_rate";
          
     public static final String FROM_PARTY_RELATIONSHIP="from_party_relationship";
          
@@ -3306,7 +3948,11 @@ public class PartyDelegator extends AbstractProcs{
          
     public static final String TO_PAYMENT="to_payment";
          
+    public static final String PAYMENT_GL_ACCOUNT_TYPE_MAP="payment_gl_account_type_map";
+         
     public static final String PAYMENT_METHOD="payment_method";
+         
+    public static final String ORGANIZATION_PAYMENT_METHOD_TYPE_GL_ACCOUNT="organization_payment_method_type_gl_account";
          
     public static final String PERSON="person";
          
@@ -3325,6 +3971,8 @@ public class PartyDelegator extends AbstractProcs{
     public static final String QUOTE="quote";
          
     public static final String QUOTE_ROLE="quote_role";
+         
+    public static final String RATE_AMOUNT="rate_amount";
          
     public static final String TO_SHIPMENT="to_shipment";
          
@@ -3477,6 +4125,14 @@ public class PartyDelegator extends AbstractProcs{
                                              el.toDataBuilder().build()));
                         }
                                                
+                        // add/set owner_facility to head entity                        
+                        if(relationsDemand.contains("owner_facility")) {
+                            getRelationValues(ctx, p1, "owner_facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.addOwnerFacility(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set organization_fin_account to head entity                        
                         if(relationsDemand.contains("organization_fin_account")) {
                             getRelationValues(ctx, p1, "organization_fin_account",
@@ -3493,12 +4149,52 @@ public class PartyDelegator extends AbstractProcs{
                                              el.toHeadBuilder().build()));
                         }
                                                
+                        // add/set fin_account_role to head entity                        
+                        if(relationsDemand.contains("fin_account_role")) {
+                            getRelationValues(ctx, p1, "fin_account_role",
+                                            FinAccountRole.class)
+                                    .forEach(el -> pb.addFinAccountRole(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set fin_account_trans to head entity                        
+                        if(relationsDemand.contains("fin_account_trans")) {
+                            getRelationValues(ctx, p1, "fin_account_trans",
+                                            FinAccountTrans.class)
+                                    .forEach(el -> pb.addFinAccountTrans(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set performed_by_fin_account_trans to head entity                        
+                        if(relationsDemand.contains("performed_by_fin_account_trans")) {
+                            getRelationValues(ctx, p1, "performed_by_fin_account_trans",
+                                            FinAccountTrans.class)
+                                    .forEach(el -> pb.addPerformedByFinAccountTrans(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set fixed_asset to head entity                        
                         if(relationsDemand.contains("fixed_asset")) {
                             getRelationValues(ctx, p1, "fixed_asset",
                                             FixedAsset.class)
                                     .forEach(el -> pb.addFixedAsset(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set gov_agency_fixed_asset_registration to head entity                        
+                        if(relationsDemand.contains("gov_agency_fixed_asset_registration")) {
+                            getRelationValues(ctx, p1, "gov_agency_fixed_asset_registration",
+                                            FixedAssetRegistration.class)
+                                    .forEach(el -> pb.addGovAgencyFixedAssetRegistration(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set organization_gl_account_type_default to head entity                        
+                        if(relationsDemand.contains("organization_gl_account_type_default")) {
+                            getRelationValues(ctx, p1, "organization_gl_account_type_default",
+                                            GlAccountTypeDefault.class)
+                                    .forEach(el -> pb.addOrganizationGlAccountTypeDefault(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set inventory_item to head entity                        
@@ -3549,6 +4245,14 @@ public class PartyDelegator extends AbstractProcs{
                                              el.toHeadBuilder().build()));
                         }
                                                
+                        // add/set organization_invoice_item_type_gl_account to head entity                        
+                        if(relationsDemand.contains("organization_invoice_item_type_gl_account")) {
+                            getRelationValues(ctx, p1, "organization_invoice_item_type_gl_account",
+                                            InvoiceItemTypeGlAccount.class)
+                                    .forEach(el -> pb.addOrganizationInvoiceItemTypeGlAccount(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set invoice_role to head entity                        
                         if(relationsDemand.contains("invoice_role")) {
                             getRelationValues(ctx, p1, "invoice_role",
@@ -3589,6 +4293,14 @@ public class PartyDelegator extends AbstractProcs{
                                              el.toDataBuilder().build()));
                         }
                                                
+                        // add/set party_acctg_preference to head entity                        
+                        if(relationsDemand.contains("party_acctg_preference")) {
+                            getRelationValues(ctx, p1, "party_acctg_preference",
+                                            PartyAcctgPreference.class)
+                                    .forEach(el -> pb.setPartyAcctgPreference(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set party_contact_mech to head entity                        
                         if(relationsDemand.contains("party_contact_mech")) {
                             getRelationValues(ctx, p1, "party_contact_mech",
@@ -3626,6 +4338,14 @@ public class PartyDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "party_identification",
                                             PartyIdentification.class)
                                     .forEach(el -> pb.addPartyIdentification(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set party_rate to head entity                        
+                        if(relationsDemand.contains("party_rate")) {
+                            getRelationValues(ctx, p1, "party_rate",
+                                            PartyRate.class)
+                                    .forEach(el -> pb.addPartyRate(
                                              el.toDataBuilder().build()));
                         }
                                                
@@ -3685,11 +4405,27 @@ public class PartyDelegator extends AbstractProcs{
                                              el.toHeadBuilder().build()));
                         }
                                                
+                        // add/set payment_gl_account_type_map to head entity                        
+                        if(relationsDemand.contains("payment_gl_account_type_map")) {
+                            getRelationValues(ctx, p1, "payment_gl_account_type_map",
+                                            PaymentGlAccountTypeMap.class)
+                                    .forEach(el -> pb.addPaymentGlAccountTypeMap(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set payment_method to head entity                        
                         if(relationsDemand.contains("payment_method")) {
                             getRelationValues(ctx, p1, "payment_method",
                                             PaymentMethod.class)
                                     .forEach(el -> pb.addPaymentMethod(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set organization_payment_method_type_gl_account to head entity                        
+                        if(relationsDemand.contains("organization_payment_method_type_gl_account")) {
+                            getRelationValues(ctx, p1, "organization_payment_method_type_gl_account",
+                                            PaymentMethodTypeGlAccount.class)
+                                    .forEach(el -> pb.addOrganizationPaymentMethodTypeGlAccount(
                                              el.toDataBuilder().build()));
                         }
                                                
@@ -3762,6 +4498,14 @@ public class PartyDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "quote_role",
                                             QuoteRole.class)
                                     .forEach(el -> pb.addQuoteRole(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set rate_amount to head entity                        
+                        if(relationsDemand.contains("rate_amount")) {
+                            getRelationValues(ctx, p1, "rate_amount",
+                                            RateAmount.class)
+                                    .forEach(el -> pb.addRateAmount(
                                              el.toDataBuilder().build()));
                         }
                                                

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -115,3 +116,27 @@ public class EbayConfig implements IEventModel<EbayConfigData.Builder>, Serializ
 
     
 }
+
+
+/*
+-- keys: productStoreId
+
+-- fields --
+    
+    String productStoreId
+    String devId
+    String appId
+    String certId
+    String token
+    String compatibilityLevel
+    String siteId
+    String xmlGatewayUri
+    String customXml
+    String webSiteId
+
+-- relations --
+    
+    - ProductStore (one, autoRelation: false, keymaps: productStoreId)
+    - WebSite (one, autoRelation: false, keymaps: webSiteId)
+*/
+

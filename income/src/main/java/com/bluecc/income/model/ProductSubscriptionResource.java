@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductSubscriptionResourceData;
 @REntity
 @MessageObject(value = ProductSubscriptionResourceData.class,
         symbol = EntityNames.ProductSubscriptionResource)
-public class ProductSubscriptionResource implements IEventModel<ProductSubscriptionResourceData.Builder>, Serializable {
+public class ProductSubscriptionResource implements IEventModel<ProductSubscriptionResourceData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productId;
@@ -165,3 +166,42 @@ public class ProductSubscriptionResource implements IEventModel<ProductSubscript
 
     
 }
+
+
+/*
+-- keys: productId, subscriptionResourceId, fromDate
+
+-- fields --
+    
+    String productId
+    String subscriptionResourceId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    java.time.LocalDateTime purchaseFromDate
+    java.time.LocalDateTime purchaseThruDate
+    Long maxLifeTime
+    String maxLifeTimeUomId
+    Long availableTime
+    String availableTimeUomId
+    Long useCountLimit
+    Long useTime
+    String useTimeUomId
+    String useRoleTypeId
+    Character automaticExtend
+    Long canclAutmExtTime
+    String canclAutmExtTimeUomId
+    Long gracePeriodOnExpiry
+    String gracePeriodOnExpiryUomId
+
+-- relations --
+    
+    - Product (one, autoRelation: false, keymaps: productId)
+    - SubscriptionResource (one, autoRelation: false, keymaps: subscriptionResourceId)
+    - UseRoleType (one, autoRelation: false, keymaps: useRoleTypeId -> roleTypeId)
+    - UseTimeUom (one, autoRelation: false, keymaps: useTimeUomId -> uomId)
+    - CancelTimeUom (one, autoRelation: false, keymaps: canclAutmExtTimeUomId -> uomId)
+    - AvailableTimeUom (one, autoRelation: false, keymaps: availableTimeUomId -> uomId)
+    - MaxLifeTimeUom (one, autoRelation: false, keymaps: maxLifeTimeUomId -> uomId)
+    - GracePeriodUom (one, autoRelation: false, keymaps: gracePeriodOnExpiryUomId -> uomId)
+*/
+

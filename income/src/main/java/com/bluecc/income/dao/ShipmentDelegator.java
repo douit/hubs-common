@@ -109,6 +109,66 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
+        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        default Map<String, Shipment> chainOriginFacility(ProtoMeta protoMeta,
+                                               Map<String, Shipment> inMap,
+                                               boolean succInvoke) {
+            return chainOriginFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
+        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        default Map<String, Shipment> chainOriginFacility(ProtoMeta protoMeta,
+                                               Map<String, Shipment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORIGIN_FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
+                                id -> rr.getRow(Shipment.class));
+                        if (rr.getColumn("of_facility_id", String.class) != null) {
+                            p.getRelOriginFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
+        @RegisterBeanMapper(value = Facility.class, prefix = "df")
+        default Map<String, Shipment> chainDestinationFacility(ProtoMeta protoMeta,
+                                               Map<String, Shipment> inMap,
+                                               boolean succInvoke) {
+            return chainDestinationFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
+        @RegisterBeanMapper(value = Facility.class, prefix = "df")
+        default Map<String, Shipment> chainDestinationFacility(ProtoMeta protoMeta,
+                                               Map<String, Shipment> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(DESTINATION_FACILITY);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
+                                id -> rr.getRow(Shipment.class));
+                        if (rr.getColumn("df_facility_id", String.class) != null) {
+                            p.getRelDestinationFacility()
+                                    .add(rr.getRow(Facility.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
         @RegisterBeanMapper(value = ContactMech.class, prefix = "ocm")
         default Map<String, Shipment> chainOriginContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
@@ -853,6 +913,28 @@ public class ShipmentDelegator extends AbstractProcs{
         return e -> dao.chainEstimatedArrivalWorkEffort(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Shipment>> originFacility(Dao dao, boolean succ) {
+        return e -> dao.chainOriginFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Shipment>> originFacility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOriginFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Shipment>> destinationFacility(Dao dao, boolean succ) {
+        return e -> dao.chainDestinationFacility(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Shipment>> destinationFacility(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainDestinationFacility(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Shipment>> originContactMech(Dao dao, boolean succ) {
         return e -> dao.chainOriginContactMech(protoMeta, e, succ);
     }
@@ -1175,6 +1257,28 @@ public class ShipmentDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<Facility> getOriginFacility(){
+            return getRelationValues(ctx, p1, "origin_facility", Facility.class);
+        }
+
+        public List<Facility> mergeOriginFacility(){
+            return getOriginFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOriginFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<Facility> getDestinationFacility(){
+            return getRelationValues(ctx, p1, "destination_facility", Facility.class);
+        }
+
+        public List<Facility> mergeDestinationFacility(){
+            return getDestinationFacility().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelDestinationFacility().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<ContactMech> getOriginContactMech(){
             return getRelationValues(ctx, p1, "origin_contact_mech", ContactMech.class);
         }
@@ -1460,6 +1564,10 @@ public class ShipmentDelegator extends AbstractProcs{
          
     public static final String ESTIMATED_ARRIVAL_WORK_EFFORT="estimated_arrival_work_effort";
          
+    public static final String ORIGIN_FACILITY="origin_facility";
+         
+    public static final String DESTINATION_FACILITY="destination_facility";
+         
     public static final String ORIGIN_CONTACT_MECH="origin_contact_mech";
          
     public static final String DEST_CONTACT_MECH="dest_contact_mech";
@@ -1534,6 +1642,22 @@ public class ShipmentDelegator extends AbstractProcs{
                             getRelationValues(ctx, p1, "estimated_arrival_work_effort",
                                             WorkEffort.class)
                                     .forEach(el -> pb.setEstimatedArrivalWorkEffort(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set origin_facility to head entity                        
+                        if(relationsDemand.contains("origin_facility")) {
+                            getRelationValues(ctx, p1, "origin_facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.setOriginFacility(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set destination_facility to head entity                        
+                        if(relationsDemand.contains("destination_facility")) {
+                            getRelationValues(ctx, p1, "destination_facility",
+                                            Facility.class)
+                                    .forEach(el -> pb.setDestinationFacility(
                                              el.toDataBuilder().build()));
                         }
                                                

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -164,3 +165,29 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Se
     }
 
 }
+
+
+/*
+-- keys: prodCatalogId
+
+-- fields --
+    
+    String prodCatalogId
+    String catalogName
+    Character useQuickAdd
+    String styleSheet
+    String headerLogo
+    String contentPathPrefix
+    String templatePathPrefix
+    Character viewAllowPermReqd
+    Character purchaseAllowPermReqd
+
+-- relations --
+    
+    + CartAbandonedLine (many, autoRelation: true, keymaps: prodCatalogId)
+    + ProdCatalogCategory (many, autoRelation: true, keymaps: prodCatalogId)
+    + ProdCatalogInvFacility (many, autoRelation: true, keymaps: prodCatalogId)
+    + ProdCatalogRole (many, autoRelation: true, keymaps: prodCatalogId)
+    + ProductStoreCatalog (many, autoRelation: true, keymaps: prodCatalogId)
+*/
+

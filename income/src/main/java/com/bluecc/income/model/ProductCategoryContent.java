@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ProductCategoryContentData;
 @REntity
 @MessageObject(value = ProductCategoryContentData.class,
         symbol = EntityNames.ProductCategoryContent)
-public class ProductCategoryContent implements IEventModel<ProductCategoryContentData.Builder>, Serializable {
+public class ProductCategoryContent implements IEventModel<ProductCategoryContentData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String productCategoryId;
@@ -115,3 +116,27 @@ public class ProductCategoryContent implements IEventModel<ProductCategoryConten
 
     
 }
+
+
+/*
+-- keys: productCategoryId, contentId, prodCatContentTypeId, fromDate
+
+-- fields --
+    
+    String productCategoryId
+    String contentId
+    String prodCatContentTypeId
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    java.time.LocalDateTime purchaseFromDate
+    java.time.LocalDateTime purchaseThruDate
+    Long useCountLimit
+    java.math.BigDecimal useDaysLimit
+
+-- relations --
+    
+    - ProductCategory (one, autoRelation: false, keymaps: productCategoryId)
+    - Content (one, autoRelation: false, keymaps: contentId)
+    - ProductCategoryContentType (one, autoRelation: false, keymaps: prodCatContentTypeId)
+*/
+

@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -29,7 +30,7 @@ import com.bluecc.hubs.stub.ShipmentTimeEstimateData;
 @REntity
 @MessageObject(value = ShipmentTimeEstimateData.class,
         symbol = EntityNames.ShipmentTimeEstimate)
-public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateData.Builder>, Serializable {
+public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateData.Builder>, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
     @RIndex String shipmentMethodTypeId;
@@ -120,3 +121,29 @@ public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateDat
 
     
 }
+
+
+/*
+-- keys: shipmentMethodTypeId, partyId, roleTypeId, geoIdTo, geoIdFrom, fromDate
+
+-- fields --
+    
+    String shipmentMethodTypeId
+    String partyId
+    String roleTypeId
+    String geoIdTo
+    String geoIdFrom
+    java.time.LocalDateTime fromDate
+    java.time.LocalDateTime thruDate
+    java.math.BigDecimal leadTime
+    String leadTimeUomId
+    Long sequenceNumber
+
+-- relations --
+    
+    - CarrierShipmentMethod (one, autoRelation: false, keymaps: shipmentMethodTypeId, partyId, roleTypeId)
+    - ToGeo (one, autoRelation: false, keymaps: geoIdTo -> geoId)
+    - fromGeo (one, autoRelation: false, keymaps: geoIdFrom -> geoId)
+    - Time unitUom (one, autoRelation: false, keymaps: leadTimeUomId -> uomId)
+*/
+

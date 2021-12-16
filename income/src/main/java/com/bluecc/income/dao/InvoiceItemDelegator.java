@@ -229,6 +229,36 @@ public class InvoiceItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "oga")
+        default Map<String, InvoiceItem> chainOverrideGlAccount(ProtoMeta protoMeta,
+                                               Map<String, InvoiceItem> inMap,
+                                               boolean succInvoke) {
+            return chainOverrideGlAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+        }
+
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "oga")
+        default Map<String, InvoiceItem> chainOverrideGlAccount(ProtoMeta protoMeta,
+                                               Map<String, InvoiceItem> inMap,
+                                               String whereClause,
+                                               Map<String, Object> binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("InvoiceItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(OVERRIDE_GL_ACCOUNT);
+            return getHandle().select(view.getSql() + " " + whereClause)
+                    .bindMap(binds)
+                    .reduceRows(inMap, (map, rr) -> {
+                        InvoiceItem p = map.computeIfAbsent(rr.getColumn("ii_id", String.class),
+                                id -> rr.getRow(InvoiceItem.class));
+                        if (rr.getColumn("oga_gl_account_id", String.class) != null) {
+                            p.getRelOverrideGlAccount()
+                                    .add(rr.getRow(GlAccount.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
         @RegisterBeanMapper(value = Party.class, prefix = "tap")
         default Map<String, InvoiceItem> chainTaxAuthorityParty(ProtoMeta protoMeta,
                                                Map<String, InvoiceItem> inMap,
@@ -507,6 +537,17 @@ public class InvoiceItemDelegator extends AbstractProcs{
         return e -> dao.chainChildrenInvoiceItem(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, InvoiceItem>> overrideGlAccount(Dao dao, boolean succ) {
+        return e -> dao.chainOverrideGlAccount(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, InvoiceItem>> overrideGlAccount(Dao dao,
+                                        String whereClause,
+                                        Map<String, Object> binds,
+                                        boolean succ) {
+        return e -> dao.chainOverrideGlAccount(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, InvoiceItem>> taxAuthorityParty(Dao dao, boolean succ) {
         return e -> dao.chainTaxAuthorityParty(protoMeta, e, succ);
     }
@@ -686,6 +727,17 @@ public class InvoiceItemDelegator extends AbstractProcs{
                     .collect(Collectors.toList());
         }
          
+        public List<GlAccount> getOverrideGlAccount(){
+            return getRelationValues(ctx, p1, "override_gl_account", GlAccount.class);
+        }
+
+        public List<GlAccount> mergeOverrideGlAccount(){
+            return getOverrideGlAccount().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelOverrideGlAccount().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<Party> getTaxAuthorityParty(){
             return getRelationValues(ctx, p1, "tax_authority_party", Party.class);
         }
@@ -792,6 +844,8 @@ public class InvoiceItemDelegator extends AbstractProcs{
          
     public static final String CHILDREN_INVOICE_ITEM="children_invoice_item";
          
+    public static final String OVERRIDE_GL_ACCOUNT="override_gl_account";
+         
     public static final String TAX_AUTHORITY_PARTY="tax_authority_party";
          
     public static final String TAX_AUTHORITY_RATE_PRODUCT="tax_authority_rate_product";
@@ -865,6 +919,14 @@ public class InvoiceItemDelegator extends AbstractProcs{
                                             InvoiceItem.class)
                                     .forEach(el -> pb.addChildrenInvoiceItem(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set override_gl_account to head entity                        
+                        if(relationsDemand.contains("override_gl_account")) {
+                            getRelationValues(ctx, p1, "override_gl_account",
+                                            GlAccount.class)
+                                    .forEach(el -> pb.setOverrideGlAccount(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set tax_authority_party to head entity                        

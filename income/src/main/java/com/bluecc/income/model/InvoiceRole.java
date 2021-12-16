@@ -15,6 +15,7 @@ import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
 import org.redisson.api.annotation.*;
 
+import com.bluecc.hubs.fund.model.*;
 import com.bluecc.hubs.fund.descriptor.EntityNames;
 import com.bluecc.hubs.fund.pubs.MessageObject;
 import com.bluecc.hubs.fund.pubs.Exclude;
@@ -95,3 +96,24 @@ public class InvoiceRole implements IEventModel<InvoiceRoleData.Builder>, Serial
 
     
 }
+
+
+/*
+-- keys: invoiceId, partyId, roleTypeId
+
+-- fields --
+    
+    String invoiceId
+    String partyId
+    String roleTypeId
+    java.time.LocalDateTime datetimePerformed
+    java.math.BigDecimal percentage
+
+-- relations --
+    
+    - Invoice (one, autoRelation: false, keymaps: invoiceId)
+    - Party (one, autoRelation: false, keymaps: partyId)
+    - RoleType (one-nofk, autoRelation: false, keymaps: roleTypeId)
+    - PartyRole (one, autoRelation: false, keymaps: partyId, roleTypeId)
+*/
+
