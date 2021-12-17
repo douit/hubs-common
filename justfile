@@ -91,6 +91,10 @@ seed:
 srv:
 	just i endpoint.RpcEndpoints
 
+build-srv:
+	just build
+	just srv
+
 addon file:
 	just gen StereotypeAddons -f {{file}}
 
@@ -107,3 +111,8 @@ mesh-proto:
 profile p:
 	just gen GenProfile {{p}}
 
+dist:
+	mvn package -DskipTests -f income/pom.xml
+
+start:
+	java -jar income/target/income-1.0-SNAPSHOT-shaded.jar
