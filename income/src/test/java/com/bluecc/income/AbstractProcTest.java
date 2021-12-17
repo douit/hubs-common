@@ -17,6 +17,7 @@ import org.jdbi.v3.core.statement.StatementContext;
 import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -92,4 +93,11 @@ public class AbstractProcTest {
         setupEntities(false, entities);
     }
 
+    protected static void dump(String fileName, String cnt){
+        try {
+            Util.writeFile(cnt, SystemDefs.prependHubsHomeFile("dumps/"+fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

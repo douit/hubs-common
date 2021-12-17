@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.PersonData;
 
-public class PersonDelegator extends AbstractProcs{
+public class PersonDelegator extends AbstractProcs implements IChainQuery<Person>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(Person.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class PersonDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, Person> chainParty(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, Person> chainParty(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                        if (rr.getColumn("pao_party_id", String.class) != null) {
                             p.getRelParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -82,7 +93,7 @@ public class PersonDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
+        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcmm")
         default Map<String, Person> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
+        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcmm")
         default Map<String, Person> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("pcm_party_id", String.class) != null) {
+                        if (rr.getColumn("pcmm_party_id", String.class) != null) {
                             p.getRelPartyContactMech()
                                     .add(rr.getRow(PartyContactMech.class));
                         }
@@ -112,7 +123,7 @@ public class PersonDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmp")
+        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmpm")
         default Map<String, Person> chainPartyContactMechPurpose(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmp")
+        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmpm")
         default Map<String, Person> chainPartyContactMechPurpose(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("pcmp_party_id", String.class) != null) {
+                        if (rr.getColumn("pcmpm_party_id", String.class) != null) {
                             p.getRelPartyContactMechPurpose()
                                     .add(rr.getRow(PartyContactMechPurpose.class));
                         }
@@ -142,7 +153,7 @@ public class PersonDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psrm")
         default Map<String, Person> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psrm")
         default Map<String, Person> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("psr_party_id", String.class) != null) {
+                        if (rr.getColumn("psrm_party_id", String.class) != null) {
                             p.getRelProductStoreRole()
                                     .add(rr.getRow(ProductStoreRole.class));
                         }
@@ -172,7 +183,7 @@ public class PersonDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "ts")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "tsm")
         default Map<String, Person> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "ts")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "tsm")
         default Map<String, Person> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("ts_party_id_to", String.class) != null) {
+                        if (rr.getColumn("tsm_party_id_to", String.class) != null) {
                             p.getRelToShipment()
                                     .add(rr.getRow(Shipment.class));
                         }
@@ -202,7 +213,7 @@ public class PersonDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "fs")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "fsm")
         default Map<String, Person> chainFromShipment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "fs")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "fsm")
         default Map<String, Person> chainFromShipment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("fs_party_id_from", String.class) != null) {
+                        if (rr.getColumn("fsm_party_id_from", String.class) != null) {
                             p.getRelFromShipment()
                                     .add(rr.getRow(Shipment.class));
                         }
@@ -232,7 +243,7 @@ public class PersonDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrs")
+        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrsm")
         default Map<String, Person> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrs")
+        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrsm")
         default Map<String, Person> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("csrs_carrier_party_id", String.class) != null) {
+                        if (rr.getColumn("csrsm_carrier_party_id", String.class) != null) {
                             p.getRelCarrierShipmentRouteSegment()
                                     .add(rr.getRow(ShipmentRouteSegment.class));
                         }
@@ -262,7 +273,7 @@ public class PersonDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ulm")
         default Map<String, Person> chainUserLogin(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ulm")
         default Map<String, Person> chainUserLogin(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("ul_party_id", String.class) != null) {
+                        if (rr.getColumn("ulm_party_id", String.class) != null) {
                             p.getRelUserLogin()
                                     .add(rr.getRow(UserLogin.class));
                         }
@@ -292,7 +303,7 @@ public class PersonDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, Person> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class PersonDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, Person> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class PersonDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -527,6 +538,16 @@ public class PersonDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, person.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "Person", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

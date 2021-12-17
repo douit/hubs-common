@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.WorkEffortData;
 
-public class WorkEffortDelegator extends AbstractProcs{
+public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<WorkEffort>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(WorkEffort.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "pwe")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "pweo")
         default Map<String, WorkEffort> chainParentWorkEffort(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "pwe")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "pweo")
         default Map<String, WorkEffort> chainParentWorkEffort(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("pwe_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("pweo_work_effort_id", String.class) != null) {
                             p.getRelParentWorkEffort()
                                     .add(rr.getRow(WorkEffort.class));
                         }
@@ -82,7 +93,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fao")
         default Map<String, WorkEffort> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fao")
         default Map<String, WorkEffort> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("fa_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("fao_fixed_asset_id", String.class) != null) {
                             p.getRelFixedAsset()
                                     .add(rr.getRow(FixedAsset.class));
                         }
@@ -112,7 +123,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fao")
         default Map<String, WorkEffort> chainFacility(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fao")
         default Map<String, WorkEffort> chainFacility(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("fa_facility_id", String.class) != null) {
+                        if (rr.getColumn("fao_facility_id", String.class) != null) {
                             p.getRelFacility()
                                     .add(rr.getRow(Facility.class));
                         }
@@ -142,7 +153,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = RecurrenceInfo.class, prefix = "ri")
+        @RegisterBeanMapper(value = RecurrenceInfo.class, prefix = "rio")
         default Map<String, WorkEffort> chainRecurrenceInfo(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = RecurrenceInfo.class, prefix = "ri")
+        @RegisterBeanMapper(value = RecurrenceInfo.class, prefix = "rio")
         default Map<String, WorkEffort> chainRecurrenceInfo(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("ri_recurrence_info_id", String.class) != null) {
+                        if (rr.getColumn("rio_recurrence_info_id", String.class) != null) {
                             p.getRelRecurrenceInfo()
                                     .add(rr.getRow(RecurrenceInfo.class));
                         }
@@ -172,7 +183,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = TemporalExpression.class, prefix = "te")
+        @RegisterBeanMapper(value = TemporalExpression.class, prefix = "teo")
         default Map<String, WorkEffort> chainTemporalExpression(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = TemporalExpression.class, prefix = "te")
+        @RegisterBeanMapper(value = TemporalExpression.class, prefix = "teo")
         default Map<String, WorkEffort> chainTemporalExpression(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("te_temp_expr_id", String.class) != null) {
+                        if (rr.getColumn("teo_temp_expr_id", String.class) != null) {
                             p.getRelTemporalExpression()
                                     .add(rr.getRow(TemporalExpression.class));
                         }
@@ -202,7 +213,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = CustomMethod.class, prefix = "cm")
+        @RegisterBeanMapper(value = CustomMethod.class, prefix = "cmo")
         default Map<String, WorkEffort> chainCustomMethod(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = CustomMethod.class, prefix = "cm")
+        @RegisterBeanMapper(value = CustomMethod.class, prefix = "cmo")
         default Map<String, WorkEffort> chainCustomMethod(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("cm_custom_method_id", String.class) != null) {
+                        if (rr.getColumn("cmo_custom_method_id", String.class) != null) {
                             p.getRelCustomMethod()
                                     .add(rr.getRow(CustomMethod.class));
                         }
@@ -232,7 +243,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, WorkEffort> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, WorkEffort> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("at_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("atm_work_effort_id", String.class) != null) {
                             p.getRelAcctgTrans()
                                     .add(rr.getRow(AcctgTrans.class));
                         }
@@ -262,7 +273,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iid")
+        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iidm")
         default Map<String, WorkEffort> chainInventoryItemDetail(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iid")
+        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iidm")
         default Map<String, WorkEffort> chainInventoryItemDetail(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("iid_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("iidm_work_effort_id", String.class) != null) {
                             p.getRelInventoryItemDetail()
                                     .add(rr.getRow(InventoryItemDetail.class));
                         }
@@ -292,7 +303,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = ProductAssoc.class, prefix = "rpa")
+        @RegisterBeanMapper(value = ProductAssoc.class, prefix = "rpam")
         default Map<String, WorkEffort> chainRoutingProductAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = ProductAssoc.class, prefix = "rpa")
+        @RegisterBeanMapper(value = ProductAssoc.class, prefix = "rpam")
         default Map<String, WorkEffort> chainRoutingProductAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("rpa_routing_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("rpam_routing_work_effort_id", String.class) != null) {
                             p.getRelRoutingProductAssoc()
                                     .add(rr.getRow(ProductAssoc.class));
                         }
@@ -322,7 +333,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qi")
+        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qim")
         default Map<String, WorkEffort> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qi")
+        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qim")
         default Map<String, WorkEffort> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("qi_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("qim_work_effort_id", String.class) != null) {
                             p.getRelQuoteItem()
                                     .add(rr.getRow(QuoteItem.class));
                         }
@@ -352,7 +363,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = RateAmount.class, prefix = "ra")
+        @RegisterBeanMapper(value = RateAmount.class, prefix = "ram")
         default Map<String, WorkEffort> chainRateAmount(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -360,7 +371,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = RateAmount.class, prefix = "ra")
+        @RegisterBeanMapper(value = RateAmount.class, prefix = "ram")
         default Map<String, WorkEffort> chainRateAmount(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -373,7 +384,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("ra_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("ram_work_effort_id", String.class) != null) {
                             p.getRelRateAmount()
                                     .add(rr.getRow(RateAmount.class));
                         }
@@ -382,7 +393,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "ess")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "essm")
         default Map<String, WorkEffort> chainEstimatedShipShipment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -390,7 +401,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "ess")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "essm")
         default Map<String, WorkEffort> chainEstimatedShipShipment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -403,7 +414,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("ess_estimated_ship_work_eff_id", String.class) != null) {
+                        if (rr.getColumn("essm_estimated_ship_work_eff_id", String.class) != null) {
                             p.getRelEstimatedShipShipment()
                                     .add(rr.getRow(Shipment.class));
                         }
@@ -412,7 +423,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "eas")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "easm")
         default Map<String, WorkEffort> chainEstimatedArrivalShipment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -420,7 +431,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "eas")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "easm")
         default Map<String, WorkEffort> chainEstimatedArrivalShipment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -433,7 +444,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("eas_estimated_arrival_work_eff_id", String.class) != null) {
+                        if (rr.getColumn("easm_estimated_arrival_work_eff_id", String.class) != null) {
                             p.getRelEstimatedArrivalShipment()
                                     .add(rr.getRow(Shipment.class));
                         }
@@ -442,7 +453,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "cwe")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "cwem")
         default Map<String, WorkEffort> chainChildWorkEffort(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -450,7 +461,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "cwe")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "cwem")
         default Map<String, WorkEffort> chainChildWorkEffort(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -463,7 +474,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("cwe_work_effort_parent_id", String.class) != null) {
+                        if (rr.getColumn("cwem_work_effort_parent_id", String.class) != null) {
                             p.getRelChildWorkEffort()
                                     .add(rr.getRow(WorkEffort.class));
                         }
@@ -472,7 +483,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortAssoc.class, prefix = "fwea")
+        @RegisterBeanMapper(value = WorkEffortAssoc.class, prefix = "fweam")
         default Map<String, WorkEffort> chainFromWorkEffortAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -480,7 +491,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortAssoc.class, prefix = "fwea")
+        @RegisterBeanMapper(value = WorkEffortAssoc.class, prefix = "fweam")
         default Map<String, WorkEffort> chainFromWorkEffortAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -493,7 +504,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("fwea_work_effort_id_from", String.class) != null) {
+                        if (rr.getColumn("fweam_work_effort_id_from", String.class) != null) {
                             p.getRelFromWorkEffortAssoc()
                                     .add(rr.getRow(WorkEffortAssoc.class));
                         }
@@ -502,7 +513,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortAssoc.class, prefix = "twea")
+        @RegisterBeanMapper(value = WorkEffortAssoc.class, prefix = "tweam")
         default Map<String, WorkEffort> chainToWorkEffortAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -510,7 +521,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortAssoc.class, prefix = "twea")
+        @RegisterBeanMapper(value = WorkEffortAssoc.class, prefix = "tweam")
         default Map<String, WorkEffort> chainToWorkEffortAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -523,7 +534,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("twea_work_effort_id_to", String.class) != null) {
+                        if (rr.getColumn("tweam_work_effort_id_to", String.class) != null) {
                             p.getRelToWorkEffortAssoc()
                                     .add(rr.getRow(WorkEffortAssoc.class));
                         }
@@ -532,7 +543,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaa")
+        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaam")
         default Map<String, WorkEffort> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -540,7 +551,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaa")
+        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaam")
         default Map<String, WorkEffort> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -553,7 +564,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("wefaa_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("wefaam_work_effort_id", String.class) != null) {
                             p.getRelWorkEffortFixedAssetAssign()
                                     .add(rr.getRow(WorkEffortFixedAssetAssign.class));
                         }
@@ -562,7 +573,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortGoodStandard.class, prefix = "wegs")
+        @RegisterBeanMapper(value = WorkEffortGoodStandard.class, prefix = "wegsm")
         default Map<String, WorkEffort> chainWorkEffortGoodStandard(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -570,7 +581,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortGoodStandard.class, prefix = "wegs")
+        @RegisterBeanMapper(value = WorkEffortGoodStandard.class, prefix = "wegsm")
         default Map<String, WorkEffort> chainWorkEffortGoodStandard(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -583,7 +594,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("wegs_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("wegsm_work_effort_id", String.class) != null) {
                             p.getRelWorkEffortGoodStandard()
                                     .add(rr.getRow(WorkEffortGoodStandard.class));
                         }
@@ -592,7 +603,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepa")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepam")
         default Map<String, WorkEffort> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -600,7 +611,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepa")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepam")
         default Map<String, WorkEffort> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -613,7 +624,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("wepa_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("wepam_work_effort_id", String.class) != null) {
                             p.getRelWorkEffortPartyAssignment()
                                     .add(rr.getRow(WorkEffortPartyAssignment.class));
                         }
@@ -622,7 +633,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortSkillStandard.class, prefix = "wess")
+        @RegisterBeanMapper(value = WorkEffortSkillStandard.class, prefix = "wessm")
         default Map<String, WorkEffort> chainWorkEffortSkillStandard(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -630,7 +641,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = WorkEffortSkillStandard.class, prefix = "wess")
+        @RegisterBeanMapper(value = WorkEffortSkillStandard.class, prefix = "wessm")
         default Map<String, WorkEffort> chainWorkEffortSkillStandard(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -643,7 +654,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("wess_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("wessm_work_effort_id", String.class) != null) {
                             p.getRelWorkEffortSkillStandard()
                                     .add(rr.getRow(WorkEffortSkillStandard.class));
                         }
@@ -652,7 +663,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, WorkEffort> chainTenant(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
@@ -660,7 +671,7 @@ public class WorkEffortDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, WorkEffort> chainTenant(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
@@ -673,7 +684,7 @@ public class WorkEffortDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -1091,6 +1102,16 @@ public class WorkEffortDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, workEffort.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "WorkEffort", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.QuoteData;
 
-public class QuoteDelegator extends AbstractProcs{
+public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(Quote.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class QuoteDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, Quote> chainParty(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, Quote> chainParty(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class QuoteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
-                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                        if (rr.getColumn("pao_party_id", String.class) != null) {
                             p.getRelParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -82,7 +93,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "pso")
         default Map<String, Quote> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "pso")
         default Map<String, Quote> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class QuoteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
-                        if (rr.getColumn("ps_product_store_id", String.class) != null) {
+                        if (rr.getColumn("pso_product_store_id", String.class) != null) {
                             p.getRelProductStore()
                                     .add(rr.getRow(ProductStore.class));
                         }
@@ -112,7 +123,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qi")
+        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qim")
         default Map<String, Quote> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qi")
+        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qim")
         default Map<String, Quote> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class QuoteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
-                        if (rr.getColumn("qi_quote_id", String.class) != null) {
+                        if (rr.getColumn("qim_quote_id", String.class) != null) {
                             p.getRelQuoteItem()
                                     .add(rr.getRow(QuoteItem.class));
                         }
@@ -142,7 +153,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qr")
+        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qrm")
         default Map<String, Quote> chainQuoteRole(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qr")
+        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qrm")
         default Map<String, Quote> chainQuoteRole(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class QuoteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
-                        if (rr.getColumn("qr_quote_id", String.class) != null) {
+                        if (rr.getColumn("qrm_quote_id", String.class) != null) {
                             p.getRelQuoteRole()
                                     .add(rr.getRow(QuoteRole.class));
                         }
@@ -172,7 +183,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = QuoteTerm.class, prefix = "qt")
+        @RegisterBeanMapper(value = QuoteTerm.class, prefix = "qtm")
         default Map<String, Quote> chainQuoteTerm(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = QuoteTerm.class, prefix = "qt")
+        @RegisterBeanMapper(value = QuoteTerm.class, prefix = "qtm")
         default Map<String, Quote> chainQuoteTerm(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class QuoteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
-                        if (rr.getColumn("qt_quote_id", String.class) != null) {
+                        if (rr.getColumn("qtm_quote_id", String.class) != null) {
                             p.getRelQuoteTerm()
                                     .add(rr.getRow(QuoteTerm.class));
                         }
@@ -202,7 +213,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, Quote> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class QuoteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, Quote> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class QuoteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -386,6 +397,16 @@ public class QuoteDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, quote.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "Quote", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

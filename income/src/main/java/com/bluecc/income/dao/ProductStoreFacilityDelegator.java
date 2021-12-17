@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.ProductStoreFacilityData;
 
-public class ProductStoreFacilityDelegator extends AbstractProcs{
+public class ProductStoreFacilityDelegator extends AbstractProcs implements IChainQuery<ProductStoreFacility>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(ProductStoreFacility.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
-        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "pso")
         default Map<String, ProductStoreFacility> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
-        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "pso")
         default Map<String, ProductStoreFacility> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
                                 id -> rr.getRow(ProductStoreFacility.class));
-                        if (rr.getColumn("ps_product_store_id", String.class) != null) {
+                        if (rr.getColumn("pso_product_store_id", String.class) != null) {
                             p.getRelProductStore()
                                     .add(rr.getRow(ProductStore.class));
                         }
@@ -82,7 +93,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
-        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fao")
         default Map<String, ProductStoreFacility> chainFacility(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
-        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fao")
         default Map<String, ProductStoreFacility> chainFacility(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
                                 id -> rr.getRow(ProductStoreFacility.class));
-                        if (rr.getColumn("fa_facility_id", String.class) != null) {
+                        if (rr.getColumn("fao_facility_id", String.class) != null) {
                             p.getRelFacility()
                                     .add(rr.getRow(Facility.class));
                         }
@@ -112,7 +123,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, ProductStoreFacility> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, ProductStoreFacility> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
                                 id -> rr.getRow(ProductStoreFacility.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -245,6 +256,16 @@ public class ProductStoreFacilityDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, productStoreFacility.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "ProductStoreFacility", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

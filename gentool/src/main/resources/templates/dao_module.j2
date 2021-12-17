@@ -1,0 +1,18 @@
+package com.bluecc.income.dummy.store;
+
+import com.bluecc.income.dao.*;
+import com.bluecc.income.exchange.IDelegator;
+import com.google.inject.AbstractModule;
+import com.google.inject.multibindings.MapBinder;
+
+public class DelegatorsPluginModule extends AbstractModule {
+    public void configure() {
+        MapBinder<String, IDelegator> uriBinder =
+                MapBinder.newMapBinder(binder(), String.class, IDelegator.class);
+
+        {% for ent in ents %}
+        uriBinder.addBinding("{{ent.name}}").to({{ent.name}}Delegator.class);
+        {%- endfor %}
+    }
+}
+

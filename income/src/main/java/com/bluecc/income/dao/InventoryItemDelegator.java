@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.InventoryItemData;
 
-public class InventoryItemDelegator extends AbstractProcs{
+public class InventoryItemDelegator extends AbstractProcs implements IChainQuery<InventoryItem>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(InventoryItem.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Product.class, prefix = "pro")
         default Map<String, InventoryItem> chainProduct(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Product.class, prefix = "pro")
         default Map<String, InventoryItem> chainProduct(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("pr_product_id", String.class) != null) {
+                        if (rr.getColumn("pro_product_id", String.class) != null) {
                             p.getRelProduct()
                                     .add(rr.getRow(Product.class));
                         }
@@ -82,7 +93,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, InventoryItem> chainParty(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, InventoryItem> chainParty(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                        if (rr.getColumn("pao_party_id", String.class) != null) {
                             p.getRelParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -112,7 +123,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        @RegisterBeanMapper(value = Party.class, prefix = "opo")
         default Map<String, InventoryItem> chainOwnerParty(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        @RegisterBeanMapper(value = Party.class, prefix = "opo")
         default Map<String, InventoryItem> chainOwnerParty(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("op_party_id", String.class) != null) {
+                        if (rr.getColumn("opo_party_id", String.class) != null) {
                             p.getRelOwnerParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -142,7 +153,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fao")
         default Map<String, InventoryItem> chainFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fao")
         default Map<String, InventoryItem> chainFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("fa_facility_id", String.class) != null) {
+                        if (rr.getColumn("fao_facility_id", String.class) != null) {
                             p.getRelFacility()
                                     .add(rr.getRow(Facility.class));
                         }
@@ -172,7 +183,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = ProductFacility.class, prefix = "pf")
+        @RegisterBeanMapper(value = ProductFacility.class, prefix = "pfo")
         default Map<String, InventoryItem> chainProductFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = ProductFacility.class, prefix = "pf")
+        @RegisterBeanMapper(value = ProductFacility.class, prefix = "pfo")
         default Map<String, InventoryItem> chainProductFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("pf_product_id", String.class) != null) {
+                        if (rr.getColumn("pfo_product_id", String.class) != null) {
                             p.getRelProductFacility()
                                     .add(rr.getRow(ProductFacility.class));
                         }
@@ -202,7 +213,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "fl")
+        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "flo")
         default Map<String, InventoryItem> chainFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "fl")
+        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "flo")
         default Map<String, InventoryItem> chainFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("fl_facility_id", String.class) != null) {
+                        if (rr.getColumn("flo_facility_id", String.class) != null) {
                             p.getRelFacilityLocation()
                                     .add(rr.getRow(FacilityLocation.class));
                         }
@@ -232,7 +243,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pfl")
+        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pflo")
         default Map<String, InventoryItem> chainProductFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pfl")
+        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pflo")
         default Map<String, InventoryItem> chainProductFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("pfl_product_id", String.class) != null) {
+                        if (rr.getColumn("pflo_product_id", String.class) != null) {
                             p.getRelProductFacilityLocation()
                                     .add(rr.getRow(ProductFacilityLocation.class));
                         }
@@ -262,7 +273,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fafa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fafao")
         default Map<String, InventoryItem> chainFixedAssetFixedAsset(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fafa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fafao")
         default Map<String, InventoryItem> chainFixedAssetFixedAsset(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("fafa_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("fafao_fixed_asset_id", String.class) != null) {
                             p.getRelFixedAssetFixedAsset()
                                     .add(rr.getRow(FixedAsset.class));
                         }
@@ -292,7 +303,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, InventoryItem> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, InventoryItem> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("at_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("atm_inventory_item_id", String.class) != null) {
                             p.getRelAcctgTrans()
                                     .add(rr.getRow(AcctgTrans.class));
                         }
@@ -322,7 +333,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "ate")
+        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "atem")
         default Map<String, InventoryItem> chainAcctgTransEntry(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "ate")
+        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "atem")
         default Map<String, InventoryItem> chainAcctgTransEntry(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("ate_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("atem_inventory_item_id", String.class) != null) {
                             p.getRelAcctgTransEntry()
                                     .add(rr.getRow(AcctgTransEntry.class));
                         }
@@ -352,7 +363,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iid")
+        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iidm")
         default Map<String, InventoryItem> chainInventoryItemDetail(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -360,7 +371,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iid")
+        @RegisterBeanMapper(value = InventoryItemDetail.class, prefix = "iidm")
         default Map<String, InventoryItem> chainInventoryItemDetail(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -373,7 +384,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("iid_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("iidm_inventory_item_id", String.class) != null) {
                             p.getRelInventoryItemDetail()
                                     .add(rr.getRow(InventoryItemDetail.class));
                         }
@@ -382,7 +393,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "iim")
         default Map<String, InventoryItem> chainInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -390,7 +401,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "iim")
         default Map<String, InventoryItem> chainInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -403,7 +414,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("ii_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("iim_inventory_item_id", String.class) != null) {
                             p.getRelInvoiceItem()
                                     .add(rr.getRow(InvoiceItem.class));
                         }
@@ -412,7 +423,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "iim")
         default Map<String, InventoryItem> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -420,7 +431,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "iim")
         default Map<String, InventoryItem> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -433,7 +444,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("ii_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("iim_inventory_item_id", String.class) != null) {
                             p.getRelItemIssuance()
                                     .add(rr.getRow(ItemIssuance.class));
                         }
@@ -442,7 +453,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = OrderItem.class, prefix = "foi")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "foim")
         default Map<String, InventoryItem> chainFromOrderItem(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -450,7 +461,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = OrderItem.class, prefix = "foi")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "foim")
         default Map<String, InventoryItem> chainFromOrderItem(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -463,7 +474,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("foi_from_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("foim_from_inventory_item_id", String.class) != null) {
                             p.getRelFromOrderItem()
                                     .add(rr.getRow(OrderItem.class));
                         }
@@ -472,7 +483,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgir")
+        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgirm")
         default Map<String, InventoryItem> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -480,7 +491,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgir")
+        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgirm")
         default Map<String, InventoryItem> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -493,7 +504,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("oisgir_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("oisgirm_inventory_item_id", String.class) != null) {
                             p.getRelOrderItemShipGrpInvRes()
                                     .add(rr.getRow(OrderItemShipGrpInvRes.class));
                         }
@@ -502,7 +513,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, InventoryItem> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -510,7 +521,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, InventoryItem> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -523,7 +534,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("sr_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("srm_inventory_item_id", String.class) != null) {
                             p.getRelShipmentReceipt()
                                     .add(rr.getRow(ShipmentReceipt.class));
                         }
@@ -532,7 +543,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, InventoryItem> chainTenant(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
@@ -540,7 +551,7 @@ public class InventoryItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, InventoryItem> chainTenant(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
@@ -553,7 +564,7 @@ public class InventoryItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -903,6 +914,16 @@ public class InventoryItemDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, inventoryItem.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "InventoryItem", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

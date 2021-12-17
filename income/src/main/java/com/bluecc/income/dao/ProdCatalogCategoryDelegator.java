@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.ProdCatalogCategoryData;
 
-public class ProdCatalogCategoryDelegator extends AbstractProcs{
+public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChainQuery<ProdCatalogCategory>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(ProdCatalogCategory.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
-        @RegisterBeanMapper(value = ProdCatalog.class, prefix = "pc")
+        @RegisterBeanMapper(value = ProdCatalog.class, prefix = "pco")
         default Map<String, ProdCatalogCategory> chainProdCatalog(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
-        @RegisterBeanMapper(value = ProdCatalog.class, prefix = "pc")
+        @RegisterBeanMapper(value = ProdCatalog.class, prefix = "pco")
         default Map<String, ProdCatalogCategory> chainProdCatalog(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProdCatalogCategory p = map.computeIfAbsent(rr.getColumn("pcc_id", String.class),
                                 id -> rr.getRow(ProdCatalogCategory.class));
-                        if (rr.getColumn("pc_prod_catalog_id", String.class) != null) {
+                        if (rr.getColumn("pco_prod_catalog_id", String.class) != null) {
                             p.getRelProdCatalog()
                                     .add(rr.getRow(ProdCatalog.class));
                         }
@@ -82,7 +93,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
-        @RegisterBeanMapper(value = ProductCategory.class, prefix = "pc")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "pco")
         default Map<String, ProdCatalogCategory> chainProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
-        @RegisterBeanMapper(value = ProductCategory.class, prefix = "pc")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "pco")
         default Map<String, ProdCatalogCategory> chainProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProdCatalogCategory p = map.computeIfAbsent(rr.getColumn("pcc_id", String.class),
                                 id -> rr.getRow(ProdCatalogCategory.class));
-                        if (rr.getColumn("pc_product_category_id", String.class) != null) {
+                        if (rr.getColumn("pco_product_category_id", String.class) != null) {
                             p.getRelProductCategory()
                                     .add(rr.getRow(ProductCategory.class));
                         }
@@ -112,7 +123,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, ProdCatalogCategory> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, ProdCatalogCategory> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProdCatalogCategory p = map.computeIfAbsent(rr.getColumn("pcc_id", String.class),
                                 id -> rr.getRow(ProdCatalogCategory.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -245,6 +256,16 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, prodCatalogCategory.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "ProdCatalogCategory", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

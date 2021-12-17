@@ -74,7 +74,7 @@ relationMarks:
   entityName: WorkEffort
   name: ChildWorkEffort
   relationType: many
-  tags: [skip]
+  tags: [normal]
 - bindFields: [workEffortId]
   entityName: WorkEffortAssoc
   name: FromWorkEffortAssoc

@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.SecurityGroupData;
 
-public class SecurityGroupDelegator extends AbstractProcs{
+public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery<SecurityGroup>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(SecurityGroup.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
-        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "pr")
+        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "prm")
         default Map<String, SecurityGroup> chainPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
-        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "pr")
+        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "prm")
         default Map<String, SecurityGroup> chainPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         SecurityGroup p = map.computeIfAbsent(rr.getColumn("sg_group_id", String.class),
                                 id -> rr.getRow(SecurityGroup.class));
-                        if (rr.getColumn("pr_security_group_id", String.class) != null) {
+                        if (rr.getColumn("prm_security_group_id", String.class) != null) {
                             p.getRelPartyRelationship()
                                     .add(rr.getRow(PartyRelationship.class));
                         }
@@ -82,7 +93,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
-        @RegisterBeanMapper(value = SecurityGroupPermission.class, prefix = "sgp")
+        @RegisterBeanMapper(value = SecurityGroupPermission.class, prefix = "sgpm")
         default Map<String, SecurityGroup> chainSecurityGroupPermission(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
-        @RegisterBeanMapper(value = SecurityGroupPermission.class, prefix = "sgp")
+        @RegisterBeanMapper(value = SecurityGroupPermission.class, prefix = "sgpm")
         default Map<String, SecurityGroup> chainSecurityGroupPermission(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         SecurityGroup p = map.computeIfAbsent(rr.getColumn("sg_group_id", String.class),
                                 id -> rr.getRow(SecurityGroup.class));
-                        if (rr.getColumn("sgp_group_id", String.class) != null) {
+                        if (rr.getColumn("sgpm_group_id", String.class) != null) {
                             p.getRelSecurityGroupPermission()
                                     .add(rr.getRow(SecurityGroupPermission.class));
                         }
@@ -112,7 +123,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
-        @RegisterBeanMapper(value = UserLoginSecurityGroup.class, prefix = "ulsg")
+        @RegisterBeanMapper(value = UserLoginSecurityGroup.class, prefix = "ulsgm")
         default Map<String, SecurityGroup> chainUserLoginSecurityGroup(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
-        @RegisterBeanMapper(value = UserLoginSecurityGroup.class, prefix = "ulsg")
+        @RegisterBeanMapper(value = UserLoginSecurityGroup.class, prefix = "ulsgm")
         default Map<String, SecurityGroup> chainUserLoginSecurityGroup(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         SecurityGroup p = map.computeIfAbsent(rr.getColumn("sg_group_id", String.class),
                                 id -> rr.getRow(SecurityGroup.class));
-                        if (rr.getColumn("ulsg_group_id", String.class) != null) {
+                        if (rr.getColumn("ulsgm_group_id", String.class) != null) {
                             p.getRelUserLoginSecurityGroup()
                                     .add(rr.getRow(UserLoginSecurityGroup.class));
                         }
@@ -142,7 +153,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, SecurityGroup> chainTenant(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, SecurityGroup> chainTenant(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class SecurityGroupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         SecurityGroup p = map.computeIfAbsent(rr.getColumn("sg_group_id", String.class),
                                 id -> rr.getRow(SecurityGroup.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -292,6 +303,16 @@ public class SecurityGroupDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, securityGroup.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "SecurityGroup", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

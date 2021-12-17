@@ -1,19 +1,20 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.ProtoJsonUtils;
 import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.hubs.fund.Tuple2;
+import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.fund.model.IModel;
+import com.bluecc.hubs.fund.model.WithSuppliers;
 import com.bluecc.hubs.fund.pubs.MessageObject;
-import com.bluecc.hubs.stub.Identity;
-import com.bluecc.hubs.stub.OrderHeaderFlatData;
-import com.bluecc.hubs.stub.ProductStoreData;
-import com.bluecc.hubs.stub.ProductStoreFlatData;
+import com.bluecc.hubs.stub.*;
 import com.bluecc.income.AbstractStoreProcTest;
+import com.bluecc.income.exchange.IChainQuery;
 import com.bluecc.income.exchange.IProc;
-import com.bluecc.income.model.FixedAsset;
 import com.bluecc.income.model.OrderHeader;
 import com.bluecc.income.model.ProductStore;
 import com.bluecc.income.model.ProductStorePaymentSetting;
+import com.bluecc.income.procs.Buckets;
 import com.bluecc.income.procs.Orders;
 import com.bluecc.income.procs.StatusTypes;
 import com.github.javafaker.Faker;
@@ -47,6 +48,7 @@ import static com.bluecc.hubs.ProtoTypes.*;
 import static com.bluecc.hubs.fund.Tuple2.of;
 import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.hubs.stereotypes.OrderSeedData.StatusItem_ORDER_CANCELLED;
+import static com.bluecc.income.exchange.ModelSerializer.getEntityValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
@@ -462,4 +464,38 @@ public class ProductStoreDelegatorTest extends AbstractStoreProcTest {
 
         });
     }
+
+    @Inject
+    Buckets buckets;
+
+    @Test
+    public void testChainQueryByInspectMeta() {
+        process(c -> {
+            String entityName="ProductStore";
+
+            Set<String> incls=protoMeta.getInspectMeta(entityName)
+                    .getValidRelationNames();
+            assertThat(incls).contains(Util.toSnakecase("ProductStorePaymentSetting"));
+
+            // List<EntityValue> entityValues = productStores.chainQuery(c, incls)
+            //         .values().stream().map(e -> getEntityValue(e))
+            //         .collect(Collectors.toList());
+            //
+            // EntityBucket bucket=EntityBucket.newBuilder()
+            //         .setEntityType(entityName)
+            //         .addAllValues(entityValues)
+            //         .build();
+            //
+            // // workEfforts.chainQuery(c, incls.toArray(new String[0]))
+            // //         .values().stream().map(w -> w.)
+            // System.out.println(entityValues.size());
+
+            EntityBucket bucket=buckets.queryValues(productStores, c, entityName);
+            String jsonStr= ProtoJsonUtils.toJson(bucket);
+
+            // System.out.println(jsonStr);
+            dump(entityName+".json", jsonStr);
+        });
+    }
+
 }

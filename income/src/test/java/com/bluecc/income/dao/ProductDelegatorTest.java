@@ -1,5 +1,6 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.ProtoJsonUtils;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.feed.DataFill;
 import com.bluecc.hubs.fund.EntityMeta;
@@ -13,6 +14,7 @@ import com.bluecc.income.exchange.ResultSubscriber;
 import com.bluecc.income.helper.ModelWrapper;
 import com.bluecc.income.model.*;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
 import com.github.javafaker.Faker;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -649,10 +651,15 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
 
     }
 
+    @Inject
+    Buckets buckets;
     @Test
-    public void testPriceList() {
+    public void testSerialize() {
         process(c -> {
-            // Dao dao = c.getHandle().attach(// Dao.class);
+            String entityName="Product";
+            EntityBucket bucket=buckets.queryValues(products, c, entityName);
+            String jsonStr= ProtoJsonUtils.toJson(bucket);
+            dump(entityName+".json", jsonStr);
 
         });
     }

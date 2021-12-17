@@ -3,6 +3,7 @@ package com.bluecc.income.service;
 import com.bluecc.hubs.fund.tenant.Tenants;
 import com.bluecc.income.endpoint.HeaderServerInterceptor;
 import com.bluecc.income.endpoint.RpcEndpoints;
+import com.bluecc.income.procs.DataStoreRpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptors;
@@ -24,6 +25,8 @@ public class ServiceFacade {
     RpcEndpoints.GreeterImpl greeter;
     @Inject
     RpcEndpoints.RoutinesImpl routines;
+    @Inject 
+    Provider<DataStoreRpc> dataStoreRpcProvider;
 
     @Inject
     HeaderServerInterceptor interceptor;
@@ -44,6 +47,7 @@ public class ServiceFacade {
         server = ServerBuilder.forPort(port)
                 .addService(greeter)
                 .addService(ServerInterceptors.intercept(routines, interceptor))
+                .addService(ServerInterceptors.intercept(dataStoreRpcProvider.get(), interceptor))
                 {%- for ent in ents %}
                 .addService(ServerInterceptors.intercept({{ent.varName}}Rpc.get(), interceptor))
                 {%- endfor %}

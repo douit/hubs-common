@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.UserLoginData;
 
-public class UserLoginDelegator extends AbstractProcs{
+public class UserLoginDelegator extends AbstractProcs implements IChainQuery<UserLogin>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(UserLogin.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class UserLoginDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, UserLogin> chainParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, UserLogin> chainParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                        if (rr.getColumn("pao_party_id", String.class) != null) {
                             p.getRelParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -82,7 +93,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Person.class, prefix = "peo")
         default Map<String, UserLogin> chainPerson(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Person.class, prefix = "peo")
         default Map<String, UserLogin> chainPerson(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("pe_party_id", String.class) != null) {
+                        if (rr.getColumn("peo_party_id", String.class) != null) {
                             p.getRelPerson()
                                     .add(rr.getRow(Person.class));
                         }
@@ -112,7 +123,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = PartyGroup.class, prefix = "pg")
+        @RegisterBeanMapper(value = PartyGroup.class, prefix = "pgo")
         default Map<String, UserLogin> chainPartyGroup(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = PartyGroup.class, prefix = "pg")
+        @RegisterBeanMapper(value = PartyGroup.class, prefix = "pgo")
         default Map<String, UserLogin> chainPartyGroup(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("pg_party_id", String.class) != null) {
+                        if (rr.getColumn("pgo_party_id", String.class) != null) {
                             p.getRelPartyGroup()
                                     .add(rr.getRow(PartyGroup.class));
                         }
@@ -142,7 +153,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = BudgetStatus.class, prefix = "cbbs")
+        @RegisterBeanMapper(value = BudgetStatus.class, prefix = "cbbsm")
         default Map<String, UserLogin> chainChangeByBudgetStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = BudgetStatus.class, prefix = "cbbs")
+        @RegisterBeanMapper(value = BudgetStatus.class, prefix = "cbbsm")
         default Map<String, UserLogin> chainChangeByBudgetStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbbs_change_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("cbbsm_change_by_user_login_id", String.class) != null) {
                             p.getRelChangeByBudgetStatus()
                                     .add(rr.getRow(BudgetStatus.class));
                         }
@@ -172,7 +183,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Content.class, prefix = "cbc")
+        @RegisterBeanMapper(value = Content.class, prefix = "cbcm")
         default Map<String, UserLogin> chainCreatedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Content.class, prefix = "cbc")
+        @RegisterBeanMapper(value = Content.class, prefix = "cbcm")
         default Map<String, UserLogin> chainCreatedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbc_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbcm_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByContent()
                                     .add(rr.getRow(Content.class));
                         }
@@ -202,7 +213,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Content.class, prefix = "lmbc")
+        @RegisterBeanMapper(value = Content.class, prefix = "lmbcm")
         default Map<String, UserLogin> chainLastModifiedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Content.class, prefix = "lmbc")
+        @RegisterBeanMapper(value = Content.class, prefix = "lmbcm")
         default Map<String, UserLogin> chainLastModifiedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbc_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbcm_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByContent()
                                     .add(rr.getRow(Content.class));
                         }
@@ -232,7 +243,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ContentAssoc.class, prefix = "cbca")
+        @RegisterBeanMapper(value = ContentAssoc.class, prefix = "cbcam")
         default Map<String, UserLogin> chainCreatedByContentAssoc(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ContentAssoc.class, prefix = "cbca")
+        @RegisterBeanMapper(value = ContentAssoc.class, prefix = "cbcam")
         default Map<String, UserLogin> chainCreatedByContentAssoc(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbca_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbcam_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByContentAssoc()
                                     .add(rr.getRow(ContentAssoc.class));
                         }
@@ -262,7 +273,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ContentAssoc.class, prefix = "lmbca")
+        @RegisterBeanMapper(value = ContentAssoc.class, prefix = "lmbcam")
         default Map<String, UserLogin> chainLastModifiedByContentAssoc(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ContentAssoc.class, prefix = "lmbca")
+        @RegisterBeanMapper(value = ContentAssoc.class, prefix = "lmbcam")
         default Map<String, UserLogin> chainLastModifiedByContentAssoc(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbca_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbcam_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByContentAssoc()
                                     .add(rr.getRow(ContentAssoc.class));
                         }
@@ -292,7 +303,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = DataResource.class, prefix = "cbdr")
+        @RegisterBeanMapper(value = DataResource.class, prefix = "cbdrm")
         default Map<String, UserLogin> chainCreatedByDataResource(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = DataResource.class, prefix = "cbdr")
+        @RegisterBeanMapper(value = DataResource.class, prefix = "cbdrm")
         default Map<String, UserLogin> chainCreatedByDataResource(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbdr_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbdrm_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByDataResource()
                                     .add(rr.getRow(DataResource.class));
                         }
@@ -322,7 +333,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = DataResource.class, prefix = "lmbdr")
+        @RegisterBeanMapper(value = DataResource.class, prefix = "lmbdrm")
         default Map<String, UserLogin> chainLastModifiedByDataResource(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = DataResource.class, prefix = "lmbdr")
+        @RegisterBeanMapper(value = DataResource.class, prefix = "lmbdrm")
         default Map<String, UserLogin> chainLastModifiedByDataResource(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbdr_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbdrm_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByDataResource()
                                     .add(rr.getRow(DataResource.class));
                         }
@@ -352,7 +363,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fas")
+        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fasm")
         default Map<String, UserLogin> chainFinAccountStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -360,7 +371,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fas")
+        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fasm")
         default Map<String, UserLogin> chainFinAccountStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -373,7 +384,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("fas_change_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("fasm_change_by_user_login_id", String.class) != null) {
                             p.getRelFinAccountStatus()
                                     .add(rr.getRow(FinAccountStatus.class));
                         }
@@ -382,7 +393,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = InvoiceStatus.class, prefix = "cbis")
+        @RegisterBeanMapper(value = InvoiceStatus.class, prefix = "cbism")
         default Map<String, UserLogin> chainChangeByInvoiceStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -390,7 +401,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = InvoiceStatus.class, prefix = "cbis")
+        @RegisterBeanMapper(value = InvoiceStatus.class, prefix = "cbism")
         default Map<String, UserLogin> chainChangeByInvoiceStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -403,7 +414,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbis_change_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("cbism_change_by_user_login_id", String.class) != null) {
                             p.getRelChangeByInvoiceStatus()
                                     .add(rr.getRow(InvoiceStatus.class));
                         }
@@ -412,7 +423,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ibii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ibiim")
         default Map<String, UserLogin> chainIssuedByItemIssuance(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -420,7 +431,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ibii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ibiim")
         default Map<String, UserLogin> chainIssuedByItemIssuance(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -433,7 +444,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("ibii_issued_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("ibiim_issued_by_user_login_id", String.class) != null) {
                             p.getRelIssuedByItemIssuance()
                                     .add(rr.getRow(ItemIssuance.class));
                         }
@@ -442,7 +453,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = JobSandbox.class, prefix = "ajs")
+        @RegisterBeanMapper(value = JobSandbox.class, prefix = "ajsm")
         default Map<String, UserLogin> chainAuthJobSandbox(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -450,7 +461,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = JobSandbox.class, prefix = "ajs")
+        @RegisterBeanMapper(value = JobSandbox.class, prefix = "ajsm")
         default Map<String, UserLogin> chainAuthJobSandbox(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -463,7 +474,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("ajs_auth_user_login_id", String.class) != null) {
+                        if (rr.getColumn("ajsm_auth_user_login_id", String.class) != null) {
                             p.getRelAuthJobSandbox()
                                     .add(rr.getRow(JobSandbox.class));
                         }
@@ -472,7 +483,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = JobSandbox.class, prefix = "rajs")
+        @RegisterBeanMapper(value = JobSandbox.class, prefix = "rajsm")
         default Map<String, UserLogin> chainRunAsJobSandbox(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -480,7 +491,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = JobSandbox.class, prefix = "rajs")
+        @RegisterBeanMapper(value = JobSandbox.class, prefix = "rajsm")
         default Map<String, UserLogin> chainRunAsJobSandbox(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -493,7 +504,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("rajs_run_as_user", String.class) != null) {
+                        if (rr.getColumn("rajsm_run_as_user", String.class) != null) {
                             p.getRelRunAsJobSandbox()
                                     .add(rr.getRow(JobSandbox.class));
                         }
@@ -502,7 +513,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oa")
+        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oam")
         default Map<String, UserLogin> chainOrderAdjustment(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -510,7 +521,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oa")
+        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oam")
         default Map<String, UserLogin> chainOrderAdjustment(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -523,7 +534,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("oa_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("oam_created_by_user_login", String.class) != null) {
                             p.getRelOrderAdjustment()
                                     .add(rr.getRow(OrderAdjustment.class));
                         }
@@ -532,7 +543,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "cboh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "cbohm")
         default Map<String, UserLogin> chainCreatedByOrderHeader(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -540,7 +551,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "cboh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "cbohm")
         default Map<String, UserLogin> chainCreatedByOrderHeader(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -553,7 +564,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cboh_created_by", String.class) != null) {
+                        if (rr.getColumn("cbohm_created_by", String.class) != null) {
                             p.getRelCreatedByOrderHeader()
                                     .add(rr.getRow(OrderHeader.class));
                         }
@@ -562,7 +573,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderItem.class, prefix = "dcsoi")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "dcsoim")
         default Map<String, UserLogin> chainDontCancelSetOrderItem(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -570,7 +581,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderItem.class, prefix = "dcsoi")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "dcsoim")
         default Map<String, UserLogin> chainDontCancelSetOrderItem(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -583,7 +594,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("dcsoi_dont_cancel_set_user_login", String.class) != null) {
+                        if (rr.getColumn("dcsoim_dont_cancel_set_user_login", String.class) != null) {
                             p.getRelDontCancelSetOrderItem()
                                     .add(rr.getRow(OrderItem.class));
                         }
@@ -592,7 +603,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderItem.class, prefix = "cboi")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "cboim")
         default Map<String, UserLogin> chainChangeByOrderItem(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -600,7 +611,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderItem.class, prefix = "cboi")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "cboim")
         default Map<String, UserLogin> chainChangeByOrderItem(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -613,7 +624,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cboi_change_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("cboim_change_by_user_login_id", String.class) != null) {
                             p.getRelChangeByOrderItem()
                                     .add(rr.getRow(OrderItem.class));
                         }
@@ -622,7 +633,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "oppm")
         default Map<String, UserLogin> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -630,7 +641,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "oppm")
         default Map<String, UserLogin> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -643,7 +654,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("opp_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("oppm_created_by_user_login", String.class) != null) {
                             p.getRelOrderPaymentPreference()
                                     .add(rr.getRow(OrderPaymentPreference.class));
                         }
@@ -652,7 +663,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderStatus.class, prefix = "os")
+        @RegisterBeanMapper(value = OrderStatus.class, prefix = "osm")
         default Map<String, UserLogin> chainOrderStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -660,7 +671,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = OrderStatus.class, prefix = "os")
+        @RegisterBeanMapper(value = OrderStatus.class, prefix = "osm")
         default Map<String, UserLogin> chainOrderStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -673,7 +684,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("os_status_user_login", String.class) != null) {
+                        if (rr.getColumn("osm_status_user_login", String.class) != null) {
                             p.getRelOrderStatus()
                                     .add(rr.getRow(OrderStatus.class));
                         }
@@ -682,7 +693,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Party.class, prefix = "cbp")
+        @RegisterBeanMapper(value = Party.class, prefix = "cbpm")
         default Map<String, UserLogin> chainCreatedByParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -690,7 +701,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Party.class, prefix = "cbp")
+        @RegisterBeanMapper(value = Party.class, prefix = "cbpm")
         default Map<String, UserLogin> chainCreatedByParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -703,7 +714,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbp_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbpm_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -712,7 +723,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Party.class, prefix = "lmbp")
+        @RegisterBeanMapper(value = Party.class, prefix = "lmbpm")
         default Map<String, UserLogin> chainLastModifiedByParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -720,7 +731,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Party.class, prefix = "lmbp")
+        @RegisterBeanMapper(value = Party.class, prefix = "lmbpm")
         default Map<String, UserLogin> chainLastModifiedByParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -733,7 +744,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbp_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbpm_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -742,7 +753,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = PartyStatus.class, prefix = "cbps")
+        @RegisterBeanMapper(value = PartyStatus.class, prefix = "cbpsm")
         default Map<String, UserLogin> chainChangeByPartyStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -750,7 +761,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = PartyStatus.class, prefix = "cbps")
+        @RegisterBeanMapper(value = PartyStatus.class, prefix = "cbpsm")
         default Map<String, UserLogin> chainChangeByPartyStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -763,7 +774,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbps_change_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("cbpsm_change_by_user_login_id", String.class) != null) {
                             p.getRelChangeByPartyStatus()
                                     .add(rr.getRow(PartyStatus.class));
                         }
@@ -772,7 +783,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Product.class, prefix = "cbp")
+        @RegisterBeanMapper(value = Product.class, prefix = "cbpm")
         default Map<String, UserLogin> chainCreatedByProduct(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -780,7 +791,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Product.class, prefix = "cbp")
+        @RegisterBeanMapper(value = Product.class, prefix = "cbpm")
         default Map<String, UserLogin> chainCreatedByProduct(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -793,7 +804,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbp_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbpm_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByProduct()
                                     .add(rr.getRow(Product.class));
                         }
@@ -802,7 +813,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Product.class, prefix = "lmbp")
+        @RegisterBeanMapper(value = Product.class, prefix = "lmbpm")
         default Map<String, UserLogin> chainLastModifiedByProduct(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -810,7 +821,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Product.class, prefix = "lmbp")
+        @RegisterBeanMapper(value = Product.class, prefix = "lmbpm")
         default Map<String, UserLogin> chainLastModifiedByProduct(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -823,7 +834,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbp_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbpm_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByProduct()
                                     .add(rr.getRow(Product.class));
                         }
@@ -832,7 +843,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductFeaturePrice.class, prefix = "cbpfp")
+        @RegisterBeanMapper(value = ProductFeaturePrice.class, prefix = "cbpfpm")
         default Map<String, UserLogin> chainCreatedByProductFeaturePrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -840,7 +851,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductFeaturePrice.class, prefix = "cbpfp")
+        @RegisterBeanMapper(value = ProductFeaturePrice.class, prefix = "cbpfpm")
         default Map<String, UserLogin> chainCreatedByProductFeaturePrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -853,7 +864,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbpfp_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbpfpm_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByProductFeaturePrice()
                                     .add(rr.getRow(ProductFeaturePrice.class));
                         }
@@ -862,7 +873,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductFeaturePrice.class, prefix = "lmbpfp")
+        @RegisterBeanMapper(value = ProductFeaturePrice.class, prefix = "lmbpfpm")
         default Map<String, UserLogin> chainLastModifiedByProductFeaturePrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -870,7 +881,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductFeaturePrice.class, prefix = "lmbpfp")
+        @RegisterBeanMapper(value = ProductFeaturePrice.class, prefix = "lmbpfpm")
         default Map<String, UserLogin> chainLastModifiedByProductFeaturePrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -883,7 +894,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbpfp_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbpfpm_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByProductFeaturePrice()
                                     .add(rr.getRow(ProductFeaturePrice.class));
                         }
@@ -892,7 +903,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPrice.class, prefix = "cbpp")
+        @RegisterBeanMapper(value = ProductPrice.class, prefix = "cbppm")
         default Map<String, UserLogin> chainCreatedByProductPrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -900,7 +911,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPrice.class, prefix = "cbpp")
+        @RegisterBeanMapper(value = ProductPrice.class, prefix = "cbppm")
         default Map<String, UserLogin> chainCreatedByProductPrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -913,7 +924,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbpp_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbppm_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByProductPrice()
                                     .add(rr.getRow(ProductPrice.class));
                         }
@@ -922,7 +933,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPrice.class, prefix = "lmbpp")
+        @RegisterBeanMapper(value = ProductPrice.class, prefix = "lmbppm")
         default Map<String, UserLogin> chainLastModifiedByProductPrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -930,7 +941,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPrice.class, prefix = "lmbpp")
+        @RegisterBeanMapper(value = ProductPrice.class, prefix = "lmbppm")
         default Map<String, UserLogin> chainLastModifiedByProductPrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -943,7 +954,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbpp_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbppm_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByProductPrice()
                                     .add(rr.getRow(ProductPrice.class));
                         }
@@ -952,7 +963,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPromo.class, prefix = "cbpp")
+        @RegisterBeanMapper(value = ProductPromo.class, prefix = "cbppm")
         default Map<String, UserLogin> chainCreatedByProductPromo(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -960,7 +971,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPromo.class, prefix = "cbpp")
+        @RegisterBeanMapper(value = ProductPromo.class, prefix = "cbppm")
         default Map<String, UserLogin> chainCreatedByProductPromo(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -973,7 +984,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbpp_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbppm_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByProductPromo()
                                     .add(rr.getRow(ProductPromo.class));
                         }
@@ -982,7 +993,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPromo.class, prefix = "lmbpp")
+        @RegisterBeanMapper(value = ProductPromo.class, prefix = "lmbppm")
         default Map<String, UserLogin> chainLastModifiedByProductPromo(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -990,7 +1001,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPromo.class, prefix = "lmbpp")
+        @RegisterBeanMapper(value = ProductPromo.class, prefix = "lmbppm")
         default Map<String, UserLogin> chainLastModifiedByProductPromo(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1003,7 +1014,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbpp_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbppm_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByProductPromo()
                                     .add(rr.getRow(ProductPromo.class));
                         }
@@ -1012,7 +1023,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPromoCode.class, prefix = "cbppc")
+        @RegisterBeanMapper(value = ProductPromoCode.class, prefix = "cbppcm")
         default Map<String, UserLogin> chainCreatedByProductPromoCode(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -1020,7 +1031,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPromoCode.class, prefix = "cbppc")
+        @RegisterBeanMapper(value = ProductPromoCode.class, prefix = "cbppcm")
         default Map<String, UserLogin> chainCreatedByProductPromoCode(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1033,7 +1044,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbppc_created_by_user_login", String.class) != null) {
+                        if (rr.getColumn("cbppcm_created_by_user_login", String.class) != null) {
                             p.getRelCreatedByProductPromoCode()
                                     .add(rr.getRow(ProductPromoCode.class));
                         }
@@ -1042,7 +1053,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPromoCode.class, prefix = "lmbppc")
+        @RegisterBeanMapper(value = ProductPromoCode.class, prefix = "lmbppcm")
         default Map<String, UserLogin> chainLastModifiedByProductPromoCode(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -1050,7 +1061,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductPromoCode.class, prefix = "lmbppc")
+        @RegisterBeanMapper(value = ProductPromoCode.class, prefix = "lmbppcm")
         default Map<String, UserLogin> chainLastModifiedByProductPromoCode(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1063,7 +1074,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("lmbppc_last_modified_by_user_login", String.class) != null) {
+                        if (rr.getColumn("lmbppcm_last_modified_by_user_login", String.class) != null) {
                             p.getRelLastModifiedByProductPromoCode()
                                     .add(rr.getRow(ProductPromoCode.class));
                         }
@@ -1072,7 +1083,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductReview.class, prefix = "pr")
+        @RegisterBeanMapper(value = ProductReview.class, prefix = "prm")
         default Map<String, UserLogin> chainProductReview(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -1080,7 +1091,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ProductReview.class, prefix = "pr")
+        @RegisterBeanMapper(value = ProductReview.class, prefix = "prm")
         default Map<String, UserLogin> chainProductReview(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1093,7 +1104,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("pr_user_login_id", String.class) != null) {
+                        if (rr.getColumn("prm_user_login_id", String.class) != null) {
                             p.getRelProductReview()
                                     .add(rr.getRow(ProductReview.class));
                         }
@@ -1102,7 +1113,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, UserLogin> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -1110,7 +1121,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, UserLogin> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1123,7 +1134,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("sr_received_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("srm_received_by_user_login_id", String.class) != null) {
                             p.getRelShipmentReceipt()
                                     .add(rr.getRow(ShipmentReceipt.class));
                         }
@@ -1132,7 +1143,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ShipmentStatus.class, prefix = "cbss")
+        @RegisterBeanMapper(value = ShipmentStatus.class, prefix = "cbssm")
         default Map<String, UserLogin> chainChangeByShipmentStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -1140,7 +1151,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = ShipmentStatus.class, prefix = "cbss")
+        @RegisterBeanMapper(value = ShipmentStatus.class, prefix = "cbssm")
         default Map<String, UserLogin> chainChangeByShipmentStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1153,7 +1164,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("cbss_change_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("cbssm_change_by_user_login_id", String.class) != null) {
                             p.getRelChangeByShipmentStatus()
                                     .add(rr.getRow(ShipmentStatus.class));
                         }
@@ -1162,7 +1173,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = UserLoginSecurityGroup.class, prefix = "ulsg")
+        @RegisterBeanMapper(value = UserLoginSecurityGroup.class, prefix = "ulsgm")
         default Map<String, UserLogin> chainUserLoginSecurityGroup(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -1170,7 +1181,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = UserLoginSecurityGroup.class, prefix = "ulsg")
+        @RegisterBeanMapper(value = UserLoginSecurityGroup.class, prefix = "ulsgm")
         default Map<String, UserLogin> chainUserLoginSecurityGroup(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1183,7 +1194,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("ulsg_user_login_id", String.class) != null) {
+                        if (rr.getColumn("ulsgm_user_login_id", String.class) != null) {
                             p.getRelUserLoginSecurityGroup()
                                     .add(rr.getRow(UserLoginSecurityGroup.class));
                         }
@@ -1192,7 +1203,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "abwepa")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "abwepam")
         default Map<String, UserLogin> chainAssignedByWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -1200,7 +1211,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "abwepa")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "abwepam")
         default Map<String, UserLogin> chainAssignedByWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1213,7 +1224,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("abwepa_assigned_by_user_login_id", String.class) != null) {
+                        if (rr.getColumn("abwepam_assigned_by_user_login_id", String.class) != null) {
                             p.getRelAssignedByWorkEffortPartyAssignment()
                                     .add(rr.getRow(WorkEffortPartyAssignment.class));
                         }
@@ -1222,7 +1233,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, UserLogin> chainTenant(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
@@ -1230,7 +1241,7 @@ public class UserLoginDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, UserLogin> chainTenant(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
@@ -1243,7 +1254,7 @@ public class UserLoginDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -1984,6 +1995,16 @@ public class UserLoginDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, userLogin.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "UserLogin", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

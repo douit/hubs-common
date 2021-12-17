@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.FixedAssetData;
 
-public class FixedAssetDelegator extends AbstractProcs{
+public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<FixedAsset>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(FixedAsset.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "pfa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "pfao")
         default Map<String, FixedAsset> chainParentFixedAsset(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "pfa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "pfao")
         default Map<String, FixedAsset> chainParentFixedAsset(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("pfa_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("pfao_fixed_asset_id", String.class) != null) {
                             p.getRelParentFixedAsset()
                                     .add(rr.getRow(FixedAsset.class));
                         }
@@ -82,7 +93,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = Product.class, prefix = "iop")
+        @RegisterBeanMapper(value = Product.class, prefix = "iopo")
         default Map<String, FixedAsset> chainInstanceOfProduct(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = Product.class, prefix = "iop")
+        @RegisterBeanMapper(value = Product.class, prefix = "iopo")
         default Map<String, FixedAsset> chainInstanceOfProduct(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("iop_product_id", String.class) != null) {
+                        if (rr.getColumn("iopo_product_id", String.class) != null) {
                             p.getRelInstanceOfProduct()
                                     .add(rr.getRow(Product.class));
                         }
@@ -112,7 +123,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, FixedAsset> chainParty(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, FixedAsset> chainParty(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                        if (rr.getColumn("pao_party_id", String.class) != null) {
                             p.getRelParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -142,7 +153,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = PartyRole.class, prefix = "pr")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "pro")
         default Map<String, FixedAsset> chainPartyRole(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = PartyRole.class, prefix = "pr")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "pro")
         default Map<String, FixedAsset> chainPartyRole(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("pr_party_id", String.class) != null) {
+                        if (rr.getColumn("pro_party_id", String.class) != null) {
                             p.getRelPartyRole()
                                     .add(rr.getRow(PartyRole.class));
                         }
@@ -172,7 +183,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "aoh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "aoho")
         default Map<String, FixedAsset> chainAcquireOrderHeader(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "aoh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "aoho")
         default Map<String, FixedAsset> chainAcquireOrderHeader(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("aoh_order_id", String.class) != null) {
+                        if (rr.getColumn("aoho_order_id", String.class) != null) {
                             p.getRelAcquireOrderHeader()
                                     .add(rr.getRow(OrderHeader.class));
                         }
@@ -202,7 +213,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = OrderItem.class, prefix = "aoi")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "aoio")
         default Map<String, FixedAsset> chainAcquireOrderItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = OrderItem.class, prefix = "aoi")
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "aoio")
         default Map<String, FixedAsset> chainAcquireOrderItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("aoi_order_id", String.class) != null) {
+                        if (rr.getColumn("aoio_order_id", String.class) != null) {
                             p.getRelAcquireOrderItem()
                                     .add(rr.getRow(OrderItem.class));
                         }
@@ -232,7 +243,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = TechDataCalendar.class, prefix = "tdc")
+        @RegisterBeanMapper(value = TechDataCalendar.class, prefix = "tdco")
         default Map<String, FixedAsset> chainTechDataCalendar(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = TechDataCalendar.class, prefix = "tdc")
+        @RegisterBeanMapper(value = TechDataCalendar.class, prefix = "tdco")
         default Map<String, FixedAsset> chainTechDataCalendar(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("tdc_calendar_id", String.class) != null) {
+                        if (rr.getColumn("tdco_calendar_id", String.class) != null) {
                             p.getRelTechDataCalendar()
                                     .add(rr.getRow(TechDataCalendar.class));
                         }
@@ -262,7 +273,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = Facility.class, prefix = "laf")
+        @RegisterBeanMapper(value = Facility.class, prefix = "lafo")
         default Map<String, FixedAsset> chainLocatedAtFacility(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = Facility.class, prefix = "laf")
+        @RegisterBeanMapper(value = Facility.class, prefix = "lafo")
         default Map<String, FixedAsset> chainLocatedAtFacility(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("laf_facility_id", String.class) != null) {
+                        if (rr.getColumn("lafo_facility_id", String.class) != null) {
                             p.getRelLocatedAtFacility()
                                     .add(rr.getRow(Facility.class));
                         }
@@ -292,7 +303,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "lafl")
+        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "laflo")
         default Map<String, FixedAsset> chainLocatedAtFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "lafl")
+        @RegisterBeanMapper(value = FacilityLocation.class, prefix = "laflo")
         default Map<String, FixedAsset> chainLocatedAtFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("lafl_facility_id", String.class) != null) {
+                        if (rr.getColumn("laflo_facility_id", String.class) != null) {
                             p.getRelLocatedAtFacilityLocation()
                                     .add(rr.getRow(FacilityLocation.class));
                         }
@@ -322,7 +333,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, FixedAsset> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, FixedAsset> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("at_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("atm_fixed_asset_id", String.class) != null) {
                             p.getRelAcctgTrans()
                                     .add(rr.getRow(AcctgTrans.class));
                         }
@@ -352,7 +363,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "cfa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "cfam")
         default Map<String, FixedAsset> chainChildFixedAsset(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -360,7 +371,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "cfa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "cfam")
         default Map<String, FixedAsset> chainChildFixedAsset(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -373,7 +384,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("cfa_parent_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("cfam_parent_fixed_asset_id", String.class) != null) {
                             p.getRelChildFixedAsset()
                                     .add(rr.getRow(FixedAsset.class));
                         }
@@ -382,7 +393,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetDepMethod.class, prefix = "fadm")
+        @RegisterBeanMapper(value = FixedAssetDepMethod.class, prefix = "fadmm")
         default Map<String, FixedAsset> chainFixedAssetDepMethod(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -390,7 +401,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetDepMethod.class, prefix = "fadm")
+        @RegisterBeanMapper(value = FixedAssetDepMethod.class, prefix = "fadmm")
         default Map<String, FixedAsset> chainFixedAssetDepMethod(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -403,7 +414,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("fadm_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("fadmm_fixed_asset_id", String.class) != null) {
                             p.getRelFixedAssetDepMethod()
                                     .add(rr.getRow(FixedAssetDepMethod.class));
                         }
@@ -412,7 +423,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetGeoPoint.class, prefix = "fagp")
+        @RegisterBeanMapper(value = FixedAssetGeoPoint.class, prefix = "fagpm")
         default Map<String, FixedAsset> chainFixedAssetGeoPoint(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -420,7 +431,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetGeoPoint.class, prefix = "fagp")
+        @RegisterBeanMapper(value = FixedAssetGeoPoint.class, prefix = "fagpm")
         default Map<String, FixedAsset> chainFixedAssetGeoPoint(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -433,7 +444,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("fagp_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("fagpm_fixed_asset_id", String.class) != null) {
                             p.getRelFixedAssetGeoPoint()
                                     .add(rr.getRow(FixedAssetGeoPoint.class));
                         }
@@ -442,7 +453,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetProduct.class, prefix = "fap")
+        @RegisterBeanMapper(value = FixedAssetProduct.class, prefix = "fapm")
         default Map<String, FixedAsset> chainFixedAssetProduct(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -450,7 +461,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetProduct.class, prefix = "fap")
+        @RegisterBeanMapper(value = FixedAssetProduct.class, prefix = "fapm")
         default Map<String, FixedAsset> chainFixedAssetProduct(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -463,7 +474,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("fap_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("fapm_fixed_asset_id", String.class) != null) {
                             p.getRelFixedAssetProduct()
                                     .add(rr.getRow(FixedAssetProduct.class));
                         }
@@ -472,7 +483,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "far")
+        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "farm")
         default Map<String, FixedAsset> chainFixedAssetRegistration(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -480,7 +491,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "far")
+        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "farm")
         default Map<String, FixedAsset> chainFixedAssetRegistration(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -493,7 +504,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("far_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("farm_fixed_asset_id", String.class) != null) {
                             p.getRelFixedAssetRegistration()
                                     .add(rr.getRow(FixedAssetRegistration.class));
                         }
@@ -502,7 +513,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetStdCost.class, prefix = "fasc")
+        @RegisterBeanMapper(value = FixedAssetStdCost.class, prefix = "fascm")
         default Map<String, FixedAsset> chainFixedAssetStdCost(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -510,7 +521,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = FixedAssetStdCost.class, prefix = "fasc")
+        @RegisterBeanMapper(value = FixedAssetStdCost.class, prefix = "fascm")
         default Map<String, FixedAsset> chainFixedAssetStdCost(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -523,7 +534,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("fasc_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("fascm_fixed_asset_id", String.class) != null) {
                             p.getRelFixedAssetStdCost()
                                     .add(rr.getRow(FixedAssetStdCost.class));
                         }
@@ -532,7 +543,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = InventoryItem.class, prefix = "faii")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "faiim")
         default Map<String, FixedAsset> chainFixedAssetInventoryItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -540,7 +551,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = InventoryItem.class, prefix = "faii")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "faiim")
         default Map<String, FixedAsset> chainFixedAssetInventoryItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -553,7 +564,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("faii_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("faiim_fixed_asset_id", String.class) != null) {
                             p.getRelFixedAssetInventoryItem()
                                     .add(rr.getRow(InventoryItem.class));
                         }
@@ -562,7 +573,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "wem")
         default Map<String, FixedAsset> chainWorkEffort(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -570,7 +581,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "wem")
         default Map<String, FixedAsset> chainWorkEffort(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -583,7 +594,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("we_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("wem_fixed_asset_id", String.class) != null) {
                             p.getRelWorkEffort()
                                     .add(rr.getRow(WorkEffort.class));
                         }
@@ -592,7 +603,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaa")
+        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaam")
         default Map<String, FixedAsset> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -600,7 +611,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaa")
+        @RegisterBeanMapper(value = WorkEffortFixedAssetAssign.class, prefix = "wefaam")
         default Map<String, FixedAsset> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -613,7 +624,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("wefaa_fixed_asset_id", String.class) != null) {
+                        if (rr.getColumn("wefaam_fixed_asset_id", String.class) != null) {
                             p.getRelWorkEffortFixedAssetAssign()
                                     .add(rr.getRow(WorkEffortFixedAssetAssign.class));
                         }
@@ -622,7 +633,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, FixedAsset> chainTenant(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
@@ -630,7 +641,7 @@ public class FixedAssetDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, FixedAsset> chainTenant(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
@@ -643,7 +654,7 @@ public class FixedAssetDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -1044,6 +1055,16 @@ public class FixedAssetDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, fixedAsset.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "FixedAsset", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

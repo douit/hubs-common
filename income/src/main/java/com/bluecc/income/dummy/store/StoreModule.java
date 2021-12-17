@@ -49,10 +49,12 @@ public class StoreModule extends AbstractFacModule {
     }
 
     public static Injector startup(){
-        return Guice.createInjector(new StoreModule());
+        return startup("default");
     }
+
     public static Injector startup(String tenant){
-        return Guice.createInjector(new StoreModule(tenant));
+        return Guice.createInjector(new StoreModule(tenant),
+                new DelegatorsPluginModule());
     }
 
     public static <T> T startup(Class<T> clz){
@@ -60,7 +62,7 @@ public class StoreModule extends AbstractFacModule {
     }
 
     public static <T> T startup(String tenant, Class<T> clz){
-        return startup().getInstance(clz);
+        return startup(tenant).getInstance(clz);
     }
 }
 

@@ -1,7 +1,12 @@
 package com.bluecc.income.exchange;
 
+import com.bluecc.hubs.ProtoTypes;
+import com.bluecc.hubs.fund.model.WithSuppliers;
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.EntityValue;
 import com.google.common.collect.Maps;
 import com.google.gson.annotations.SerializedName;
+import com.google.protobuf.Message;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -11,6 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 public final class ModelSerializer {
+    public static EntityValue toEntityValue(Object bean){
+        return EntityValue.newBuilder()
+                .setEntityType(bean.getClass().getSimpleName())
+                .putAllValues(ModelSerializer.toStringMap(bean))
+                .build();
+    }
+
     public static Map<String, String> toStringMap(Object o){
         MethodHandles.Lookup lookup = MethodHandles.lookup();
         Field[] fields = o.getClass().getDeclaredFields();
@@ -36,4 +48,26 @@ public final class ModelSerializer {
         }
         return resultMap;
     }
+
+
+    public static EntityValue getEntityValue(WithSuppliers e) {
+        EntityValue.Builder valBuilder = EntityValue.newBuilder()
+                .setEntityType(e.getClass().getSimpleName())
+                .putAllValues(ModelSerializer.toStringMap(e));
+        // Printers.printChildren(e);
+        e.suppliers().forEach((k, v) -> {
+            List<?> values = v.get();
+
+            if (!values.isEmpty()) {
+                EntityBucket.Builder bucket = EntityBucket.newBuilder();
+                values.forEach(row -> {
+                    bucket.addValues(ModelSerializer.toEntityValue(row));
+                });
+                valBuilder.putBuckets(k, bucket.build());
+            }
+
+        });
+        return valBuilder.build();
+    }
+
 }

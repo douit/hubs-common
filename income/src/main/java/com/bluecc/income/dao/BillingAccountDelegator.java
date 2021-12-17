@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.BillingAccountData;
 
-public class BillingAccountDelegator extends AbstractProcs{
+public class BillingAccountDelegator extends AbstractProcs implements IChainQuery<BillingAccount>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(BillingAccount.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = ContactMech.class, prefix = "cm")
+        @RegisterBeanMapper(value = ContactMech.class, prefix = "cmo")
         default Map<String, BillingAccount> chainContactMech(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = ContactMech.class, prefix = "cm")
+        @RegisterBeanMapper(value = ContactMech.class, prefix = "cmo")
         default Map<String, BillingAccount> chainContactMech(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class BillingAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
-                        if (rr.getColumn("cm_contact_mech_id", String.class) != null) {
+                        if (rr.getColumn("cmo_contact_mech_id", String.class) != null) {
                             p.getRelContactMech()
                                     .add(rr.getRow(ContactMech.class));
                         }
@@ -82,7 +93,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = PostalAddress.class, prefix = "pa")
+        @RegisterBeanMapper(value = PostalAddress.class, prefix = "pao")
         default Map<String, BillingAccount> chainPostalAddress(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = PostalAddress.class, prefix = "pa")
+        @RegisterBeanMapper(value = PostalAddress.class, prefix = "pao")
         default Map<String, BillingAccount> chainPostalAddress(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class BillingAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
-                        if (rr.getColumn("pa_contact_mech_id", String.class) != null) {
+                        if (rr.getColumn("pao_contact_mech_id", String.class) != null) {
                             p.getRelPostalAddress()
                                     .add(rr.getRow(PostalAddress.class));
                         }
@@ -112,7 +123,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = BillingAccountRole.class, prefix = "bar")
+        @RegisterBeanMapper(value = BillingAccountRole.class, prefix = "barm")
         default Map<String, BillingAccount> chainBillingAccountRole(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = BillingAccountRole.class, prefix = "bar")
+        @RegisterBeanMapper(value = BillingAccountRole.class, prefix = "barm")
         default Map<String, BillingAccount> chainBillingAccountRole(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class BillingAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
-                        if (rr.getColumn("bar_billing_account_id", String.class) != null) {
+                        if (rr.getColumn("barm_billing_account_id", String.class) != null) {
                             p.getRelBillingAccountRole()
                                     .add(rr.getRow(BillingAccountRole.class));
                         }
@@ -142,7 +153,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = Invoice.class, prefix = "inzm")
         default Map<String, BillingAccount> chainInvoice(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = Invoice.class, prefix = "inzm")
         default Map<String, BillingAccount> chainInvoice(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class BillingAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
-                        if (rr.getColumn("in_billing_account_id", String.class) != null) {
+                        if (rr.getColumn("inzm_billing_account_id", String.class) != null) {
                             p.getRelInvoice()
                                     .add(rr.getRow(Invoice.class));
                         }
@@ -172,7 +183,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "ohm")
         default Map<String, BillingAccount> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "ohm")
         default Map<String, BillingAccount> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class BillingAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
-                        if (rr.getColumn("oh_billing_account_id", String.class) != null) {
+                        if (rr.getColumn("ohm_billing_account_id", String.class) != null) {
                             p.getRelOrderHeader()
                                     .add(rr.getRow(OrderHeader.class));
                         }
@@ -202,7 +213,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "pam")
         default Map<String, BillingAccount> chainPaymentApplication(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "pa")
+        @RegisterBeanMapper(value = PaymentApplication.class, prefix = "pam")
         default Map<String, BillingAccount> chainPaymentApplication(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class BillingAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
-                        if (rr.getColumn("pa_billing_account_id", String.class) != null) {
+                        if (rr.getColumn("pam_billing_account_id", String.class) != null) {
                             p.getRelPaymentApplication()
                                     .add(rr.getRow(PaymentApplication.class));
                         }
@@ -232,7 +243,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, BillingAccount> chainTenant(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class BillingAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, BillingAccount> chainTenant(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class BillingAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -433,6 +444,16 @@ public class BillingAccountDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, billingAccount.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "BillingAccount", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

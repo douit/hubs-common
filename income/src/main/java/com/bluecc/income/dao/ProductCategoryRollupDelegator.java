@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.ProductCategoryRollupData;
 
-public class ProductCategoryRollupDelegator extends AbstractProcs{
+public class ProductCategoryRollupDelegator extends AbstractProcs implements IChainQuery<ProductCategoryRollup>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(ProductCategoryRollup.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategory.class, prefix = "cpc")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "cpco")
         default Map<String, ProductCategoryRollup> chainCurrentProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategory.class, prefix = "cpc")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "cpco")
         default Map<String, ProductCategoryRollup> chainCurrentProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
-                        if (rr.getColumn("cpc_product_category_id", String.class) != null) {
+                        if (rr.getColumn("cpco_product_category_id", String.class) != null) {
                             p.getRelCurrentProductCategory()
                                     .add(rr.getRow(ProductCategory.class));
                         }
@@ -82,7 +93,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategory.class, prefix = "ppc")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "ppco")
         default Map<String, ProductCategoryRollup> chainParentProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategory.class, prefix = "ppc")
+        @RegisterBeanMapper(value = ProductCategory.class, prefix = "ppco")
         default Map<String, ProductCategoryRollup> chainParentProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
-                        if (rr.getColumn("ppc_product_category_id", String.class) != null) {
+                        if (rr.getColumn("ppco_product_category_id", String.class) != null) {
                             p.getRelParentProductCategory()
                                     .add(rr.getRow(ProductCategory.class));
                         }
@@ -112,7 +123,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "cpcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "cpcrm")
         default Map<String, ProductCategoryRollup> chainChildProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "cpcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "cpcrm")
         default Map<String, ProductCategoryRollup> chainChildProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
-                        if (rr.getColumn("cpcr_parent_product_category_id", String.class) != null) {
+                        if (rr.getColumn("cpcrm_parent_product_category_id", String.class) != null) {
                             p.getRelChildProductCategoryRollup()
                                     .add(rr.getRow(ProductCategoryRollup.class));
                         }
@@ -142,7 +153,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "ppcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "ppcrm")
         default Map<String, ProductCategoryRollup> chainParentProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "ppcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "ppcrm")
         default Map<String, ProductCategoryRollup> chainParentProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
-                        if (rr.getColumn("ppcr_product_category_id", String.class) != null) {
+                        if (rr.getColumn("ppcrm_product_category_id", String.class) != null) {
                             p.getRelParentProductCategoryRollup()
                                     .add(rr.getRow(ProductCategoryRollup.class));
                         }
@@ -172,7 +183,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "spcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "spcrm")
         default Map<String, ProductCategoryRollup> chainSiblingProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "spcr")
+        @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "spcrm")
         default Map<String, ProductCategoryRollup> chainSiblingProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
-                        if (rr.getColumn("spcr_parent_product_category_id", String.class) != null) {
+                        if (rr.getColumn("spcrm_parent_product_category_id", String.class) != null) {
                             p.getRelSiblingProductCategoryRollup()
                                     .add(rr.getRow(ProductCategoryRollup.class));
                         }
@@ -202,7 +213,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, ProductCategoryRollup> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, ProductCategoryRollup> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -386,6 +397,16 @@ public class ProductCategoryRollupDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, productCategoryRollup.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "ProductCategoryRollup", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

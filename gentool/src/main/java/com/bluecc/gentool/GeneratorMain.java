@@ -37,6 +37,9 @@ public class GeneratorMain {
         System.out.println("* rpc");
         RpcGenTool.startGen();
 
+        System.out.println("* profiles");
+        GenProfile.startGen();
+
         // reimportSql("hubs");
     }
 

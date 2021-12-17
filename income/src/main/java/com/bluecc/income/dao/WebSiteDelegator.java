@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.WebSiteData;
 
-public class WebSiteDelegator extends AbstractProcs{
+public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSite>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(WebSite.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class WebSiteDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "pso")
         default Map<String, WebSite> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "pso")
         default Map<String, WebSite> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class WebSiteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
-                        if (rr.getColumn("ps_product_store_id", String.class) != null) {
+                        if (rr.getColumn("pso_product_store_id", String.class) != null) {
                             p.getRelProductStore()
                                     .add(rr.getRow(ProductStore.class));
                         }
@@ -82,7 +93,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ec")
+        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ecm")
         default Map<String, WebSite> chainEbayConfig(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ec")
+        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ecm")
         default Map<String, WebSite> chainEbayConfig(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class WebSiteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
-                        if (rr.getColumn("ec_web_site_id", String.class) != null) {
+                        if (rr.getColumn("ecm_web_site_id", String.class) != null) {
                             p.getRelEbayConfig()
                                     .add(rr.getRow(EbayConfig.class));
                         }
@@ -112,7 +123,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "ohm")
         default Map<String, WebSite> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "ohm")
         default Map<String, WebSite> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class WebSiteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
-                        if (rr.getColumn("oh_web_site_id", String.class) != null) {
+                        if (rr.getColumn("ohm_web_site_id", String.class) != null) {
                             p.getRelOrderHeader()
                                     .add(rr.getRow(OrderHeader.class));
                         }
@@ -142,7 +153,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = SubscriptionResource.class, prefix = "sr")
+        @RegisterBeanMapper(value = SubscriptionResource.class, prefix = "srm")
         default Map<String, WebSite> chainSubscriptionResource(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = SubscriptionResource.class, prefix = "sr")
+        @RegisterBeanMapper(value = SubscriptionResource.class, prefix = "srm")
         default Map<String, WebSite> chainSubscriptionResource(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class WebSiteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
-                        if (rr.getColumn("sr_web_site_id", String.class) != null) {
+                        if (rr.getColumn("srm_web_site_id", String.class) != null) {
                             p.getRelSubscriptionResource()
                                     .add(rr.getRow(SubscriptionResource.class));
                         }
@@ -172,7 +183,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = WebAnalyticsConfig.class, prefix = "wac")
+        @RegisterBeanMapper(value = WebAnalyticsConfig.class, prefix = "wacm")
         default Map<String, WebSite> chainWebAnalyticsConfig(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = WebAnalyticsConfig.class, prefix = "wac")
+        @RegisterBeanMapper(value = WebAnalyticsConfig.class, prefix = "wacm")
         default Map<String, WebSite> chainWebAnalyticsConfig(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class WebSiteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
-                        if (rr.getColumn("wac_web_site_id", String.class) != null) {
+                        if (rr.getColumn("wacm_web_site_id", String.class) != null) {
                             p.getRelWebAnalyticsConfig()
                                     .add(rr.getRow(WebAnalyticsConfig.class));
                         }
@@ -202,7 +213,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = WebSiteContent.class, prefix = "wsc")
+        @RegisterBeanMapper(value = WebSiteContent.class, prefix = "wscm")
         default Map<String, WebSite> chainWebSiteContent(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = WebSiteContent.class, prefix = "wsc")
+        @RegisterBeanMapper(value = WebSiteContent.class, prefix = "wscm")
         default Map<String, WebSite> chainWebSiteContent(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class WebSiteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
-                        if (rr.getColumn("wsc_web_site_id", String.class) != null) {
+                        if (rr.getColumn("wscm_web_site_id", String.class) != null) {
                             p.getRelWebSiteContent()
                                     .add(rr.getRow(WebSiteContent.class));
                         }
@@ -232,7 +243,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, WebSite> chainTenant(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class WebSiteDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, WebSite> chainTenant(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class WebSiteDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -433,6 +444,16 @@ public class WebSiteDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, webSite.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "WebSite", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

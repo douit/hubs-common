@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.OrderItemData;
 
-public class OrderItemDelegator extends AbstractProcs{
+public class OrderItemDelegator extends AbstractProcs implements IChainQuery<OrderItem>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(OrderItem.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class OrderItemDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oho")
         default Map<String, OrderItem> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oho")
         default Map<String, OrderItem> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("oh_order_id", String.class) != null) {
+                        if (rr.getColumn("oho_order_id", String.class) != null) {
                             p.getRelOrderHeader()
                                     .add(rr.getRow(OrderHeader.class));
                         }
@@ -82,7 +93,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Product.class, prefix = "pro")
         default Map<String, OrderItem> chainProduct(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Product.class, prefix = "pro")
         default Map<String, OrderItem> chainProduct(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("pr_product_id", String.class) != null) {
+                        if (rr.getColumn("pro_product_id", String.class) != null) {
                             p.getRelProduct()
                                     .add(rr.getRow(Product.class));
                         }
@@ -112,7 +123,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = InventoryItem.class, prefix = "fii")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "fiio")
         default Map<String, OrderItem> chainFromInventoryItem(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = InventoryItem.class, prefix = "fii")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "fiio")
         default Map<String, OrderItem> chainFromInventoryItem(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("fii_inventory_item_id", String.class) != null) {
+                        if (rr.getColumn("fiio_inventory_item_id", String.class) != null) {
                             p.getRelFromInventoryItem()
                                     .add(rr.getRow(InventoryItem.class));
                         }
@@ -142,7 +153,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pfl")
+        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pflm")
         default Map<String, OrderItem> chainProductFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pfl")
+        @RegisterBeanMapper(value = ProductFacilityLocation.class, prefix = "pflm")
         default Map<String, OrderItem> chainProductFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("pfl_product_id", String.class) != null) {
+                        if (rr.getColumn("pflm_product_id", String.class) != null) {
                             p.getRelProductFacilityLocation()
                                     .add(rr.getRow(ProductFacilityLocation.class));
                         }
@@ -172,7 +183,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "dcsul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "dcsulo")
         default Map<String, OrderItem> chainDontCancelSetUserLogin(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "dcsul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "dcsulo")
         default Map<String, OrderItem> chainDontCancelSetUserLogin(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("dcsul_user_login_id", String.class) != null) {
+                        if (rr.getColumn("dcsulo_user_login_id", String.class) != null) {
                             p.getRelDontCancelSetUserLogin()
                                     .add(rr.getRow(UserLogin.class));
                         }
@@ -202,7 +213,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qi")
+        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qio")
         default Map<String, OrderItem> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qi")
+        @RegisterBeanMapper(value = QuoteItem.class, prefix = "qio")
         default Map<String, OrderItem> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("qi_quote_id", String.class) != null) {
+                        if (rr.getColumn("qio_quote_id", String.class) != null) {
                             p.getRelQuoteItem()
                                     .add(rr.getRow(QuoteItem.class));
                         }
@@ -232,7 +243,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = GlAccount.class, prefix = "oga")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "ogao")
         default Map<String, OrderItem> chainOverrideGlAccount(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = GlAccount.class, prefix = "oga")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "ogao")
         default Map<String, OrderItem> chainOverrideGlAccount(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("oga_gl_account_id", String.class) != null) {
+                        if (rr.getColumn("ogao_gl_account_id", String.class) != null) {
                             p.getRelOverrideGlAccount()
                                     .add(rr.getRow(GlAccount.class));
                         }
@@ -262,7 +273,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbulo")
         default Map<String, OrderItem> chainChangeByUserLogin(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbulo")
         default Map<String, OrderItem> chainChangeByUserLogin(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("cbul_user_login_id", String.class) != null) {
+                        if (rr.getColumn("cbulo_user_login_id", String.class) != null) {
                             p.getRelChangeByUserLogin()
                                     .add(rr.getRow(UserLogin.class));
                         }
@@ -292,7 +303,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fatm")
         default Map<String, OrderItem> chainFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fatm")
         default Map<String, OrderItem> chainFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("fat_order_id", String.class) != null) {
+                        if (rr.getColumn("fatm_order_id", String.class) != null) {
                             p.getRelFinAccountTrans()
                                     .add(rr.getRow(FinAccountTrans.class));
                         }
@@ -322,7 +333,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "afa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "afam")
         default Map<String, OrderItem> chainAcquireFixedAsset(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "afa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "afam")
         default Map<String, OrderItem> chainAcquireFixedAsset(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("afa_acquire_order_id", String.class) != null) {
+                        if (rr.getColumn("afam_acquire_order_id", String.class) != null) {
                             p.getRelAcquireFixedAsset()
                                     .add(rr.getRow(FixedAsset.class));
                         }
@@ -352,7 +363,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "iim")
         default Map<String, OrderItem> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -360,7 +371,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "iim")
         default Map<String, OrderItem> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -373,7 +384,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("ii_order_id", String.class) != null) {
+                        if (rr.getColumn("iim_order_id", String.class) != null) {
                             p.getRelItemIssuance()
                                     .add(rr.getRow(ItemIssuance.class));
                         }
@@ -382,7 +393,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oa")
+        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oam")
         default Map<String, OrderItem> chainOrderAdjustment(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -390,7 +401,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oa")
+        @RegisterBeanMapper(value = OrderAdjustment.class, prefix = "oam")
         default Map<String, OrderItem> chainOrderAdjustment(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -403,7 +414,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("oa_order_id", String.class) != null) {
+                        if (rr.getColumn("oam_order_id", String.class) != null) {
                             p.getRelOrderAdjustment()
                                     .add(rr.getRow(OrderAdjustment.class));
                         }
@@ -412,7 +423,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderItemBilling.class, prefix = "oib")
+        @RegisterBeanMapper(value = OrderItemBilling.class, prefix = "oibm")
         default Map<String, OrderItem> chainOrderItemBilling(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -420,7 +431,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderItemBilling.class, prefix = "oib")
+        @RegisterBeanMapper(value = OrderItemBilling.class, prefix = "oibm")
         default Map<String, OrderItem> chainOrderItemBilling(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -433,7 +444,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("oib_order_id", String.class) != null) {
+                        if (rr.getColumn("oibm_order_id", String.class) != null) {
                             p.getRelOrderItemBilling()
                                     .add(rr.getRow(OrderItemBilling.class));
                         }
@@ -442,7 +453,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderItemPriceInfo.class, prefix = "oipi")
+        @RegisterBeanMapper(value = OrderItemPriceInfo.class, prefix = "oipim")
         default Map<String, OrderItem> chainOrderItemPriceInfo(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -450,7 +461,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderItemPriceInfo.class, prefix = "oipi")
+        @RegisterBeanMapper(value = OrderItemPriceInfo.class, prefix = "oipim")
         default Map<String, OrderItem> chainOrderItemPriceInfo(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -463,7 +474,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("oipi_order_id", String.class) != null) {
+                        if (rr.getColumn("oipim_order_id", String.class) != null) {
                             p.getRelOrderItemPriceInfo()
                                     .add(rr.getRow(OrderItemPriceInfo.class));
                         }
@@ -472,7 +483,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderItemShipGroupAssoc.class, prefix = "oisga")
+        @RegisterBeanMapper(value = OrderItemShipGroupAssoc.class, prefix = "oisgam")
         default Map<String, OrderItem> chainOrderItemShipGroupAssoc(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -480,7 +491,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderItemShipGroupAssoc.class, prefix = "oisga")
+        @RegisterBeanMapper(value = OrderItemShipGroupAssoc.class, prefix = "oisgam")
         default Map<String, OrderItem> chainOrderItemShipGroupAssoc(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -493,7 +504,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("oisga_order_id", String.class) != null) {
+                        if (rr.getColumn("oisgam_order_id", String.class) != null) {
                             p.getRelOrderItemShipGroupAssoc()
                                     .add(rr.getRow(OrderItemShipGroupAssoc.class));
                         }
@@ -502,7 +513,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgir")
+        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgirm")
         default Map<String, OrderItem> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -510,7 +521,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgir")
+        @RegisterBeanMapper(value = OrderItemShipGrpInvRes.class, prefix = "oisgirm")
         default Map<String, OrderItem> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -523,7 +534,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("oisgir_order_id", String.class) != null) {
+                        if (rr.getColumn("oisgirm_order_id", String.class) != null) {
                             p.getRelOrderItemShipGrpInvRes()
                                     .add(rr.getRow(OrderItemShipGrpInvRes.class));
                         }
@@ -532,7 +543,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "oppm")
         default Map<String, OrderItem> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -540,7 +551,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "oppm")
         default Map<String, OrderItem> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -553,7 +564,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("opp_order_id", String.class) != null) {
+                        if (rr.getColumn("oppm_order_id", String.class) != null) {
                             p.getRelOrderPaymentPreference()
                                     .add(rr.getRow(OrderPaymentPreference.class));
                         }
@@ -562,7 +573,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderStatus.class, prefix = "os")
+        @RegisterBeanMapper(value = OrderStatus.class, prefix = "osm")
         default Map<String, OrderItem> chainOrderStatus(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -570,7 +581,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = OrderStatus.class, prefix = "os")
+        @RegisterBeanMapper(value = OrderStatus.class, prefix = "osm")
         default Map<String, OrderItem> chainOrderStatus(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -583,7 +594,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("os_order_id", String.class) != null) {
+                        if (rr.getColumn("osm_order_id", String.class) != null) {
                             p.getRelOrderStatus()
                                     .add(rr.getRow(OrderStatus.class));
                         }
@@ -592,7 +603,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, OrderItem> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -600,7 +611,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, OrderItem> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -613,7 +624,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("sr_order_id", String.class) != null) {
+                        if (rr.getColumn("srm_order_id", String.class) != null) {
                             p.getRelShipmentReceipt()
                                     .add(rr.getRow(ShipmentReceipt.class));
                         }
@@ -622,7 +633,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, OrderItem> chainTenant(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                boolean succInvoke) {
@@ -630,7 +641,7 @@ public class OrderItemDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, OrderItem> chainTenant(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
                                                String whereClause,
@@ -643,7 +654,7 @@ public class OrderItemDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
                                 id -> rr.getRow(OrderItem.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -1044,6 +1055,16 @@ public class OrderItemDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, orderItem.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "OrderItem", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

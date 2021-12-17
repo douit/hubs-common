@@ -34,17 +34,17 @@ relationMarks:
   entityName: ProductStoreCatalog
   name: ProductStoreCatalog
   relationType: many
-  tags: [skip]
+  tags: [normal]
 - bindFields: [productStoreId]
   entityName: ProductStoreEmailSetting
   name: ProductStoreEmailSetting
   relationType: many
-  tags: [skip]
+  tags: [normal]
 - bindFields: [productStoreId]
   entityName: ProductStoreFacility
   name: ProductStoreFacility
   relationType: many
-  tags: [skip]
+  tags: [normal]
 - bindFields: [productStoreId]
   entityName: ProductStoreFinActSetting
   name: ProductStoreFinActSetting
@@ -59,7 +59,7 @@ relationMarks:
   entityName: ProductStorePaymentSetting
   name: ProductStorePaymentSetting
   relationType: many
-  tags: [skip]
+  tags: [normal]
 - bindFields: [productStoreId]
   entityName: ProductStorePromoAppl
   name: ProductStorePromoAppl
@@ -69,7 +69,7 @@ relationMarks:
   entityName: ProductStoreRole
   name: ProductStoreRole
   relationType: many
-  tags: [skip]
+  tags: [normal]
 - bindFields: [productStoreId]
   entityName: ProductStoreSurveyAppl
   name: ProductStoreSurveyAppl
@@ -99,4 +99,4 @@ relationMarks:
   entityName: WebSite
   name: WebSite
   relationType: many
-  tags: [skip]
+  tags: [normal]

@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.ProductStoreData;
 
-public class ProductStoreDelegator extends AbstractProcs{
+public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<ProductStore>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(ProductStore.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fao")
         default Map<String, ProductStore> chainFacility(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = Facility.class, prefix = "fa")
+        @RegisterBeanMapper(value = Facility.class, prefix = "fao")
         default Map<String, ProductStore> chainFacility(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("fa_facility_id", String.class) != null) {
+                        if (rr.getColumn("fao_facility_id", String.class) != null) {
                             p.getRelFacility()
                                     .add(rr.getRow(Facility.class));
                         }
@@ -82,7 +93,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, ProductStore> chainParty(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = Party.class, prefix = "pao")
         default Map<String, ProductStore> chainParty(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("pa_party_id", String.class) != null) {
+                        if (rr.getColumn("pao_party_id", String.class) != null) {
                             p.getRelParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -112,7 +123,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "vta")
+        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "vtao")
         default Map<String, ProductStore> chainVatTaxAuthority(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "vta")
+        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "vtao")
         default Map<String, ProductStore> chainVatTaxAuthority(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("vta_tax_auth_geo_id", String.class) != null) {
+                        if (rr.getColumn("vtao_tax_auth_geo_id", String.class) != null) {
                             p.getRelVatTaxAuthority()
                                     .add(rr.getRow(TaxAuthority.class));
                         }
@@ -142,7 +153,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = CustRequest.class, prefix = "cr")
+        @RegisterBeanMapper(value = CustRequest.class, prefix = "crm")
         default Map<String, ProductStore> chainCustRequest(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = CustRequest.class, prefix = "cr")
+        @RegisterBeanMapper(value = CustRequest.class, prefix = "crm")
         default Map<String, ProductStore> chainCustRequest(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("cr_product_store_id", String.class) != null) {
+                        if (rr.getColumn("crm_product_store_id", String.class) != null) {
                             p.getRelCustRequest()
                                     .add(rr.getRow(CustRequest.class));
                         }
@@ -172,7 +183,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ec")
+        @RegisterBeanMapper(value = EbayConfig.class, prefix = "eco")
         default Map<String, ProductStore> chainEbayConfig(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = EbayConfig.class, prefix = "ec")
+        @RegisterBeanMapper(value = EbayConfig.class, prefix = "eco")
         default Map<String, ProductStore> chainEbayConfig(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("ec_product_store_id", String.class) != null) {
+                        if (rr.getColumn("eco_product_store_id", String.class) != null) {
                             p.getRelEbayConfig()
                                     .add(rr.getRow(EbayConfig.class));
                         }
@@ -202,7 +213,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "ohm")
         default Map<String, ProductStore> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "ohm")
         default Map<String, ProductStore> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("oh_product_store_id", String.class) != null) {
+                        if (rr.getColumn("ohm_product_store_id", String.class) != null) {
                             p.getRelOrderHeader()
                                     .add(rr.getRow(OrderHeader.class));
                         }
@@ -232,7 +243,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductReview.class, prefix = "pr")
+        @RegisterBeanMapper(value = ProductReview.class, prefix = "prm")
         default Map<String, ProductStore> chainProductReview(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductReview.class, prefix = "pr")
+        @RegisterBeanMapper(value = ProductReview.class, prefix = "prm")
         default Map<String, ProductStore> chainProductReview(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("pr_product_store_id", String.class) != null) {
+                        if (rr.getColumn("prm_product_store_id", String.class) != null) {
                             p.getRelProductReview()
                                     .add(rr.getRow(ProductReview.class));
                         }
@@ -262,7 +273,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "psc")
+        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "pscm")
         default Map<String, ProductStore> chainProductStoreCatalog(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "psc")
+        @RegisterBeanMapper(value = ProductStoreCatalog.class, prefix = "pscm")
         default Map<String, ProductStore> chainProductStoreCatalog(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("psc_product_store_id", String.class) != null) {
+                        if (rr.getColumn("pscm_product_store_id", String.class) != null) {
                             p.getRelProductStoreCatalog()
                                     .add(rr.getRow(ProductStoreCatalog.class));
                         }
@@ -292,7 +303,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreEmailSetting.class, prefix = "pses")
+        @RegisterBeanMapper(value = ProductStoreEmailSetting.class, prefix = "psesm")
         default Map<String, ProductStore> chainProductStoreEmailSetting(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreEmailSetting.class, prefix = "pses")
+        @RegisterBeanMapper(value = ProductStoreEmailSetting.class, prefix = "psesm")
         default Map<String, ProductStore> chainProductStoreEmailSetting(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("pses_product_store_id", String.class) != null) {
+                        if (rr.getColumn("psesm_product_store_id", String.class) != null) {
                             p.getRelProductStoreEmailSetting()
                                     .add(rr.getRow(ProductStoreEmailSetting.class));
                         }
@@ -322,7 +333,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psfm")
         default Map<String, ProductStore> chainProductStoreFacility(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
+        @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psfm")
         default Map<String, ProductStore> chainProductStoreFacility(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("psf_product_store_id", String.class) != null) {
+                        if (rr.getColumn("psfm_product_store_id", String.class) != null) {
                             p.getRelProductStoreFacility()
                                     .add(rr.getRow(ProductStoreFacility.class));
                         }
@@ -352,7 +363,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreFinActSetting.class, prefix = "psfas")
+        @RegisterBeanMapper(value = ProductStoreFinActSetting.class, prefix = "psfasm")
         default Map<String, ProductStore> chainProductStoreFinActSetting(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -360,7 +371,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreFinActSetting.class, prefix = "psfas")
+        @RegisterBeanMapper(value = ProductStoreFinActSetting.class, prefix = "psfasm")
         default Map<String, ProductStore> chainProductStoreFinActSetting(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -373,7 +384,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("psfas_product_store_id", String.class) != null) {
+                        if (rr.getColumn("psfasm_product_store_id", String.class) != null) {
                             p.getRelProductStoreFinActSetting()
                                     .add(rr.getRow(ProductStoreFinActSetting.class));
                         }
@@ -382,7 +393,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreKeywordOvrd.class, prefix = "psko")
+        @RegisterBeanMapper(value = ProductStoreKeywordOvrd.class, prefix = "pskom")
         default Map<String, ProductStore> chainProductStoreKeywordOvrd(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -390,7 +401,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreKeywordOvrd.class, prefix = "psko")
+        @RegisterBeanMapper(value = ProductStoreKeywordOvrd.class, prefix = "pskom")
         default Map<String, ProductStore> chainProductStoreKeywordOvrd(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -403,7 +414,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("psko_product_store_id", String.class) != null) {
+                        if (rr.getColumn("pskom_product_store_id", String.class) != null) {
                             p.getRelProductStoreKeywordOvrd()
                                     .add(rr.getRow(ProductStoreKeywordOvrd.class));
                         }
@@ -412,7 +423,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStorePaymentSetting.class, prefix = "psps")
+        @RegisterBeanMapper(value = ProductStorePaymentSetting.class, prefix = "pspsm")
         default Map<String, ProductStore> chainProductStorePaymentSetting(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -420,7 +431,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStorePaymentSetting.class, prefix = "psps")
+        @RegisterBeanMapper(value = ProductStorePaymentSetting.class, prefix = "pspsm")
         default Map<String, ProductStore> chainProductStorePaymentSetting(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -433,7 +444,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("psps_product_store_id", String.class) != null) {
+                        if (rr.getColumn("pspsm_product_store_id", String.class) != null) {
                             p.getRelProductStorePaymentSetting()
                                     .add(rr.getRow(ProductStorePaymentSetting.class));
                         }
@@ -442,7 +453,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStorePromoAppl.class, prefix = "pspa")
+        @RegisterBeanMapper(value = ProductStorePromoAppl.class, prefix = "pspam")
         default Map<String, ProductStore> chainProductStorePromoAppl(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -450,7 +461,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStorePromoAppl.class, prefix = "pspa")
+        @RegisterBeanMapper(value = ProductStorePromoAppl.class, prefix = "pspam")
         default Map<String, ProductStore> chainProductStorePromoAppl(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -463,7 +474,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("pspa_product_store_id", String.class) != null) {
+                        if (rr.getColumn("pspam_product_store_id", String.class) != null) {
                             p.getRelProductStorePromoAppl()
                                     .add(rr.getRow(ProductStorePromoAppl.class));
                         }
@@ -472,7 +483,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psrm")
         default Map<String, ProductStore> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -480,7 +491,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psrm")
         default Map<String, ProductStore> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -493,7 +504,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("psr_product_store_id", String.class) != null) {
+                        if (rr.getColumn("psrm_product_store_id", String.class) != null) {
                             p.getRelProductStoreRole()
                                     .add(rr.getRow(ProductStoreRole.class));
                         }
@@ -502,7 +513,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreSurveyAppl.class, prefix = "pssa")
+        @RegisterBeanMapper(value = ProductStoreSurveyAppl.class, prefix = "pssam")
         default Map<String, ProductStore> chainProductStoreSurveyAppl(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -510,7 +521,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = ProductStoreSurveyAppl.class, prefix = "pssa")
+        @RegisterBeanMapper(value = ProductStoreSurveyAppl.class, prefix = "pssam")
         default Map<String, ProductStore> chainProductStoreSurveyAppl(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -523,7 +534,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("pssa_product_store_id", String.class) != null) {
+                        if (rr.getColumn("pssam_product_store_id", String.class) != null) {
                             p.getRelProductStoreSurveyAppl()
                                     .add(rr.getRow(ProductStoreSurveyAppl.class));
                         }
@@ -532,7 +543,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = Quote.class, prefix = "qum")
         default Map<String, ProductStore> chainQuote(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -540,7 +551,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = Quote.class, prefix = "qum")
         default Map<String, ProductStore> chainQuote(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -553,7 +564,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("qu_product_store_id", String.class) != null) {
+                        if (rr.getColumn("qum_product_store_id", String.class) != null) {
                             p.getRelQuote()
                                     .add(rr.getRow(Quote.class));
                         }
@@ -562,7 +573,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = TaxAuthorityRateProduct.class, prefix = "tarp")
+        @RegisterBeanMapper(value = TaxAuthorityRateProduct.class, prefix = "tarpm")
         default Map<String, ProductStore> chainTaxAuthorityRateProduct(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -570,7 +581,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = TaxAuthorityRateProduct.class, prefix = "tarp")
+        @RegisterBeanMapper(value = TaxAuthorityRateProduct.class, prefix = "tarpm")
         default Map<String, ProductStore> chainTaxAuthorityRateProduct(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -583,7 +594,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("tarp_product_store_id", String.class) != null) {
+                        if (rr.getColumn("tarpm_product_store_id", String.class) != null) {
                             p.getRelTaxAuthorityRateProduct()
                                     .add(rr.getRow(TaxAuthorityRateProduct.class));
                         }
@@ -592,7 +603,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = WebSite.class, prefix = "wsm")
         default Map<String, ProductStore> chainWebSite(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -600,7 +611,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
+        @RegisterBeanMapper(value = WebSite.class, prefix = "wsm")
         default Map<String, ProductStore> chainWebSite(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -613,7 +624,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("ws_product_store_id", String.class) != null) {
+                        if (rr.getColumn("wsm_product_store_id", String.class) != null) {
                             p.getRelWebSite()
                                     .add(rr.getRow(WebSite.class));
                         }
@@ -622,7 +633,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, ProductStore> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                boolean succInvoke) {
@@ -630,7 +641,7 @@ public class ProductStoreDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, ProductStore> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
                                                String whereClause,
@@ -643,7 +654,7 @@ public class ProductStoreDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
                                 id -> rr.getRow(ProductStore.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -1044,6 +1055,16 @@ public class ProductStoreDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, productStore.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "ProductStore", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

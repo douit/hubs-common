@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InspectMeta {
@@ -44,11 +45,11 @@ public class InspectMeta {
          * </pre>
          * @return relation names in snake-case
          */
-        public List<String> getValidRelationNames(){
+        public Set<String> getValidRelationNames(){
             return getRelationMarks().stream()
                     .filter(r -> !r.getTags().contains("skip"))
                     .map(e -> Util.toSnakecase(e.name))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toSet());
         }
     }
 }

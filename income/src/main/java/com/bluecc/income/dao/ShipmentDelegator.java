@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.ShipmentData;
 
-public class ShipmentDelegator extends AbstractProcs{
+public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Shipment>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(Shipment.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class ShipmentDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "eswe")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "esweo")
         default Map<String, Shipment> chainEstimatedShipWorkEffort(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "eswe")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "esweo")
         default Map<String, Shipment> chainEstimatedShipWorkEffort(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("eswe_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("esweo_work_effort_id", String.class) != null) {
                             p.getRelEstimatedShipWorkEffort()
                                     .add(rr.getRow(WorkEffort.class));
                         }
@@ -82,7 +93,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "eawe")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "eaweo")
         default Map<String, Shipment> chainEstimatedArrivalWorkEffort(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = WorkEffort.class, prefix = "eawe")
+        @RegisterBeanMapper(value = WorkEffort.class, prefix = "eaweo")
         default Map<String, Shipment> chainEstimatedArrivalWorkEffort(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("eawe_work_effort_id", String.class) != null) {
+                        if (rr.getColumn("eaweo_work_effort_id", String.class) != null) {
                             p.getRelEstimatedArrivalWorkEffort()
                                     .add(rr.getRow(WorkEffort.class));
                         }
@@ -112,7 +123,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        @RegisterBeanMapper(value = Facility.class, prefix = "ofzo")
         default Map<String, Shipment> chainOriginFacility(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        @RegisterBeanMapper(value = Facility.class, prefix = "ofzo")
         default Map<String, Shipment> chainOriginFacility(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("of_facility_id", String.class) != null) {
+                        if (rr.getColumn("ofzo_facility_id", String.class) != null) {
                             p.getRelOriginFacility()
                                     .add(rr.getRow(Facility.class));
                         }
@@ -142,7 +153,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Facility.class, prefix = "df")
+        @RegisterBeanMapper(value = Facility.class, prefix = "dfo")
         default Map<String, Shipment> chainDestinationFacility(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Facility.class, prefix = "df")
+        @RegisterBeanMapper(value = Facility.class, prefix = "dfo")
         default Map<String, Shipment> chainDestinationFacility(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("df_facility_id", String.class) != null) {
+                        if (rr.getColumn("dfo_facility_id", String.class) != null) {
                             p.getRelDestinationFacility()
                                     .add(rr.getRow(Facility.class));
                         }
@@ -172,7 +183,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ContactMech.class, prefix = "ocm")
+        @RegisterBeanMapper(value = ContactMech.class, prefix = "ocmo")
         default Map<String, Shipment> chainOriginContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ContactMech.class, prefix = "ocm")
+        @RegisterBeanMapper(value = ContactMech.class, prefix = "ocmo")
         default Map<String, Shipment> chainOriginContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("ocm_contact_mech_id", String.class) != null) {
+                        if (rr.getColumn("ocmo_contact_mech_id", String.class) != null) {
                             p.getRelOriginContactMech()
                                     .add(rr.getRow(ContactMech.class));
                         }
@@ -202,7 +213,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ContactMech.class, prefix = "dcm")
+        @RegisterBeanMapper(value = ContactMech.class, prefix = "dcmo")
         default Map<String, Shipment> chainDestContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ContactMech.class, prefix = "dcm")
+        @RegisterBeanMapper(value = ContactMech.class, prefix = "dcmo")
         default Map<String, Shipment> chainDestContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("dcm_contact_mech_id", String.class) != null) {
+                        if (rr.getColumn("dcmo_contact_mech_id", String.class) != null) {
                             p.getRelDestContactMech()
                                     .add(rr.getRow(ContactMech.class));
                         }
@@ -232,7 +243,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = PostalAddress.class, prefix = "opa")
+        @RegisterBeanMapper(value = PostalAddress.class, prefix = "opao")
         default Map<String, Shipment> chainOriginPostalAddress(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = PostalAddress.class, prefix = "opa")
+        @RegisterBeanMapper(value = PostalAddress.class, prefix = "opao")
         default Map<String, Shipment> chainOriginPostalAddress(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("opa_contact_mech_id", String.class) != null) {
+                        if (rr.getColumn("opao_contact_mech_id", String.class) != null) {
                             p.getRelOriginPostalAddress()
                                     .add(rr.getRow(PostalAddress.class));
                         }
@@ -262,7 +273,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = TelecomNumber.class, prefix = "otn")
+        @RegisterBeanMapper(value = TelecomNumber.class, prefix = "otno")
         default Map<String, Shipment> chainOriginTelecomNumber(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = TelecomNumber.class, prefix = "otn")
+        @RegisterBeanMapper(value = TelecomNumber.class, prefix = "otno")
         default Map<String, Shipment> chainOriginTelecomNumber(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("otn_contact_mech_id", String.class) != null) {
+                        if (rr.getColumn("otno_contact_mech_id", String.class) != null) {
                             p.getRelOriginTelecomNumber()
                                     .add(rr.getRow(TelecomNumber.class));
                         }
@@ -292,7 +303,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = PostalAddress.class, prefix = "dpa")
+        @RegisterBeanMapper(value = PostalAddress.class, prefix = "dpao")
         default Map<String, Shipment> chainDestinationPostalAddress(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = PostalAddress.class, prefix = "dpa")
+        @RegisterBeanMapper(value = PostalAddress.class, prefix = "dpao")
         default Map<String, Shipment> chainDestinationPostalAddress(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("dpa_contact_mech_id", String.class) != null) {
+                        if (rr.getColumn("dpao_contact_mech_id", String.class) != null) {
                             p.getRelDestinationPostalAddress()
                                     .add(rr.getRow(PostalAddress.class));
                         }
@@ -322,7 +333,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = TelecomNumber.class, prefix = "dtn")
+        @RegisterBeanMapper(value = TelecomNumber.class, prefix = "dtno")
         default Map<String, Shipment> chainDestinationTelecomNumber(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = TelecomNumber.class, prefix = "dtn")
+        @RegisterBeanMapper(value = TelecomNumber.class, prefix = "dtno")
         default Map<String, Shipment> chainDestinationTelecomNumber(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("dtn_contact_mech_id", String.class) != null) {
+                        if (rr.getColumn("dtno_contact_mech_id", String.class) != null) {
                             p.getRelDestinationTelecomNumber()
                                     .add(rr.getRow(TelecomNumber.class));
                         }
@@ -352,7 +363,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "poh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "poho")
         default Map<String, Shipment> chainPrimaryOrderHeader(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -360,7 +371,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = OrderHeader.class, prefix = "poh")
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "poho")
         default Map<String, Shipment> chainPrimaryOrderHeader(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -373,7 +384,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("poh_order_id", String.class) != null) {
+                        if (rr.getColumn("poho_order_id", String.class) != null) {
                             p.getRelPrimaryOrderHeader()
                                     .add(rr.getRow(OrderHeader.class));
                         }
@@ -382,7 +393,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "poisg")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "poisgo")
         default Map<String, Shipment> chainPrimaryOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -390,7 +401,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "poisg")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "poisgo")
         default Map<String, Shipment> chainPrimaryOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -403,7 +414,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("poisg_order_id", String.class) != null) {
+                        if (rr.getColumn("poisgo_order_id", String.class) != null) {
                             p.getRelPrimaryOrderItemShipGroup()
                                     .add(rr.getRow(OrderItemShipGroup.class));
                         }
@@ -412,7 +423,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Party.class, prefix = "tp")
+        @RegisterBeanMapper(value = Party.class, prefix = "tpo")
         default Map<String, Shipment> chainToParty(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -420,7 +431,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Party.class, prefix = "tp")
+        @RegisterBeanMapper(value = Party.class, prefix = "tpo")
         default Map<String, Shipment> chainToParty(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -433,7 +444,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("tp_party_id", String.class) != null) {
+                        if (rr.getColumn("tpo_party_id", String.class) != null) {
                             p.getRelToParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -442,7 +453,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Person.class, prefix = "tp")
+        @RegisterBeanMapper(value = Person.class, prefix = "tpo")
         default Map<String, Shipment> chainToPerson(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -450,7 +461,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Person.class, prefix = "tp")
+        @RegisterBeanMapper(value = Person.class, prefix = "tpo")
         default Map<String, Shipment> chainToPerson(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -463,7 +474,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("tp_party_id", String.class) != null) {
+                        if (rr.getColumn("tpo_party_id", String.class) != null) {
                             p.getRelToPerson()
                                     .add(rr.getRow(Person.class));
                         }
@@ -472,7 +483,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = PartyGroup.class, prefix = "tpg")
+        @RegisterBeanMapper(value = PartyGroup.class, prefix = "tpgo")
         default Map<String, Shipment> chainToPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -480,7 +491,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = PartyGroup.class, prefix = "tpg")
+        @RegisterBeanMapper(value = PartyGroup.class, prefix = "tpgo")
         default Map<String, Shipment> chainToPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -493,7 +504,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("tpg_party_id", String.class) != null) {
+                        if (rr.getColumn("tpgo_party_id", String.class) != null) {
                             p.getRelToPartyGroup()
                                     .add(rr.getRow(PartyGroup.class));
                         }
@@ -502,7 +513,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Party.class, prefix = "fp")
+        @RegisterBeanMapper(value = Party.class, prefix = "fpo")
         default Map<String, Shipment> chainFromParty(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -510,7 +521,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Party.class, prefix = "fp")
+        @RegisterBeanMapper(value = Party.class, prefix = "fpo")
         default Map<String, Shipment> chainFromParty(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -523,7 +534,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("fp_party_id", String.class) != null) {
+                        if (rr.getColumn("fpo_party_id", String.class) != null) {
                             p.getRelFromParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -532,7 +543,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Person.class, prefix = "fp")
+        @RegisterBeanMapper(value = Person.class, prefix = "fpo")
         default Map<String, Shipment> chainFromPerson(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -540,7 +551,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Person.class, prefix = "fp")
+        @RegisterBeanMapper(value = Person.class, prefix = "fpo")
         default Map<String, Shipment> chainFromPerson(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -553,7 +564,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("fp_party_id", String.class) != null) {
+                        if (rr.getColumn("fpo_party_id", String.class) != null) {
                             p.getRelFromPerson()
                                     .add(rr.getRow(Person.class));
                         }
@@ -562,7 +573,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = PartyGroup.class, prefix = "fpg")
+        @RegisterBeanMapper(value = PartyGroup.class, prefix = "fpgo")
         default Map<String, Shipment> chainFromPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -570,7 +581,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = PartyGroup.class, prefix = "fpg")
+        @RegisterBeanMapper(value = PartyGroup.class, prefix = "fpgo")
         default Map<String, Shipment> chainFromPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -583,7 +594,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("fpg_party_id", String.class) != null) {
+                        if (rr.getColumn("fpgo_party_id", String.class) != null) {
                             p.getRelFromPartyGroup()
                                     .add(rr.getRow(PartyGroup.class));
                         }
@@ -592,7 +603,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, Shipment> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -600,7 +611,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, Shipment> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -613,7 +624,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("at_shipment_id", String.class) != null) {
+                        if (rr.getColumn("atm_shipment_id", String.class) != null) {
                             p.getRelAcctgTrans()
                                     .add(rr.getRow(AcctgTrans.class));
                         }
@@ -622,7 +633,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "iim")
         default Map<String, Shipment> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -630,7 +641,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "ii")
+        @RegisterBeanMapper(value = ItemIssuance.class, prefix = "iim")
         default Map<String, Shipment> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -643,7 +654,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("ii_shipment_id", String.class) != null) {
+                        if (rr.getColumn("iim_shipment_id", String.class) != null) {
                             p.getRelItemIssuance()
                                     .add(rr.getRow(ItemIssuance.class));
                         }
@@ -652,7 +663,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentItem.class, prefix = "si")
+        @RegisterBeanMapper(value = ShipmentItem.class, prefix = "sim")
         default Map<String, Shipment> chainShipmentItem(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -660,7 +671,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentItem.class, prefix = "si")
+        @RegisterBeanMapper(value = ShipmentItem.class, prefix = "sim")
         default Map<String, Shipment> chainShipmentItem(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -673,7 +684,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("si_shipment_id", String.class) != null) {
+                        if (rr.getColumn("sim_shipment_id", String.class) != null) {
                             p.getRelShipmentItem()
                                     .add(rr.getRow(ShipmentItem.class));
                         }
@@ -682,7 +693,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentItemBilling.class, prefix = "sib")
+        @RegisterBeanMapper(value = ShipmentItemBilling.class, prefix = "sibm")
         default Map<String, Shipment> chainShipmentItemBilling(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -690,7 +701,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentItemBilling.class, prefix = "sib")
+        @RegisterBeanMapper(value = ShipmentItemBilling.class, prefix = "sibm")
         default Map<String, Shipment> chainShipmentItemBilling(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -703,7 +714,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("sib_shipment_id", String.class) != null) {
+                        if (rr.getColumn("sibm_shipment_id", String.class) != null) {
                             p.getRelShipmentItemBilling()
                                     .add(rr.getRow(ShipmentItemBilling.class));
                         }
@@ -712,7 +723,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentPackage.class, prefix = "sp")
+        @RegisterBeanMapper(value = ShipmentPackage.class, prefix = "spm")
         default Map<String, Shipment> chainShipmentPackage(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -720,7 +731,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentPackage.class, prefix = "sp")
+        @RegisterBeanMapper(value = ShipmentPackage.class, prefix = "spm")
         default Map<String, Shipment> chainShipmentPackage(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -733,7 +744,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("sp_shipment_id", String.class) != null) {
+                        if (rr.getColumn("spm_shipment_id", String.class) != null) {
                             p.getRelShipmentPackage()
                                     .add(rr.getRow(ShipmentPackage.class));
                         }
@@ -742,7 +753,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentPackageContent.class, prefix = "spc")
+        @RegisterBeanMapper(value = ShipmentPackageContent.class, prefix = "spcm")
         default Map<String, Shipment> chainShipmentPackageContent(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -750,7 +761,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentPackageContent.class, prefix = "spc")
+        @RegisterBeanMapper(value = ShipmentPackageContent.class, prefix = "spcm")
         default Map<String, Shipment> chainShipmentPackageContent(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -763,7 +774,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("spc_shipment_id", String.class) != null) {
+                        if (rr.getColumn("spcm_shipment_id", String.class) != null) {
                             p.getRelShipmentPackageContent()
                                     .add(rr.getRow(ShipmentPackageContent.class));
                         }
@@ -772,7 +783,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentPackageRouteSeg.class, prefix = "sprs")
+        @RegisterBeanMapper(value = ShipmentPackageRouteSeg.class, prefix = "sprsm")
         default Map<String, Shipment> chainShipmentPackageRouteSeg(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -780,7 +791,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentPackageRouteSeg.class, prefix = "sprs")
+        @RegisterBeanMapper(value = ShipmentPackageRouteSeg.class, prefix = "sprsm")
         default Map<String, Shipment> chainShipmentPackageRouteSeg(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -793,7 +804,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("sprs_shipment_id", String.class) != null) {
+                        if (rr.getColumn("sprsm_shipment_id", String.class) != null) {
                             p.getRelShipmentPackageRouteSeg()
                                     .add(rr.getRow(ShipmentPackageRouteSeg.class));
                         }
@@ -802,7 +813,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, Shipment> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -810,7 +821,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "sr")
+        @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, Shipment> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -823,7 +834,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("sr_shipment_id", String.class) != null) {
+                        if (rr.getColumn("srm_shipment_id", String.class) != null) {
                             p.getRelShipmentReceipt()
                                     .add(rr.getRow(ShipmentReceipt.class));
                         }
@@ -832,7 +843,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "srs")
+        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "srsm")
         default Map<String, Shipment> chainShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -840,7 +851,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "srs")
+        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "srsm")
         default Map<String, Shipment> chainShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -853,7 +864,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("srs_shipment_id", String.class) != null) {
+                        if (rr.getColumn("srsm_shipment_id", String.class) != null) {
                             p.getRelShipmentRouteSegment()
                                     .add(rr.getRow(ShipmentRouteSegment.class));
                         }
@@ -862,7 +873,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentStatus.class, prefix = "ss")
+        @RegisterBeanMapper(value = ShipmentStatus.class, prefix = "ssm")
         default Map<String, Shipment> chainShipmentStatus(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -870,7 +881,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = ShipmentStatus.class, prefix = "ss")
+        @RegisterBeanMapper(value = ShipmentStatus.class, prefix = "ssm")
         default Map<String, Shipment> chainShipmentStatus(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -883,7 +894,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("ss_shipment_id", String.class) != null) {
+                        if (rr.getColumn("ssm_shipment_id", String.class) != null) {
                             p.getRelShipmentStatus()
                                     .add(rr.getRow(ShipmentStatus.class));
                         }
@@ -892,7 +903,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, Shipment> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
@@ -900,7 +911,7 @@ public class ShipmentDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, Shipment> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
@@ -913,7 +924,7 @@ public class ShipmentDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -1467,6 +1478,16 @@ public class ShipmentDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, shipment.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "Shipment", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

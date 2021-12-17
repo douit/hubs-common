@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.FinAccountData;
 
-public class FinAccountDelegator extends AbstractProcs{
+public class FinAccountDelegator extends AbstractProcs implements IChainQuery<FinAccount>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(FinAccount.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class FinAccountDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        @RegisterBeanMapper(value = Party.class, prefix = "opo")
         default Map<String, FinAccount> chainOrganizationParty(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        @RegisterBeanMapper(value = Party.class, prefix = "opo")
         default Map<String, FinAccount> chainOrganizationParty(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("op_party_id", String.class) != null) {
+                        if (rr.getColumn("opo_party_id", String.class) != null) {
                             p.getRelOrganizationParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -82,7 +93,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        @RegisterBeanMapper(value = Party.class, prefix = "opo")
         default Map<String, FinAccount> chainOwnerParty(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = Party.class, prefix = "op")
+        @RegisterBeanMapper(value = Party.class, prefix = "opo")
         default Map<String, FinAccount> chainOwnerParty(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("op_party_id", String.class) != null) {
+                        if (rr.getColumn("opo_party_id", String.class) != null) {
                             p.getRelOwnerParty()
                                     .add(rr.getRow(Party.class));
                         }
@@ -112,7 +123,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = GlAccount.class, prefix = "ptga")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "ptgao")
         default Map<String, FinAccount> chainPostToGlAccount(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = GlAccount.class, prefix = "ptga")
+        @RegisterBeanMapper(value = GlAccount.class, prefix = "ptgao")
         default Map<String, FinAccount> chainPostToGlAccount(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("ptga_gl_account_id", String.class) != null) {
+                        if (rr.getColumn("ptgao_gl_account_id", String.class) != null) {
                             p.getRelPostToGlAccount()
                                     .add(rr.getRow(GlAccount.class));
                         }
@@ -142,7 +153,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "rpm")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "rpmo")
         default Map<String, FinAccount> chainReplenishPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "rpm")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "rpmo")
         default Map<String, FinAccount> chainReplenishPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("rpm_payment_method_id", String.class) != null) {
+                        if (rr.getColumn("rpmo_payment_method_id", String.class) != null) {
                             p.getRelReplenishPaymentMethod()
                                     .add(rr.getRow(PaymentMethod.class));
                         }
@@ -172,7 +183,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "far")
+        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "farm")
         default Map<String, FinAccount> chainFinAccountRole(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "far")
+        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "farm")
         default Map<String, FinAccount> chainFinAccountRole(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("far_fin_account_id", String.class) != null) {
+                        if (rr.getColumn("farm_fin_account_id", String.class) != null) {
                             p.getRelFinAccountRole()
                                     .add(rr.getRow(FinAccountRole.class));
                         }
@@ -202,7 +213,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fas")
+        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fasm")
         default Map<String, FinAccount> chainFinAccountStatus(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fas")
+        @RegisterBeanMapper(value = FinAccountStatus.class, prefix = "fasm")
         default Map<String, FinAccount> chainFinAccountStatus(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("fas_fin_account_id", String.class) != null) {
+                        if (rr.getColumn("fasm_fin_account_id", String.class) != null) {
                             p.getRelFinAccountStatus()
                                     .add(rr.getRow(FinAccountStatus.class));
                         }
@@ -232,7 +243,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fatm")
         default Map<String, FinAccount> chainFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fatm")
         default Map<String, FinAccount> chainFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("fat_fin_account_id", String.class) != null) {
+                        if (rr.getColumn("fatm_fin_account_id", String.class) != null) {
                             p.getRelFinAccountTrans()
                                     .add(rr.getRow(FinAccountTrans.class));
                         }
@@ -262,7 +273,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "oppm")
         default Map<String, FinAccount> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "opp")
+        @RegisterBeanMapper(value = OrderPaymentPreference.class, prefix = "oppm")
         default Map<String, FinAccount> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("opp_fin_account_id", String.class) != null) {
+                        if (rr.getColumn("oppm_fin_account_id", String.class) != null) {
                             p.getRelOrderPaymentPreference()
                                     .add(rr.getRow(OrderPaymentPreference.class));
                         }
@@ -292,7 +303,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pmm")
         default Map<String, FinAccount> chainPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pmm")
         default Map<String, FinAccount> chainPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("pm_fin_account_id", String.class) != null) {
+                        if (rr.getColumn("pmm_fin_account_id", String.class) != null) {
                             p.getRelPaymentMethod()
                                     .add(rr.getRow(PaymentMethod.class));
                         }
@@ -322,7 +333,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, FinAccount> chainTenant(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class FinAccountDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, FinAccount> chainTenant(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class FinAccountDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
                                 id -> rr.getRow(FinAccount.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -574,6 +585,16 @@ public class FinAccountDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, finAccount.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "FinAccount", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 

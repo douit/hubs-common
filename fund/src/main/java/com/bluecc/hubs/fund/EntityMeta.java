@@ -112,12 +112,17 @@ public class EntityMeta {
         return prefix;
     }
 
+    static final Set<String> keywords=Sets.newHashSet("in",
+            "with", "of", "and", "or", "not");
     public static String prefix(String constName) {
         String prefix= Arrays.stream(constName.split("_"))
                 .map(s -> s.substring(0, 1))
                 .collect(Collectors.joining());
         if(prefix.length()==1){
             prefix= constName.substring(0,2);
+        }
+        if(keywords.contains(prefix)){
+            prefix=prefix+"z";
         }
         return prefix;
     }
@@ -668,7 +673,7 @@ public class EntityMeta {
             return Util.toSnakecase(name);
         }
         public String getPrefix(){
-            return prefix(getProtoName());
+            return prefix(getProtoName())+type.charAt(0);
         }
 
         public String getVarName(){

@@ -44,6 +44,11 @@ public class ProtoMeta {
         return new SqlMeta(this, getEntityMeta(entityName), succ);
     }
 
+    public List<EntityMeta> getHeadEntities(){
+        return HeadEntityResources.allHeads().stream().map(e -> getEntityMeta(e))
+                .collect(Collectors.toList());
+    }
+
     public EntityMeta.RelationQueryMeta findRelationQueryMeta(String entityName, String relField) {
         List<EntityMeta.RelationQueryMeta> rels = getEntityMeta(entityName).getRelationQueries();
         for (EntityMeta.RelationQueryMeta rel : rels) {

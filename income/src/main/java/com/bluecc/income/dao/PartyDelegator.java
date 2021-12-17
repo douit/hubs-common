@@ -1,11 +1,18 @@
 package com.bluecc.income.dao;
 
+import com.bluecc.hubs.stub.EntityBucket;
+import com.bluecc.hubs.stub.QueryList;
+import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.Buckets;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -15,6 +22,7 @@ import com.google.common.collect.Sets;
 
 import com.bluecc.income.model.*;
 import com.bluecc.income.helper.ModelWrapper;
+import com.bluecc.income.procs.Buckets;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,13 +39,16 @@ import java.util.function.Function;
 import com.google.protobuf.Message;
 import java.util.stream.Collectors;
 import io.grpc.stub.StreamObserver;
+import com.bluecc.income.exchange.IChainQuery;
 
 import com.bluecc.hubs.stub.PartyData;
 
-public class PartyDelegator extends AbstractProcs{
+public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>, IDelegator {
 
     @Inject
     Provider<LiveObjects> liveObjectsProvider;
+    @Inject
+    Provider<Buckets> buckets;
 
     @RegisterBeanMapper(Party.class)
     public interface Dao extends SqlObject{
@@ -52,7 +63,7 @@ public class PartyDelegator extends AbstractProcs{
         // for relations
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbulo")
         default Map<String, Party> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -60,7 +71,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "cbulo")
         default Map<String, Party> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -73,7 +84,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("cbul_user_login_id", String.class) != null) {
+                        if (rr.getColumn("cbulo_user_login_id", String.class) != null) {
                             p.getRelCreatedByUserLogin()
                                     .add(rr.getRow(UserLogin.class));
                         }
@@ -82,7 +93,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "lmbul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "lmbulo")
         default Map<String, Party> chainLastModifiedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -90,7 +101,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "lmbul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "lmbulo")
         default Map<String, Party> chainLastModifiedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -103,7 +114,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("lmbul_user_login_id", String.class) != null) {
+                        if (rr.getColumn("lmbulo_user_login_id", String.class) != null) {
                             p.getRelLastModifiedByUserLogin()
                                     .add(rr.getRow(UserLogin.class));
                         }
@@ -112,7 +123,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, Party> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -120,7 +131,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "at")
+        @RegisterBeanMapper(value = AcctgTrans.class, prefix = "atm")
         default Map<String, Party> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -133,7 +144,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("at_party_id", String.class) != null) {
+                        if (rr.getColumn("atm_party_id", String.class) != null) {
                             p.getRelAcctgTrans()
                                     .add(rr.getRow(AcctgTrans.class));
                         }
@@ -142,7 +153,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "ate")
+        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "atem")
         default Map<String, Party> chainAcctgTransEntry(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -150,7 +161,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "ate")
+        @RegisterBeanMapper(value = AcctgTransEntry.class, prefix = "atem")
         default Map<String, Party> chainAcctgTransEntry(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -163,7 +174,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ate_party_id", String.class) != null) {
+                        if (rr.getColumn("atem_party_id", String.class) != null) {
                             p.getRelAcctgTransEntry()
                                     .add(rr.getRow(AcctgTransEntry.class));
                         }
@@ -172,7 +183,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Agreement.class, prefix = "fa")
+        @RegisterBeanMapper(value = Agreement.class, prefix = "fam")
         default Map<String, Party> chainFromAgreement(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -180,7 +191,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Agreement.class, prefix = "fa")
+        @RegisterBeanMapper(value = Agreement.class, prefix = "fam")
         default Map<String, Party> chainFromAgreement(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -193,7 +204,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fa_party_id_from", String.class) != null) {
+                        if (rr.getColumn("fam_party_id_from", String.class) != null) {
                             p.getRelFromAgreement()
                                     .add(rr.getRow(Agreement.class));
                         }
@@ -202,7 +213,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Agreement.class, prefix = "ta")
+        @RegisterBeanMapper(value = Agreement.class, prefix = "tam")
         default Map<String, Party> chainToAgreement(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -210,7 +221,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Agreement.class, prefix = "ta")
+        @RegisterBeanMapper(value = Agreement.class, prefix = "tam")
         default Map<String, Party> chainToAgreement(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -223,7 +234,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ta_party_id_to", String.class) != null) {
+                        if (rr.getColumn("tam_party_id_to", String.class) != null) {
                             p.getRelToAgreement()
                                     .add(rr.getRow(Agreement.class));
                         }
@@ -232,7 +243,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = BillingAccountRole.class, prefix = "bar")
+        @RegisterBeanMapper(value = BillingAccountRole.class, prefix = "barm")
         default Map<String, Party> chainBillingAccountRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -240,7 +251,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = BillingAccountRole.class, prefix = "bar")
+        @RegisterBeanMapper(value = BillingAccountRole.class, prefix = "barm")
         default Map<String, Party> chainBillingAccountRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -253,7 +264,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("bar_party_id", String.class) != null) {
+                        if (rr.getColumn("barm_party_id", String.class) != null) {
                             p.getRelBillingAccountRole()
                                     .add(rr.getRow(BillingAccountRole.class));
                         }
@@ -262,7 +273,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CarrierShipmentBoxType.class, prefix = "csbt")
+        @RegisterBeanMapper(value = CarrierShipmentBoxType.class, prefix = "csbtm")
         default Map<String, Party> chainCarrierShipmentBoxType(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -270,7 +281,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CarrierShipmentBoxType.class, prefix = "csbt")
+        @RegisterBeanMapper(value = CarrierShipmentBoxType.class, prefix = "csbtm")
         default Map<String, Party> chainCarrierShipmentBoxType(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -283,7 +294,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("csbt_party_id", String.class) != null) {
+                        if (rr.getColumn("csbtm_party_id", String.class) != null) {
                             p.getRelCarrierShipmentBoxType()
                                     .add(rr.getRow(CarrierShipmentBoxType.class));
                         }
@@ -292,7 +303,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CarrierShipmentMethod.class, prefix = "csm")
+        @RegisterBeanMapper(value = CarrierShipmentMethod.class, prefix = "csmm")
         default Map<String, Party> chainCarrierShipmentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -300,7 +311,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CarrierShipmentMethod.class, prefix = "csm")
+        @RegisterBeanMapper(value = CarrierShipmentMethod.class, prefix = "csmm")
         default Map<String, Party> chainCarrierShipmentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -313,7 +324,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("csm_party_id", String.class) != null) {
+                        if (rr.getColumn("csmm_party_id", String.class) != null) {
                             p.getRelCarrierShipmentMethod()
                                     .add(rr.getRow(CarrierShipmentMethod.class));
                         }
@@ -322,7 +333,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CommunicationEvent.class, prefix = "tce")
+        @RegisterBeanMapper(value = CommunicationEvent.class, prefix = "tcem")
         default Map<String, Party> chainToCommunicationEvent(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -330,7 +341,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CommunicationEvent.class, prefix = "tce")
+        @RegisterBeanMapper(value = CommunicationEvent.class, prefix = "tcem")
         default Map<String, Party> chainToCommunicationEvent(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -343,7 +354,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("tce_party_id_to", String.class) != null) {
+                        if (rr.getColumn("tcem_party_id_to", String.class) != null) {
                             p.getRelToCommunicationEvent()
                                     .add(rr.getRow(CommunicationEvent.class));
                         }
@@ -352,7 +363,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CommunicationEvent.class, prefix = "fce")
+        @RegisterBeanMapper(value = CommunicationEvent.class, prefix = "fcem")
         default Map<String, Party> chainFromCommunicationEvent(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -360,7 +371,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CommunicationEvent.class, prefix = "fce")
+        @RegisterBeanMapper(value = CommunicationEvent.class, prefix = "fcem")
         default Map<String, Party> chainFromCommunicationEvent(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -373,7 +384,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fce_party_id_from", String.class) != null) {
+                        if (rr.getColumn("fcem_party_id_from", String.class) != null) {
                             p.getRelFromCommunicationEvent()
                                     .add(rr.getRow(CommunicationEvent.class));
                         }
@@ -382,7 +393,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CommunicationEventRole.class, prefix = "cer")
+        @RegisterBeanMapper(value = CommunicationEventRole.class, prefix = "cerm")
         default Map<String, Party> chainCommunicationEventRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -390,7 +401,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CommunicationEventRole.class, prefix = "cer")
+        @RegisterBeanMapper(value = CommunicationEventRole.class, prefix = "cerm")
         default Map<String, Party> chainCommunicationEventRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -403,7 +414,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("cer_party_id", String.class) != null) {
+                        if (rr.getColumn("cerm_party_id", String.class) != null) {
                             p.getRelCommunicationEventRole()
                                     .add(rr.getRow(CommunicationEventRole.class));
                         }
@@ -412,7 +423,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ContentRole.class, prefix = "cr")
+        @RegisterBeanMapper(value = ContentRole.class, prefix = "crm")
         default Map<String, Party> chainContentRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -420,7 +431,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ContentRole.class, prefix = "cr")
+        @RegisterBeanMapper(value = ContentRole.class, prefix = "crm")
         default Map<String, Party> chainContentRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -433,7 +444,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("cr_party_id", String.class) != null) {
+                        if (rr.getColumn("crm_party_id", String.class) != null) {
                             p.getRelContentRole()
                                     .add(rr.getRow(ContentRole.class));
                         }
@@ -442,7 +453,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CustRequest.class, prefix = "fcr")
+        @RegisterBeanMapper(value = CustRequest.class, prefix = "fcrm")
         default Map<String, Party> chainFromCustRequest(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -450,7 +461,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CustRequest.class, prefix = "fcr")
+        @RegisterBeanMapper(value = CustRequest.class, prefix = "fcrm")
         default Map<String, Party> chainFromCustRequest(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -463,7 +474,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fcr_from_party_id", String.class) != null) {
+                        if (rr.getColumn("fcrm_from_party_id", String.class) != null) {
                             p.getRelFromCustRequest()
                                     .add(rr.getRow(CustRequest.class));
                         }
@@ -472,7 +483,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CustRequestType.class, prefix = "crt")
+        @RegisterBeanMapper(value = CustRequestType.class, prefix = "crtm")
         default Map<String, Party> chainCustRequestType(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -480,7 +491,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = CustRequestType.class, prefix = "crt")
+        @RegisterBeanMapper(value = CustRequestType.class, prefix = "crtm")
         default Map<String, Party> chainCustRequestType(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -493,7 +504,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("crt_party_id", String.class) != null) {
+                        if (rr.getColumn("crtm_party_id", String.class) != null) {
                             p.getRelCustRequestType()
                                     .add(rr.getRow(CustRequestType.class));
                         }
@@ -502,7 +513,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        @RegisterBeanMapper(value = Facility.class, prefix = "ofzm")
         default Map<String, Party> chainOwnerFacility(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -510,7 +521,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Facility.class, prefix = "of")
+        @RegisterBeanMapper(value = Facility.class, prefix = "ofzm")
         default Map<String, Party> chainOwnerFacility(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -523,7 +534,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("of_owner_party_id", String.class) != null) {
+                        if (rr.getColumn("ofzm_owner_party_id", String.class) != null) {
                             p.getRelOwnerFacility()
                                     .add(rr.getRow(Facility.class));
                         }
@@ -532,7 +543,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccount.class, prefix = "ofa")
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "ofam")
         default Map<String, Party> chainOrganizationFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -540,7 +551,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccount.class, prefix = "ofa")
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "ofam")
         default Map<String, Party> chainOrganizationFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -553,7 +564,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ofa_organization_party_id", String.class) != null) {
+                        if (rr.getColumn("ofam_organization_party_id", String.class) != null) {
                             p.getRelOrganizationFinAccount()
                                     .add(rr.getRow(FinAccount.class));
                         }
@@ -562,7 +573,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccount.class, prefix = "ofa")
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "ofam")
         default Map<String, Party> chainOwnerFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -570,7 +581,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccount.class, prefix = "ofa")
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "ofam")
         default Map<String, Party> chainOwnerFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -583,7 +594,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ofa_owner_party_id", String.class) != null) {
+                        if (rr.getColumn("ofam_owner_party_id", String.class) != null) {
                             p.getRelOwnerFinAccount()
                                     .add(rr.getRow(FinAccount.class));
                         }
@@ -592,7 +603,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "far")
+        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "farm")
         default Map<String, Party> chainFinAccountRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -600,7 +611,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "far")
+        @RegisterBeanMapper(value = FinAccountRole.class, prefix = "farm")
         default Map<String, Party> chainFinAccountRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -613,7 +624,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("far_party_id", String.class) != null) {
+                        if (rr.getColumn("farm_party_id", String.class) != null) {
                             p.getRelFinAccountRole()
                                     .add(rr.getRow(FinAccountRole.class));
                         }
@@ -622,7 +633,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fatm")
         default Map<String, Party> chainFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -630,7 +641,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fat")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "fatm")
         default Map<String, Party> chainFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -643,7 +654,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fat_party_id", String.class) != null) {
+                        if (rr.getColumn("fatm_party_id", String.class) != null) {
                             p.getRelFinAccountTrans()
                                     .add(rr.getRow(FinAccountTrans.class));
                         }
@@ -652,7 +663,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "pbfat")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "pbfatm")
         default Map<String, Party> chainPerformedByFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -660,7 +671,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "pbfat")
+        @RegisterBeanMapper(value = FinAccountTrans.class, prefix = "pbfatm")
         default Map<String, Party> chainPerformedByFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -673,7 +684,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pbfat_performed_by_party_id", String.class) != null) {
+                        if (rr.getColumn("pbfatm_performed_by_party_id", String.class) != null) {
                             p.getRelPerformedByFinAccountTrans()
                                     .add(rr.getRow(FinAccountTrans.class));
                         }
@@ -682,7 +693,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fam")
         default Map<String, Party> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -690,7 +701,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fam")
         default Map<String, Party> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -703,7 +714,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fa_party_id", String.class) != null) {
+                        if (rr.getColumn("fam_party_id", String.class) != null) {
                             p.getRelFixedAsset()
                                     .add(rr.getRow(FixedAsset.class));
                         }
@@ -712,7 +723,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "gafar")
+        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "gafarm")
         default Map<String, Party> chainGovAgencyFixedAssetRegistration(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -720,7 +731,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "gafar")
+        @RegisterBeanMapper(value = FixedAssetRegistration.class, prefix = "gafarm")
         default Map<String, Party> chainGovAgencyFixedAssetRegistration(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -733,7 +744,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("gafar_gov_agency_party_id", String.class) != null) {
+                        if (rr.getColumn("gafarm_gov_agency_party_id", String.class) != null) {
                             p.getRelGovAgencyFixedAssetRegistration()
                                     .add(rr.getRow(FixedAssetRegistration.class));
                         }
@@ -742,7 +753,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = GlAccountTypeDefault.class, prefix = "ogatd")
+        @RegisterBeanMapper(value = GlAccountTypeDefault.class, prefix = "ogatdm")
         default Map<String, Party> chainOrganizationGlAccountTypeDefault(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -750,7 +761,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = GlAccountTypeDefault.class, prefix = "ogatd")
+        @RegisterBeanMapper(value = GlAccountTypeDefault.class, prefix = "ogatdm")
         default Map<String, Party> chainOrganizationGlAccountTypeDefault(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -763,7 +774,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ogatd_organization_party_id", String.class) != null) {
+                        if (rr.getColumn("ogatdm_organization_party_id", String.class) != null) {
                             p.getRelOrganizationGlAccountTypeDefault()
                                     .add(rr.getRow(GlAccountTypeDefault.class));
                         }
@@ -772,7 +783,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "iim")
         default Map<String, Party> chainInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -780,7 +791,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "iim")
         default Map<String, Party> chainInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -793,7 +804,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ii_party_id", String.class) != null) {
+                        if (rr.getColumn("iim_party_id", String.class) != null) {
                             p.getRelInventoryItem()
                                     .add(rr.getRow(InventoryItem.class));
                         }
@@ -802,7 +813,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InventoryItem.class, prefix = "oii")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "oiim")
         default Map<String, Party> chainOwnerInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -810,7 +821,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InventoryItem.class, prefix = "oii")
+        @RegisterBeanMapper(value = InventoryItem.class, prefix = "oiim")
         default Map<String, Party> chainOwnerInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -823,7 +834,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("oii_owner_party_id", String.class) != null) {
+                        if (rr.getColumn("oiim_owner_party_id", String.class) != null) {
                             p.getRelOwnerInventoryItem()
                                     .add(rr.getRow(InventoryItem.class));
                         }
@@ -832,7 +843,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Invoice.class, prefix = "fi")
+        @RegisterBeanMapper(value = Invoice.class, prefix = "fim")
         default Map<String, Party> chainFromInvoice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -840,7 +851,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Invoice.class, prefix = "fi")
+        @RegisterBeanMapper(value = Invoice.class, prefix = "fim")
         default Map<String, Party> chainFromInvoice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -853,7 +864,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fi_party_id_from", String.class) != null) {
+                        if (rr.getColumn("fim_party_id_from", String.class) != null) {
                             p.getRelFromInvoice()
                                     .add(rr.getRow(Invoice.class));
                         }
@@ -862,7 +873,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = Invoice.class, prefix = "inzm")
         default Map<String, Party> chainInvoice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -870,7 +881,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Invoice.class, prefix = "in")
+        @RegisterBeanMapper(value = Invoice.class, prefix = "inzm")
         default Map<String, Party> chainInvoice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -883,7 +894,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("in_party_id", String.class) != null) {
+                        if (rr.getColumn("inzm_party_id", String.class) != null) {
                             p.getRelInvoice()
                                     .add(rr.getRow(Invoice.class));
                         }
@@ -892,7 +903,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "taii")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "taiim")
         default Map<String, Party> chainTaxAuthorityInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -900,7 +911,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "taii")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "taiim")
         default Map<String, Party> chainTaxAuthorityInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -913,7 +924,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("taii_tax_auth_party_id", String.class) != null) {
+                        if (rr.getColumn("taiim_tax_auth_party_id", String.class) != null) {
                             p.getRelTaxAuthorityInvoiceItem()
                                     .add(rr.getRow(InvoiceItem.class));
                         }
@@ -922,7 +933,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ooii")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ooiim")
         default Map<String, Party> chainOverrideOrgInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -930,7 +941,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ooii")
+        @RegisterBeanMapper(value = InvoiceItem.class, prefix = "ooiim")
         default Map<String, Party> chainOverrideOrgInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -943,7 +954,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ooii_override_org_party_id", String.class) != null) {
+                        if (rr.getColumn("ooiim_override_org_party_id", String.class) != null) {
                             p.getRelOverrideOrgInvoiceItem()
                                     .add(rr.getRow(InvoiceItem.class));
                         }
@@ -952,7 +963,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InvoiceItemTypeGlAccount.class, prefix = "oiitga")
+        @RegisterBeanMapper(value = InvoiceItemTypeGlAccount.class, prefix = "oiitgam")
         default Map<String, Party> chainOrganizationInvoiceItemTypeGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -960,7 +971,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InvoiceItemTypeGlAccount.class, prefix = "oiitga")
+        @RegisterBeanMapper(value = InvoiceItemTypeGlAccount.class, prefix = "oiitgam")
         default Map<String, Party> chainOrganizationInvoiceItemTypeGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -973,7 +984,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("oiitga_organization_party_id", String.class) != null) {
+                        if (rr.getColumn("oiitgam_organization_party_id", String.class) != null) {
                             p.getRelOrganizationInvoiceItemTypeGlAccount()
                                     .add(rr.getRow(InvoiceItemTypeGlAccount.class));
                         }
@@ -982,7 +993,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InvoiceRole.class, prefix = "ir")
+        @RegisterBeanMapper(value = InvoiceRole.class, prefix = "irm")
         default Map<String, Party> chainInvoiceRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -990,7 +1001,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = InvoiceRole.class, prefix = "ir")
+        @RegisterBeanMapper(value = InvoiceRole.class, prefix = "irm")
         default Map<String, Party> chainInvoiceRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1003,7 +1014,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ir_party_id", String.class) != null) {
+                        if (rr.getColumn("irm_party_id", String.class) != null) {
                             p.getRelInvoiceRole()
                                     .add(rr.getRow(InvoiceRole.class));
                         }
@@ -1012,7 +1023,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "soisg")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "soisgm")
         default Map<String, Party> chainSupplierOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1020,7 +1031,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "soisg")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "soisgm")
         default Map<String, Party> chainSupplierOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1033,7 +1044,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("soisg_supplier_party_id", String.class) != null) {
+                        if (rr.getColumn("soisgm_supplier_party_id", String.class) != null) {
                             p.getRelSupplierOrderItemShipGroup()
                                     .add(rr.getRow(OrderItemShipGroup.class));
                         }
@@ -1042,7 +1053,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "voisg")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "voisgm")
         default Map<String, Party> chainVendorOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1050,7 +1061,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "voisg")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "voisgm")
         default Map<String, Party> chainVendorOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1063,7 +1074,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("voisg_vendor_party_id", String.class) != null) {
+                        if (rr.getColumn("voisgm_vendor_party_id", String.class) != null) {
                             p.getRelVendorOrderItemShipGroup()
                                     .add(rr.getRow(OrderItemShipGroup.class));
                         }
@@ -1072,7 +1083,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "coisg")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "coisgm")
         default Map<String, Party> chainCarrierOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1080,7 +1091,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "coisg")
+        @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "coisgm")
         default Map<String, Party> chainCarrierOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1093,7 +1104,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("coisg_carrier_party_id", String.class) != null) {
+                        if (rr.getColumn("coisgm_carrier_party_id", String.class) != null) {
                             p.getRelCarrierOrderItemShipGroup()
                                     .add(rr.getRow(OrderItemShipGroup.class));
                         }
@@ -1102,7 +1113,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = OrderRole.class, prefix = "or")
+        @RegisterBeanMapper(value = OrderRole.class, prefix = "orzm")
         default Map<String, Party> chainOrderRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1110,7 +1121,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = OrderRole.class, prefix = "or")
+        @RegisterBeanMapper(value = OrderRole.class, prefix = "orzm")
         default Map<String, Party> chainOrderRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1123,7 +1134,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("or_party_id", String.class) != null) {
+                        if (rr.getColumn("orzm_party_id", String.class) != null) {
                             p.getRelOrderRole()
                                     .add(rr.getRow(OrderRole.class));
                         }
@@ -1132,7 +1143,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyAcctgPreference.class, prefix = "pap")
+        @RegisterBeanMapper(value = PartyAcctgPreference.class, prefix = "papo")
         default Map<String, Party> chainPartyAcctgPreference(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1140,7 +1151,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyAcctgPreference.class, prefix = "pap")
+        @RegisterBeanMapper(value = PartyAcctgPreference.class, prefix = "papo")
         default Map<String, Party> chainPartyAcctgPreference(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1153,7 +1164,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pap_party_id", String.class) != null) {
+                        if (rr.getColumn("papo_party_id", String.class) != null) {
                             p.getRelPartyAcctgPreference()
                                     .add(rr.getRow(PartyAcctgPreference.class));
                         }
@@ -1162,7 +1173,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
+        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcmm")
         default Map<String, Party> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1170,7 +1181,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcm")
+        @RegisterBeanMapper(value = PartyContactMech.class, prefix = "pcmm")
         default Map<String, Party> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1183,7 +1194,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pcm_party_id", String.class) != null) {
+                        if (rr.getColumn("pcmm_party_id", String.class) != null) {
                             p.getRelPartyContactMech()
                                     .add(rr.getRow(PartyContactMech.class));
                         }
@@ -1192,7 +1203,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmp")
+        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmpm")
         default Map<String, Party> chainPartyContactMechPurpose(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1200,7 +1211,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmp")
+        @RegisterBeanMapper(value = PartyContactMechPurpose.class, prefix = "pcmpm")
         default Map<String, Party> chainPartyContactMechPurpose(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1213,7 +1224,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pcmp_party_id", String.class) != null) {
+                        if (rr.getColumn("pcmpm_party_id", String.class) != null) {
                             p.getRelPartyContactMechPurpose()
                                     .add(rr.getRow(PartyContactMechPurpose.class));
                         }
@@ -1222,7 +1233,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyGeoPoint.class, prefix = "pgp")
+        @RegisterBeanMapper(value = PartyGeoPoint.class, prefix = "pgpm")
         default Map<String, Party> chainPartyGeoPoint(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1230,7 +1241,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyGeoPoint.class, prefix = "pgp")
+        @RegisterBeanMapper(value = PartyGeoPoint.class, prefix = "pgpm")
         default Map<String, Party> chainPartyGeoPoint(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1243,7 +1254,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pgp_party_id", String.class) != null) {
+                        if (rr.getColumn("pgpm_party_id", String.class) != null) {
                             p.getRelPartyGeoPoint()
                                     .add(rr.getRow(PartyGeoPoint.class));
                         }
@@ -1252,7 +1263,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyGroup.class, prefix = "pg")
+        @RegisterBeanMapper(value = PartyGroup.class, prefix = "pgo")
         default Map<String, Party> chainPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1260,7 +1271,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyGroup.class, prefix = "pg")
+        @RegisterBeanMapper(value = PartyGroup.class, prefix = "pgo")
         default Map<String, Party> chainPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1273,7 +1284,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pg_party_id", String.class) != null) {
+                        if (rr.getColumn("pgo_party_id", String.class) != null) {
                             p.getRelPartyGroup()
                                     .add(rr.getRow(PartyGroup.class));
                         }
@@ -1282,7 +1293,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyIdentification.class, prefix = "pi")
+        @RegisterBeanMapper(value = PartyIdentification.class, prefix = "pim")
         default Map<String, Party> chainPartyIdentification(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1290,7 +1301,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyIdentification.class, prefix = "pi")
+        @RegisterBeanMapper(value = PartyIdentification.class, prefix = "pim")
         default Map<String, Party> chainPartyIdentification(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1303,7 +1314,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pi_party_id", String.class) != null) {
+                        if (rr.getColumn("pim_party_id", String.class) != null) {
                             p.getRelPartyIdentification()
                                     .add(rr.getRow(PartyIdentification.class));
                         }
@@ -1312,7 +1323,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyRate.class, prefix = "pr")
+        @RegisterBeanMapper(value = PartyRate.class, prefix = "prm")
         default Map<String, Party> chainPartyRate(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1320,7 +1331,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyRate.class, prefix = "pr")
+        @RegisterBeanMapper(value = PartyRate.class, prefix = "prm")
         default Map<String, Party> chainPartyRate(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1333,7 +1344,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pr_party_id", String.class) != null) {
+                        if (rr.getColumn("prm_party_id", String.class) != null) {
                             p.getRelPartyRate()
                                     .add(rr.getRow(PartyRate.class));
                         }
@@ -1342,7 +1353,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "fpr")
+        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "fprm")
         default Map<String, Party> chainFromPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1350,7 +1361,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "fpr")
+        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "fprm")
         default Map<String, Party> chainFromPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1363,7 +1374,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fpr_party_id_from", String.class) != null) {
+                        if (rr.getColumn("fprm_party_id_from", String.class) != null) {
                             p.getRelFromPartyRelationship()
                                     .add(rr.getRow(PartyRelationship.class));
                         }
@@ -1372,7 +1383,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "tpr")
+        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "tprm")
         default Map<String, Party> chainToPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1380,7 +1391,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "tpr")
+        @RegisterBeanMapper(value = PartyRelationship.class, prefix = "tprm")
         default Map<String, Party> chainToPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1393,7 +1404,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("tpr_party_id_to", String.class) != null) {
+                        if (rr.getColumn("tprm_party_id_to", String.class) != null) {
                             p.getRelToPartyRelationship()
                                     .add(rr.getRow(PartyRelationship.class));
                         }
@@ -1402,7 +1413,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyRole.class, prefix = "pr")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "prm")
         default Map<String, Party> chainPartyRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1410,7 +1421,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyRole.class, prefix = "pr")
+        @RegisterBeanMapper(value = PartyRole.class, prefix = "prm")
         default Map<String, Party> chainPartyRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1423,7 +1434,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pr_party_id", String.class) != null) {
+                        if (rr.getColumn("prm_party_id", String.class) != null) {
                             p.getRelPartyRole()
                                     .add(rr.getRow(PartyRole.class));
                         }
@@ -1432,7 +1443,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyStatus.class, prefix = "ps")
+        @RegisterBeanMapper(value = PartyStatus.class, prefix = "psm")
         default Map<String, Party> chainPartyStatus(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1440,7 +1451,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyStatus.class, prefix = "ps")
+        @RegisterBeanMapper(value = PartyStatus.class, prefix = "psm")
         default Map<String, Party> chainPartyStatus(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1453,7 +1464,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ps_party_id", String.class) != null) {
+                        if (rr.getColumn("psm_party_id", String.class) != null) {
                             p.getRelPartyStatus()
                                     .add(rr.getRow(PartyStatus.class));
                         }
@@ -1462,7 +1473,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyTaxAuthInfo.class, prefix = "ptai")
+        @RegisterBeanMapper(value = PartyTaxAuthInfo.class, prefix = "ptaim")
         default Map<String, Party> chainPartyTaxAuthInfo(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1470,7 +1481,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PartyTaxAuthInfo.class, prefix = "ptai")
+        @RegisterBeanMapper(value = PartyTaxAuthInfo.class, prefix = "ptaim")
         default Map<String, Party> chainPartyTaxAuthInfo(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1483,7 +1494,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ptai_party_id", String.class) != null) {
+                        if (rr.getColumn("ptaim_party_id", String.class) != null) {
                             p.getRelPartyTaxAuthInfo()
                                     .add(rr.getRow(PartyTaxAuthInfo.class));
                         }
@@ -1492,7 +1503,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Payment.class, prefix = "fp")
+        @RegisterBeanMapper(value = Payment.class, prefix = "fpm")
         default Map<String, Party> chainFromPayment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1500,7 +1511,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Payment.class, prefix = "fp")
+        @RegisterBeanMapper(value = Payment.class, prefix = "fpm")
         default Map<String, Party> chainFromPayment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1513,7 +1524,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fp_party_id_from", String.class) != null) {
+                        if (rr.getColumn("fpm_party_id_from", String.class) != null) {
                             p.getRelFromPayment()
                                     .add(rr.getRow(Payment.class));
                         }
@@ -1522,7 +1533,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Payment.class, prefix = "tp")
+        @RegisterBeanMapper(value = Payment.class, prefix = "tpm")
         default Map<String, Party> chainToPayment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1530,7 +1541,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Payment.class, prefix = "tp")
+        @RegisterBeanMapper(value = Payment.class, prefix = "tpm")
         default Map<String, Party> chainToPayment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1543,7 +1554,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("tp_party_id_to", String.class) != null) {
+                        if (rr.getColumn("tpm_party_id_to", String.class) != null) {
                             p.getRelToPayment()
                                     .add(rr.getRow(Payment.class));
                         }
@@ -1552,7 +1563,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PaymentGlAccountTypeMap.class, prefix = "pgatm")
+        @RegisterBeanMapper(value = PaymentGlAccountTypeMap.class, prefix = "pgatmm")
         default Map<String, Party> chainPaymentGlAccountTypeMap(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1560,7 +1571,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PaymentGlAccountTypeMap.class, prefix = "pgatm")
+        @RegisterBeanMapper(value = PaymentGlAccountTypeMap.class, prefix = "pgatmm")
         default Map<String, Party> chainPaymentGlAccountTypeMap(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1573,7 +1584,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pgatm_organization_party_id", String.class) != null) {
+                        if (rr.getColumn("pgatmm_organization_party_id", String.class) != null) {
                             p.getRelPaymentGlAccountTypeMap()
                                     .add(rr.getRow(PaymentGlAccountTypeMap.class));
                         }
@@ -1582,7 +1593,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pmm")
         default Map<String, Party> chainPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1590,7 +1601,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pm")
+        @RegisterBeanMapper(value = PaymentMethod.class, prefix = "pmm")
         default Map<String, Party> chainPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1603,7 +1614,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pm_party_id", String.class) != null) {
+                        if (rr.getColumn("pmm_party_id", String.class) != null) {
                             p.getRelPaymentMethod()
                                     .add(rr.getRow(PaymentMethod.class));
                         }
@@ -1612,7 +1623,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PaymentMethodTypeGlAccount.class, prefix = "opmtga")
+        @RegisterBeanMapper(value = PaymentMethodTypeGlAccount.class, prefix = "opmtgam")
         default Map<String, Party> chainOrganizationPaymentMethodTypeGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1620,7 +1631,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = PaymentMethodTypeGlAccount.class, prefix = "opmtga")
+        @RegisterBeanMapper(value = PaymentMethodTypeGlAccount.class, prefix = "opmtgam")
         default Map<String, Party> chainOrganizationPaymentMethodTypeGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1633,7 +1644,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("opmtga_organization_party_id", String.class) != null) {
+                        if (rr.getColumn("opmtgam_organization_party_id", String.class) != null) {
                             p.getRelOrganizationPaymentMethodTypeGlAccount()
                                     .add(rr.getRow(PaymentMethodTypeGlAccount.class));
                         }
@@ -1642,7 +1653,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Person.class, prefix = "peo")
         default Map<String, Party> chainPerson(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1650,7 +1661,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Person.class, prefix = "pe")
+        @RegisterBeanMapper(value = Person.class, prefix = "peo")
         default Map<String, Party> chainPerson(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1663,7 +1674,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pe_party_id", String.class) != null) {
+                        if (rr.getColumn("peo_party_id", String.class) != null) {
                             p.getRelPerson()
                                     .add(rr.getRow(Person.class));
                         }
@@ -1672,7 +1683,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductCategoryRole.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategoryRole.class, prefix = "pcrm")
         default Map<String, Party> chainProductCategoryRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1680,7 +1691,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductCategoryRole.class, prefix = "pcr")
+        @RegisterBeanMapper(value = ProductCategoryRole.class, prefix = "pcrm")
         default Map<String, Party> chainProductCategoryRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1693,7 +1704,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pcr_party_id", String.class) != null) {
+                        if (rr.getColumn("pcrm_party_id", String.class) != null) {
                             p.getRelProductCategoryRole()
                                     .add(rr.getRow(ProductCategoryRole.class));
                         }
@@ -1702,7 +1713,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductPrice.class, prefix = "tapp")
+        @RegisterBeanMapper(value = ProductPrice.class, prefix = "tappm")
         default Map<String, Party> chainTaxAuthorityProductPrice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1710,7 +1721,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductPrice.class, prefix = "tapp")
+        @RegisterBeanMapper(value = ProductPrice.class, prefix = "tappm")
         default Map<String, Party> chainTaxAuthorityProductPrice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1723,7 +1734,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("tapp_tax_auth_party_id", String.class) != null) {
+                        if (rr.getColumn("tappm_tax_auth_party_id", String.class) != null) {
                             p.getRelTaxAuthorityProductPrice()
                                     .add(rr.getRow(ProductPrice.class));
                         }
@@ -1732,7 +1743,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductPromo.class, prefix = "pp")
+        @RegisterBeanMapper(value = ProductPromo.class, prefix = "ppm")
         default Map<String, Party> chainProductPromo(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1740,7 +1751,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductPromo.class, prefix = "pp")
+        @RegisterBeanMapper(value = ProductPromo.class, prefix = "ppm")
         default Map<String, Party> chainProductPromo(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1753,7 +1764,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pp_override_org_party_id", String.class) != null) {
+                        if (rr.getColumn("ppm_override_org_party_id", String.class) != null) {
                             p.getRelProductPromo()
                                     .add(rr.getRow(ProductPromo.class));
                         }
@@ -1762,7 +1773,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "psm")
         default Map<String, Party> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1770,7 +1781,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "psm")
         default Map<String, Party> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1783,7 +1794,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ps_pay_to_party_id", String.class) != null) {
+                        if (rr.getColumn("psm_pay_to_party_id", String.class) != null) {
                             p.getRelProductStore()
                                     .add(rr.getRow(ProductStore.class));
                         }
@@ -1792,7 +1803,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psrm")
         default Map<String, Party> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1800,7 +1811,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psr")
+        @RegisterBeanMapper(value = ProductStoreRole.class, prefix = "psrm")
         default Map<String, Party> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1813,7 +1824,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("psr_party_id", String.class) != null) {
+                        if (rr.getColumn("psrm_party_id", String.class) != null) {
                             p.getRelProductStoreRole()
                                     .add(rr.getRow(ProductStoreRole.class));
                         }
@@ -1822,7 +1833,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductStoreShipmentMeth.class, prefix = "pssm")
+        @RegisterBeanMapper(value = ProductStoreShipmentMeth.class, prefix = "pssmm")
         default Map<String, Party> chainProductStoreShipmentMeth(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1830,7 +1841,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ProductStoreShipmentMeth.class, prefix = "pssm")
+        @RegisterBeanMapper(value = ProductStoreShipmentMeth.class, prefix = "pssmm")
         default Map<String, Party> chainProductStoreShipmentMeth(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1843,7 +1854,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("pssm_company_party_id", String.class) != null) {
+                        if (rr.getColumn("pssmm_company_party_id", String.class) != null) {
                             p.getRelProductStoreShipmentMeth()
                                     .add(rr.getRow(ProductStoreShipmentMeth.class));
                         }
@@ -1852,7 +1863,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = Quote.class, prefix = "qum")
         default Map<String, Party> chainQuote(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1860,7 +1871,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = Quote.class, prefix = "qum")
         default Map<String, Party> chainQuote(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1873,7 +1884,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("qu_party_id", String.class) != null) {
+                        if (rr.getColumn("qum_party_id", String.class) != null) {
                             p.getRelQuote()
                                     .add(rr.getRow(Quote.class));
                         }
@@ -1882,7 +1893,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qr")
+        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qrm")
         default Map<String, Party> chainQuoteRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1890,7 +1901,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qr")
+        @RegisterBeanMapper(value = QuoteRole.class, prefix = "qrm")
         default Map<String, Party> chainQuoteRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1903,7 +1914,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("qr_party_id", String.class) != null) {
+                        if (rr.getColumn("qrm_party_id", String.class) != null) {
                             p.getRelQuoteRole()
                                     .add(rr.getRow(QuoteRole.class));
                         }
@@ -1912,7 +1923,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = RateAmount.class, prefix = "ra")
+        @RegisterBeanMapper(value = RateAmount.class, prefix = "ram")
         default Map<String, Party> chainRateAmount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1920,7 +1931,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = RateAmount.class, prefix = "ra")
+        @RegisterBeanMapper(value = RateAmount.class, prefix = "ram")
         default Map<String, Party> chainRateAmount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1933,7 +1944,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ra_party_id", String.class) != null) {
+                        if (rr.getColumn("ram_party_id", String.class) != null) {
                             p.getRelRateAmount()
                                     .add(rr.getRow(RateAmount.class));
                         }
@@ -1942,7 +1953,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "ts")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "tsm")
         default Map<String, Party> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1950,7 +1961,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "ts")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "tsm")
         default Map<String, Party> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1963,7 +1974,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ts_party_id_to", String.class) != null) {
+                        if (rr.getColumn("tsm_party_id_to", String.class) != null) {
                             p.getRelToShipment()
                                     .add(rr.getRow(Shipment.class));
                         }
@@ -1972,7 +1983,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "fs")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "fsm")
         default Map<String, Party> chainFromShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -1980,7 +1991,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Shipment.class, prefix = "fs")
+        @RegisterBeanMapper(value = Shipment.class, prefix = "fsm")
         default Map<String, Party> chainFromShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -1993,7 +2004,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("fs_party_id_from", String.class) != null) {
+                        if (rr.getColumn("fsm_party_id_from", String.class) != null) {
                             p.getRelFromShipment()
                                     .add(rr.getRow(Shipment.class));
                         }
@@ -2002,7 +2013,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ShipmentCostEstimate.class, prefix = "sce")
+        @RegisterBeanMapper(value = ShipmentCostEstimate.class, prefix = "scem")
         default Map<String, Party> chainShipmentCostEstimate(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2010,7 +2021,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ShipmentCostEstimate.class, prefix = "sce")
+        @RegisterBeanMapper(value = ShipmentCostEstimate.class, prefix = "scem")
         default Map<String, Party> chainShipmentCostEstimate(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2023,7 +2034,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("sce_party_id", String.class) != null) {
+                        if (rr.getColumn("scem_party_id", String.class) != null) {
                             p.getRelShipmentCostEstimate()
                                     .add(rr.getRow(ShipmentCostEstimate.class));
                         }
@@ -2032,7 +2043,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrs")
+        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrsm")
         default Map<String, Party> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2040,7 +2051,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrs")
+        @RegisterBeanMapper(value = ShipmentRouteSegment.class, prefix = "csrsm")
         default Map<String, Party> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2053,7 +2064,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("csrs_carrier_party_id", String.class) != null) {
+                        if (rr.getColumn("csrsm_carrier_party_id", String.class) != null) {
                             p.getRelCarrierShipmentRouteSegment()
                                     .add(rr.getRow(ShipmentRouteSegment.class));
                         }
@@ -2062,7 +2073,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = SupplierProduct.class, prefix = "sp")
+        @RegisterBeanMapper(value = SupplierProduct.class, prefix = "spm")
         default Map<String, Party> chainSupplierProduct(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2070,7 +2081,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = SupplierProduct.class, prefix = "sp")
+        @RegisterBeanMapper(value = SupplierProduct.class, prefix = "spm")
         default Map<String, Party> chainSupplierProduct(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2083,7 +2094,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("sp_party_id", String.class) != null) {
+                        if (rr.getColumn("spm_party_id", String.class) != null) {
                             p.getRelSupplierProduct()
                                     .add(rr.getRow(SupplierProduct.class));
                         }
@@ -2092,7 +2103,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = SupplierProductFeature.class, prefix = "spf")
+        @RegisterBeanMapper(value = SupplierProductFeature.class, prefix = "spfm")
         default Map<String, Party> chainSupplierProductFeature(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2100,7 +2111,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = SupplierProductFeature.class, prefix = "spf")
+        @RegisterBeanMapper(value = SupplierProductFeature.class, prefix = "spfm")
         default Map<String, Party> chainSupplierProductFeature(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2113,7 +2124,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("spf_party_id", String.class) != null) {
+                        if (rr.getColumn("spfm_party_id", String.class) != null) {
                             p.getRelSupplierProductFeature()
                                     .add(rr.getRow(SupplierProductFeature.class));
                         }
@@ -2122,7 +2133,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "tata")
+        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "tatam")
         default Map<String, Party> chainTaxAuthTaxAuthority(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2130,7 +2141,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "tata")
+        @RegisterBeanMapper(value = TaxAuthority.class, prefix = "tatam")
         default Map<String, Party> chainTaxAuthTaxAuthority(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2143,7 +2154,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("tata_tax_auth_party_id", String.class) != null) {
+                        if (rr.getColumn("tatam_tax_auth_party_id", String.class) != null) {
                             p.getRelTaxAuthTaxAuthority()
                                     .add(rr.getRow(TaxAuthority.class));
                         }
@@ -2152,7 +2163,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = TaxAuthorityGlAccount.class, prefix = "otaga")
+        @RegisterBeanMapper(value = TaxAuthorityGlAccount.class, prefix = "otagam")
         default Map<String, Party> chainOrganizationTaxAuthorityGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2160,7 +2171,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = TaxAuthorityGlAccount.class, prefix = "otaga")
+        @RegisterBeanMapper(value = TaxAuthorityGlAccount.class, prefix = "otagam")
         default Map<String, Party> chainOrganizationTaxAuthorityGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2173,7 +2184,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("otaga_organization_party_id", String.class) != null) {
+                        if (rr.getColumn("otagam_organization_party_id", String.class) != null) {
                             p.getRelOrganizationTaxAuthorityGlAccount()
                                     .add(rr.getRow(TaxAuthorityGlAccount.class));
                         }
@@ -2182,7 +2193,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ulm")
         default Map<String, Party> chainUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2190,7 +2201,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ulm")
         default Map<String, Party> chainUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2203,7 +2214,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("ul_party_id", String.class) != null) {
+                        if (rr.getColumn("ulm_party_id", String.class) != null) {
                             p.getRelUserLogin()
                                     .add(rr.getRow(UserLogin.class));
                         }
@@ -2212,7 +2223,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepa")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepam")
         default Map<String, Party> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2220,7 +2231,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepa")
+        @RegisterBeanMapper(value = WorkEffortPartyAssignment.class, prefix = "wepam")
         default Map<String, Party> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2233,7 +2244,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("wepa_party_id", String.class) != null) {
+                        if (rr.getColumn("wepam_party_id", String.class) != null) {
                             p.getRelWorkEffortPartyAssignment()
                                     .add(rr.getRow(WorkEffortPartyAssignment.class));
                         }
@@ -2242,7 +2253,7 @@ public class PartyDelegator extends AbstractProcs{
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, Party> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
@@ -2250,7 +2261,7 @@ public class PartyDelegator extends AbstractProcs{
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
-        @RegisterBeanMapper(value = Tenant.class, prefix = "te")
+        @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, Party> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
@@ -2263,7 +2274,7 @@ public class PartyDelegator extends AbstractProcs{
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
-                        if (rr.getColumn("te_tenant_id", String.class) != null) {
+                        if (rr.getColumn("teo_tenant_id", String.class) != null) {
                             p.getRelTenant()
                                     .add(rr.getRow(Tenant.class));
                         }
@@ -3582,6 +3593,16 @@ public class PartyDelegator extends AbstractProcs{
             }
             storeOrUpdate(c, party.toData());
         });
+    }
+
+    @Override
+    public void serialize(QueryList queryList, Writer writer) {
+        buckets.get().writeTo(this, "Party", writer);
+    }
+
+    @Override
+    public void queryList(QueryProfile request, StreamObserver<EntityBucket> responseObserver){
+        buckets.get().queryList(this, request, responseObserver);
     }
 
 
