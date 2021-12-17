@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,24 +37,43 @@ import com.bluecc.hubs.stub.EmailTemplateSettingData;
 @REntity
 @MessageObject(value = EmailTemplateSettingData.class,
         symbol = EntityNames.EmailTemplateSetting)
-public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingData.Builder>, Serializable, WithDescription {
+public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String emailTemplateSettingId;
+    @SerializedName("email_template_setting_id")
+	@RId 
+    String emailTemplateSettingId;
+    @SerializedName("email_type") 
     String emailType;
+    @SerializedName("description") 
     String description;
+    @SerializedName("body_screen_location") 
     String bodyScreenLocation;
+    @SerializedName("xslfo_attach_screen_location") 
     String xslfoAttachScreenLocation;
+    @SerializedName("from_address") 
     String fromAddress;
+    @SerializedName("cc_address") 
     String ccAddress;
+    @SerializedName("bcc_address") 
     String bccAddress;
+    @SerializedName("subject") 
     String subject;
+    @SerializedName("content_type") 
     String contentType;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return emailTemplateSettingId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,16 +37,27 @@ import com.bluecc.hubs.stub.TenantDomainNameData;
 @REntity
 @MessageObject(value = TenantDomainNameData.class,
         symbol = EntityNames.TenantDomainName)
-public class TenantDomainName implements IEventModel<TenantDomainNameData.Builder>, Serializable {
+public class TenantDomainName implements IEventModel<TenantDomainNameData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
+    @SerializedName("tenant_id") 
     String tenantId;
-    @RId String domainName;
+    @SerializedName("domain_name")
+	@RId 
+    String domainName;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return domainName;
+    }
 
         
     public Message toData() {

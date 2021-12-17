@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,31 +37,57 @@ import com.bluecc.hubs.stub.CreditCardData;
 @REntity
 @MessageObject(value = CreditCardData.class,
         symbol = EntityNames.CreditCard)
-public class CreditCard implements IEventModel<CreditCardData.Builder>, Serializable {
+public class CreditCard implements IEventModel<CreditCardData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String paymentMethodId;
+    @SerializedName("payment_method_id")
+	@RId 
+    String paymentMethodId;
+    @SerializedName("card_type") 
     String cardType;
+    @SerializedName("card_number") 
     String cardNumber;
+    @SerializedName("valid_from_date") 
     String validFromDate;
+    @SerializedName("expire_date") 
     String expireDate;
+    @SerializedName("issue_number") 
     String issueNumber;
+    @SerializedName("company_name_on_card") 
     String companyNameOnCard;
+    @SerializedName("title_on_card") 
     String titleOnCard;
+    @SerializedName("first_name_on_card") 
     String firstNameOnCard;
+    @SerializedName("middle_name_on_card") 
     String middleNameOnCard;
+    @SerializedName("last_name_on_card") 
     String lastNameOnCard;
+    @SerializedName("suffix_on_card") 
     String suffixOnCard;
+    @SerializedName("contact_mech_id") 
     String contactMechId;
+    @SerializedName("consecutive_failed_auths") 
     Long consecutiveFailedAuths;
+    @SerializedName("last_failed_auth_date") 
     java.time.LocalDateTime lastFailedAuthDate;
+    @SerializedName("consecutive_failed_nsf") 
     Long consecutiveFailedNsf;
+    @SerializedName("last_failed_nsf_date") 
     java.time.LocalDateTime lastFailedNsfDate;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return paymentMethodId;
+    }
 
         
     public Message toData() {

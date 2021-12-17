@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,24 +37,45 @@ import com.bluecc.hubs.stub.ShipmentTimeEstimateData;
 @REntity
 @MessageObject(value = ShipmentTimeEstimateData.class,
         symbol = EntityNames.ShipmentTimeEstimate)
-public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateData.Builder>, Serializable, WithPeriod {
+public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String shipmentMethodTypeId;
-    @RIndex String partyId;
-    @RIndex String roleTypeId;
-    @RIndex String geoIdTo;
-    @RIndex String geoIdFrom;
+    @SerializedName("shipment_method_type_id")
+	@RIndex 
+    String shipmentMethodTypeId;
+    @SerializedName("party_id")
+	@RIndex 
+    String partyId;
+    @SerializedName("role_type_id")
+	@RIndex 
+    String roleTypeId;
+    @SerializedName("geo_id_to")
+	@RIndex 
+    String geoIdTo;
+    @SerializedName("geo_id_from")
+	@RIndex 
+    String geoIdFrom;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("lead_time") 
     java.math.BigDecimal leadTime;
+    @SerializedName("lead_time_uom_id") 
     String leadTimeUomId;
+    @SerializedName("sequence_number") 
     Long sequenceNumber;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

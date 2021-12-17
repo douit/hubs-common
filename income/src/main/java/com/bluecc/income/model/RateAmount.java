@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,23 +37,44 @@ import com.bluecc.hubs.stub.RateAmountData;
 @REntity
 @MessageObject(value = RateAmountData.class,
         symbol = EntityNames.RateAmount)
-public class RateAmount implements IEventModel<RateAmountData.Builder>, Serializable, WithPeriod {
+public class RateAmount implements IEventModel<RateAmountData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String rateTypeId;
-    @RIndex String rateCurrencyUomId;
-    @RIndex String periodTypeId;
-    @RIndex String workEffortId;
-    @RIndex String partyId;
-    @RIndex String emplPositionTypeId;
+    @SerializedName("rate_type_id")
+	@RIndex 
+    String rateTypeId;
+    @SerializedName("rate_currency_uom_id")
+	@RIndex 
+    String rateCurrencyUomId;
+    @SerializedName("period_type_id")
+	@RIndex 
+    String periodTypeId;
+    @SerializedName("work_effort_id")
+	@RIndex 
+    String workEffortId;
+    @SerializedName("party_id")
+	@RIndex 
+    String partyId;
+    @SerializedName("empl_position_type_id")
+	@RIndex 
+    String emplPositionTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("rate_amount") 
     java.math.BigDecimal rateAmount;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

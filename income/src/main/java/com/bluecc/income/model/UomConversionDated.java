@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,23 +37,40 @@ import com.bluecc.hubs.stub.UomConversionDatedData;
 @REntity
 @MessageObject(value = UomConversionDatedData.class,
         symbol = EntityNames.UomConversionDated)
-public class UomConversionDated implements IEventModel<UomConversionDatedData.Builder>, Serializable, WithPeriod {
+public class UomConversionDated implements IEventModel<UomConversionDatedData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String uomId;
-    @RIndex String uomIdTo;
+    @SerializedName("uom_id")
+	@RIndex 
+    String uomId;
+    @SerializedName("uom_id_to")
+	@RIndex 
+    String uomIdTo;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("conversion_factor") 
     Double conversionFactor;
+    @SerializedName("custom_method_id") 
     String customMethodId;
+    @SerializedName("decimal_scale") 
     Long decimalScale;
+    @SerializedName("rounding_mode") 
     String roundingMode;
+    @SerializedName("purpose_enum_id") 
     String purposeEnumId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

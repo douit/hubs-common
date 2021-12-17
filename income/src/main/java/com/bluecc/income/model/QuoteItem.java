@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,35 +37,64 @@ import com.bluecc.hubs.stub.QuoteItemData;
 @REntity
 @MessageObject(value = QuoteItemData.class,
         symbol = EntityNames.QuoteItem)
-public class QuoteItem implements IEventModel<QuoteItemData.Builder>, Serializable {
+public class QuoteItem implements IEventModel<QuoteItemData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String quoteId;
-    @RIndex String quoteItemSeqId;
+    @SerializedName("quote_id")
+	@RIndex 
+    String quoteId;
+    @SerializedName("quote_item_seq_id")
+	@RIndex 
+    String quoteItemSeqId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("product_feature_id") 
     String productFeatureId;
+    @SerializedName("deliverable_type_id") 
     String deliverableTypeId;
+    @SerializedName("skill_type_id") 
     String skillTypeId;
+    @SerializedName("uom_id") 
     String uomId;
+    @SerializedName("work_effort_id") 
     String workEffortId;
+    @SerializedName("cust_request_id") 
     String custRequestId;
+    @SerializedName("cust_request_item_seq_id") 
     String custRequestItemSeqId;
+    @SerializedName("quantity") 
     java.math.BigDecimal quantity;
+    @SerializedName("selected_amount") 
     java.math.BigDecimal selectedAmount;
+    @SerializedName("quote_unit_price") 
     java.math.BigDecimal quoteUnitPrice;
+    @SerializedName("reserv_start") 
     java.time.LocalDateTime reservStart;
+    @SerializedName("reserv_length") 
     java.math.BigDecimal reservLength;
+    @SerializedName("reserv_persons") 
     java.math.BigDecimal reservPersons;
+    @SerializedName("config_id") 
     String configId;
+    @SerializedName("estimated_delivery_date") 
     java.time.LocalDateTime estimatedDeliveryDate;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("is_promo") 
     Character isPromo;
+    @SerializedName("lead_time_days") 
     Long leadTimeDays;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

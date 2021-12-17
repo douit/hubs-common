@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,34 +37,64 @@ import com.bluecc.hubs.stub.SupplierProductData;
 @REntity
 @MessageObject(value = SupplierProductData.class,
         symbol = EntityNames.SupplierProduct)
-public class SupplierProduct implements IEventModel<SupplierProductData.Builder>, Serializable {
+public class SupplierProduct implements IEventModel<SupplierProductData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productId;
-    @RIndex String partyId;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("party_id")
+	@RIndex 
+    String partyId;
+    @SerializedName("available_from_date") 
     java.time.LocalDateTime availableFromDate;
+    @SerializedName("available_thru_date") 
     java.time.LocalDateTime availableThruDate;
+    @SerializedName("supplier_pref_order_id") 
     String supplierPrefOrderId;
+    @SerializedName("supplier_rating_type_id") 
     String supplierRatingTypeId;
+    @SerializedName("standard_lead_time_days") 
     java.math.BigDecimal standardLeadTimeDays;
-    @RIndex java.math.BigDecimal minimumOrderQuantity;
+    @SerializedName("minimum_order_quantity")
+	@RIndex 
+    java.math.BigDecimal minimumOrderQuantity;
+    @SerializedName("order_qty_increments") 
     java.math.BigDecimal orderQtyIncrements;
+    @SerializedName("units_included") 
     java.math.BigDecimal unitsIncluded;
+    @SerializedName("quantity_uom_id") 
     String quantityUomId;
+    @SerializedName("agreement_id") 
     String agreementId;
+    @SerializedName("agreement_item_seq_id") 
     String agreementItemSeqId;
+    @SerializedName("last_price") 
     java.math.BigDecimal lastPrice;
+    @SerializedName("shipping_price") 
     java.math.BigDecimal shippingPrice;
-    @RIndex String currencyUomId;
+    @SerializedName("currency_uom_id")
+	@RIndex 
+    String currencyUomId;
+    @SerializedName("supplier_product_name") 
     String supplierProductName;
+    @SerializedName("supplier_product_id") 
     String supplierProductId;
+    @SerializedName("can_drop_ship") 
     Character canDropShip;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

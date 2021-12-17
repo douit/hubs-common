@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,61 +42,117 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = OrderItemData.class,
         symbol = EntityNames.OrderItem)
-public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, Serializable, WithSuppliers {
+public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String orderId;
-    @RIndex String orderItemSeqId;
+    @SerializedName("order_id")
+	@RIndex 
+    String orderId;
+    @SerializedName("order_item_seq_id")
+	@RIndex 
+    String orderItemSeqId;
+    @SerializedName("external_id") 
     String externalId;
+    @SerializedName("order_item_type_id") 
     String orderItemTypeId;
+    @SerializedName("order_item_group_seq_id") 
     String orderItemGroupSeqId;
+    @SerializedName("is_item_group_primary") 
     Character isItemGroupPrimary;
+    @SerializedName("from_inventory_item_id") 
     String fromInventoryItemId;
+    @SerializedName("budget_id") 
     String budgetId;
+    @SerializedName("budget_item_seq_id") 
     String budgetItemSeqId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("supplier_product_id") 
     String supplierProductId;
+    @SerializedName("product_feature_id") 
     String productFeatureId;
+    @SerializedName("prod_catalog_id") 
     String prodCatalogId;
+    @SerializedName("product_category_id") 
     String productCategoryId;
+    @SerializedName("is_promo") 
     Character isPromo;
+    @SerializedName("quote_id") 
     String quoteId;
+    @SerializedName("quote_item_seq_id") 
     String quoteItemSeqId;
+    @SerializedName("shopping_list_id") 
     String shoppingListId;
+    @SerializedName("shopping_list_item_seq_id") 
     String shoppingListItemSeqId;
+    @SerializedName("subscription_id") 
     String subscriptionId;
+    @SerializedName("deployment_id") 
     String deploymentId;
+    @SerializedName("quantity") 
     java.math.BigDecimal quantity;
+    @SerializedName("cancel_quantity") 
     java.math.BigDecimal cancelQuantity;
+    @SerializedName("selected_amount") 
     java.math.BigDecimal selectedAmount;
+    @SerializedName("unit_price") 
     java.math.BigDecimal unitPrice;
+    @SerializedName("unit_list_price") 
     java.math.BigDecimal unitListPrice;
+    @SerializedName("unit_average_cost") 
     java.math.BigDecimal unitAverageCost;
+    @SerializedName("unit_recurring_price") 
     java.math.BigDecimal unitRecurringPrice;
+    @SerializedName("is_modified_price") 
     Character isModifiedPrice;
+    @SerializedName("recurring_freq_uom_id") 
     String recurringFreqUomId;
+    @SerializedName("item_description") 
     String itemDescription;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("corresponding_po_id") 
     String correspondingPoId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("sync_status_id") 
     String syncStatusId;
+    @SerializedName("estimated_ship_date") 
     java.time.LocalDateTime estimatedShipDate;
+    @SerializedName("estimated_delivery_date") 
     java.time.LocalDateTime estimatedDeliveryDate;
+    @SerializedName("auto_cancel_date") 
     java.time.LocalDateTime autoCancelDate;
+    @SerializedName("dont_cancel_set_date") 
     java.time.LocalDateTime dontCancelSetDate;
+    @SerializedName("dont_cancel_set_user_login") 
     String dontCancelSetUserLogin;
+    @SerializedName("ship_before_date") 
     java.time.LocalDateTime shipBeforeDate;
+    @SerializedName("ship_after_date") 
     java.time.LocalDateTime shipAfterDate;
+    @SerializedName("reserve_after_date") 
     java.time.LocalDateTime reserveAfterDate;
+    @SerializedName("cancel_back_order_date") 
     java.time.LocalDateTime cancelBackOrderDate;
+    @SerializedName("override_gl_account_id") 
     String overrideGlAccountId;
+    @SerializedName("sales_opportunity_id") 
     String salesOpportunityId;
+    @SerializedName("change_by_user_login_id") 
     String changeByUserLoginId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
+    @SerializedName("tenant_id") 
     String tenantId;
     
 

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,32 +42,59 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = FinAccountData.class,
         symbol = EntityNames.FinAccount)
-public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, Serializable, WithSuppliers, WithPeriod {
+public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, HasId, Serializable, WithSuppliers, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RId String finAccountId;
+    @SerializedName("fin_account_id")
+	@RId 
+    String finAccountId;
+    @SerializedName("fin_account_type_id") 
     String finAccountTypeId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("fin_account_name") 
     String finAccountName;
+    @SerializedName("fin_account_code") 
     String finAccountCode;
+    @SerializedName("fin_account_pin") 
     String finAccountPin;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("organization_party_id") 
     String organizationPartyId;
+    @SerializedName("owner_party_id") 
     String ownerPartyId;
+    @SerializedName("post_to_gl_account_id") 
     String postToGlAccountId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("is_refundable") 
     Character isRefundable;
+    @SerializedName("replenish_payment_id") 
     String replenishPaymentId;
+    @SerializedName("replenish_level") 
     java.math.BigDecimal replenishLevel;
+    @SerializedName("actual_balance") 
     java.math.BigDecimal actualBalance;
+    @SerializedName("available_balance") 
     java.math.BigDecimal availableBalance;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return finAccountId;
+    }
 
         
     public Message toData() {

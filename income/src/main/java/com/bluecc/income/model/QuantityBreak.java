@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,18 +37,31 @@ import com.bluecc.hubs.stub.QuantityBreakData;
 @REntity
 @MessageObject(value = QuantityBreakData.class,
         symbol = EntityNames.QuantityBreak)
-public class QuantityBreak implements IEventModel<QuantityBreakData.Builder>, Serializable {
+public class QuantityBreak implements IEventModel<QuantityBreakData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String quantityBreakId;
+    @SerializedName("quantity_break_id")
+	@RId 
+    String quantityBreakId;
+    @SerializedName("quantity_break_type_id") 
     String quantityBreakTypeId;
+    @SerializedName("from_quantity") 
     java.math.BigDecimal fromQuantity;
+    @SerializedName("thru_quantity") 
     java.math.BigDecimal thruQuantity;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return quantityBreakId;
+    }
 
         
     public Message toData() {

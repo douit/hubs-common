@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,29 +37,52 @@ import com.bluecc.hubs.stub.ProductStoreFinActSettingData;
 @REntity
 @MessageObject(value = ProductStoreFinActSettingData.class,
         symbol = EntityNames.ProductStoreFinActSetting)
-public class ProductStoreFinActSetting implements IEventModel<ProductStoreFinActSettingData.Builder>, Serializable {
+public class ProductStoreFinActSetting implements IEventModel<ProductStoreFinActSettingData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productStoreId;
-    @RIndex String finAccountTypeId;
+    @SerializedName("product_store_id")
+	@RIndex 
+    String productStoreId;
+    @SerializedName("fin_account_type_id")
+	@RIndex 
+    String finAccountTypeId;
+    @SerializedName("require_pin_code") 
     Character requirePinCode;
+    @SerializedName("validate_g_c_fin_acct") 
     Character validateGCFinAcct;
+    @SerializedName("account_code_length") 
     Long accountCodeLength;
+    @SerializedName("pin_code_length") 
     Long pinCodeLength;
+    @SerializedName("account_valid_days") 
     Long accountValidDays;
+    @SerializedName("auth_valid_days") 
     Long authValidDays;
+    @SerializedName("purchase_survey_id") 
     String purchaseSurveyId;
+    @SerializedName("purch_survey_send_to") 
     String purchSurveySendTo;
+    @SerializedName("purch_survey_copy_me") 
     String purchSurveyCopyMe;
+    @SerializedName("allow_auth_to_negative") 
     Character allowAuthToNegative;
+    @SerializedName("min_balance") 
     java.math.BigDecimal minBalance;
+    @SerializedName("replenish_threshold") 
     java.math.BigDecimal replenishThreshold;
+    @SerializedName("replenish_method_enum_id") 
     String replenishMethodEnumId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

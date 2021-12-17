@@ -171,5 +171,18 @@ public class ProtoTypesTest {
                 .hasField(descriptor.findFieldByName("has_table")));
         System.out.println(data);
     }
+
+    @Test
+    public void testToString(){
+        System.out.println(LocalDateTime.now().toString());
+        System.out.println(new BigDecimal("2.5"));
+    }
+
+    @Test
+    public void testIndicator(){
+        assertEquals(Indicator.SECOND, castIndicator("2"));
+        System.out.println(Indicator.SECOND);
+        assertEquals('2', ProtoTypes.getIndicatorChar(Indicator.SECOND));
+    }
 }
 

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,17 +37,29 @@ import com.bluecc.hubs.stub.SurveyQuestionCategoryData;
 @REntity
 @MessageObject(value = SurveyQuestionCategoryData.class,
         symbol = EntityNames.SurveyQuestionCategory)
-public class SurveyQuestionCategory implements IEventModel<SurveyQuestionCategoryData.Builder>, Serializable, WithDescription {
+public class SurveyQuestionCategory implements IEventModel<SurveyQuestionCategoryData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String surveyQuestionCategoryId;
+    @SerializedName("survey_question_category_id")
+	@RId 
+    String surveyQuestionCategoryId;
+    @SerializedName("parent_category_id") 
     String parentCategoryId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return surveyQuestionCategoryId;
+    }
 
         
     public Message toData() {

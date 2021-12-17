@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,34 +37,63 @@ import com.bluecc.hubs.stub.PartyAcctgPreferenceData;
 @REntity
 @MessageObject(value = PartyAcctgPreferenceData.class,
         symbol = EntityNames.PartyAcctgPreference)
-public class PartyAcctgPreference implements IEventModel<PartyAcctgPreferenceData.Builder>, Serializable {
+public class PartyAcctgPreference implements IEventModel<PartyAcctgPreferenceData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String partyId;
+    @SerializedName("party_id")
+	@RId 
+    String partyId;
+    @SerializedName("fiscal_year_start_month") 
     Long fiscalYearStartMonth;
+    @SerializedName("fiscal_year_start_day") 
     Long fiscalYearStartDay;
+    @SerializedName("tax_form_id") 
     String taxFormId;
+    @SerializedName("cogs_method_id") 
     String cogsMethodId;
+    @SerializedName("base_currency_uom_id") 
     String baseCurrencyUomId;
+    @SerializedName("invoice_seq_cust_meth_id") 
     String invoiceSeqCustMethId;
+    @SerializedName("invoice_id_prefix") 
     String invoiceIdPrefix;
+    @SerializedName("last_invoice_number") 
     Long lastInvoiceNumber;
+    @SerializedName("last_invoice_restart_date") 
     java.time.LocalDateTime lastInvoiceRestartDate;
+    @SerializedName("use_invoice_id_for_returns") 
     Character useInvoiceIdForReturns;
+    @SerializedName("quote_seq_cust_meth_id") 
     String quoteSeqCustMethId;
+    @SerializedName("quote_id_prefix") 
     String quoteIdPrefix;
+    @SerializedName("last_quote_number") 
     Long lastQuoteNumber;
+    @SerializedName("order_seq_cust_meth_id") 
     String orderSeqCustMethId;
+    @SerializedName("order_id_prefix") 
     String orderIdPrefix;
+    @SerializedName("last_order_number") 
     Long lastOrderNumber;
+    @SerializedName("refund_payment_method_id") 
     String refundPaymentMethodId;
+    @SerializedName("error_gl_journal_id") 
     String errorGlJournalId;
+    @SerializedName("enable_accounting") 
     Character enableAccounting;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return partyId;
+    }
 
         
     public Message toData() {

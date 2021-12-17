@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,39 +37,72 @@ import com.bluecc.hubs.stub.AcctgTransEntryData;
 @REntity
 @MessageObject(value = AcctgTransEntryData.class,
         symbol = EntityNames.AcctgTransEntry)
-public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>, Serializable, WithDescription {
+public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String acctgTransId;
-    @RIndex String acctgTransEntrySeqId;
+    @SerializedName("acctg_trans_id")
+	@RIndex 
+    String acctgTransId;
+    @SerializedName("acctg_trans_entry_seq_id")
+	@RIndex 
+    String acctgTransEntrySeqId;
+    @SerializedName("acctg_trans_entry_type_id") 
     String acctgTransEntryTypeId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("voucher_ref") 
     String voucherRef;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("role_type_id") 
     String roleTypeId;
+    @SerializedName("their_party_id") 
     String theirPartyId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("their_product_id") 
     String theirProductId;
+    @SerializedName("inventory_item_id") 
     String inventoryItemId;
+    @SerializedName("gl_account_type_id") 
     String glAccountTypeId;
+    @SerializedName("gl_account_id") 
     String glAccountId;
+    @SerializedName("organization_party_id") 
     String organizationPartyId;
+    @SerializedName("amount") 
     java.math.BigDecimal amount;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("orig_amount") 
     java.math.BigDecimal origAmount;
+    @SerializedName("orig_currency_uom_id") 
     String origCurrencyUomId;
+    @SerializedName("debit_credit_flag") 
     Character debitCreditFlag;
+    @SerializedName("due_date") 
     java.time.LocalDate dueDate;
+    @SerializedName("group_id") 
     String groupId;
+    @SerializedName("tax_id") 
     String taxId;
+    @SerializedName("reconcile_status_id") 
     String reconcileStatusId;
+    @SerializedName("settlement_term_id") 
     String settlementTermId;
+    @SerializedName("is_summary") 
     Character isSummary;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

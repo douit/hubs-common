@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,26 +37,46 @@ import com.bluecc.hubs.stub.SurveyQuestionApplData;
 @REntity
 @MessageObject(value = SurveyQuestionApplData.class,
         symbol = EntityNames.SurveyQuestionAppl)
-public class SurveyQuestionAppl implements IEventModel<SurveyQuestionApplData.Builder>, Serializable, WithPeriod {
+public class SurveyQuestionAppl implements IEventModel<SurveyQuestionApplData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String surveyId;
-    @RIndex String surveyQuestionId;
+    @SerializedName("survey_id")
+	@RIndex 
+    String surveyId;
+    @SerializedName("survey_question_id")
+	@RIndex 
+    String surveyQuestionId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("survey_page_seq_id") 
     String surveyPageSeqId;
+    @SerializedName("survey_multi_resp_id") 
     String surveyMultiRespId;
+    @SerializedName("survey_multi_resp_col_id") 
     String surveyMultiRespColId;
+    @SerializedName("required_field") 
     Character requiredField;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("external_field_ref") 
     String externalFieldRef;
+    @SerializedName("with_survey_question_id") 
     String withSurveyQuestionId;
+    @SerializedName("with_survey_option_seq_id") 
     String withSurveyOptionSeqId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

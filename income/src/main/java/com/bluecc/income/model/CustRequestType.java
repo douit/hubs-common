@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,33 @@ import com.bluecc.hubs.stub.CustRequestTypeData;
 @REntity
 @MessageObject(value = CustRequestTypeData.class,
         symbol = EntityNames.CustRequestType)
-public class CustRequestType implements IEventModel<CustRequestTypeData.Builder>, Serializable, WithDescription {
+public class CustRequestType implements IEventModel<CustRequestTypeData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String custRequestTypeId;
+    @SerializedName("cust_request_type_id")
+	@RId 
+    String custRequestTypeId;
+    @SerializedName("parent_type_id") 
     String parentTypeId;
+    @SerializedName("has_table") 
     Character hasTable;
+    @SerializedName("description") 
     String description;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return custRequestTypeId;
+    }
 
         
     public Message toData() {

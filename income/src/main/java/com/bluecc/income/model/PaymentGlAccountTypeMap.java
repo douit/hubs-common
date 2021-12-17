@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,17 +37,28 @@ import com.bluecc.hubs.stub.PaymentGlAccountTypeMapData;
 @REntity
 @MessageObject(value = PaymentGlAccountTypeMapData.class,
         symbol = EntityNames.PaymentGlAccountTypeMap)
-public class PaymentGlAccountTypeMap implements IEventModel<PaymentGlAccountTypeMapData.Builder>, Serializable {
+public class PaymentGlAccountTypeMap implements IEventModel<PaymentGlAccountTypeMapData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String paymentTypeId;
-    @RIndex String organizationPartyId;
+    @SerializedName("payment_type_id")
+	@RIndex 
+    String paymentTypeId;
+    @SerializedName("organization_party_id")
+	@RIndex 
+    String organizationPartyId;
+    @SerializedName("gl_account_type_id") 
     String glAccountTypeId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

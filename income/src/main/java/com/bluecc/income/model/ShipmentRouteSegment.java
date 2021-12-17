@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,50 +37,94 @@ import com.bluecc.hubs.stub.ShipmentRouteSegmentData;
 @REntity
 @MessageObject(value = ShipmentRouteSegmentData.class,
         symbol = EntityNames.ShipmentRouteSegment)
-public class ShipmentRouteSegment implements IEventModel<ShipmentRouteSegmentData.Builder>, Serializable {
+public class ShipmentRouteSegment implements IEventModel<ShipmentRouteSegmentData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String shipmentId;
-    @RIndex String shipmentRouteSegmentId;
+    @SerializedName("shipment_id")
+	@RIndex 
+    String shipmentId;
+    @SerializedName("shipment_route_segment_id")
+	@RIndex 
+    String shipmentRouteSegmentId;
+    @SerializedName("delivery_id") 
     String deliveryId;
+    @SerializedName("origin_facility_id") 
     String originFacilityId;
+    @SerializedName("dest_facility_id") 
     String destFacilityId;
+    @SerializedName("origin_contact_mech_id") 
     String originContactMechId;
+    @SerializedName("origin_telecom_number_id") 
     String originTelecomNumberId;
+    @SerializedName("dest_contact_mech_id") 
     String destContactMechId;
+    @SerializedName("dest_telecom_number_id") 
     String destTelecomNumberId;
+    @SerializedName("carrier_party_id") 
     String carrierPartyId;
+    @SerializedName("shipment_method_type_id") 
     String shipmentMethodTypeId;
+    @SerializedName("carrier_service_status_id") 
     String carrierServiceStatusId;
+    @SerializedName("carrier_delivery_zone") 
     String carrierDeliveryZone;
+    @SerializedName("carrier_restriction_codes") 
     String carrierRestrictionCodes;
+    @SerializedName("carrier_restriction_desc") 
     String carrierRestrictionDesc;
+    @SerializedName("billing_weight") 
     java.math.BigDecimal billingWeight;
+    @SerializedName("billing_weight_uom_id") 
     String billingWeightUomId;
+    @SerializedName("actual_transport_cost") 
     java.math.BigDecimal actualTransportCost;
+    @SerializedName("actual_service_cost") 
     java.math.BigDecimal actualServiceCost;
+    @SerializedName("actual_other_cost") 
     java.math.BigDecimal actualOtherCost;
+    @SerializedName("actual_cost") 
     java.math.BigDecimal actualCost;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("actual_start_date") 
     java.time.LocalDateTime actualStartDate;
+    @SerializedName("actual_arrival_date") 
     java.time.LocalDateTime actualArrivalDate;
+    @SerializedName("estimated_start_date") 
     java.time.LocalDateTime estimatedStartDate;
+    @SerializedName("estimated_arrival_date") 
     java.time.LocalDateTime estimatedArrivalDate;
+    @SerializedName("tracking_id_number") 
     String trackingIdNumber;
+    @SerializedName("tracking_digest") 
     String trackingDigest;
+    @SerializedName("updated_by_user_login_id") 
     String updatedByUserLoginId;
+    @SerializedName("last_updated_date") 
     java.time.LocalDateTime lastUpdatedDate;
+    @SerializedName("home_delivery_type") 
     String homeDeliveryType;
+    @SerializedName("home_delivery_date") 
     java.time.LocalDateTime homeDeliveryDate;
+    @SerializedName("third_party_account_number") 
     String thirdPartyAccountNumber;
+    @SerializedName("third_party_postal_code") 
     String thirdPartyPostalCode;
+    @SerializedName("third_party_country_geo_code") 
     String thirdPartyCountryGeoCode;
+    @SerializedName("ups_high_value_report") 
     byte[] upsHighValueReport;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

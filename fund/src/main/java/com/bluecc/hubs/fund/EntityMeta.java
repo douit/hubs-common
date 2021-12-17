@@ -372,12 +372,19 @@ public class EntityMeta {
 
 
     public String getAnnotation(FieldMeta fld){
+        List<String> annotations = getAnnotationList(fld);
+        return String.join("\n\t", annotations);
+    }
+
+    public List<String> getAnnotationList(FieldMeta fld) {
+        List<String> annotations=Lists.newArrayList();
+        annotations.add(format("@SerializedName(\"%s\")", fld.getUnderscore()));
         if(getPk().equals(fld.name)){
-            return "@RId ";
+            annotations.add("@RId");
         } else if(fld.pk && !fld.isDateTimeField()){
-            return "@RIndex ";
+            annotations.add("@RIndex");
         }
-        return "";
+        return annotations;
     }
 
     public String getFacets(){

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,67 +42,129 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = WorkEffortData.class,
         symbol = EntityNames.WorkEffort)
-public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, Serializable, WithSuppliers, WithSchedule, WithDescription {
+public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, HasId, Serializable, WithSuppliers, WithSchedule, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String workEffortId;
+    @SerializedName("work_effort_id")
+	@RId 
+    String workEffortId;
+    @SerializedName("work_effort_type_id") 
     String workEffortTypeId;
+    @SerializedName("current_status_id") 
     String currentStatusId;
+    @SerializedName("last_status_update") 
     java.time.LocalDateTime lastStatusUpdate;
+    @SerializedName("work_effort_purpose_type_id") 
     String workEffortPurposeTypeId;
+    @SerializedName("work_effort_parent_id") 
     String workEffortParentId;
+    @SerializedName("scope_enum_id") 
     String scopeEnumId;
+    @SerializedName("priority") 
     Long priority;
+    @SerializedName("percent_complete") 
     Long percentComplete;
+    @SerializedName("work_effort_name") 
     String workEffortName;
+    @SerializedName("show_as_enum_id") 
     String showAsEnumId;
+    @SerializedName("send_notification_email") 
     Character sendNotificationEmail;
+    @SerializedName("description") 
     String description;
+    @SerializedName("location_desc") 
     String locationDesc;
+    @SerializedName("estimated_start_date") 
     java.time.LocalDateTime estimatedStartDate;
+    @SerializedName("estimated_completion_date") 
     java.time.LocalDateTime estimatedCompletionDate;
+    @SerializedName("actual_start_date") 
     java.time.LocalDateTime actualStartDate;
+    @SerializedName("actual_completion_date") 
     java.time.LocalDateTime actualCompletionDate;
+    @SerializedName("estimated_milli_seconds") 
     Double estimatedMilliSeconds;
+    @SerializedName("estimated_setup_millis") 
     Double estimatedSetupMillis;
+    @SerializedName("estimate_calc_method") 
     String estimateCalcMethod;
+    @SerializedName("actual_milli_seconds") 
     Double actualMilliSeconds;
+    @SerializedName("actual_setup_millis") 
     Double actualSetupMillis;
+    @SerializedName("total_milli_seconds_allowed") 
     Double totalMilliSecondsAllowed;
+    @SerializedName("total_money_allowed") 
     java.math.BigDecimal totalMoneyAllowed;
+    @SerializedName("money_uom_id") 
     String moneyUomId;
+    @SerializedName("special_terms") 
     String specialTerms;
+    @SerializedName("time_transparency") 
     Long timeTransparency;
+    @SerializedName("universal_id") 
     String universalId;
+    @SerializedName("source_reference_id") 
     String sourceReferenceId;
+    @SerializedName("fixed_asset_id") 
     String fixedAssetId;
+    @SerializedName("facility_id") 
     String facilityId;
+    @SerializedName("info_url") 
     String infoUrl;
+    @SerializedName("recurrence_info_id") 
     String recurrenceInfoId;
+    @SerializedName("temp_expr_id") 
     String tempExprId;
+    @SerializedName("runtime_data_id") 
     String runtimeDataId;
+    @SerializedName("note_id") 
     String noteId;
+    @SerializedName("service_loader_name") 
     String serviceLoaderName;
+    @SerializedName("quantity_to_produce") 
     java.math.BigDecimal quantityToProduce;
+    @SerializedName("quantity_produced") 
     java.math.BigDecimal quantityProduced;
+    @SerializedName("quantity_rejected") 
     java.math.BigDecimal quantityRejected;
+    @SerializedName("reserv_persons") 
     java.math.BigDecimal reservPersons;
+    @SerializedName("reserv_2nd_p_p_perc") 
     java.math.BigDecimal reserv2ndPPPerc;
+    @SerializedName("reserv_nth_p_p_perc") 
     java.math.BigDecimal reservNthPPPerc;
+    @SerializedName("accommodation_map_id") 
     String accommodationMapId;
+    @SerializedName("accommodation_spot_id") 
     String accommodationSpotId;
+    @SerializedName("revision_number") 
     Long revisionNumber;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return workEffortId;
+    }
 
         
     public Message toData() {

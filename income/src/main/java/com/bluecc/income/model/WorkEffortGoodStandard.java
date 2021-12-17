@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,22 +37,39 @@ import com.bluecc.hubs.stub.WorkEffortGoodStandardData;
 @REntity
 @MessageObject(value = WorkEffortGoodStandardData.class,
         symbol = EntityNames.WorkEffortGoodStandard)
-public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandardData.Builder>, Serializable, WithPeriod {
+public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandardData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String workEffortId;
-    @RIndex String productId;
-    @RIndex String workEffortGoodStdTypeId;
+    @SerializedName("work_effort_id")
+	@RIndex 
+    String workEffortId;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("work_effort_good_std_type_id")
+	@RIndex 
+    String workEffortGoodStdTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("estimated_quantity") 
     Double estimatedQuantity;
+    @SerializedName("estimated_cost") 
     java.math.BigDecimal estimatedCost;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

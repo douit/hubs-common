@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,47 +42,89 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = PersonData.class,
         symbol = EntityNames.Person)
-public class Person implements IEventModel<PersonFlatData.Builder>, Serializable, WithSuppliers {
+public class Person implements IEventModel<PersonFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String partyId;
+    @SerializedName("party_id")
+	@RId 
+    String partyId;
+    @SerializedName("salutation") 
     String salutation;
+    @SerializedName("first_name") 
     String firstName;
+    @SerializedName("middle_name") 
     String middleName;
+    @SerializedName("last_name") 
     String lastName;
+    @SerializedName("personal_title") 
     String personalTitle;
+    @SerializedName("suffix") 
     String suffix;
+    @SerializedName("nickname") 
     String nickname;
+    @SerializedName("first_name_local") 
     String firstNameLocal;
+    @SerializedName("middle_name_local") 
     String middleNameLocal;
+    @SerializedName("last_name_local") 
     String lastNameLocal;
+    @SerializedName("other_local") 
     String otherLocal;
+    @SerializedName("member_id") 
     String memberId;
+    @SerializedName("gender") 
     Character gender;
+    @SerializedName("birth_date") 
     java.time.LocalDate birthDate;
+    @SerializedName("deceased_date") 
     java.time.LocalDate deceasedDate;
+    @SerializedName("height") 
     Double height;
+    @SerializedName("weight") 
     Double weight;
+    @SerializedName("mothers_maiden_name") 
     String mothersMaidenName;
+    @SerializedName("marital_status_enum_id") 
     String maritalStatusEnumId;
+    @SerializedName("social_security_number") 
     String socialSecurityNumber;
+    @SerializedName("passport_number") 
     String passportNumber;
+    @SerializedName("passport_expire_date") 
     java.time.LocalDate passportExpireDate;
+    @SerializedName("total_years_work_experience") 
     Double totalYearsWorkExperience;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("employment_status_enum_id") 
     String employmentStatusEnumId;
+    @SerializedName("residence_status_enum_id") 
     String residenceStatusEnumId;
+    @SerializedName("occupation") 
     String occupation;
+    @SerializedName("years_with_employer") 
     Long yearsWithEmployer;
+    @SerializedName("months_with_employer") 
     Long monthsWithEmployer;
+    @SerializedName("existing_customer") 
     Character existingCustomer;
+    @SerializedName("card_id") 
     String cardId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return partyId;
+    }
 
         
     public Message toData() {

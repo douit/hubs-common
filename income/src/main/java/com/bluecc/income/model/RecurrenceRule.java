@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,30 +37,55 @@ import com.bluecc.hubs.stub.RecurrenceRuleData;
 @REntity
 @MessageObject(value = RecurrenceRuleData.class,
         symbol = EntityNames.RecurrenceRule)
-public class RecurrenceRule implements IEventModel<RecurrenceRuleData.Builder>, Serializable {
+public class RecurrenceRule implements IEventModel<RecurrenceRuleData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String recurrenceRuleId;
+    @SerializedName("recurrence_rule_id")
+	@RId 
+    String recurrenceRuleId;
+    @SerializedName("frequency") 
     String frequency;
+    @SerializedName("until_date_time") 
     java.time.LocalDateTime untilDateTime;
+    @SerializedName("count_number") 
     Long countNumber;
+    @SerializedName("interval_number") 
     Long intervalNumber;
+    @SerializedName("by_second_list") 
     String bySecondList;
+    @SerializedName("by_minute_list") 
     String byMinuteList;
+    @SerializedName("by_hour_list") 
     String byHourList;
+    @SerializedName("by_day_list") 
     String byDayList;
+    @SerializedName("by_month_day_list") 
     String byMonthDayList;
+    @SerializedName("by_year_day_list") 
     String byYearDayList;
+    @SerializedName("by_week_no_list") 
     String byWeekNoList;
+    @SerializedName("by_month_list") 
     String byMonthList;
+    @SerializedName("by_set_pos_list") 
     String bySetPosList;
+    @SerializedName("week_start") 
     String weekStart;
+    @SerializedName("x_name") 
     String xName;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return recurrenceRuleId;
+    }
 
         
     public Message toData() {

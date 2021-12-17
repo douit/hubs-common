@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,23 +37,40 @@ import com.bluecc.hubs.stub.ProductStoreEmailSettingData;
 @REntity
 @MessageObject(value = ProductStoreEmailSettingData.class,
         symbol = EntityNames.ProductStoreEmailSetting)
-public class ProductStoreEmailSetting implements IEventModel<ProductStoreEmailSettingData.Builder>, Serializable {
+public class ProductStoreEmailSetting implements IEventModel<ProductStoreEmailSettingData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productStoreId;
-    @RIndex String emailType;
+    @SerializedName("product_store_id")
+	@RIndex 
+    String productStoreId;
+    @SerializedName("email_type")
+	@RIndex 
+    String emailType;
+    @SerializedName("body_screen_location") 
     String bodyScreenLocation;
+    @SerializedName("xslfo_attach_screen_location") 
     String xslfoAttachScreenLocation;
+    @SerializedName("from_address") 
     String fromAddress;
+    @SerializedName("cc_address") 
     String ccAddress;
+    @SerializedName("bcc_address") 
     String bccAddress;
+    @SerializedName("subject") 
     String subject;
+    @SerializedName("content_type") 
     String contentType;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

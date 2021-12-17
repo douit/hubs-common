@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,26 +42,47 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductCategoryData.class,
         symbol = EntityNames.ProductCategory)
-public class ProductCategory implements IEventModel<ProductCategoryFlatData.Builder>, Serializable, WithSuppliers, WithDescription {
+public class ProductCategory implements IEventModel<ProductCategoryFlatData.Builder>, HasId, Serializable, WithSuppliers, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String productCategoryId;
+    @SerializedName("product_category_id")
+	@RId 
+    String productCategoryId;
+    @SerializedName("product_category_type_id") 
     String productCategoryTypeId;
+    @SerializedName("primary_parent_category_id") 
     String primaryParentCategoryId;
+    @SerializedName("category_name") 
     String categoryName;
+    @SerializedName("description") 
     String description;
+    @SerializedName("long_description") 
     String longDescription;
+    @SerializedName("category_image_url") 
     String categoryImageUrl;
+    @SerializedName("link_one_image_url") 
     String linkOneImageUrl;
+    @SerializedName("link_two_image_url") 
     String linkTwoImageUrl;
+    @SerializedName("detail_screen") 
     String detailScreen;
+    @SerializedName("show_in_select") 
     Character showInSelect;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return productCategoryId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,23 +42,41 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = BillingAccountData.class,
         symbol = EntityNames.BillingAccount)
-public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, Serializable, WithSuppliers, WithDescription, WithPeriod {
+public class BillingAccount implements IEventModel<BillingAccountFlatData.Builder>, HasId, Serializable, WithSuppliers, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RId String billingAccountId;
+    @SerializedName("billing_account_id")
+	@RId 
+    String billingAccountId;
+    @SerializedName("account_limit") 
     java.math.BigDecimal accountLimit;
+    @SerializedName("account_currency_uom_id") 
     String accountCurrencyUomId;
+    @SerializedName("contact_mech_id") 
     String contactMechId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("description") 
     String description;
+    @SerializedName("external_account_id") 
     String externalAccountId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return billingAccountId;
+    }
 
         
     public Message toData() {

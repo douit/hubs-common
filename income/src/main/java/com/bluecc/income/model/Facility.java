@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,32 +37,59 @@ import com.bluecc.hubs.stub.FacilityData;
 @REntity
 @MessageObject(value = FacilityData.class,
         symbol = EntityNames.Facility)
-public class Facility implements IEventModel<FacilityData.Builder>, Serializable, WithLocation, WithDescription {
+public class Facility implements IEventModel<FacilityData.Builder>, HasId, Serializable, WithLocation, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String facilityId;
+    @SerializedName("facility_id")
+	@RId 
+    String facilityId;
+    @SerializedName("facility_type_id") 
     String facilityTypeId;
+    @SerializedName("parent_facility_id") 
     String parentFacilityId;
+    @SerializedName("owner_party_id") 
     String ownerPartyId;
+    @SerializedName("default_inventory_item_type_id") 
     String defaultInventoryItemTypeId;
+    @SerializedName("facility_name") 
     String facilityName;
+    @SerializedName("primary_facility_group_id") 
     String primaryFacilityGroupId;
+    @SerializedName("facility_size") 
     java.math.BigDecimal facilitySize;
+    @SerializedName("facility_size_uom_id") 
     String facilitySizeUomId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("default_days_to_ship") 
     Long defaultDaysToShip;
+    @SerializedName("opened_date") 
     java.time.LocalDateTime openedDate;
+    @SerializedName("closed_date") 
     java.time.LocalDateTime closedDate;
+    @SerializedName("description") 
     String description;
+    @SerializedName("default_dimension_uom_id") 
     String defaultDimensionUomId;
+    @SerializedName("default_weight_uom_id") 
     String defaultWeightUomId;
+    @SerializedName("geo_point_id") 
     String geoPointId;
+    @SerializedName("facility_level") 
     Long facilityLevel;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return facilityId;
+    }
 
         
     public Message toData() {

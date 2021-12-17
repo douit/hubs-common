@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,28 +37,51 @@ import com.bluecc.hubs.stub.WorkEffortPartyAssignmentData;
 @REntity
 @MessageObject(value = WorkEffortPartyAssignmentData.class,
         symbol = EntityNames.WorkEffortPartyAssignment)
-public class WorkEffortPartyAssignment implements IEventModel<WorkEffortPartyAssignmentData.Builder>, Serializable, WithPeriod {
+public class WorkEffortPartyAssignment implements IEventModel<WorkEffortPartyAssignmentData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String workEffortId;
-    @RIndex String partyId;
-    @RIndex String roleTypeId;
+    @SerializedName("work_effort_id")
+	@RIndex 
+    String workEffortId;
+    @SerializedName("party_id")
+	@RIndex 
+    String partyId;
+    @SerializedName("role_type_id")
+	@RIndex 
+    String roleTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("assigned_by_user_login_id") 
     String assignedByUserLoginId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("status_date_time") 
     java.time.LocalDateTime statusDateTime;
+    @SerializedName("expectation_enum_id") 
     String expectationEnumId;
+    @SerializedName("delegate_reason_enum_id") 
     String delegateReasonEnumId;
+    @SerializedName("facility_id") 
     String facilityId;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("must_rsvp") 
     Character mustRsvp;
+    @SerializedName("availability_status_id") 
     String availabilityStatusId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,18 +37,30 @@ import com.bluecc.hubs.stub.SystemPropertyData;
 @REntity
 @MessageObject(value = SystemPropertyData.class,
         symbol = EntityNames.SystemProperty)
-public class SystemProperty implements IEventModel<SystemPropertyData.Builder>, Serializable, WithDescription {
+public class SystemProperty implements IEventModel<SystemPropertyData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String systemResourceId;
-    @RIndex String systemPropertyId;
+    @SerializedName("system_resource_id")
+	@RIndex 
+    String systemResourceId;
+    @SerializedName("system_property_id")
+	@RIndex 
+    String systemPropertyId;
+    @SerializedName("system_property_value") 
     String systemPropertyValue;
+    @SerializedName("description") 
     String description;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

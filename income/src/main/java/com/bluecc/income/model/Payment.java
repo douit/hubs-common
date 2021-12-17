@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,34 +42,63 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = PaymentData.class,
         symbol = EntityNames.Payment)
-public class Payment implements IEventModel<PaymentFlatData.Builder>, Serializable, WithSuppliers {
+public class Payment implements IEventModel<PaymentFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String paymentId;
+    @SerializedName("payment_id")
+	@RId 
+    String paymentId;
+    @SerializedName("payment_type_id") 
     String paymentTypeId;
+    @SerializedName("payment_method_type_id") 
     String paymentMethodTypeId;
+    @SerializedName("payment_method_id") 
     String paymentMethodId;
+    @SerializedName("payment_gateway_response_id") 
     String paymentGatewayResponseId;
+    @SerializedName("payment_preference_id") 
     String paymentPreferenceId;
+    @SerializedName("party_id_from") 
     String partyIdFrom;
+    @SerializedName("party_id_to") 
     String partyIdTo;
+    @SerializedName("role_type_id_to") 
     String roleTypeIdTo;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("effective_date") 
     java.time.LocalDateTime effectiveDate;
+    @SerializedName("payment_ref_num") 
     String paymentRefNum;
+    @SerializedName("amount") 
     java.math.BigDecimal amount;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("fin_account_trans_id") 
     String finAccountTransId;
+    @SerializedName("override_gl_account_id") 
     String overrideGlAccountId;
+    @SerializedName("actual_currency_amount") 
     java.math.BigDecimal actualCurrencyAmount;
+    @SerializedName("actual_currency_uom_id") 
     String actualCurrencyUomId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return paymentId;
+    }
 
         
     public Message toData() {

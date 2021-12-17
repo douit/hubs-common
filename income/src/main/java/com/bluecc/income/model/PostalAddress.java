@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,32 +37,59 @@ import com.bluecc.hubs.stub.PostalAddressData;
 @REntity
 @MessageObject(value = PostalAddressData.class,
         symbol = EntityNames.PostalAddress)
-public class PostalAddress implements IEventModel<PostalAddressData.Builder>, Serializable, WithLocation {
+public class PostalAddress implements IEventModel<PostalAddressData.Builder>, HasId, Serializable, WithLocation {
     private static final long serialVersionUID = 1L;
 
-    @RId String contactMechId;
+    @SerializedName("contact_mech_id")
+	@RId 
+    String contactMechId;
+    @SerializedName("to_name") 
     String toName;
+    @SerializedName("attn_name") 
     String attnName;
+    @SerializedName("address1") 
     String address1;
+    @SerializedName("address2") 
     String address2;
+    @SerializedName("house_number") 
     Long houseNumber;
+    @SerializedName("house_number_ext") 
     String houseNumberExt;
+    @SerializedName("directions") 
     String directions;
+    @SerializedName("city") 
     String city;
+    @SerializedName("city_geo_id") 
     String cityGeoId;
+    @SerializedName("postal_code") 
     String postalCode;
+    @SerializedName("postal_code_ext") 
     String postalCodeExt;
+    @SerializedName("country_geo_id") 
     String countryGeoId;
+    @SerializedName("state_province_geo_id") 
     String stateProvinceGeoId;
+    @SerializedName("county_geo_id") 
     String countyGeoId;
+    @SerializedName("municipality_geo_id") 
     String municipalityGeoId;
+    @SerializedName("postal_code_geo_id") 
     String postalCodeGeoId;
+    @SerializedName("geo_point_id") 
     String geoPointId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return contactMechId;
+    }
 
         
     public Message toData() {

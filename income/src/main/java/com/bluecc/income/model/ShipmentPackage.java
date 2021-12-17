@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,25 +37,44 @@ import com.bluecc.hubs.stub.ShipmentPackageData;
 @REntity
 @MessageObject(value = ShipmentPackageData.class,
         symbol = EntityNames.ShipmentPackage)
-public class ShipmentPackage implements IEventModel<ShipmentPackageData.Builder>, Serializable {
+public class ShipmentPackage implements IEventModel<ShipmentPackageData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String shipmentId;
-    @RIndex String shipmentPackageSeqId;
+    @SerializedName("shipment_id")
+	@RIndex 
+    String shipmentId;
+    @SerializedName("shipment_package_seq_id")
+	@RIndex 
+    String shipmentPackageSeqId;
+    @SerializedName("shipment_box_type_id") 
     String shipmentBoxTypeId;
+    @SerializedName("date_created") 
     java.time.LocalDateTime dateCreated;
+    @SerializedName("box_length") 
     java.math.BigDecimal boxLength;
+    @SerializedName("box_height") 
     java.math.BigDecimal boxHeight;
+    @SerializedName("box_width") 
     java.math.BigDecimal boxWidth;
+    @SerializedName("dimension_uom_id") 
     String dimensionUomId;
+    @SerializedName("weight") 
     java.math.BigDecimal weight;
+    @SerializedName("weight_uom_id") 
     String weightUomId;
+    @SerializedName("insured_value") 
     java.math.BigDecimal insuredValue;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

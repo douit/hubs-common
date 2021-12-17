@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,27 +37,49 @@ import com.bluecc.hubs.stub.ItemIssuanceData;
 @REntity
 @MessageObject(value = ItemIssuanceData.class,
         symbol = EntityNames.ItemIssuance)
-public class ItemIssuance implements IEventModel<ItemIssuanceData.Builder>, Serializable {
+public class ItemIssuance implements IEventModel<ItemIssuanceData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String itemIssuanceId;
+    @SerializedName("item_issuance_id")
+	@RId 
+    String itemIssuanceId;
+    @SerializedName("order_id") 
     String orderId;
+    @SerializedName("order_item_seq_id") 
     String orderItemSeqId;
+    @SerializedName("ship_group_seq_id") 
     String shipGroupSeqId;
+    @SerializedName("inventory_item_id") 
     String inventoryItemId;
+    @SerializedName("shipment_id") 
     String shipmentId;
+    @SerializedName("shipment_item_seq_id") 
     String shipmentItemSeqId;
+    @SerializedName("fixed_asset_id") 
     String fixedAssetId;
+    @SerializedName("maint_hist_seq_id") 
     String maintHistSeqId;
+    @SerializedName("issued_date_time") 
     java.time.LocalDateTime issuedDateTime;
+    @SerializedName("issued_by_user_login_id") 
     String issuedByUserLoginId;
+    @SerializedName("quantity") 
     java.math.BigDecimal quantity;
+    @SerializedName("cancel_quantity") 
     java.math.BigDecimal cancelQuantity;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return itemIssuanceId;
+    }
 
         
     public Message toData() {

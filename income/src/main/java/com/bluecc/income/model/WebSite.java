@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,32 +42,59 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = WebSiteData.class,
         symbol = EntityNames.WebSite)
-public class WebSite implements IEventModel<WebSiteFlatData.Builder>, Serializable, WithSuppliers {
+public class WebSite implements IEventModel<WebSiteFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String webSiteId;
+    @SerializedName("web_site_id")
+	@RId 
+    String webSiteId;
+    @SerializedName("site_name") 
     String siteName;
+    @SerializedName("http_host") 
     String httpHost;
+    @SerializedName("http_port") 
     String httpPort;
+    @SerializedName("https_host") 
     String httpsHost;
+    @SerializedName("https_port") 
     String httpsPort;
+    @SerializedName("enable_https") 
     Character enableHttps;
+    @SerializedName("webapp_path") 
     String webappPath;
+    @SerializedName("standard_content_prefix") 
     String standardContentPrefix;
+    @SerializedName("secure_content_prefix") 
     String secureContentPrefix;
+    @SerializedName("cookie_domain") 
     String cookieDomain;
+    @SerializedName("visual_theme_set_id") 
     String visualThemeSetId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("allow_product_store_change") 
     Character allowProductStoreChange;
+    @SerializedName("hosted_path_alias") 
     String hostedPathAlias;
+    @SerializedName("is_default") 
     Character isDefault;
+    @SerializedName("display_maintenance_page") 
     Character displayMaintenancePage;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return webSiteId;
+    }
 
         
     public Message toData() {

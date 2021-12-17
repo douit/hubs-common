@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,45 +42,85 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = OrderHeaderData.class,
         symbol = EntityNames.OrderHeader)
-public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Serializable, WithSuppliers {
+public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String orderId;
+    @SerializedName("order_id")
+	@RId 
+    String orderId;
+    @SerializedName("order_type_id") 
     String orderTypeId;
+    @SerializedName("order_name") 
     String orderName;
+    @SerializedName("external_id") 
     String externalId;
+    @SerializedName("sales_channel_enum_id") 
     String salesChannelEnumId;
+    @SerializedName("order_date") 
     java.time.LocalDateTime orderDate;
+    @SerializedName("priority") 
     Character priority;
+    @SerializedName("entry_date") 
     java.time.LocalDateTime entryDate;
+    @SerializedName("pick_sheet_printed_date") 
     java.time.LocalDateTime pickSheetPrintedDate;
+    @SerializedName("visit_id") 
     String visitId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("created_by") 
     String createdBy;
+    @SerializedName("first_attempt_order_id") 
     String firstAttemptOrderId;
+    @SerializedName("currency_uom") 
     String currencyUom;
+    @SerializedName("sync_status_id") 
     String syncStatusId;
+    @SerializedName("billing_account_id") 
     String billingAccountId;
+    @SerializedName("origin_facility_id") 
     String originFacilityId;
+    @SerializedName("web_site_id") 
     String webSiteId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("agreement_id") 
     String agreementId;
+    @SerializedName("terminal_id") 
     String terminalId;
+    @SerializedName("transaction_id") 
     String transactionId;
+    @SerializedName("auto_order_shopping_list_id") 
     String autoOrderShoppingListId;
+    @SerializedName("needs_inventory_issuance") 
     Character needsInventoryIssuance;
+    @SerializedName("is_rush_order") 
     Character isRushOrder;
+    @SerializedName("internal_code") 
     String internalCode;
+    @SerializedName("remaining_sub_total") 
     java.math.BigDecimal remainingSubTotal;
+    @SerializedName("grand_total") 
     java.math.BigDecimal grandTotal;
+    @SerializedName("is_viewed") 
     Character isViewed;
+    @SerializedName("invoice_per_shipment") 
     Character invoicePerShipment;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return orderId;
+    }
 
         
     public Message toData() {

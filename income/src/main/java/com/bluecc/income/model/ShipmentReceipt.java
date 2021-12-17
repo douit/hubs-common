@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,30 +37,55 @@ import com.bluecc.hubs.stub.ShipmentReceiptData;
 @REntity
 @MessageObject(value = ShipmentReceiptData.class,
         symbol = EntityNames.ShipmentReceipt)
-public class ShipmentReceipt implements IEventModel<ShipmentReceiptData.Builder>, Serializable {
+public class ShipmentReceipt implements IEventModel<ShipmentReceiptData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String receiptId;
+    @SerializedName("receipt_id")
+	@RId 
+    String receiptId;
+    @SerializedName("inventory_item_id") 
     String inventoryItemId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("shipment_id") 
     String shipmentId;
+    @SerializedName("shipment_item_seq_id") 
     String shipmentItemSeqId;
+    @SerializedName("shipment_package_seq_id") 
     String shipmentPackageSeqId;
+    @SerializedName("order_id") 
     String orderId;
+    @SerializedName("order_item_seq_id") 
     String orderItemSeqId;
+    @SerializedName("return_id") 
     String returnId;
+    @SerializedName("return_item_seq_id") 
     String returnItemSeqId;
+    @SerializedName("rejection_id") 
     String rejectionId;
+    @SerializedName("received_by_user_login_id") 
     String receivedByUserLoginId;
+    @SerializedName("datetime_received") 
     java.time.LocalDateTime datetimeReceived;
+    @SerializedName("item_description") 
     String itemDescription;
+    @SerializedName("quantity_accepted") 
     java.math.BigDecimal quantityAccepted;
+    @SerializedName("quantity_rejected") 
     java.math.BigDecimal quantityRejected;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return receiptId;
+    }
 
         
     public Message toData() {

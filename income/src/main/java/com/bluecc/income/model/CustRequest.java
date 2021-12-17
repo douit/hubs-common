@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,41 +37,77 @@ import com.bluecc.hubs.stub.CustRequestData;
 @REntity
 @MessageObject(value = CustRequestData.class,
         symbol = EntityNames.CustRequest)
-public class CustRequest implements IEventModel<CustRequestData.Builder>, Serializable, WithDescription {
+public class CustRequest implements IEventModel<CustRequestData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String custRequestId;
+    @SerializedName("cust_request_id")
+	@RId 
+    String custRequestId;
+    @SerializedName("cust_request_type_id") 
     String custRequestTypeId;
+    @SerializedName("cust_request_category_id") 
     String custRequestCategoryId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("from_party_id") 
     String fromPartyId;
+    @SerializedName("priority") 
     Long priority;
+    @SerializedName("cust_request_date") 
     java.time.LocalDateTime custRequestDate;
+    @SerializedName("response_required_date") 
     java.time.LocalDateTime responseRequiredDate;
+    @SerializedName("cust_request_name") 
     String custRequestName;
+    @SerializedName("description") 
     String description;
+    @SerializedName("maximum_amount_uom_id") 
     String maximumAmountUomId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("sales_channel_enum_id") 
     String salesChannelEnumId;
+    @SerializedName("fulfill_contact_mech_id") 
     String fulfillContactMechId;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("open_date_time") 
     java.time.LocalDateTime openDateTime;
+    @SerializedName("closed_date_time") 
     java.time.LocalDateTime closedDateTime;
+    @SerializedName("internal_comment") 
     String internalComment;
+    @SerializedName("reason") 
     String reason;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("cust_estimated_milli_seconds") 
     Double custEstimatedMilliSeconds;
+    @SerializedName("cust_sequence_num") 
     Long custSequenceNum;
+    @SerializedName("parent_cust_request_id") 
     String parentCustRequestId;
+    @SerializedName("billed") 
     Character billed;
     
+    @Override
+    public String getId(){
+        return custRequestId;
+    }
 
         
     public Message toData() {

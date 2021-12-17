@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,27 +42,49 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = PartyData.class,
         symbol = EntityNames.Party)
-public class Party implements IEventModel<PartyFlatData.Builder>, Serializable, WithSuppliers, WithDescription {
+public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Serializable, WithSuppliers, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String partyId;
+    @SerializedName("party_id")
+	@RId 
+    String partyId;
+    @SerializedName("party_type_id") 
     String partyTypeId;
+    @SerializedName("external_id") 
     String externalId;
+    @SerializedName("preferred_currency_uom_id") 
     String preferredCurrencyUomId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("data_source_id") 
     String dataSourceId;
+    @SerializedName("is_unread") 
     Character isUnread;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return partyId;
+    }
 
         
     public Message toData() {

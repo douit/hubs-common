@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,33 +37,61 @@ import com.bluecc.hubs.stub.DataResourceData;
 @REntity
 @MessageObject(value = DataResourceData.class,
         symbol = EntityNames.DataResource)
-public class DataResource implements IEventModel<DataResourceData.Builder>, Serializable {
+public class DataResource implements IEventModel<DataResourceData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String dataResourceId;
+    @SerializedName("data_resource_id")
+	@RId 
+    String dataResourceId;
+    @SerializedName("data_resource_type_id") 
     String dataResourceTypeId;
+    @SerializedName("data_template_type_id") 
     String dataTemplateTypeId;
+    @SerializedName("data_category_id") 
     String dataCategoryId;
+    @SerializedName("data_source_id") 
     String dataSourceId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("data_resource_name") 
     String dataResourceName;
+    @SerializedName("locale_string") 
     String localeString;
+    @SerializedName("mime_type_id") 
     String mimeTypeId;
+    @SerializedName("character_set_id") 
     String characterSetId;
+    @SerializedName("object_info") 
     String objectInfo;
+    @SerializedName("survey_id") 
     String surveyId;
+    @SerializedName("survey_response_id") 
     String surveyResponseId;
+    @SerializedName("related_detail_id") 
     String relatedDetailId;
+    @SerializedName("is_public") 
     Character isPublic;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return dataResourceId;
+    }
 
         
     public Message toData() {

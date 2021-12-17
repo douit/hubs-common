@@ -3,9 +3,8 @@ package com.bluecc.income.exchange;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.hubs.fund.Util;
-import com.bluecc.hubs.stub.Indicator;
-import com.bluecc.hubs.stub.PersonFlatData;
-import com.bluecc.hubs.stub.ProductConfigData;
+import com.bluecc.hubs.stub.*;
+import com.bluecc.income.model.OrderHeader;
 import com.google.common.base.CaseFormat;
 import com.google.protobuf.Descriptors;
 import org.junit.Test;
@@ -18,6 +17,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.util.Arrays;
 import java.util.Map;
 
+import static com.bluecc.hubs.ProtoTypes.*;
+import static com.bluecc.hubs.ProtoTypes.getCurrency;
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
 public class FlatMessageCollectorTest {
@@ -90,4 +91,5 @@ public class FlatMessageCollectorTest {
         assertEquals("STANDARD", Util.childElements(doc.getDocumentElement())
                 .get(0).getAttribute("configTypeId"));
     }
+
 }

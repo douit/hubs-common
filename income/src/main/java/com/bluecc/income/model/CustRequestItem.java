@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,31 +37,56 @@ import com.bluecc.hubs.stub.CustRequestItemData;
 @REntity
 @MessageObject(value = CustRequestItemData.class,
         symbol = EntityNames.CustRequestItem)
-public class CustRequestItem implements IEventModel<CustRequestItemData.Builder>, Serializable, WithDescription {
+public class CustRequestItem implements IEventModel<CustRequestItemData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String custRequestId;
-    @RIndex String custRequestItemSeqId;
+    @SerializedName("cust_request_id")
+	@RIndex 
+    String custRequestId;
+    @SerializedName("cust_request_item_seq_id")
+	@RIndex 
+    String custRequestItemSeqId;
+    @SerializedName("cust_request_resolution_id") 
     String custRequestResolutionId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("priority") 
     Long priority;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("required_by_date") 
     java.time.LocalDateTime requiredByDate;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("quantity") 
     java.math.BigDecimal quantity;
+    @SerializedName("selected_amount") 
     java.math.BigDecimal selectedAmount;
+    @SerializedName("maximum_amount") 
     java.math.BigDecimal maximumAmount;
+    @SerializedName("reserv_start") 
     java.time.LocalDateTime reservStart;
+    @SerializedName("reserv_length") 
     java.math.BigDecimal reservLength;
+    @SerializedName("reserv_persons") 
     java.math.BigDecimal reservPersons;
+    @SerializedName("config_id") 
     String configId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("story") 
     String story;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

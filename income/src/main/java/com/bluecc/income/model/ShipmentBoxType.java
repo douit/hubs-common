@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,22 +37,39 @@ import com.bluecc.hubs.stub.ShipmentBoxTypeData;
 @REntity
 @MessageObject(value = ShipmentBoxTypeData.class,
         symbol = EntityNames.ShipmentBoxType)
-public class ShipmentBoxType implements IEventModel<ShipmentBoxTypeData.Builder>, Serializable, WithDescription {
+public class ShipmentBoxType implements IEventModel<ShipmentBoxTypeData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String shipmentBoxTypeId;
+    @SerializedName("shipment_box_type_id")
+	@RId 
+    String shipmentBoxTypeId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("dimension_uom_id") 
     String dimensionUomId;
+    @SerializedName("box_length") 
     java.math.BigDecimal boxLength;
+    @SerializedName("box_width") 
     java.math.BigDecimal boxWidth;
+    @SerializedName("box_height") 
     java.math.BigDecimal boxHeight;
+    @SerializedName("weight_uom_id") 
     String weightUomId;
+    @SerializedName("box_weight") 
     java.math.BigDecimal boxWeight;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return shipmentBoxTypeId;
+    }
 
         
     public Message toData() {

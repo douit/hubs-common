@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,93 +42,181 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductStoreData.class,
         symbol = EntityNames.ProductStore)
-public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, Serializable, WithSuppliers {
+public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String productStoreId;
+    @SerializedName("product_store_id")
+	@RId 
+    String productStoreId;
+    @SerializedName("primary_store_group_id") 
     String primaryStoreGroupId;
+    @SerializedName("store_name") 
     String storeName;
+    @SerializedName("company_name") 
     String companyName;
+    @SerializedName("title") 
     String title;
+    @SerializedName("subtitle") 
     String subtitle;
+    @SerializedName("pay_to_party_id") 
     String payToPartyId;
+    @SerializedName("days_to_cancel_non_pay") 
     Long daysToCancelNonPay;
+    @SerializedName("manual_auth_is_capture") 
     Character manualAuthIsCapture;
+    @SerializedName("prorate_shipping") 
     Character prorateShipping;
+    @SerializedName("prorate_taxes") 
     Character prorateTaxes;
+    @SerializedName("view_cart_on_add") 
     Character viewCartOnAdd;
+    @SerializedName("auto_save_cart") 
     Character autoSaveCart;
+    @SerializedName("auto_approve_reviews") 
     Character autoApproveReviews;
+    @SerializedName("is_demo_store") 
     Character isDemoStore;
+    @SerializedName("is_immediately_fulfilled") 
     Character isImmediatelyFulfilled;
+    @SerializedName("inventory_facility_id") 
     String inventoryFacilityId;
+    @SerializedName("one_inventory_facility") 
     Character oneInventoryFacility;
+    @SerializedName("check_inventory") 
     Character checkInventory;
+    @SerializedName("reserve_inventory") 
     Character reserveInventory;
+    @SerializedName("reserve_order_enum_id") 
     String reserveOrderEnumId;
+    @SerializedName("require_inventory") 
     Character requireInventory;
+    @SerializedName("balance_res_on_order_creation") 
     Character balanceResOnOrderCreation;
+    @SerializedName("requirement_method_enum_id") 
     String requirementMethodEnumId;
+    @SerializedName("order_number_prefix") 
     String orderNumberPrefix;
+    @SerializedName("default_locale_string") 
     String defaultLocaleString;
+    @SerializedName("default_currency_uom_id") 
     String defaultCurrencyUomId;
+    @SerializedName("default_time_zone_string") 
     String defaultTimeZoneString;
+    @SerializedName("default_sales_channel_enum_id") 
     String defaultSalesChannelEnumId;
+    @SerializedName("allow_password") 
     Character allowPassword;
+    @SerializedName("default_password") 
     String defaultPassword;
+    @SerializedName("explode_order_items") 
     Character explodeOrderItems;
+    @SerializedName("check_gc_balance") 
     Character checkGcBalance;
+    @SerializedName("retry_failed_auths") 
     Character retryFailedAuths;
+    @SerializedName("header_approved_status") 
     String headerApprovedStatus;
+    @SerializedName("item_approved_status") 
     String itemApprovedStatus;
+    @SerializedName("digital_item_approved_status") 
     String digitalItemApprovedStatus;
+    @SerializedName("header_declined_status") 
     String headerDeclinedStatus;
+    @SerializedName("item_declined_status") 
     String itemDeclinedStatus;
+    @SerializedName("header_cancel_status") 
     String headerCancelStatus;
+    @SerializedName("item_cancel_status") 
     String itemCancelStatus;
+    @SerializedName("auth_declined_message") 
     String authDeclinedMessage;
+    @SerializedName("auth_fraud_message") 
     String authFraudMessage;
+    @SerializedName("auth_error_message") 
     String authErrorMessage;
+    @SerializedName("visual_theme_id") 
     String visualThemeId;
+    @SerializedName("store_credit_account_enum_id") 
     String storeCreditAccountEnumId;
+    @SerializedName("use_primary_email_username") 
     Character usePrimaryEmailUsername;
+    @SerializedName("require_customer_role") 
     Character requireCustomerRole;
+    @SerializedName("auto_invoice_digital_items") 
     Character autoInvoiceDigitalItems;
+    @SerializedName("req_ship_addr_for_dig_items") 
     Character reqShipAddrForDigItems;
+    @SerializedName("show_checkout_gift_options") 
     Character showCheckoutGiftOptions;
+    @SerializedName("select_payment_type_per_item") 
     Character selectPaymentTypePerItem;
+    @SerializedName("show_prices_with_vat_tax") 
     Character showPricesWithVatTax;
+    @SerializedName("show_tax_is_exempt") 
     Character showTaxIsExempt;
+    @SerializedName("vat_tax_auth_geo_id") 
     String vatTaxAuthGeoId;
+    @SerializedName("vat_tax_auth_party_id") 
     String vatTaxAuthPartyId;
+    @SerializedName("enable_auto_suggestion_list") 
     Character enableAutoSuggestionList;
+    @SerializedName("enable_dig_prod_upload") 
     Character enableDigProdUpload;
+    @SerializedName("prod_search_exclude_variants") 
     Character prodSearchExcludeVariants;
+    @SerializedName("dig_prod_upload_category_id") 
     String digProdUploadCategoryId;
+    @SerializedName("auto_order_cc_try_exp") 
     Character autoOrderCcTryExp;
+    @SerializedName("auto_order_cc_try_other_cards") 
     Character autoOrderCcTryOtherCards;
+    @SerializedName("auto_order_cc_try_later_nsf") 
     Character autoOrderCcTryLaterNsf;
+    @SerializedName("auto_order_cc_try_later_max") 
     Long autoOrderCcTryLaterMax;
+    @SerializedName("store_credit_valid_days") 
     Long storeCreditValidDays;
+    @SerializedName("auto_approve_invoice") 
     Character autoApproveInvoice;
+    @SerializedName("auto_approve_order") 
     Character autoApproveOrder;
+    @SerializedName("ship_if_capture_fails") 
     Character shipIfCaptureFails;
+    @SerializedName("set_owner_upon_issuance") 
     Character setOwnerUponIssuance;
+    @SerializedName("req_return_inventory_receive") 
     Character reqReturnInventoryReceive;
+    @SerializedName("add_to_cart_remove_incompat") 
     Character addToCartRemoveIncompat;
+    @SerializedName("add_to_cart_replace_upsell") 
     Character addToCartReplaceUpsell;
+    @SerializedName("split_pay_pref_per_shp_grp") 
     Character splitPayPrefPerShpGrp;
+    @SerializedName("managed_by_lot") 
     Character managedByLot;
+    @SerializedName("show_out_of_stock_products") 
     Character showOutOfStockProducts;
+    @SerializedName("order_decimal_quantity") 
     Character orderDecimalQuantity;
+    @SerializedName("allow_comment") 
     Character allowComment;
+    @SerializedName("allocate_inventory") 
     Character allocateInventory;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return productStoreId;
+    }
 
         
     public Message toData() {

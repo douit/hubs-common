@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,33 @@ import com.bluecc.hubs.stub.SurveyMultiRespColumnData;
 @REntity
 @MessageObject(value = SurveyMultiRespColumnData.class,
         symbol = EntityNames.SurveyMultiRespColumn)
-public class SurveyMultiRespColumn implements IEventModel<SurveyMultiRespColumnData.Builder>, Serializable {
+public class SurveyMultiRespColumn implements IEventModel<SurveyMultiRespColumnData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String surveyId;
-    @RIndex String surveyMultiRespId;
-    @RIndex String surveyMultiRespColId;
+    @SerializedName("survey_id")
+	@RIndex 
+    String surveyId;
+    @SerializedName("survey_multi_resp_id")
+	@RIndex 
+    String surveyMultiRespId;
+    @SerializedName("survey_multi_resp_col_id")
+	@RIndex 
+    String surveyMultiRespColId;
+    @SerializedName("column_title") 
     String columnTitle;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

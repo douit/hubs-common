@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,26 +37,47 @@ import com.bluecc.hubs.stub.ProductContentData;
 @REntity
 @MessageObject(value = ProductContentData.class,
         symbol = EntityNames.ProductContent)
-public class ProductContent implements IEventModel<ProductContentData.Builder>, Serializable, WithPeriod {
+public class ProductContent implements IEventModel<ProductContentData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productId;
-    @RIndex String contentId;
-    @RIndex String productContentTypeId;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("content_id")
+	@RIndex 
+    String contentId;
+    @SerializedName("product_content_type_id")
+	@RIndex 
+    String productContentTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("purchase_from_date") 
     java.time.LocalDateTime purchaseFromDate;
+    @SerializedName("purchase_thru_date") 
     java.time.LocalDateTime purchaseThruDate;
+    @SerializedName("use_count_limit") 
     Long useCountLimit;
+    @SerializedName("use_time") 
     Long useTime;
+    @SerializedName("use_time_uom_id") 
     String useTimeUomId;
+    @SerializedName("use_role_type_id") 
     String useRoleTypeId;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

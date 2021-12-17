@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,32 @@ import com.bluecc.hubs.stub.WorkEffortSkillStandardData;
 @REntity
 @MessageObject(value = WorkEffortSkillStandardData.class,
         symbol = EntityNames.WorkEffortSkillStandard)
-public class WorkEffortSkillStandard implements IEventModel<WorkEffortSkillStandardData.Builder>, Serializable {
+public class WorkEffortSkillStandard implements IEventModel<WorkEffortSkillStandardData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String workEffortId;
-    @RIndex String skillTypeId;
+    @SerializedName("work_effort_id")
+	@RIndex 
+    String workEffortId;
+    @SerializedName("skill_type_id")
+	@RIndex 
+    String skillTypeId;
+    @SerializedName("estimated_num_people") 
     Double estimatedNumPeople;
+    @SerializedName("estimated_duration") 
     Double estimatedDuration;
+    @SerializedName("estimated_cost") 
     java.math.BigDecimal estimatedCost;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

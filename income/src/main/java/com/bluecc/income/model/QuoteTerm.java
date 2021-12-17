@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,22 +37,39 @@ import com.bluecc.hubs.stub.QuoteTermData;
 @REntity
 @MessageObject(value = QuoteTermData.class,
         symbol = EntityNames.QuoteTerm)
-public class QuoteTerm implements IEventModel<QuoteTermData.Builder>, Serializable, WithDescription {
+public class QuoteTerm implements IEventModel<QuoteTermData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String termTypeId;
-    @RIndex String quoteId;
-    @RIndex String quoteItemSeqId;
+    @SerializedName("term_type_id")
+	@RIndex 
+    String termTypeId;
+    @SerializedName("quote_id")
+	@RIndex 
+    String quoteId;
+    @SerializedName("quote_item_seq_id")
+	@RIndex 
+    String quoteItemSeqId;
+    @SerializedName("term_value") 
     Long termValue;
+    @SerializedName("uom_id") 
     String uomId;
+    @SerializedName("term_days") 
     Long termDays;
+    @SerializedName("text_value") 
     String textValue;
+    @SerializedName("description") 
     String description;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

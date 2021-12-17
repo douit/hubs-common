@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,38 +37,71 @@ import com.bluecc.hubs.stub.OrderPaymentPreferenceData;
 @REntity
 @MessageObject(value = OrderPaymentPreferenceData.class,
         symbol = EntityNames.OrderPaymentPreference)
-public class OrderPaymentPreference implements IEventModel<OrderPaymentPreferenceData.Builder>, Serializable {
+public class OrderPaymentPreference implements IEventModel<OrderPaymentPreferenceData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String orderPaymentPreferenceId;
+    @SerializedName("order_payment_preference_id")
+	@RId 
+    String orderPaymentPreferenceId;
+    @SerializedName("order_id") 
     String orderId;
+    @SerializedName("order_item_seq_id") 
     String orderItemSeqId;
+    @SerializedName("ship_group_seq_id") 
     String shipGroupSeqId;
+    @SerializedName("product_price_purpose_id") 
     String productPricePurposeId;
+    @SerializedName("payment_method_type_id") 
     String paymentMethodTypeId;
+    @SerializedName("payment_method_id") 
     String paymentMethodId;
+    @SerializedName("fin_account_id") 
     String finAccountId;
+    @SerializedName("security_code") 
     String securityCode;
+    @SerializedName("track2") 
     String track2;
+    @SerializedName("present_flag") 
     Character presentFlag;
+    @SerializedName("swiped_flag") 
     Character swipedFlag;
+    @SerializedName("overflow_flag") 
     Character overflowFlag;
+    @SerializedName("max_amount") 
     java.math.BigDecimal maxAmount;
+    @SerializedName("process_attempt") 
     Long processAttempt;
+    @SerializedName("billing_postal_code") 
     String billingPostalCode;
+    @SerializedName("manual_auth_code") 
     String manualAuthCode;
+    @SerializedName("manual_ref_num") 
     String manualRefNum;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("needs_nsf_retry") 
     Character needsNsfRetry;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return orderPaymentPreferenceId;
+    }
 
         
     public Message toData() {

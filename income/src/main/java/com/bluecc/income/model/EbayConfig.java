@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,24 +37,43 @@ import com.bluecc.hubs.stub.EbayConfigData;
 @REntity
 @MessageObject(value = EbayConfigData.class,
         symbol = EntityNames.EbayConfig)
-public class EbayConfig implements IEventModel<EbayConfigData.Builder>, Serializable {
+public class EbayConfig implements IEventModel<EbayConfigData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String productStoreId;
+    @SerializedName("product_store_id")
+	@RId 
+    String productStoreId;
+    @SerializedName("dev_id") 
     String devId;
+    @SerializedName("app_id") 
     String appId;
+    @SerializedName("cert_id") 
     String certId;
+    @SerializedName("token") 
     String token;
+    @SerializedName("compatibility_level") 
     String compatibilityLevel;
+    @SerializedName("site_id") 
     String siteId;
+    @SerializedName("xml_gateway_uri") 
     String xmlGatewayUri;
+    @SerializedName("custom_xml") 
     String customXml;
+    @SerializedName("web_site_id") 
     String webSiteId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return productStoreId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,42 +37,79 @@ import com.bluecc.hubs.stub.ShipmentCostEstimateData;
 @REntity
 @MessageObject(value = ShipmentCostEstimateData.class,
         symbol = EntityNames.ShipmentCostEstimate)
-public class ShipmentCostEstimate implements IEventModel<ShipmentCostEstimateData.Builder>, Serializable {
+public class ShipmentCostEstimate implements IEventModel<ShipmentCostEstimateData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String shipmentCostEstimateId;
+    @SerializedName("shipment_cost_estimate_id")
+	@RId 
+    String shipmentCostEstimateId;
+    @SerializedName("shipment_method_type_id") 
     String shipmentMethodTypeId;
+    @SerializedName("carrier_party_id") 
     String carrierPartyId;
+    @SerializedName("carrier_role_type_id") 
     String carrierRoleTypeId;
+    @SerializedName("product_store_ship_meth_id") 
     String productStoreShipMethId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("role_type_id") 
     String roleTypeId;
+    @SerializedName("geo_id_to") 
     String geoIdTo;
+    @SerializedName("geo_id_from") 
     String geoIdFrom;
+    @SerializedName("weight_break_id") 
     String weightBreakId;
+    @SerializedName("weight_uom_id") 
     String weightUomId;
+    @SerializedName("weight_unit_price") 
     java.math.BigDecimal weightUnitPrice;
+    @SerializedName("quantity_break_id") 
     String quantityBreakId;
+    @SerializedName("quantity_uom_id") 
     String quantityUomId;
+    @SerializedName("quantity_unit_price") 
     java.math.BigDecimal quantityUnitPrice;
+    @SerializedName("price_break_id") 
     String priceBreakId;
+    @SerializedName("price_uom_id") 
     String priceUomId;
+    @SerializedName("price_unit_price") 
     java.math.BigDecimal priceUnitPrice;
+    @SerializedName("order_flat_price") 
     java.math.BigDecimal orderFlatPrice;
+    @SerializedName("order_price_percent") 
     java.math.BigDecimal orderPricePercent;
+    @SerializedName("order_item_flat_price") 
     java.math.BigDecimal orderItemFlatPrice;
+    @SerializedName("shipping_price_percent") 
     java.math.BigDecimal shippingPricePercent;
+    @SerializedName("product_feature_group_id") 
     String productFeatureGroupId;
+    @SerializedName("oversize_unit") 
     java.math.BigDecimal oversizeUnit;
+    @SerializedName("oversize_price") 
     java.math.BigDecimal oversizePrice;
+    @SerializedName("feature_percent") 
     java.math.BigDecimal featurePercent;
+    @SerializedName("feature_price") 
     java.math.BigDecimal featurePrice;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return shipmentCostEstimateId;
+    }
 
         
     public Message toData() {

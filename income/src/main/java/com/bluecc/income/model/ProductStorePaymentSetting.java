@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,22 +37,39 @@ import com.bluecc.hubs.stub.ProductStorePaymentSettingData;
 @REntity
 @MessageObject(value = ProductStorePaymentSettingData.class,
         symbol = EntityNames.ProductStorePaymentSetting)
-public class ProductStorePaymentSetting implements IEventModel<ProductStorePaymentSettingData.Builder>, Serializable {
+public class ProductStorePaymentSetting implements IEventModel<ProductStorePaymentSettingData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productStoreId;
-    @RIndex String paymentMethodTypeId;
-    @RIndex String paymentServiceTypeEnumId;
+    @SerializedName("product_store_id")
+	@RIndex 
+    String productStoreId;
+    @SerializedName("payment_method_type_id")
+	@RIndex 
+    String paymentMethodTypeId;
+    @SerializedName("payment_service_type_enum_id")
+	@RIndex 
+    String paymentServiceTypeEnumId;
+    @SerializedName("payment_service") 
     String paymentService;
+    @SerializedName("payment_custom_method_id") 
     String paymentCustomMethodId;
+    @SerializedName("payment_gateway_config_id") 
     String paymentGatewayConfigId;
+    @SerializedName("payment_properties_path") 
     String paymentPropertiesPath;
+    @SerializedName("apply_to_all_products") 
     Character applyToAllProducts;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

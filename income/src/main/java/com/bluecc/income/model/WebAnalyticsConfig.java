@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,17 +37,28 @@ import com.bluecc.hubs.stub.WebAnalyticsConfigData;
 @REntity
 @MessageObject(value = WebAnalyticsConfigData.class,
         symbol = EntityNames.WebAnalyticsConfig)
-public class WebAnalyticsConfig implements IEventModel<WebAnalyticsConfigData.Builder>, Serializable {
+public class WebAnalyticsConfig implements IEventModel<WebAnalyticsConfigData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String webSiteId;
-    @RIndex String webAnalyticsTypeId;
+    @SerializedName("web_site_id")
+	@RIndex 
+    String webSiteId;
+    @SerializedName("web_analytics_type_id")
+	@RIndex 
+    String webAnalyticsTypeId;
+    @SerializedName("web_analytics_code") 
     String webAnalyticsCode;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

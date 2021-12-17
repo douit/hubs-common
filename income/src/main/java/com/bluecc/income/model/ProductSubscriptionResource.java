@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,33 +37,60 @@ import com.bluecc.hubs.stub.ProductSubscriptionResourceData;
 @REntity
 @MessageObject(value = ProductSubscriptionResourceData.class,
         symbol = EntityNames.ProductSubscriptionResource)
-public class ProductSubscriptionResource implements IEventModel<ProductSubscriptionResourceData.Builder>, Serializable, WithPeriod {
+public class ProductSubscriptionResource implements IEventModel<ProductSubscriptionResourceData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productId;
-    @RIndex String subscriptionResourceId;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("subscription_resource_id")
+	@RIndex 
+    String subscriptionResourceId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("purchase_from_date") 
     java.time.LocalDateTime purchaseFromDate;
+    @SerializedName("purchase_thru_date") 
     java.time.LocalDateTime purchaseThruDate;
+    @SerializedName("max_life_time") 
     Long maxLifeTime;
+    @SerializedName("max_life_time_uom_id") 
     String maxLifeTimeUomId;
+    @SerializedName("available_time") 
     Long availableTime;
+    @SerializedName("available_time_uom_id") 
     String availableTimeUomId;
+    @SerializedName("use_count_limit") 
     Long useCountLimit;
+    @SerializedName("use_time") 
     Long useTime;
+    @SerializedName("use_time_uom_id") 
     String useTimeUomId;
+    @SerializedName("use_role_type_id") 
     String useRoleTypeId;
+    @SerializedName("automatic_extend") 
     Character automaticExtend;
+    @SerializedName("cancl_autm_ext_time") 
     Long canclAutmExtTime;
+    @SerializedName("cancl_autm_ext_time_uom_id") 
     String canclAutmExtTimeUomId;
+    @SerializedName("grace_period_on_expiry") 
     Long gracePeriodOnExpiry;
+    @SerializedName("grace_period_on_expiry_uom_id") 
     String gracePeriodOnExpiryUomId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

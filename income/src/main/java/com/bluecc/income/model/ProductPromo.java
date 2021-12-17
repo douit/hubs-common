@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,29 +37,53 @@ import com.bluecc.hubs.stub.ProductPromoData;
 @REntity
 @MessageObject(value = ProductPromoData.class,
         symbol = EntityNames.ProductPromo)
-public class ProductPromo implements IEventModel<ProductPromoData.Builder>, Serializable {
+public class ProductPromo implements IEventModel<ProductPromoData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String productPromoId;
+    @SerializedName("product_promo_id")
+	@RId 
+    String productPromoId;
+    @SerializedName("promo_name") 
     String promoName;
+    @SerializedName("promo_text") 
     String promoText;
+    @SerializedName("user_entered") 
     Character userEntered;
+    @SerializedName("show_to_customer") 
     Character showToCustomer;
+    @SerializedName("require_code") 
     Character requireCode;
+    @SerializedName("use_limit_per_order") 
     Long useLimitPerOrder;
+    @SerializedName("use_limit_per_customer") 
     Long useLimitPerCustomer;
+    @SerializedName("use_limit_per_promotion") 
     Long useLimitPerPromotion;
+    @SerializedName("billback_factor") 
     java.math.BigDecimal billbackFactor;
+    @SerializedName("override_org_party_id") 
     String overrideOrgPartyId;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return productPromoId;
+    }
 
         
     public Message toData() {

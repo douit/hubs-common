@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,27 +42,49 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = QuoteData.class,
         symbol = EntityNames.Quote)
-public class Quote implements IEventModel<QuoteFlatData.Builder>, Serializable, WithSuppliers, WithDescription {
+public class Quote implements IEventModel<QuoteFlatData.Builder>, HasId, Serializable, WithSuppliers, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String quoteId;
+    @SerializedName("quote_id")
+	@RId 
+    String quoteId;
+    @SerializedName("quote_type_id") 
     String quoteTypeId;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("issue_date") 
     java.time.LocalDateTime issueDate;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("sales_channel_enum_id") 
     String salesChannelEnumId;
+    @SerializedName("valid_from_date") 
     java.time.LocalDateTime validFromDate;
+    @SerializedName("valid_thru_date") 
     java.time.LocalDateTime validThruDate;
+    @SerializedName("quote_name") 
     String quoteName;
+    @SerializedName("description") 
     String description;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return quoteId;
+    }
 
         
     public Message toData() {

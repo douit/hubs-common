@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,22 +37,39 @@ import com.bluecc.hubs.stub.PartyTaxAuthInfoData;
 @REntity
 @MessageObject(value = PartyTaxAuthInfoData.class,
         symbol = EntityNames.PartyTaxAuthInfo)
-public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builder>, Serializable, WithPeriod {
+public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String partyId;
-    @RIndex String taxAuthGeoId;
-    @RIndex String taxAuthPartyId;
+    @SerializedName("party_id")
+	@RIndex 
+    String partyId;
+    @SerializedName("tax_auth_geo_id")
+	@RIndex 
+    String taxAuthGeoId;
+    @SerializedName("tax_auth_party_id")
+	@RIndex 
+    String taxAuthPartyId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("party_tax_id") 
     String partyTaxId;
+    @SerializedName("is_exempt") 
     Character isExempt;
+    @SerializedName("is_nexus") 
     Character isNexus;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

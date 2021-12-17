@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,27 +37,49 @@ import com.bluecc.hubs.stub.ProductAssocData;
 @REntity
 @MessageObject(value = ProductAssocData.class,
         symbol = EntityNames.ProductAssoc)
-public class ProductAssoc implements IEventModel<ProductAssocData.Builder>, Serializable, WithPeriod {
+public class ProductAssoc implements IEventModel<ProductAssocData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productId;
-    @RIndex String productIdTo;
-    @RIndex String productAssocTypeId;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("product_id_to")
+	@RIndex 
+    String productIdTo;
+    @SerializedName("product_assoc_type_id")
+	@RIndex 
+    String productAssocTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("reason") 
     String reason;
+    @SerializedName("quantity") 
     java.math.BigDecimal quantity;
+    @SerializedName("scrap_factor") 
     java.math.BigDecimal scrapFactor;
+    @SerializedName("instruction") 
     String instruction;
+    @SerializedName("routing_work_effort_id") 
     String routingWorkEffortId;
+    @SerializedName("estimate_calc_method") 
     String estimateCalcMethod;
+    @SerializedName("recurrence_info_id") 
     String recurrenceInfoId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

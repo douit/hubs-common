@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,20 +37,34 @@ import com.bluecc.hubs.stub.ProductStoreKeywordOvrdData;
 @REntity
 @MessageObject(value = ProductStoreKeywordOvrdData.class,
         symbol = EntityNames.ProductStoreKeywordOvrd)
-public class ProductStoreKeywordOvrd implements IEventModel<ProductStoreKeywordOvrdData.Builder>, Serializable, WithPeriod {
+public class ProductStoreKeywordOvrd implements IEventModel<ProductStoreKeywordOvrdData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productStoreId;
-    @RIndex String keyword;
+    @SerializedName("product_store_id")
+	@RIndex 
+    String productStoreId;
+    @SerializedName("keyword")
+	@RIndex 
+    String keyword;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("target") 
     String target;
+    @SerializedName("target_type_enum_id") 
     String targetTypeEnumId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

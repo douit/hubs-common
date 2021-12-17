@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,20 +37,35 @@ import com.bluecc.hubs.stub.ProductConfigItemData;
 @REntity
 @MessageObject(value = ProductConfigItemData.class,
         symbol = EntityNames.ProductConfigItem)
-public class ProductConfigItem implements IEventModel<ProductConfigItemData.Builder>, Serializable, WithDescription {
+public class ProductConfigItem implements IEventModel<ProductConfigItemData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String configItemId;
+    @SerializedName("config_item_id")
+	@RId 
+    String configItemId;
+    @SerializedName("config_item_type_id") 
     String configItemTypeId;
+    @SerializedName("config_item_name") 
     String configItemName;
+    @SerializedName("description") 
     String description;
+    @SerializedName("long_description") 
     String longDescription;
+    @SerializedName("image_url") 
     String imageUrl;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return configItemId;
+    }
 
         
     public Message toData() {

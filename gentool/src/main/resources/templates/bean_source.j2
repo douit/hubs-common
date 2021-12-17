@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,12 +42,20 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = {{ent.messageType}}.class,
         symbol = EntityNames.{{ent.name}})
-public class {{ent.name}} implements IEventModel<{{ent.flatMessageType}}.Builder>, {{ent.facets}} {
+public class {{ent.name}} implements IEventModel<{{ent.flatMessageType}}.Builder>, HasId, {{ent.facets}} {
     private static final long serialVersionUID = 1L;
 
     {% for f in ent.fields -%}
-    {{ent.getAnnotation(f)}}{{f.javaType}} {{f.name}};
+    {{ent.getAnnotation(f)}} 
+    {{f.javaType}} {{f.name}};
     {% endfor %}
+
+    {%- if !ent.combine %}
+    @Override
+    public String getId(){
+        return {{ent.pk}};
+    }
+    {%- endif %}
 
     {{conv_part}}
     {{head_part}}

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,22 +37,38 @@ import com.bluecc.hubs.stub.ProductFacilityData;
 @REntity
 @MessageObject(value = ProductFacilityData.class,
         symbol = EntityNames.ProductFacility)
-public class ProductFacility implements IEventModel<ProductFacilityData.Builder>, Serializable {
+public class ProductFacility implements IEventModel<ProductFacilityData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productId;
-    @RIndex String facilityId;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("facility_id")
+	@RIndex 
+    String facilityId;
+    @SerializedName("minimum_stock") 
     java.math.BigDecimal minimumStock;
+    @SerializedName("reorder_quantity") 
     java.math.BigDecimal reorderQuantity;
+    @SerializedName("days_to_ship") 
     Long daysToShip;
+    @SerializedName("replenish_method_enum_id") 
     String replenishMethodEnumId;
+    @SerializedName("last_inventory_count") 
     java.math.BigDecimal lastInventoryCount;
+    @SerializedName("requirement_method_enum_id") 
     String requirementMethodEnumId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

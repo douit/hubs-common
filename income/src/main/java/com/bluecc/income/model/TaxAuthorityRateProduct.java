@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,30 +37,55 @@ import com.bluecc.hubs.stub.TaxAuthorityRateProductData;
 @REntity
 @MessageObject(value = TaxAuthorityRateProductData.class,
         symbol = EntityNames.TaxAuthorityRateProduct)
-public class TaxAuthorityRateProduct implements IEventModel<TaxAuthorityRateProductData.Builder>, Serializable, WithDescription, WithPeriod {
+public class TaxAuthorityRateProduct implements IEventModel<TaxAuthorityRateProductData.Builder>, HasId, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RId String taxAuthorityRateSeqId;
+    @SerializedName("tax_authority_rate_seq_id")
+	@RId 
+    String taxAuthorityRateSeqId;
+    @SerializedName("tax_auth_geo_id") 
     String taxAuthGeoId;
+    @SerializedName("tax_auth_party_id") 
     String taxAuthPartyId;
+    @SerializedName("tax_authority_rate_type_id") 
     String taxAuthorityRateTypeId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("product_category_id") 
     String productCategoryId;
+    @SerializedName("title_transfer_enum_id") 
     String titleTransferEnumId;
+    @SerializedName("min_item_price") 
     java.math.BigDecimal minItemPrice;
+    @SerializedName("min_purchase") 
     java.math.BigDecimal minPurchase;
+    @SerializedName("tax_shipping") 
     Character taxShipping;
+    @SerializedName("tax_percentage") 
     java.math.BigDecimal taxPercentage;
+    @SerializedName("tax_promotions") 
     Character taxPromotions;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("description") 
     String description;
+    @SerializedName("is_tax_in_shipping_price") 
     Character isTaxInShippingPrice;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return taxAuthorityRateSeqId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,23 +37,40 @@ import com.bluecc.hubs.stub.SurveyQuestionOptionData;
 @REntity
 @MessageObject(value = SurveyQuestionOptionData.class,
         symbol = EntityNames.SurveyQuestionOption)
-public class SurveyQuestionOption implements IEventModel<SurveyQuestionOptionData.Builder>, Serializable, WithDescription {
+public class SurveyQuestionOption implements IEventModel<SurveyQuestionOptionData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String surveyQuestionId;
-    @RIndex String surveyOptionSeqId;
+    @SerializedName("survey_question_id")
+	@RIndex 
+    String surveyQuestionId;
+    @SerializedName("survey_option_seq_id")
+	@RIndex 
+    String surveyOptionSeqId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("amount_base") 
     java.math.BigDecimal amountBase;
+    @SerializedName("amount_base_uom_id") 
     String amountBaseUomId;
+    @SerializedName("weight_factor") 
     Double weightFactor;
+    @SerializedName("duration") 
     Long duration;
+    @SerializedName("duration_uom_id") 
     String durationUomId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

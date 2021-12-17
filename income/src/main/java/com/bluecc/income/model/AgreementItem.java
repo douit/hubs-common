@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,20 +37,34 @@ import com.bluecc.hubs.stub.AgreementItemData;
 @REntity
 @MessageObject(value = AgreementItemData.class,
         symbol = EntityNames.AgreementItem)
-public class AgreementItem implements IEventModel<AgreementItemData.Builder>, Serializable {
+public class AgreementItem implements IEventModel<AgreementItemData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String agreementId;
-    @RIndex String agreementItemSeqId;
+    @SerializedName("agreement_id")
+	@RIndex 
+    String agreementId;
+    @SerializedName("agreement_item_seq_id")
+	@RIndex 
+    String agreementItemSeqId;
+    @SerializedName("agreement_item_type_id") 
     String agreementItemTypeId;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("agreement_text") 
     String agreementText;
+    @SerializedName("agreement_image") 
     byte[] agreementImage;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

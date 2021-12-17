@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,32 @@ import com.bluecc.hubs.stub.ProductPriceActionData;
 @REntity
 @MessageObject(value = ProductPriceActionData.class,
         symbol = EntityNames.ProductPriceAction)
-public class ProductPriceAction implements IEventModel<ProductPriceActionData.Builder>, Serializable {
+public class ProductPriceAction implements IEventModel<ProductPriceActionData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productPriceRuleId;
-    @RIndex String productPriceActionSeqId;
+    @SerializedName("product_price_rule_id")
+	@RIndex 
+    String productPriceRuleId;
+    @SerializedName("product_price_action_seq_id")
+	@RIndex 
+    String productPriceActionSeqId;
+    @SerializedName("product_price_action_type_id") 
     String productPriceActionTypeId;
+    @SerializedName("amount") 
     java.math.BigDecimal amount;
+    @SerializedName("rate_code") 
     String rateCode;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

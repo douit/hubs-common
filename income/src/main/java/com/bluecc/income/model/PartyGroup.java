@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,24 +42,43 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = PartyGroupData.class,
         symbol = EntityNames.PartyGroup)
-public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, Serializable, WithSuppliers {
+public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String partyId;
+    @SerializedName("party_id")
+	@RId 
+    String partyId;
+    @SerializedName("group_name") 
     String groupName;
+    @SerializedName("group_name_local") 
     String groupNameLocal;
+    @SerializedName("office_site_name") 
     String officeSiteName;
+    @SerializedName("annual_revenue") 
     java.math.BigDecimal annualRevenue;
+    @SerializedName("num_employees") 
     Long numEmployees;
+    @SerializedName("ticker_symbol") 
     String tickerSymbol;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("logo_image_url") 
     String logoImageUrl;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return partyId;
+    }
 
         
     public Message toData() {

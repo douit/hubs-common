@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,33 @@ import com.bluecc.hubs.stub.InvoiceRoleData;
 @REntity
 @MessageObject(value = InvoiceRoleData.class,
         symbol = EntityNames.InvoiceRole)
-public class InvoiceRole implements IEventModel<InvoiceRoleData.Builder>, Serializable {
+public class InvoiceRole implements IEventModel<InvoiceRoleData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String invoiceId;
-    @RIndex String partyId;
-    @RIndex String roleTypeId;
+    @SerializedName("invoice_id")
+	@RIndex 
+    String invoiceId;
+    @SerializedName("party_id")
+	@RIndex 
+    String partyId;
+    @SerializedName("role_type_id")
+	@RIndex 
+    String roleTypeId;
+    @SerializedName("datetime_performed") 
     java.time.LocalDateTime datetimePerformed;
+    @SerializedName("percentage") 
     java.math.BigDecimal percentage;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

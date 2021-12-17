@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,30 +37,55 @@ import com.bluecc.hubs.stub.TechDataCalendarWeekData;
 @REntity
 @MessageObject(value = TechDataCalendarWeekData.class,
         symbol = EntityNames.TechDataCalendarWeek)
-public class TechDataCalendarWeek implements IEventModel<TechDataCalendarWeekData.Builder>, Serializable, WithDescription {
+public class TechDataCalendarWeek implements IEventModel<TechDataCalendarWeekData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String calendarWeekId;
+    @SerializedName("calendar_week_id")
+	@RId 
+    String calendarWeekId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("monday_start_time") 
     java.time.LocalTime mondayStartTime;
+    @SerializedName("monday_capacity") 
     Double mondayCapacity;
+    @SerializedName("tuesday_start_time") 
     java.time.LocalTime tuesdayStartTime;
+    @SerializedName("tuesday_capacity") 
     Double tuesdayCapacity;
+    @SerializedName("wednesday_start_time") 
     java.time.LocalTime wednesdayStartTime;
+    @SerializedName("wednesday_capacity") 
     Double wednesdayCapacity;
+    @SerializedName("thursday_start_time") 
     java.time.LocalTime thursdayStartTime;
+    @SerializedName("thursday_capacity") 
     Double thursdayCapacity;
+    @SerializedName("friday_start_time") 
     java.time.LocalTime fridayStartTime;
+    @SerializedName("friday_capacity") 
     Double fridayCapacity;
+    @SerializedName("saturday_start_time") 
     java.time.LocalTime saturdayStartTime;
+    @SerializedName("saturday_capacity") 
     Double saturdayCapacity;
+    @SerializedName("sunday_start_time") 
     java.time.LocalTime sundayStartTime;
+    @SerializedName("sunday_capacity") 
     Double sundayCapacity;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return calendarWeekId;
+    }
 
         
     public Message toData() {

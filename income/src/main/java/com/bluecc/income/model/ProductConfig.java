@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,24 +37,43 @@ import com.bluecc.hubs.stub.ProductConfigData;
 @REntity
 @MessageObject(value = ProductConfigData.class,
         symbol = EntityNames.ProductConfig)
-public class ProductConfig implements IEventModel<ProductConfigData.Builder>, Serializable, WithDescription, WithPeriod {
+public class ProductConfig implements IEventModel<ProductConfigData.Builder>, HasId, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productId;
-    @RIndex String configItemId;
-    @RIndex Long sequenceNum;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("config_item_id")
+	@RIndex 
+    String configItemId;
+    @SerializedName("sequence_num")
+	@RIndex 
+    Long sequenceNum;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("description") 
     String description;
+    @SerializedName("long_description") 
     String longDescription;
+    @SerializedName("config_type_id") 
     String configTypeId;
+    @SerializedName("default_config_option_id") 
     String defaultConfigOptionId;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("is_mandatory") 
     Character isMandatory;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

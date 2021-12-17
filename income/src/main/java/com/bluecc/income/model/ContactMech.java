@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,17 +37,29 @@ import com.bluecc.hubs.stub.ContactMechData;
 @REntity
 @MessageObject(value = ContactMechData.class,
         symbol = EntityNames.ContactMech)
-public class ContactMech implements IEventModel<ContactMechData.Builder>, Serializable {
+public class ContactMech implements IEventModel<ContactMechData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String contactMechId;
+    @SerializedName("contact_mech_id")
+	@RId 
+    String contactMechId;
+    @SerializedName("contact_mech_type_id") 
     String contactMechTypeId;
+    @SerializedName("info_string") 
     String infoString;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return contactMechId;
+    }
 
         
     public Message toData() {

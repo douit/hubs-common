@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,31 +42,57 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = InvoiceData.class,
         symbol = EntityNames.Invoice)
-public class Invoice implements IEventModel<InvoiceFlatData.Builder>, Serializable, WithSuppliers, WithDescription {
+public class Invoice implements IEventModel<InvoiceFlatData.Builder>, HasId, Serializable, WithSuppliers, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String invoiceId;
+    @SerializedName("invoice_id")
+	@RId 
+    String invoiceId;
+    @SerializedName("invoice_type_id") 
     String invoiceTypeId;
+    @SerializedName("party_id_from") 
     String partyIdFrom;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("role_type_id") 
     String roleTypeId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("billing_account_id") 
     String billingAccountId;
+    @SerializedName("contact_mech_id") 
     String contactMechId;
+    @SerializedName("invoice_date") 
     java.time.LocalDateTime invoiceDate;
+    @SerializedName("due_date") 
     java.time.LocalDateTime dueDate;
+    @SerializedName("paid_date") 
     java.time.LocalDateTime paidDate;
+    @SerializedName("invoice_message") 
     String invoiceMessage;
+    @SerializedName("reference_number") 
     String referenceNumber;
+    @SerializedName("description") 
     String description;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("recurrence_info_id") 
     String recurrenceInfoId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return invoiceId;
+    }
 
         
     public Message toData() {

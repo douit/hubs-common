@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,47 +37,89 @@ import com.bluecc.hubs.stub.OrderAdjustmentData;
 @REntity
 @MessageObject(value = OrderAdjustmentData.class,
         symbol = EntityNames.OrderAdjustment)
-public class OrderAdjustment implements IEventModel<OrderAdjustmentData.Builder>, Serializable, WithDescription {
+public class OrderAdjustment implements IEventModel<OrderAdjustmentData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String orderAdjustmentId;
+    @SerializedName("order_adjustment_id")
+	@RId 
+    String orderAdjustmentId;
+    @SerializedName("order_adjustment_type_id") 
     String orderAdjustmentTypeId;
+    @SerializedName("order_id") 
     String orderId;
+    @SerializedName("order_item_seq_id") 
     String orderItemSeqId;
+    @SerializedName("ship_group_seq_id") 
     String shipGroupSeqId;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("description") 
     String description;
+    @SerializedName("amount") 
     java.math.BigDecimal amount;
+    @SerializedName("recurring_amount") 
     java.math.BigDecimal recurringAmount;
+    @SerializedName("amount_already_included") 
     java.math.BigDecimal amountAlreadyIncluded;
+    @SerializedName("product_promo_id") 
     String productPromoId;
+    @SerializedName("product_promo_rule_id") 
     String productPromoRuleId;
+    @SerializedName("product_promo_action_seq_id") 
     String productPromoActionSeqId;
+    @SerializedName("product_feature_id") 
     String productFeatureId;
+    @SerializedName("corresponding_product_id") 
     String correspondingProductId;
+    @SerializedName("tax_authority_rate_seq_id") 
     String taxAuthorityRateSeqId;
+    @SerializedName("source_reference_id") 
     String sourceReferenceId;
+    @SerializedName("source_percentage") 
     java.math.BigDecimal sourcePercentage;
+    @SerializedName("customer_reference_id") 
     String customerReferenceId;
+    @SerializedName("primary_geo_id") 
     String primaryGeoId;
+    @SerializedName("secondary_geo_id") 
     String secondaryGeoId;
+    @SerializedName("exempt_amount") 
     java.math.BigDecimal exemptAmount;
+    @SerializedName("tax_auth_geo_id") 
     String taxAuthGeoId;
+    @SerializedName("tax_auth_party_id") 
     String taxAuthPartyId;
+    @SerializedName("override_gl_account_id") 
     String overrideGlAccountId;
+    @SerializedName("include_in_tax") 
     Character includeInTax;
+    @SerializedName("include_in_shipping") 
     Character includeInShipping;
+    @SerializedName("is_manual") 
     Character isManual;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("original_adjustment_id") 
     String originalAdjustmentId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return orderAdjustmentId;
+    }
 
         
     public Message toData() {

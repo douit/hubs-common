@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,23 +37,41 @@ import com.bluecc.hubs.stub.TemporalExpressionData;
 @REntity
 @MessageObject(value = TemporalExpressionData.class,
         symbol = EntityNames.TemporalExpression)
-public class TemporalExpression implements IEventModel<TemporalExpressionData.Builder>, Serializable, WithSchedule, WithDescription {
+public class TemporalExpression implements IEventModel<TemporalExpressionData.Builder>, HasId, Serializable, WithSchedule, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String tempExprId;
+    @SerializedName("temp_expr_id")
+	@RId 
+    String tempExprId;
+    @SerializedName("temp_expr_type_id") 
     String tempExprTypeId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("date1") 
     java.time.LocalDateTime date1;
+    @SerializedName("date2") 
     java.time.LocalDateTime date2;
+    @SerializedName("integer1") 
     Long integer1;
+    @SerializedName("integer2") 
     Long integer2;
+    @SerializedName("string1") 
     String string1;
+    @SerializedName("string2") 
     String string2;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return tempExprId;
+    }
 
         
     public Message toData() {

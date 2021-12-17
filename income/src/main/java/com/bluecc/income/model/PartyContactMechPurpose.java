@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,33 @@ import com.bluecc.hubs.stub.PartyContactMechPurposeData;
 @REntity
 @MessageObject(value = PartyContactMechPurposeData.class,
         symbol = EntityNames.PartyContactMechPurpose)
-public class PartyContactMechPurpose implements IEventModel<PartyContactMechPurposeData.Builder>, Serializable, WithPeriod {
+public class PartyContactMechPurpose implements IEventModel<PartyContactMechPurposeData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String partyId;
-    @RIndex String contactMechId;
-    @RIndex String contactMechPurposeTypeId;
+    @SerializedName("party_id")
+	@RIndex 
+    String partyId;
+    @SerializedName("contact_mech_id")
+	@RIndex 
+    String contactMechId;
+    @SerializedName("contact_mech_purpose_type_id")
+	@RIndex 
+    String contactMechPurposeTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

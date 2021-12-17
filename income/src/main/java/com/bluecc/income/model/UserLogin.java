@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,31 +42,57 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = UserLoginData.class,
         symbol = EntityNames.UserLogin)
-public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, Serializable, WithSuppliers {
+public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String userLoginId;
+    @SerializedName("user_login_id")
+	@RId 
+    String userLoginId;
+    @SerializedName("current_password") 
     String currentPassword;
+    @SerializedName("password_hint") 
     String passwordHint;
+    @SerializedName("is_system") 
     Character isSystem;
+    @SerializedName("enabled") 
     Character enabled;
+    @SerializedName("has_logged_out") 
     Character hasLoggedOut;
+    @SerializedName("require_password_change") 
     Character requirePasswordChange;
+    @SerializedName("last_currency_uom") 
     String lastCurrencyUom;
+    @SerializedName("last_locale") 
     String lastLocale;
+    @SerializedName("last_time_zone") 
     String lastTimeZone;
+    @SerializedName("disabled_date_time") 
     java.time.LocalDateTime disabledDateTime;
+    @SerializedName("successive_failed_logins") 
     Long successiveFailedLogins;
+    @SerializedName("external_auth_id") 
     String externalAuthId;
+    @SerializedName("user_ldap_dn") 
     String userLdapDn;
+    @SerializedName("disabled_by") 
     String disabledBy;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return userLoginId;
+    }
 
         
     public Message toData() {

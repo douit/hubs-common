@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,36 +37,67 @@ import com.bluecc.hubs.stub.PaymentGatewayResponseData;
 @REntity
 @MessageObject(value = PaymentGatewayResponseData.class,
         symbol = EntityNames.PaymentGatewayResponse)
-public class PaymentGatewayResponse implements IEventModel<PaymentGatewayResponseData.Builder>, Serializable {
+public class PaymentGatewayResponse implements IEventModel<PaymentGatewayResponseData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String paymentGatewayResponseId;
+    @SerializedName("payment_gateway_response_id")
+	@RId 
+    String paymentGatewayResponseId;
+    @SerializedName("payment_service_type_enum_id") 
     String paymentServiceTypeEnumId;
+    @SerializedName("order_payment_preference_id") 
     String orderPaymentPreferenceId;
+    @SerializedName("payment_method_type_id") 
     String paymentMethodTypeId;
+    @SerializedName("payment_method_id") 
     String paymentMethodId;
+    @SerializedName("trans_code_enum_id") 
     String transCodeEnumId;
+    @SerializedName("amount") 
     java.math.BigDecimal amount;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("reference_num") 
     String referenceNum;
+    @SerializedName("alt_reference") 
     String altReference;
+    @SerializedName("sub_reference") 
     String subReference;
+    @SerializedName("gateway_code") 
     String gatewayCode;
+    @SerializedName("gateway_flag") 
     String gatewayFlag;
+    @SerializedName("gateway_avs_result") 
     String gatewayAvsResult;
+    @SerializedName("gateway_cv_result") 
     String gatewayCvResult;
+    @SerializedName("gateway_score_result") 
     String gatewayScoreResult;
+    @SerializedName("gateway_message") 
     String gatewayMessage;
+    @SerializedName("transaction_date") 
     java.time.LocalDateTime transactionDate;
+    @SerializedName("result_declined") 
     Character resultDeclined;
+    @SerializedName("result_nsf") 
     Character resultNsf;
+    @SerializedName("result_bad_expire") 
     Character resultBadExpire;
+    @SerializedName("result_bad_card_number") 
     Character resultBadCardNumber;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return paymentGatewayResponseId;
+    }
 
         
     public Message toData() {

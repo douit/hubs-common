@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,42 +37,79 @@ import com.bluecc.hubs.stub.AcctgTransData;
 @REntity
 @MessageObject(value = AcctgTransData.class,
         symbol = EntityNames.AcctgTrans)
-public class AcctgTrans implements IEventModel<AcctgTransData.Builder>, Serializable, WithDescription {
+public class AcctgTrans implements IEventModel<AcctgTransData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String acctgTransId;
+    @SerializedName("acctg_trans_id")
+	@RId 
+    String acctgTransId;
+    @SerializedName("acctg_trans_type_id") 
     String acctgTransTypeId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("transaction_date") 
     java.time.LocalDateTime transactionDate;
+    @SerializedName("is_posted") 
     Character isPosted;
+    @SerializedName("posted_date") 
     java.time.LocalDateTime postedDate;
+    @SerializedName("scheduled_posting_date") 
     java.time.LocalDateTime scheduledPostingDate;
+    @SerializedName("gl_journal_id") 
     String glJournalId;
+    @SerializedName("gl_fiscal_type_id") 
     String glFiscalTypeId;
+    @SerializedName("voucher_ref") 
     String voucherRef;
+    @SerializedName("voucher_date") 
     java.time.LocalDateTime voucherDate;
+    @SerializedName("group_status_id") 
     String groupStatusId;
+    @SerializedName("fixed_asset_id") 
     String fixedAssetId;
+    @SerializedName("inventory_item_id") 
     String inventoryItemId;
+    @SerializedName("physical_inventory_id") 
     String physicalInventoryId;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("role_type_id") 
     String roleTypeId;
+    @SerializedName("invoice_id") 
     String invoiceId;
+    @SerializedName("payment_id") 
     String paymentId;
+    @SerializedName("fin_account_trans_id") 
     String finAccountTransId;
+    @SerializedName("shipment_id") 
     String shipmentId;
+    @SerializedName("receipt_id") 
     String receiptId;
+    @SerializedName("work_effort_id") 
     String workEffortId;
+    @SerializedName("their_acctg_trans_id") 
     String theirAcctgTransId;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return acctgTransId;
+    }
 
         
     public Message toData() {

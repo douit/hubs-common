@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,23 +37,41 @@ import com.bluecc.hubs.stub.ProductReviewData;
 @REntity
 @MessageObject(value = ProductReviewData.class,
         symbol = EntityNames.ProductReview)
-public class ProductReview implements IEventModel<ProductReviewData.Builder>, Serializable {
+public class ProductReview implements IEventModel<ProductReviewData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String productReviewId;
+    @SerializedName("product_review_id")
+	@RId 
+    String productReviewId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("user_login_id") 
     String userLoginId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("posted_anonymous") 
     Character postedAnonymous;
+    @SerializedName("posted_date_time") 
     java.time.LocalDateTime postedDateTime;
+    @SerializedName("product_rating") 
     java.math.BigDecimal productRating;
+    @SerializedName("product_review") 
     String productReview;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return productReviewId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,33 +42,61 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = InvoiceItemData.class,
         symbol = EntityNames.InvoiceItem)
-public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Serializable, WithSuppliers, WithDescription {
+public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, HasId, Serializable, WithSuppliers, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String invoiceId;
-    @RIndex String invoiceItemSeqId;
+    @SerializedName("invoice_id")
+	@RIndex 
+    String invoiceId;
+    @SerializedName("invoice_item_seq_id")
+	@RIndex 
+    String invoiceItemSeqId;
+    @SerializedName("invoice_item_type_id") 
     String invoiceItemTypeId;
+    @SerializedName("override_gl_account_id") 
     String overrideGlAccountId;
+    @SerializedName("override_org_party_id") 
     String overrideOrgPartyId;
+    @SerializedName("inventory_item_id") 
     String inventoryItemId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("product_feature_id") 
     String productFeatureId;
+    @SerializedName("parent_invoice_id") 
     String parentInvoiceId;
+    @SerializedName("parent_invoice_item_seq_id") 
     String parentInvoiceItemSeqId;
+    @SerializedName("uom_id") 
     String uomId;
+    @SerializedName("taxable_flag") 
     Character taxableFlag;
+    @SerializedName("quantity") 
     java.math.BigDecimal quantity;
+    @SerializedName("amount") 
     java.math.BigDecimal amount;
+    @SerializedName("description") 
     String description;
+    @SerializedName("tax_auth_party_id") 
     String taxAuthPartyId;
+    @SerializedName("tax_auth_geo_id") 
     String taxAuthGeoId;
+    @SerializedName("tax_authority_rate_seq_id") 
     String taxAuthorityRateSeqId;
+    @SerializedName("sales_opportunity_id") 
     String salesOpportunityId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
+    @SerializedName("tenant_id") 
     String tenantId;
     
 

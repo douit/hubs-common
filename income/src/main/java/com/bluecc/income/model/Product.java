@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,85 +42,165 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ProductData.class,
         symbol = EntityNames.Product)
-public class Product implements IEventModel<ProductFlatData.Builder>, Serializable, WithSuppliers, WithDescription {
+public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Serializable, WithSuppliers, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String productId;
+    @SerializedName("product_id")
+	@RId 
+    String productId;
+    @SerializedName("product_type_id") 
     String productTypeId;
+    @SerializedName("primary_product_category_id") 
     String primaryProductCategoryId;
+    @SerializedName("facility_id") 
     String facilityId;
+    @SerializedName("introduction_date") 
     java.time.LocalDateTime introductionDate;
+    @SerializedName("release_date") 
     java.time.LocalDateTime releaseDate;
+    @SerializedName("support_discontinuation_date") 
     java.time.LocalDateTime supportDiscontinuationDate;
+    @SerializedName("sales_discontinuation_date") 
     java.time.LocalDateTime salesDiscontinuationDate;
+    @SerializedName("sales_disc_when_not_avail") 
     Character salesDiscWhenNotAvail;
+    @SerializedName("internal_name") 
     String internalName;
+    @SerializedName("brand_name") 
     String brandName;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("product_name") 
     String productName;
+    @SerializedName("description") 
     String description;
+    @SerializedName("long_description") 
     String longDescription;
+    @SerializedName("price_detail_text") 
     String priceDetailText;
+    @SerializedName("small_image_url") 
     String smallImageUrl;
+    @SerializedName("medium_image_url") 
     String mediumImageUrl;
+    @SerializedName("large_image_url") 
     String largeImageUrl;
+    @SerializedName("detail_image_url") 
     String detailImageUrl;
+    @SerializedName("original_image_url") 
     String originalImageUrl;
+    @SerializedName("detail_screen") 
     String detailScreen;
+    @SerializedName("inventory_message") 
     String inventoryMessage;
+    @SerializedName("inventory_item_type_id") 
     String inventoryItemTypeId;
+    @SerializedName("require_inventory") 
     Character requireInventory;
+    @SerializedName("quantity_uom_id") 
     String quantityUomId;
+    @SerializedName("quantity_included") 
     java.math.BigDecimal quantityIncluded;
+    @SerializedName("pieces_included") 
     Long piecesIncluded;
+    @SerializedName("require_amount") 
     Character requireAmount;
+    @SerializedName("fixed_amount") 
     java.math.BigDecimal fixedAmount;
+    @SerializedName("amount_uom_type_id") 
     String amountUomTypeId;
+    @SerializedName("weight_uom_id") 
     String weightUomId;
+    @SerializedName("shipping_weight") 
     java.math.BigDecimal shippingWeight;
+    @SerializedName("product_weight") 
     java.math.BigDecimal productWeight;
+    @SerializedName("height_uom_id") 
     String heightUomId;
+    @SerializedName("product_height") 
     java.math.BigDecimal productHeight;
+    @SerializedName("shipping_height") 
     java.math.BigDecimal shippingHeight;
+    @SerializedName("width_uom_id") 
     String widthUomId;
+    @SerializedName("product_width") 
     java.math.BigDecimal productWidth;
+    @SerializedName("shipping_width") 
     java.math.BigDecimal shippingWidth;
+    @SerializedName("depth_uom_id") 
     String depthUomId;
+    @SerializedName("product_depth") 
     java.math.BigDecimal productDepth;
+    @SerializedName("shipping_depth") 
     java.math.BigDecimal shippingDepth;
+    @SerializedName("diameter_uom_id") 
     String diameterUomId;
+    @SerializedName("product_diameter") 
     java.math.BigDecimal productDiameter;
+    @SerializedName("product_rating") 
     java.math.BigDecimal productRating;
+    @SerializedName("rating_type_enum") 
     String ratingTypeEnum;
+    @SerializedName("returnable") 
     Character returnable;
+    @SerializedName("taxable") 
     Character taxable;
+    @SerializedName("charge_shipping") 
     Character chargeShipping;
+    @SerializedName("auto_create_keywords") 
     Character autoCreateKeywords;
+    @SerializedName("include_in_promotions") 
     Character includeInPromotions;
+    @SerializedName("is_virtual") 
     Character isVirtual;
+    @SerializedName("is_variant") 
     Character isVariant;
+    @SerializedName("virtual_variant_method_enum") 
     String virtualVariantMethodEnum;
+    @SerializedName("origin_geo_id") 
     String originGeoId;
+    @SerializedName("requirement_method_enum_id") 
     String requirementMethodEnumId;
+    @SerializedName("bill_of_material_level") 
     Long billOfMaterialLevel;
+    @SerializedName("reserv_max_persons") 
     java.math.BigDecimal reservMaxPersons;
+    @SerializedName("reserv_2nd_p_p_perc") 
     java.math.BigDecimal reserv2ndPPPerc;
+    @SerializedName("reserv_nth_p_p_perc") 
     java.math.BigDecimal reservNthPPPerc;
+    @SerializedName("config_id") 
     String configId;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("in_shipping_box") 
     Character inShippingBox;
+    @SerializedName("default_shipment_box_type_id") 
     String defaultShipmentBoxTypeId;
+    @SerializedName("lot_id_filled_in") 
     String lotIdFilledIn;
+    @SerializedName("order_decimal_quantity") 
     Character orderDecimalQuantity;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return productId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,41 +42,77 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = InventoryItemData.class,
         symbol = EntityNames.InventoryItem)
-public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>, Serializable, WithSuppliers {
+public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String inventoryItemId;
+    @SerializedName("inventory_item_id")
+	@RId 
+    String inventoryItemId;
+    @SerializedName("inventory_item_type_id") 
     String inventoryItemTypeId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("owner_party_id") 
     String ownerPartyId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("datetime_received") 
     java.time.LocalDateTime datetimeReceived;
+    @SerializedName("datetime_manufactured") 
     java.time.LocalDateTime datetimeManufactured;
+    @SerializedName("expire_date") 
     java.time.LocalDateTime expireDate;
+    @SerializedName("facility_id") 
     String facilityId;
+    @SerializedName("container_id") 
     String containerId;
+    @SerializedName("lot_id") 
     String lotId;
+    @SerializedName("uom_id") 
     String uomId;
+    @SerializedName("bin_number") 
     String binNumber;
+    @SerializedName("location_seq_id") 
     String locationSeqId;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("quantity_on_hand_total") 
     java.math.BigDecimal quantityOnHandTotal;
+    @SerializedName("available_to_promise_total") 
     java.math.BigDecimal availableToPromiseTotal;
+    @SerializedName("accounting_quantity_total") 
     java.math.BigDecimal accountingQuantityTotal;
+    @SerializedName("serial_number") 
     String serialNumber;
+    @SerializedName("soft_identifier") 
     String softIdentifier;
+    @SerializedName("activation_number") 
     String activationNumber;
+    @SerializedName("activation_valid_thru") 
     java.time.LocalDateTime activationValidThru;
+    @SerializedName("unit_cost") 
     java.math.BigDecimal unitCost;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("fixed_asset_id") 
     String fixedAssetId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return inventoryItemId;
+    }
 
         
     public Message toData() {

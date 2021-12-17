@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,33 @@ import com.bluecc.hubs.stub.OrderItemShipGroupAssocData;
 @REntity
 @MessageObject(value = OrderItemShipGroupAssocData.class,
         symbol = EntityNames.OrderItemShipGroupAssoc)
-public class OrderItemShipGroupAssoc implements IEventModel<OrderItemShipGroupAssocData.Builder>, Serializable {
+public class OrderItemShipGroupAssoc implements IEventModel<OrderItemShipGroupAssocData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String orderId;
-    @RIndex String orderItemSeqId;
-    @RIndex String shipGroupSeqId;
+    @SerializedName("order_id")
+	@RIndex 
+    String orderId;
+    @SerializedName("order_item_seq_id")
+	@RIndex 
+    String orderItemSeqId;
+    @SerializedName("ship_group_seq_id")
+	@RIndex 
+    String shipGroupSeqId;
+    @SerializedName("quantity") 
     java.math.BigDecimal quantity;
+    @SerializedName("cancel_quantity") 
     java.math.BigDecimal cancelQuantity;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

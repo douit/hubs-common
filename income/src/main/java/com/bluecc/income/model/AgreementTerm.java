@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,27 +37,49 @@ import com.bluecc.hubs.stub.AgreementTermData;
 @REntity
 @MessageObject(value = AgreementTermData.class,
         symbol = EntityNames.AgreementTerm)
-public class AgreementTerm implements IEventModel<AgreementTermData.Builder>, Serializable, WithDescription, WithPeriod {
+public class AgreementTerm implements IEventModel<AgreementTermData.Builder>, HasId, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RId String agreementTermId;
+    @SerializedName("agreement_term_id")
+	@RId 
+    String agreementTermId;
+    @SerializedName("term_type_id") 
     String termTypeId;
+    @SerializedName("agreement_id") 
     String agreementId;
+    @SerializedName("agreement_item_seq_id") 
     String agreementItemSeqId;
+    @SerializedName("invoice_item_type_id") 
     String invoiceItemTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("term_value") 
     java.math.BigDecimal termValue;
+    @SerializedName("term_days") 
     Long termDays;
+    @SerializedName("text_value") 
     String textValue;
+    @SerializedName("min_quantity") 
     Double minQuantity;
+    @SerializedName("max_quantity") 
     Double maxQuantity;
+    @SerializedName("description") 
     String description;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return agreementTermId;
+    }
 
         
     public Message toData() {

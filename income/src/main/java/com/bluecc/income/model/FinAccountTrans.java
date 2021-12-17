@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,29 +37,53 @@ import com.bluecc.hubs.stub.FinAccountTransData;
 @REntity
 @MessageObject(value = FinAccountTransData.class,
         symbol = EntityNames.FinAccountTrans)
-public class FinAccountTrans implements IEventModel<FinAccountTransData.Builder>, Serializable {
+public class FinAccountTrans implements IEventModel<FinAccountTransData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String finAccountTransId;
+    @SerializedName("fin_account_trans_id")
+	@RId 
+    String finAccountTransId;
+    @SerializedName("fin_account_trans_type_id") 
     String finAccountTransTypeId;
+    @SerializedName("fin_account_id") 
     String finAccountId;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("gl_reconciliation_id") 
     String glReconciliationId;
+    @SerializedName("transaction_date") 
     java.time.LocalDateTime transactionDate;
+    @SerializedName("entry_date") 
     java.time.LocalDateTime entryDate;
+    @SerializedName("amount") 
     java.math.BigDecimal amount;
+    @SerializedName("payment_id") 
     String paymentId;
+    @SerializedName("order_id") 
     String orderId;
+    @SerializedName("order_item_seq_id") 
     String orderItemSeqId;
+    @SerializedName("performed_by_party_id") 
     String performedByPartyId;
+    @SerializedName("reason_enum_id") 
     String reasonEnumId;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return finAccountTransId;
+    }
 
         
     public Message toData() {

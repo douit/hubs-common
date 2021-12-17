@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,22 +37,42 @@ import com.bluecc.hubs.stub.ProductPromoCategoryData;
 @REntity
 @MessageObject(value = ProductPromoCategoryData.class,
         symbol = EntityNames.ProductPromoCategory)
-public class ProductPromoCategory implements IEventModel<ProductPromoCategoryData.Builder>, Serializable {
+public class ProductPromoCategory implements IEventModel<ProductPromoCategoryData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productPromoId;
-    @RIndex String productPromoRuleId;
-    @RIndex String productPromoActionSeqId;
-    @RIndex String productPromoCondSeqId;
-    @RIndex String productCategoryId;
-    @RIndex String andGroupId;
+    @SerializedName("product_promo_id")
+	@RIndex 
+    String productPromoId;
+    @SerializedName("product_promo_rule_id")
+	@RIndex 
+    String productPromoRuleId;
+    @SerializedName("product_promo_action_seq_id")
+	@RIndex 
+    String productPromoActionSeqId;
+    @SerializedName("product_promo_cond_seq_id")
+	@RIndex 
+    String productPromoCondSeqId;
+    @SerializedName("product_category_id")
+	@RIndex 
+    String productCategoryId;
+    @SerializedName("and_group_id")
+	@RIndex 
+    String andGroupId;
+    @SerializedName("product_promo_appl_enum_id") 
     String productPromoApplEnumId;
+    @SerializedName("include_sub_categories") 
     Character includeSubCategories;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

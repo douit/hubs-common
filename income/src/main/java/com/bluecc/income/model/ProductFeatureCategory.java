@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,17 +37,29 @@ import com.bluecc.hubs.stub.ProductFeatureCategoryData;
 @REntity
 @MessageObject(value = ProductFeatureCategoryData.class,
         symbol = EntityNames.ProductFeatureCategory)
-public class ProductFeatureCategory implements IEventModel<ProductFeatureCategoryData.Builder>, Serializable, WithDescription {
+public class ProductFeatureCategory implements IEventModel<ProductFeatureCategoryData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String productFeatureCategoryId;
+    @SerializedName("product_feature_category_id")
+	@RId 
+    String productFeatureCategoryId;
+    @SerializedName("parent_category_id") 
     String parentCategoryId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return productFeatureCategoryId;
+    }
 
         
     public Message toData() {

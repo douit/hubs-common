@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,20 +37,35 @@ import com.bluecc.hubs.stub.WorkEffortAssocData;
 @REntity
 @MessageObject(value = WorkEffortAssocData.class,
         symbol = EntityNames.WorkEffortAssoc)
-public class WorkEffortAssoc implements IEventModel<WorkEffortAssocData.Builder>, Serializable, WithPeriod {
+public class WorkEffortAssoc implements IEventModel<WorkEffortAssocData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String workEffortIdFrom;
-    @RIndex String workEffortIdTo;
-    @RIndex String workEffortAssocTypeId;
+    @SerializedName("work_effort_id_from")
+	@RIndex 
+    String workEffortIdFrom;
+    @SerializedName("work_effort_id_to")
+	@RIndex 
+    String workEffortIdTo;
+    @SerializedName("work_effort_assoc_type_id")
+	@RIndex 
+    String workEffortAssocTypeId;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

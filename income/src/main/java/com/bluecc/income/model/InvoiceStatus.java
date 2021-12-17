@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,18 +37,30 @@ import com.bluecc.hubs.stub.InvoiceStatusData;
 @REntity
 @MessageObject(value = InvoiceStatusData.class,
         symbol = EntityNames.InvoiceStatus)
-public class InvoiceStatus implements IEventModel<InvoiceStatusData.Builder>, Serializable {
+public class InvoiceStatus implements IEventModel<InvoiceStatusData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String statusId;
-    @RIndex String invoiceId;
+    @SerializedName("status_id")
+	@RIndex 
+    String statusId;
+    @SerializedName("invoice_id")
+	@RIndex 
+    String invoiceId;
+    @SerializedName("status_date") 
     java.time.LocalDateTime statusDate;
+    @SerializedName("change_by_user_login_id") 
     String changeByUserLoginId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

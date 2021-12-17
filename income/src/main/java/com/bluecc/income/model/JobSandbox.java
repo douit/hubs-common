@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,39 +37,73 @@ import com.bluecc.hubs.stub.JobSandboxData;
 @REntity
 @MessageObject(value = JobSandboxData.class,
         symbol = EntityNames.JobSandbox)
-public class JobSandbox implements IEventModel<JobSandboxData.Builder>, Serializable, WithSchedule {
+public class JobSandbox implements IEventModel<JobSandboxData.Builder>, HasId, Serializable, WithSchedule {
     private static final long serialVersionUID = 1L;
 
-    @RId String jobId;
+    @SerializedName("job_id")
+	@RId 
+    String jobId;
+    @SerializedName("job_name") 
     String jobName;
+    @SerializedName("run_time") 
     java.time.LocalDateTime runTime;
+    @SerializedName("priority") 
     Long priority;
+    @SerializedName("pool_id") 
     String poolId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("parent_job_id") 
     String parentJobId;
+    @SerializedName("previous_job_id") 
     String previousJobId;
+    @SerializedName("service_name") 
     String serviceName;
+    @SerializedName("loader_name") 
     String loaderName;
+    @SerializedName("max_retry") 
     Long maxRetry;
+    @SerializedName("current_retry_count") 
     Long currentRetryCount;
+    @SerializedName("auth_user_login_id") 
     String authUserLoginId;
+    @SerializedName("run_as_user") 
     String runAsUser;
+    @SerializedName("runtime_data_id") 
     String runtimeDataId;
+    @SerializedName("recurrence_info_id") 
     String recurrenceInfoId;
+    @SerializedName("temp_expr_id") 
     String tempExprId;
+    @SerializedName("current_recurrence_count") 
     Long currentRecurrenceCount;
+    @SerializedName("max_recurrence_count") 
     Long maxRecurrenceCount;
+    @SerializedName("run_by_instance_id") 
     String runByInstanceId;
+    @SerializedName("start_date_time") 
     java.time.LocalDateTime startDateTime;
+    @SerializedName("finish_date_time") 
     java.time.LocalDateTime finishDateTime;
+    @SerializedName("cancel_date_time") 
     java.time.LocalDateTime cancelDateTime;
+    @SerializedName("job_result") 
     String jobResult;
+    @SerializedName("recurrence_time_zone") 
     String recurrenceTimeZone;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return jobId;
+    }
 
         
     public Message toData() {

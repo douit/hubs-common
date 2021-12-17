@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,24 +37,43 @@ import com.bluecc.hubs.stub.SurveyData;
 @REntity
 @MessageObject(value = SurveyData.class,
         symbol = EntityNames.Survey)
-public class Survey implements IEventModel<SurveyData.Builder>, Serializable, WithDescription {
+public class Survey implements IEventModel<SurveyData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String surveyId;
+    @SerializedName("survey_id")
+	@RId 
+    String surveyId;
+    @SerializedName("survey_name") 
     String surveyName;
+    @SerializedName("description") 
     String description;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("submit_caption") 
     String submitCaption;
+    @SerializedName("response_service") 
     String responseService;
+    @SerializedName("is_anonymous") 
     Character isAnonymous;
+    @SerializedName("allow_multiple") 
     Character allowMultiple;
+    @SerializedName("allow_update") 
     Character allowUpdate;
+    @SerializedName("acro_form_content_id") 
     String acroFormContentId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return surveyId;
+    }
 
         
     public Message toData() {

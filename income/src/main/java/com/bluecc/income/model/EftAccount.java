@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,23 +37,41 @@ import com.bluecc.hubs.stub.EftAccountData;
 @REntity
 @MessageObject(value = EftAccountData.class,
         symbol = EntityNames.EftAccount)
-public class EftAccount implements IEventModel<EftAccountData.Builder>, Serializable {
+public class EftAccount implements IEventModel<EftAccountData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String paymentMethodId;
+    @SerializedName("payment_method_id")
+	@RId 
+    String paymentMethodId;
+    @SerializedName("bank_name") 
     String bankName;
+    @SerializedName("routing_number") 
     String routingNumber;
+    @SerializedName("account_type") 
     String accountType;
+    @SerializedName("account_number") 
     String accountNumber;
+    @SerializedName("name_on_account") 
     String nameOnAccount;
+    @SerializedName("company_name_on_account") 
     String companyNameOnAccount;
+    @SerializedName("contact_mech_id") 
     String contactMechId;
+    @SerializedName("years_at_bank") 
     Long yearsAtBank;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return paymentMethodId;
+    }
 
         
     public Message toData() {

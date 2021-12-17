@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,26 +37,47 @@ import com.bluecc.hubs.stub.AgreementData;
 @REntity
 @MessageObject(value = AgreementData.class,
         symbol = EntityNames.Agreement)
-public class Agreement implements IEventModel<AgreementData.Builder>, Serializable, WithDescription, WithPeriod {
+public class Agreement implements IEventModel<AgreementData.Builder>, HasId, Serializable, WithDescription, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RId String agreementId;
+    @SerializedName("agreement_id")
+	@RId 
+    String agreementId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("party_id_from") 
     String partyIdFrom;
+    @SerializedName("party_id_to") 
     String partyIdTo;
+    @SerializedName("role_type_id_from") 
     String roleTypeIdFrom;
+    @SerializedName("role_type_id_to") 
     String roleTypeIdTo;
+    @SerializedName("agreement_type_id") 
     String agreementTypeId;
+    @SerializedName("agreement_date") 
     java.time.LocalDateTime agreementDate;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("description") 
     String description;
+    @SerializedName("text_data") 
     String textData;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return agreementId;
+    }
 
         
     public Message toData() {

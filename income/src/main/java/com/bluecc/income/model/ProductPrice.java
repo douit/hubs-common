@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,35 +37,67 @@ import com.bluecc.hubs.stub.ProductPriceData;
 @REntity
 @MessageObject(value = ProductPriceData.class,
         symbol = EntityNames.ProductPrice)
-public class ProductPrice implements IEventModel<ProductPriceData.Builder>, Serializable, WithPeriod {
+public class ProductPrice implements IEventModel<ProductPriceData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productId;
-    @RIndex String productPriceTypeId;
-    @RIndex String productPricePurposeId;
-    @RIndex String currencyUomId;
-    @RIndex String productStoreGroupId;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("product_price_type_id")
+	@RIndex 
+    String productPriceTypeId;
+    @SerializedName("product_price_purpose_id")
+	@RIndex 
+    String productPricePurposeId;
+    @SerializedName("currency_uom_id")
+	@RIndex 
+    String currencyUomId;
+    @SerializedName("product_store_group_id")
+	@RIndex 
+    String productStoreGroupId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("price") 
     java.math.BigDecimal price;
+    @SerializedName("term_uom_id") 
     String termUomId;
+    @SerializedName("custom_price_calc_service") 
     String customPriceCalcService;
+    @SerializedName("price_without_tax") 
     java.math.BigDecimal priceWithoutTax;
+    @SerializedName("price_with_tax") 
     java.math.BigDecimal priceWithTax;
+    @SerializedName("tax_amount") 
     java.math.BigDecimal taxAmount;
+    @SerializedName("tax_percentage") 
     java.math.BigDecimal taxPercentage;
+    @SerializedName("tax_auth_party_id") 
     String taxAuthPartyId;
+    @SerializedName("tax_auth_geo_id") 
     String taxAuthGeoId;
+    @SerializedName("tax_in_price") 
     Character taxInPrice;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

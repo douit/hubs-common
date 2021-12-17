@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,34 +37,62 @@ import com.bluecc.hubs.stub.OrderItemShipGroupData;
 @REntity
 @MessageObject(value = OrderItemShipGroupData.class,
         symbol = EntityNames.OrderItemShipGroup)
-public class OrderItemShipGroup implements IEventModel<OrderItemShipGroupData.Builder>, Serializable {
+public class OrderItemShipGroup implements IEventModel<OrderItemShipGroupData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String orderId;
-    @RIndex String shipGroupSeqId;
+    @SerializedName("order_id")
+	@RIndex 
+    String orderId;
+    @SerializedName("ship_group_seq_id")
+	@RIndex 
+    String shipGroupSeqId;
+    @SerializedName("shipment_method_type_id") 
     String shipmentMethodTypeId;
+    @SerializedName("supplier_party_id") 
     String supplierPartyId;
+    @SerializedName("supplier_agreement_id") 
     String supplierAgreementId;
+    @SerializedName("vendor_party_id") 
     String vendorPartyId;
+    @SerializedName("carrier_party_id") 
     String carrierPartyId;
+    @SerializedName("carrier_role_type_id") 
     String carrierRoleTypeId;
+    @SerializedName("facility_id") 
     String facilityId;
+    @SerializedName("contact_mech_id") 
     String contactMechId;
+    @SerializedName("telecom_contact_mech_id") 
     String telecomContactMechId;
+    @SerializedName("tracking_number") 
     String trackingNumber;
+    @SerializedName("shipping_instructions") 
     String shippingInstructions;
+    @SerializedName("may_split") 
     Character maySplit;
+    @SerializedName("gift_message") 
     String giftMessage;
+    @SerializedName("is_gift") 
     Character isGift;
+    @SerializedName("ship_after_date") 
     java.time.LocalDateTime shipAfterDate;
+    @SerializedName("ship_by_date") 
     java.time.LocalDateTime shipByDate;
+    @SerializedName("estimated_ship_date") 
     java.time.LocalDateTime estimatedShipDate;
+    @SerializedName("estimated_delivery_date") 
     java.time.LocalDateTime estimatedDeliveryDate;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

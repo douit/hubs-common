@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,45 +42,85 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = ShipmentData.class,
         symbol = EntityNames.Shipment)
-public class Shipment implements IEventModel<ShipmentFlatData.Builder>, Serializable, WithSuppliers {
+public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String shipmentId;
+    @SerializedName("shipment_id")
+	@RId 
+    String shipmentId;
+    @SerializedName("shipment_type_id") 
     String shipmentTypeId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("primary_order_id") 
     String primaryOrderId;
+    @SerializedName("primary_return_id") 
     String primaryReturnId;
+    @SerializedName("primary_ship_group_seq_id") 
     String primaryShipGroupSeqId;
+    @SerializedName("picklist_bin_id") 
     String picklistBinId;
+    @SerializedName("estimated_ready_date") 
     java.time.LocalDateTime estimatedReadyDate;
+    @SerializedName("estimated_ship_date") 
     java.time.LocalDateTime estimatedShipDate;
+    @SerializedName("estimated_ship_work_eff_id") 
     String estimatedShipWorkEffId;
+    @SerializedName("estimated_arrival_date") 
     java.time.LocalDateTime estimatedArrivalDate;
+    @SerializedName("estimated_arrival_work_eff_id") 
     String estimatedArrivalWorkEffId;
+    @SerializedName("latest_cancel_date") 
     java.time.LocalDateTime latestCancelDate;
+    @SerializedName("estimated_ship_cost") 
     java.math.BigDecimal estimatedShipCost;
+    @SerializedName("currency_uom_id") 
     String currencyUomId;
+    @SerializedName("handling_instructions") 
     String handlingInstructions;
+    @SerializedName("origin_facility_id") 
     String originFacilityId;
+    @SerializedName("destination_facility_id") 
     String destinationFacilityId;
+    @SerializedName("origin_contact_mech_id") 
     String originContactMechId;
+    @SerializedName("origin_telecom_number_id") 
     String originTelecomNumberId;
+    @SerializedName("destination_contact_mech_id") 
     String destinationContactMechId;
+    @SerializedName("destination_telecom_number_id") 
     String destinationTelecomNumberId;
+    @SerializedName("party_id_to") 
     String partyIdTo;
+    @SerializedName("party_id_from") 
     String partyIdFrom;
+    @SerializedName("additional_shipping_charge") 
     java.math.BigDecimal additionalShippingCharge;
+    @SerializedName("addtl_shipping_charge_desc") 
     String addtlShippingChargeDesc;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return shipmentId;
+    }
 
         
     public Message toData() {

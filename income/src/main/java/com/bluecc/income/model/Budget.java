@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,18 +37,31 @@ import com.bluecc.hubs.stub.BudgetData;
 @REntity
 @MessageObject(value = BudgetData.class,
         symbol = EntityNames.Budget)
-public class Budget implements IEventModel<BudgetData.Builder>, Serializable {
+public class Budget implements IEventModel<BudgetData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String budgetId;
+    @SerializedName("budget_id")
+	@RId 
+    String budgetId;
+    @SerializedName("budget_type_id") 
     String budgetTypeId;
+    @SerializedName("custom_time_period_id") 
     String customTimePeriodId;
+    @SerializedName("comments") 
     String comments;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return budgetId;
+    }
 
         
     public Message toData() {

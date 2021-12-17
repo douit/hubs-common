@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,29 +37,53 @@ import com.bluecc.hubs.stub.ContentAssocData;
 @REntity
 @MessageObject(value = ContentAssocData.class,
         symbol = EntityNames.ContentAssoc)
-public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, Serializable, WithPeriod {
+public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String contentId;
-    @RIndex String contentIdTo;
-    @RIndex String contentAssocTypeId;
+    @SerializedName("content_id")
+	@RIndex 
+    String contentId;
+    @SerializedName("content_id_to")
+	@RIndex 
+    String contentIdTo;
+    @SerializedName("content_assoc_type_id")
+	@RIndex 
+    String contentAssocTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("content_assoc_predicate_id") 
     String contentAssocPredicateId;
+    @SerializedName("data_source_id") 
     String dataSourceId;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("map_key") 
     String mapKey;
+    @SerializedName("upper_coordinate") 
     Long upperCoordinate;
+    @SerializedName("left_coordinate") 
     Long leftCoordinate;
+    @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
+    @SerializedName("created_by_user_login") 
     String createdByUserLogin;
+    @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
+    @SerializedName("last_modified_by_user_login") 
     String lastModifiedByUserLogin;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

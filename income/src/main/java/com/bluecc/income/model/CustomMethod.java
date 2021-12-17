@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,18 +37,31 @@ import com.bluecc.hubs.stub.CustomMethodData;
 @REntity
 @MessageObject(value = CustomMethodData.class,
         symbol = EntityNames.CustomMethod)
-public class CustomMethod implements IEventModel<CustomMethodData.Builder>, Serializable, WithDescription {
+public class CustomMethod implements IEventModel<CustomMethodData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String customMethodId;
+    @SerializedName("custom_method_id")
+	@RId 
+    String customMethodId;
+    @SerializedName("custom_method_type_id") 
     String customMethodTypeId;
+    @SerializedName("custom_method_name") 
     String customMethodName;
+    @SerializedName("description") 
     String description;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return customMethodId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,23 +37,41 @@ import com.bluecc.hubs.stub.ProductCategoryContentData;
 @REntity
 @MessageObject(value = ProductCategoryContentData.class,
         symbol = EntityNames.ProductCategoryContent)
-public class ProductCategoryContent implements IEventModel<ProductCategoryContentData.Builder>, Serializable, WithPeriod {
+public class ProductCategoryContent implements IEventModel<ProductCategoryContentData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productCategoryId;
-    @RIndex String contentId;
-    @RIndex String prodCatContentTypeId;
+    @SerializedName("product_category_id")
+	@RIndex 
+    String productCategoryId;
+    @SerializedName("content_id")
+	@RIndex 
+    String contentId;
+    @SerializedName("prod_cat_content_type_id")
+	@RIndex 
+    String prodCatContentTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("purchase_from_date") 
     java.time.LocalDateTime purchaseFromDate;
+    @SerializedName("purchase_thru_date") 
     java.time.LocalDateTime purchaseThruDate;
+    @SerializedName("use_count_limit") 
     Long useCountLimit;
+    @SerializedName("use_days_limit") 
     java.math.BigDecimal useDaysLimit;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

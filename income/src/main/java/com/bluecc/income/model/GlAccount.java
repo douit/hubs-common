@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,25 +37,45 @@ import com.bluecc.hubs.stub.GlAccountData;
 @REntity
 @MessageObject(value = GlAccountData.class,
         symbol = EntityNames.GlAccount)
-public class GlAccount implements IEventModel<GlAccountData.Builder>, Serializable, WithDescription {
+public class GlAccount implements IEventModel<GlAccountData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String glAccountId;
+    @SerializedName("gl_account_id")
+	@RId 
+    String glAccountId;
+    @SerializedName("gl_account_type_id") 
     String glAccountTypeId;
+    @SerializedName("gl_account_class_id") 
     String glAccountClassId;
+    @SerializedName("gl_resource_type_id") 
     String glResourceTypeId;
+    @SerializedName("gl_xbrl_class_id") 
     String glXbrlClassId;
+    @SerializedName("parent_gl_account_id") 
     String parentGlAccountId;
+    @SerializedName("account_code") 
     String accountCode;
+    @SerializedName("account_name") 
     String accountName;
+    @SerializedName("description") 
     String description;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("external_id") 
     String externalId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return glAccountId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -41,40 +42,75 @@ import com.bluecc.income.exchange.IProc;
 @REntity
 @MessageObject(value = FixedAssetData.class,
         symbol = EntityNames.FixedAsset)
-public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, Serializable, WithSuppliers {
+public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, HasId, Serializable, WithSuppliers {
     private static final long serialVersionUID = 1L;
 
-    @RId String fixedAssetId;
+    @SerializedName("fixed_asset_id")
+	@RId 
+    String fixedAssetId;
+    @SerializedName("fixed_asset_type_id") 
     String fixedAssetTypeId;
+    @SerializedName("parent_fixed_asset_id") 
     String parentFixedAssetId;
+    @SerializedName("instance_of_product_id") 
     String instanceOfProductId;
+    @SerializedName("class_enum_id") 
     String classEnumId;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("role_type_id") 
     String roleTypeId;
+    @SerializedName("fixed_asset_name") 
     String fixedAssetName;
+    @SerializedName("acquire_order_id") 
     String acquireOrderId;
+    @SerializedName("acquire_order_item_seq_id") 
     String acquireOrderItemSeqId;
+    @SerializedName("date_acquired") 
     java.time.LocalDateTime dateAcquired;
+    @SerializedName("date_last_serviced") 
     java.time.LocalDateTime dateLastServiced;
+    @SerializedName("date_next_service") 
     java.time.LocalDateTime dateNextService;
+    @SerializedName("expected_end_of_life") 
     java.time.LocalDate expectedEndOfLife;
+    @SerializedName("actual_end_of_life") 
     java.time.LocalDate actualEndOfLife;
+    @SerializedName("production_capacity") 
     java.math.BigDecimal productionCapacity;
+    @SerializedName("uom_id") 
     String uomId;
+    @SerializedName("calendar_id") 
     String calendarId;
+    @SerializedName("serial_number") 
     String serialNumber;
+    @SerializedName("located_at_facility_id") 
     String locatedAtFacilityId;
+    @SerializedName("located_at_location_seq_id") 
     String locatedAtLocationSeqId;
+    @SerializedName("salvage_value") 
     java.math.BigDecimal salvageValue;
+    @SerializedName("depreciation") 
     java.math.BigDecimal depreciation;
+    @SerializedName("purchase_cost") 
     java.math.BigDecimal purchaseCost;
+    @SerializedName("purchase_cost_uom_id") 
     String purchaseCostUomId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
+    @SerializedName("tenant_id") 
     String tenantId;
     
+    @Override
+    public String getId(){
+        return fixedAssetId;
+    }
 
         
     public Message toData() {

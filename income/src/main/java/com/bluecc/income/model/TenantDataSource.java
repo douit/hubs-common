@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,32 @@ import com.bluecc.hubs.stub.TenantDataSourceData;
 @REntity
 @MessageObject(value = TenantDataSourceData.class,
         symbol = EntityNames.TenantDataSource)
-public class TenantDataSource implements IEventModel<TenantDataSourceData.Builder>, Serializable {
+public class TenantDataSource implements IEventModel<TenantDataSourceData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String tenantId;
-    @RIndex String entityGroupName;
+    @SerializedName("tenant_id")
+	@RIndex 
+    String tenantId;
+    @SerializedName("entity_group_name")
+	@RIndex 
+    String entityGroupName;
+    @SerializedName("jdbc_uri") 
     String jdbcUri;
+    @SerializedName("jdbc_username") 
     String jdbcUsername;
+    @SerializedName("jdbc_password") 
     String jdbcPassword;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

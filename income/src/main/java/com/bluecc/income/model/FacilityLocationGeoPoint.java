@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,19 +37,33 @@ import com.bluecc.hubs.stub.FacilityLocationGeoPointData;
 @REntity
 @MessageObject(value = FacilityLocationGeoPointData.class,
         symbol = EntityNames.FacilityLocationGeoPoint)
-public class FacilityLocationGeoPoint implements IEventModel<FacilityLocationGeoPointData.Builder>, Serializable, WithLocation, WithPeriod {
+public class FacilityLocationGeoPoint implements IEventModel<FacilityLocationGeoPointData.Builder>, HasId, Serializable, WithLocation, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String facilityId;
-    @RIndex String locationSeqId;
-    @RIndex String geoPointId;
+    @SerializedName("facility_id")
+	@RIndex 
+    String facilityId;
+    @SerializedName("location_seq_id")
+	@RIndex 
+    String locationSeqId;
+    @SerializedName("geo_point_id")
+	@RIndex 
+    String geoPointId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

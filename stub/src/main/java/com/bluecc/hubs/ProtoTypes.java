@@ -209,7 +209,11 @@ public class ProtoTypes {
             case "N":
                 return Indicator.NO;
             default:
-                return Indicator.UNKNOWN;
+                Indicator indicator=Indicator.forNumber(Integer.parseInt(c));
+                if(indicator==null) {
+                    indicator= Indicator.UNKNOWN;
+                }
+                return indicator;
         }
     }
 
@@ -219,8 +223,11 @@ public class ProtoTypes {
                 return 'Y';
             case NO:
                 return 'N';
+            case UNKNOWN:
+                return ' ';
+            default:
+                return String.valueOf(indicator.getNumber()).charAt(0);
         }
-        return ' ';
     }
 
     public static String getTableByMessage(Message msg) {

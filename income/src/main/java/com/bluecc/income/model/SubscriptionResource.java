@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,20 +37,35 @@ import com.bluecc.hubs.stub.SubscriptionResourceData;
 @REntity
 @MessageObject(value = SubscriptionResourceData.class,
         symbol = EntityNames.SubscriptionResource)
-public class SubscriptionResource implements IEventModel<SubscriptionResourceData.Builder>, Serializable, WithDescription {
+public class SubscriptionResource implements IEventModel<SubscriptionResourceData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RId String subscriptionResourceId;
+    @SerializedName("subscription_resource_id")
+	@RId 
+    String subscriptionResourceId;
+    @SerializedName("parent_resource_id") 
     String parentResourceId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("content_id") 
     String contentId;
+    @SerializedName("web_site_id") 
     String webSiteId;
+    @SerializedName("service_name_on_expiry") 
     String serviceNameOnExpiry;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return subscriptionResourceId;
+    }
 
         
     public Message toData() {

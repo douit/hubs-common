@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,18 +37,30 @@ import com.bluecc.hubs.stub.CarrierShipmentBoxTypeData;
 @REntity
 @MessageObject(value = CarrierShipmentBoxTypeData.class,
         symbol = EntityNames.CarrierShipmentBoxType)
-public class CarrierShipmentBoxType implements IEventModel<CarrierShipmentBoxTypeData.Builder>, Serializable {
+public class CarrierShipmentBoxType implements IEventModel<CarrierShipmentBoxTypeData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String shipmentBoxTypeId;
-    @RIndex String partyId;
+    @SerializedName("shipment_box_type_id")
+	@RIndex 
+    String shipmentBoxTypeId;
+    @SerializedName("party_id")
+	@RIndex 
+    String partyId;
+    @SerializedName("packaging_type_code") 
     String packagingTypeCode;
+    @SerializedName("oversize_code") 
     String oversizeCode;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

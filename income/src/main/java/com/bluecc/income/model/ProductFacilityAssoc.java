@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,22 +37,40 @@ import com.bluecc.hubs.stub.ProductFacilityAssocData;
 @REntity
 @MessageObject(value = ProductFacilityAssocData.class,
         symbol = EntityNames.ProductFacilityAssoc)
-public class ProductFacilityAssoc implements IEventModel<ProductFacilityAssocData.Builder>, Serializable, WithPeriod {
+public class ProductFacilityAssoc implements IEventModel<ProductFacilityAssocData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String productId;
-    @RIndex String facilityId;
-    @RIndex String facilityIdTo;
-    @RIndex String facilityAssocTypeId;
+    @SerializedName("product_id")
+	@RIndex 
+    String productId;
+    @SerializedName("facility_id")
+	@RIndex 
+    String facilityId;
+    @SerializedName("facility_id_to")
+	@RIndex 
+    String facilityIdTo;
+    @SerializedName("facility_assoc_type_id")
+	@RIndex 
+    String facilityAssocTypeId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("transit_time") 
     Long transitTime;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

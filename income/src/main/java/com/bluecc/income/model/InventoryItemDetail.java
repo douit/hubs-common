@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,36 +37,66 @@ import com.bluecc.hubs.stub.InventoryItemDetailData;
 @REntity
 @MessageObject(value = InventoryItemDetailData.class,
         symbol = EntityNames.InventoryItemDetail)
-public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.Builder>, Serializable, WithDescription {
+public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.Builder>, HasId, Serializable, WithDescription {
     private static final long serialVersionUID = 1L;
 
-    @RIndex String inventoryItemId;
-    @RIndex String inventoryItemDetailSeqId;
+    @SerializedName("inventory_item_id")
+	@RIndex 
+    String inventoryItemId;
+    @SerializedName("inventory_item_detail_seq_id")
+	@RIndex 
+    String inventoryItemDetailSeqId;
+    @SerializedName("effective_date") 
     java.time.LocalDateTime effectiveDate;
+    @SerializedName("quantity_on_hand_diff") 
     java.math.BigDecimal quantityOnHandDiff;
+    @SerializedName("available_to_promise_diff") 
     java.math.BigDecimal availableToPromiseDiff;
+    @SerializedName("accounting_quantity_diff") 
     java.math.BigDecimal accountingQuantityDiff;
+    @SerializedName("unit_cost") 
     java.math.BigDecimal unitCost;
+    @SerializedName("order_id") 
     String orderId;
+    @SerializedName("order_item_seq_id") 
     String orderItemSeqId;
+    @SerializedName("ship_group_seq_id") 
     String shipGroupSeqId;
+    @SerializedName("shipment_id") 
     String shipmentId;
+    @SerializedName("shipment_item_seq_id") 
     String shipmentItemSeqId;
+    @SerializedName("return_id") 
     String returnId;
+    @SerializedName("return_item_seq_id") 
     String returnItemSeqId;
+    @SerializedName("work_effort_id") 
     String workEffortId;
+    @SerializedName("fixed_asset_id") 
     String fixedAssetId;
+    @SerializedName("maint_hist_seq_id") 
     String maintHistSeqId;
+    @SerializedName("item_issuance_id") 
     String itemIssuanceId;
+    @SerializedName("receipt_id") 
     String receiptId;
+    @SerializedName("physical_inventory_id") 
     String physicalInventoryId;
+    @SerializedName("reason_enum_id") 
     String reasonEnumId;
+    @SerializedName("description") 
     String description;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
-    @RId String id;
+    @SerializedName("id")
+	@RId 
+    String id;
     
 
         

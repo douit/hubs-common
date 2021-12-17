@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,41 +37,77 @@ import com.bluecc.hubs.stub.CommunicationEventData;
 @REntity
 @MessageObject(value = CommunicationEventData.class,
         symbol = EntityNames.CommunicationEvent)
-public class CommunicationEvent implements IEventModel<CommunicationEventData.Builder>, Serializable {
+public class CommunicationEvent implements IEventModel<CommunicationEventData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String communicationEventId;
+    @SerializedName("communication_event_id")
+	@RId 
+    String communicationEventId;
+    @SerializedName("communication_event_type_id") 
     String communicationEventTypeId;
+    @SerializedName("orig_comm_event_id") 
     String origCommEventId;
+    @SerializedName("parent_comm_event_id") 
     String parentCommEventId;
+    @SerializedName("status_id") 
     String statusId;
+    @SerializedName("contact_mech_type_id") 
     String contactMechTypeId;
+    @SerializedName("contact_mech_id_from") 
     String contactMechIdFrom;
+    @SerializedName("contact_mech_id_to") 
     String contactMechIdTo;
+    @SerializedName("role_type_id_from") 
     String roleTypeIdFrom;
+    @SerializedName("role_type_id_to") 
     String roleTypeIdTo;
+    @SerializedName("party_id_from") 
     String partyIdFrom;
+    @SerializedName("party_id_to") 
     String partyIdTo;
+    @SerializedName("entry_date") 
     java.time.LocalDateTime entryDate;
+    @SerializedName("datetime_started") 
     java.time.LocalDateTime datetimeStarted;
+    @SerializedName("datetime_ended") 
     java.time.LocalDateTime datetimeEnded;
+    @SerializedName("subject") 
     String subject;
+    @SerializedName("content_mime_type_id") 
     String contentMimeTypeId;
+    @SerializedName("content") 
     String content;
+    @SerializedName("note") 
     String note;
+    @SerializedName("reason_enum_id") 
     String reasonEnumId;
+    @SerializedName("contact_list_id") 
     String contactListId;
+    @SerializedName("header_string") 
     String headerString;
+    @SerializedName("from_text") 
     String fromText;
+    @SerializedName("to_text") 
     String toText;
+    @SerializedName("cc_string") 
     String ccString;
+    @SerializedName("bcc_string") 
     String bccString;
+    @SerializedName("message_id") 
     String messageId;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return communicationEventId;
+    }
 
         
     public Message toData() {

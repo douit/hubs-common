@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,26 +37,47 @@ import com.bluecc.hubs.stub.ProductStoreSurveyApplData;
 @REntity
 @MessageObject(value = ProductStoreSurveyApplData.class,
         symbol = EntityNames.ProductStoreSurveyAppl)
-public class ProductStoreSurveyAppl implements IEventModel<ProductStoreSurveyApplData.Builder>, Serializable, WithPeriod {
+public class ProductStoreSurveyAppl implements IEventModel<ProductStoreSurveyApplData.Builder>, HasId, Serializable, WithPeriod {
     private static final long serialVersionUID = 1L;
 
-    @RId String productStoreSurveyId;
+    @SerializedName("product_store_survey_id")
+	@RId 
+    String productStoreSurveyId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("survey_appl_type_id") 
     String surveyApplTypeId;
+    @SerializedName("group_name") 
     String groupName;
+    @SerializedName("survey_id") 
     String surveyId;
+    @SerializedName("product_id") 
     String productId;
+    @SerializedName("product_category_id") 
     String productCategoryId;
+    @SerializedName("from_date") 
     java.time.LocalDateTime fromDate;
+    @SerializedName("thru_date") 
     java.time.LocalDateTime thruDate;
+    @SerializedName("survey_template") 
     String surveyTemplate;
+    @SerializedName("result_template") 
     String resultTemplate;
+    @SerializedName("sequence_num") 
     Long sequenceNum;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return productStoreSurveyId;
+    }
 
         
     public Message toData() {

@@ -15,6 +15,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.ByteString;
 // import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import com.bluecc.hubs.fund.model.IEventModel;
 import static com.bluecc.hubs.ProtoTypes.*;
@@ -36,42 +37,79 @@ import com.bluecc.hubs.stub.ProductStoreShipmentMethData;
 @REntity
 @MessageObject(value = ProductStoreShipmentMethData.class,
         symbol = EntityNames.ProductStoreShipmentMeth)
-public class ProductStoreShipmentMeth implements IEventModel<ProductStoreShipmentMethData.Builder>, Serializable {
+public class ProductStoreShipmentMeth implements IEventModel<ProductStoreShipmentMethData.Builder>, HasId, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @RId String productStoreShipMethId;
+    @SerializedName("product_store_ship_meth_id")
+	@RId 
+    String productStoreShipMethId;
+    @SerializedName("product_store_id") 
     String productStoreId;
+    @SerializedName("shipment_method_type_id") 
     String shipmentMethodTypeId;
+    @SerializedName("party_id") 
     String partyId;
+    @SerializedName("role_type_id") 
     String roleTypeId;
+    @SerializedName("company_party_id") 
     String companyPartyId;
+    @SerializedName("min_weight") 
     java.math.BigDecimal minWeight;
+    @SerializedName("max_weight") 
     java.math.BigDecimal maxWeight;
+    @SerializedName("min_size") 
     java.math.BigDecimal minSize;
+    @SerializedName("max_size") 
     java.math.BigDecimal maxSize;
+    @SerializedName("min_total") 
     java.math.BigDecimal minTotal;
+    @SerializedName("max_total") 
     java.math.BigDecimal maxTotal;
+    @SerializedName("allow_usps_addr") 
     Character allowUspsAddr;
+    @SerializedName("require_usps_addr") 
     Character requireUspsAddr;
+    @SerializedName("allow_company_addr") 
     Character allowCompanyAddr;
+    @SerializedName("require_company_addr") 
     Character requireCompanyAddr;
+    @SerializedName("include_no_charge_items") 
     Character includeNoChargeItems;
+    @SerializedName("include_feature_group") 
     String includeFeatureGroup;
+    @SerializedName("exclude_feature_group") 
     String excludeFeatureGroup;
+    @SerializedName("include_geo_id") 
     String includeGeoId;
+    @SerializedName("exclude_geo_id") 
     String excludeGeoId;
+    @SerializedName("service_name") 
     String serviceName;
+    @SerializedName("config_props") 
     String configProps;
+    @SerializedName("shipment_custom_method_id") 
     String shipmentCustomMethodId;
+    @SerializedName("shipment_gateway_config_id") 
     String shipmentGatewayConfigId;
+    @SerializedName("sequence_number") 
     Long sequenceNumber;
+    @SerializedName("allowance_percent") 
     java.math.BigDecimal allowancePercent;
+    @SerializedName("minimum_price") 
     java.math.BigDecimal minimumPrice;
+    @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
+    @SerializedName("last_updated_tx_stamp") 
     java.time.LocalDateTime lastUpdatedTxStamp;
+    @SerializedName("created_stamp") 
     java.time.LocalDateTime createdStamp;
+    @SerializedName("created_tx_stamp") 
     java.time.LocalDateTime createdTxStamp;
     
+    @Override
+    public String getId(){
+        return productStoreShipMethId;
+    }
 
         
     public Message toData() {
