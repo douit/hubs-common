@@ -219,4 +219,10 @@ public class ProtoMetaTest {
                 .forEach(r -> System.out.println("incl: "+r));
     }
 
+    @Test
+    public void testGetInspectMeta(){
+        protoMeta.getInspectMeta("Product")
+                .getValidRelationNames()
+                .forEach(e -> System.out.println(e));
+    }
 }

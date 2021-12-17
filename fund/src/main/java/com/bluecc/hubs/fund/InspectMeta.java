@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InspectMeta {
     public enum RelationTags{
@@ -33,5 +34,21 @@ public class InspectMeta {
     public static class EntityInspect{
         String name;
         List<RelationMark> relationMarks;
+
+        /**
+         * Example code:
+         * <pre>
+         *     protoMeta.getInspectMeta("Product")
+         *                 .getValidRelationNames()
+         *                 .forEach(e -> System.out.println(e));
+         * </pre>
+         * @return relation names in snake-case
+         */
+        public List<String> getValidRelationNames(){
+            return getRelationMarks().stream()
+                    .filter(r -> !r.getTags().contains("skip"))
+                    .map(e -> Util.toSnakecase(e.name))
+                    .collect(Collectors.toList());
+        }
     }
 }
