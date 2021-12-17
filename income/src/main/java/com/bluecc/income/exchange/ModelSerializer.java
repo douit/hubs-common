@@ -49,7 +49,6 @@ public final class ModelSerializer {
         return resultMap;
     }
 
-
     public static EntityValue getEntityValue(WithSuppliers e) {
         EntityValue.Builder valBuilder = EntityValue.newBuilder()
                 .setEntityType(e.getClass().getSimpleName())
@@ -63,7 +62,9 @@ public final class ModelSerializer {
                 values.forEach(row -> {
                     bucket.addValues(ModelSerializer.toEntityValue(row));
                 });
-                valBuilder.putBuckets(k, bucket.build());
+                // with same element type, pick up the first element type as the bucket type
+                String entType=values.get(0).getClass().getSimpleName();
+                valBuilder.putBuckets(k, bucket.setEntityType(entType).build());
             }
 
         });
