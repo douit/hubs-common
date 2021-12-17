@@ -1,19 +1,22 @@
 package com.bluecc.income.proto;
 
 import com.bluecc.hubs.ProtoTypes;
-import com.bluecc.hubs.fund.EntityMeta;
-import com.bluecc.hubs.fund.ProtoMeta;
-import com.bluecc.hubs.fund.SqlMeta;
+import com.bluecc.hubs.fund.*;
+import com.bluecc.hubs.fund.InspectMeta.EntityInspect;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.dao.PartyDelegator;
 import com.google.common.collect.Maps;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
 import org.junit.Test;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.bluecc.hubs.fund.Util.prettyYaml;
 import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -203,4 +206,17 @@ public class ProtoMetaTest {
         System.out.println(sqlMeta.getAliases());
         System.out.println(sqlMeta.leftJoin(PartyDelegator.PARTY_CONTACT_MECH));
     }
+
+    @Test
+    public void testLoadInspectMeta() throws FileNotFoundException {
+        Yaml yaml = new Yaml();
+        EntityInspect inspectMeta=yaml.loadAs(new FileReader(
+                SystemDefs.prependHubsHomeFile("asset/inspect/Product.yml")),
+                EntityInspect.class);
+        // prettyYaml(inspectMeta);
+        inspectMeta.getRelationMarks().stream()
+                .filter(r -> !r.getTags().contains("skip"))
+                .forEach(r -> System.out.println("incl: "+r));
+    }
+
 }

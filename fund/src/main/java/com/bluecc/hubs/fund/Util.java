@@ -13,6 +13,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.nodes.Tag;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -40,6 +43,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
+import static org.yaml.snakeyaml.DumperOptions.FlowStyle.AUTO;
 
 public class Util {
     public static String arrayAwareToString(Object o) {
@@ -392,5 +396,17 @@ public class Util {
         }
         out.append('$');
         return out.toString();
+    }
+
+    public static String toYaml(Object obj){
+        DumperOptions dumperOptions = new DumperOptions();
+        // dumperOptions.setPrettyFlow(true);
+        dumperOptions.setDefaultFlowStyle(AUTO);
+        Yaml yaml = new Yaml(dumperOptions);
+        return yaml.dumpAs(obj, Tag.MAP, null);
+    }
+
+    public static void prettyYaml(Object obj){
+        System.out.println(toYaml(obj));
     }
 }

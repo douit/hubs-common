@@ -1,0 +1,17 @@
+name: ProductCategoryMember
+relationMarks:
+- bindFields: [productId]
+  entityName: Product
+  name: Product
+  relationType: one
+  tags: [skip]
+- bindFields: [productCategoryId]
+  entityName: ProductCategory
+  name: ProductCategory
+  relationType: one
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]

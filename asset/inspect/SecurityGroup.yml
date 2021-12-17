@@ -1,0 +1,22 @@
+name: SecurityGroup
+relationMarks:
+- bindFields: [groupId]
+  entityName: PartyRelationship
+  name: PartyRelationship
+  relationType: many
+  tags: [skip]
+- bindFields: [groupId]
+  entityName: SecurityGroupPermission
+  name: SecurityGroupPermission
+  relationType: many
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]
+- bindFields: [groupId]
+  entityName: UserLoginSecurityGroup
+  name: UserLoginSecurityGroup
+  relationType: many
+  tags: [skip]

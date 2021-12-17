@@ -1,0 +1,17 @@
+name: ProductStoreFacility
+relationMarks:
+- bindFields: [facilityId]
+  entityName: Facility
+  name: Facility
+  relationType: one
+  tags: [skip]
+- bindFields: [productStoreId]
+  entityName: ProductStore
+  name: ProductStore
+  relationType: one
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]

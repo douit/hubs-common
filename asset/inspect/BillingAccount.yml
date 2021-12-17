@@ -1,0 +1,37 @@
+name: BillingAccount
+relationMarks:
+- bindFields: [billingAccountId]
+  entityName: BillingAccountRole
+  name: BillingAccountRole
+  relationType: many
+  tags: [skip]
+- bindFields: [contactMechId]
+  entityName: ContactMech
+  name: ContactMech
+  relationType: one
+  tags: [skip]
+- bindFields: [billingAccountId]
+  entityName: Invoice
+  name: Invoice
+  relationType: many
+  tags: [skip]
+- bindFields: [billingAccountId]
+  entityName: OrderHeader
+  name: OrderHeader
+  relationType: many
+  tags: [skip]
+- bindFields: [billingAccountId]
+  entityName: PaymentApplication
+  name: PaymentApplication
+  relationType: many
+  tags: [skip]
+- bindFields: [contactMechId]
+  entityName: PostalAddress
+  name: PostalAddress
+  relationType: one
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]

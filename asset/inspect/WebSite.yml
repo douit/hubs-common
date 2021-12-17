@@ -1,0 +1,37 @@
+name: WebSite
+relationMarks:
+- bindFields: [webSiteId]
+  entityName: EbayConfig
+  name: EbayConfig
+  relationType: many
+  tags: [skip]
+- bindFields: [webSiteId]
+  entityName: OrderHeader
+  name: OrderHeader
+  relationType: many
+  tags: [skip]
+- bindFields: [productStoreId]
+  entityName: ProductStore
+  name: ProductStore
+  relationType: one
+  tags: [skip]
+- bindFields: [webSiteId]
+  entityName: SubscriptionResource
+  name: SubscriptionResource
+  relationType: many
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]
+- bindFields: [webSiteId]
+  entityName: WebAnalyticsConfig
+  name: WebAnalyticsConfig
+  relationType: many
+  tags: [skip]
+- bindFields: [webSiteId]
+  entityName: WebSiteContent
+  name: WebSiteContent
+  relationType: many
+  tags: [skip]

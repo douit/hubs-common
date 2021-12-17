@@ -1,0 +1,102 @@
+name: OrderItem
+relationMarks:
+- bindFields: [orderId, orderItemSeqId]
+  entityName: FinAccountTrans
+  name: FinAccountTrans
+  relationType: many
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: FixedAsset
+  name: AcquireFixedAsset
+  relationType: many
+  tags: [skip]
+- bindFields: [overrideGlAccountId]
+  entityName: GlAccount
+  name: OverrideGlAccount
+  relationType: one
+  tags: [skip]
+- bindFields: [fromInventoryItemId]
+  entityName: InventoryItem
+  name: FromInventoryItem
+  relationType: one
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: ItemIssuance
+  name: ItemIssuance
+  relationType: many
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: OrderAdjustment
+  name: OrderAdjustment
+  relationType: many
+  tags: [skip]
+- bindFields: [orderId]
+  entityName: OrderHeader
+  name: OrderHeader
+  relationType: one
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: OrderItemBilling
+  name: OrderItemBilling
+  relationType: many
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: OrderItemPriceInfo
+  name: OrderItemPriceInfo
+  relationType: many
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: OrderItemShipGroupAssoc
+  name: OrderItemShipGroupAssoc
+  relationType: many
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: OrderItemShipGrpInvRes
+  name: OrderItemShipGrpInvRes
+  relationType: many
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: OrderPaymentPreference
+  name: OrderPaymentPreference
+  relationType: many
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: OrderStatus
+  name: OrderStatus
+  relationType: many
+  tags: [skip]
+- bindFields: [productId]
+  entityName: Product
+  name: Product
+  relationType: one
+  tags: [skip]
+- bindFields: [productId]
+  entityName: ProductFacilityLocation
+  name: ProductFacilityLocation
+  relationType: many
+  tags: [skip]
+- bindFields: [quoteId, quoteItemSeqId]
+  entityName: QuoteItem
+  name: QuoteItem
+  relationType: one
+  tags: [skip]
+- bindFields: [orderId, orderItemSeqId]
+  entityName: ShipmentReceipt
+  name: ShipmentReceipt
+  relationType: many
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]
+- bindFields: [dontCancelSetUserLogin]
+  entityName: UserLogin
+  name: DontCancelSetUserLogin
+  relationType: one
+  tags: [skip]
+- bindFields: [changeByUserLoginId]
+  entityName: UserLogin
+  name: ChangeByUserLogin
+  relationType: one
+  tags: [skip]

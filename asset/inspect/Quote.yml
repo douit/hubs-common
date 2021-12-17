@@ -1,0 +1,32 @@
+name: Quote
+relationMarks:
+- bindFields: [partyId]
+  entityName: Party
+  name: Party
+  relationType: one
+  tags: [skip]
+- bindFields: [productStoreId]
+  entityName: ProductStore
+  name: ProductStore
+  relationType: one
+  tags: [skip]
+- bindFields: [quoteId]
+  entityName: QuoteItem
+  name: QuoteItem
+  relationType: many
+  tags: [skip]
+- bindFields: [quoteId]
+  entityName: QuoteRole
+  name: QuoteRole
+  relationType: many
+  tags: [skip]
+- bindFields: [quoteId]
+  entityName: QuoteTerm
+  name: QuoteTerm
+  relationType: many
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]

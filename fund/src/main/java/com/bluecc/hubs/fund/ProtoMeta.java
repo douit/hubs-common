@@ -3,13 +3,16 @@ package com.bluecc.hubs.fund;
 import com.google.common.collect.Maps;
 
 import javax.inject.Singleton;
-import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Singleton
 public class ProtoMeta {
     Map<String, EntityMeta> metaMap = Maps.newHashMap();
+    Map<String, InspectMeta> inspectMetas=Maps.newHashMap();
 
     public Map<String, EntityMeta> getMetaMap() {
         return metaMap;
@@ -42,6 +45,28 @@ public class ProtoMeta {
             }
         }
         return null;
+    }
+
+    public InspectMeta.EntityInspect buildInspectMeta(String entityName){
+        EntityMeta meta=getEntityMeta(entityName);
+        // skip, multi, single, assoc
+        List<InspectMeta.RelationMark> marks=meta.getValidRelations()
+                .stream().sorted(Comparator.comparing(e -> e.getRelEntityName()))
+                // .peek( e -> System.out.println(e.getName()))
+                .map(e -> InspectMeta.RelationMark.builder()
+                        .name(e.getName())
+                        .relationType(e.getType())
+                        .entityName(e.getRelEntityName())
+                        .bindFields(e.getRelFieldList())
+                        .tags(Collections.singletonList("skip"))
+                        .build()
+                )
+                .collect(Collectors.toList());
+        InspectMeta.EntityInspect inspect= InspectMeta.EntityInspect.builder()
+                .name(meta.getName())
+                .relationMarks(marks)
+                .build();
+        return inspect;
     }
 
 }

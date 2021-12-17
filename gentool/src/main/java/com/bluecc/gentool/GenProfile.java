@@ -2,13 +2,19 @@ package com.bluecc.gentool;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.bluecc.hubs.fund.HeadEntityResources;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.Util;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * $ just gen GenProfile proto
@@ -46,9 +52,31 @@ public class GenProfile {
                 case "info":
                     System.out.println("available profiles: livecases, proto, heads");
                     break;
+                case "inspect":
+                    writeInspectMeta();
+                    break;
                 default:
                     System.out.println("Cannot execute profile "+profile);
             }
         }
+    }
+
+    public static void writeInspectMeta() {
+        AtomicInteger total= new AtomicInteger();
+        ProtoMeta protoMeta=new ProtoMeta();
+        String targetDir="asset/inspect";
+        HeadEntityResources.allHeads().forEach(head ->{
+            Path path= Paths.get(targetDir, head+".yml");
+            if(!path.toFile().exists()) {
+                total.getAndIncrement();
+                try {
+                    Util.writeFile(Util.toYaml(protoMeta.buildInspectMeta(head)), path);
+                    System.out.println("write to "+path);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        System.out.println(".. write inspect meta: "+total.get());
     }
 }

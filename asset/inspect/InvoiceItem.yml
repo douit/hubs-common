@@ -1,0 +1,77 @@
+name: InvoiceItem
+relationMarks:
+- bindFields: [overrideGlAccountId]
+  entityName: GlAccount
+  name: OverrideGlAccount
+  relationType: one
+  tags: [skip]
+- bindFields: [inventoryItemId]
+  entityName: InventoryItem
+  name: InventoryItem
+  relationType: one
+  tags: [skip]
+- bindFields: [invoiceId]
+  entityName: Invoice
+  name: Invoice
+  relationType: one
+  tags: [skip]
+- bindFields: [parentInvoiceId, parentInvoiceItemSeqId]
+  entityName: InvoiceItem
+  name: InvoiceItem
+  relationType: one
+  tags: [skip]
+- bindFields: [invoiceId, invoiceItemSeqId]
+  entityName: InvoiceItem
+  name: ChildrenInvoiceItem
+  relationType: many
+  tags: [skip]
+- bindFields: [invoiceId, invoiceItemSeqId]
+  entityName: OrderAdjustmentBilling
+  name: OrderAdjustmentBilling
+  relationType: many
+  tags: [skip]
+- bindFields: [invoiceId, invoiceItemSeqId]
+  entityName: OrderItemBilling
+  name: OrderItemBilling
+  relationType: many
+  tags: [skip]
+- bindFields: [taxAuthPartyId]
+  entityName: Party
+  name: TaxAuthorityParty
+  relationType: one
+  tags: [skip]
+- bindFields: [overrideOrgPartyId]
+  entityName: Party
+  name: OverrideOrgParty
+  relationType: one
+  tags: [skip]
+- bindFields: [invoiceId, invoiceItemSeqId]
+  entityName: PaymentApplication
+  name: PaymentApplication
+  relationType: many
+  tags: [skip]
+- bindFields: [productId]
+  entityName: Product
+  name: Product
+  relationType: one
+  tags: [skip]
+- bindFields: [productFeatureId]
+  entityName: ProductFeature
+  name: ProductFeature
+  relationType: one
+  tags: [skip]
+- bindFields: [invoiceId, invoiceItemSeqId]
+  entityName: ShipmentItemBilling
+  name: ShipmentItemBilling
+  relationType: many
+  tags: [skip]
+- bindFields: [taxAuthorityRateSeqId]
+  entityName: TaxAuthorityRateProduct
+  name: TaxAuthorityRateProduct
+  relationType: one
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]

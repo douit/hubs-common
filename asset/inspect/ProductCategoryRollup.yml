@@ -1,0 +1,32 @@
+name: ProductCategoryRollup
+relationMarks:
+- bindFields: [productCategoryId]
+  entityName: ProductCategory
+  name: CurrentProductCategory
+  relationType: one
+  tags: [skip]
+- bindFields: [parentProductCategoryId]
+  entityName: ProductCategory
+  name: ParentProductCategory
+  relationType: one
+  tags: [skip]
+- bindFields: [productCategoryId]
+  entityName: ProductCategoryRollup
+  name: ChildProductCategoryRollup
+  relationType: many
+  tags: [skip]
+- bindFields: [parentProductCategoryId]
+  entityName: ProductCategoryRollup
+  name: ParentProductCategoryRollup
+  relationType: many
+  tags: [skip]
+- bindFields: [parentProductCategoryId]
+  entityName: ProductCategoryRollup
+  name: SiblingProductCategoryRollup
+  relationType: many
+  tags: [skip]
+- bindFields: [tenantId]
+  entityName: Tenant
+  name: Tenant
+  relationType: one
+  tags: [skip]

@@ -42,6 +42,12 @@
         </dependency>
         <dependency>
             <groupId>com.bluecc</groupId>
+            <artifactId>facade</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <!--            <optional>true</optional>-->
+        </dependency>
+        <dependency>
+            <groupId>com.bluecc</groupId>
             <artifactId>stub</artifactId>
             <version>1.0-SNAPSHOT</version>
 <!--            <optional>true</optional>-->
@@ -278,6 +284,22 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sources</goal>
+                            <goal>resolve</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>javadoc</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
