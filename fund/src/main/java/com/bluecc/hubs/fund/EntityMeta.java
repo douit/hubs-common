@@ -23,7 +23,7 @@ import static java.lang.String.format;
 public class EntityMeta {
     public static final String REL_MANY = "many";
     public static final String REL_ONE = "one";
-    public static final String REL_ONE_NOFK="one-nofk";
+    public static final String REL_ONE_NOFK = "one-nofk";
 
     /* move to HeadEntity
     public static final Map<String, HeadEntity> HEAD_ENTITIES = ImmutableMap.of(
@@ -72,6 +72,7 @@ public class EntityMeta {
 
     static final Set<String> MESSAGE_IGNORE_FIELDS =
             Sets.newHashSet("lastUpdatedStamp", "createdStamp");
+
     public List<FieldMeta> getMessageFields() {
         return fields.stream().filter(f -> !MESSAGE_IGNORE_FIELDS.contains(f.getName()))
                 .collect(Collectors.toList());
@@ -84,16 +85,21 @@ public class EntityMeta {
     public String getKeyNames() {
         return String.join(", ", pks);
     }
-    public String getUnderscoreKeys(){
+
+    public String getUnderscoreKeys() {
         return getUniqueCols().toLowerCase(Locale.ROOT);
     }
 
-    public Set<String> getFieldNames(){
+    public Set<String> getFieldNames() {
         return fields.stream().map(f -> f.name).collect(Collectors.toSet());
     }
 
-    public List<String> getColNames(String... exclude){
-        if(exclude.length>0) {
+    public Set<String> getPublicFieldNames() {
+        return getPublicFields().stream().map(f -> f.name).collect(Collectors.toSet());
+    }
+
+    public List<String> getColNames(String... exclude) {
+        if (exclude.length > 0) {
             return fields.stream()
                     .map(f -> f.getUnderscore())
                     .filter(underscore -> Stream.of(exclude)
@@ -106,28 +112,29 @@ public class EntityMeta {
                 .collect(Collectors.toList());
     }
 
-    public String getPrefix(){
-        String constName=getUnderscore();
+    public String getPrefix() {
+        String constName = getUnderscore();
         String prefix = prefix(constName);
         return prefix;
     }
 
-    static final Set<String> keywords=Sets.newHashSet("in",
+    static final Set<String> keywords = Sets.newHashSet("in",
             "with", "of", "and", "or", "not");
+
     public static String prefix(String constName) {
-        String prefix= Arrays.stream(constName.split("_"))
+        String prefix = Arrays.stream(constName.split("_"))
                 .map(s -> s.substring(0, 1))
                 .collect(Collectors.joining());
-        if(prefix.length()==1){
-            prefix= constName.substring(0,2);
+        if (prefix.length() == 1) {
+            prefix = constName.substring(0, 2);
         }
-        if(keywords.contains(prefix)){
-            prefix=prefix+"z";
+        if (keywords.contains(prefix)) {
+            prefix = prefix + "z";
         }
         return prefix;
     }
 
-    public Optional<FieldMeta> getField(String fieldName){
+    public Optional<FieldMeta> getField(String fieldName) {
         return fields.stream().filter(f -> f.name.equals(fieldName)).findFirst();
     }
 
@@ -142,6 +149,7 @@ public class EntityMeta {
     public String getPkGetter() {
         return "get" + Util.toClassName(getPk());
     }
+
     public String getPkSetter() {
         return "set" + Util.toClassName(getPk());
     }
@@ -154,7 +162,7 @@ public class EntityMeta {
         }
     }
 
-    public String getUnderscorePk(){
+    public String getUnderscorePk() {
         return getPkCol().toLowerCase(Locale.ROOT);
     }
 
@@ -184,33 +192,33 @@ public class EntityMeta {
         return HeadEntityResources.contains(this.name);
     }
 
-    public String getUpdateClause(){
-        String sid=getPk();
+    public String getUpdateClause() {
+        String sid = getPk();
         return fields.stream()
                 .filter(f -> !f.getName().equals(sid)
                         && !f.isCreateTs()
                         && !IGNORE_FIELDS.contains(f.name))
                 .map(f -> {
-                    if(f.isUpdateTs()){
+                    if (f.isUpdateTs()) {
                         return format("%s=:now", f.getUnderscore());
-                    }else {
+                    } else {
                         return format("%s=:%s", f.getUnderscore(), f.name);
                     }
                 })
                 .collect(Collectors.joining(", "));
     }
 
-    public String getInsertClause(){
-        String cols= fields.stream()
+    public String getInsertClause() {
+        String cols = fields.stream()
                 .filter(f -> !f.isUpdateTs() && !IGNORE_FIELDS.contains(f.name))
                 .map(f -> f.getUnderscore())
                 .collect(Collectors.joining(", "));
-        String vals= fields.stream()
+        String vals = fields.stream()
                 .filter(f -> !f.isUpdateTs() && !IGNORE_FIELDS.contains(f.name))
                 .map(f -> {
-                    if(f.isCreateTs()){
+                    if (f.isCreateTs()) {
                         return ":now";
-                    }else {
+                    } else {
                         return format(":%s", f.getName());
                     }
                 })
@@ -230,6 +238,8 @@ public class EntityMeta {
             f.setSqlType(typDef.getSqlType());
             f.setJavaType(typDef.getJavaType());
             f.setClickhouseType(typDef.getClickhouseType());
+
+            f.setFieldTypeDef(typDef);  // all other type-mappings
         });
 
         // process entity types
@@ -263,6 +273,7 @@ public class EntityMeta {
                     .type("id")
                     // .javaType("Long")
                     // .sqlType("BIGINT auto_increment")
+                    .fieldTypeDef(types.get("id"))
                     .javaType("String")
                     .sqlType("VARCHAR(20)")
                     .stringLength(20)
@@ -274,7 +285,7 @@ public class EntityMeta {
                     .build());
         }
 
-        if(isHeadEntity()){
+        if (isHeadEntity()) {
             getFields().add(FieldMeta.builder()
                     .name("tenantId")
                     .type("id")
@@ -291,15 +302,15 @@ public class EntityMeta {
                     .build());
 
             getRelations().add(RelationMeta.builder()
-                            .name("Tenant")
-                            .relEntityName("Tenant")
-                            .type("one")
-                            .title("")
-                            .fkName("TENANT_FK")
-                            .keymap(KeymapMeta.builder()
-                                    .fieldName("tenantId")
-                                    .relFieldName("tenantId")
-                                    .build())
+                    .name("Tenant")
+                    .relEntityName("Tenant")
+                    .type("one")
+                    .title("")
+                    .fkName("TENANT_FK")
+                    .keymap(KeymapMeta.builder()
+                            .fieldName("tenantId")
+                            .relFieldName("tenantId")
+                            .build())
                     .build());
         }
         //
@@ -311,32 +322,32 @@ public class EntityMeta {
         // });
     }
 
-    public String getFlatMessageType(){
-        if(HeadEntityResources.contains(name)){
-            return name+"FlatData";
+    public String getFlatMessageType() {
+        if (HeadEntityResources.contains(name)) {
+            return name + "FlatData";
         }
         return getMessageType();
     }
 
-    public String getMessageType(){
-        return name+"Data";
+    public String getMessageType() {
+        return name + "Data";
     }
 
     @Data
     @Builder
-    public static class RelationQueryMeta{
+    public static class RelationQueryMeta {
         String relationFieldName;  // 使用relation名称定义的proto字段名
         String relationEntity;
         List<String> fieldNames;
         boolean repeated;
 
-        public List<String> getTableFields(){
+        public List<String> getTableFields() {
             return fieldNames.stream().map(f -> Util.toSnakecase(f))
                     .collect(Collectors.toList());
         }
     }
 
-    public List<RelationQueryMeta> getRelationQueries(){
+    public List<RelationQueryMeta> getRelationQueries() {
         return relations.stream().filter(r -> r.hasProtoDef(name))
                 .map(r -> RelationQueryMeta.builder()
                         .relationFieldName(Util.toSnakecase(r.name))
@@ -347,69 +358,70 @@ public class EntityMeta {
                 .collect(Collectors.toList());
     }
 
-    public Optional<RelationMeta> findRelation(String relationName){
+    public Optional<RelationMeta> findRelation(String relationName) {
         return relations.stream().filter(r -> r.getName().equals(relationName))
                 .findFirst();
     }
-    public Optional<RelationMeta> findRelationByProtoName(String relationName){
+
+    public Optional<RelationMeta> findRelationByProtoName(String relationName) {
         return relations.stream().filter(r -> r.getProtoName().equals(relationName))
                 .findFirst();
     }
 
     public List<RelationMeta> findRelationsByField(String fieldName,
-                                                      String...relationType){
-        if(relationType.length==0){
+                                                   String... relationType) {
+        if (relationType.length == 0) {
             return Lists.newArrayList();
         }
-        Set<String> types=Sets.newHashSet(relationType);
+        Set<String> types = Sets.newHashSet(relationType);
         return relations.stream()
                 .filter(r -> r.getRelFieldList().contains(fieldName)
                         && types.contains(r.type))
                 .collect(Collectors.toList());
     }
 
-    public List<RelationMeta> getValidRelations(){
-        Set<String> ents=MetaTypes.getAllEntities();
+    public List<RelationMeta> getValidRelations() {
+        Set<String> ents = MetaTypes.getAllEntities();
         return relations.stream()
-                .filter(r ->  ents.contains(r.getRelEntityName()))
+                .filter(r -> ents.contains(r.getRelEntityName()))
                 .collect(Collectors.toList());
     }
 
 
-    public String getAnnotation(FieldMeta fld){
+    public String getAnnotation(FieldMeta fld) {
         List<String> annotations = getAnnotationList(fld);
         return String.join("\n\t", annotations);
     }
 
     public List<String> getAnnotationList(FieldMeta fld) {
-        List<String> annotations=Lists.newArrayList();
+        List<String> annotations = Lists.newArrayList();
         annotations.add(format("@SerializedName(\"%s\")", fld.getUnderscore()));
-        if(getPk().equals(fld.name)){
+        if (getPk().equals(fld.name)) {
             annotations.add("@RId");
-        } else if(fld.pk && !fld.isDateTimeField()){
+        } else if (fld.pk && !fld.isDateTimeField()) {
             annotations.add("@RIndex");
         }
         return annotations;
     }
 
-    public String getFacets(){
-        List<String> facets=Lists.newArrayList("Serializable");
-        if(isHeadEntity()){
+    public String getFacets() {
+        List<String> facets = Lists.newArrayList("Serializable");
+        if (isHeadEntity()) {
             facets.add("WithSuppliers");
         }
-        if(getField("geoPointId").isPresent()){
+        if (getField("geoPointId").isPresent()) {
             facets.add("WithLocation");
         }
         // tempExprId
-        if(getField("tempExprId").isPresent()){
+        if (getField("tempExprId").isPresent()) {
             facets.add("WithSchedule");
         }
         // WithDescription
-        if(getField("description").isPresent()){
+        if (getField("description").isPresent()) {
             facets.add("WithDescription");
         }
-        Set<String> periodFields= Sets.newHashSet("fromDate", "thruDate");
-        if(getFieldNames().containsAll(periodFields)){
+        Set<String> periodFields = Sets.newHashSet("fromDate", "thruDate");
+        if (getFieldNames().containsAll(periodFields)) {
             facets.add("WithPeriod");
         }
         return String.join(", ", facets);
@@ -430,6 +442,7 @@ public class EntityMeta {
          */
         private String sqlType;
         private String clickhouseType;
+        private FieldMappings.FieldTypeDef fieldTypeDef;
 
         /**
          * The sql-type-alias of the Field, this is optional
@@ -466,23 +479,27 @@ public class EntityMeta {
             }
         }
 
-        public boolean isDateTimeField(){
+        public boolean isDateTimeField() {
             return MetaTypeUtil.DATETIME_TYPES.contains(type);
         }
 
-        public boolean isNumericField(){
+        public boolean isNumericField() {
             return MetaTypeUtil.NUMERIC_TYPES.contains(type);
         }
-        public boolean isDecimalField(){
+
+        public boolean isDecimalField() {
             return MetaTypeUtil.DECIMAL_TYPES.contains(type);
         }
-        public boolean isBlobField(){
+
+        public boolean isBlobField() {
             return MetaTypeUtil.BLOB_TYPES.contains(type);
         }
-        public boolean isManualField(){
+
+        public boolean isManualField() {
             return MetaTypeUtil.MANUAL_TYPES.contains(type);
         }
-        public boolean isRawTextField(){
+
+        public boolean isRawTextField() {
             return type.endsWith("-varchar") || type.startsWith("very-");
         }
 
@@ -497,65 +514,67 @@ public class EntityMeta {
             return MetaTypeUtil.getProtoType(this.type);
         }
 
-        public boolean isCreateTs(){
+        public boolean isCreateTs() {
             return name.equals("createdStamp");
         }
-        public boolean isUpdateTs(){
+
+        public boolean isUpdateTs() {
             return name.equals("lastUpdatedStamp");
         }
 
-        public boolean isIndicator(){
+        public boolean isIndicator() {
             return type.equals("indicator");
         }
-        public String getSetter(){
+
+        public String getSetter() {
             return format("set%s", fixedClassName());
         }
 
-        public String valuePart(String rawValue){
-            String value=format("\"%s\"", rawValue.replace('"', '\''));
+        public String valuePart(String rawValue) {
+            String value = format("\"%s\"", rawValue.replace('"', '\''));
             String valuePart;
-            switch (type){
+            switch (type) {
                 case "date-time":
-                    valuePart= format("getTimestamp(%s)", value);
+                    valuePart = format("getTimestamp(%s)", value);
                     break;
                 case "date":
-                    valuePart= format("getDate(%s)", value);
+                    valuePart = format("getDate(%s)", value);
                     break;
                 case "time":
-                    valuePart= format("getTimeOfDay(%s)", value);
+                    valuePart = format("getTimeOfDay(%s)", value);
                     break;
                 case "indicator":
-                    valuePart= format("castIndicator(%s)", value);
+                    valuePart = format("castIndicator(%s)", value);
                     break;
                 case "currency-amount":
                 case "currency-precise":
-                    valuePart= format("getCurrency(%s)", value);
+                    valuePart = format("getCurrency(%s)", value);
                     break;
                 case "fixed-point":
-                    valuePart= format("getFixedPoint(%s)", value);
+                    valuePart = format("getFixedPoint(%s)", value);
                     break;
                 case "byte-array":
                 case "blob":
                 case "object":
-                    valuePart= format("ByteString.copyFrom(%s)", value);
+                    valuePart = format("ByteString.copyFrom(%s)", value);
                     break;
 
                 default:
-                    if(name.endsWith("FormatPattern")){
-                        value= StringUtils.replace(value, "\\", "\\\\");
+                    if (name.endsWith("FormatPattern")) {
+                        value = StringUtils.replace(value, "\\", "\\\\");
                     }
-                    valuePart= isNumericField()?filterNum(rawValue):value;
+                    valuePart = isNumericField() ? filterNum(rawValue) : value;
             }
             return valuePart;
         }
 
         private String filterNum(String rawValue) {
-            if(rawValue.contains(".")){
+            if (rawValue.contains(".")) {
                 return rawValue;
-            }else if(rawValue.startsWith("0")) {
+            } else if (rawValue.startsWith("0")) {
                 try {
                     return String.format("%d", Integer.parseInt(rawValue));
-                }catch(NumberFormatException e){
+                } catch (NumberFormatException e) {
                     log.warn("fail to filter-num with integer: {}", rawValue);
                     throw e;
                 }
@@ -563,47 +582,47 @@ public class EntityMeta {
             return rawValue;
         }
 
-        public String getProtoSetter(){
+        public String getProtoSetter() {
             String valuePart;
-            switch (type){
+            switch (type) {
                 case "date-time":
-                    valuePart= format("getTimestamp(%s)", name);
+                    valuePart = format("getTimestamp(%s)", name);
                     break;
                 case "date":
-                    valuePart= format("getDate(%s)", name);
+                    valuePart = format("getDate(%s)", name);
                     break;
                 case "time":
-                    valuePart= format("getTimeOfDay(%s)", name);
+                    valuePart = format("getTimeOfDay(%s)", name);
                     break;
                 case "indicator":
-                    valuePart= format("getIndicator(%s)", name);
+                    valuePart = format("getIndicator(%s)", name);
                     break;
                 case "currency-amount":
                 case "currency-precise":
-                    valuePart= format("getCurrency(%s)", name);
+                    valuePart = format("getCurrency(%s)", name);
                     break;
                 case "fixed-point":
-                    valuePart= format("getFixedPoint(%s)", name);
+                    valuePart = format("getFixedPoint(%s)", name);
                     break;
                 case "byte-array":
                 case "blob":
                 case "object":
-                    valuePart= format("ByteString.copyFrom(%s)", name);
+                    valuePart = format("ByteString.copyFrom(%s)", name);
                     break;
                 // case "url":
                 //     valuePart= format("%s.toString()", name);
                 //     break;
                 default:
-                    valuePart=name;
+                    valuePart = name;
             }
             return format("set%s(%s)", fixedClassName(), valuePart);
         }
 
-        public String getProtoGetter(){
+        public String getProtoGetter() {
             // data.getLastName()
             // getLocalDate(data.getBirthDate())
-            String getter= format("data.get%s()", fixedClassName());
-            switch (type){
+            String getter = format("data.get%s()", fixedClassName());
+            switch (type) {
                 case "date-time":
                     return format("getLocalDateTime(%s)", getter);
                 case "date":
@@ -627,14 +646,42 @@ public class EntityMeta {
             }
         }
 
-        static final Map<String, String> FIXTURES=ImmutableMap.of(
+        static final Map<String, String> FIXTURES = ImmutableMap.of(
                 "reserv2ndPPPerc", "Reserv2NdPPPerc");
-        String fixedClassName(){
+
+        String fixedClassName() {
             // reserv2ndPPPerc
-            if(FIXTURES.containsKey(this.name)){
+            if (FIXTURES.containsKey(this.name)) {
                 return FIXTURES.get(name);
             }
             return Util.toClassName(name);
+        }
+
+        @SneakyThrows
+        public String getDartTemplate() {
+            String tpl = "fld_default.j2";
+            if (MetaTypeUtil.FLOAT_TYPES.contains(type)) {
+                tpl = "fld_double.j2";
+            } else if (MetaTypeUtil.INT_TYPES.contains(type)) {
+                tpl = "fld_int.j2";
+            } else if (type.equals("date-time") || type.equals("date")) {
+                tpl = "fld_date_time.j2";
+            } else if (type.equals("time")) {
+                tpl = "fld_time.j2";
+            }
+            return TemplateUtil.build("templates/fe/" + tpl,
+                    ImmutableMap.of("fld", this));
+        }
+
+        public String getDartSetter() {
+            if (MetaTypeUtil.FLOAT_TYPES.contains(type)
+                    || MetaTypeUtil.INT_TYPES.contains(type)
+                    || type.equals("date-time")
+                    || type.equals("date")
+                    || type.equals("time")) {
+                return name + "Str";
+            }
+            return name;
         }
     }
 
@@ -669,99 +716,105 @@ public class EntityMeta {
             return format("%s%sData %s", prefix, relEntityName, getProtoName());
         }
 
-        public String getProtoName(){
+        public String getProtoName() {
             return Util.toSnakecase(name);
         }
-        public String getPrefix(){
-            return prefix(getProtoName())+type.charAt(0);
+
+        public String getPrefix() {
+            return prefix(getProtoName()) + type.charAt(0);
         }
 
-        public String getVarName(){
+        public String getVarName() {
             return Util.toVarName(name);
         }
-        public String getRelVarName(){
-            return "rel"+name;
-        }
-        public String getBeanRelGetter(){
-            return "getRel"+name;
+
+        public String getRelVarName() {
+            return "rel" + name;
         }
 
-        public static String getRelVarNameByRelation(String relUnderscore){
-            return "rel"+Util.lowerSnakeToCamel(relUnderscore);
+        public String getBeanRelGetter() {
+            return "getRel" + name;
         }
 
-        public String getTableName(){
+        public static String getRelVarNameByRelation(String relUnderscore) {
+            return "rel" + Util.lowerSnakeToCamel(relUnderscore);
+        }
+
+        public String getTableName() {
             return Util.toSnakecase(relEntityName);
         }
 
-        public boolean isRepeated(){
+        public boolean isRepeated() {
             return this.type.equals("many");
         }
 
-        public boolean hasProtoDef(String entityName){
-            HeadEntity headEntity=HeadEntityResources.get(entityName);
-            if(headEntity!=null){
+        public boolean hasProtoDef(String entityName) {
+            HeadEntity headEntity = HeadEntityResources.get(entityName);
+            if (headEntity != null) {
                 return !headEntity.getFlatIds().contains(this.relEntityName);
             }
             return false; // not head-entity
         }
 
-        public String getMainRelField(){
+        public String getMainRelField() {
             return keymaps.get(0).fieldName;
         }
-        public String getMainTargetField(){
+
+        public String getMainTargetField() {
             return keymaps.get(0).relFieldName;
         }
 
-        public String getMainTargetCol(){
+        public String getMainTargetCol() {
             return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE,
                     keymaps.get(0).relFieldName);
         }
 
-        public String getRelFields(){
+        public String getRelFields() {
             return keymaps.stream().map(k -> k.fieldName)
                     .collect(Collectors.joining(" + "));
         }
-        public List<String> getRelFieldList(){
+
+        public List<String> getRelFieldList() {
             return keymaps.stream().map(k -> k.fieldName)
                     .collect(Collectors.toList());
         }
-        public List<String> getTargetFieldList(){
+
+        public List<String> getTargetFieldList() {
             return keymaps.stream().map(k -> k.relFieldName)
                     .collect(Collectors.toList());
         }
 
-        public String getConstantDef(){
+        public String getConstantDef() {
             return String.format("public static final String %s " +
-                    "= \"%s\"; // %s",
+                            "= \"%s\"; // %s",
                     getUpperSnake(), getProtoName(), type);
         }
 
-        public String getUpperSnake(){
+        public String getUpperSnake() {
             return CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, name);
         }
 
-        public String getRelationOp(){
-            String prefix=type.equals("many")?"add":"set";
-            return prefix+name;
+        public String getRelationOp() {
+            String prefix = type.equals("many") ? "add" : "set";
+            return prefix + name;
         }
 
-        public String getRelGetter(){
-            return "getRel"+name;
+        public String getRelGetter() {
+            return "getRel" + name;
         }
 
         public boolean isHeadEntity() {
             return HeadEntityResources.contains(this.relEntityName);
         }
 
-        public String getBuildClause(){
+        public String getBuildClause() {
             // String conv=isHeadEntity()?String.format("(%sData)", relEntityName):"";
             return String.format("%s el.to%sBuilder().build()",
-                    "", isHeadEntity()?"Head":"Data");
+                    "", isHeadEntity() ? "Head" : "Data");
         }
 
-        public String getToBuilder(){
-            return String.format("to%sBuilder", isHeadEntity()?"Head":"Data");
+        public String getToBuilder() {
+            return String.format("to%sBuilder", isHeadEntity() ? "Head" : "Data");
         }
     }
 
@@ -771,10 +824,11 @@ public class EntityMeta {
         String fieldName;
         String relFieldName;
 
-        public String getProtoField(){
+        public String getProtoField() {
             return Util.toSnakecase(fieldName);
         }
-        public String getProtoRelField(){
+
+        public String getProtoRelField() {
             return Util.toSnakecase(relFieldName);
         }
 

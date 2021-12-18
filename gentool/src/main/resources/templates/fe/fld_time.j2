@@ -1,0 +1,11 @@
+  Duration? _{{fld.name}};
+  Duration? get {{fld.name}} => _{{fld.name}};
+
+  set {{fld.name}}(Duration? {{fld.name}}) {
+    _{{fld.name}} = {{fld.name}};
+  }
+  set {{fld.name}}Str(String? value) {
+    if (value != null) {
+      _{{fld.name}} = parseTime(value);
+    }
+  }

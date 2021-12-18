@@ -15,6 +15,7 @@ public class FieldMappings {
         String sqlType;
         String javaType;
         String clickhouseType;
+        String dartType;
     }
 
     public static void main(String[] args) {
@@ -40,6 +41,9 @@ public class FieldMappings {
                     case "java-type": fld.setJavaType(node.getNodeValue()); break;
                     case "clickhouse-type":
                         fld.setClickhouseType(node.getNodeValue());
+                        break;
+                    case "dart-type":
+                        fld.setDartType(node.getNodeValue());
                         break;
                     default:
                         throw new RuntimeException("Cannot process attribute "+node.getNodeName());

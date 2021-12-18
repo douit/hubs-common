@@ -17,12 +17,10 @@ import java.util.Map;
 public class TemplateUtil {
     public static String build(String templateLoc, Map<String, Object> ctx) throws IOException {
         try {
-            Jinjava jinjava = getJinjava();
-
             String template = Resources.toString(Resources
                             .getResource(templateLoc),
                     Charsets.UTF_8);
-            return jinjava.render(template, ctx);
+            return getJinjava().render(template, ctx);
         }catch (FatalTemplateErrorsException e){
             System.out.println("⚠️  error template: \n"+e.getTemplate());
             e.getErrors().forEach(t -> System.out.println("🆑 "+t));
@@ -30,18 +28,21 @@ public class TemplateUtil {
         }
     }
 
+    static Jinjava jinjava;
     public static Jinjava getJinjava() {
-        Jinjava jinjava = new Jinjava();
-        jinjava.getGlobalContext().registerFilter(new VarFilter());
-        jinjava.getGlobalContext().registerFilter(new SnakeCaseFilter());
-        jinjava.getGlobalContext().registerFilter(new NamedFilter("camelCase",
-                e -> Util.snakeToCamel(e.toString())));
-        jinjava.getGlobalContext().registerFilter(new NamedFilter("uppercase",
-                e -> e.toString().toUpperCase(Locale.ROOT)));
-        jinjava.getGlobalContext().registerFilter(new NamedFilter("upperSnake",
-                e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, e.toString())));
-        jinjava.getGlobalContext().registerFilter(new NamedFilter("colToVar",
-                e -> CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, e.toString())));
+        if(jinjava==null) {
+            jinjava = new Jinjava();
+            jinjava.getGlobalContext().registerFilter(new VarFilter());
+            jinjava.getGlobalContext().registerFilter(new SnakeCaseFilter());
+            jinjava.getGlobalContext().registerFilter(new NamedFilter("camelCase",
+                    e -> Util.snakeToCamel(e.toString())));
+            jinjava.getGlobalContext().registerFilter(new NamedFilter("uppercase",
+                    e -> e.toString().toUpperCase(Locale.ROOT)));
+            jinjava.getGlobalContext().registerFilter(new NamedFilter("upperSnake",
+                    e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, e.toString())));
+            jinjava.getGlobalContext().registerFilter(new NamedFilter("colToVar",
+                    e -> CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, e.toString())));
+        }
         return jinjava;
     }
 

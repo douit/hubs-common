@@ -1,0 +1,10 @@
+  DateTime? _{{fld.name}};
+  DateTime? get {{fld.name}} => _{{fld.name}};
+  set {{fld.name}}(DateTime? value) {
+    _{{fld.name}} = value;
+  }
+  set {{fld.name}}Str(String? value) {
+    if (value != null) {
+      _{{fld.name}} = DateTime.parse(value);
+    }
+  }

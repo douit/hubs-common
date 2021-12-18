@@ -1,0 +1,11 @@
+  int? _{{fld.name}};
+  int? get {{fld.name}} => _{{fld.name}};
+
+  set {{fld.name}}(int? {{fld.name}}) {
+    _{{fld.name}} = {{fld.name}};
+  }
+  set {{fld.name}}Str(String? {{fld.name}}) {
+    if({{fld.name}}!=null) {
+      _{{fld.name}} = int.tryParse({{fld.name}});
+    }
+  }

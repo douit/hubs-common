@@ -1,0 +1,16 @@
+import 'dart:math';
+import 'package:rad_common/rad_common.dart';
+import 'package:duration/duration.dart';
+
+class {{ent.name}} {
+  {% for f in ent.fields %}
+{{f.dartTemplate}}
+  {%- endfor %}
+
+  static {{ent.name}} fromEntityValue(EntityValue val){
+    return {{ent.name}}()
+    {% for f in ent.fields -%}
+      ..{{f.dartSetter}}=val.values['{{f.underscore}}']{% if loop.last %}; {% endif %}
+    {% endfor %}
+  }
+}

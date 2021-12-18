@@ -25,10 +25,14 @@ public class GenCfgScanner {
         Path folder;
     }
 
+    String CFG_FILE_NAME ="gencfg.yml";
     public static void main(String[] args) {
-        String cfgFileName="gencfg.yml";
         GenCfgScanner scanner = new GenCfgScanner();
-        Stream.of("income/src").flatMap(d -> scanFiles(d, cfgFileName).stream())
+        scanner.scan();
+    }
+
+    void scan(){
+        Stream.of("income/src").flatMap(d -> scanFiles(d, CFG_FILE_NAME).stream())
                 .map(path -> createGenCfg(path))
                 .forEach(cfg -> System.out.println(cfg));
     }

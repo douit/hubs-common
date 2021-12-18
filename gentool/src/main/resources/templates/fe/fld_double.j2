@@ -1,0 +1,11 @@
+  double? _{{fld.name}};
+  double? get {{fld.name}} => _{{fld.name}};
+
+  set {{fld.name}}(double? {{fld.name}}) {
+    _{{fld.name}} = {{fld.name}};
+  }
+  set {{fld.name}}Str(String? value) {
+    if (value != null) {
+      _{{fld.name}} = double.tryParse(value);
+    }
+  }
