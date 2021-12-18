@@ -41,16 +41,16 @@ public class ProcGen {
         Util.writeFile(code, targetFile);
     }
 
-    EntityMetaManager entityMetaManager;
+    // EntityMetaManager entityMetaManager;
 
     ProcGen() {
-        entityMetaManager = new EntityMetaManager();
+        // entityMetaManager = new EntityMetaManager();
     }
 
     String gen(Set<String> entityList) throws IOException {
         List<EntityMeta> metaList = entityList.stream()
                 .sorted()
-                .map(name -> entityMetaManager.readEntityMeta(name))
+                .map(name -> EntityMetaManager.readEntityMeta(name))
                 .collect(Collectors.toList());
         Map<String, Object> ctx = ImmutableMap.of("ents", metaList);
         return TemplateUtil.build("templates/symbols.j2",

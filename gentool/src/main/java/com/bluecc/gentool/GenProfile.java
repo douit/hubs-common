@@ -2,6 +2,7 @@ package com.bluecc.gentool;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.bluecc.gentool.procgen.ProcGen;
 import com.bluecc.hubs.fund.HeadEntityResources;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.TemplateUtil;
@@ -55,6 +56,9 @@ public class GenProfile {
                     break;
                 case "info":
                     System.out.println("available profiles: livecases, proto, heads");
+                    break;
+                case "symbols":
+                    ProcGen.startGen();
                     break;
                 case "inspect":
                     writeInspectMeta();

@@ -8,6 +8,7 @@ import com.google.common.io.Resources;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -408,5 +409,20 @@ public class Util {
 
     public static void prettyYaml(Object obj){
         System.out.println(toYaml(obj));
+    }
+
+
+    @SneakyThrows
+    public static List<Path> scanFiles(String dir, String fileSuffix) {
+        List<Path> fileList= Lists.newArrayList();
+        try (Stream<Path> walkStream = Files.walk(Paths.get(dir))) {
+            walkStream.filter(p -> p.toFile().isFile()).forEach(f -> {
+                if (f.toString().endsWith(fileSuffix)) {
+                    // System.out.println(f + " found!");
+                    fileList.add(f);
+                }
+            });
+        }
+        return fileList;
     }
 }
