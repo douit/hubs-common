@@ -10,6 +10,7 @@ import com.bluecc.income.AbstractStoreProcTest;
 import com.bluecc.income.model.Party;
 import com.bluecc.income.model.PartyContactMech;
 import com.bluecc.income.model.Person;
+import com.bluecc.income.procs.SelectorBindings;
 import com.github.javafaker.Faker;
 import com.google.common.collect.*;
 import com.google.gson.JsonObject;
@@ -401,7 +402,7 @@ public class PartyDelegatorTest extends AbstractStoreProcTest {
             PartyDelegator.Dao dao = c.getHandle().attach(PartyDelegator.Dao.class);
             partyDelegator.person(dao, "where pe.last_name=:name" +
                                     " and pa.status_id=:status",
-                    ImmutableMap.of("name", "Customer",
+                            SelectorBindings.of("name", "Customer",
                             "status", "PARTY_ENABLED"),
                     false)
                     .andThen(checkParties("DemoCustomer", 3))

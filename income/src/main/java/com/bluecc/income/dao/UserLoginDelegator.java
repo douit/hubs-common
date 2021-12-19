@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -75,12 +77,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -97,7 +98,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainPerson(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainPerson(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPerson(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -105,12 +106,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainPerson(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PERSON);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -127,7 +127,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainPartyGroup(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainPartyGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -135,12 +135,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainPartyGroup(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -157,7 +156,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByBudgetStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainChangeByBudgetStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainChangeByBudgetStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -165,12 +164,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByBudgetStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHANGE_BY_BUDGET_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -187,7 +185,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByContent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByContent(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -195,12 +193,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_CONTENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -217,7 +214,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByContent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByContent(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -225,12 +222,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByContent(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_CONTENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -247,7 +243,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByContentAssoc(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByContentAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByContentAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -255,12 +251,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByContentAssoc(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_CONTENT_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -277,7 +272,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByContentAssoc(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByContentAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByContentAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -285,12 +280,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByContentAssoc(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_CONTENT_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -307,7 +301,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByDataResource(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByDataResource(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByDataResource(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -315,12 +309,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByDataResource(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_DATA_RESOURCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -337,7 +330,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByDataResource(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByDataResource(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByDataResource(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -345,12 +338,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByDataResource(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_DATA_RESOURCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -367,7 +359,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainFinAccountStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainFinAccountStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFinAccountStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -375,12 +367,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainFinAccountStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -397,7 +388,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByInvoiceStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainChangeByInvoiceStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainChangeByInvoiceStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -405,12 +396,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByInvoiceStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHANGE_BY_INVOICE_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -427,7 +417,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainIssuedByItemIssuance(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainIssuedByItemIssuance(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainIssuedByItemIssuance(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -435,12 +425,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainIssuedByItemIssuance(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ISSUED_BY_ITEM_ISSUANCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -457,7 +446,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainAuthJobSandbox(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainAuthJobSandbox(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAuthJobSandbox(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -465,12 +454,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainAuthJobSandbox(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(AUTH_JOB_SANDBOX);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -487,7 +475,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainRunAsJobSandbox(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainRunAsJobSandbox(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainRunAsJobSandbox(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -495,12 +483,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainRunAsJobSandbox(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(RUN_AS_JOB_SANDBOX);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -517,7 +504,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainOrderAdjustment(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainOrderAdjustment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderAdjustment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -525,12 +512,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainOrderAdjustment(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ADJUSTMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -547,7 +533,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByOrderHeader(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByOrderHeader(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByOrderHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -555,12 +541,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByOrderHeader(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_ORDER_HEADER);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -577,7 +562,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainDontCancelSetOrderItem(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainDontCancelSetOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainDontCancelSetOrderItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -585,12 +570,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainDontCancelSetOrderItem(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(DONT_CANCEL_SET_ORDER_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -607,7 +591,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByOrderItem(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainChangeByOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainChangeByOrderItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -615,12 +599,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByOrderItem(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHANGE_BY_ORDER_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -637,7 +620,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainOrderPaymentPreference(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderPaymentPreference(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -645,12 +628,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_PAYMENT_PREFERENCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -667,7 +649,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainOrderStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainOrderStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -675,12 +657,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainOrderStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -697,7 +678,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -705,12 +686,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -727,7 +707,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -735,12 +715,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByParty(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -757,7 +736,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByPartyStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainChangeByPartyStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainChangeByPartyStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -765,12 +744,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByPartyStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHANGE_BY_PARTY_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -787,7 +765,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProduct(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -795,12 +773,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProduct(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -817,7 +794,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProduct(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -825,12 +802,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProduct(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -847,7 +823,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProductFeaturePrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByProductFeaturePrice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByProductFeaturePrice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -855,12 +831,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProductFeaturePrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_PRODUCT_FEATURE_PRICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -877,7 +852,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProductFeaturePrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByProductFeaturePrice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByProductFeaturePrice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -885,12 +860,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProductFeaturePrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_PRODUCT_FEATURE_PRICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -907,7 +881,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProductPrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByProductPrice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByProductPrice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -915,12 +889,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProductPrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_PRODUCT_PRICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -937,7 +910,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProductPrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByProductPrice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByProductPrice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -945,12 +918,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProductPrice(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_PRODUCT_PRICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -967,7 +939,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProductPromo(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByProductPromo(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByProductPromo(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -975,12 +947,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProductPromo(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_PRODUCT_PROMO);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -997,7 +968,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProductPromo(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByProductPromo(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByProductPromo(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1005,12 +976,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProductPromo(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_PRODUCT_PROMO);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1027,7 +997,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProductPromoCode(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByProductPromoCode(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByProductPromoCode(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1035,12 +1005,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainCreatedByProductPromoCode(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_PRODUCT_PROMO_CODE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1057,7 +1026,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProductPromoCode(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByProductPromoCode(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByProductPromoCode(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1065,12 +1034,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainLastModifiedByProductPromoCode(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_PRODUCT_PROMO_CODE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1087,7 +1055,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainProductReview(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainProductReview(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductReview(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1095,12 +1063,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainProductReview(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_REVIEW);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1117,7 +1084,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainShipmentReceipt(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentReceipt(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1125,12 +1092,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_RECEIPT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1147,7 +1113,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByShipmentStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainChangeByShipmentStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainChangeByShipmentStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1155,12 +1121,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainChangeByShipmentStatus(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHANGE_BY_SHIPMENT_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1177,7 +1142,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainUserLoginSecurityGroup(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainUserLoginSecurityGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainUserLoginSecurityGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1185,12 +1150,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainUserLoginSecurityGroup(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(USER_LOGIN_SECURITY_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1207,7 +1171,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainAssignedByWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainAssignedByWorkEffortPartyAssignment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAssignedByWorkEffortPartyAssignment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1215,12 +1179,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainAssignedByWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ASSIGNED_BY_WORK_EFFORT_PARTY_ASSIGNMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1237,7 +1200,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainTenant(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
@@ -1245,12 +1208,11 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         default Map<String, UserLogin> chainTenant(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
                                 id -> rr.getRow(UserLogin.class));
@@ -1271,7 +1233,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> party(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -1282,7 +1244,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> person(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPerson(protoMeta, e, whereClause, binds, succ);
     }
@@ -1293,7 +1255,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> partyGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -1304,7 +1266,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> changeByBudgetStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainChangeByBudgetStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -1315,7 +1277,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByContent(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByContent(protoMeta, e, whereClause, binds, succ);
     }
@@ -1326,7 +1288,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByContent(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByContent(protoMeta, e, whereClause, binds, succ);
     }
@@ -1337,7 +1299,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByContentAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByContentAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -1348,7 +1310,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByContentAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByContentAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -1359,7 +1321,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByDataResource(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByDataResource(protoMeta, e, whereClause, binds, succ);
     }
@@ -1370,7 +1332,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByDataResource(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByDataResource(protoMeta, e, whereClause, binds, succ);
     }
@@ -1381,7 +1343,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> finAccountStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFinAccountStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -1392,7 +1354,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> changeByInvoiceStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainChangeByInvoiceStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -1403,7 +1365,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> issuedByItemIssuance(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainIssuedByItemIssuance(protoMeta, e, whereClause, binds, succ);
     }
@@ -1414,7 +1376,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> authJobSandbox(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAuthJobSandbox(protoMeta, e, whereClause, binds, succ);
     }
@@ -1425,7 +1387,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> runAsJobSandbox(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainRunAsJobSandbox(protoMeta, e, whereClause, binds, succ);
     }
@@ -1436,7 +1398,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> orderAdjustment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderAdjustment(protoMeta, e, whereClause, binds, succ);
     }
@@ -1447,7 +1409,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByOrderHeader(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
@@ -1458,7 +1420,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> dontCancelSetOrderItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainDontCancelSetOrderItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1469,7 +1431,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> changeByOrderItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainChangeByOrderItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1480,7 +1442,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> orderPaymentPreference(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderPaymentPreference(protoMeta, e, whereClause, binds, succ);
     }
@@ -1491,7 +1453,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> orderStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -1502,7 +1464,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByParty(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -1513,7 +1475,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByParty(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -1524,7 +1486,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> changeByPartyStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainChangeByPartyStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -1535,7 +1497,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -1546,7 +1508,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -1557,7 +1519,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByProductFeaturePrice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByProductFeaturePrice(protoMeta, e, whereClause, binds, succ);
     }
@@ -1568,7 +1530,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByProductFeaturePrice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByProductFeaturePrice(protoMeta, e, whereClause, binds, succ);
     }
@@ -1579,7 +1541,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByProductPrice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByProductPrice(protoMeta, e, whereClause, binds, succ);
     }
@@ -1590,7 +1552,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByProductPrice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByProductPrice(protoMeta, e, whereClause, binds, succ);
     }
@@ -1601,7 +1563,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByProductPromo(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByProductPromo(protoMeta, e, whereClause, binds, succ);
     }
@@ -1612,7 +1574,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByProductPromo(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByProductPromo(protoMeta, e, whereClause, binds, succ);
     }
@@ -1623,7 +1585,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> createdByProductPromoCode(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByProductPromoCode(protoMeta, e, whereClause, binds, succ);
     }
@@ -1634,7 +1596,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> lastModifiedByProductPromoCode(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByProductPromoCode(protoMeta, e, whereClause, binds, succ);
     }
@@ -1645,7 +1607,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> productReview(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductReview(protoMeta, e, whereClause, binds, succ);
     }
@@ -1656,7 +1618,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> shipmentReceipt(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
     }
@@ -1667,7 +1629,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> changeByShipmentStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainChangeByShipmentStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -1678,7 +1640,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> userLoginSecurityGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainUserLoginSecurityGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -1689,7 +1651,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> assignedByWorkEffortPartyAssignment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAssignedByWorkEffortPartyAssignment(protoMeta, e, whereClause, binds, succ);
     }
@@ -1700,7 +1662,7 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public Consumer<Map<String, UserLogin>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -1712,168 +1674,173 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
     }
     
     public Map<String, UserLogin> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, UserLogin> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, UserLogin> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, UserLogin>> chain = tenant(dao, false);
+        Consumer<Map<String, UserLogin>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PARTY)) {
-            chain = chain.andThen(party(dao, true));
+            chain = chain.andThen(party(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PERSON)) {
-            chain = chain.andThen(person(dao, true));
+            chain = chain.andThen(person(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_GROUP)) {
-            chain = chain.andThen(partyGroup(dao, true));
+            chain = chain.andThen(partyGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CHANGE_BY_BUDGET_STATUS)) {
-            chain = chain.andThen(changeByBudgetStatus(dao, true));
+            chain = chain.andThen(changeByBudgetStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_CONTENT)) {
-            chain = chain.andThen(createdByContent(dao, true));
+            chain = chain.andThen(createdByContent(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_CONTENT)) {
-            chain = chain.andThen(lastModifiedByContent(dao, true));
+            chain = chain.andThen(lastModifiedByContent(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_CONTENT_ASSOC)) {
-            chain = chain.andThen(createdByContentAssoc(dao, true));
+            chain = chain.andThen(createdByContentAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_CONTENT_ASSOC)) {
-            chain = chain.andThen(lastModifiedByContentAssoc(dao, true));
+            chain = chain.andThen(lastModifiedByContentAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_DATA_RESOURCE)) {
-            chain = chain.andThen(createdByDataResource(dao, true));
+            chain = chain.andThen(createdByDataResource(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_DATA_RESOURCE)) {
-            chain = chain.andThen(lastModifiedByDataResource(dao, true));
+            chain = chain.andThen(lastModifiedByDataResource(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIN_ACCOUNT_STATUS)) {
-            chain = chain.andThen(finAccountStatus(dao, true));
+            chain = chain.andThen(finAccountStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CHANGE_BY_INVOICE_STATUS)) {
-            chain = chain.andThen(changeByInvoiceStatus(dao, true));
+            chain = chain.andThen(changeByInvoiceStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ISSUED_BY_ITEM_ISSUANCE)) {
-            chain = chain.andThen(issuedByItemIssuance(dao, true));
+            chain = chain.andThen(issuedByItemIssuance(dao, whereClause, binds, true));
         }
          
         if (incls.contains(AUTH_JOB_SANDBOX)) {
-            chain = chain.andThen(authJobSandbox(dao, true));
+            chain = chain.andThen(authJobSandbox(dao, whereClause, binds, true));
         }
          
         if (incls.contains(RUN_AS_JOB_SANDBOX)) {
-            chain = chain.andThen(runAsJobSandbox(dao, true));
+            chain = chain.andThen(runAsJobSandbox(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ADJUSTMENT)) {
-            chain = chain.andThen(orderAdjustment(dao, true));
+            chain = chain.andThen(orderAdjustment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_ORDER_HEADER)) {
-            chain = chain.andThen(createdByOrderHeader(dao, true));
+            chain = chain.andThen(createdByOrderHeader(dao, whereClause, binds, true));
         }
          
         if (incls.contains(DONT_CANCEL_SET_ORDER_ITEM)) {
-            chain = chain.andThen(dontCancelSetOrderItem(dao, true));
+            chain = chain.andThen(dontCancelSetOrderItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CHANGE_BY_ORDER_ITEM)) {
-            chain = chain.andThen(changeByOrderItem(dao, true));
+            chain = chain.andThen(changeByOrderItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_PAYMENT_PREFERENCE)) {
-            chain = chain.andThen(orderPaymentPreference(dao, true));
+            chain = chain.andThen(orderPaymentPreference(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_STATUS)) {
-            chain = chain.andThen(orderStatus(dao, true));
+            chain = chain.andThen(orderStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_PARTY)) {
-            chain = chain.andThen(createdByParty(dao, true));
+            chain = chain.andThen(createdByParty(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_PARTY)) {
-            chain = chain.andThen(lastModifiedByParty(dao, true));
+            chain = chain.andThen(lastModifiedByParty(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CHANGE_BY_PARTY_STATUS)) {
-            chain = chain.andThen(changeByPartyStatus(dao, true));
+            chain = chain.andThen(changeByPartyStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_PRODUCT)) {
-            chain = chain.andThen(createdByProduct(dao, true));
+            chain = chain.andThen(createdByProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_PRODUCT)) {
-            chain = chain.andThen(lastModifiedByProduct(dao, true));
+            chain = chain.andThen(lastModifiedByProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_PRODUCT_FEATURE_PRICE)) {
-            chain = chain.andThen(createdByProductFeaturePrice(dao, true));
+            chain = chain.andThen(createdByProductFeaturePrice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_PRODUCT_FEATURE_PRICE)) {
-            chain = chain.andThen(lastModifiedByProductFeaturePrice(dao, true));
+            chain = chain.andThen(lastModifiedByProductFeaturePrice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_PRODUCT_PRICE)) {
-            chain = chain.andThen(createdByProductPrice(dao, true));
+            chain = chain.andThen(createdByProductPrice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_PRODUCT_PRICE)) {
-            chain = chain.andThen(lastModifiedByProductPrice(dao, true));
+            chain = chain.andThen(lastModifiedByProductPrice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_PRODUCT_PROMO)) {
-            chain = chain.andThen(createdByProductPromo(dao, true));
+            chain = chain.andThen(createdByProductPromo(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_PRODUCT_PROMO)) {
-            chain = chain.andThen(lastModifiedByProductPromo(dao, true));
+            chain = chain.andThen(lastModifiedByProductPromo(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_PRODUCT_PROMO_CODE)) {
-            chain = chain.andThen(createdByProductPromoCode(dao, true));
+            chain = chain.andThen(createdByProductPromoCode(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_PRODUCT_PROMO_CODE)) {
-            chain = chain.andThen(lastModifiedByProductPromoCode(dao, true));
+            chain = chain.andThen(lastModifiedByProductPromoCode(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_REVIEW)) {
-            chain = chain.andThen(productReview(dao, true));
+            chain = chain.andThen(productReview(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_RECEIPT)) {
-            chain = chain.andThen(shipmentReceipt(dao, true));
+            chain = chain.andThen(shipmentReceipt(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CHANGE_BY_SHIPMENT_STATUS)) {
-            chain = chain.andThen(changeByShipmentStatus(dao, true));
+            chain = chain.andThen(changeByShipmentStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(USER_LOGIN_SECURITY_GROUP)) {
-            chain = chain.andThen(userLoginSecurityGroup(dao, true));
+            chain = chain.andThen(userLoginSecurityGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ASSIGNED_BY_WORK_EFFORT_PARTY_ASSIGNMENT)) {
-            chain = chain.andThen(assignedByWorkEffortPartyAssignment(dao, true));
+            chain = chain.andThen(assignedByWorkEffortPartyAssignment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -1882,8 +1849,17 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<UserLoginData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<UserLoginData> responseObserver) {
-        Map<String, UserLogin> dataMap = chainQuery(c, incls);
+
+        Map<String, UserLogin> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             UserLoginData.Builder userLoginData = data.toHeadBuilder();
              

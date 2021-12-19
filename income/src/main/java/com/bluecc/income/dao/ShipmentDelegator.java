@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainEstimatedShipWorkEffort(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainEstimatedShipWorkEffort(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainEstimatedShipWorkEffort(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -75,12 +77,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainEstimatedShipWorkEffort(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ESTIMATED_SHIP_WORK_EFFORT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -97,7 +98,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainEstimatedArrivalWorkEffort(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainEstimatedArrivalWorkEffort(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainEstimatedArrivalWorkEffort(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -105,12 +106,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainEstimatedArrivalWorkEffort(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ESTIMATED_ARRIVAL_WORK_EFFORT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -127,7 +127,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainOriginFacility(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainOriginFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOriginFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -135,12 +135,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainOriginFacility(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORIGIN_FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -157,7 +156,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainDestinationFacility(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainDestinationFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainDestinationFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -165,12 +164,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainDestinationFacility(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(DESTINATION_FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -187,7 +185,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainOriginContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainOriginContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOriginContactMech(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -195,12 +193,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainOriginContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORIGIN_CONTACT_MECH);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -217,7 +214,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainDestContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainDestContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainDestContactMech(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -225,12 +222,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainDestContactMech(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(DEST_CONTACT_MECH);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -247,7 +243,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainOriginPostalAddress(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainOriginPostalAddress(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOriginPostalAddress(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -255,12 +251,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainOriginPostalAddress(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORIGIN_POSTAL_ADDRESS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -277,7 +272,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainOriginTelecomNumber(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainOriginTelecomNumber(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOriginTelecomNumber(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -285,12 +280,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainOriginTelecomNumber(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORIGIN_TELECOM_NUMBER);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -307,7 +301,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainDestinationPostalAddress(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainDestinationPostalAddress(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainDestinationPostalAddress(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -315,12 +309,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainDestinationPostalAddress(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(DESTINATION_POSTAL_ADDRESS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -337,7 +330,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainDestinationTelecomNumber(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainDestinationTelecomNumber(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainDestinationTelecomNumber(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -345,12 +338,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainDestinationTelecomNumber(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(DESTINATION_TELECOM_NUMBER);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -367,7 +359,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainPrimaryOrderHeader(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainPrimaryOrderHeader(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPrimaryOrderHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -375,12 +367,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainPrimaryOrderHeader(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRIMARY_ORDER_HEADER);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -397,7 +388,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainPrimaryOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainPrimaryOrderItemShipGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPrimaryOrderItemShipGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -405,12 +396,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainPrimaryOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRIMARY_ORDER_ITEM_SHIP_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -427,7 +417,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainToParty(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainToParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -435,12 +425,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainToParty(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -457,7 +446,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainToPerson(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainToPerson(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToPerson(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -465,12 +454,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainToPerson(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_PERSON);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -487,7 +475,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainToPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainToPartyGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToPartyGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -495,12 +483,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainToPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_PARTY_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -517,7 +504,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainFromParty(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainFromParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -525,12 +512,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainFromParty(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -547,7 +533,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainFromPerson(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainFromPerson(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromPerson(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -555,12 +541,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainFromPerson(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_PERSON);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -577,7 +562,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainFromPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainFromPartyGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromPartyGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -585,12 +570,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainFromPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_PARTY_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -607,7 +591,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcctgTrans(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -615,12 +599,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -637,7 +620,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainItemIssuance(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainItemIssuance(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -645,12 +628,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ITEM_ISSUANCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -667,7 +649,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentItem(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainShipmentItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -675,12 +657,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentItem(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -697,7 +678,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentItemBilling(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainShipmentItemBilling(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentItemBilling(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -705,12 +686,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentItemBilling(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_ITEM_BILLING);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -727,7 +707,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentPackage(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainShipmentPackage(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentPackage(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -735,12 +715,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentPackage(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_PACKAGE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -757,7 +736,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentPackageContent(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainShipmentPackageContent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentPackageContent(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -765,12 +744,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentPackageContent(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_PACKAGE_CONTENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -787,7 +765,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentPackageRouteSeg(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainShipmentPackageRouteSeg(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentPackageRouteSeg(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -795,12 +773,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentPackageRouteSeg(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_PACKAGE_ROUTE_SEG);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -817,7 +794,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainShipmentReceipt(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentReceipt(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -825,12 +802,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_RECEIPT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -847,7 +823,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainShipmentRouteSegment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentRouteSegment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -855,12 +831,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_ROUTE_SEGMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -877,7 +852,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentStatus(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainShipmentStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -885,12 +860,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainShipmentStatus(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -907,7 +881,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
@@ -915,12 +889,11 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         default Map<String, Shipment> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
                                 id -> rr.getRow(Shipment.class));
@@ -941,7 +914,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> estimatedShipWorkEffort(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainEstimatedShipWorkEffort(protoMeta, e, whereClause, binds, succ);
     }
@@ -952,7 +925,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> estimatedArrivalWorkEffort(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainEstimatedArrivalWorkEffort(protoMeta, e, whereClause, binds, succ);
     }
@@ -963,7 +936,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> originFacility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOriginFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -974,7 +947,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> destinationFacility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainDestinationFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -985,7 +958,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> originContactMech(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOriginContactMech(protoMeta, e, whereClause, binds, succ);
     }
@@ -996,7 +969,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> destContactMech(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainDestContactMech(protoMeta, e, whereClause, binds, succ);
     }
@@ -1007,7 +980,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> originPostalAddress(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOriginPostalAddress(protoMeta, e, whereClause, binds, succ);
     }
@@ -1018,7 +991,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> originTelecomNumber(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOriginTelecomNumber(protoMeta, e, whereClause, binds, succ);
     }
@@ -1029,7 +1002,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> destinationPostalAddress(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainDestinationPostalAddress(protoMeta, e, whereClause, binds, succ);
     }
@@ -1040,7 +1013,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> destinationTelecomNumber(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainDestinationTelecomNumber(protoMeta, e, whereClause, binds, succ);
     }
@@ -1051,7 +1024,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> primaryOrderHeader(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPrimaryOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
@@ -1062,7 +1035,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> primaryOrderItemShipGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPrimaryOrderItemShipGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -1073,7 +1046,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> toParty(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -1084,7 +1057,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> toPerson(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToPerson(protoMeta, e, whereClause, binds, succ);
     }
@@ -1095,7 +1068,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> toPartyGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToPartyGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -1106,7 +1079,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> fromParty(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -1117,7 +1090,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> fromPerson(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromPerson(protoMeta, e, whereClause, binds, succ);
     }
@@ -1128,7 +1101,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> fromPartyGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromPartyGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -1139,7 +1112,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> acctgTrans(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
     }
@@ -1150,7 +1123,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> itemIssuance(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainItemIssuance(protoMeta, e, whereClause, binds, succ);
     }
@@ -1161,7 +1134,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> shipmentItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1172,7 +1145,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> shipmentItemBilling(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentItemBilling(protoMeta, e, whereClause, binds, succ);
     }
@@ -1183,7 +1156,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> shipmentPackage(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentPackage(protoMeta, e, whereClause, binds, succ);
     }
@@ -1194,7 +1167,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> shipmentPackageContent(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentPackageContent(protoMeta, e, whereClause, binds, succ);
     }
@@ -1205,7 +1178,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> shipmentPackageRouteSeg(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentPackageRouteSeg(protoMeta, e, whereClause, binds, succ);
     }
@@ -1216,7 +1189,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> shipmentReceipt(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
     }
@@ -1227,7 +1200,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> shipmentRouteSegment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentRouteSegment(protoMeta, e, whereClause, binds, succ);
     }
@@ -1238,7 +1211,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> shipmentStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -1249,7 +1222,7 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public Consumer<Map<String, Shipment>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -1261,124 +1234,129 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
     }
     
     public Map<String, Shipment> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, Shipment> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, Shipment> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, Shipment>> chain = tenant(dao, false);
+        Consumer<Map<String, Shipment>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(ESTIMATED_SHIP_WORK_EFFORT)) {
-            chain = chain.andThen(estimatedShipWorkEffort(dao, true));
+            chain = chain.andThen(estimatedShipWorkEffort(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ESTIMATED_ARRIVAL_WORK_EFFORT)) {
-            chain = chain.andThen(estimatedArrivalWorkEffort(dao, true));
+            chain = chain.andThen(estimatedArrivalWorkEffort(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORIGIN_FACILITY)) {
-            chain = chain.andThen(originFacility(dao, true));
+            chain = chain.andThen(originFacility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(DESTINATION_FACILITY)) {
-            chain = chain.andThen(destinationFacility(dao, true));
+            chain = chain.andThen(destinationFacility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORIGIN_CONTACT_MECH)) {
-            chain = chain.andThen(originContactMech(dao, true));
+            chain = chain.andThen(originContactMech(dao, whereClause, binds, true));
         }
          
         if (incls.contains(DEST_CONTACT_MECH)) {
-            chain = chain.andThen(destContactMech(dao, true));
+            chain = chain.andThen(destContactMech(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORIGIN_POSTAL_ADDRESS)) {
-            chain = chain.andThen(originPostalAddress(dao, true));
+            chain = chain.andThen(originPostalAddress(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORIGIN_TELECOM_NUMBER)) {
-            chain = chain.andThen(originTelecomNumber(dao, true));
+            chain = chain.andThen(originTelecomNumber(dao, whereClause, binds, true));
         }
          
         if (incls.contains(DESTINATION_POSTAL_ADDRESS)) {
-            chain = chain.andThen(destinationPostalAddress(dao, true));
+            chain = chain.andThen(destinationPostalAddress(dao, whereClause, binds, true));
         }
          
         if (incls.contains(DESTINATION_TELECOM_NUMBER)) {
-            chain = chain.andThen(destinationTelecomNumber(dao, true));
+            chain = chain.andThen(destinationTelecomNumber(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRIMARY_ORDER_HEADER)) {
-            chain = chain.andThen(primaryOrderHeader(dao, true));
+            chain = chain.andThen(primaryOrderHeader(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRIMARY_ORDER_ITEM_SHIP_GROUP)) {
-            chain = chain.andThen(primaryOrderItemShipGroup(dao, true));
+            chain = chain.andThen(primaryOrderItemShipGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_PARTY)) {
-            chain = chain.andThen(toParty(dao, true));
+            chain = chain.andThen(toParty(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_PERSON)) {
-            chain = chain.andThen(toPerson(dao, true));
+            chain = chain.andThen(toPerson(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_PARTY_GROUP)) {
-            chain = chain.andThen(toPartyGroup(dao, true));
+            chain = chain.andThen(toPartyGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_PARTY)) {
-            chain = chain.andThen(fromParty(dao, true));
+            chain = chain.andThen(fromParty(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_PERSON)) {
-            chain = chain.andThen(fromPerson(dao, true));
+            chain = chain.andThen(fromPerson(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_PARTY_GROUP)) {
-            chain = chain.andThen(fromPartyGroup(dao, true));
+            chain = chain.andThen(fromPartyGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACCTG_TRANS)) {
-            chain = chain.andThen(acctgTrans(dao, true));
+            chain = chain.andThen(acctgTrans(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ITEM_ISSUANCE)) {
-            chain = chain.andThen(itemIssuance(dao, true));
+            chain = chain.andThen(itemIssuance(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_ITEM)) {
-            chain = chain.andThen(shipmentItem(dao, true));
+            chain = chain.andThen(shipmentItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_ITEM_BILLING)) {
-            chain = chain.andThen(shipmentItemBilling(dao, true));
+            chain = chain.andThen(shipmentItemBilling(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_PACKAGE)) {
-            chain = chain.andThen(shipmentPackage(dao, true));
+            chain = chain.andThen(shipmentPackage(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_PACKAGE_CONTENT)) {
-            chain = chain.andThen(shipmentPackageContent(dao, true));
+            chain = chain.andThen(shipmentPackageContent(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_PACKAGE_ROUTE_SEG)) {
-            chain = chain.andThen(shipmentPackageRouteSeg(dao, true));
+            chain = chain.andThen(shipmentPackageRouteSeg(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_RECEIPT)) {
-            chain = chain.andThen(shipmentReceipt(dao, true));
+            chain = chain.andThen(shipmentReceipt(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_ROUTE_SEGMENT)) {
-            chain = chain.andThen(shipmentRouteSegment(dao, true));
+            chain = chain.andThen(shipmentRouteSegment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_STATUS)) {
-            chain = chain.andThen(shipmentStatus(dao, true));
+            chain = chain.andThen(shipmentStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -1387,8 +1365,17 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<ShipmentData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<ShipmentData> responseObserver) {
-        Map<String, Shipment> dataMap = chainQuery(c, incls);
+
+        Map<String, Shipment> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             ShipmentData.Builder shipmentData = data.toHeadBuilder();
              

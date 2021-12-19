@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         default Map<String, SecurityGroup> chainPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                boolean succInvoke) {
-            return chainPartyRelationship(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyRelationship(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
@@ -75,12 +77,11 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         default Map<String, SecurityGroup> chainPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("SecurityGroup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_RELATIONSHIP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         SecurityGroup p = map.computeIfAbsent(rr.getColumn("sg_group_id", String.class),
                                 id -> rr.getRow(SecurityGroup.class));
@@ -97,7 +98,7 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         default Map<String, SecurityGroup> chainSecurityGroupPermission(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                boolean succInvoke) {
-            return chainSecurityGroupPermission(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainSecurityGroupPermission(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
@@ -105,12 +106,11 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         default Map<String, SecurityGroup> chainSecurityGroupPermission(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("SecurityGroup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SECURITY_GROUP_PERMISSION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         SecurityGroup p = map.computeIfAbsent(rr.getColumn("sg_group_id", String.class),
                                 id -> rr.getRow(SecurityGroup.class));
@@ -127,7 +127,7 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         default Map<String, SecurityGroup> chainUserLoginSecurityGroup(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                boolean succInvoke) {
-            return chainUserLoginSecurityGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainUserLoginSecurityGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
@@ -135,12 +135,11 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         default Map<String, SecurityGroup> chainUserLoginSecurityGroup(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("SecurityGroup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(USER_LOGIN_SECURITY_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         SecurityGroup p = map.computeIfAbsent(rr.getColumn("sg_group_id", String.class),
                                 id -> rr.getRow(SecurityGroup.class));
@@ -157,7 +156,7 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         default Map<String, SecurityGroup> chainTenant(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = SecurityGroup.class, prefix = "sg")
@@ -165,12 +164,11 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         default Map<String, SecurityGroup> chainTenant(ProtoMeta protoMeta,
                                                Map<String, SecurityGroup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("SecurityGroup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         SecurityGroup p = map.computeIfAbsent(rr.getColumn("sg_group_id", String.class),
                                 id -> rr.getRow(SecurityGroup.class));
@@ -191,7 +189,7 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, SecurityGroup>> partyRelationship(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyRelationship(protoMeta, e, whereClause, binds, succ);
     }
@@ -202,7 +200,7 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, SecurityGroup>> securityGroupPermission(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainSecurityGroupPermission(protoMeta, e, whereClause, binds, succ);
     }
@@ -213,7 +211,7 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, SecurityGroup>> userLoginSecurityGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainUserLoginSecurityGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -224,7 +222,7 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, SecurityGroup>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -236,24 +234,29 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
     }
     
     public Map<String, SecurityGroup> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, SecurityGroup> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, SecurityGroup> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, SecurityGroup>> chain = tenant(dao, false);
+        Consumer<Map<String, SecurityGroup>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PARTY_RELATIONSHIP)) {
-            chain = chain.andThen(partyRelationship(dao, true));
+            chain = chain.andThen(partyRelationship(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SECURITY_GROUP_PERMISSION)) {
-            chain = chain.andThen(securityGroupPermission(dao, true));
+            chain = chain.andThen(securityGroupPermission(dao, whereClause, binds, true));
         }
          
         if (incls.contains(USER_LOGIN_SECURITY_GROUP)) {
-            chain = chain.andThen(userLoginSecurityGroup(dao, true));
+            chain = chain.andThen(userLoginSecurityGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -262,8 +265,17 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<SecurityGroupData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<SecurityGroupData> responseObserver) {
-        Map<String, SecurityGroup> dataMap = chainQuery(c, incls);
+
+        Map<String, SecurityGroup> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             SecurityGroupData.Builder securityGroupData = data.toHeadBuilder();
              

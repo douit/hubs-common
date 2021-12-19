@@ -4,6 +4,8 @@ import com.bluecc.hubs.stub.ProductFlatData;
 import com.bluecc.income.AbstractOnceProcTest;
 import com.bluecc.income.AbstractStoreProcTest;
 import com.github.javafaker.Faker;
+import com.google.common.collect.Lists;
+import org.jdbi.v3.core.statement.Query;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,4 +41,5 @@ public class ProductsTest extends AbstractOnceProcTest {
             assertEquals(0, products.find(ctx, flatData).size());
         });
     }
+
 }

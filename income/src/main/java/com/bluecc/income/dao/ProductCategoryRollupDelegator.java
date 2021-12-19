@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainCurrentProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
-            return chainCurrentProductCategory(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCurrentProductCategory(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
@@ -75,12 +77,11 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainCurrentProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CURRENT_PRODUCT_CATEGORY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
@@ -97,7 +98,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainParentProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
-            return chainParentProductCategory(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParentProductCategory(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
@@ -105,12 +106,11 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainParentProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARENT_PRODUCT_CATEGORY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
@@ -127,7 +127,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainChildProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
-            return chainChildProductCategoryRollup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainChildProductCategoryRollup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
@@ -135,12 +135,11 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainChildProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHILD_PRODUCT_CATEGORY_ROLLUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
@@ -157,7 +156,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainParentProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
-            return chainParentProductCategoryRollup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParentProductCategoryRollup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
@@ -165,12 +164,11 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainParentProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARENT_PRODUCT_CATEGORY_ROLLUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
@@ -187,7 +185,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainSiblingProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
-            return chainSiblingProductCategoryRollup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainSiblingProductCategoryRollup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
@@ -195,12 +193,11 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainSiblingProductCategoryRollup(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SIBLING_PRODUCT_CATEGORY_ROLLUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
@@ -217,7 +214,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductCategoryRollup.class, prefix = "pcr")
@@ -225,12 +222,11 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         default Map<String, ProductCategoryRollup> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductCategoryRollup> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductCategoryRollup", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductCategoryRollup p = map.computeIfAbsent(rr.getColumn("pcr_id", String.class),
                                 id -> rr.getRow(ProductCategoryRollup.class));
@@ -251,7 +247,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
 
     public Consumer<Map<String, ProductCategoryRollup>> currentProductCategory(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCurrentProductCategory(protoMeta, e, whereClause, binds, succ);
     }
@@ -262,7 +258,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
 
     public Consumer<Map<String, ProductCategoryRollup>> parentProductCategory(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParentProductCategory(protoMeta, e, whereClause, binds, succ);
     }
@@ -273,7 +269,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
 
     public Consumer<Map<String, ProductCategoryRollup>> childProductCategoryRollup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainChildProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
     }
@@ -284,7 +280,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
 
     public Consumer<Map<String, ProductCategoryRollup>> parentProductCategoryRollup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParentProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
     }
@@ -295,7 +291,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
 
     public Consumer<Map<String, ProductCategoryRollup>> siblingProductCategoryRollup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainSiblingProductCategoryRollup(protoMeta, e, whereClause, binds, succ);
     }
@@ -306,7 +302,7 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
 
     public Consumer<Map<String, ProductCategoryRollup>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -318,32 +314,37 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
     }
     
     public Map<String, ProductCategoryRollup> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, ProductCategoryRollup> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, ProductCategoryRollup> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, ProductCategoryRollup>> chain = tenant(dao, false);
+        Consumer<Map<String, ProductCategoryRollup>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(CURRENT_PRODUCT_CATEGORY)) {
-            chain = chain.andThen(currentProductCategory(dao, true));
+            chain = chain.andThen(currentProductCategory(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARENT_PRODUCT_CATEGORY)) {
-            chain = chain.andThen(parentProductCategory(dao, true));
+            chain = chain.andThen(parentProductCategory(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CHILD_PRODUCT_CATEGORY_ROLLUP)) {
-            chain = chain.andThen(childProductCategoryRollup(dao, true));
+            chain = chain.andThen(childProductCategoryRollup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARENT_PRODUCT_CATEGORY_ROLLUP)) {
-            chain = chain.andThen(parentProductCategoryRollup(dao, true));
+            chain = chain.andThen(parentProductCategoryRollup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SIBLING_PRODUCT_CATEGORY_ROLLUP)) {
-            chain = chain.andThen(siblingProductCategoryRollup(dao, true));
+            chain = chain.andThen(siblingProductCategoryRollup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -352,8 +353,17 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<ProductCategoryRollupData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<ProductCategoryRollupData> responseObserver) {
-        Map<String, ProductCategoryRollup> dataMap = chainQuery(c, incls);
+
+        Map<String, ProductCategoryRollup> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             ProductCategoryRollupData.Builder productCategoryRollupData = data.toHeadBuilder();
              

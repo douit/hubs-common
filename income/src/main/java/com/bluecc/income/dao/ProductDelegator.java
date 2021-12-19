@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainPrimaryProductCategory(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainPrimaryProductCategory(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPrimaryProductCategory(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -75,12 +77,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainPrimaryProductCategory(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRIMARY_PRODUCT_CATEGORY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -97,7 +98,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainFacility(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -105,12 +106,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainFacility(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -127,7 +127,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByUserLogin(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -135,12 +135,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_USER_LOGIN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -157,7 +156,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainLastModifiedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByUserLogin(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -165,12 +164,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainLastModifiedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_USER_LOGIN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -187,7 +185,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainDefaultShipmentBoxType(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainDefaultShipmentBoxType(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainDefaultShipmentBoxType(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -195,12 +193,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainDefaultShipmentBoxType(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(DEFAULT_SHIPMENT_BOX_TYPE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -217,7 +214,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainAgreement(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainAgreement(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAgreement(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -225,12 +222,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainAgreement(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(AGREEMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -247,7 +243,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainAgreementProductAppl(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainAgreementProductAppl(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAgreementProductAppl(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -255,12 +251,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainAgreementProductAppl(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(AGREEMENT_PRODUCT_APPL);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -277,7 +272,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainCustRequestItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainCustRequestItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCustRequestItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -285,12 +280,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainCustRequestItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CUST_REQUEST_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -307,7 +301,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainInstanceOfFixedAsset(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainInstanceOfFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInstanceOfFixedAsset(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -315,12 +309,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainInstanceOfFixedAsset(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INSTANCE_OF_FIXED_ASSET);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -337,7 +330,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainFixedAssetProduct(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainFixedAssetProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAssetProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -345,12 +338,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainFixedAssetProduct(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -367,7 +359,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainInventoryItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInventoryItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -375,12 +367,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVENTORY_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -397,7 +388,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainInvoiceItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInvoiceItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -405,12 +396,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -427,7 +417,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainOrderItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -435,12 +425,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainOrderItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -457,7 +446,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainMainProductAssoc(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainMainProductAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainMainProductAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -465,12 +454,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainMainProductAssoc(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(MAIN_PRODUCT_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -487,7 +475,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainAssocProductAssoc(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainAssocProductAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAssocProductAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -495,12 +483,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainAssocProductAssoc(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ASSOC_PRODUCT_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -517,7 +504,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductCategoryMember(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductCategoryMember(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductCategoryMember(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -525,12 +512,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductCategoryMember(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_CATEGORY_MEMBER);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -547,7 +533,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductProductConfig(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductProductConfig(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductProductConfig(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -555,12 +541,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductProductConfig(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_PRODUCT_CONFIG);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -577,7 +562,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductProductConfigProduct(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductProductConfigProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductProductConfigProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -585,12 +570,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductProductConfigProduct(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_PRODUCT_CONFIG_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -607,7 +591,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductContent(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductContent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductContent(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -615,12 +599,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductContent(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_CONTENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -637,7 +620,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductFacility(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -645,12 +628,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductFacility(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -667,7 +649,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductFacilityAssoc(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductFacilityAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductFacilityAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -675,12 +657,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductFacilityAssoc(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_FACILITY_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -697,7 +678,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductFacilityLocation(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductFacilityLocation(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -705,12 +686,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_FACILITY_LOCATION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -727,7 +707,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductFeatureAppl(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductFeatureAppl(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductFeatureAppl(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -735,12 +715,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductFeatureAppl(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_FEATURE_APPL);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -757,7 +736,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductKeyword(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductKeyword(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductKeyword(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -765,12 +744,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductKeyword(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_KEYWORD);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -787,7 +765,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductPrice(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductPrice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductPrice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -795,12 +773,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductPrice(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_PRICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -817,7 +794,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductPromoProduct(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductPromoProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductPromoProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -825,12 +802,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductPromoProduct(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_PROMO_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -847,7 +823,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductReview(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductReview(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductReview(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -855,12 +831,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductReview(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_REVIEW);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -877,7 +852,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductStoreSurveyAppl(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductStoreSurveyAppl(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStoreSurveyAppl(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -885,12 +860,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductStoreSurveyAppl(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_SURVEY_APPL);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -907,7 +881,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductSubscriptionResource(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainProductSubscriptionResource(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductSubscriptionResource(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -915,12 +889,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainProductSubscriptionResource(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_SUBSCRIPTION_RESOURCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -937,7 +910,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainQuoteItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainQuoteItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -945,12 +918,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -967,7 +939,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainShipmentItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainShipmentItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -975,12 +947,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainShipmentItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -997,7 +968,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainSubShipmentPackageContent(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainSubShipmentPackageContent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainSubShipmentPackageContent(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -1005,12 +976,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainSubShipmentPackageContent(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SUB_SHIPMENT_PACKAGE_CONTENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -1027,7 +997,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainShipmentReceipt(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentReceipt(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -1035,12 +1005,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_RECEIPT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -1057,7 +1026,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainSupplierProduct(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainSupplierProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainSupplierProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -1065,12 +1034,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainSupplierProduct(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SUPPLIER_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -1087,7 +1055,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainWorkEffortGoodStandard(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainWorkEffortGoodStandard(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWorkEffortGoodStandard(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -1095,12 +1063,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainWorkEffortGoodStandard(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_GOOD_STANDARD);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -1117,7 +1084,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
@@ -1125,12 +1092,11 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         default Map<String, Product> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
                                 id -> rr.getRow(Product.class));
@@ -1151,7 +1117,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> primaryProductCategory(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPrimaryProductCategory(protoMeta, e, whereClause, binds, succ);
     }
@@ -1162,7 +1128,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> facility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -1173,7 +1139,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> createdByUserLogin(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByUserLogin(protoMeta, e, whereClause, binds, succ);
     }
@@ -1184,7 +1150,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> lastModifiedByUserLogin(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByUserLogin(protoMeta, e, whereClause, binds, succ);
     }
@@ -1195,7 +1161,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> defaultShipmentBoxType(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainDefaultShipmentBoxType(protoMeta, e, whereClause, binds, succ);
     }
@@ -1206,7 +1172,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> agreement(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAgreement(protoMeta, e, whereClause, binds, succ);
     }
@@ -1217,7 +1183,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> agreementProductAppl(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAgreementProductAppl(protoMeta, e, whereClause, binds, succ);
     }
@@ -1228,7 +1194,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> custRequestItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCustRequestItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1239,7 +1205,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> instanceOfFixedAsset(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInstanceOfFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
@@ -1250,7 +1216,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> fixedAssetProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -1261,7 +1227,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> inventoryItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInventoryItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1272,7 +1238,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> invoiceItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInvoiceItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1283,7 +1249,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> orderItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1294,7 +1260,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> mainProductAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainMainProductAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -1305,7 +1271,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> assocProductAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAssocProductAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -1316,7 +1282,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productCategoryMember(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductCategoryMember(protoMeta, e, whereClause, binds, succ);
     }
@@ -1327,7 +1293,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productProductConfig(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductProductConfig(protoMeta, e, whereClause, binds, succ);
     }
@@ -1338,7 +1304,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productProductConfigProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductProductConfigProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -1349,7 +1315,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productContent(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductContent(protoMeta, e, whereClause, binds, succ);
     }
@@ -1360,7 +1326,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productFacility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -1371,7 +1337,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productFacilityAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductFacilityAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -1382,7 +1348,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productFacilityLocation(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductFacilityLocation(protoMeta, e, whereClause, binds, succ);
     }
@@ -1393,7 +1359,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productFeatureAppl(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductFeatureAppl(protoMeta, e, whereClause, binds, succ);
     }
@@ -1404,7 +1370,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productKeyword(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductKeyword(protoMeta, e, whereClause, binds, succ);
     }
@@ -1415,7 +1381,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productPrice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductPrice(protoMeta, e, whereClause, binds, succ);
     }
@@ -1426,7 +1392,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productPromoProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductPromoProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -1437,7 +1403,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productReview(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductReview(protoMeta, e, whereClause, binds, succ);
     }
@@ -1448,7 +1414,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productStoreSurveyAppl(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStoreSurveyAppl(protoMeta, e, whereClause, binds, succ);
     }
@@ -1459,7 +1425,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> productSubscriptionResource(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductSubscriptionResource(protoMeta, e, whereClause, binds, succ);
     }
@@ -1470,7 +1436,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> quoteItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainQuoteItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1481,7 +1447,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> shipmentItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -1492,7 +1458,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> subShipmentPackageContent(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainSubShipmentPackageContent(protoMeta, e, whereClause, binds, succ);
     }
@@ -1503,7 +1469,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> shipmentReceipt(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
     }
@@ -1514,7 +1480,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> supplierProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainSupplierProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -1525,7 +1491,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> workEffortGoodStandard(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWorkEffortGoodStandard(protoMeta, e, whereClause, binds, succ);
     }
@@ -1536,7 +1502,7 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public Consumer<Map<String, Product>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -1548,152 +1514,157 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
     }
     
     public Map<String, Product> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, Product> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, Product> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, Product>> chain = tenant(dao, false);
+        Consumer<Map<String, Product>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PRIMARY_PRODUCT_CATEGORY)) {
-            chain = chain.andThen(primaryProductCategory(dao, true));
+            chain = chain.andThen(primaryProductCategory(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FACILITY)) {
-            chain = chain.andThen(facility(dao, true));
+            chain = chain.andThen(facility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_USER_LOGIN)) {
-            chain = chain.andThen(createdByUserLogin(dao, true));
+            chain = chain.andThen(createdByUserLogin(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_USER_LOGIN)) {
-            chain = chain.andThen(lastModifiedByUserLogin(dao, true));
+            chain = chain.andThen(lastModifiedByUserLogin(dao, whereClause, binds, true));
         }
          
         if (incls.contains(DEFAULT_SHIPMENT_BOX_TYPE)) {
-            chain = chain.andThen(defaultShipmentBoxType(dao, true));
+            chain = chain.andThen(defaultShipmentBoxType(dao, whereClause, binds, true));
         }
          
         if (incls.contains(AGREEMENT)) {
-            chain = chain.andThen(agreement(dao, true));
+            chain = chain.andThen(agreement(dao, whereClause, binds, true));
         }
          
         if (incls.contains(AGREEMENT_PRODUCT_APPL)) {
-            chain = chain.andThen(agreementProductAppl(dao, true));
+            chain = chain.andThen(agreementProductAppl(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CUST_REQUEST_ITEM)) {
-            chain = chain.andThen(custRequestItem(dao, true));
+            chain = chain.andThen(custRequestItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INSTANCE_OF_FIXED_ASSET)) {
-            chain = chain.andThen(instanceOfFixedAsset(dao, true));
+            chain = chain.andThen(instanceOfFixedAsset(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET_PRODUCT)) {
-            chain = chain.andThen(fixedAssetProduct(dao, true));
+            chain = chain.andThen(fixedAssetProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVENTORY_ITEM)) {
-            chain = chain.andThen(inventoryItem(dao, true));
+            chain = chain.andThen(inventoryItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVOICE_ITEM)) {
-            chain = chain.andThen(invoiceItem(dao, true));
+            chain = chain.andThen(invoiceItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ITEM)) {
-            chain = chain.andThen(orderItem(dao, true));
+            chain = chain.andThen(orderItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(MAIN_PRODUCT_ASSOC)) {
-            chain = chain.andThen(mainProductAssoc(dao, true));
+            chain = chain.andThen(mainProductAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ASSOC_PRODUCT_ASSOC)) {
-            chain = chain.andThen(assocProductAssoc(dao, true));
+            chain = chain.andThen(assocProductAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_CATEGORY_MEMBER)) {
-            chain = chain.andThen(productCategoryMember(dao, true));
+            chain = chain.andThen(productCategoryMember(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_PRODUCT_CONFIG)) {
-            chain = chain.andThen(productProductConfig(dao, true));
+            chain = chain.andThen(productProductConfig(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_PRODUCT_CONFIG_PRODUCT)) {
-            chain = chain.andThen(productProductConfigProduct(dao, true));
+            chain = chain.andThen(productProductConfigProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_CONTENT)) {
-            chain = chain.andThen(productContent(dao, true));
+            chain = chain.andThen(productContent(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_FACILITY)) {
-            chain = chain.andThen(productFacility(dao, true));
+            chain = chain.andThen(productFacility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_FACILITY_ASSOC)) {
-            chain = chain.andThen(productFacilityAssoc(dao, true));
+            chain = chain.andThen(productFacilityAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_FACILITY_LOCATION)) {
-            chain = chain.andThen(productFacilityLocation(dao, true));
+            chain = chain.andThen(productFacilityLocation(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_FEATURE_APPL)) {
-            chain = chain.andThen(productFeatureAppl(dao, true));
+            chain = chain.andThen(productFeatureAppl(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_KEYWORD)) {
-            chain = chain.andThen(productKeyword(dao, true));
+            chain = chain.andThen(productKeyword(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_PRICE)) {
-            chain = chain.andThen(productPrice(dao, true));
+            chain = chain.andThen(productPrice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_PROMO_PRODUCT)) {
-            chain = chain.andThen(productPromoProduct(dao, true));
+            chain = chain.andThen(productPromoProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_REVIEW)) {
-            chain = chain.andThen(productReview(dao, true));
+            chain = chain.andThen(productReview(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_STORE_SURVEY_APPL)) {
-            chain = chain.andThen(productStoreSurveyAppl(dao, true));
+            chain = chain.andThen(productStoreSurveyAppl(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_SUBSCRIPTION_RESOURCE)) {
-            chain = chain.andThen(productSubscriptionResource(dao, true));
+            chain = chain.andThen(productSubscriptionResource(dao, whereClause, binds, true));
         }
          
         if (incls.contains(QUOTE_ITEM)) {
-            chain = chain.andThen(quoteItem(dao, true));
+            chain = chain.andThen(quoteItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_ITEM)) {
-            chain = chain.andThen(shipmentItem(dao, true));
+            chain = chain.andThen(shipmentItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SUB_SHIPMENT_PACKAGE_CONTENT)) {
-            chain = chain.andThen(subShipmentPackageContent(dao, true));
+            chain = chain.andThen(subShipmentPackageContent(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_RECEIPT)) {
-            chain = chain.andThen(shipmentReceipt(dao, true));
+            chain = chain.andThen(shipmentReceipt(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SUPPLIER_PRODUCT)) {
-            chain = chain.andThen(supplierProduct(dao, true));
+            chain = chain.andThen(supplierProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WORK_EFFORT_GOOD_STANDARD)) {
-            chain = chain.andThen(workEffortGoodStandard(dao, true));
+            chain = chain.andThen(workEffortGoodStandard(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -1702,8 +1673,17 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<ProductData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<ProductData> responseObserver) {
-        Map<String, Product> dataMap = chainQuery(c, incls);
+
+        Map<String, Product> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             ProductData.Builder productData = data.toHeadBuilder();
              

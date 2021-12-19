@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByUserLogin(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -75,12 +77,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_USER_LOGIN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -97,7 +98,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainLastModifiedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainLastModifiedByUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLastModifiedByUserLogin(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -105,12 +106,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainLastModifiedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LAST_MODIFIED_BY_USER_LOGIN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -127,7 +127,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcctgTrans(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -135,12 +135,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -157,7 +156,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainAcctgTransEntry(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainAcctgTransEntry(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcctgTransEntry(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -165,12 +164,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainAcctgTransEntry(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS_ENTRY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -187,7 +185,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromAgreement(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFromAgreement(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromAgreement(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -195,12 +193,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromAgreement(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_AGREEMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -217,7 +214,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToAgreement(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainToAgreement(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToAgreement(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -225,12 +222,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToAgreement(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_AGREEMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -247,7 +243,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainBillingAccountRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainBillingAccountRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainBillingAccountRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -255,12 +251,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainBillingAccountRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(BILLING_ACCOUNT_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -277,7 +272,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCarrierShipmentBoxType(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainCarrierShipmentBoxType(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCarrierShipmentBoxType(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -285,12 +280,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCarrierShipmentBoxType(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CARRIER_SHIPMENT_BOX_TYPE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -307,7 +301,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCarrierShipmentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainCarrierShipmentMethod(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCarrierShipmentMethod(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -315,12 +309,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCarrierShipmentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CARRIER_SHIPMENT_METHOD);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -337,7 +330,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToCommunicationEvent(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainToCommunicationEvent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToCommunicationEvent(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -345,12 +338,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToCommunicationEvent(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_COMMUNICATION_EVENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -367,7 +359,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromCommunicationEvent(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFromCommunicationEvent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromCommunicationEvent(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -375,12 +367,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromCommunicationEvent(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_COMMUNICATION_EVENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -397,7 +388,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCommunicationEventRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainCommunicationEventRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCommunicationEventRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -405,12 +396,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCommunicationEventRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(COMMUNICATION_EVENT_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -427,7 +417,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainContentRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainContentRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainContentRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -435,12 +425,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainContentRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CONTENT_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -457,7 +446,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromCustRequest(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFromCustRequest(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromCustRequest(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -465,12 +454,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromCustRequest(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_CUST_REQUEST);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -487,7 +475,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCustRequestType(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainCustRequestType(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCustRequestType(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -495,12 +483,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCustRequestType(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CUST_REQUEST_TYPE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -517,7 +504,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOwnerFacility(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOwnerFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOwnerFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -525,12 +512,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOwnerFacility(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(OWNER_FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -547,7 +533,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOrganizationFinAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrganizationFinAccount(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -555,12 +541,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_FIN_ACCOUNT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -577,7 +562,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOwnerFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOwnerFinAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOwnerFinAccount(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -585,12 +570,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOwnerFinAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(OWNER_FIN_ACCOUNT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -607,7 +591,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFinAccountRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFinAccountRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFinAccountRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -615,12 +599,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFinAccountRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -637,7 +620,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFinAccountTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFinAccountTrans(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -645,12 +628,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIN_ACCOUNT_TRANS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -667,7 +649,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPerformedByFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPerformedByFinAccountTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPerformedByFinAccountTrans(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -675,12 +657,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPerformedByFinAccountTrans(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PERFORMED_BY_FIN_ACCOUNT_TRANS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -697,7 +678,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAsset(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -705,12 +686,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -727,7 +707,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainGovAgencyFixedAssetRegistration(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainGovAgencyFixedAssetRegistration(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainGovAgencyFixedAssetRegistration(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -735,12 +715,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainGovAgencyFixedAssetRegistration(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(GOV_AGENCY_FIXED_ASSET_REGISTRATION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -757,7 +736,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationGlAccountTypeDefault(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOrganizationGlAccountTypeDefault(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrganizationGlAccountTypeDefault(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -765,12 +744,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationGlAccountTypeDefault(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_GL_ACCOUNT_TYPE_DEFAULT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -787,7 +765,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainInventoryItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInventoryItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -795,12 +773,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVENTORY_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -817,7 +794,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOwnerInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOwnerInventoryItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOwnerInventoryItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -825,12 +802,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOwnerInventoryItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(OWNER_INVENTORY_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -847,7 +823,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromInvoice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFromInvoice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromInvoice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -855,12 +831,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromInvoice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_INVOICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -877,7 +852,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainInvoice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainInvoice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInvoice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -885,12 +860,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainInvoice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -907,7 +881,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainTaxAuthorityInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainTaxAuthorityInvoiceItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTaxAuthorityInvoiceItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -915,12 +889,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainTaxAuthorityInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TAX_AUTHORITY_INVOICE_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -937,7 +910,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOverrideOrgInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOverrideOrgInvoiceItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOverrideOrgInvoiceItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -945,12 +918,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOverrideOrgInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(OVERRIDE_ORG_INVOICE_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -967,7 +939,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationInvoiceItemTypeGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOrganizationInvoiceItemTypeGlAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrganizationInvoiceItemTypeGlAccount(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -975,12 +947,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationInvoiceItemTypeGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_INVOICE_ITEM_TYPE_GL_ACCOUNT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -997,7 +968,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainInvoiceRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainInvoiceRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInvoiceRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1005,12 +976,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainInvoiceRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1027,7 +997,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainSupplierOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainSupplierOrderItemShipGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainSupplierOrderItemShipGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1035,12 +1005,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainSupplierOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SUPPLIER_ORDER_ITEM_SHIP_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1057,7 +1026,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainVendorOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainVendorOrderItemShipGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainVendorOrderItemShipGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1065,12 +1034,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainVendorOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(VENDOR_ORDER_ITEM_SHIP_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1087,7 +1055,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCarrierOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainCarrierOrderItemShipGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCarrierOrderItemShipGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1095,12 +1063,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCarrierOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CARRIER_ORDER_ITEM_SHIP_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1117,7 +1084,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrderRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOrderRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1125,12 +1092,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrderRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1147,7 +1113,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyAcctgPreference(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyAcctgPreference(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyAcctgPreference(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1155,12 +1121,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyAcctgPreference(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_ACCTG_PREFERENCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1177,7 +1142,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyContactMech(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1185,12 +1150,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1207,7 +1171,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyContactMechPurpose(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyContactMechPurpose(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyContactMechPurpose(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1215,12 +1179,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyContactMechPurpose(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH_PURPOSE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1237,7 +1200,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyGeoPoint(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyGeoPoint(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyGeoPoint(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1245,12 +1208,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyGeoPoint(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_GEO_POINT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1267,7 +1229,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1275,12 +1237,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyGroup(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1297,7 +1258,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyIdentification(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyIdentification(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyIdentification(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1305,12 +1266,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyIdentification(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_IDENTIFICATION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1327,7 +1287,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyRate(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyRate(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyRate(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1335,12 +1295,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyRate(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_RATE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1357,7 +1316,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFromPartyRelationship(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromPartyRelationship(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1365,12 +1324,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_PARTY_RELATIONSHIP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1387,7 +1345,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainToPartyRelationship(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToPartyRelationship(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1395,12 +1353,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToPartyRelationship(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_PARTY_RELATIONSHIP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1417,7 +1374,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1425,12 +1382,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1447,7 +1403,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyStatus(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1455,12 +1411,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyStatus(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1477,7 +1432,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyTaxAuthInfo(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPartyTaxAuthInfo(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyTaxAuthInfo(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1485,12 +1440,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPartyTaxAuthInfo(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_TAX_AUTH_INFO);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1507,7 +1461,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromPayment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFromPayment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromPayment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1515,12 +1469,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromPayment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_PAYMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1537,7 +1490,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToPayment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainToPayment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToPayment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1545,12 +1498,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToPayment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_PAYMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1567,7 +1519,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPaymentGlAccountTypeMap(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPaymentGlAccountTypeMap(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPaymentGlAccountTypeMap(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1575,12 +1527,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPaymentGlAccountTypeMap(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_GL_ACCOUNT_TYPE_MAP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1597,7 +1548,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPaymentMethod(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPaymentMethod(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1605,12 +1556,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPaymentMethod(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_METHOD);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1627,7 +1577,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationPaymentMethodTypeGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOrganizationPaymentMethodTypeGlAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrganizationPaymentMethodTypeGlAccount(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1635,12 +1585,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationPaymentMethodTypeGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_PAYMENT_METHOD_TYPE_GL_ACCOUNT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1657,7 +1606,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPerson(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainPerson(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPerson(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1665,12 +1614,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainPerson(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PERSON);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1687,7 +1635,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductCategoryRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainProductCategoryRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductCategoryRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1695,12 +1643,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductCategoryRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_CATEGORY_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1717,7 +1664,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainTaxAuthorityProductPrice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainTaxAuthorityProductPrice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTaxAuthorityProductPrice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1725,12 +1672,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainTaxAuthorityProductPrice(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TAX_AUTHORITY_PRODUCT_PRICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1747,7 +1693,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductPromo(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainProductPromo(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductPromo(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1755,12 +1701,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductPromo(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_PROMO);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1777,7 +1722,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStore(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1785,12 +1730,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1807,7 +1751,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainProductStoreRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStoreRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1815,12 +1759,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1837,7 +1780,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductStoreShipmentMeth(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainProductStoreShipmentMeth(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStoreShipmentMeth(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1845,12 +1788,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainProductStoreShipmentMeth(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_SHIPMENT_METH);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1867,7 +1809,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainQuote(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainQuote(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainQuote(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1875,12 +1817,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainQuote(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1897,7 +1838,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainQuoteRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainQuoteRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainQuoteRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1905,12 +1846,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainQuoteRole(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1927,7 +1867,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainRateAmount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainRateAmount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainRateAmount(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1935,12 +1875,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainRateAmount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(RATE_AMOUNT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1957,7 +1896,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainToShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToShipment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1965,12 +1904,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_SHIPMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -1987,7 +1925,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainFromShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromShipment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -1995,12 +1933,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainFromShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_SHIPMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2017,7 +1954,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainShipmentCostEstimate(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainShipmentCostEstimate(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentCostEstimate(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2025,12 +1962,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainShipmentCostEstimate(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_COST_ESTIMATE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2047,7 +1983,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainCarrierShipmentRouteSegment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCarrierShipmentRouteSegment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2055,12 +1991,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CARRIER_SHIPMENT_ROUTE_SEGMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2077,7 +2012,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainSupplierProduct(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainSupplierProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainSupplierProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2085,12 +2020,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainSupplierProduct(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SUPPLIER_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2107,7 +2041,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainSupplierProductFeature(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainSupplierProductFeature(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainSupplierProductFeature(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2115,12 +2049,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainSupplierProductFeature(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SUPPLIER_PRODUCT_FEATURE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2137,7 +2070,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainTaxAuthTaxAuthority(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainTaxAuthTaxAuthority(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTaxAuthTaxAuthority(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2145,12 +2078,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainTaxAuthTaxAuthority(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TAX_AUTH_TAX_AUTHORITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2167,7 +2099,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationTaxAuthorityGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainOrganizationTaxAuthorityGlAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrganizationTaxAuthorityGlAccount(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2175,12 +2107,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainOrganizationTaxAuthorityGlAccount(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORGANIZATION_TAX_AUTHORITY_GL_ACCOUNT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2197,7 +2128,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainUserLogin(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2205,12 +2136,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainUserLogin(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(USER_LOGIN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2227,7 +2157,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainWorkEffortPartyAssignment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWorkEffortPartyAssignment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2235,12 +2165,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_PARTY_ASSIGNMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2257,7 +2186,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
@@ -2265,12 +2194,11 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         default Map<String, Party> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
                                 id -> rr.getRow(Party.class));
@@ -2291,7 +2219,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> createdByUserLogin(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByUserLogin(protoMeta, e, whereClause, binds, succ);
     }
@@ -2302,7 +2230,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> lastModifiedByUserLogin(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLastModifiedByUserLogin(protoMeta, e, whereClause, binds, succ);
     }
@@ -2313,7 +2241,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> acctgTrans(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
     }
@@ -2324,7 +2252,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> acctgTransEntry(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTransEntry(protoMeta, e, whereClause, binds, succ);
     }
@@ -2335,7 +2263,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> fromAgreement(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromAgreement(protoMeta, e, whereClause, binds, succ);
     }
@@ -2346,7 +2274,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> toAgreement(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToAgreement(protoMeta, e, whereClause, binds, succ);
     }
@@ -2357,7 +2285,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> billingAccountRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainBillingAccountRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2368,7 +2296,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> carrierShipmentBoxType(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCarrierShipmentBoxType(protoMeta, e, whereClause, binds, succ);
     }
@@ -2379,7 +2307,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> carrierShipmentMethod(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCarrierShipmentMethod(protoMeta, e, whereClause, binds, succ);
     }
@@ -2390,7 +2318,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> toCommunicationEvent(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToCommunicationEvent(protoMeta, e, whereClause, binds, succ);
     }
@@ -2401,7 +2329,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> fromCommunicationEvent(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromCommunicationEvent(protoMeta, e, whereClause, binds, succ);
     }
@@ -2412,7 +2340,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> communicationEventRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCommunicationEventRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2423,7 +2351,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> contentRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainContentRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2434,7 +2362,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> fromCustRequest(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromCustRequest(protoMeta, e, whereClause, binds, succ);
     }
@@ -2445,7 +2373,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> custRequestType(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCustRequestType(protoMeta, e, whereClause, binds, succ);
     }
@@ -2456,7 +2384,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> ownerFacility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOwnerFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -2467,7 +2395,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> organizationFinAccount(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrganizationFinAccount(protoMeta, e, whereClause, binds, succ);
     }
@@ -2478,7 +2406,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> ownerFinAccount(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOwnerFinAccount(protoMeta, e, whereClause, binds, succ);
     }
@@ -2489,7 +2417,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> finAccountRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFinAccountRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2500,7 +2428,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> finAccountTrans(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFinAccountTrans(protoMeta, e, whereClause, binds, succ);
     }
@@ -2511,7 +2439,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> performedByFinAccountTrans(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPerformedByFinAccountTrans(protoMeta, e, whereClause, binds, succ);
     }
@@ -2522,7 +2450,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> fixedAsset(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
@@ -2533,7 +2461,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> govAgencyFixedAssetRegistration(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainGovAgencyFixedAssetRegistration(protoMeta, e, whereClause, binds, succ);
     }
@@ -2544,7 +2472,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> organizationGlAccountTypeDefault(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrganizationGlAccountTypeDefault(protoMeta, e, whereClause, binds, succ);
     }
@@ -2555,7 +2483,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> inventoryItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInventoryItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -2566,7 +2494,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> ownerInventoryItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOwnerInventoryItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -2577,7 +2505,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> fromInvoice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromInvoice(protoMeta, e, whereClause, binds, succ);
     }
@@ -2588,7 +2516,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> invoice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInvoice(protoMeta, e, whereClause, binds, succ);
     }
@@ -2599,7 +2527,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> taxAuthorityInvoiceItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTaxAuthorityInvoiceItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -2610,7 +2538,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> overrideOrgInvoiceItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOverrideOrgInvoiceItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -2621,7 +2549,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> organizationInvoiceItemTypeGlAccount(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrganizationInvoiceItemTypeGlAccount(protoMeta, e, whereClause, binds, succ);
     }
@@ -2632,7 +2560,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> invoiceRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInvoiceRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2643,7 +2571,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> supplierOrderItemShipGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainSupplierOrderItemShipGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -2654,7 +2582,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> vendorOrderItemShipGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainVendorOrderItemShipGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -2665,7 +2593,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> carrierOrderItemShipGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCarrierOrderItemShipGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -2676,7 +2604,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> orderRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2687,7 +2615,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyAcctgPreference(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyAcctgPreference(protoMeta, e, whereClause, binds, succ);
     }
@@ -2698,7 +2626,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyContactMech(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyContactMech(protoMeta, e, whereClause, binds, succ);
     }
@@ -2709,7 +2637,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyContactMechPurpose(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyContactMechPurpose(protoMeta, e, whereClause, binds, succ);
     }
@@ -2720,7 +2648,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyGeoPoint(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyGeoPoint(protoMeta, e, whereClause, binds, succ);
     }
@@ -2731,7 +2659,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -2742,7 +2670,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyIdentification(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyIdentification(protoMeta, e, whereClause, binds, succ);
     }
@@ -2753,7 +2681,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyRate(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyRate(protoMeta, e, whereClause, binds, succ);
     }
@@ -2764,7 +2692,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> fromPartyRelationship(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromPartyRelationship(protoMeta, e, whereClause, binds, succ);
     }
@@ -2775,7 +2703,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> toPartyRelationship(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToPartyRelationship(protoMeta, e, whereClause, binds, succ);
     }
@@ -2786,7 +2714,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2797,7 +2725,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -2808,7 +2736,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> partyTaxAuthInfo(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyTaxAuthInfo(protoMeta, e, whereClause, binds, succ);
     }
@@ -2819,7 +2747,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> fromPayment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromPayment(protoMeta, e, whereClause, binds, succ);
     }
@@ -2830,7 +2758,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> toPayment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToPayment(protoMeta, e, whereClause, binds, succ);
     }
@@ -2841,7 +2769,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> paymentGlAccountTypeMap(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPaymentGlAccountTypeMap(protoMeta, e, whereClause, binds, succ);
     }
@@ -2852,7 +2780,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> paymentMethod(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPaymentMethod(protoMeta, e, whereClause, binds, succ);
     }
@@ -2863,7 +2791,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> organizationPaymentMethodTypeGlAccount(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrganizationPaymentMethodTypeGlAccount(protoMeta, e, whereClause, binds, succ);
     }
@@ -2874,7 +2802,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> person(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPerson(protoMeta, e, whereClause, binds, succ);
     }
@@ -2885,7 +2813,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> productCategoryRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductCategoryRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2896,7 +2824,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> taxAuthorityProductPrice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTaxAuthorityProductPrice(protoMeta, e, whereClause, binds, succ);
     }
@@ -2907,7 +2835,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> productPromo(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductPromo(protoMeta, e, whereClause, binds, succ);
     }
@@ -2918,7 +2846,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> productStore(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
@@ -2929,7 +2857,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> productStoreRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStoreRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2940,7 +2868,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> productStoreShipmentMeth(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStoreShipmentMeth(protoMeta, e, whereClause, binds, succ);
     }
@@ -2951,7 +2879,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> quote(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainQuote(protoMeta, e, whereClause, binds, succ);
     }
@@ -2962,7 +2890,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> quoteRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainQuoteRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -2973,7 +2901,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> rateAmount(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainRateAmount(protoMeta, e, whereClause, binds, succ);
     }
@@ -2984,7 +2912,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> toShipment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToShipment(protoMeta, e, whereClause, binds, succ);
     }
@@ -2995,7 +2923,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> fromShipment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromShipment(protoMeta, e, whereClause, binds, succ);
     }
@@ -3006,7 +2934,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> shipmentCostEstimate(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentCostEstimate(protoMeta, e, whereClause, binds, succ);
     }
@@ -3017,7 +2945,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> carrierShipmentRouteSegment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCarrierShipmentRouteSegment(protoMeta, e, whereClause, binds, succ);
     }
@@ -3028,7 +2956,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> supplierProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainSupplierProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -3039,7 +2967,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> supplierProductFeature(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainSupplierProductFeature(protoMeta, e, whereClause, binds, succ);
     }
@@ -3050,7 +2978,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> taxAuthTaxAuthority(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTaxAuthTaxAuthority(protoMeta, e, whereClause, binds, succ);
     }
@@ -3061,7 +2989,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> organizationTaxAuthorityGlAccount(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrganizationTaxAuthorityGlAccount(protoMeta, e, whereClause, binds, succ);
     }
@@ -3072,7 +3000,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> userLogin(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainUserLogin(protoMeta, e, whereClause, binds, succ);
     }
@@ -3083,7 +3011,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> workEffortPartyAssignment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWorkEffortPartyAssignment(protoMeta, e, whereClause, binds, succ);
     }
@@ -3094,7 +3022,7 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public Consumer<Map<String, Party>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -3106,304 +3034,309 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
     }
     
     public Map<String, Party> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, Party> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, Party> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, Party>> chain = tenant(dao, false);
+        Consumer<Map<String, Party>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(CREATED_BY_USER_LOGIN)) {
-            chain = chain.andThen(createdByUserLogin(dao, true));
+            chain = chain.andThen(createdByUserLogin(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LAST_MODIFIED_BY_USER_LOGIN)) {
-            chain = chain.andThen(lastModifiedByUserLogin(dao, true));
+            chain = chain.andThen(lastModifiedByUserLogin(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACCTG_TRANS)) {
-            chain = chain.andThen(acctgTrans(dao, true));
+            chain = chain.andThen(acctgTrans(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACCTG_TRANS_ENTRY)) {
-            chain = chain.andThen(acctgTransEntry(dao, true));
+            chain = chain.andThen(acctgTransEntry(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_AGREEMENT)) {
-            chain = chain.andThen(fromAgreement(dao, true));
+            chain = chain.andThen(fromAgreement(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_AGREEMENT)) {
-            chain = chain.andThen(toAgreement(dao, true));
+            chain = chain.andThen(toAgreement(dao, whereClause, binds, true));
         }
          
         if (incls.contains(BILLING_ACCOUNT_ROLE)) {
-            chain = chain.andThen(billingAccountRole(dao, true));
+            chain = chain.andThen(billingAccountRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CARRIER_SHIPMENT_BOX_TYPE)) {
-            chain = chain.andThen(carrierShipmentBoxType(dao, true));
+            chain = chain.andThen(carrierShipmentBoxType(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CARRIER_SHIPMENT_METHOD)) {
-            chain = chain.andThen(carrierShipmentMethod(dao, true));
+            chain = chain.andThen(carrierShipmentMethod(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_COMMUNICATION_EVENT)) {
-            chain = chain.andThen(toCommunicationEvent(dao, true));
+            chain = chain.andThen(toCommunicationEvent(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_COMMUNICATION_EVENT)) {
-            chain = chain.andThen(fromCommunicationEvent(dao, true));
+            chain = chain.andThen(fromCommunicationEvent(dao, whereClause, binds, true));
         }
          
         if (incls.contains(COMMUNICATION_EVENT_ROLE)) {
-            chain = chain.andThen(communicationEventRole(dao, true));
+            chain = chain.andThen(communicationEventRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CONTENT_ROLE)) {
-            chain = chain.andThen(contentRole(dao, true));
+            chain = chain.andThen(contentRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_CUST_REQUEST)) {
-            chain = chain.andThen(fromCustRequest(dao, true));
+            chain = chain.andThen(fromCustRequest(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CUST_REQUEST_TYPE)) {
-            chain = chain.andThen(custRequestType(dao, true));
+            chain = chain.andThen(custRequestType(dao, whereClause, binds, true));
         }
          
         if (incls.contains(OWNER_FACILITY)) {
-            chain = chain.andThen(ownerFacility(dao, true));
+            chain = chain.andThen(ownerFacility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORGANIZATION_FIN_ACCOUNT)) {
-            chain = chain.andThen(organizationFinAccount(dao, true));
+            chain = chain.andThen(organizationFinAccount(dao, whereClause, binds, true));
         }
          
         if (incls.contains(OWNER_FIN_ACCOUNT)) {
-            chain = chain.andThen(ownerFinAccount(dao, true));
+            chain = chain.andThen(ownerFinAccount(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIN_ACCOUNT_ROLE)) {
-            chain = chain.andThen(finAccountRole(dao, true));
+            chain = chain.andThen(finAccountRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIN_ACCOUNT_TRANS)) {
-            chain = chain.andThen(finAccountTrans(dao, true));
+            chain = chain.andThen(finAccountTrans(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PERFORMED_BY_FIN_ACCOUNT_TRANS)) {
-            chain = chain.andThen(performedByFinAccountTrans(dao, true));
+            chain = chain.andThen(performedByFinAccountTrans(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET)) {
-            chain = chain.andThen(fixedAsset(dao, true));
+            chain = chain.andThen(fixedAsset(dao, whereClause, binds, true));
         }
          
         if (incls.contains(GOV_AGENCY_FIXED_ASSET_REGISTRATION)) {
-            chain = chain.andThen(govAgencyFixedAssetRegistration(dao, true));
+            chain = chain.andThen(govAgencyFixedAssetRegistration(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORGANIZATION_GL_ACCOUNT_TYPE_DEFAULT)) {
-            chain = chain.andThen(organizationGlAccountTypeDefault(dao, true));
+            chain = chain.andThen(organizationGlAccountTypeDefault(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVENTORY_ITEM)) {
-            chain = chain.andThen(inventoryItem(dao, true));
+            chain = chain.andThen(inventoryItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(OWNER_INVENTORY_ITEM)) {
-            chain = chain.andThen(ownerInventoryItem(dao, true));
+            chain = chain.andThen(ownerInventoryItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_INVOICE)) {
-            chain = chain.andThen(fromInvoice(dao, true));
+            chain = chain.andThen(fromInvoice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVOICE)) {
-            chain = chain.andThen(invoice(dao, true));
+            chain = chain.andThen(invoice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TAX_AUTHORITY_INVOICE_ITEM)) {
-            chain = chain.andThen(taxAuthorityInvoiceItem(dao, true));
+            chain = chain.andThen(taxAuthorityInvoiceItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(OVERRIDE_ORG_INVOICE_ITEM)) {
-            chain = chain.andThen(overrideOrgInvoiceItem(dao, true));
+            chain = chain.andThen(overrideOrgInvoiceItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORGANIZATION_INVOICE_ITEM_TYPE_GL_ACCOUNT)) {
-            chain = chain.andThen(organizationInvoiceItemTypeGlAccount(dao, true));
+            chain = chain.andThen(organizationInvoiceItemTypeGlAccount(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVOICE_ROLE)) {
-            chain = chain.andThen(invoiceRole(dao, true));
+            chain = chain.andThen(invoiceRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SUPPLIER_ORDER_ITEM_SHIP_GROUP)) {
-            chain = chain.andThen(supplierOrderItemShipGroup(dao, true));
+            chain = chain.andThen(supplierOrderItemShipGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(VENDOR_ORDER_ITEM_SHIP_GROUP)) {
-            chain = chain.andThen(vendorOrderItemShipGroup(dao, true));
+            chain = chain.andThen(vendorOrderItemShipGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CARRIER_ORDER_ITEM_SHIP_GROUP)) {
-            chain = chain.andThen(carrierOrderItemShipGroup(dao, true));
+            chain = chain.andThen(carrierOrderItemShipGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ROLE)) {
-            chain = chain.andThen(orderRole(dao, true));
+            chain = chain.andThen(orderRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_ACCTG_PREFERENCE)) {
-            chain = chain.andThen(partyAcctgPreference(dao, true));
+            chain = chain.andThen(partyAcctgPreference(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_CONTACT_MECH)) {
-            chain = chain.andThen(partyContactMech(dao, true));
+            chain = chain.andThen(partyContactMech(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_CONTACT_MECH_PURPOSE)) {
-            chain = chain.andThen(partyContactMechPurpose(dao, true));
+            chain = chain.andThen(partyContactMechPurpose(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_GEO_POINT)) {
-            chain = chain.andThen(partyGeoPoint(dao, true));
+            chain = chain.andThen(partyGeoPoint(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_GROUP)) {
-            chain = chain.andThen(partyGroup(dao, true));
+            chain = chain.andThen(partyGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_IDENTIFICATION)) {
-            chain = chain.andThen(partyIdentification(dao, true));
+            chain = chain.andThen(partyIdentification(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_RATE)) {
-            chain = chain.andThen(partyRate(dao, true));
+            chain = chain.andThen(partyRate(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_PARTY_RELATIONSHIP)) {
-            chain = chain.andThen(fromPartyRelationship(dao, true));
+            chain = chain.andThen(fromPartyRelationship(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_PARTY_RELATIONSHIP)) {
-            chain = chain.andThen(toPartyRelationship(dao, true));
+            chain = chain.andThen(toPartyRelationship(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_ROLE)) {
-            chain = chain.andThen(partyRole(dao, true));
+            chain = chain.andThen(partyRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_STATUS)) {
-            chain = chain.andThen(partyStatus(dao, true));
+            chain = chain.andThen(partyStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_TAX_AUTH_INFO)) {
-            chain = chain.andThen(partyTaxAuthInfo(dao, true));
+            chain = chain.andThen(partyTaxAuthInfo(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_PAYMENT)) {
-            chain = chain.andThen(fromPayment(dao, true));
+            chain = chain.andThen(fromPayment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_PAYMENT)) {
-            chain = chain.andThen(toPayment(dao, true));
+            chain = chain.andThen(toPayment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PAYMENT_GL_ACCOUNT_TYPE_MAP)) {
-            chain = chain.andThen(paymentGlAccountTypeMap(dao, true));
+            chain = chain.andThen(paymentGlAccountTypeMap(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PAYMENT_METHOD)) {
-            chain = chain.andThen(paymentMethod(dao, true));
+            chain = chain.andThen(paymentMethod(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORGANIZATION_PAYMENT_METHOD_TYPE_GL_ACCOUNT)) {
-            chain = chain.andThen(organizationPaymentMethodTypeGlAccount(dao, true));
+            chain = chain.andThen(organizationPaymentMethodTypeGlAccount(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PERSON)) {
-            chain = chain.andThen(person(dao, true));
+            chain = chain.andThen(person(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_CATEGORY_ROLE)) {
-            chain = chain.andThen(productCategoryRole(dao, true));
+            chain = chain.andThen(productCategoryRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TAX_AUTHORITY_PRODUCT_PRICE)) {
-            chain = chain.andThen(taxAuthorityProductPrice(dao, true));
+            chain = chain.andThen(taxAuthorityProductPrice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_PROMO)) {
-            chain = chain.andThen(productPromo(dao, true));
+            chain = chain.andThen(productPromo(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_STORE)) {
-            chain = chain.andThen(productStore(dao, true));
+            chain = chain.andThen(productStore(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_STORE_ROLE)) {
-            chain = chain.andThen(productStoreRole(dao, true));
+            chain = chain.andThen(productStoreRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_STORE_SHIPMENT_METH)) {
-            chain = chain.andThen(productStoreShipmentMeth(dao, true));
+            chain = chain.andThen(productStoreShipmentMeth(dao, whereClause, binds, true));
         }
          
         if (incls.contains(QUOTE)) {
-            chain = chain.andThen(quote(dao, true));
+            chain = chain.andThen(quote(dao, whereClause, binds, true));
         }
          
         if (incls.contains(QUOTE_ROLE)) {
-            chain = chain.andThen(quoteRole(dao, true));
+            chain = chain.andThen(quoteRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(RATE_AMOUNT)) {
-            chain = chain.andThen(rateAmount(dao, true));
+            chain = chain.andThen(rateAmount(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_SHIPMENT)) {
-            chain = chain.andThen(toShipment(dao, true));
+            chain = chain.andThen(toShipment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_SHIPMENT)) {
-            chain = chain.andThen(fromShipment(dao, true));
+            chain = chain.andThen(fromShipment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_COST_ESTIMATE)) {
-            chain = chain.andThen(shipmentCostEstimate(dao, true));
+            chain = chain.andThen(shipmentCostEstimate(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CARRIER_SHIPMENT_ROUTE_SEGMENT)) {
-            chain = chain.andThen(carrierShipmentRouteSegment(dao, true));
+            chain = chain.andThen(carrierShipmentRouteSegment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SUPPLIER_PRODUCT)) {
-            chain = chain.andThen(supplierProduct(dao, true));
+            chain = chain.andThen(supplierProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SUPPLIER_PRODUCT_FEATURE)) {
-            chain = chain.andThen(supplierProductFeature(dao, true));
+            chain = chain.andThen(supplierProductFeature(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TAX_AUTH_TAX_AUTHORITY)) {
-            chain = chain.andThen(taxAuthTaxAuthority(dao, true));
+            chain = chain.andThen(taxAuthTaxAuthority(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORGANIZATION_TAX_AUTHORITY_GL_ACCOUNT)) {
-            chain = chain.andThen(organizationTaxAuthorityGlAccount(dao, true));
+            chain = chain.andThen(organizationTaxAuthorityGlAccount(dao, whereClause, binds, true));
         }
          
         if (incls.contains(USER_LOGIN)) {
-            chain = chain.andThen(userLogin(dao, true));
+            chain = chain.andThen(userLogin(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WORK_EFFORT_PARTY_ASSIGNMENT)) {
-            chain = chain.andThen(workEffortPartyAssignment(dao, true));
+            chain = chain.andThen(workEffortPartyAssignment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -3412,8 +3345,17 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<PartyData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<PartyData> responseObserver) {
-        Map<String, Party> dataMap = chainQuery(c, incls);
+
+        Map<String, Party> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             PartyData.Builder partyData = data.toHeadBuilder();
              

@@ -15,13 +15,16 @@ import com.bluecc.income.helper.ModelWrapper;
 import com.bluecc.income.model.*;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 import com.github.javafaker.Faker;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import com.google.gson.JsonObject;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Singular;
+import org.jdbi.v3.core.statement.Query;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,6 +35,7 @@ import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
 import static com.bluecc.hubs.fund.Util.pretty;
+import static com.bluecc.income.procs.AbstractProcs.findOne;
 import static java.lang.String.format;
 import static org.junit.Assert.*;
 
@@ -322,7 +326,7 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
                 System.out.println("--------------");
             });
 
-            Message p1 = genericProcs.findOne(c, p, Product.class).toData();
+            Message p1 = findOne(c, p, Product.class).toData();
             System.out.println(p1);
             assertTrue(genericProcs.getRelationValues(c, p1,
                     "primary_product_category",
@@ -337,7 +341,7 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
             ProductData p = ProductData.newBuilder()
                     .setProductId("FA-001")
                     .build();
-            Message p1 = genericProcs.findOne(c, p, Product.class).toData();
+            Message p1 = findOne(c, p, Product.class).toData();
             // System.out.println(p1);
             assertFalse(genericProcs.getRelationValues(c, p1,
                     "primary_product_category",
@@ -661,6 +665,26 @@ public class ProductDelegatorTest extends AbstractStoreProcTest {
             String jsonStr= ProtoJsonUtils.toJson(bucket);
             dump(entityName+".json", jsonStr);
 
+        });
+    }
+
+
+    @Test
+    public void testQueryBinds() {
+        process(c -> {
+            // Dao dao = c.getHandle().attach(// Dao.class);
+            Query selector = c.getHandle().select("select * from product "
+                    +"where product_id in (<ids>)");
+
+            SelectorBindings bindings=SelectorBindings.builder()
+                    .listBinding("ids", Lists.newArrayList("RoomStd"))
+                    .build();
+            System.out.println(bindings.getMapBindings());
+            // selector.bindList("ids", Lists.newArrayList("RoomStd"));
+            // selector.bindMap(ImmutableMap.of("ids", Lists.newArrayList("RoomStd")));
+            bindings.enrich(selector);
+
+            selector.mapToMap().list().forEach(e -> System.out.println(e));
         });
     }
 }

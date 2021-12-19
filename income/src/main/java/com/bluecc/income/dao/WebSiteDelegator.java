@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
-            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStore(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
@@ -75,12 +77,11 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
@@ -97,7 +98,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainEbayConfig(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
-            return chainEbayConfig(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainEbayConfig(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
@@ -105,12 +106,11 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainEbayConfig(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(EBAY_CONFIG);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
@@ -127,7 +127,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
-            return chainOrderHeader(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
@@ -135,12 +135,11 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_HEADER);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
@@ -157,7 +156,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainSubscriptionResource(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
-            return chainSubscriptionResource(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainSubscriptionResource(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
@@ -165,12 +164,11 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainSubscriptionResource(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SUBSCRIPTION_RESOURCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
@@ -187,7 +185,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainWebAnalyticsConfig(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
-            return chainWebAnalyticsConfig(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWebAnalyticsConfig(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
@@ -195,12 +193,11 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainWebAnalyticsConfig(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WEB_ANALYTICS_CONFIG);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
@@ -217,7 +214,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainWebSiteContent(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
-            return chainWebSiteContent(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWebSiteContent(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
@@ -225,12 +222,11 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainWebSiteContent(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WEB_SITE_CONTENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
@@ -247,7 +243,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainTenant(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WebSite.class, prefix = "ws")
@@ -255,12 +251,11 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         default Map<String, WebSite> chainTenant(ProtoMeta protoMeta,
                                                Map<String, WebSite> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WebSite", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WebSite p = map.computeIfAbsent(rr.getColumn("ws_web_site_id", String.class),
                                 id -> rr.getRow(WebSite.class));
@@ -281,7 +276,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
 
     public Consumer<Map<String, WebSite>> productStore(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
@@ -292,7 +287,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
 
     public Consumer<Map<String, WebSite>> ebayConfig(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainEbayConfig(protoMeta, e, whereClause, binds, succ);
     }
@@ -303,7 +298,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
 
     public Consumer<Map<String, WebSite>> orderHeader(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
@@ -314,7 +309,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
 
     public Consumer<Map<String, WebSite>> subscriptionResource(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainSubscriptionResource(protoMeta, e, whereClause, binds, succ);
     }
@@ -325,7 +320,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
 
     public Consumer<Map<String, WebSite>> webAnalyticsConfig(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWebAnalyticsConfig(protoMeta, e, whereClause, binds, succ);
     }
@@ -336,7 +331,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
 
     public Consumer<Map<String, WebSite>> webSiteContent(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWebSiteContent(protoMeta, e, whereClause, binds, succ);
     }
@@ -347,7 +342,7 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
 
     public Consumer<Map<String, WebSite>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -359,36 +354,41 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
     }
     
     public Map<String, WebSite> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, WebSite> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, WebSite> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, WebSite>> chain = tenant(dao, false);
+        Consumer<Map<String, WebSite>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PRODUCT_STORE)) {
-            chain = chain.andThen(productStore(dao, true));
+            chain = chain.andThen(productStore(dao, whereClause, binds, true));
         }
          
         if (incls.contains(EBAY_CONFIG)) {
-            chain = chain.andThen(ebayConfig(dao, true));
+            chain = chain.andThen(ebayConfig(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_HEADER)) {
-            chain = chain.andThen(orderHeader(dao, true));
+            chain = chain.andThen(orderHeader(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SUBSCRIPTION_RESOURCE)) {
-            chain = chain.andThen(subscriptionResource(dao, true));
+            chain = chain.andThen(subscriptionResource(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WEB_ANALYTICS_CONFIG)) {
-            chain = chain.andThen(webAnalyticsConfig(dao, true));
+            chain = chain.andThen(webAnalyticsConfig(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WEB_SITE_CONTENT)) {
-            chain = chain.andThen(webSiteContent(dao, true));
+            chain = chain.andThen(webSiteContent(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -397,8 +397,17 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<WebSiteData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<WebSiteData> responseObserver) {
-        Map<String, WebSite> dataMap = chainQuery(c, incls);
+
+        Map<String, WebSite> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             WebSiteData.Builder webSiteData = data.toHeadBuilder();
              

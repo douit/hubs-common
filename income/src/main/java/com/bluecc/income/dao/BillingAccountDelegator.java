@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainContactMech(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
-            return chainContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainContactMech(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
@@ -75,12 +77,11 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainContactMech(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("BillingAccount", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CONTACT_MECH);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
@@ -97,7 +98,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainPostalAddress(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
-            return chainPostalAddress(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPostalAddress(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
@@ -105,12 +106,11 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainPostalAddress(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("BillingAccount", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(POSTAL_ADDRESS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
@@ -127,7 +127,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainBillingAccountRole(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
-            return chainBillingAccountRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainBillingAccountRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
@@ -135,12 +135,11 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainBillingAccountRole(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("BillingAccount", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(BILLING_ACCOUNT_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
@@ -157,7 +156,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainInvoice(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
-            return chainInvoice(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInvoice(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
@@ -165,12 +164,11 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainInvoice(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("BillingAccount", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
@@ -187,7 +185,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
-            return chainOrderHeader(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
@@ -195,12 +193,11 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainOrderHeader(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("BillingAccount", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_HEADER);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
@@ -217,7 +214,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainPaymentApplication(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
-            return chainPaymentApplication(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPaymentApplication(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
@@ -225,12 +222,11 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainPaymentApplication(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("BillingAccount", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PAYMENT_APPLICATION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
@@ -247,7 +243,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainTenant(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = BillingAccount.class, prefix = "ba")
@@ -255,12 +251,11 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         default Map<String, BillingAccount> chainTenant(ProtoMeta protoMeta,
                                                Map<String, BillingAccount> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("BillingAccount", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         BillingAccount p = map.computeIfAbsent(rr.getColumn("ba_billing_account_id", String.class),
                                 id -> rr.getRow(BillingAccount.class));
@@ -281,7 +276,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
 
     public Consumer<Map<String, BillingAccount>> contactMech(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainContactMech(protoMeta, e, whereClause, binds, succ);
     }
@@ -292,7 +287,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
 
     public Consumer<Map<String, BillingAccount>> postalAddress(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPostalAddress(protoMeta, e, whereClause, binds, succ);
     }
@@ -303,7 +298,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
 
     public Consumer<Map<String, BillingAccount>> billingAccountRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainBillingAccountRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -314,7 +309,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
 
     public Consumer<Map<String, BillingAccount>> invoice(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInvoice(protoMeta, e, whereClause, binds, succ);
     }
@@ -325,7 +320,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
 
     public Consumer<Map<String, BillingAccount>> orderHeader(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
@@ -336,7 +331,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
 
     public Consumer<Map<String, BillingAccount>> paymentApplication(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPaymentApplication(protoMeta, e, whereClause, binds, succ);
     }
@@ -347,7 +342,7 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
 
     public Consumer<Map<String, BillingAccount>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -359,36 +354,41 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
     }
     
     public Map<String, BillingAccount> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, BillingAccount> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, BillingAccount> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, BillingAccount>> chain = tenant(dao, false);
+        Consumer<Map<String, BillingAccount>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(CONTACT_MECH)) {
-            chain = chain.andThen(contactMech(dao, true));
+            chain = chain.andThen(contactMech(dao, whereClause, binds, true));
         }
          
         if (incls.contains(POSTAL_ADDRESS)) {
-            chain = chain.andThen(postalAddress(dao, true));
+            chain = chain.andThen(postalAddress(dao, whereClause, binds, true));
         }
          
         if (incls.contains(BILLING_ACCOUNT_ROLE)) {
-            chain = chain.andThen(billingAccountRole(dao, true));
+            chain = chain.andThen(billingAccountRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVOICE)) {
-            chain = chain.andThen(invoice(dao, true));
+            chain = chain.andThen(invoice(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_HEADER)) {
-            chain = chain.andThen(orderHeader(dao, true));
+            chain = chain.andThen(orderHeader(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PAYMENT_APPLICATION)) {
-            chain = chain.andThen(paymentApplication(dao, true));
+            chain = chain.andThen(paymentApplication(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -397,8 +397,17 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<BillingAccountData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<BillingAccountData> responseObserver) {
-        Map<String, BillingAccount> dataMap = chainQuery(c, incls);
+
+        Map<String, BillingAccount> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             BillingAccountData.Builder billingAccountData = data.toHeadBuilder();
              

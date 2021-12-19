@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainParentWorkEffort(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainParentWorkEffort(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParentWorkEffort(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -75,12 +77,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainParentWorkEffort(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARENT_WORK_EFFORT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -97,7 +98,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAsset(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -105,12 +106,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainFixedAsset(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -127,7 +127,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainFacility(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -135,12 +135,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainFacility(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -157,7 +156,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainRecurrenceInfo(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainRecurrenceInfo(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainRecurrenceInfo(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -165,12 +164,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainRecurrenceInfo(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(RECURRENCE_INFO);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -187,7 +185,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainTemporalExpression(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainTemporalExpression(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTemporalExpression(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -195,12 +193,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainTemporalExpression(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TEMPORAL_EXPRESSION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -217,7 +214,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainCustomMethod(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainCustomMethod(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCustomMethod(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -225,12 +222,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainCustomMethod(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CUSTOM_METHOD);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -247,7 +243,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcctgTrans(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -255,12 +251,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -277,7 +272,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainInventoryItemDetail(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainInventoryItemDetail(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInventoryItemDetail(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -285,12 +280,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainInventoryItemDetail(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVENTORY_ITEM_DETAIL);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -307,7 +301,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainRoutingProductAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainRoutingProductAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainRoutingProductAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -315,12 +309,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainRoutingProductAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ROUTING_PRODUCT_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -337,7 +330,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainQuoteItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainQuoteItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -345,12 +338,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -367,7 +359,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainRateAmount(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainRateAmount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainRateAmount(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -375,12 +367,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainRateAmount(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(RATE_AMOUNT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -397,7 +388,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainEstimatedShipShipment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainEstimatedShipShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainEstimatedShipShipment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -405,12 +396,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainEstimatedShipShipment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ESTIMATED_SHIP_SHIPMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -427,7 +417,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainEstimatedArrivalShipment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainEstimatedArrivalShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainEstimatedArrivalShipment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -435,12 +425,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainEstimatedArrivalShipment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ESTIMATED_ARRIVAL_SHIPMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -457,7 +446,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainChildWorkEffort(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainChildWorkEffort(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainChildWorkEffort(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -465,12 +454,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainChildWorkEffort(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHILD_WORK_EFFORT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -487,7 +475,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainFromWorkEffortAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainFromWorkEffortAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromWorkEffortAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -495,12 +483,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainFromWorkEffortAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_WORK_EFFORT_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -517,7 +504,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainToWorkEffortAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainToWorkEffortAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToWorkEffortAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -525,12 +512,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainToWorkEffortAssoc(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_WORK_EFFORT_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -547,7 +533,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainWorkEffortFixedAssetAssign(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWorkEffortFixedAssetAssign(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -555,12 +541,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_FIXED_ASSET_ASSIGN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -577,7 +562,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainWorkEffortGoodStandard(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainWorkEffortGoodStandard(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWorkEffortGoodStandard(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -585,12 +570,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainWorkEffortGoodStandard(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_GOOD_STANDARD);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -607,7 +591,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainWorkEffortPartyAssignment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWorkEffortPartyAssignment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -615,12 +599,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainWorkEffortPartyAssignment(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_PARTY_ASSIGNMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -637,7 +620,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainWorkEffortSkillStandard(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainWorkEffortSkillStandard(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWorkEffortSkillStandard(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -645,12 +628,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainWorkEffortSkillStandard(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_SKILL_STANDARD);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -667,7 +649,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainTenant(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "we")
@@ -675,12 +657,11 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         default Map<String, WorkEffort> chainTenant(ProtoMeta protoMeta,
                                                Map<String, WorkEffort> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("WorkEffort", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         WorkEffort p = map.computeIfAbsent(rr.getColumn("we_work_effort_id", String.class),
                                 id -> rr.getRow(WorkEffort.class));
@@ -701,7 +682,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> parentWorkEffort(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParentWorkEffort(protoMeta, e, whereClause, binds, succ);
     }
@@ -712,7 +693,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> fixedAsset(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
@@ -723,7 +704,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> facility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -734,7 +715,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> recurrenceInfo(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainRecurrenceInfo(protoMeta, e, whereClause, binds, succ);
     }
@@ -745,7 +726,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> temporalExpression(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTemporalExpression(protoMeta, e, whereClause, binds, succ);
     }
@@ -756,7 +737,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> customMethod(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCustomMethod(protoMeta, e, whereClause, binds, succ);
     }
@@ -767,7 +748,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> acctgTrans(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
     }
@@ -778,7 +759,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> inventoryItemDetail(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInventoryItemDetail(protoMeta, e, whereClause, binds, succ);
     }
@@ -789,7 +770,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> routingProductAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainRoutingProductAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -800,7 +781,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> quoteItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainQuoteItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -811,7 +792,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> rateAmount(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainRateAmount(protoMeta, e, whereClause, binds, succ);
     }
@@ -822,7 +803,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> estimatedShipShipment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainEstimatedShipShipment(protoMeta, e, whereClause, binds, succ);
     }
@@ -833,7 +814,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> estimatedArrivalShipment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainEstimatedArrivalShipment(protoMeta, e, whereClause, binds, succ);
     }
@@ -844,7 +825,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> childWorkEffort(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainChildWorkEffort(protoMeta, e, whereClause, binds, succ);
     }
@@ -855,7 +836,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> fromWorkEffortAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromWorkEffortAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -866,7 +847,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> toWorkEffortAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToWorkEffortAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -877,7 +858,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> workEffortFixedAssetAssign(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWorkEffortFixedAssetAssign(protoMeta, e, whereClause, binds, succ);
     }
@@ -888,7 +869,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> workEffortGoodStandard(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWorkEffortGoodStandard(protoMeta, e, whereClause, binds, succ);
     }
@@ -899,7 +880,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> workEffortPartyAssignment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWorkEffortPartyAssignment(protoMeta, e, whereClause, binds, succ);
     }
@@ -910,7 +891,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> workEffortSkillStandard(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWorkEffortSkillStandard(protoMeta, e, whereClause, binds, succ);
     }
@@ -921,7 +902,7 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public Consumer<Map<String, WorkEffort>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -933,92 +914,97 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
     }
     
     public Map<String, WorkEffort> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, WorkEffort> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, WorkEffort> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, WorkEffort>> chain = tenant(dao, false);
+        Consumer<Map<String, WorkEffort>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PARENT_WORK_EFFORT)) {
-            chain = chain.andThen(parentWorkEffort(dao, true));
+            chain = chain.andThen(parentWorkEffort(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET)) {
-            chain = chain.andThen(fixedAsset(dao, true));
+            chain = chain.andThen(fixedAsset(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FACILITY)) {
-            chain = chain.andThen(facility(dao, true));
+            chain = chain.andThen(facility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(RECURRENCE_INFO)) {
-            chain = chain.andThen(recurrenceInfo(dao, true));
+            chain = chain.andThen(recurrenceInfo(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TEMPORAL_EXPRESSION)) {
-            chain = chain.andThen(temporalExpression(dao, true));
+            chain = chain.andThen(temporalExpression(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CUSTOM_METHOD)) {
-            chain = chain.andThen(customMethod(dao, true));
+            chain = chain.andThen(customMethod(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACCTG_TRANS)) {
-            chain = chain.andThen(acctgTrans(dao, true));
+            chain = chain.andThen(acctgTrans(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVENTORY_ITEM_DETAIL)) {
-            chain = chain.andThen(inventoryItemDetail(dao, true));
+            chain = chain.andThen(inventoryItemDetail(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ROUTING_PRODUCT_ASSOC)) {
-            chain = chain.andThen(routingProductAssoc(dao, true));
+            chain = chain.andThen(routingProductAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(QUOTE_ITEM)) {
-            chain = chain.andThen(quoteItem(dao, true));
+            chain = chain.andThen(quoteItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(RATE_AMOUNT)) {
-            chain = chain.andThen(rateAmount(dao, true));
+            chain = chain.andThen(rateAmount(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ESTIMATED_SHIP_SHIPMENT)) {
-            chain = chain.andThen(estimatedShipShipment(dao, true));
+            chain = chain.andThen(estimatedShipShipment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ESTIMATED_ARRIVAL_SHIPMENT)) {
-            chain = chain.andThen(estimatedArrivalShipment(dao, true));
+            chain = chain.andThen(estimatedArrivalShipment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CHILD_WORK_EFFORT)) {
-            chain = chain.andThen(childWorkEffort(dao, true));
+            chain = chain.andThen(childWorkEffort(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_WORK_EFFORT_ASSOC)) {
-            chain = chain.andThen(fromWorkEffortAssoc(dao, true));
+            chain = chain.andThen(fromWorkEffortAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_WORK_EFFORT_ASSOC)) {
-            chain = chain.andThen(toWorkEffortAssoc(dao, true));
+            chain = chain.andThen(toWorkEffortAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WORK_EFFORT_FIXED_ASSET_ASSIGN)) {
-            chain = chain.andThen(workEffortFixedAssetAssign(dao, true));
+            chain = chain.andThen(workEffortFixedAssetAssign(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WORK_EFFORT_GOOD_STANDARD)) {
-            chain = chain.andThen(workEffortGoodStandard(dao, true));
+            chain = chain.andThen(workEffortGoodStandard(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WORK_EFFORT_PARTY_ASSIGNMENT)) {
-            chain = chain.andThen(workEffortPartyAssignment(dao, true));
+            chain = chain.andThen(workEffortPartyAssignment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WORK_EFFORT_SKILL_STANDARD)) {
-            chain = chain.andThen(workEffortSkillStandard(dao, true));
+            chain = chain.andThen(workEffortSkillStandard(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -1027,8 +1013,17 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<WorkEffortData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<WorkEffortData> responseObserver) {
-        Map<String, WorkEffort> dataMap = chainQuery(c, incls);
+
+        Map<String, WorkEffort> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             WorkEffortData.Builder workEffortData = data.toHeadBuilder();
              

@@ -72,7 +72,7 @@ public class ProtoTool {
 
     void writeProtos(String protoFile) throws IOException {
         FileWriter writer=new FileWriter(protoFile);
-        writeProtoFileHeader(writer);
+        writeProtoFileHeader("DataProto", writer);
 
         for (String headEnt : HeadEntityResources.allHeads()) {
             EntityMeta meta= EntityMetaManager.readEntityMeta(headEnt);
@@ -90,9 +90,9 @@ public class ProtoTool {
         writer.close();
     }
 
-    private void writeProtoFileHeader(FileWriter writer) throws IOException {
+    private void writeProtoFileHeader(String className, FileWriter writer) throws IOException {
         writer.write(TemplateUtil.build("templates/proto_header.j2",
-                ImmutableMap.of("className", "DataProto",
+                ImmutableMap.of("className", className,
                         "classPrefix", "DTP")));
     }
 

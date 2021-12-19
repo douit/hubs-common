@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainParty(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
-            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
@@ -75,12 +77,11 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainParty(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
@@ -97,7 +98,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
-            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStore(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
@@ -105,12 +106,11 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
@@ -127,7 +127,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
-            return chainQuoteItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainQuoteItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
@@ -135,12 +135,11 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
@@ -157,7 +156,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainQuoteRole(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
-            return chainQuoteRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainQuoteRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
@@ -165,12 +164,11 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainQuoteRole(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
@@ -187,7 +185,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainQuoteTerm(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
-            return chainQuoteTerm(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainQuoteTerm(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
@@ -195,12 +193,11 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainQuoteTerm(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_TERM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
@@ -217,7 +214,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
@@ -225,12 +222,11 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         default Map<String, Quote> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
                                 id -> rr.getRow(Quote.class));
@@ -251,7 +247,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
 
     public Consumer<Map<String, Quote>> party(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -262,7 +258,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
 
     public Consumer<Map<String, Quote>> productStore(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
@@ -273,7 +269,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
 
     public Consumer<Map<String, Quote>> quoteItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainQuoteItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -284,7 +280,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
 
     public Consumer<Map<String, Quote>> quoteRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainQuoteRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -295,7 +291,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
 
     public Consumer<Map<String, Quote>> quoteTerm(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainQuoteTerm(protoMeta, e, whereClause, binds, succ);
     }
@@ -306,7 +302,7 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
 
     public Consumer<Map<String, Quote>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -318,32 +314,37 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
     }
     
     public Map<String, Quote> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, Quote> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, Quote> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, Quote>> chain = tenant(dao, false);
+        Consumer<Map<String, Quote>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PARTY)) {
-            chain = chain.andThen(party(dao, true));
+            chain = chain.andThen(party(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_STORE)) {
-            chain = chain.andThen(productStore(dao, true));
+            chain = chain.andThen(productStore(dao, whereClause, binds, true));
         }
          
         if (incls.contains(QUOTE_ITEM)) {
-            chain = chain.andThen(quoteItem(dao, true));
+            chain = chain.andThen(quoteItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(QUOTE_ROLE)) {
-            chain = chain.andThen(quoteRole(dao, true));
+            chain = chain.andThen(quoteRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(QUOTE_TERM)) {
-            chain = chain.andThen(quoteTerm(dao, true));
+            chain = chain.andThen(quoteTerm(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -352,8 +353,17 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<QuoteData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<QuoteData> responseObserver) {
-        Map<String, Quote> dataMap = chainQuery(c, incls);
+
+        Map<String, Quote> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             QuoteData.Builder quoteData = data.toHeadBuilder();
              

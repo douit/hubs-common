@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOriginFacility(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOriginFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOriginFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -75,12 +77,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOriginFacility(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORIGIN_FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -97,7 +98,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainBillingAccount(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainBillingAccount(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainBillingAccount(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -105,12 +106,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainBillingAccount(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(BILLING_ACCOUNT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -127,7 +127,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStore(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -135,12 +135,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -157,7 +156,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainCreatedByUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCreatedByUserLogin(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -165,12 +164,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CREATED_BY_USER_LOGIN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -187,7 +185,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainWebSite(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainWebSite(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWebSite(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -195,12 +193,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainWebSite(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WEB_SITE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -217,7 +214,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainAcquireFixedAsset(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainAcquireFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcquireFixedAsset(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -225,12 +222,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainAcquireFixedAsset(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACQUIRE_FIXED_ASSET);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -247,7 +243,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainItemIssuance(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainItemIssuance(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -255,12 +251,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ITEM_ISSUANCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -277,7 +272,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderAdjustment(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderAdjustment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderAdjustment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -285,12 +280,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderAdjustment(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ADJUSTMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -307,7 +301,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderContactMech(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderContactMech(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -315,12 +309,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderContactMech(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_CONTACT_MECH);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -337,7 +330,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItem(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -345,12 +338,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItem(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -367,7 +359,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemBilling(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderItemBilling(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderItemBilling(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -375,12 +367,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemBilling(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_BILLING);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -397,7 +388,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemPriceInfo(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderItemPriceInfo(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderItemPriceInfo(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -405,12 +396,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemPriceInfo(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_PRICE_INFO);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -427,7 +417,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderItemShipGroup(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderItemShipGroup(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -435,12 +425,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_SHIP_GROUP);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -457,7 +446,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemShipGroupAssoc(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderItemShipGroupAssoc(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderItemShipGroupAssoc(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -465,12 +454,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemShipGroupAssoc(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_SHIP_GROUP_ASSOC);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -487,7 +475,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderItemShipGrpInvRes(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderItemShipGrpInvRes(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -495,12 +483,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_SHIP_GRP_INV_RES);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -517,7 +504,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderPaymentPreference(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderPaymentPreference(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -525,12 +512,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderPaymentPreference(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_PAYMENT_PREFERENCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -547,7 +533,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderRole(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -555,12 +541,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderRole(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -577,7 +562,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderStatus(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainOrderStatus(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderStatus(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -585,12 +570,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainOrderStatus(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_STATUS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -607,7 +591,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainPrimaryShipment(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainPrimaryShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPrimaryShipment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -615,12 +599,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainPrimaryShipment(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRIMARY_SHIPMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -637,7 +620,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainShipmentReceipt(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentReceipt(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -645,12 +628,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_RECEIPT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -667,7 +649,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainTenant(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
@@ -675,12 +657,11 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         default Map<String, OrderHeader> chainTenant(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
                                 id -> rr.getRow(OrderHeader.class));
@@ -701,7 +682,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> originFacility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOriginFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -712,7 +693,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> billingAccount(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainBillingAccount(protoMeta, e, whereClause, binds, succ);
     }
@@ -723,7 +704,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> productStore(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
@@ -734,7 +715,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> createdByUserLogin(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCreatedByUserLogin(protoMeta, e, whereClause, binds, succ);
     }
@@ -745,7 +726,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> webSite(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWebSite(protoMeta, e, whereClause, binds, succ);
     }
@@ -756,7 +737,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> acquireFixedAsset(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcquireFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
@@ -767,7 +748,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> itemIssuance(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainItemIssuance(protoMeta, e, whereClause, binds, succ);
     }
@@ -778,7 +759,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderAdjustment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderAdjustment(protoMeta, e, whereClause, binds, succ);
     }
@@ -789,7 +770,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderContactMech(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderContactMech(protoMeta, e, whereClause, binds, succ);
     }
@@ -800,7 +781,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -811,7 +792,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderItemBilling(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemBilling(protoMeta, e, whereClause, binds, succ);
     }
@@ -822,7 +803,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderItemPriceInfo(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemPriceInfo(protoMeta, e, whereClause, binds, succ);
     }
@@ -833,7 +814,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderItemShipGroup(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemShipGroup(protoMeta, e, whereClause, binds, succ);
     }
@@ -844,7 +825,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderItemShipGroupAssoc(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemShipGroupAssoc(protoMeta, e, whereClause, binds, succ);
     }
@@ -855,7 +836,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderItemShipGrpInvRes(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemShipGrpInvRes(protoMeta, e, whereClause, binds, succ);
     }
@@ -866,7 +847,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderPaymentPreference(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderPaymentPreference(protoMeta, e, whereClause, binds, succ);
     }
@@ -877,7 +858,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -888,7 +869,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> orderStatus(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderStatus(protoMeta, e, whereClause, binds, succ);
     }
@@ -899,7 +880,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> primaryShipment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPrimaryShipment(protoMeta, e, whereClause, binds, succ);
     }
@@ -910,7 +891,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> shipmentReceipt(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
     }
@@ -921,7 +902,7 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public Consumer<Map<String, OrderHeader>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -933,92 +914,97 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
     }
     
     public Map<String, OrderHeader> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, OrderHeader> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, OrderHeader> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, OrderHeader>> chain = tenant(dao, false);
+        Consumer<Map<String, OrderHeader>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(ORIGIN_FACILITY)) {
-            chain = chain.andThen(originFacility(dao, true));
+            chain = chain.andThen(originFacility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(BILLING_ACCOUNT)) {
-            chain = chain.andThen(billingAccount(dao, true));
+            chain = chain.andThen(billingAccount(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_STORE)) {
-            chain = chain.andThen(productStore(dao, true));
+            chain = chain.andThen(productStore(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_USER_LOGIN)) {
-            chain = chain.andThen(createdByUserLogin(dao, true));
+            chain = chain.andThen(createdByUserLogin(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WEB_SITE)) {
-            chain = chain.andThen(webSite(dao, true));
+            chain = chain.andThen(webSite(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACQUIRE_FIXED_ASSET)) {
-            chain = chain.andThen(acquireFixedAsset(dao, true));
+            chain = chain.andThen(acquireFixedAsset(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ITEM_ISSUANCE)) {
-            chain = chain.andThen(itemIssuance(dao, true));
+            chain = chain.andThen(itemIssuance(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ADJUSTMENT)) {
-            chain = chain.andThen(orderAdjustment(dao, true));
+            chain = chain.andThen(orderAdjustment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_CONTACT_MECH)) {
-            chain = chain.andThen(orderContactMech(dao, true));
+            chain = chain.andThen(orderContactMech(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ITEM)) {
-            chain = chain.andThen(orderItem(dao, true));
+            chain = chain.andThen(orderItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ITEM_BILLING)) {
-            chain = chain.andThen(orderItemBilling(dao, true));
+            chain = chain.andThen(orderItemBilling(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ITEM_PRICE_INFO)) {
-            chain = chain.andThen(orderItemPriceInfo(dao, true));
+            chain = chain.andThen(orderItemPriceInfo(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ITEM_SHIP_GROUP)) {
-            chain = chain.andThen(orderItemShipGroup(dao, true));
+            chain = chain.andThen(orderItemShipGroup(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ITEM_SHIP_GROUP_ASSOC)) {
-            chain = chain.andThen(orderItemShipGroupAssoc(dao, true));
+            chain = chain.andThen(orderItemShipGroupAssoc(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ITEM_SHIP_GRP_INV_RES)) {
-            chain = chain.andThen(orderItemShipGrpInvRes(dao, true));
+            chain = chain.andThen(orderItemShipGrpInvRes(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_PAYMENT_PREFERENCE)) {
-            chain = chain.andThen(orderPaymentPreference(dao, true));
+            chain = chain.andThen(orderPaymentPreference(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ROLE)) {
-            chain = chain.andThen(orderRole(dao, true));
+            chain = chain.andThen(orderRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_STATUS)) {
-            chain = chain.andThen(orderStatus(dao, true));
+            chain = chain.andThen(orderStatus(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRIMARY_SHIPMENT)) {
-            chain = chain.andThen(primaryShipment(dao, true));
+            chain = chain.andThen(primaryShipment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_RECEIPT)) {
-            chain = chain.andThen(shipmentReceipt(dao, true));
+            chain = chain.andThen(shipmentReceipt(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -1027,8 +1013,17 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<OrderHeaderData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<OrderHeaderData> responseObserver) {
-        Map<String, OrderHeader> dataMap = chainQuery(c, incls);
+
+        Map<String, OrderHeader> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             OrderHeaderData.Builder orderHeaderData = data.toHeadBuilder();
              

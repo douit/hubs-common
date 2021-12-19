@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
         default Map<String, ProductStoreFacility> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                boolean succInvoke) {
-            return chainProductStore(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStore(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
@@ -75,12 +77,11 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
         default Map<String, ProductStoreFacility> chainProductStore(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStoreFacility", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
                                 id -> rr.getRow(ProductStoreFacility.class));
@@ -97,7 +98,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
         default Map<String, ProductStoreFacility> chainFacility(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                boolean succInvoke) {
-            return chainFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
@@ -105,12 +106,11 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
         default Map<String, ProductStoreFacility> chainFacility(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStoreFacility", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
                                 id -> rr.getRow(ProductStoreFacility.class));
@@ -127,7 +127,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
         default Map<String, ProductStoreFacility> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProductStoreFacility.class, prefix = "psf")
@@ -135,12 +135,11 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
         default Map<String, ProductStoreFacility> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProductStoreFacility> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStoreFacility", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProductStoreFacility p = map.computeIfAbsent(rr.getColumn("psf_id", String.class),
                                 id -> rr.getRow(ProductStoreFacility.class));
@@ -161,7 +160,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
 
     public Consumer<Map<String, ProductStoreFacility>> productStore(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
@@ -172,7 +171,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
 
     public Consumer<Map<String, ProductStoreFacility>> facility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -183,7 +182,7 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
 
     public Consumer<Map<String, ProductStoreFacility>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -195,20 +194,25 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
     }
     
     public Map<String, ProductStoreFacility> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, ProductStoreFacility> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, ProductStoreFacility> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, ProductStoreFacility>> chain = tenant(dao, false);
+        Consumer<Map<String, ProductStoreFacility>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PRODUCT_STORE)) {
-            chain = chain.andThen(productStore(dao, true));
+            chain = chain.andThen(productStore(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FACILITY)) {
-            chain = chain.andThen(facility(dao, true));
+            chain = chain.andThen(facility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -217,8 +221,17 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<ProductStoreFacilityData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<ProductStoreFacilityData> responseObserver) {
-        Map<String, ProductStoreFacility> dataMap = chainQuery(c, incls);
+
+        Map<String, ProductStoreFacility> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             ProductStoreFacilityData.Builder productStoreFacilityData = data.toHeadBuilder();
              

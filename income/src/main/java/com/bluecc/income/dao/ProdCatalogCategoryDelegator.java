@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
         default Map<String, ProdCatalogCategory> chainProdCatalog(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                boolean succInvoke) {
-            return chainProdCatalog(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProdCatalog(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
@@ -75,12 +77,11 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
         default Map<String, ProdCatalogCategory> chainProdCatalog(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProdCatalogCategory", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PROD_CATALOG);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProdCatalogCategory p = map.computeIfAbsent(rr.getColumn("pcc_id", String.class),
                                 id -> rr.getRow(ProdCatalogCategory.class));
@@ -97,7 +98,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
         default Map<String, ProdCatalogCategory> chainProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                boolean succInvoke) {
-            return chainProductCategory(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductCategory(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
@@ -105,12 +106,11 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
         default Map<String, ProdCatalogCategory> chainProductCategory(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProdCatalogCategory", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_CATEGORY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProdCatalogCategory p = map.computeIfAbsent(rr.getColumn("pcc_id", String.class),
                                 id -> rr.getRow(ProdCatalogCategory.class));
@@ -127,7 +127,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
         default Map<String, ProdCatalogCategory> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = ProdCatalogCategory.class, prefix = "pcc")
@@ -135,12 +135,11 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
         default Map<String, ProdCatalogCategory> chainTenant(ProtoMeta protoMeta,
                                                Map<String, ProdCatalogCategory> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("ProdCatalogCategory", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         ProdCatalogCategory p = map.computeIfAbsent(rr.getColumn("pcc_id", String.class),
                                 id -> rr.getRow(ProdCatalogCategory.class));
@@ -161,7 +160,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
 
     public Consumer<Map<String, ProdCatalogCategory>> prodCatalog(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProdCatalog(protoMeta, e, whereClause, binds, succ);
     }
@@ -172,7 +171,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
 
     public Consumer<Map<String, ProdCatalogCategory>> productCategory(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductCategory(protoMeta, e, whereClause, binds, succ);
     }
@@ -183,7 +182,7 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
 
     public Consumer<Map<String, ProdCatalogCategory>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -195,20 +194,25 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
     }
     
     public Map<String, ProdCatalogCategory> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, ProdCatalogCategory> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, ProdCatalogCategory> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, ProdCatalogCategory>> chain = tenant(dao, false);
+        Consumer<Map<String, ProdCatalogCategory>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PROD_CATALOG)) {
-            chain = chain.andThen(prodCatalog(dao, true));
+            chain = chain.andThen(prodCatalog(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_CATEGORY)) {
-            chain = chain.andThen(productCategory(dao, true));
+            chain = chain.andThen(productCategory(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -217,8 +221,17 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<ProdCatalogCategoryData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<ProdCatalogCategoryData> responseObserver) {
-        Map<String, ProdCatalogCategory> dataMap = chainQuery(c, incls);
+
+        Map<String, ProdCatalogCategory> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             ProdCatalogCategoryData.Builder prodCatalogCategoryData = data.toHeadBuilder();
              

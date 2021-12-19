@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainParentFixedAsset(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainParentFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParentFixedAsset(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -75,12 +77,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainParentFixedAsset(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARENT_FIXED_ASSET);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -97,7 +98,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainInstanceOfProduct(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainInstanceOfProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInstanceOfProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -105,12 +106,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainInstanceOfProduct(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INSTANCE_OF_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -127,7 +127,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainParty(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -135,12 +135,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainParty(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -157,7 +156,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainPartyRole(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainPartyRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -165,12 +164,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainPartyRole(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -187,7 +185,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainAcquireOrderHeader(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainAcquireOrderHeader(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcquireOrderHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -195,12 +193,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainAcquireOrderHeader(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACQUIRE_ORDER_HEADER);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -217,7 +214,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainAcquireOrderItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainAcquireOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcquireOrderItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -225,12 +222,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainAcquireOrderItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACQUIRE_ORDER_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -247,7 +243,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainTechDataCalendar(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainTechDataCalendar(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTechDataCalendar(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -255,12 +251,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainTechDataCalendar(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TECH_DATA_CALENDAR);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -277,7 +272,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainLocatedAtFacility(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainLocatedAtFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLocatedAtFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -285,12 +280,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainLocatedAtFacility(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LOCATED_AT_FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -307,7 +301,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainLocatedAtFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainLocatedAtFacilityLocation(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainLocatedAtFacilityLocation(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -315,12 +309,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainLocatedAtFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(LOCATED_AT_FACILITY_LOCATION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -337,7 +330,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcctgTrans(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -345,12 +338,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -367,7 +359,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainChildFixedAsset(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainChildFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainChildFixedAsset(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -375,12 +367,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainChildFixedAsset(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CHILD_FIXED_ASSET);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -397,7 +388,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetDepMethod(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainFixedAssetDepMethod(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAssetDepMethod(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -405,12 +396,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetDepMethod(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_DEP_METHOD);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -427,7 +417,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetGeoPoint(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainFixedAssetGeoPoint(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAssetGeoPoint(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -435,12 +425,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetGeoPoint(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_GEO_POINT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -457,7 +446,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetProduct(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainFixedAssetProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAssetProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -465,12 +454,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetProduct(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -487,7 +475,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetRegistration(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainFixedAssetRegistration(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAssetRegistration(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -495,12 +483,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetRegistration(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_REGISTRATION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -517,7 +504,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetStdCost(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainFixedAssetStdCost(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAssetStdCost(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -525,12 +512,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetStdCost(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_STD_COST);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -547,7 +533,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetInventoryItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainFixedAssetInventoryItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAssetInventoryItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -555,12 +541,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainFixedAssetInventoryItem(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_INVENTORY_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -577,7 +562,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainWorkEffort(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainWorkEffort(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWorkEffort(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -585,12 +570,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainWorkEffort(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -607,7 +591,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainWorkEffortFixedAssetAssign(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainWorkEffortFixedAssetAssign(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -615,12 +599,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainWorkEffortFixedAssetAssign(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(WORK_EFFORT_FIXED_ASSET_ASSIGN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -637,7 +620,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainTenant(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
@@ -645,12 +628,11 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         default Map<String, FixedAsset> chainTenant(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
                                 id -> rr.getRow(FixedAsset.class));
@@ -671,7 +653,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> parentFixedAsset(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParentFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
@@ -682,7 +664,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> instanceOfProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInstanceOfProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -693,7 +675,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> party(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -704,7 +686,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> partyRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -715,7 +697,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> acquireOrderHeader(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcquireOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
@@ -726,7 +708,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> acquireOrderItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcquireOrderItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -737,7 +719,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> techDataCalendar(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTechDataCalendar(protoMeta, e, whereClause, binds, succ);
     }
@@ -748,7 +730,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> locatedAtFacility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLocatedAtFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -759,7 +741,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> locatedAtFacilityLocation(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainLocatedAtFacilityLocation(protoMeta, e, whereClause, binds, succ);
     }
@@ -770,7 +752,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> acctgTrans(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
     }
@@ -781,7 +763,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> childFixedAsset(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainChildFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
@@ -792,7 +774,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> fixedAssetDepMethod(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetDepMethod(protoMeta, e, whereClause, binds, succ);
     }
@@ -803,7 +785,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> fixedAssetGeoPoint(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetGeoPoint(protoMeta, e, whereClause, binds, succ);
     }
@@ -814,7 +796,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> fixedAssetProduct(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -825,7 +807,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> fixedAssetRegistration(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetRegistration(protoMeta, e, whereClause, binds, succ);
     }
@@ -836,7 +818,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> fixedAssetStdCost(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetStdCost(protoMeta, e, whereClause, binds, succ);
     }
@@ -847,7 +829,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> fixedAssetInventoryItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetInventoryItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -858,7 +840,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> workEffort(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWorkEffort(protoMeta, e, whereClause, binds, succ);
     }
@@ -869,7 +851,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> workEffortFixedAssetAssign(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainWorkEffortFixedAssetAssign(protoMeta, e, whereClause, binds, succ);
     }
@@ -880,7 +862,7 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public Consumer<Map<String, FixedAsset>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -892,88 +874,93 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
     }
     
     public Map<String, FixedAsset> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, FixedAsset> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, FixedAsset> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, FixedAsset>> chain = tenant(dao, false);
+        Consumer<Map<String, FixedAsset>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PARENT_FIXED_ASSET)) {
-            chain = chain.andThen(parentFixedAsset(dao, true));
+            chain = chain.andThen(parentFixedAsset(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INSTANCE_OF_PRODUCT)) {
-            chain = chain.andThen(instanceOfProduct(dao, true));
+            chain = chain.andThen(instanceOfProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY)) {
-            chain = chain.andThen(party(dao, true));
+            chain = chain.andThen(party(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_ROLE)) {
-            chain = chain.andThen(partyRole(dao, true));
+            chain = chain.andThen(partyRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACQUIRE_ORDER_HEADER)) {
-            chain = chain.andThen(acquireOrderHeader(dao, true));
+            chain = chain.andThen(acquireOrderHeader(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACQUIRE_ORDER_ITEM)) {
-            chain = chain.andThen(acquireOrderItem(dao, true));
+            chain = chain.andThen(acquireOrderItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TECH_DATA_CALENDAR)) {
-            chain = chain.andThen(techDataCalendar(dao, true));
+            chain = chain.andThen(techDataCalendar(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LOCATED_AT_FACILITY)) {
-            chain = chain.andThen(locatedAtFacility(dao, true));
+            chain = chain.andThen(locatedAtFacility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(LOCATED_AT_FACILITY_LOCATION)) {
-            chain = chain.andThen(locatedAtFacilityLocation(dao, true));
+            chain = chain.andThen(locatedAtFacilityLocation(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACCTG_TRANS)) {
-            chain = chain.andThen(acctgTrans(dao, true));
+            chain = chain.andThen(acctgTrans(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CHILD_FIXED_ASSET)) {
-            chain = chain.andThen(childFixedAsset(dao, true));
+            chain = chain.andThen(childFixedAsset(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET_DEP_METHOD)) {
-            chain = chain.andThen(fixedAssetDepMethod(dao, true));
+            chain = chain.andThen(fixedAssetDepMethod(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET_GEO_POINT)) {
-            chain = chain.andThen(fixedAssetGeoPoint(dao, true));
+            chain = chain.andThen(fixedAssetGeoPoint(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET_PRODUCT)) {
-            chain = chain.andThen(fixedAssetProduct(dao, true));
+            chain = chain.andThen(fixedAssetProduct(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET_REGISTRATION)) {
-            chain = chain.andThen(fixedAssetRegistration(dao, true));
+            chain = chain.andThen(fixedAssetRegistration(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET_STD_COST)) {
-            chain = chain.andThen(fixedAssetStdCost(dao, true));
+            chain = chain.andThen(fixedAssetStdCost(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET_INVENTORY_ITEM)) {
-            chain = chain.andThen(fixedAssetInventoryItem(dao, true));
+            chain = chain.andThen(fixedAssetInventoryItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WORK_EFFORT)) {
-            chain = chain.andThen(workEffort(dao, true));
+            chain = chain.andThen(workEffort(dao, whereClause, binds, true));
         }
          
         if (incls.contains(WORK_EFFORT_FIXED_ASSET_ASSIGN)) {
-            chain = chain.andThen(workEffortFixedAssetAssign(dao, true));
+            chain = chain.andThen(workEffortFixedAssetAssign(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -982,8 +969,17 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<FixedAssetData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<FixedAssetData> responseObserver) {
-        Map<String, FixedAsset> dataMap = chainQuery(c, incls);
+
+        Map<String, FixedAsset> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             FixedAssetData.Builder fixedAssetData = data.toHeadBuilder();
              

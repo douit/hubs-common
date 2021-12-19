@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainProduct(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainProduct(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProduct(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -75,12 +77,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainProduct(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -97,7 +98,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainParty(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -105,12 +106,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainParty(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -127,7 +127,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainOwnerParty(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainOwnerParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOwnerParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -135,12 +135,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainOwnerParty(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(OWNER_PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -157,7 +156,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -165,12 +164,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -187,7 +185,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainProductFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainProductFacility(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductFacility(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -195,12 +193,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainProductFacility(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_FACILITY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -217,7 +214,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainFacilityLocation(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFacilityLocation(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -225,12 +222,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FACILITY_LOCATION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -247,7 +243,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainProductFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainProductFacilityLocation(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductFacilityLocation(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -255,12 +251,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainProductFacilityLocation(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_FACILITY_LOCATION);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -277,7 +272,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainFixedAssetFixedAsset(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainFixedAssetFixedAsset(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFixedAssetFixedAsset(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -285,12 +280,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainFixedAssetFixedAsset(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FIXED_ASSET_FIXED_ASSET);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -307,7 +301,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainAcctgTrans(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcctgTrans(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -315,12 +309,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainAcctgTrans(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -337,7 +330,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainAcctgTransEntry(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainAcctgTransEntry(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainAcctgTransEntry(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -345,12 +338,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainAcctgTransEntry(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ACCTG_TRANS_ENTRY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -367,7 +359,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainInventoryItemDetail(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainInventoryItemDetail(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInventoryItemDetail(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -375,12 +367,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainInventoryItemDetail(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVENTORY_ITEM_DETAIL);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -397,7 +388,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainInvoiceItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainInvoiceItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -405,12 +396,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainInvoiceItem(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(INVOICE_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -427,7 +417,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainItemIssuance(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainItemIssuance(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -435,12 +425,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainItemIssuance(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ITEM_ISSUANCE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -457,7 +446,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainFromOrderItem(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainFromOrderItem(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromOrderItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -465,12 +454,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainFromOrderItem(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_ORDER_ITEM);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -487,7 +475,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainOrderItemShipGrpInvRes(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainOrderItemShipGrpInvRes(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -495,12 +483,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainOrderItemShipGrpInvRes(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(ORDER_ITEM_SHIP_GRP_INV_RES);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -517,7 +504,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainShipmentReceipt(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainShipmentReceipt(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -525,12 +512,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHIPMENT_RECEIPT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -547,7 +533,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainTenant(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = InventoryItem.class, prefix = "ii")
@@ -555,12 +541,11 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         default Map<String, InventoryItem> chainTenant(ProtoMeta protoMeta,
                                                Map<String, InventoryItem> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("InventoryItem", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         InventoryItem p = map.computeIfAbsent(rr.getColumn("ii_inventory_item_id", String.class),
                                 id -> rr.getRow(InventoryItem.class));
@@ -581,7 +566,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> product(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProduct(protoMeta, e, whereClause, binds, succ);
     }
@@ -592,7 +577,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> party(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -603,7 +588,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> ownerParty(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOwnerParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -614,7 +599,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> facility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -625,7 +610,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> productFacility(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductFacility(protoMeta, e, whereClause, binds, succ);
     }
@@ -636,7 +621,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> facilityLocation(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFacilityLocation(protoMeta, e, whereClause, binds, succ);
     }
@@ -647,7 +632,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> productFacilityLocation(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductFacilityLocation(protoMeta, e, whereClause, binds, succ);
     }
@@ -658,7 +643,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> fixedAssetFixedAsset(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFixedAssetFixedAsset(protoMeta, e, whereClause, binds, succ);
     }
@@ -669,7 +654,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> acctgTrans(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTrans(protoMeta, e, whereClause, binds, succ);
     }
@@ -680,7 +665,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> acctgTransEntry(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainAcctgTransEntry(protoMeta, e, whereClause, binds, succ);
     }
@@ -691,7 +676,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> inventoryItemDetail(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInventoryItemDetail(protoMeta, e, whereClause, binds, succ);
     }
@@ -702,7 +687,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> invoiceItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainInvoiceItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -713,7 +698,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> itemIssuance(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainItemIssuance(protoMeta, e, whereClause, binds, succ);
     }
@@ -724,7 +709,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> fromOrderItem(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromOrderItem(protoMeta, e, whereClause, binds, succ);
     }
@@ -735,7 +720,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> orderItemShipGrpInvRes(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainOrderItemShipGrpInvRes(protoMeta, e, whereClause, binds, succ);
     }
@@ -746,7 +731,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> shipmentReceipt(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
     }
@@ -757,7 +742,7 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public Consumer<Map<String, InventoryItem>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -769,76 +754,81 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
     }
     
     public Map<String, InventoryItem> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, InventoryItem> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, InventoryItem> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, InventoryItem>> chain = tenant(dao, false);
+        Consumer<Map<String, InventoryItem>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PRODUCT)) {
-            chain = chain.andThen(product(dao, true));
+            chain = chain.andThen(product(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY)) {
-            chain = chain.andThen(party(dao, true));
+            chain = chain.andThen(party(dao, whereClause, binds, true));
         }
          
         if (incls.contains(OWNER_PARTY)) {
-            chain = chain.andThen(ownerParty(dao, true));
+            chain = chain.andThen(ownerParty(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FACILITY)) {
-            chain = chain.andThen(facility(dao, true));
+            chain = chain.andThen(facility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_FACILITY)) {
-            chain = chain.andThen(productFacility(dao, true));
+            chain = chain.andThen(productFacility(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FACILITY_LOCATION)) {
-            chain = chain.andThen(facilityLocation(dao, true));
+            chain = chain.andThen(facilityLocation(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_FACILITY_LOCATION)) {
-            chain = chain.andThen(productFacilityLocation(dao, true));
+            chain = chain.andThen(productFacilityLocation(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FIXED_ASSET_FIXED_ASSET)) {
-            chain = chain.andThen(fixedAssetFixedAsset(dao, true));
+            chain = chain.andThen(fixedAssetFixedAsset(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACCTG_TRANS)) {
-            chain = chain.andThen(acctgTrans(dao, true));
+            chain = chain.andThen(acctgTrans(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ACCTG_TRANS_ENTRY)) {
-            chain = chain.andThen(acctgTransEntry(dao, true));
+            chain = chain.andThen(acctgTransEntry(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVENTORY_ITEM_DETAIL)) {
-            chain = chain.andThen(inventoryItemDetail(dao, true));
+            chain = chain.andThen(inventoryItemDetail(dao, whereClause, binds, true));
         }
          
         if (incls.contains(INVOICE_ITEM)) {
-            chain = chain.andThen(invoiceItem(dao, true));
+            chain = chain.andThen(invoiceItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ITEM_ISSUANCE)) {
-            chain = chain.andThen(itemIssuance(dao, true));
+            chain = chain.andThen(itemIssuance(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_ORDER_ITEM)) {
-            chain = chain.andThen(fromOrderItem(dao, true));
+            chain = chain.andThen(fromOrderItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(ORDER_ITEM_SHIP_GRP_INV_RES)) {
-            chain = chain.andThen(orderItemShipGrpInvRes(dao, true));
+            chain = chain.andThen(orderItemShipGrpInvRes(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SHIPMENT_RECEIPT)) {
-            chain = chain.andThen(shipmentReceipt(dao, true));
+            chain = chain.andThen(shipmentReceipt(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -847,8 +837,17 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<InventoryItemData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<InventoryItemData> responseObserver) {
-        Map<String, InventoryItem> dataMap = chainQuery(c, incls);
+
+        Map<String, InventoryItem> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             InventoryItemData.Builder inventoryItemData = data.toHeadBuilder();
              

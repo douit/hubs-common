@@ -6,6 +6,7 @@ import com.bluecc.hubs.stub.QueryProfile;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.Buckets;
+import com.bluecc.income.procs.SelectorBindings;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -16,6 +17,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +69,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainParty(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainParty(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainParty(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -75,12 +77,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainParty(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -97,7 +98,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainPartyContactMech(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyContactMech(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -105,12 +106,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainPartyContactMech(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -127,7 +127,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainPartyContactMechPurpose(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainPartyContactMechPurpose(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainPartyContactMechPurpose(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -135,12 +135,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainPartyContactMechPurpose(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PARTY_CONTACT_MECH_PURPOSE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -157,7 +156,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainProductStoreRole(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainProductStoreRole(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -165,12 +164,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainProductStoreRole(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRODUCT_STORE_ROLE);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -187,7 +185,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainToShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainToShipment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -195,12 +193,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_SHIPMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -217,7 +214,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainFromShipment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainFromShipment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainFromShipment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -225,12 +222,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainFromShipment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(FROM_SHIPMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -247,7 +243,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainCarrierShipmentRouteSegment(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainCarrierShipmentRouteSegment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -255,12 +251,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainCarrierShipmentRouteSegment(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(CARRIER_SHIPMENT_ROUTE_SEGMENT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -277,7 +272,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainUserLogin(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainUserLogin(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainUserLogin(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -285,12 +280,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainUserLogin(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(USER_LOGIN);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -307,7 +301,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                boolean succInvoke) {
-            return chainTenant(protoMeta, inMap, "", Maps.newHashMap(), succInvoke);
+            return chainTenant(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
         }
 
         @RegisterBeanMapper(value = Person.class, prefix = "pe")
@@ -315,12 +309,11 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
         default Map<String, Person> chainTenant(ProtoMeta protoMeta,
                                                Map<String, Person> inMap,
                                                String whereClause,
-                                               Map<String, Object> binds,
+                                               SelectorBindings binds,
                                                boolean succInvoke) {
             SqlMeta sqlMeta = protoMeta.getSqlMeta("Person", succInvoke);
             SqlMeta.ViewDecl view = sqlMeta.leftJoin(TENANT);
-            return getHandle().select(view.getSql() + " " + whereClause)
-                    .bindMap(binds)
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
                     .reduceRows(inMap, (map, rr) -> {
                         Person p = map.computeIfAbsent(rr.getColumn("pe_party_id", String.class),
                                 id -> rr.getRow(Person.class));
@@ -341,7 +334,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> party(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainParty(protoMeta, e, whereClause, binds, succ);
     }
@@ -352,7 +345,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> partyContactMech(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyContactMech(protoMeta, e, whereClause, binds, succ);
     }
@@ -363,7 +356,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> partyContactMechPurpose(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainPartyContactMechPurpose(protoMeta, e, whereClause, binds, succ);
     }
@@ -374,7 +367,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> productStoreRole(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStoreRole(protoMeta, e, whereClause, binds, succ);
     }
@@ -385,7 +378,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> toShipment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainToShipment(protoMeta, e, whereClause, binds, succ);
     }
@@ -396,7 +389,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> fromShipment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainFromShipment(protoMeta, e, whereClause, binds, succ);
     }
@@ -407,7 +400,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> carrierShipmentRouteSegment(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCarrierShipmentRouteSegment(protoMeta, e, whereClause, binds, succ);
     }
@@ -418,7 +411,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> userLogin(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainUserLogin(protoMeta, e, whereClause, binds, succ);
     }
@@ -429,7 +422,7 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public Consumer<Map<String, Person>> tenant(Dao dao,
                                         String whereClause,
-                                        Map<String, Object> binds,
+                                        SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, whereClause, binds, succ);
     }
@@ -441,44 +434,49 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
     }
     
     public Map<String, Person> chainQuery(IProc.ProcContext c, Set<String> incls) {
+        return chainQuery(c, "", SelectorBindings.EMPTY, incls);
+    }
+    public Map<String, Person> chainQuery(IProc.ProcContext c, String whereClause,
+                                           SelectorBindings binds,
+                                           Set<String> incls) {
         Map<String, Person> dataMap = Maps.newHashMap();
         Dao dao = c.getHandle().attach(Dao.class);
-        Consumer<Map<String, Person>> chain = tenant(dao, false);
+        Consumer<Map<String, Person>> chain = tenant(dao, whereClause, binds, false);
          
         if (incls.contains(PARTY)) {
-            chain = chain.andThen(party(dao, true));
+            chain = chain.andThen(party(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_CONTACT_MECH)) {
-            chain = chain.andThen(partyContactMech(dao, true));
+            chain = chain.andThen(partyContactMech(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PARTY_CONTACT_MECH_PURPOSE)) {
-            chain = chain.andThen(partyContactMechPurpose(dao, true));
+            chain = chain.andThen(partyContactMechPurpose(dao, whereClause, binds, true));
         }
          
         if (incls.contains(PRODUCT_STORE_ROLE)) {
-            chain = chain.andThen(productStoreRole(dao, true));
+            chain = chain.andThen(productStoreRole(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TO_SHIPMENT)) {
-            chain = chain.andThen(toShipment(dao, true));
+            chain = chain.andThen(toShipment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(FROM_SHIPMENT)) {
-            chain = chain.andThen(fromShipment(dao, true));
+            chain = chain.andThen(fromShipment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CARRIER_SHIPMENT_ROUTE_SEGMENT)) {
-            chain = chain.andThen(carrierShipmentRouteSegment(dao, true));
+            chain = chain.andThen(carrierShipmentRouteSegment(dao, whereClause, binds, true));
         }
          
         if (incls.contains(USER_LOGIN)) {
-            chain = chain.andThen(userLogin(dao, true));
+            chain = chain.andThen(userLogin(dao, whereClause, binds, true));
         }
          
         if (incls.contains(TENANT)) {
-            chain = chain.andThen(tenant(dao, true));
+            chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
         
         chain.accept(dataMap);
@@ -487,8 +485,17 @@ public class PersonDelegator extends AbstractProcs implements IChainQuery<Person
 
     public void chainQueryDataList(IProc.ProcContext c,
                                    Set<String> incls,
+                                   StreamObserver<PersonData> responseObserver){
+        chainQueryDataList(c, incls, "", SelectorBindings.EMPTY, responseObserver);
+    }
+
+    public void chainQueryDataList(IProc.ProcContext c,
+                                   Set<String> incls,
+                                   String whereClause,
+                                   SelectorBindings binds,
                                    StreamObserver<PersonData> responseObserver) {
-        Map<String, Person> dataMap = chainQuery(c, incls);
+
+        Map<String, Person> dataMap = chainQuery(c, whereClause, binds, incls);
         dataMap.values().stream().map(data -> {
             PersonData.Builder personData = data.toHeadBuilder();
              
