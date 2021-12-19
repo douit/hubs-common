@@ -1,5 +1,6 @@
 package com.bluecc.hubs.fund;
 
+import com.bluecc.hubs.fund.descriptor.EntitySummaries;
 import com.google.common.collect.Maps;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +11,7 @@ import javax.inject.Singleton;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.TypeMappers.digestMapper;
@@ -26,9 +24,16 @@ public class ProtoMeta {
     Map<String, EntityMeta> metaMap = Maps.newHashMap();
     Map<String, InspectMeta.EntityInspect> inspectMetas = Maps.newHashMap();
     Map<String, TypeMappers.TypeMapper> typeMapperMap=Maps.newHashMap();
-
+    EntitySummaries.EntitySummary entitySummaries;
     public Map<String, EntityMeta> getMetaMap() {
         return metaMap;
+    }
+    @SneakyThrows
+    EntitySummaries.EntitySummary getEntitySummaries(){
+        if(entitySummaries==null){
+            entitySummaries=EntitySummaries.load();
+        }
+        return entitySummaries;
     }
 
     public EntityMeta getEntityMeta(String entityName) {
@@ -36,6 +41,12 @@ public class ProtoMeta {
         if (meta == null) {
             synchronized (ProtoMeta.class) {
                 meta = EntityMetaManager.readEntityMeta(entityName);
+                Optional<EntitySummaries.CommonUse> commonUse = getEntitySummaries()
+                        .getCommonUses()
+                        .stream().filter(c -> c.getEntity().equals(entityName)).findFirst();
+                if(commonUse.isPresent()){
+                    meta.setCommonUse(commonUse.get());
+                }
                 metaMap.put(entityName, meta);
             }
         }

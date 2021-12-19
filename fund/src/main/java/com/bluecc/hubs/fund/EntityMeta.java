@@ -1,6 +1,8 @@
 package com.bluecc.hubs.fund;
 
 import com.bluecc.hubs.fund.EntityMetaDigester.FieldDigest;
+import com.bluecc.hubs.fund.descriptor.EntitySummaries;
+import com.bluecc.hubs.fund.descriptor.EntitySummaries.CommonUse;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -56,6 +58,16 @@ public class EntityMeta {
     String uniqueKey;
     boolean combine;
     String description;
+
+    public void setCommonUse(CommonUse commonUse) {
+        this.commonUse = commonUse;
+    }
+
+    EntitySummaries.CommonUse commonUse;
+    public List<String> getCommonUseFields(){
+        return commonUse==null?Lists.newArrayList(getPks()):commonUse.getFields();
+    }
+
 
     @Singular
     List<FieldMeta> fields = Lists.newArrayList();
