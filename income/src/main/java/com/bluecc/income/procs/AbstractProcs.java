@@ -23,6 +23,7 @@ import com.google.protobuf.Message;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.PreparedBatch;
 import org.jdbi.v3.core.statement.SqlLogger;
@@ -31,10 +32,11 @@ import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.ProtoTypes.getTableByMessage;
-import static com.bluecc.income.exchange.MessageMapCollector.collect;
 import static java.lang.String.format;
 
 @Slf4j
@@ -62,6 +64,11 @@ public class AbstractProcs {
             proc.proc(new IProc.ProcContext(handle, resultSubscriber));
             return Flux.fromIterable(resultSubscriber.getResult());
         });
+    }
+
+    public <T> Collection<T> collect(Function<IProc.ProcContext, Collection<T>> fn){
+        return hubsStore.getJdbi().withHandle(handle ->
+                fn.apply(new IProc.ProcContext(handle, new ResultSubscriber<>())));
     }
 
     protected void truncate(IProc.ProcContext ctx, List<String> tableNames) {
@@ -98,7 +105,7 @@ public class AbstractProcs {
     }
 
     public Map<String, MessageMapCollector.ResultData> storeCompoundObject(IProc.ProcContext ctx, Message messageData) {
-        Map<String, MessageMapCollector.ResultData> resultMap = collect((c, e) -> {
+        Map<String, MessageMapCollector.ResultData> resultMap = MessageMapCollector.collect((c, e) -> {
             String idval = null;
 
             // 将子实体的id作为父实体的关联字段保存

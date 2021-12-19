@@ -1,6 +1,7 @@
 package com.bluecc.income.procs;
 
 import com.bluecc.income.AbstractStoreProcTest;
+import com.bluecc.income.cli.DataDumper;
 import com.bluecc.income.dao.ProductDelegator;
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -8,7 +9,10 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
+import java.util.stream.Collectors;
+
 import static com.bluecc.hubs.fund.Util.pretty;
+import static com.bluecc.hubs.fund.Util.prettyFull;
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,6 +38,7 @@ public class CatalogsTest extends AbstractStoreProcTest {
 
     @Inject
     ProductDelegator productDelegator;
+
     @Test
     public void testProductDetailsInCatalog() {
         process(c -> {
@@ -45,13 +50,19 @@ public class CatalogsTest extends AbstractStoreProcTest {
 
             System.out.println(protoMeta.getInspectMeta("Product").getValidRelationNames());
 
-            productDelegator.chainQuery(c, "where pr.product_id in (<ids>)",
-                            SelectorBindings.stringList("ids", catalogs.getProductsInCatalog(c, "HotelFac")),
-                            protoMeta.getInspectMeta("Product").getValidRelationNames())
-                    .forEach((key, value) -> {
-                        System.out.println(key + " ==> ");
-                        pretty(value);
-                    });
+            DataDumper.dumpJson("productsInCatalog",
+                    productDelegator.chainQuery(c, "where pr.product_id in (<ids>)",
+                                    SelectorBindings.stringList("ids", catalogs.getProductsInCatalog(c, "HotelFac")),
+                                    protoMeta.getInspectMeta("Product").getValidRelationNames())
+                            .entrySet().stream().peek(entry -> {
+                                System.out.println(entry.getKey() + " ==> ");
+                                prettyFull(entry.getValue());
+                                // System.out.println(value.getRelProductPrice());
+                            })
+                            .map(entry -> entry.getValue())
+                            .collect(Collectors.toList())
+            );
+
         });
     }
 
@@ -60,7 +71,7 @@ public class CatalogsTest extends AbstractStoreProcTest {
         process(c -> {
             // Dao dao = c.getHandle().attach(// Dao.class);
             catalogs.catalogTree(c, "BoatRental")
-                            .forEach(e -> System.out.println(e));
+                    .forEach(e -> System.out.println(e));
             assertThat(catalogs.catalogTree(c, "BoatRental"))
                     .contains("RowBoats", "MotorBoats");
 

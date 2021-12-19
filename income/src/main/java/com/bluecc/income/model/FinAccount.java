@@ -197,33 +197,43 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, HasI
      
     @Exclude
     @Singular("addOrganizationParty")
+    @SerializedName("organization_party") 
     List<Party> relOrganizationParty= new ArrayList<>(); 
     @Exclude
     @Singular("addOwnerParty")
+    @SerializedName("owner_party") 
     List<Party> relOwnerParty= new ArrayList<>(); 
     @Exclude
     @Singular("addPostToGlAccount")
+    @SerializedName("post_to_gl_account") 
     List<GlAccount> relPostToGlAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addReplenishPaymentMethod")
+    @SerializedName("replenish_payment_method") 
     List<PaymentMethod> relReplenishPaymentMethod= new ArrayList<>(); 
     @Exclude
     @Singular("addFinAccountRole")
+    @SerializedName("fin_account_role") 
     List<FinAccountRole> relFinAccountRole= new ArrayList<>(); 
     @Exclude
     @Singular("addFinAccountStatus")
+    @SerializedName("fin_account_status") 
     List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addFinAccountTrans")
+    @SerializedName("fin_account_trans") 
     List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderPaymentPreference")
+    @SerializedName("order_payment_preference") 
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
     @Singular("addPaymentMethod")
+    @SerializedName("payment_method") 
     List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

@@ -5,6 +5,9 @@ import com.google.common.collect.Lists;
 import org.jdbi.v3.core.statement.Query;
 import org.junit.Test;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import static org.junit.Assert.*;
 
 public class SelectorBindingsTest extends AbstractStoreProcTest {
@@ -27,4 +30,5 @@ public class SelectorBindingsTest extends AbstractStoreProcTest {
             selector.mapToMap().list().forEach(e -> System.out.println(e));
         });
     }
+
 }

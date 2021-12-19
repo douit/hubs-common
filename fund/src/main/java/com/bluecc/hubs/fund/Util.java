@@ -1,5 +1,6 @@
 package com.bluecc.hubs.fund;
 
+import com.bluecc.hubs.fund.GsonHelpers.LocalDateTimeAdapter;
 import com.bluecc.hubs.fund.pubs.Exclude;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
@@ -40,6 +41,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.bluecc.hubs.fund.GsonHelpers.EXCLUSION_STRATEGY;
 import static java.util.Objects.requireNonNull;
 import static org.yaml.snakeyaml.DumperOptions.FlowStyle.AUTO;
 
@@ -82,47 +84,20 @@ public class Util {
     }
 
 
-    /**
-     * A simpler implementation. Add null support to by registering the nullSafe() wrapped version
-     * ref: https://stackoverflow.com/questions/39192945/serialize-java-8-localdate-as-yyyy-mm-dd-with-gson
-     */
-    private static final class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
-        @Override
-        public void write(final JsonWriter jsonWriter, final LocalDateTime localDate) throws IOException {
-            jsonWriter.value(localDate.toString());
-        }
-
-        @Override
-        public LocalDateTime read(final JsonReader jsonReader) throws IOException {
-            return LocalDateTime.parse(jsonReader.nextString());
-        }
-    }
-
-    static ExclusionStrategy strategy = new ExclusionStrategy() {
-        @Override
-        public boolean shouldSkipClass(Class<?> clazz) {
-            return false;
-        }
-
-        @Override
-        public boolean shouldSkipField(FieldAttributes field) {
-            return field.getAnnotation(Exclude.class) != null;
-        }
-    };
-
     public static final Gson GSON = new GsonBuilder()
             // .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
 //            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
             .setPrettyPrinting()
-            .setExclusionStrategies(strategy)
+            .setExclusionStrategies(EXCLUSION_STRATEGY)
             .create();
     public static final Gson GSON_NO_EXCLUDE = new GsonBuilder()
             // .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
 //            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
+            .registerTypeHierarchyAdapter(Collection.class, new GsonHelpers.CollectionAdapter())
             .setPrettyPrinting()
             // .setExclusionStrategies(strategy)
             .create();
@@ -135,7 +110,9 @@ public class Util {
     }
 
     public static String prettyJson(Object o) {
-        return GSON.toJson(o);
+        // return GSON.toJson(o);
+        // 不用Exclude标注, 使用TypeHierarchyAdapter方式来过滤空列表和对象
+        return GSON_NO_EXCLUDE.toJson(o);
     }
 
     public static String toString(Object o){

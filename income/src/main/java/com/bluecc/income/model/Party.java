@@ -60,11 +60,11 @@ public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Seriali
     String statusId;
     @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
-    @SerializedName("created_by_user_login") 
+    @SerializedName("created_by_user_login_id") 
     String createdByUserLogin;
     @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
-    @SerializedName("last_modified_by_user_login") 
+    @SerializedName("last_modified_by_user_login_id") 
     String lastModifiedByUserLogin;
     @SerializedName("data_source_id") 
     String dataSourceId;
@@ -167,225 +167,299 @@ public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Seriali
      
     @Exclude
     @Singular("addCreatedByUserLogin")
+    @SerializedName("created_by_user_login") 
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByUserLogin")
+    @SerializedName("last_modified_by_user_login") 
     List<UserLogin> relLastModifiedByUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTrans")
+    @SerializedName("acctg_trans") 
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTransEntry")
+    @SerializedName("acctg_trans_entry") 
     List<AcctgTransEntry> relAcctgTransEntry= new ArrayList<>(); 
     @Exclude
     @Singular("addFromAgreement")
+    @SerializedName("from_agreement") 
     List<Agreement> relFromAgreement= new ArrayList<>(); 
     @Exclude
     @Singular("addToAgreement")
+    @SerializedName("to_agreement") 
     List<Agreement> relToAgreement= new ArrayList<>(); 
     @Exclude
     @Singular("addBillingAccountRole")
+    @SerializedName("billing_account_role") 
     List<BillingAccountRole> relBillingAccountRole= new ArrayList<>(); 
     @Exclude
     @Singular("addCarrierShipmentBoxType")
+    @SerializedName("carrier_shipment_box_type") 
     List<CarrierShipmentBoxType> relCarrierShipmentBoxType= new ArrayList<>(); 
     @Exclude
     @Singular("addCarrierShipmentMethod")
+    @SerializedName("carrier_shipment_method") 
     List<CarrierShipmentMethod> relCarrierShipmentMethod= new ArrayList<>(); 
     @Exclude
     @Singular("addToCommunicationEvent")
+    @SerializedName("to_communication_event") 
     List<CommunicationEvent> relToCommunicationEvent= new ArrayList<>(); 
     @Exclude
     @Singular("addFromCommunicationEvent")
+    @SerializedName("from_communication_event") 
     List<CommunicationEvent> relFromCommunicationEvent= new ArrayList<>(); 
     @Exclude
     @Singular("addCommunicationEventRole")
+    @SerializedName("communication_event_role") 
     List<CommunicationEventRole> relCommunicationEventRole= new ArrayList<>(); 
     @Exclude
     @Singular("addContentRole")
+    @SerializedName("content_role") 
     List<ContentRole> relContentRole= new ArrayList<>(); 
     @Exclude
     @Singular("addFromCustRequest")
+    @SerializedName("from_cust_request") 
     List<CustRequest> relFromCustRequest= new ArrayList<>(); 
     @Exclude
     @Singular("addCustRequestType")
+    @SerializedName("cust_request_type") 
     List<CustRequestType> relCustRequestType= new ArrayList<>(); 
     @Exclude
     @Singular("addOwnerFacility")
+    @SerializedName("owner_facility") 
     List<Facility> relOwnerFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addOrganizationFinAccount")
+    @SerializedName("organization_fin_account") 
     List<FinAccount> relOrganizationFinAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addOwnerFinAccount")
+    @SerializedName("owner_fin_account") 
     List<FinAccount> relOwnerFinAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addFinAccountRole")
+    @SerializedName("fin_account_role") 
     List<FinAccountRole> relFinAccountRole= new ArrayList<>(); 
     @Exclude
     @Singular("addFinAccountTrans")
+    @SerializedName("fin_account_trans") 
     List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addPerformedByFinAccountTrans")
+    @SerializedName("performed_by_fin_account_trans") 
     List<FinAccountTrans> relPerformedByFinAccountTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAsset")
+    @SerializedName("fixed_asset") 
     List<FixedAsset> relFixedAsset= new ArrayList<>(); 
     @Exclude
     @Singular("addGovAgencyFixedAssetRegistration")
+    @SerializedName("gov_agency_fixed_asset_registration") 
     List<FixedAssetRegistration> relGovAgencyFixedAssetRegistration= new ArrayList<>(); 
     @Exclude
     @Singular("addOrganizationGlAccountTypeDefault")
+    @SerializedName("organization_gl_account_type_default") 
     List<GlAccountTypeDefault> relOrganizationGlAccountTypeDefault= new ArrayList<>(); 
     @Exclude
     @Singular("addInventoryItem")
+    @SerializedName("inventory_item") 
     List<InventoryItem> relInventoryItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOwnerInventoryItem")
+    @SerializedName("owner_inventory_item") 
     List<InventoryItem> relOwnerInventoryItem= new ArrayList<>(); 
     @Exclude
     @Singular("addFromInvoice")
+    @SerializedName("from_invoice") 
     List<Invoice> relFromInvoice= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoice")
+    @SerializedName("invoice") 
     List<Invoice> relInvoice= new ArrayList<>(); 
     @Exclude
     @Singular("addTaxAuthorityInvoiceItem")
+    @SerializedName("tax_authority_invoice_item") 
     List<InvoiceItem> relTaxAuthorityInvoiceItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOverrideOrgInvoiceItem")
+    @SerializedName("override_org_invoice_item") 
     List<InvoiceItem> relOverrideOrgInvoiceItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOrganizationInvoiceItemTypeGlAccount")
+    @SerializedName("organization_invoice_item_type_gl_account") 
     List<InvoiceItemTypeGlAccount> relOrganizationInvoiceItemTypeGlAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoiceRole")
+    @SerializedName("invoice_role") 
     List<InvoiceRole> relInvoiceRole= new ArrayList<>(); 
     @Exclude
     @Singular("addSupplierOrderItemShipGroup")
+    @SerializedName("supplier_order_item_ship_group") 
     List<OrderItemShipGroup> relSupplierOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addVendorOrderItemShipGroup")
+    @SerializedName("vendor_order_item_ship_group") 
     List<OrderItemShipGroup> relVendorOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addCarrierOrderItemShipGroup")
+    @SerializedName("carrier_order_item_ship_group") 
     List<OrderItemShipGroup> relCarrierOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderRole")
+    @SerializedName("order_role") 
     List<OrderRole> relOrderRole= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyAcctgPreference")
+    @SerializedName("party_acctg_preference") 
     List<PartyAcctgPreference> relPartyAcctgPreference= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyContactMech")
+    @SerializedName("party_contact_mech") 
     List<PartyContactMech> relPartyContactMech= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyContactMechPurpose")
+    @SerializedName("party_contact_mech_purpose") 
     List<PartyContactMechPurpose> relPartyContactMechPurpose= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyGeoPoint")
+    @SerializedName("party_geo_point") 
     List<PartyGeoPoint> relPartyGeoPoint= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyGroup")
+    @SerializedName("party_group") 
     List<PartyGroup> relPartyGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyIdentification")
+    @SerializedName("party_identification") 
     List<PartyIdentification> relPartyIdentification= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyRate")
+    @SerializedName("party_rate") 
     List<PartyRate> relPartyRate= new ArrayList<>(); 
     @Exclude
     @Singular("addFromPartyRelationship")
+    @SerializedName("from_party_relationship") 
     List<PartyRelationship> relFromPartyRelationship= new ArrayList<>(); 
     @Exclude
     @Singular("addToPartyRelationship")
+    @SerializedName("to_party_relationship") 
     List<PartyRelationship> relToPartyRelationship= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyRole")
+    @SerializedName("party_role") 
     List<PartyRole> relPartyRole= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyStatus")
+    @SerializedName("party_status") 
     List<PartyStatus> relPartyStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyTaxAuthInfo")
+    @SerializedName("party_tax_auth_info") 
     List<PartyTaxAuthInfo> relPartyTaxAuthInfo= new ArrayList<>(); 
     @Exclude
     @Singular("addFromPayment")
+    @SerializedName("from_payment") 
     List<Payment> relFromPayment= new ArrayList<>(); 
     @Exclude
     @Singular("addToPayment")
+    @SerializedName("to_payment") 
     List<Payment> relToPayment= new ArrayList<>(); 
     @Exclude
     @Singular("addPaymentGlAccountTypeMap")
+    @SerializedName("payment_gl_account_type_map") 
     List<PaymentGlAccountTypeMap> relPaymentGlAccountTypeMap= new ArrayList<>(); 
     @Exclude
     @Singular("addPaymentMethod")
+    @SerializedName("payment_method") 
     List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
     @Exclude
     @Singular("addOrganizationPaymentMethodTypeGlAccount")
+    @SerializedName("organization_payment_method_type_gl_account") 
     List<PaymentMethodTypeGlAccount> relOrganizationPaymentMethodTypeGlAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addPerson")
+    @SerializedName("person") 
     List<Person> relPerson= new ArrayList<>(); 
     @Exclude
     @Singular("addProductCategoryRole")
+    @SerializedName("product_category_role") 
     List<ProductCategoryRole> relProductCategoryRole= new ArrayList<>(); 
     @Exclude
     @Singular("addTaxAuthorityProductPrice")
+    @SerializedName("tax_authority_product_price") 
     List<ProductPrice> relTaxAuthorityProductPrice= new ArrayList<>(); 
     @Exclude
     @Singular("addProductPromo")
+    @SerializedName("product_promo") 
     List<ProductPromo> relProductPromo= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStore")
+    @SerializedName("product_store") 
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreRole")
+    @SerializedName("product_store_role") 
     List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreShipmentMeth")
+    @SerializedName("product_store_shipment_meth") 
     List<ProductStoreShipmentMeth> relProductStoreShipmentMeth= new ArrayList<>(); 
     @Exclude
     @Singular("addQuote")
+    @SerializedName("quote") 
     List<Quote> relQuote= new ArrayList<>(); 
     @Exclude
     @Singular("addQuoteRole")
+    @SerializedName("quote_role") 
     List<QuoteRole> relQuoteRole= new ArrayList<>(); 
     @Exclude
     @Singular("addRateAmount")
+    @SerializedName("rate_amount") 
     List<RateAmount> relRateAmount= new ArrayList<>(); 
     @Exclude
     @Singular("addToShipment")
+    @SerializedName("to_shipment") 
     List<Shipment> relToShipment= new ArrayList<>(); 
     @Exclude
     @Singular("addFromShipment")
+    @SerializedName("from_shipment") 
     List<Shipment> relFromShipment= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentCostEstimate")
+    @SerializedName("shipment_cost_estimate") 
     List<ShipmentCostEstimate> relShipmentCostEstimate= new ArrayList<>(); 
     @Exclude
     @Singular("addCarrierShipmentRouteSegment")
+    @SerializedName("carrier_shipment_route_segment") 
     List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
     @Exclude
     @Singular("addSupplierProduct")
+    @SerializedName("supplier_product") 
     List<SupplierProduct> relSupplierProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addSupplierProductFeature")
+    @SerializedName("supplier_product_feature") 
     List<SupplierProductFeature> relSupplierProductFeature= new ArrayList<>(); 
     @Exclude
     @Singular("addTaxAuthTaxAuthority")
+    @SerializedName("tax_auth_tax_authority") 
     List<TaxAuthority> relTaxAuthTaxAuthority= new ArrayList<>(); 
     @Exclude
     @Singular("addOrganizationTaxAuthorityGlAccount")
+    @SerializedName("organization_tax_authority_gl_account") 
     List<TaxAuthorityGlAccount> relOrganizationTaxAuthorityGlAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addUserLogin")
+    @SerializedName("user_login") 
     List<UserLogin> relUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addWorkEffortPartyAssignment")
+    @SerializedName("work_effort_party_assignment") 
     List<WorkEffortPartyAssignment> relWorkEffortPartyAssignment= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

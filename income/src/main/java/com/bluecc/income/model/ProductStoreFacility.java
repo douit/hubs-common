@@ -129,12 +129,15 @@ public class ProductStoreFacility implements IEventModel<ProductStoreFacilityFla
      
     @Exclude
     @Singular("addProductStore")
+    @SerializedName("product_store") 
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
     @Singular("addFacility")
+    @SerializedName("facility") 
     List<Facility> relFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

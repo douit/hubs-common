@@ -81,11 +81,11 @@ public class Content implements IEventModel<ContentData.Builder>, HasId, Seriali
     Long childBranchCount;
     @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
-    @SerializedName("created_by_user_login") 
+    @SerializedName("created_by_user_login_id") 
     String createdByUserLogin;
     @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
-    @SerializedName("last_modified_by_user_login") 
+    @SerializedName("last_modified_by_user_login_id") 
     String lastModifiedByUserLogin;
     @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;

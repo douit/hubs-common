@@ -100,11 +100,11 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, S
     String addtlShippingChargeDesc;
     @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
-    @SerializedName("created_by_user_login") 
+    @SerializedName("created_by_user_login_id") 
     String createdByUserLogin;
     @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
-    @SerializedName("last_modified_by_user_login") 
+    @SerializedName("last_modified_by_user_login_id") 
     String lastModifiedByUserLogin;
     @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
@@ -275,90 +275,119 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, S
      
     @Exclude
     @Singular("addEstimatedShipWorkEffort")
+    @SerializedName("estimated_ship_work_effort") 
     List<WorkEffort> relEstimatedShipWorkEffort= new ArrayList<>(); 
     @Exclude
     @Singular("addEstimatedArrivalWorkEffort")
+    @SerializedName("estimated_arrival_work_effort") 
     List<WorkEffort> relEstimatedArrivalWorkEffort= new ArrayList<>(); 
     @Exclude
     @Singular("addOriginFacility")
+    @SerializedName("origin_facility") 
     List<Facility> relOriginFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addDestinationFacility")
+    @SerializedName("destination_facility") 
     List<Facility> relDestinationFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addOriginContactMech")
+    @SerializedName("origin_contact_mech") 
     List<ContactMech> relOriginContactMech= new ArrayList<>(); 
     @Exclude
     @Singular("addDestContactMech")
+    @SerializedName("dest_contact_mech") 
     List<ContactMech> relDestContactMech= new ArrayList<>(); 
     @Exclude
     @Singular("addOriginPostalAddress")
+    @SerializedName("origin_postal_address") 
     List<PostalAddress> relOriginPostalAddress= new ArrayList<>(); 
     @Exclude
     @Singular("addOriginTelecomNumber")
+    @SerializedName("origin_telecom_number") 
     List<TelecomNumber> relOriginTelecomNumber= new ArrayList<>(); 
     @Exclude
     @Singular("addDestinationPostalAddress")
+    @SerializedName("destination_postal_address") 
     List<PostalAddress> relDestinationPostalAddress= new ArrayList<>(); 
     @Exclude
     @Singular("addDestinationTelecomNumber")
+    @SerializedName("destination_telecom_number") 
     List<TelecomNumber> relDestinationTelecomNumber= new ArrayList<>(); 
     @Exclude
     @Singular("addPrimaryOrderHeader")
+    @SerializedName("primary_order_header") 
     List<OrderHeader> relPrimaryOrderHeader= new ArrayList<>(); 
     @Exclude
     @Singular("addPrimaryOrderItemShipGroup")
+    @SerializedName("primary_order_item_ship_group") 
     List<OrderItemShipGroup> relPrimaryOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addToParty")
+    @SerializedName("to_party") 
     List<Party> relToParty= new ArrayList<>(); 
     @Exclude
     @Singular("addToPerson")
+    @SerializedName("to_person") 
     List<Person> relToPerson= new ArrayList<>(); 
     @Exclude
     @Singular("addToPartyGroup")
+    @SerializedName("to_party_group") 
     List<PartyGroup> relToPartyGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addFromParty")
+    @SerializedName("from_party") 
     List<Party> relFromParty= new ArrayList<>(); 
     @Exclude
     @Singular("addFromPerson")
+    @SerializedName("from_person") 
     List<Person> relFromPerson= new ArrayList<>(); 
     @Exclude
     @Singular("addFromPartyGroup")
+    @SerializedName("from_party_group") 
     List<PartyGroup> relFromPartyGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTrans")
+    @SerializedName("acctg_trans") 
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addItemIssuance")
+    @SerializedName("item_issuance") 
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentItem")
+    @SerializedName("shipment_item") 
     List<ShipmentItem> relShipmentItem= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentItemBilling")
+    @SerializedName("shipment_item_billing") 
     List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentPackage")
+    @SerializedName("shipment_package") 
     List<ShipmentPackage> relShipmentPackage= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentPackageContent")
+    @SerializedName("shipment_package_content") 
     List<ShipmentPackageContent> relShipmentPackageContent= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentPackageRouteSeg")
+    @SerializedName("shipment_package_route_seg") 
     List<ShipmentPackageRouteSeg> relShipmentPackageRouteSeg= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentReceipt")
+    @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentRouteSegment")
+    @SerializedName("shipment_route_segment") 
     List<ShipmentRouteSegment> relShipmentRouteSegment= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentStatus")
+    @SerializedName("shipment_status") 
     List<ShipmentStatus> relShipmentStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

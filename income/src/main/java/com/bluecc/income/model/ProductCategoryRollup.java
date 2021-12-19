@@ -129,21 +129,27 @@ public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupF
      
     @Exclude
     @Singular("addCurrentProductCategory")
+    @SerializedName("current_product_category") 
     List<ProductCategory> relCurrentProductCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addParentProductCategory")
+    @SerializedName("parent_product_category") 
     List<ProductCategory> relParentProductCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addChildProductCategoryRollup")
+    @SerializedName("child_product_category_rollup") 
     List<ProductCategoryRollup> relChildProductCategoryRollup= new ArrayList<>(); 
     @Exclude
     @Singular("addParentProductCategoryRollup")
+    @SerializedName("parent_product_category_rollup") 
     List<ProductCategoryRollup> relParentProductCategoryRollup= new ArrayList<>(); 
     @Exclude
     @Singular("addSiblingProductCategoryRollup")
+    @SerializedName("sibling_product_category_rollup") 
     List<ProductCategoryRollup> relSiblingProductCategoryRollup= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

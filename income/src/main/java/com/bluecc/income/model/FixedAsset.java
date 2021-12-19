@@ -245,63 +245,83 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, HasI
      
     @Exclude
     @Singular("addParentFixedAsset")
+    @SerializedName("parent_fixed_asset") 
     List<FixedAsset> relParentFixedAsset= new ArrayList<>(); 
     @Exclude
     @Singular("addInstanceOfProduct")
+    @SerializedName("instance_of_product") 
     List<Product> relInstanceOfProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addParty")
+    @SerializedName("party") 
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyRole")
+    @SerializedName("party_role") 
     List<PartyRole> relPartyRole= new ArrayList<>(); 
     @Exclude
     @Singular("addAcquireOrderHeader")
+    @SerializedName("acquire_order_header") 
     List<OrderHeader> relAcquireOrderHeader= new ArrayList<>(); 
     @Exclude
     @Singular("addAcquireOrderItem")
+    @SerializedName("acquire_order_item") 
     List<OrderItem> relAcquireOrderItem= new ArrayList<>(); 
     @Exclude
     @Singular("addTechDataCalendar")
+    @SerializedName("tech_data_calendar") 
     List<TechDataCalendar> relTechDataCalendar= new ArrayList<>(); 
     @Exclude
     @Singular("addLocatedAtFacility")
+    @SerializedName("located_at_facility") 
     List<Facility> relLocatedAtFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addLocatedAtFacilityLocation")
+    @SerializedName("located_at_facility_location") 
     List<FacilityLocation> relLocatedAtFacilityLocation= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTrans")
+    @SerializedName("acctg_trans") 
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addChildFixedAsset")
+    @SerializedName("child_fixed_asset") 
     List<FixedAsset> relChildFixedAsset= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAssetDepMethod")
+    @SerializedName("fixed_asset_dep_method") 
     List<FixedAssetDepMethod> relFixedAssetDepMethod= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAssetGeoPoint")
+    @SerializedName("fixed_asset_geo_point") 
     List<FixedAssetGeoPoint> relFixedAssetGeoPoint= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAssetProduct")
+    @SerializedName("fixed_asset_product") 
     List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAssetRegistration")
+    @SerializedName("fixed_asset_registration") 
     List<FixedAssetRegistration> relFixedAssetRegistration= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAssetStdCost")
+    @SerializedName("fixed_asset_std_cost") 
     List<FixedAssetStdCost> relFixedAssetStdCost= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAssetInventoryItem")
+    @SerializedName("fixed_asset_inventory_item") 
     List<InventoryItem> relFixedAssetInventoryItem= new ArrayList<>(); 
     @Exclude
     @Singular("addWorkEffort")
+    @SerializedName("work_effort") 
     List<WorkEffort> relWorkEffort= new ArrayList<>(); 
     @Exclude
     @Singular("addWorkEffortFixedAssetAssign")
+    @SerializedName("work_effort_fixed_asset_assign") 
     List<WorkEffortFixedAssetAssign> relWorkEffortFixedAssetAssign= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

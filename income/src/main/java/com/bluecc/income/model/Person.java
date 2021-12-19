@@ -287,30 +287,39 @@ public class Person implements IEventModel<PersonFlatData.Builder>, HasId, Seria
      
     @Exclude
     @Singular("addParty")
+    @SerializedName("party") 
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyContactMech")
+    @SerializedName("party_contact_mech") 
     List<PartyContactMech> relPartyContactMech= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyContactMechPurpose")
+    @SerializedName("party_contact_mech_purpose") 
     List<PartyContactMechPurpose> relPartyContactMechPurpose= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreRole")
+    @SerializedName("product_store_role") 
     List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
     @Exclude
     @Singular("addToShipment")
+    @SerializedName("to_shipment") 
     List<Shipment> relToShipment= new ArrayList<>(); 
     @Exclude
     @Singular("addFromShipment")
+    @SerializedName("from_shipment") 
     List<Shipment> relFromShipment= new ArrayList<>(); 
     @Exclude
     @Singular("addCarrierShipmentRouteSegment")
+    @SerializedName("carrier_shipment_route_segment") 
     List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
     @Exclude
     @Singular("addUserLogin")
+    @SerializedName("user_login") 
     List<UserLogin> relUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

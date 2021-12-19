@@ -191,48 +191,63 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, HasId, Ser
      
     @Exclude
     @Singular("addFromParty")
+    @SerializedName("from_party") 
     List<Party> relFromParty= new ArrayList<>(); 
     @Exclude
     @Singular("addParty")
+    @SerializedName("party") 
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyRole")
+    @SerializedName("party_role") 
     List<PartyRole> relPartyRole= new ArrayList<>(); 
     @Exclude
     @Singular("addBillingAccount")
+    @SerializedName("billing_account") 
     List<BillingAccount> relBillingAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addContactMech")
+    @SerializedName("contact_mech") 
     List<ContactMech> relContactMech= new ArrayList<>(); 
     @Exclude
     @Singular("addRecurrenceInfo")
+    @SerializedName("recurrence_info") 
     List<RecurrenceInfo> relRecurrenceInfo= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTrans")
+    @SerializedName("acctg_trans") 
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoiceItem")
+    @SerializedName("invoice_item") 
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoiceRole")
+    @SerializedName("invoice_role") 
     List<InvoiceRole> relInvoiceRole= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoiceStatus")
+    @SerializedName("invoice_status") 
     List<InvoiceStatus> relInvoiceStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderAdjustmentBilling")
+    @SerializedName("order_adjustment_billing") 
     List<OrderAdjustmentBilling> relOrderAdjustmentBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemBilling")
+    @SerializedName("order_item_billing") 
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addPaymentApplication")
+    @SerializedName("payment_application") 
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentItemBilling")
+    @SerializedName("shipment_item_billing") 
     List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

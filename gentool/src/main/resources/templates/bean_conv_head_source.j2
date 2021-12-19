@@ -2,6 +2,7 @@
     {% for rel in ent.validRelations %} 
     @Exclude
     @Singular("add{{rel.name}}")
+    @SerializedName("{{rel.protoName}}") 
     List<{{rel.relEntityName}}> {{rel.relVarName}}= new ArrayList<>();
     {%- endfor %}
 

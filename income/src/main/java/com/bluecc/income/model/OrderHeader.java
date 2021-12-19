@@ -275,66 +275,87 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
      
     @Exclude
     @Singular("addOriginFacility")
+    @SerializedName("origin_facility") 
     List<Facility> relOriginFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addBillingAccount")
+    @SerializedName("billing_account") 
     List<BillingAccount> relBillingAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStore")
+    @SerializedName("product_store") 
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByUserLogin")
+    @SerializedName("created_by_user_login") 
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addWebSite")
+    @SerializedName("web_site") 
     List<WebSite> relWebSite= new ArrayList<>(); 
     @Exclude
     @Singular("addAcquireFixedAsset")
+    @SerializedName("acquire_fixed_asset") 
     List<FixedAsset> relAcquireFixedAsset= new ArrayList<>(); 
     @Exclude
     @Singular("addItemIssuance")
+    @SerializedName("item_issuance") 
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderAdjustment")
+    @SerializedName("order_adjustment") 
     List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderContactMech")
+    @SerializedName("order_contact_mech") 
     List<OrderContactMech> relOrderContactMech= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItem")
+    @SerializedName("order_item") 
     List<OrderItem> relOrderItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemBilling")
+    @SerializedName("order_item_billing") 
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemPriceInfo")
+    @SerializedName("order_item_price_info") 
     List<OrderItemPriceInfo> relOrderItemPriceInfo= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemShipGroup")
+    @SerializedName("order_item_ship_group") 
     List<OrderItemShipGroup> relOrderItemShipGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemShipGroupAssoc")
+    @SerializedName("order_item_ship_group_assoc") 
     List<OrderItemShipGroupAssoc> relOrderItemShipGroupAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemShipGrpInvRes")
+    @SerializedName("order_item_ship_grp_inv_res") 
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderPaymentPreference")
+    @SerializedName("order_payment_preference") 
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderRole")
+    @SerializedName("order_role") 
     List<OrderRole> relOrderRole= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderStatus")
+    @SerializedName("order_status") 
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addPrimaryShipment")
+    @SerializedName("primary_shipment") 
     List<Shipment> relPrimaryShipment= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentReceipt")
+    @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

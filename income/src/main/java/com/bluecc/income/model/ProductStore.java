@@ -563,63 +563,83 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
      
     @Exclude
     @Singular("addFacility")
+    @SerializedName("facility") 
     List<Facility> relFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addParty")
+    @SerializedName("party") 
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
     @Singular("addVatTaxAuthority")
+    @SerializedName("vat_tax_authority") 
     List<TaxAuthority> relVatTaxAuthority= new ArrayList<>(); 
     @Exclude
     @Singular("addCustRequest")
+    @SerializedName("cust_request") 
     List<CustRequest> relCustRequest= new ArrayList<>(); 
     @Exclude
     @Singular("addEbayConfig")
+    @SerializedName("ebay_config") 
     List<EbayConfig> relEbayConfig= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderHeader")
+    @SerializedName("order_header") 
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     @Exclude
     @Singular("addProductReview")
+    @SerializedName("product_review") 
     List<ProductReview> relProductReview= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreCatalog")
+    @SerializedName("product_store_catalog") 
     List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreEmailSetting")
+    @SerializedName("product_store_email_setting") 
     List<ProductStoreEmailSetting> relProductStoreEmailSetting= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreFacility")
+    @SerializedName("product_store_facility") 
     List<ProductStoreFacility> relProductStoreFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreFinActSetting")
+    @SerializedName("product_store_fin_act_setting") 
     List<ProductStoreFinActSetting> relProductStoreFinActSetting= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreKeywordOvrd")
+    @SerializedName("product_store_keyword_ovrd") 
     List<ProductStoreKeywordOvrd> relProductStoreKeywordOvrd= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStorePaymentSetting")
+    @SerializedName("product_store_payment_setting") 
     List<ProductStorePaymentSetting> relProductStorePaymentSetting= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStorePromoAppl")
+    @SerializedName("product_store_promo_appl") 
     List<ProductStorePromoAppl> relProductStorePromoAppl= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreRole")
+    @SerializedName("product_store_role") 
     List<ProductStoreRole> relProductStoreRole= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreSurveyAppl")
+    @SerializedName("product_store_survey_appl") 
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
     @Exclude
     @Singular("addQuote")
+    @SerializedName("quote") 
     List<Quote> relQuote= new ArrayList<>(); 
     @Exclude
     @Singular("addTaxAuthorityRateProduct")
+    @SerializedName("tax_authority_rate_product") 
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addWebSite")
+    @SerializedName("web_site") 
     List<WebSite> relWebSite= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

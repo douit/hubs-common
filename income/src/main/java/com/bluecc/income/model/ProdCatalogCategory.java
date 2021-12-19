@@ -136,12 +136,15 @@ public class ProdCatalogCategory implements IEventModel<ProdCatalogCategoryFlatD
      
     @Exclude
     @Singular("addProdCatalog")
+    @SerializedName("prod_catalog") 
     List<ProdCatalog> relProdCatalog= new ArrayList<>(); 
     @Exclude
     @Singular("addProductCategory")
+    @SerializedName("product_category") 
     List<ProductCategory> relProductCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

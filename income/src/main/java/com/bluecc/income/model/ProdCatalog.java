@@ -149,12 +149,15 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Ha
      
     @Exclude
     @Singular("addProdCatalogCategory")
+    @SerializedName("prod_catalog_category") 
     List<ProdCatalogCategory> relProdCatalogCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreCatalog")
+    @SerializedName("product_store_catalog") 
     List<ProductStoreCatalog> relProductStoreCatalog= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

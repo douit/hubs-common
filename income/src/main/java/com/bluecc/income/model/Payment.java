@@ -209,45 +209,59 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, HasId, Ser
      
     @Exclude
     @Singular("addPaymentMethod")
+    @SerializedName("payment_method") 
     List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
     @Exclude
     @Singular("addCreditCard")
+    @SerializedName("credit_card") 
     List<CreditCard> relCreditCard= new ArrayList<>(); 
     @Exclude
     @Singular("addEftAccount")
+    @SerializedName("eft_account") 
     List<EftAccount> relEftAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderPaymentPreference")
+    @SerializedName("order_payment_preference") 
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
     @Singular("addPaymentGatewayResponse")
+    @SerializedName("payment_gateway_response") 
     List<PaymentGatewayResponse> relPaymentGatewayResponse= new ArrayList<>(); 
     @Exclude
     @Singular("addFromParty")
+    @SerializedName("from_party") 
     List<Party> relFromParty= new ArrayList<>(); 
     @Exclude
     @Singular("addToParty")
+    @SerializedName("to_party") 
     List<Party> relToParty= new ArrayList<>(); 
     @Exclude
     @Singular("addToPartyRole")
+    @SerializedName("to_party_role") 
     List<PartyRole> relToPartyRole= new ArrayList<>(); 
     @Exclude
     @Singular("addFinAccountTrans")
+    @SerializedName("fin_account_trans") 
     List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addGlAccount")
+    @SerializedName("gl_account") 
     List<GlAccount> relGlAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTrans")
+    @SerializedName("acctg_trans") 
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addPaymentApplication")
+    @SerializedName("payment_application") 
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     @Exclude
     @Singular("addToPaymentApplication")
+    @SerializedName("to_payment_application") 
     List<PaymentApplication> relToPaymentApplication= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

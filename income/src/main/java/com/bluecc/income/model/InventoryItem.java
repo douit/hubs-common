@@ -251,54 +251,71 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
      
     @Exclude
     @Singular("addProduct")
+    @SerializedName("product") 
     List<Product> relProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addParty")
+    @SerializedName("party") 
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
     @Singular("addOwnerParty")
+    @SerializedName("owner_party") 
     List<Party> relOwnerParty= new ArrayList<>(); 
     @Exclude
     @Singular("addFacility")
+    @SerializedName("facility") 
     List<Facility> relFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFacility")
+    @SerializedName("product_facility") 
     List<ProductFacility> relProductFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addFacilityLocation")
+    @SerializedName("facility_location") 
     List<FacilityLocation> relFacilityLocation= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFacilityLocation")
+    @SerializedName("product_facility_location") 
     List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAssetFixedAsset")
+    @SerializedName("fixed_asset_fixed_asset") 
     List<FixedAsset> relFixedAssetFixedAsset= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTrans")
+    @SerializedName("acctg_trans") 
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTransEntry")
+    @SerializedName("acctg_trans_entry") 
     List<AcctgTransEntry> relAcctgTransEntry= new ArrayList<>(); 
     @Exclude
     @Singular("addInventoryItemDetail")
+    @SerializedName("inventory_item_detail") 
     List<InventoryItemDetail> relInventoryItemDetail= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoiceItem")
+    @SerializedName("invoice_item") 
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
     @Exclude
     @Singular("addItemIssuance")
+    @SerializedName("item_issuance") 
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
     @Exclude
     @Singular("addFromOrderItem")
+    @SerializedName("from_order_item") 
     List<OrderItem> relFromOrderItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemShipGrpInvRes")
+    @SerializedName("order_item_ship_grp_inv_res") 
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentReceipt")
+    @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

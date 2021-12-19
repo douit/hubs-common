@@ -172,11 +172,11 @@ public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Ser
     String configId;
     @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
-    @SerializedName("created_by_user_login") 
+    @SerializedName("created_by_user_login_id") 
     String createdByUserLogin;
     @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
-    @SerializedName("last_modified_by_user_login") 
+    @SerializedName("last_modified_by_user_login_id") 
     String lastModifiedByUserLogin;
     @SerializedName("in_shipping_box") 
     Character inShippingBox;
@@ -515,111 +515,147 @@ public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Ser
      
     @Exclude
     @Singular("addPrimaryProductCategory")
+    @SerializedName("primary_product_category") 
     List<ProductCategory> relPrimaryProductCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addFacility")
+    @SerializedName("facility") 
     List<Facility> relFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByUserLogin")
+    @SerializedName("created_by_user_login") 
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByUserLogin")
+    @SerializedName("last_modified_by_user_login") 
     List<UserLogin> relLastModifiedByUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addDefaultShipmentBoxType")
+    @SerializedName("default_shipment_box_type") 
     List<ShipmentBoxType> relDefaultShipmentBoxType= new ArrayList<>(); 
     @Exclude
     @Singular("addAgreement")
+    @SerializedName("agreement") 
     List<Agreement> relAgreement= new ArrayList<>(); 
     @Exclude
     @Singular("addAgreementProductAppl")
+    @SerializedName("agreement_product_appl") 
     List<AgreementProductAppl> relAgreementProductAppl= new ArrayList<>(); 
     @Exclude
     @Singular("addCustRequestItem")
+    @SerializedName("cust_request_item") 
     List<CustRequestItem> relCustRequestItem= new ArrayList<>(); 
     @Exclude
     @Singular("addInstanceOfFixedAsset")
+    @SerializedName("instance_of_fixed_asset") 
     List<FixedAsset> relInstanceOfFixedAsset= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAssetProduct")
+    @SerializedName("fixed_asset_product") 
     List<FixedAssetProduct> relFixedAssetProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addInventoryItem")
+    @SerializedName("inventory_item") 
     List<InventoryItem> relInventoryItem= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoiceItem")
+    @SerializedName("invoice_item") 
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItem")
+    @SerializedName("order_item") 
     List<OrderItem> relOrderItem= new ArrayList<>(); 
     @Exclude
     @Singular("addMainProductAssoc")
+    @SerializedName("main_product_assoc") 
     List<ProductAssoc> relMainProductAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addAssocProductAssoc")
+    @SerializedName("assoc_product_assoc") 
     List<ProductAssoc> relAssocProductAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addProductCategoryMember")
+    @SerializedName("product_category_member") 
     List<ProductCategoryMember> relProductCategoryMember= new ArrayList<>(); 
     @Exclude
     @Singular("addProductProductConfig")
+    @SerializedName("product_product_config") 
     List<ProductConfig> relProductProductConfig= new ArrayList<>(); 
     @Exclude
     @Singular("addProductProductConfigProduct")
+    @SerializedName("product_product_config_product") 
     List<ProductConfigProduct> relProductProductConfigProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addProductContent")
+    @SerializedName("product_content") 
     List<ProductContent> relProductContent= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFacility")
+    @SerializedName("product_facility") 
     List<ProductFacility> relProductFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFacilityAssoc")
+    @SerializedName("product_facility_assoc") 
     List<ProductFacilityAssoc> relProductFacilityAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFacilityLocation")
+    @SerializedName("product_facility_location") 
     List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFeatureAppl")
+    @SerializedName("product_feature_appl") 
     List<ProductFeatureAppl> relProductFeatureAppl= new ArrayList<>(); 
     @Exclude
     @Singular("addProductKeyword")
+    @SerializedName("product_keyword") 
     List<ProductKeyword> relProductKeyword= new ArrayList<>(); 
     @Exclude
     @Singular("addProductPrice")
+    @SerializedName("product_price") 
     List<ProductPrice> relProductPrice= new ArrayList<>(); 
     @Exclude
     @Singular("addProductPromoProduct")
+    @SerializedName("product_promo_product") 
     List<ProductPromoProduct> relProductPromoProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addProductReview")
+    @SerializedName("product_review") 
     List<ProductReview> relProductReview= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreSurveyAppl")
+    @SerializedName("product_store_survey_appl") 
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
     @Exclude
     @Singular("addProductSubscriptionResource")
+    @SerializedName("product_subscription_resource") 
     List<ProductSubscriptionResource> relProductSubscriptionResource= new ArrayList<>(); 
     @Exclude
     @Singular("addQuoteItem")
+    @SerializedName("quote_item") 
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentItem")
+    @SerializedName("shipment_item") 
     List<ShipmentItem> relShipmentItem= new ArrayList<>(); 
     @Exclude
     @Singular("addSubShipmentPackageContent")
+    @SerializedName("sub_shipment_package_content") 
     List<ShipmentPackageContent> relSubShipmentPackageContent= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentReceipt")
+    @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     @Exclude
     @Singular("addSupplierProduct")
+    @SerializedName("supplier_product") 
     List<SupplierProduct> relSupplierProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addWorkEffortGoodStandard")
+    @SerializedName("work_effort_good_standard") 
     List<WorkEffortGoodStandard> relWorkEffortGoodStandard= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

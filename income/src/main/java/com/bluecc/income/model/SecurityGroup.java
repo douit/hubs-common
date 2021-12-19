@@ -113,15 +113,19 @@ public class SecurityGroup implements IEventModel<SecurityGroupFlatData.Builder>
      
     @Exclude
     @Singular("addPartyRelationship")
+    @SerializedName("party_relationship") 
     List<PartyRelationship> relPartyRelationship= new ArrayList<>(); 
     @Exclude
     @Singular("addSecurityGroupPermission")
+    @SerializedName("security_group_permission") 
     List<SecurityGroupPermission> relSecurityGroupPermission= new ArrayList<>(); 
     @Exclude
     @Singular("addUserLoginSecurityGroup")
+    @SerializedName("user_login_security_group") 
     List<UserLoginSecurityGroup> relUserLoginSecurityGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

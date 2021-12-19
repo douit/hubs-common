@@ -407,7 +407,8 @@ public class EntityMeta {
 
     public List<String> getAnnotationList(FieldMeta fld) {
         List<String> annotations = Lists.newArrayList();
-        annotations.add(format("@SerializedName(\"%s\")", fld.getUnderscore()));
+
+        annotations.add(format("@SerializedName(\"%s\")", fld.getSerializeName()));
         if (getPk().equals(fld.name)) {
             annotations.add("@RId");
         } else if (fld.pk && !fld.isDateTimeField()) {
@@ -520,6 +521,14 @@ public class EntityMeta {
         // }
         public String getUnderscore() {
             return col.toLowerCase(Locale.ROOT);
+        }
+
+        public String getSerializeName(){
+            String prop=getUnderscore();
+            if(prop.endsWith("user_login")){
+                return prop+"_id";
+            }
+            return prop;
         }
 
         public String getProtoType() {

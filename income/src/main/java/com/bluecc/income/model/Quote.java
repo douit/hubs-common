@@ -167,21 +167,27 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, HasId, Seriali
      
     @Exclude
     @Singular("addParty")
+    @SerializedName("party") 
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStore")
+    @SerializedName("product_store") 
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
     @Singular("addQuoteItem")
+    @SerializedName("quote_item") 
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
     @Singular("addQuoteRole")
+    @SerializedName("quote_role") 
     List<QuoteRole> relQuoteRole= new ArrayList<>(); 
     @Exclude
     @Singular("addQuoteTerm")
+    @SerializedName("quote_term") 
     List<QuoteTerm> relQuoteTerm= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

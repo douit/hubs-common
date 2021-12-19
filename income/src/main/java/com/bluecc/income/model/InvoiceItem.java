@@ -213,48 +213,63 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Ha
      
     @Exclude
     @Singular("addInvoice")
+    @SerializedName("invoice") 
     List<Invoice> relInvoice= new ArrayList<>(); 
     @Exclude
     @Singular("addInventoryItem")
+    @SerializedName("inventory_item") 
     List<InventoryItem> relInventoryItem= new ArrayList<>(); 
     @Exclude
     @Singular("addProduct")
+    @SerializedName("product") 
     List<Product> relProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFeature")
+    @SerializedName("product_feature") 
     List<ProductFeature> relProductFeature= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoiceItem")
+    @SerializedName("invoice_item") 
     List<InvoiceItem> relInvoiceItem= new ArrayList<>(); 
     @Exclude
     @Singular("addChildrenInvoiceItem")
+    @SerializedName("children_invoice_item") 
     List<InvoiceItem> relChildrenInvoiceItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOverrideGlAccount")
+    @SerializedName("override_gl_account") 
     List<GlAccount> relOverrideGlAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addTaxAuthorityParty")
+    @SerializedName("tax_authority_party") 
     List<Party> relTaxAuthorityParty= new ArrayList<>(); 
     @Exclude
     @Singular("addTaxAuthorityRateProduct")
+    @SerializedName("tax_authority_rate_product") 
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addOverrideOrgParty")
+    @SerializedName("override_org_party") 
     List<Party> relOverrideOrgParty= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderAdjustmentBilling")
+    @SerializedName("order_adjustment_billing") 
     List<OrderAdjustmentBilling> relOrderAdjustmentBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemBilling")
+    @SerializedName("order_item_billing") 
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addPaymentApplication")
+    @SerializedName("payment_application") 
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentItemBilling")
+    @SerializedName("shipment_item_billing") 
     List<ShipmentItemBilling> relShipmentItemBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

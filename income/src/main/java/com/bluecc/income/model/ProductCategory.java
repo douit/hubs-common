@@ -161,51 +161,67 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
      
     @Exclude
     @Singular("addPrimaryParentProductCategory")
+    @SerializedName("primary_parent_product_category") 
     List<ProductCategory> relPrimaryParentProductCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addPrimaryChildProductCategory")
+    @SerializedName("primary_child_product_category") 
     List<ProductCategory> relPrimaryChildProductCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addProdCatalogCategory")
+    @SerializedName("prod_catalog_category") 
     List<ProdCatalogCategory> relProdCatalogCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addPrimaryProduct")
+    @SerializedName("primary_product") 
     List<Product> relPrimaryProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addProductCategoryContent")
+    @SerializedName("product_category_content") 
     List<ProductCategoryContent> relProductCategoryContent= new ArrayList<>(); 
     @Exclude
     @Singular("addProductCategoryLink")
+    @SerializedName("product_category_link") 
     List<ProductCategoryLink> relProductCategoryLink= new ArrayList<>(); 
     @Exclude
     @Singular("addProductCategoryMember")
+    @SerializedName("product_category_member") 
     List<ProductCategoryMember> relProductCategoryMember= new ArrayList<>(); 
     @Exclude
     @Singular("addProductCategoryRole")
+    @SerializedName("product_category_role") 
     List<ProductCategoryRole> relProductCategoryRole= new ArrayList<>(); 
     @Exclude
     @Singular("addCurrentProductCategoryRollup")
+    @SerializedName("current_product_category_rollup") 
     List<ProductCategoryRollup> relCurrentProductCategoryRollup= new ArrayList<>(); 
     @Exclude
     @Singular("addParentProductCategoryRollup")
+    @SerializedName("parent_product_category_rollup") 
     List<ProductCategoryRollup> relParentProductCategoryRollup= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFeatureCategoryAppl")
+    @SerializedName("product_feature_category_appl") 
     List<ProductFeatureCategoryAppl> relProductFeatureCategoryAppl= new ArrayList<>(); 
     @Exclude
     @Singular("addProductPromoCategory")
+    @SerializedName("product_promo_category") 
     List<ProductPromoCategory> relProductPromoCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addProductStoreSurveyAppl")
+    @SerializedName("product_store_survey_appl") 
     List<ProductStoreSurveyAppl> relProductStoreSurveyAppl= new ArrayList<>(); 
     @Exclude
     @Singular("addTaxAuthorityCategory")
+    @SerializedName("tax_authority_category") 
     List<TaxAuthorityCategory> relTaxAuthorityCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addTaxAuthorityRateProduct")
+    @SerializedName("tax_authority_rate_product") 
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

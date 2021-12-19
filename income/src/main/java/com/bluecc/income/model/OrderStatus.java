@@ -53,7 +53,7 @@ public class OrderStatus implements IEventModel<OrderStatusData.Builder>, HasId,
     String orderPaymentPreferenceId;
     @SerializedName("status_datetime") 
     java.time.LocalDateTime statusDatetime;
-    @SerializedName("status_user_login") 
+    @SerializedName("status_user_login_id") 
     String statusUserLogin;
     @SerializedName("change_reason") 
     String changeReason;

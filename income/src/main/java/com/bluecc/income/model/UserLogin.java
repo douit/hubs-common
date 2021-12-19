@@ -191,123 +191,163 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, HasId,
      
     @Exclude
     @Singular("addParty")
+    @SerializedName("party") 
     List<Party> relParty= new ArrayList<>(); 
     @Exclude
     @Singular("addPerson")
+    @SerializedName("person") 
     List<Person> relPerson= new ArrayList<>(); 
     @Exclude
     @Singular("addPartyGroup")
+    @SerializedName("party_group") 
     List<PartyGroup> relPartyGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addChangeByBudgetStatus")
+    @SerializedName("change_by_budget_status") 
     List<BudgetStatus> relChangeByBudgetStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByContent")
+    @SerializedName("created_by_content") 
     List<Content> relCreatedByContent= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByContent")
+    @SerializedName("last_modified_by_content") 
     List<Content> relLastModifiedByContent= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByContentAssoc")
+    @SerializedName("created_by_content_assoc") 
     List<ContentAssoc> relCreatedByContentAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByContentAssoc")
+    @SerializedName("last_modified_by_content_assoc") 
     List<ContentAssoc> relLastModifiedByContentAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByDataResource")
+    @SerializedName("created_by_data_resource") 
     List<DataResource> relCreatedByDataResource= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByDataResource")
+    @SerializedName("last_modified_by_data_resource") 
     List<DataResource> relLastModifiedByDataResource= new ArrayList<>(); 
     @Exclude
     @Singular("addFinAccountStatus")
+    @SerializedName("fin_account_status") 
     List<FinAccountStatus> relFinAccountStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addChangeByInvoiceStatus")
+    @SerializedName("change_by_invoice_status") 
     List<InvoiceStatus> relChangeByInvoiceStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addIssuedByItemIssuance")
+    @SerializedName("issued_by_item_issuance") 
     List<ItemIssuance> relIssuedByItemIssuance= new ArrayList<>(); 
     @Exclude
     @Singular("addAuthJobSandbox")
+    @SerializedName("auth_job_sandbox") 
     List<JobSandbox> relAuthJobSandbox= new ArrayList<>(); 
     @Exclude
     @Singular("addRunAsJobSandbox")
+    @SerializedName("run_as_job_sandbox") 
     List<JobSandbox> relRunAsJobSandbox= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderAdjustment")
+    @SerializedName("order_adjustment") 
     List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByOrderHeader")
+    @SerializedName("created_by_order_header") 
     List<OrderHeader> relCreatedByOrderHeader= new ArrayList<>(); 
     @Exclude
     @Singular("addDontCancelSetOrderItem")
+    @SerializedName("dont_cancel_set_order_item") 
     List<OrderItem> relDontCancelSetOrderItem= new ArrayList<>(); 
     @Exclude
     @Singular("addChangeByOrderItem")
+    @SerializedName("change_by_order_item") 
     List<OrderItem> relChangeByOrderItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderPaymentPreference")
+    @SerializedName("order_payment_preference") 
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderStatus")
+    @SerializedName("order_status") 
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByParty")
+    @SerializedName("created_by_party") 
     List<Party> relCreatedByParty= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByParty")
+    @SerializedName("last_modified_by_party") 
     List<Party> relLastModifiedByParty= new ArrayList<>(); 
     @Exclude
     @Singular("addChangeByPartyStatus")
+    @SerializedName("change_by_party_status") 
     List<PartyStatus> relChangeByPartyStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByProduct")
+    @SerializedName("created_by_product") 
     List<Product> relCreatedByProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByProduct")
+    @SerializedName("last_modified_by_product") 
     List<Product> relLastModifiedByProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByProductFeaturePrice")
+    @SerializedName("created_by_product_feature_price") 
     List<ProductFeaturePrice> relCreatedByProductFeaturePrice= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByProductFeaturePrice")
+    @SerializedName("last_modified_by_product_feature_price") 
     List<ProductFeaturePrice> relLastModifiedByProductFeaturePrice= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByProductPrice")
+    @SerializedName("created_by_product_price") 
     List<ProductPrice> relCreatedByProductPrice= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByProductPrice")
+    @SerializedName("last_modified_by_product_price") 
     List<ProductPrice> relLastModifiedByProductPrice= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByProductPromo")
+    @SerializedName("created_by_product_promo") 
     List<ProductPromo> relCreatedByProductPromo= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByProductPromo")
+    @SerializedName("last_modified_by_product_promo") 
     List<ProductPromo> relLastModifiedByProductPromo= new ArrayList<>(); 
     @Exclude
     @Singular("addCreatedByProductPromoCode")
+    @SerializedName("created_by_product_promo_code") 
     List<ProductPromoCode> relCreatedByProductPromoCode= new ArrayList<>(); 
     @Exclude
     @Singular("addLastModifiedByProductPromoCode")
+    @SerializedName("last_modified_by_product_promo_code") 
     List<ProductPromoCode> relLastModifiedByProductPromoCode= new ArrayList<>(); 
     @Exclude
     @Singular("addProductReview")
+    @SerializedName("product_review") 
     List<ProductReview> relProductReview= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentReceipt")
+    @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     @Exclude
     @Singular("addChangeByShipmentStatus")
+    @SerializedName("change_by_shipment_status") 
     List<ShipmentStatus> relChangeByShipmentStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addUserLoginSecurityGroup")
+    @SerializedName("user_login_security_group") 
     List<UserLoginSecurityGroup> relUserLoginSecurityGroup= new ArrayList<>(); 
     @Exclude
     @Singular("addAssignedByWorkEffortPartyAssignment")
+    @SerializedName("assigned_by_work_effort_party_assignment") 
     List<WorkEffortPartyAssignment> relAssignedByWorkEffortPartyAssignment= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

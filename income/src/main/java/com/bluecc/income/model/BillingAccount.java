@@ -143,24 +143,31 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
      
     @Exclude
     @Singular("addContactMech")
+    @SerializedName("contact_mech") 
     List<ContactMech> relContactMech= new ArrayList<>(); 
     @Exclude
     @Singular("addPostalAddress")
+    @SerializedName("postal_address") 
     List<PostalAddress> relPostalAddress= new ArrayList<>(); 
     @Exclude
     @Singular("addBillingAccountRole")
+    @SerializedName("billing_account_role") 
     List<BillingAccountRole> relBillingAccountRole= new ArrayList<>(); 
     @Exclude
     @Singular("addInvoice")
+    @SerializedName("invoice") 
     List<Invoice> relInvoice= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderHeader")
+    @SerializedName("order_header") 
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     @Exclude
     @Singular("addPaymentApplication")
+    @SerializedName("payment_application") 
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

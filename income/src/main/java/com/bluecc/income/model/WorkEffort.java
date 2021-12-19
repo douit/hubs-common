@@ -142,11 +142,11 @@ public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, HasI
     Long revisionNumber;
     @SerializedName("created_date") 
     java.time.LocalDateTime createdDate;
-    @SerializedName("created_by_user_login") 
+    @SerializedName("created_by_user_login_id") 
     String createdByUserLogin;
     @SerializedName("last_modified_date") 
     java.time.LocalDateTime lastModifiedDate;
-    @SerializedName("last_modified_by_user_login") 
+    @SerializedName("last_modified_by_user_login_id") 
     String lastModifiedByUserLogin;
     @SerializedName("last_updated_stamp") 
     java.time.LocalDateTime lastUpdatedStamp;
@@ -407,66 +407,87 @@ public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, HasI
      
     @Exclude
     @Singular("addParentWorkEffort")
+    @SerializedName("parent_work_effort") 
     List<WorkEffort> relParentWorkEffort= new ArrayList<>(); 
     @Exclude
     @Singular("addFixedAsset")
+    @SerializedName("fixed_asset") 
     List<FixedAsset> relFixedAsset= new ArrayList<>(); 
     @Exclude
     @Singular("addFacility")
+    @SerializedName("facility") 
     List<Facility> relFacility= new ArrayList<>(); 
     @Exclude
     @Singular("addRecurrenceInfo")
+    @SerializedName("recurrence_info") 
     List<RecurrenceInfo> relRecurrenceInfo= new ArrayList<>(); 
     @Exclude
     @Singular("addTemporalExpression")
+    @SerializedName("temporal_expression") 
     List<TemporalExpression> relTemporalExpression= new ArrayList<>(); 
     @Exclude
     @Singular("addCustomMethod")
+    @SerializedName("custom_method") 
     List<CustomMethod> relCustomMethod= new ArrayList<>(); 
     @Exclude
     @Singular("addAcctgTrans")
+    @SerializedName("acctg_trans") 
     List<AcctgTrans> relAcctgTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addInventoryItemDetail")
+    @SerializedName("inventory_item_detail") 
     List<InventoryItemDetail> relInventoryItemDetail= new ArrayList<>(); 
     @Exclude
     @Singular("addRoutingProductAssoc")
+    @SerializedName("routing_product_assoc") 
     List<ProductAssoc> relRoutingProductAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addQuoteItem")
+    @SerializedName("quote_item") 
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
     @Singular("addRateAmount")
+    @SerializedName("rate_amount") 
     List<RateAmount> relRateAmount= new ArrayList<>(); 
     @Exclude
     @Singular("addEstimatedShipShipment")
+    @SerializedName("estimated_ship_shipment") 
     List<Shipment> relEstimatedShipShipment= new ArrayList<>(); 
     @Exclude
     @Singular("addEstimatedArrivalShipment")
+    @SerializedName("estimated_arrival_shipment") 
     List<Shipment> relEstimatedArrivalShipment= new ArrayList<>(); 
     @Exclude
     @Singular("addChildWorkEffort")
+    @SerializedName("child_work_effort") 
     List<WorkEffort> relChildWorkEffort= new ArrayList<>(); 
     @Exclude
     @Singular("addFromWorkEffortAssoc")
+    @SerializedName("from_work_effort_assoc") 
     List<WorkEffortAssoc> relFromWorkEffortAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addToWorkEffortAssoc")
+    @SerializedName("to_work_effort_assoc") 
     List<WorkEffortAssoc> relToWorkEffortAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addWorkEffortFixedAssetAssign")
+    @SerializedName("work_effort_fixed_asset_assign") 
     List<WorkEffortFixedAssetAssign> relWorkEffortFixedAssetAssign= new ArrayList<>(); 
     @Exclude
     @Singular("addWorkEffortGoodStandard")
+    @SerializedName("work_effort_good_standard") 
     List<WorkEffortGoodStandard> relWorkEffortGoodStandard= new ArrayList<>(); 
     @Exclude
     @Singular("addWorkEffortPartyAssignment")
+    @SerializedName("work_effort_party_assignment") 
     List<WorkEffortPartyAssignment> relWorkEffortPartyAssignment= new ArrayList<>(); 
     @Exclude
     @Singular("addWorkEffortSkillStandard")
+    @SerializedName("work_effort_skill_standard") 
     List<WorkEffortSkillStandard> relWorkEffortSkillStandard= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

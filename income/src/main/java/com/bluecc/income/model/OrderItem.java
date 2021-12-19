@@ -125,7 +125,7 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, HasId,
     java.time.LocalDateTime autoCancelDate;
     @SerializedName("dont_cancel_set_date") 
     java.time.LocalDateTime dontCancelSetDate;
-    @SerializedName("dont_cancel_set_user_login") 
+    @SerializedName("dont_cancel_set_user_login_id") 
     String dontCancelSetUserLogin;
     @SerializedName("ship_before_date") 
     java.time.LocalDateTime shipBeforeDate;
@@ -381,63 +381,83 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, HasId,
      
     @Exclude
     @Singular("addOrderHeader")
+    @SerializedName("order_header") 
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     @Exclude
     @Singular("addProduct")
+    @SerializedName("product") 
     List<Product> relProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addFromInventoryItem")
+    @SerializedName("from_inventory_item") 
     List<InventoryItem> relFromInventoryItem= new ArrayList<>(); 
     @Exclude
     @Singular("addProductFacilityLocation")
+    @SerializedName("product_facility_location") 
     List<ProductFacilityLocation> relProductFacilityLocation= new ArrayList<>(); 
     @Exclude
     @Singular("addDontCancelSetUserLogin")
+    @SerializedName("dont_cancel_set_user_login") 
     List<UserLogin> relDontCancelSetUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addQuoteItem")
+    @SerializedName("quote_item") 
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
     @Singular("addOverrideGlAccount")
+    @SerializedName("override_gl_account") 
     List<GlAccount> relOverrideGlAccount= new ArrayList<>(); 
     @Exclude
     @Singular("addChangeByUserLogin")
+    @SerializedName("change_by_user_login") 
     List<UserLogin> relChangeByUserLogin= new ArrayList<>(); 
     @Exclude
     @Singular("addFinAccountTrans")
+    @SerializedName("fin_account_trans") 
     List<FinAccountTrans> relFinAccountTrans= new ArrayList<>(); 
     @Exclude
     @Singular("addAcquireFixedAsset")
+    @SerializedName("acquire_fixed_asset") 
     List<FixedAsset> relAcquireFixedAsset= new ArrayList<>(); 
     @Exclude
     @Singular("addItemIssuance")
+    @SerializedName("item_issuance") 
     List<ItemIssuance> relItemIssuance= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderAdjustment")
+    @SerializedName("order_adjustment") 
     List<OrderAdjustment> relOrderAdjustment= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemBilling")
+    @SerializedName("order_item_billing") 
     List<OrderItemBilling> relOrderItemBilling= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemPriceInfo")
+    @SerializedName("order_item_price_info") 
     List<OrderItemPriceInfo> relOrderItemPriceInfo= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemShipGroupAssoc")
+    @SerializedName("order_item_ship_group_assoc") 
     List<OrderItemShipGroupAssoc> relOrderItemShipGroupAssoc= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderItemShipGrpInvRes")
+    @SerializedName("order_item_ship_grp_inv_res") 
     List<OrderItemShipGrpInvRes> relOrderItemShipGrpInvRes= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderPaymentPreference")
+    @SerializedName("order_payment_preference") 
     List<OrderPaymentPreference> relOrderPaymentPreference= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderStatus")
+    @SerializedName("order_status") 
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     @Exclude
     @Singular("addShipmentReceipt")
+    @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

@@ -141,12 +141,15 @@ public class ProductCategoryMember implements IEventModel<ProductCategoryMemberF
      
     @Exclude
     @Singular("addProduct")
+    @SerializedName("product") 
     List<Product> relProduct= new ArrayList<>(); 
     @Exclude
     @Singular("addProductCategory")
+    @SerializedName("product_category") 
     List<ProductCategory> relProductCategory= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){

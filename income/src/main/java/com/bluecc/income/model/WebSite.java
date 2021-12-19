@@ -197,24 +197,31 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, HasId, Ser
      
     @Exclude
     @Singular("addProductStore")
+    @SerializedName("product_store") 
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
     @Singular("addEbayConfig")
+    @SerializedName("ebay_config") 
     List<EbayConfig> relEbayConfig= new ArrayList<>(); 
     @Exclude
     @Singular("addOrderHeader")
+    @SerializedName("order_header") 
     List<OrderHeader> relOrderHeader= new ArrayList<>(); 
     @Exclude
     @Singular("addSubscriptionResource")
+    @SerializedName("subscription_resource") 
     List<SubscriptionResource> relSubscriptionResource= new ArrayList<>(); 
     @Exclude
     @Singular("addWebAnalyticsConfig")
+    @SerializedName("web_analytics_config") 
     List<WebAnalyticsConfig> relWebAnalyticsConfig= new ArrayList<>(); 
     @Exclude
     @Singular("addWebSiteContent")
+    @SerializedName("web_site_content") 
     List<WebSiteContent> relWebSiteContent= new ArrayList<>(); 
     @Exclude
     @Singular("addTenant")
+    @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
 
     public Map<String, Supplier<List<?>>> suppliers(){
