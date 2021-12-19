@@ -23,7 +23,7 @@ public class EntitySummariesTest {
     @Test
     public void testInProtoMeta() {
         ProtoMeta protoMeta = new ProtoMeta();
-        assertThat(protoMeta.getEntityMeta("Product").getCommonUseFields()
+        assertThat(protoMeta.getEntityMeta("Product").getCommonUseFieldNames()
                 .stream()
                 .peek(e -> System.out.println(e)).collect(Collectors.toList()))
                 .contains("productId", "description");

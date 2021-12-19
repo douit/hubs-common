@@ -4,6 +4,8 @@ import com.bluecc.hubs.fund.tenant.Tenants;
 import com.bluecc.income.endpoint.HeaderServerInterceptor;
 import com.bluecc.income.endpoint.RpcEndpoints;
 import com.bluecc.income.procs.DataStoreRpc;
+import com.bluecc.income.procs.EntityTypesRpc;
+
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptors;
@@ -27,6 +29,8 @@ public class ServiceFacade {
     RpcEndpoints.RoutinesImpl routines;
     @Inject 
     Provider<DataStoreRpc> dataStoreRpcProvider;
+    @Inject
+    Provider<EntityTypesRpc> entityTypesRpcProvider;
 
     @Inject
     HeaderServerInterceptor interceptor;
@@ -73,6 +77,7 @@ public class ServiceFacade {
                 .addService(greeter)
                 .addService(ServerInterceptors.intercept(routines, interceptor))
                 .addService(ServerInterceptors.intercept(dataStoreRpcProvider.get(), interceptor))
+                .addService(ServerInterceptors.intercept(entityTypesRpcProvider.get(), interceptor))
                 .addService(ServerInterceptors.intercept(prodCatalogRpc.get(), interceptor))
                 .addService(ServerInterceptors.intercept(productStoreRpc.get(), interceptor))
                 .addService(ServerInterceptors.intercept(productStoreFacilityRpc.get(), interceptor))

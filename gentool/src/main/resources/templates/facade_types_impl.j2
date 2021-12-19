@@ -1,0 +1,24 @@
+package com.bluecc.income.procs;
+
+import com.bluecc.hubs.feed.FactBag;
+import com.bluecc.hubs.stub.*;
+import io.grpc.stub.StreamObserver;
+
+import javax.inject.Inject;
+import java.util.List;
+
+public class EntityTypesRpc extends EntityTypesServiceGrpc.EntityTypesServiceImplBase {
+    @Inject
+    FactBag factBag;
+
+    {% for t in facade.config.exportTypes %}
+    @Override
+    public void query{{t}}(QueryType request, StreamObserver<{{t}}List> responseObserver) {
+        List<{{t}}Data> rs = factBag.allTypes("{{t}}", {{t}}Data::parseFrom);
+        responseObserver.onNext({{t}}List.newBuilder()
+                .addAllData(rs)
+                .build());
+        responseObserver.onCompleted();
+    }
+    {% endfor %}
+}

@@ -35,7 +35,7 @@ public class GeneratorMain {
         StereotypeAddons.startGen();  // livecases
 
         System.out.println("* rpc");
-        RpcGenTool.startGen();
+        RpcGenTool.startGen();  // rpc_crud.j2, facade.j2
 
         System.out.println("* profiles");
         GenProfile.startGen();

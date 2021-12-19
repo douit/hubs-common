@@ -13,4 +13,14 @@ class {{ent.name}} {
       ..{{f.dartSetter}}=val.values['{{f.underscore}}']{% if loop.last %}; {% endif %}
     {% endfor %}
   }
+
+
+  @override
+  String toString() {
+    return '{{ent.name}}('
+        {%- for fld in ent.commonUseFieldNames %}
+        '{{fld}}: ${{fld}}{% if !loop.last %}, {% endif %}'
+        {%- endfor %}
+        ')';
+  }
 }

@@ -1,0 +1,6 @@
+entities:
+  - Product
+  - ProductPrice
+types:
+  - StatusType
+  - StatusItem

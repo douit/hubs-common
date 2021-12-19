@@ -64,7 +64,7 @@ public class EntityMeta {
     }
 
     EntitySummaries.CommonUse commonUse;
-    public List<String> getCommonUseFields(){
+    public List<String> getCommonUseFieldNames(){
         return commonUse==null?Lists.newArrayList(getPks()):commonUse.getFields();
     }
 

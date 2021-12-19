@@ -2,11 +2,13 @@ package com.bluecc.income.procs;
 
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.exchange.IDelegator;
+import com.google.common.base.Stopwatch;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class DataStoreRpc extends DataStoreServiceGrpc.DataStoreServiceImplBase {
@@ -24,12 +26,11 @@ public class DataStoreRpc extends DataStoreServiceGrpc.DataStoreServiceImplBase 
             return;
         }
 
+        Stopwatch stopwatch = Stopwatch.createStarted();
         delegator.queryList(request, responseObserver);
+        stopwatch.stop();
+        log.info("cost {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
         responseObserver.onCompleted();
     }
 
-    @Override
-    public void queryTypeList(TypeNameList request, StreamObserver<SeedType> responseObserver) {
-        super.queryTypeList(request, responseObserver);
-    }
 }

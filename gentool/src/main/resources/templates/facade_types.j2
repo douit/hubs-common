@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.bluecc.hubs.stub";
+option java_outer_classname = "FacadeTypesProto";
+option objc_class_prefix = "FCP";
+
+package facade;
+
+// import "google/protobuf/any.proto";
+// import "routines.proto";
+{% for t in facade.config.exportTypes %}
+import "types/{{t|snakeCase}}.proto";
+{%- endfor %}
+
+service EntityTypesService {
+    {%- for t in facade.config.exportTypes %}
+    rpc Query{{t}}(QueryType) returns ({{t}}List) {}
+    {%- endfor %}
+}
+
+{% for t in facade.config.exportTypes %}
+message {{t}}List{
+  repeated domain.{{t}}Data data=1;
+}
+{% endfor %}
+
+message QueryType{
+  string version=1;
+}
+
