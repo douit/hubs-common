@@ -1,6 +1,8 @@
 package com.bluecc.hubs.fund;
 
 import com.google.common.collect.Maps;
+import lombok.Builder;
+import lombok.Data;
 import lombok.SneakyThrows;
 import org.yaml.snakeyaml.Yaml;
 
@@ -14,12 +16,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.bluecc.hubs.fund.TypeMappers.digestMapper;
 import static java.lang.String.format;
 
 @Singleton
 public class ProtoMeta {
+
+
     Map<String, EntityMeta> metaMap = Maps.newHashMap();
     Map<String, InspectMeta.EntityInspect> inspectMetas = Maps.newHashMap();
+    Map<String, TypeMappers.TypeMapper> typeMapperMap=Maps.newHashMap();
 
     public Map<String, EntityMeta> getMetaMap() {
         return metaMap;
@@ -34,6 +40,12 @@ public class ProtoMeta {
             }
         }
         return meta;
+    }
+
+    public TypeMappers.TypeMapper getTypeMapper(String typeName){
+        return typeMapperMap.computeIfAbsent(typeName, e->{
+            return digestMapper(typeName, this);
+        });
     }
 
     public SqlMeta getSqlMeta(String entityName) {

@@ -1,0 +1,333 @@
+commonUses:
+- entity: ShipmentRouteSegment
+  fields: [carrierPartyId, destFacilityId, shipmentRouteSegmentId, shipmentId, carrierServiceStatusId,
+    destContactMechId, shipmentMethodTypeId, destTelecomNumberId]
+- entity: Invoice
+  fields: [partyIdFrom, currencyUomId, statusId, invoiceTypeId, description, invoiceId,
+    invoiceDate, partyId]
+- entity: OrderAdjustment
+  fields: [orderItemSeqId, amount, createdDate, orderId, productPromoActionSeqId,
+    orderAdjustmentTypeId, productPromoRuleId, productPromoId, createdByUserLogin,
+    shipGroupSeqId, orderAdjustmentId]
+- entity: CarrierShipmentBoxType
+  fields: [packagingTypeCode, partyId, shipmentBoxTypeId]
+- entity: Product
+  fields: [longDescription, internalName, productId, isVariant, description, isVirtual,
+    productName, productTypeId]
+- entity: WebAnalyticsConfig
+  fields: [webAnalyticsCode, webAnalyticsTypeId, webSiteId]
+- entity: FixedAsset
+  fields: [fixedAssetTypeId, fixedAssetName, fixedAssetId]
+- entity: ShipmentItemBilling
+  fields: [shipmentId, invoiceId, invoiceItemSeqId, shipmentItemSeqId]
+- entity: PaymentGatewayResponse
+  fields: [amount, paymentServiceTypeEnumId, transCodeEnumId, paymentMethodTypeId,
+    transactionDate, referenceNum, currencyUomId, orderPaymentPreferenceId, gatewayCode,
+    gatewayFlag, paymentGatewayResponseId, paymentMethodId, altReference, gatewayMessage]
+- entity: ProductCategoryRollup
+  fields: [fromDate, productCategoryId, parentProductCategoryId]
+- entity: ShipmentCostEstimate
+  fields: [weightUnitPrice, carrierPartyId, orderFlatPrice, carrierRoleTypeId, productStoreId,
+    weightBreakId, shipmentMethodTypeId, orderItemFlatPrice, orderPricePercent, shipmentCostEstimateId]
+- entity: ProductPromoAction
+  fields: [quantity, productId, productPromoActionSeqId, orderAdjustmentTypeId, productPromoRuleId,
+    productPromoActionEnumId, productPromoId]
+- entity: SecurityGroupPermission
+  fields: [fromDate, permissionId, groupId]
+- entity: ProductStoreKeywordOvrd
+  fields: [fromDate, productStoreId, targetTypeEnumId, keyword, target]
+- entity: ProductAssoc
+  fields: [fromDate, quantity, productId, productIdTo, productAssocTypeId]
+- entity: FixedAssetProduct
+  fields: [fromDate, productId, fixedAssetId, fixedAssetProductTypeId]
+- entity: PaymentApplication
+  fields: [amountApplied, paymentId, invoiceId, paymentApplicationId]
+- entity: CustRequest
+  fields: [custRequestName, fromPartyId, lastModifiedDate, description, custRequestDate,
+    priority, lastModifiedByUserLogin, createdDate, statusId, custRequestId, custRequestTypeId,
+    productStoreId, createdByUserLogin]
+- entity: ShipmentReceipt
+  fields: [inventoryItemId, orderItemSeqId, productId, orderId, shipmentId, quantityAccepted,
+    datetimeReceived, quantityRejected, receiptId]
+- entity: InventoryItemDetail
+  fields: [inventoryItemId, accountingQuantityDiff, availableToPromiseDiff, effectiveDate,
+    inventoryItemDetailSeqId, quantityOnHandDiff]
+- entity: OrderAdjustmentBilling
+  fields: [amount, invoiceId, invoiceItemSeqId, orderAdjustmentId]
+- entity: ProductFeaturePrice
+  fields: [fromDate, currencyUomId, price, productFeatureId, productPriceTypeId]
+- entity: ProductConfigOption
+  fields: [configItemId, sequenceNum, configOptionId, configOptionName, description]
+- entity: PostalAddress
+  fields: [countryGeoId, attnName, city, toName, address1, postalCode, stateProvinceGeoId,
+    geoPointId, contactMechId]
+- entity: ProductFacilityAssoc
+  fields: [fromDate, facilityId, productId, sequenceNum, transitTime, facilityIdTo,
+    facilityAssocTypeId]
+- entity: OrderItemPriceInfo
+  fields: [orderItemSeqId, modifyAmount, orderId, productPriceActionSeqId, description,
+    productPriceRuleId, orderItemPriceInfoId]
+- entity: WorkEffortGoodStandard
+  fields: [fromDate, workEffortGoodStdTypeId, workEffortId, productId, statusId]
+- entity: Person
+  fields: [firstName, lastName, partyId]
+- entity: PartyContactMech
+  fields: [fromDate, allowSolicitation, partyId, contactMechId]
+- entity: ProductStoreRole
+  fields: [fromDate, roleTypeId, productStoreId, partyId]
+- entity: ProductStoreEmailSetting
+  fields: [xslfoAttachScreenLocation, emailType, bodyScreenLocation, subject, bccAddress,
+    fromAddress, productStoreId]
+- entity: ElectronicText
+  fields: [textData, dataResourceId]
+- entity: ItemIssuance
+  fields: [orderItemSeqId, quantity, orderId, itemIssuanceId, shipmentId, issuedDateTime,
+    shipmentItemSeqId, shipGroupSeqId]
+- entity: PartyGroup
+  fields: [groupName, partyId]
+- entity: ProductPromoProduct
+  fields: [productId, productPromoActionSeqId, productPromoRuleId, productPromoApplEnumId,
+    productPromoId, productPromoCondSeqId]
+- entity: OrderPaymentPreference
+  fields: [orderId, swipedFlag, paymentMethodTypeId, processAttempt, needsNsfRetry,
+    createdDate, orderPaymentPreferenceId, statusId, paymentMethodId, overflowFlag,
+    maxAmount, createdByUserLogin, presentFlag]
+- entity: ProductReview
+  fields: [userLoginId, productId, statusId, productStoreId, productRating, productReviewId,
+    productReview]
+- entity: SupplierProduct
+  fields: [supplierProductName, currencyUomId, availableFromDate, productId, canDropShip,
+    minimumOrderQuantity, partyId, supplierProductId, lastPrice]
+- entity: OrderStatus
+  fields: [orderStatusId, statusId, statusUserLogin, orderId, statusDatetime]
+- entity: Party
+  fields: [partyId]
+- entity: PartyTaxAuthInfo
+  fields: [fromDate, partyTaxId, taxAuthPartyId, isExempt, taxAuthGeoId, partyId]
+- entity: AgreementItem
+  fields: [currencyUomId, agreementId, agreementItemSeqId, agreementItemTypeId]
+- entity: AcctgTrans
+  fields: [isPosted, acctgTransTypeId, shipmentId, glFiscalTypeId, partyId, transactionDate,
+    acctgTransId, postedDate]
+- entity: DataResource
+  fields: [localeString, dataResourceId, dataResourceTypeId]
+- entity: ShipmentItem
+  fields: [quantity, productId, shipmentId, shipmentItemSeqId]
+- entity: FacilityContactMech
+  fields: [fromDate, facilityId, contactMechId]
+- entity: Agreement
+  fields: [fromDate, roleTypeIdTo, partyIdFrom, agreementId, agreementTypeId, description,
+    partyIdTo, roleTypeIdFrom]
+- entity: ProdCatalogCategory
+  fields: [fromDate, prodCatalogCategoryTypeId, productCategoryId, sequenceNum, prodCatalogId]
+- entity: OrderItem
+  fields: [orderItemSeqId, unitPrice, quantity, productId, orderId, isModifiedPrice,
+    isPromo, statusId, unitListPrice, itemDescription, selectedAmount, orderItemTypeId,
+    prodCatalogId]
+- entity: ProductCategoryRole
+  fields: [fromDate, roleTypeId, productCategoryId, partyId]
+- entity: ShipmentTimeEstimate
+  fields: [fromDate, geoIdFrom, leadTimeUomId, roleTypeId, leadTime, partyId, geoIdTo,
+    shipmentMethodTypeId]
+- entity: OrderItemShipGroupAssoc
+  fields: [orderItemSeqId, quantity, orderId, shipGroupSeqId]
+- entity: ProductCategoryContent
+  fields: [fromDate, prodCatContentTypeId, productCategoryId, contentId]
+- entity: ContentAssoc
+  fields: [fromDate, contentAssocTypeId, contentIdTo, contentId]
+- entity: ProductPromoCond
+  fields: [productPromoRuleId, inputParamEnumId, condValue, productPromoId, operatorEnumId,
+    productPromoCondSeqId]
+- entity: ProdCatalog
+  fields: [catalogName, useQuickAdd, prodCatalogId]
+- entity: QuoteItem
+  fields: [comments, quantity, productId, quoteItemSeqId, quoteUnitPrice, quoteId]
+- entity: ProductPromoCategory
+  fields: [productCategoryId, andGroupId, productPromoActionSeqId, productPromoRuleId,
+    includeSubCategories, productPromoApplEnumId, productPromoId, productPromoCondSeqId]
+- entity: FacilityLocation
+  fields: [areaId, facilityId, positionId, levelId, sectionId, locationTypeEnumId,
+    aisleId, locationSeqId]
+- entity: PartyStatus
+  fields: [statusDate, statusId, partyId]
+- entity: ProductFacilityLocation
+  fields: [facilityId, productId, locationSeqId]
+- entity: ShipmentBoxType
+  fields: [boxLength, dimensionUomId, description, boxHeight, boxWidth, shipmentBoxTypeId]
+- entity: ShipmentPackageRouteSeg
+  fields: [shipmentRouteSegmentId, shipmentId, shipmentPackageSeqId]
+- entity: ProductFeatureAppl
+  fields: [fromDate, productId, sequenceNum, productFeatureApplTypeId, productFeatureId]
+- entity: SubscriptionResource
+  fields: [serviceNameOnExpiry, subscriptionResourceId, description]
+- entity: PartyContactMechPurpose
+  fields: [fromDate, contactMechPurposeTypeId, partyId, contactMechId]
+- entity: RecurrenceInfo
+  fields: [recurrenceInfoId, startDateTime, recurrenceCount, recurrenceRuleId]
+- entity: ProductFeatureCategory
+  fields: [description, productFeatureCategoryId]
+- entity: FacilityLocationGeoPoint
+  fields: [fromDate, facilityId, geoPointId, locationSeqId]
+- entity: UserLoginSecurityGroup
+  fields: [fromDate, userLoginId, groupId]
+- entity: ProductStoreCatalog
+  fields: [fromDate, sequenceNum, productStoreId, prodCatalogId]
+- entity: UserLogin
+  fields: [userLoginId, currentPassword]
+- entity: ProductPriceRule
+  fields: [isSale, ruleName, productPriceRuleId]
+- entity: PartyRole
+  fields: [roleTypeId, partyId]
+- entity: OrderHeader
+  fields: [invoicePerShipment, salesChannelEnumId, entryDate, grandTotal, orderId,
+    orderTypeId, priority, statusId, visitId, createdBy, currencyUom, productStoreId,
+    orderDate, remainingSubTotal, webSiteId]
+- entity: PartyGeoPoint
+  fields: [fromDate, geoPointId, partyId]
+- entity: ProductFacility
+  fields: [facilityId, productId, minimumStock, reorderQuantity, daysToShip]
+- entity: CarrierShipmentMethod
+  fields: [sequenceNumber, roleTypeId, partyId, shipmentMethodTypeId]
+- entity: Shipment
+  fields: [originContactMechId, originFacilityId, createdDate, destinationContactMechId,
+    statusId, originTelecomNumberId, shipmentId, destinationTelecomNumberId, primaryOrderId,
+    estimatedShipCost, partyIdTo, shipmentTypeId, primaryShipGroupSeqId]
+- entity: ShipmentPackageContent
+  fields: [quantity, shipmentId, shipmentPackageSeqId, shipmentItemSeqId]
+- entity: SecurityGroup
+  fields: [groupName, groupId, description]
+- entity: ProductContent
+  fields: [fromDate, productId, contentId, productContentTypeId]
+- entity: Payment
+  fields: [partyIdFrom, amount, currencyUomId, paymentTypeId, statusId, paymentId,
+    paymentMethodId, partyIdTo, paymentMethodTypeId, effectiveDate]
+- entity: ProductStoreShipmentMeth
+  fields: [productStoreShipMethId, sequenceNumber, roleTypeId, allowUspsAddr, requireUspsAddr,
+    includeNoChargeItems, productStoreId, partyId, shipmentMethodTypeId]
+- entity: PartyRelationship
+  fields: [fromDate, roleTypeIdTo, partyIdFrom, partyIdTo, roleTypeIdFrom]
+- entity: ShipmentPackage
+  fields: [dateCreated, shipmentId, shipmentPackageSeqId]
+- entity: Content
+  fields: [localeString, contentId, contentTypeId, dataResourceId]
+- entity: ProductStoreFacility
+  fields: [fromDate, facilityId, productStoreId]
+- entity: ProductCategory
+  fields: [longDescription, productCategoryTypeId, productCategoryId, categoryName]
+- entity: WebSite
+  fields: [siteName, productStoreId, visualThemeSetId, webSiteId]
+- entity: PaymentMethod
+  fields: [fromDate, paymentMethodId, paymentMethodTypeId, partyId]
+- entity: ProductStorePaymentSetting
+  fields: [paymentService, paymentServiceTypeEnumId, paymentCustomMethodId, paymentMethodTypeId,
+    productStoreId]
+- entity: ProductPriceCond
+  fields: [productPriceCondSeqId, inputParamEnumId, condValue, operatorEnumId, productPriceRuleId]
+- entity: InventoryItem
+  fields: [inventoryItemId, ownerPartyId, currencyUomId, facilityId, productId, unitCost,
+    datetimeReceived, inventoryItemTypeId, locationSeqId]
+- entity: BillingAccountRole
+  fields: [fromDate, roleTypeId, billingAccountId, partyId]
+- entity: InvoiceItem
+  fields: [amount, quantity, productId, description, invoiceId, invoiceItemSeqId,
+    invoiceItemTypeId]
+- entity: ProductFeatureCategoryAppl
+  fields: [fromDate, productCategoryId, productFeatureCategoryId]
+- entity: ProductConfigItem
+  fields: [configItemId, configItemName, configItemTypeId, description]
+- entity: TelecomNumber
+  fields: [areaCode, contactNumber, contactMechId]
+- entity: ProductPromoCode
+  fields: [useLimitPerCode, lastModifiedByUserLogin, userEntered, createdDate, lastModifiedDate,
+    productPromoCodeId, requireEmailOrParty, productPromoId, createdByUserLogin, useLimitPerCustomer]
+- entity: ProductConfig
+  fields: [configItemId, fromDate, productId, sequenceNum, configTypeId, description,
+    isMandatory]
+- entity: ProductFeature
+  fields: [productFeatureTypeId, defaultSequenceNum, productFeatureId, description,
+    productFeatureCategoryId]
+- entity: ProductStore
+  fields: [productStoreId]
+- entity: QuantityBreak
+  fields: [thruQuantity, fromQuantity, quantityBreakTypeId, quantityBreakId]
+- entity: ProductPrice
+  fields: [fromDate, taxInPrice, currencyUomId, productId, price, productPricePurposeId,
+    productStoreGroupId, productPriceTypeId]
+- entity: ContactMech
+  fields: [contactMechTypeId, contactMechId]
+- entity: OrderItemShipGrpInvRes
+  fields: [inventoryItemId, orderItemSeqId, quantity, orderId, promisedDatetime, createdDatetime,
+    quantityNotAvailable, reserveOrderEnumId, reservedDatetime, priority, shipGroupSeqId]
+- entity: OrderContactMech
+  fields: [contactMechPurposeTypeId, orderId, contactMechId]
+- entity: ProductPromoRule
+  fields: [productPromoRuleId, ruleName, productPromoId]
+- entity: WorkEffort
+  fields: [workEffortId, estimatedSetupMillis, workEffortTypeId, revisionNumber, workEffortPurposeTypeId,
+    description, fixedAssetId, currentStatusId, workEffortName, estimatedMilliSeconds]
+- entity: ShipmentStatus
+  fields: [statusDate, statusId, shipmentId]
+- entity: BillingAccount
+  fields: [fromDate, accountLimit, accountCurrencyUomId, description, billingAccountId,
+    contactMechId]
+- entity: ProductKeyword
+  fields: [productId, statusId, keywordTypeId, keyword]
+- entity: FacilityContactMechPurpose
+  fields: [fromDate, facilityId, contactMechPurposeTypeId, contactMechId]
+- entity: CustRequestItem
+  fields: [custRequestId, custRequestItemSeqId, story]
+- entity: OrderRole
+  fields: [roleTypeId, orderId, partyId]
+- entity: RecurrenceRule
+  fields: [intervalNumber, byHourList, byDayList, countNumber, recurrenceRuleId, frequency]
+- entity: FixedAssetGeoPoint
+  fields: [fromDate, fixedAssetId, geoPointId]
+- entity: ProductStorePromoAppl
+  fields: [fromDate, sequenceNum, productStoreId, productPromoId]
+- entity: ProductConfigProduct
+  fields: [configItemId, quantity, productId, configOptionId]
+- entity: ProductPriceAction
+  fields: [amount, productPriceActionSeqId, productPriceActionTypeId, productPriceRuleId]
+- entity: ShipmentMethodType
+  fields: [description, shipmentMethodTypeId]
+- entity: QuoteTerm
+  fields: [termDays, quoteItemSeqId, termTypeId, quoteId]
+- entity: AcctgTransEntry
+  fields: [amount, roleTypeId, productId, glAccountId, reconcileStatusId, acctgTransEntryTypeId,
+    acctgTransId, currencyUomId, debitCreditFlag, glAccountTypeId, origAmount, origCurrencyUomId,
+    organizationPartyId, acctgTransEntrySeqId, partyId]
+- entity: OrderItemBilling
+  fields: [orderItemSeqId, amount, quantity, orderId, invoiceId, invoiceItemSeqId,
+    shipmentReceiptId]
+- entity: OrderItemShipGroup
+  fields: [carrierPartyId, orderId, carrierRoleTypeId, maySplit, isGift, shipGroupSeqId,
+    shipmentMethodTypeId, contactMechId]
+- entity: AgreementProductAppl
+  fields: [productId, price, agreementId, agreementItemSeqId]
+- entity: CustRequestType
+  fields: [custRequestTypeId, partyId]
+- entity: CreditCard
+  fields: [lastNameOnCard, firstNameOnCard, paymentMethodId, cardType, expireDate,
+    cardNumber, contactMechId]
+- entity: ProductSubscriptionResource
+  fields: [fromDate, gracePeriodOnExpiryUomId, useTimeUomId, productId, subscriptionResourceId,
+    useTime, gracePeriodOnExpiry]
+- entity: ProductPromo
+  fields: [promoName, userEntered, promoText, createdDate, productPromoId, useLimitPerOrder]
+- entity: Quote
+  fields: [currencyUomId, quoteTypeId, salesChannelEnumId, statusId, validFromDate,
+    productStoreId, issueDate, partyId, quoteId, validThruDate, quoteName]
+- entity: AgreementTerm
+  fields: [termDays, agreementId, agreementItemSeqId, termTypeId, agreementTermId,
+    termValue, invoiceItemTypeId]
+- entity: ProductCategoryMember
+  fields: [fromDate, productCategoryId, productId]
+- entity: ProductCategoryLink
+  fields: [fromDate, linkInfo, productCategoryId, sequenceNum, detailText, imageUrl,
+    titleText, linkTypeEnumId, linkSeqId]
+- entity: ProductFeatureIactn
+  fields: [productId, productFeatureIactnTypeId, productFeatureId, productFeatureIdTo]
+- entity: WorkEffortAssoc
+  fields: [fromDate, workEffortIdTo, sequenceNum, workEffortIdFrom, workEffortAssocTypeId]
+- entity: QuoteRole
+  fields: [roleTypeId, partyId, quoteId]

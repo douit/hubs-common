@@ -2,23 +2,27 @@ package com.bluecc.income.procs;
 
 import com.bluecc.hubs.feed.FactBag;
 import com.bluecc.hubs.fund.FnUtil;
-import com.bluecc.hubs.fund.descriptor.EntityNames;
+import com.bluecc.hubs.fund.ProtoMeta;
+import com.bluecc.hubs.fund.Tuple2;
+import com.bluecc.hubs.fund.TypeMappers;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.GuiceTestRunner;
+import com.google.common.collect.Maps;
+import com.google.protobuf.Descriptors;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.FnUtil.wrap;
+import static com.bluecc.hubs.fund.TypeMappers.digestMapper;
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,21 +32,25 @@ public class TypeEntityProcsTest {
     TypeEntityProcs typeEntityProcs;
     @Inject
     StatusTypes statusTypes;
+    @Inject
+    FactBag factBag;
+    @Inject
+    ProtoMeta protoMeta;
 
     @Test
     public void getEntityData() throws InvalidProtocolBufferException {
-        CustRequestTypeData.Builder custReqType=CustRequestTypeData.newBuilder();
+        CustRequestTypeData.Builder custReqType = CustRequestTypeData.newBuilder();
         typeEntityProcs.factBag.getEntityData("RF_BUGFIX", custReqType);
-        CustRequestTypeData data=custReqType.build();
+        CustRequestTypeData data = custReqType.build();
         System.out.println(data);
         assertEquals("Request For Bug Fix", data.getDescription());
     }
 
     @Test
     public void getEnumeration() throws InvalidProtocolBufferException {
-        EnumerationData.Builder typeBuilder=EnumerationData.newBuilder();
+        EnumerationData.Builder typeBuilder = EnumerationData.newBuilder();
         typeEntityProcs.factBag.getEntityData("WEB_SALES_CHANNEL", typeBuilder);
-        EnumerationData data=typeBuilder.build();
+        EnumerationData data = typeBuilder.build();
         System.out.println(data);
         assertEquals("Web Channel", data.getDescription());
         assertEquals("ORDER_SALES_CHANNEL", data.getEnumTypeId());
@@ -50,19 +58,19 @@ public class TypeEntityProcsTest {
     }
 
     @Test
-    public void getAll(){
-        typeEntityProcs.factBag.all("StatusType").forEach((k,v)->{
+    public void getAll() {
+        typeEntityProcs.factBag.all("StatusType").forEach((k, v) -> {
             try {
-                StatusTypeData d=StatusTypeData.parseFrom(v);
-                System.out.println(k+": "+d);
+                StatusTypeData d = StatusTypeData.parseFrom(v);
+                System.out.println(k + ": " + d);
             } catch (InvalidProtocolBufferException e) {
                 fail(e.getMessage());
             }
         });
 
 
-        FnUtil.CheckedFunction<byte[],StatusTypeData> parseFn=StatusTypeData::parseFrom;
-        List<StatusTypeData> ds= typeEntityProcs.factBag.all("StatusType")
+        FnUtil.CheckedFunction<byte[], StatusTypeData> parseFn = StatusTypeData::parseFrom;
+        List<StatusTypeData> ds = typeEntityProcs.factBag.all("StatusType")
                 .readAllMap()
                 .values().stream()
                 // .map(wrap(bytes -> StatusTypeData.parseFrom(bytes)))
@@ -76,32 +84,32 @@ public class TypeEntityProcsTest {
     }
 
     @Test
-    public void testAllTypes(){
-        FactBag types=typeEntityProcs.factBag;
-        List<StatusTypeData> ds=types.allTypes("StatusType", StatusTypeData::parseFrom);
+    public void testAllTypes() {
+        FactBag types = typeEntityProcs.factBag;
+        List<StatusTypeData> ds = types.allTypes("StatusType", StatusTypeData::parseFrom);
         System.out.println(ds.size());
         ds.forEach(e -> System.out.println(e.getDescription()));
     }
 
     @Test
-    public void testStatusItems(){
-        FactBag types=typeEntityProcs.factBag;
-        String statusTypeId="ORDER_ITEM_STATUS";
+    public void testStatusItems() {
+        FactBag types = typeEntityProcs.factBag;
+        String statusTypeId = "ORDER_ITEM_STATUS";
         types.allTypes("StatusItem", StatusItemData::parseFrom)
                 .stream().filter(e -> e.getStatusTypeId().equals(statusTypeId))
                 .map(e -> e.getStatusId())
                 .collect(Collectors.toList())
                 .forEach(t -> System.out.println(t));
 
-        String statusId="ORDER_CREATED";
+        String statusId = "ORDER_CREATED";
         System.out.format("from %s to:\n", statusId);
         types.allTypes("StatusValidChange", StatusValidChangeData::parseFrom)
                 .stream().filter(e -> e.getStatusId().equals(statusId))
                 .map(e -> e.getStatusIdTo())
                 .collect(Collectors.toSet())
-                .forEach(e -> System.out.println("\t-> "+e));
+                .forEach(e -> System.out.println("\t-> " + e));
 
-        String statusIdTo="ORDER_PROCESSING";
+        String statusIdTo = "ORDER_PROCESSING";
         Optional<String> transName = statusTypes.getTransitionName(statusId, statusIdTo);
         assertTrue(transName.isPresent());
         assertEquals("Process Order", transName.get());
@@ -123,6 +131,104 @@ public class TypeEntityProcsTest {
                 .map(t -> t.f0)
                 .collect(Collectors.toSet()))
                 .contains("WEB_SALES_CHANNEL");
+    }
+
+    @Test
+    public void testTypeAndItems() {
+        String typeName = "StatusType";
+
+        // types
+        List<SeedType> seedTypes = getStatusType(typeName).stream().map(e -> {
+            System.out.format("%s -> %d\n", e.f0.getStatusTypeId(), e.f1.size());
+            SeedType seedType = SeedType.newBuilder()
+                    .setTypeId(e.f0.getStatusTypeId())
+                    .setParentTypeId(e.f0.getParentTypeId())
+                    .setDescription(e.f0.getDescription())
+                    .putAllItems(convertItems(e.f1))
+                    .build();
+            return seedType;
+        }).collect(Collectors.toList());
+
+        seedTypes.forEach(e -> System.out.println(e));
+    }
+
+    // convert items
+    private Map<String, SeedTypeItem> convertItems(List<StatusItemData> items) {
+        Map<String, SeedTypeItem> result = Maps.newHashMap();
+        items.forEach(item -> {
+            result.put(item.getStatusId(), SeedTypeItem.newBuilder()
+                    .setItemId(item.getStatusId())
+                    .setDescription(item.getDescription())
+                    .setItemTypeId(item.getStatusTypeId())
+                    .build());
+        });
+        return result;
+    }
+
+    // type
+    private List<Tuple2<StatusTypeData, List<StatusItemData>>> getStatusType(String typeName) {
+        return factBag.allTypes(typeName, StatusTypeData::parseFrom)
+                .stream()
+                .map(e -> Tuple2.of(e, getStatusItems(e.getStatusTypeId())))
+                .collect(Collectors.toList());
+    }
+
+    // items
+    private List<StatusItemData> getStatusItems(String typeId) {
+        List<StatusItemData> items = factBag.allTypes("StatusItem", StatusItemData::parseFrom)
+                .stream().filter(e -> e.getStatusTypeId().equals(typeId))
+                .collect(Collectors.toList());
+        return items;
+    }
+
+    // ------------
+
+    @Test
+    public void testConvertTypeMappers() {
+        String typeName = "ContactMechType";
+        List<SeedType> seedTypes = factBag.allTypes(typeName, ContactMechTypeData::parseFrom)
+                .stream()
+                .peek(e -> System.out.println(e))
+                .map(e -> mapBy(typeName, e))
+                .collect(Collectors.toList());
+
+        seedTypes.forEach(e -> {
+            System.out.println(e);
+        });
+
+        // factBag.allTypes("StatusItem", StatusItemData::parseFrom)
+        //         .stream()
+        //         .peek(e -> System.out.println(e))
+        //         .collect(Collectors.toList());
+    }
+
+    @Test
+    public void testQueryTypeMapper(){
+        System.out.println(protoMeta.getTypeMapper("ContactMechType"));
+        System.out.println(digestMapper("ContactMechType", protoMeta));
+    }
+
+
+    private SeedType mapBy(String typeName, Message e) {
+        TypeMappers.TypeMapper typeMapper = protoMeta.getTypeMapper(typeName);
+        // TypeMappers.TypeMapper itemTypeMapper=protoMeta.getTypeMapper(itemTypeName);
+        Descriptors.Descriptor descriptor = e.getDescriptorForType();
+        System.out.println(typeMapper);
+        String idFld=typeMapper.getIdField();
+        System.out.println("id fld: "+idFld);
+        Object val = e.getField(descriptor.findFieldByName(idFld));
+        String descFld=typeMapper.getDescriptionField();
+        String description="";
+        if(descFld!=null){
+            description=(String)e.getField(descriptor.findFieldByName(idFld));
+        }
+        String parent=typeMapper.getParentField()==null?""
+                :(String)e.getField(descriptor.findFieldByName(typeMapper.getParentField()));
+        return SeedType.newBuilder()
+                .setTypeId(val.toString())
+                .setParentTypeId(parent)
+                .setDescription(description)
+                .build();
     }
 }
 

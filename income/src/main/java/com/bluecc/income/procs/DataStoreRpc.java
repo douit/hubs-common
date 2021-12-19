@@ -1,9 +1,6 @@
 package com.bluecc.income.procs;
 
-import com.bluecc.hubs.stub.DataStoreServiceGrpc;
-import com.bluecc.hubs.stub.EntityBucket;
-import com.bluecc.hubs.stub.QueryList;
-import com.bluecc.hubs.stub.QueryProfile;
+import com.bluecc.hubs.stub.*;
 import com.bluecc.income.exchange.IDelegator;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
@@ -29,5 +26,10 @@ public class DataStoreRpc extends DataStoreServiceGrpc.DataStoreServiceImplBase 
 
         delegator.queryList(request, responseObserver);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void queryTypeList(TypeNameList request, StreamObserver<SeedType> responseObserver) {
+        super.queryTypeList(request, responseObserver);
     }
 }

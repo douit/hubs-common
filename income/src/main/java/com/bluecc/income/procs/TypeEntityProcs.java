@@ -2,6 +2,7 @@ package com.bluecc.income.procs;
 
 import com.bluecc.hubs.feed.FactBag;
 import com.bluecc.hubs.fund.DataSetUtil;
+import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.Tuple2;
 import com.bluecc.hubs.stub.EnumerationData;
 import com.bluecc.hubs.stub.StatusItemData;
@@ -30,6 +31,9 @@ public class TypeEntityProcs {
 
     @Inject
     FactBag factBag;
+    @Inject
+    ProtoMeta protoMeta;
+
     int total;
     public long publishSeedFiles() {
         long start = System.currentTimeMillis();

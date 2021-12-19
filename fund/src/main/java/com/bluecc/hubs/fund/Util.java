@@ -35,10 +35,7 @@ import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -175,6 +172,10 @@ public class Util {
 
     public static void writeFile(String string, Path path) throws IOException {
         writeFile(string, path.toFile());
+    }
+
+    public static void writeFile(String string, String path) throws IOException {
+        writeFile(string, new File(path));
     }
 
     public static void writeFile(String string, File file) throws IOException {
@@ -411,6 +412,11 @@ public class Util {
         System.out.println(toYaml(obj));
     }
 
+    public static Map<String, Object> readYaml(String inputFile) throws FileNotFoundException {
+        InputStream inputStream = new FileInputStream(inputFile);
+        Yaml yaml = new Yaml();
+        return yaml.load(inputStream);
+    }
 
     @SneakyThrows
     public static List<Path> scanFiles(String dir, String fileSuffix) {

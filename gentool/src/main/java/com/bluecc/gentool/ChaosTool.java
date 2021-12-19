@@ -1,14 +1,14 @@
 package com.bluecc.gentool;
 
-import com.bluecc.hubs.fund.TemplateUtil;
-import com.bluecc.hubs.fund.EntityMeta;
-import com.bluecc.hubs.fund.ProtoMeta;
-import com.bluecc.hubs.fund.Tuple2;
+import com.bluecc.hubs.fund.*;
+import com.bluecc.hubs.fund.descriptor.EntitySummaries;
 import com.google.common.collect.*;
 import com.google.gson.JsonObject;
 import com.hubspot.jinjava.Jinjava;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -18,25 +18,48 @@ import java.util.stream.Collectors;
 
 import static com.bluecc.gentool.Stereotypes.convertToStereotype;
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
+import static com.bluecc.hubs.fund.descriptor.EntitySummaries.SUMMARY_CFG;
 
 public class ChaosTool {
+
+    Map<String, Set<String>> commonUses = Maps.newHashMap();
+
+    void putCommonUse(String entity, String... fields) {
+        for (String fld : fields) {
+            Set<String> flds = commonUses.computeIfAbsent(entity, e -> new HashSet<>());
+            flds.add(fld);
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         // String dataFile="dataset/accounting/PaymentApplicationTestsData.xml";
         ChaosTool chaosTool = new ChaosTool();
         // System.out.println(chaosTool.gen(dataFile));
 
-        String dataFile="dataset/order/OrderDemoData.xml";
+        String dataFile = "dataset/order/OrderDemoData.xml";
         // String dataFile="dataset/accounting/PaymentApplicationTestsData.xml";
         // String dataFile = "dataset/livecases/SalesOrder_DEMO10090.xml";
         // String dataFile="dataset/livecases/SalesOrderAccounting_DEMO1002.xml";
         chaosTool.deduceStereotypes(dataFile);
+
+        // asset/facts/common_use.yml
+        System.out.println("common-use for Product: " + chaosTool.commonUses.get("Product"));
+        System.out.println("common-use for ProductPrice: " + chaosTool.commonUses.get("ProductPrice"));
+        String cnt=Util.toYaml(
+                new EntitySummaries.EntitySummary(
+                        chaosTool.commonUses.entrySet()
+                                .stream()
+                                .map(e -> new EntitySummaries.CommonUse(e.getKey(), new ArrayList<>(e.getValue())))
+                                .collect(Collectors.toList())
+                )
+        );
+        Util.writeFile(cnt, SUMMARY_CFG);
     }
 
     AllMetas.EntityList entityList;
 
     ChaosTool() {
-        entityList= AllMetas.EntityList.load();
+        entityList = AllMetas.EntityList.load();
     }
 
     public void deduceStereotypes(String dataFile) {
@@ -47,8 +70,8 @@ public class ChaosTool {
 
         List<String> result = Lists.newArrayList();
         for (String ent : dataMaps.keySet()) {
-            String r=deduce(dataMaps, ent);
-            if(r!=null) {
+            String r = deduce(dataMaps, ent);
+            if (r != null) {
                 result.add(r);
             }
         }
@@ -63,7 +86,7 @@ public class ChaosTool {
         // assertNotNull(ste);
 
         Set<String> fields = Sets.newHashSet(ste.fields.keySet()); // copy
-
+        putCommonUse(ent, fields.toArray(new String[0]));
         // one
         ste.getFieldList().stream()
                 .map(f -> Tuple2.of(f.meta.getName(),
@@ -111,10 +134,10 @@ public class ChaosTool {
         System.out.format("\tpk: %s\n", ste.meta.getPk());
         fields.remove(ste.meta.getPk());
 
-        if(ste.meta.isCombine()){
-            Set<String> slaveKeys=fields.stream().filter(f -> ste.meta.getPks().contains(f))
+        if (ste.meta.isCombine()) {
+            Set<String> slaveKeys = fields.stream().filter(f -> ste.meta.getPks().contains(f))
                     .collect(Collectors.toSet());
-            if(!slaveKeys.isEmpty()) {
+            if (!slaveKeys.isEmpty()) {
                 System.out.format("\tslave-keys: %s\n", slaveKeys);
                 fields.removeAll(slaveKeys);
             }
@@ -157,7 +180,7 @@ public class ChaosTool {
                         || f.isIndicator())
                 .map(f -> f.getName())
                 .collect(Collectors.toSet());
-        if(!measureFlds.isEmpty()) {
+        if (!measureFlds.isEmpty()) {
             System.out.println("\tmeasure: " + measureFlds);
             fields.removeAll(measureFlds);
         }
@@ -183,7 +206,7 @@ public class ChaosTool {
         }
 
         // spec-auto-fields
-        Map<String, String> autoUniques=ImmutableMap.of(
+        Map<String, String> autoUniques = ImmutableMap.of(
                 "supplierProductId", "SupplierProduct",
                 "partyTaxId", "PartyTaxAuthInfo"
         );
@@ -192,12 +215,12 @@ public class ChaosTool {
             //     System.out.println("\tauto-unique: "+fldName);
             //     fields.remove("supplierProductId");
             // }
-            if(autoUniques.containsKey(fldName) ){
-                String ownerEnt=autoUniques.get(fldName);
-                if(ent.equals(ownerEnt)) {
+            if (autoUniques.containsKey(fldName)) {
+                String ownerEnt = autoUniques.get(fldName);
+                if (ent.equals(ownerEnt)) {
                     System.out.println("\tauto-unique: " + fldName);
-                }else{
-                    FieldComplementSpec relSpec=FieldComplementSpec.builder()
+                } else {
+                    FieldComplementSpec relSpec = FieldComplementSpec.builder()
                             .type("one")
                             .relEntity(ownerEnt)
                             .name(fldName)
@@ -210,17 +233,17 @@ public class ChaosTool {
         }
 
         // complement
-        List<FieldComplementSpec> specs=fields.stream()
+        List<FieldComplementSpec> specs = fields.stream()
                 .map(f -> ste.meta.getField(f).get())
                 .map(f -> complementSpec(ent, f))
-                .filter(f -> f!=null)
+                .filter(f -> f != null)
                 .peek(s -> System.out.format("\tcomplement %s: %s\n", s.name, s))
                 .collect(Collectors.toList());
 
         fields.removeAll(specs.stream().map(s -> s.name).collect(Collectors.toSet()));
 
         // enums
-        Map<String, Set<String>> enumTypes=ImmutableMap.of(
+        Map<String, Set<String>> enumTypes = ImmutableMap.of(
                 "configItemTypeId", Sets.newHashSet("MULTIPLE", "SINGLE"),
                 "configTypeId", Sets.newHashSet("QUESTION")
         );
@@ -229,13 +252,13 @@ public class ChaosTool {
                 .collect(Collectors.toSet()));
 
         // deform fields
-        Map<String, Set<String>> deformFields=ImmutableMap.of(
+        Map<String, Set<String>> deformFields = ImmutableMap.of(
                 "FacilityLocation",
                 Sets.newHashSet("areaId", "positionId",
                         "levelId", "sectionId", "aisleId")
         );
-        if(deformFields.containsKey(ent)) {
-            Set<String> flds=deformFields.get(ent);
+        if (deformFields.containsKey(ent)) {
+            Set<String> flds = deformFields.get(ent);
             fields.removeAll(fields.stream().filter(f ->
                             Objects.requireNonNull(flds).contains(f))
                     .peek(f -> System.out.format("deform-field %s\n", f))
@@ -243,7 +266,7 @@ public class ChaosTool {
         }
 
         // ...
-        if(fields.isEmpty()){
+        if (fields.isEmpty()) {
             return null;
         }
 
@@ -298,8 +321,8 @@ public class ChaosTool {
                         .build();
         }
 
-        AllMetas.EntityInfo info=entityList.getInfoByKey(fld.getName());
-        if(info!=null){
+        AllMetas.EntityInfo info = entityList.getInfoByKey(fld.getName());
+        if (info != null) {
             return FieldComplementSpec.builder()
                     .type("one")
                     .relEntity(info.getName())
@@ -308,15 +331,15 @@ public class ChaosTool {
                     .build();
         }
 
-        String fldName=fld.getName();
-        if(fldName.endsWith("UserLogin")){
+        String fldName = fld.getName();
+        if (fldName.endsWith("UserLogin")) {
             return FieldComplementSpec.builder()
                     .type("one")
                     .relEntity("UserLogin")
                     .name(fld.getName())
                     .relFieldName("userLoginId")
                     .build();
-        }else if(fldName.endsWith("UomId")){
+        } else if (fldName.endsWith("UomId")) {
             return FieldComplementSpec.builder()
                     .type("one")
                     .relEntity("Uom")
@@ -327,7 +350,7 @@ public class ChaosTool {
 
         // if(ent.equals("SupplierProduct"))
         // supplierProductId可以作为SupplierProduct实体的唯一主键, 并能在OrderItem中引用
-        if(fldName.equals("supplierProductId") && !ent.equals("SupplierProduct")){
+        if (fldName.equals("supplierProductId") && !ent.equals("SupplierProduct")) {
             return FieldComplementSpec.builder()
                     .type("one")
                     .relEntity("SupplierProduct")
