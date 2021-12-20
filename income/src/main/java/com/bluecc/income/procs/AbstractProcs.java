@@ -71,6 +71,11 @@ public class AbstractProcs {
                 fn.apply(new IProc.ProcContext(handle, new ResultSubscriber<>())));
     }
 
+    public <T> T single(Function<IProc.ProcContext, T> fn){
+        return hubsStore.getJdbi().withHandle(handle ->
+                fn.apply(new IProc.ProcContext(handle, new ResultSubscriber<>())));
+    }
+
     protected void truncate(IProc.ProcContext ctx, List<String> tableNames) {
         for (String tableName : tableNames) {
             ctx.getHandle().execute("truncate " + tableName);

@@ -2,6 +2,8 @@ package com.bluecc.income.exchange;
 
 import com.bluecc.hubs.fund.Util;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.primitives.Primitives;
 import com.linecorp.armeria.common.*;
 import com.linecorp.armeria.common.annotation.Nullable;
 import com.linecorp.armeria.server.ServiceRequestContext;
@@ -40,12 +42,19 @@ public class GsonConverters {
                 ServiceRequestContext ctx, ResponseHeaders headers,
                 @Nullable Object result, HttpHeaders trailers) throws Exception {
 
-            if (result instanceof Response) {
+            if (result == null) {
+                return ResponseConverterFunction.fallthrough();
+            }
+
+            if (result.getClass().isPrimitive() || Primitives.isWrapperType(result.getClass())) {
+                return HttpResponse.of(headers, HttpData.ofUtf8(Util.prettyJson(
+                        ImmutableMap.of("result", result))), trailers);
+            } else if (result instanceof Response) {
                 final Response response = (Response) result;
                 final HttpData body = HttpData.ofUtf8(response.result() + ':' + response.from());
                 return HttpResponse.of(headers, body, trailers);
-            }else{
-                String resultBody= Util.prettyJson(result);
+            } else {
+                String resultBody = Util.prettyJson(result);
                 final HttpData body = HttpData.ofUtf8(resultBody);
                 return HttpResponse.of(headers, body, trailers);
             }

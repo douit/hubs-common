@@ -114,6 +114,7 @@ public class CliMain {
         jc.parse(args);
         String parsedCmdStr = jc.getParsedCommand();
         if(parsedCmdStr!=null) {
+            System.out.println("global-opts: "+opts);
             JCommander cmdWrapper=jc.findCommandByAlias(parsedCmdStr);
             // System.out.println(cmd.getObjects().get(0).getClass().getName());
             ICmd cmd=(ICmd) cmdWrapper.getObjects().get(0);

@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -529,18 +529,45 @@ public class PartyGroupDelegator extends AbstractProcs implements IChainQuery<Pa
         return ctx.attach(Dao.class).getPartyGroup(id);
     }
 
+    @Get("/party_groups/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public PartyGroup get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<PartyGroup> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listPartyGroup();
+    }
+
+    @Get("/party_groups")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<PartyGroup> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countPartyGroup();
     }
 
+    @Get("/party_groups/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/party_groups")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(PartyGroup partyGroup){
         return store(partyGroup, true);
+    }
+
+    @Put("/party_groups")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(PartyGroup partyGroup){
+        return store(partyGroup, false);
     }
 
     public String store(PartyGroup partyGroup, boolean genId){

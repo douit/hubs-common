@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -805,18 +805,45 @@ public class InvoiceItemDelegator extends AbstractProcs implements IChainQuery<I
         return ctx.attach(Dao.class).getInvoiceItem(id);
     }
 
+    @Get("/invoice_items/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public InvoiceItem get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<InvoiceItem> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listInvoiceItem();
+    }
+
+    @Get("/invoice_items")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<InvoiceItem> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countInvoiceItem();
     }
 
+    @Get("/invoice_items/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/invoice_items")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(InvoiceItem invoiceItem){
         return store(invoiceItem, true);
+    }
+
+    @Put("/invoice_items")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(InvoiceItem invoiceItem){
+        return store(invoiceItem, false);
     }
 
     public String store(InvoiceItem invoiceItem, boolean genId){

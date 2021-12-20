@@ -24,6 +24,7 @@ import com.linecorp.armeria.server.annotation.Default;
 import com.linecorp.armeria.server.annotation.Get;
 import com.linecorp.armeria.server.annotation.Param;
 import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.docs.DocService;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -44,15 +45,17 @@ public class HttpEndpoints extends AbstractProcs {
 
     public static void run(ICmd.Opts globalOpts) {
         HttpEndpoints endpoints = startup(HttpEndpoints.class);
-        endpoints.init();
+        endpoints.init(globalOpts);
         endpoints.serve();
     }
 
     @Inject
     ProtoMeta protoMeta;
 
-    void init(){
-        setupEntities();  // sql tracer
+    void init(ICmd.Opts globalOpts){
+        if(!globalOpts.isSilent()) {
+            setupEntities();  // sql tracer
+        }
     }
 
     void serve() {
@@ -127,6 +130,16 @@ public class HttpEndpoints extends AbstractProcs {
 
     private void initServices(ServerBuilder sb) {
         sb.annotatedService(catalogProvider.get());
+
+        // doc
+        final DocService docService =
+                DocService.builder()
+                        .examplePaths(CatalogLocalCaches.class,
+                                "cachedProductsInCatalog",
+                                "/catalogs/HotelFac")
+                        .build();
+        sb.serviceUnder("/docs", docService);
+
         // sb.annotatedService(workEffortDelegatorProvider.get());
         delegators.values().forEach(dele -> sb.annotatedService(dele));
     }

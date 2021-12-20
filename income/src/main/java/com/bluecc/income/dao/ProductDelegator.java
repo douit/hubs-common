@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -1771,18 +1771,45 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         return ctx.attach(Dao.class).getProduct(id);
     }
 
+    @Get("/products/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Product get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<Product> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listProduct();
+    }
+
+    @Get("/products")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<Product> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countProduct();
     }
 
+    @Get("/products/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/products")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(Product product){
         return store(product, true);
+    }
+
+    @Put("/products")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(Product product){
+        return store(product, false);
     }
 
     public String store(Product product, boolean genId){

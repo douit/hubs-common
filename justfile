@@ -119,4 +119,9 @@ start:
 
 http:
 	java -jar income/target/income-1.0-SNAPSHOT-shaded.jar -s http
+http-verbose:
+	java -jar income/target/income-1.0-SNAPSHOT-shaded.jar http
+
+dist-http:
+	just dist && just http-verbose
 

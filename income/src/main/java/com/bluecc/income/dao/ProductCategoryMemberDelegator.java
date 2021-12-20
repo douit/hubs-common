@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -253,18 +253,45 @@ public class ProductCategoryMemberDelegator extends AbstractProcs implements ICh
         return ctx.attach(Dao.class).getProductCategoryMember(id);
     }
 
+    @Get("/product_category_members/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public ProductCategoryMember get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<ProductCategoryMember> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listProductCategoryMember();
+    }
+
+    @Get("/product_category_members")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<ProductCategoryMember> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countProductCategoryMember();
     }
 
+    @Get("/product_category_members/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/product_category_members")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(ProductCategoryMember productCategoryMember){
         return store(productCategoryMember, true);
+    }
+
+    @Put("/product_category_members")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(ProductCategoryMember productCategoryMember){
+        return store(productCategoryMember, false);
     }
 
     public String store(ProductCategoryMember productCategoryMember, boolean genId){

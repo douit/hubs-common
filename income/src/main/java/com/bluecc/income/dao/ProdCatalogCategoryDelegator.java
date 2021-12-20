@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -253,18 +253,45 @@ public class ProdCatalogCategoryDelegator extends AbstractProcs implements IChai
         return ctx.attach(Dao.class).getProdCatalogCategory(id);
     }
 
+    @Get("/prod_catalog_categories/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public ProdCatalogCategory get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<ProdCatalogCategory> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listProdCatalogCategory();
+    }
+
+    @Get("/prod_catalog_categories")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<ProdCatalogCategory> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countProdCatalogCategory();
     }
 
+    @Get("/prod_catalog_categories/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/prod_catalog_categories")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(ProdCatalogCategory prodCatalogCategory){
         return store(prodCatalogCategory, true);
+    }
+
+    @Put("/prod_catalog_categories")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(ProdCatalogCategory prodCatalogCategory){
+        return store(prodCatalogCategory, false);
     }
 
     public String store(ProdCatalogCategory prodCatalogCategory, boolean genId){

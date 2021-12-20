@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -437,18 +437,45 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         return ctx.attach(Dao.class).getWebSite(id);
     }
 
+    @Get("/web_sites/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public WebSite get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<WebSite> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listWebSite();
+    }
+
+    @Get("/web_sites")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<WebSite> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countWebSite();
     }
 
+    @Get("/web_sites/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/web_sites")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(WebSite webSite){
         return store(webSite, true);
+    }
+
+    @Put("/web_sites")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(WebSite webSite){
+        return store(webSite, false);
     }
 
     public String store(WebSite webSite, boolean genId){

@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -1035,18 +1035,45 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
         return ctx.attach(Dao.class).getOrderItem(id);
     }
 
+    @Get("/order_items/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public OrderItem get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<OrderItem> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listOrderItem();
+    }
+
+    @Get("/order_items")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<OrderItem> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countOrderItem();
     }
 
+    @Get("/order_items/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/order_items")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(OrderItem orderItem){
         return store(orderItem, true);
+    }
+
+    @Put("/order_items")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(OrderItem orderItem){
+        return store(orderItem, false);
     }
 
     public String store(OrderItem orderItem, boolean genId){

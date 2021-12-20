@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -437,18 +437,45 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         return ctx.attach(Dao.class).getBillingAccount(id);
     }
 
+    @Get("/billing_accounts/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public BillingAccount get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<BillingAccount> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listBillingAccount();
+    }
+
+    @Get("/billing_accounts")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<BillingAccount> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countBillingAccount();
     }
 
+    @Get("/billing_accounts/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/billing_accounts")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(BillingAccount billingAccount){
         return store(billingAccount, true);
+    }
+
+    @Put("/billing_accounts")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(BillingAccount billingAccount){
+        return store(billingAccount, false);
     }
 
     public String store(BillingAccount billingAccount, boolean genId){

@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -299,18 +299,45 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         return ctx.attach(Dao.class).getSecurityGroup(id);
     }
 
+    @Get("/security_groups/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public SecurityGroup get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<SecurityGroup> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listSecurityGroup();
+    }
+
+    @Get("/security_groups")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<SecurityGroup> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countSecurityGroup();
     }
 
+    @Get("/security_groups/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/security_groups")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(SecurityGroup securityGroup){
         return store(securityGroup, true);
+    }
+
+    @Put("/security_groups")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(SecurityGroup securityGroup){
+        return store(securityGroup, false);
     }
 
     public String store(SecurityGroup securityGroup, boolean genId){

@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -391,18 +391,45 @@ public class ProductCategoryRollupDelegator extends AbstractProcs implements ICh
         return ctx.attach(Dao.class).getProductCategoryRollup(id);
     }
 
+    @Get("/product_category_rollups/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public ProductCategoryRollup get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<ProductCategoryRollup> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listProductCategoryRollup();
+    }
+
+    @Get("/product_category_rollups")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<ProductCategoryRollup> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countProductCategoryRollup();
     }
 
+    @Get("/product_category_rollups/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/product_category_rollups")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(ProductCategoryRollup productCategoryRollup){
         return store(productCategoryRollup, true);
+    }
+
+    @Put("/product_category_rollups")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(ProductCategoryRollup productCategoryRollup){
+        return store(productCategoryRollup, false);
     }
 
     public String store(ProductCategoryRollup productCategoryRollup, boolean genId){

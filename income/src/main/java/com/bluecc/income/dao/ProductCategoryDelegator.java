@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -851,18 +851,45 @@ public class ProductCategoryDelegator extends AbstractProcs implements IChainQue
         return ctx.attach(Dao.class).getProductCategory(id);
     }
 
+    @Get("/product_categories/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public ProductCategory get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<ProductCategory> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listProductCategory();
+    }
+
+    @Get("/product_categories")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<ProductCategory> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countProductCategory();
     }
 
+    @Get("/product_categories/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/product_categories")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(ProductCategory productCategory){
         return store(productCategory, true);
+    }
+
+    @Put("/product_categories")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(ProductCategory productCategory){
+        return store(productCategory, false);
     }
 
     public String store(ProductCategory productCategory, boolean genId){

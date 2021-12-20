@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -1035,18 +1035,45 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         return ctx.attach(Dao.class).getFixedAsset(id);
     }
 
+    @Get("/fixed_assets/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public FixedAsset get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<FixedAsset> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listFixedAsset();
+    }
+
+    @Get("/fixed_assets")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<FixedAsset> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countFixedAsset();
     }
 
+    @Get("/fixed_assets/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/fixed_assets")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(FixedAsset fixedAsset){
         return store(fixedAsset, true);
+    }
+
+    @Put("/fixed_assets")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(FixedAsset fixedAsset){
+        return store(fixedAsset, false);
     }
 
     public String store(FixedAsset fixedAsset, boolean genId){

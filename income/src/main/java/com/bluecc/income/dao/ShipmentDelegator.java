@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -1449,18 +1449,45 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         return ctx.attach(Dao.class).getShipment(id);
     }
 
+    @Get("/shipments/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Shipment get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<Shipment> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listShipment();
+    }
+
+    @Get("/shipments")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<Shipment> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countShipment();
     }
 
+    @Get("/shipments/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/shipments")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(Shipment shipment){
         return store(shipment, true);
+    }
+
+    @Put("/shipments")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(Shipment shipment){
+        return store(shipment, false);
     }
 
     public String store(Shipment shipment, boolean genId){

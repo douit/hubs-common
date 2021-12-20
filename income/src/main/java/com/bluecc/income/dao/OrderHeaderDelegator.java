@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -1081,18 +1081,45 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         return ctx.attach(Dao.class).getOrderHeader(id);
     }
 
+    @Get("/order_headers/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public OrderHeader get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<OrderHeader> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listOrderHeader();
+    }
+
+    @Get("/order_headers")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<OrderHeader> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countOrderHeader();
     }
 
+    @Get("/order_headers/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/order_headers")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(OrderHeader orderHeader){
         return store(orderHeader, true);
+    }
+
+    @Put("/order_headers")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(OrderHeader orderHeader){
+        return store(orderHeader, false);
     }
 
     public String store(OrderHeader orderHeader, boolean genId){

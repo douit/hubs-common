@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -897,18 +897,45 @@ public class InventoryItemDelegator extends AbstractProcs implements IChainQuery
         return ctx.attach(Dao.class).getInventoryItem(id);
     }
 
+    @Get("/inventory_items/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public InventoryItem get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<InventoryItem> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listInventoryItem();
+    }
+
+    @Get("/inventory_items")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<InventoryItem> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countInventoryItem();
     }
 
+    @Get("/inventory_items/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/inventory_items")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(InventoryItem inventoryItem){
         return store(inventoryItem, true);
+    }
+
+    @Put("/inventory_items")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(InventoryItem inventoryItem){
+        return store(inventoryItem, false);
     }
 
     public String store(InventoryItem inventoryItem, boolean genId){

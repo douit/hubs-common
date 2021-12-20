@@ -14,14 +14,14 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
 import com.bluecc.income.exchange.GsonConverters;
-import com.linecorp.armeria.server.annotation.Post;
-import com.linecorp.armeria.server.annotation.RequestConverter;
+import com.linecorp.armeria.server.annotation.*;
 
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.function.Consumer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -575,18 +575,45 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
         return ctx.attach(Dao.class).getFinAccount(id);
     }
 
+    @Get("/fin_accounts/:id")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public FinAccount get(@Param String id){
+        return single(c -> get(c, id));
+    }
+
     public List<FinAccount> all(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).listFinAccount();
+    }
+
+    @Get("/fin_accounts")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<FinAccount> all(){
+        return collect(c -> all(c));
     }
 
     public int count(IProc.ProcContext ctx){
         return ctx.attach(Dao.class).countFinAccount();
     }
 
+    @Get("/fin_accounts/count")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Integer count(){
+        return single(c -> count(c));
+    }
+
     @Post("/fin_accounts")
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store(FinAccount finAccount){
         return store(finAccount, true);
+    }
+
+    @Put("/fin_accounts")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String storeOrUpdate(FinAccount finAccount){
+        return store(finAccount, false);
     }
 
     public String store(FinAccount finAccount, boolean genId){
