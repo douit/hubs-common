@@ -1,5 +1,6 @@
 package com.bluecc.income.procs;
 
+import com.bluecc.hubs.ProtoJsonUtils;
 import com.bluecc.hubs.feed.FactBag;
 import com.bluecc.hubs.fund.FnUtil;
 import com.bluecc.hubs.fund.ProtoMeta;
@@ -229,6 +230,38 @@ public class TypeEntityProcsTest {
                 .setParentTypeId(parent)
                 .setDescription(description)
                 .build();
+    }
+
+    @Test
+    public void testShoppingListType(){
+        List<ShoppingListTypeData> items =
+                factBag.allTypes("ShoppingListType", ShoppingListTypeData::parseFrom);
+        // items.forEach(e -> System.out.println(e));
+        items.forEach(e -> System.out.println(ProtoJsonUtils.toJson(e)));
+
+        // testSerializeType();
+    }
+
+    @Test
+    public void testSerializeType() {
+        String typeName="ShoppingListType";
+        String result;
+        switch (typeName){
+            case "ShoppingListType":
+                result= quoteList(factBag.allTypes("ShoppingListType", ShoppingListTypeData::parseFrom)
+                        .stream().map(e -> ProtoJsonUtils.toJson(e))
+                        .collect(Collectors.joining(",")));
+                break;
+            default:
+                result="[]";
+                break;
+        }
+
+        System.out.println(result);
+    }
+
+    static String quoteList(String jsonLines){
+        return String.format("[%s]", jsonLines);
     }
 }
 

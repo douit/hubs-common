@@ -9,16 +9,16 @@ message {{ent.name}}Data {
     // fields
     {% for f in ent.messageFields -%}
     {%- if digester.isRefField(f.name) %}
-    {{f.protoType}} {{f.underscore}} = {{loop.index}}; // {{digester.getEntityRef(f.name)}}
+    {{f.protoType}} {{f.underscore}} = {{loop.index}} [json_name = "{{f.underscore}}"]; // {{digester.getEntityRef(f.name)}}
     {%- else %}    
-    {{f.protoType}} {{f.underscore}} = {{loop.index}};
+    {{f.protoType}} {{f.underscore}} = {{loop.index}} [json_name = "{{f.underscore}}"];
     {%- endif -%}
     {% endfor %}
     {% if ent.headEntity %}
     // relations
     {% for r in ent.relations -%}
     {% if r.hasProtoDef(ent.name) -%}
-    {{r.protoDef}} = {{loop.index+ent.messageFieldNumber}}; // ref({{r.name}}): {{r.relFields}}
+    {{r.protoDef}} = {{loop.index+ent.messageFieldNumber}} [json_name = "{{r.protoName}}"]; // ref({{r.name}}): {{r.relFields}}
     {% endif -%}
     {% endfor %}
     {% endif %}    

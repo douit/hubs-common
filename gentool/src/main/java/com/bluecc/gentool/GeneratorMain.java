@@ -23,6 +23,7 @@ public class GeneratorMain {
         ProtoTool.startGen(new ProtoTool.ProtoGenOpts(null, true));
         System.out.println("* proto types");
         ProtoTypeTool.startGen();
+
         System.out.println("* head entities");
         GenHeadEntities.startGen();
 

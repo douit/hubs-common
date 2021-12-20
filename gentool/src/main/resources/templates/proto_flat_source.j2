@@ -8,9 +8,9 @@ message {{ent.name}}{{suffix}} {
     // keys: {{ent.keyNames}}
     {% for f in ent.messageFields -%}
     {%- if digester.isRefField(f.name) %}
-    {{f.protoType}} {{f.underscore}} = {{loop.index}}; // {{digester.getEntityRef(f.name)}}
+    {{f.protoType}} {{f.underscore}} = {{loop.index}} [json_name = "{{f.underscore}}"]; // {{digester.getEntityRef(f.name)}}
     {%- else %}    
-    {{f.protoType}} {{f.underscore}} = {{loop.index}};
+    {{f.protoType}} {{f.underscore}} = {{loop.index}} [json_name = "{{f.underscore}}"];
     {%- endif -%}
     {% endfor %}  
 }

@@ -11,6 +11,7 @@ import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.CatalogLocalCaches;
+import com.bluecc.income.procs.TypeEntities;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
@@ -119,6 +120,8 @@ public class HttpEndpoints extends AbstractProcs {
 
     @Inject
     Provider<CatalogLocalCaches> catalogProvider;
+    @Inject
+    Provider<TypeEntities> typeEntitiesProvider;
     // @Inject
     // Provider<WorkEffortDelegator> workEffortDelegatorProvider;
     private final Map<String, IDelegator> delegators;
@@ -130,6 +133,7 @@ public class HttpEndpoints extends AbstractProcs {
 
     private void initServices(ServerBuilder sb) {
         sb.annotatedService(catalogProvider.get());
+        sb.annotatedService(typeEntitiesProvider.get());
 
         // doc
         final DocService docService =

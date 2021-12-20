@@ -49,6 +49,8 @@ public class GenProfile {
                     break;
                 case "proto":
                     ProtoTool.startGen(new ProtoTool.ProtoGenOpts(null, true));
+                    System.out.println("* proto types");
+                    ProtoTypeTool.startGen();
                     break;
                 case "heads":
                     GenHeadEntities.startGen();

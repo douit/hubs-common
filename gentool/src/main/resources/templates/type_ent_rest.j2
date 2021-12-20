@@ -1,0 +1,48 @@
+package com.bluecc.income.procs;
+
+import com.bluecc.hubs.ProtoJsonUtils;
+import com.bluecc.hubs.feed.FactBag;
+import com.bluecc.hubs.stub.*;
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Get;
+import com.linecorp.armeria.server.annotation.Param;
+import com.linecorp.armeria.server.annotation.ProducesJson;
+import com.linecorp.armeria.server.annotation.ResponseConverter;
+
+import javax.inject.Inject;
+import java.util.stream.Collectors;
+
+public class TypeEntities {
+    @Inject
+    FactBag factBag;
+
+    /**
+     * GET http://localhost:4940/types/ShoppingListType
+     * @param name type entity name
+     * @return type list string with json format
+     */
+    @Get("/types/:name")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public GsonConverters.JsonString queryTypes(@Param String name) {
+        String result;
+        switch (name){
+            {% for ent in ents %}
+            case "{{ent.name}}":
+                result= quoteList(factBag.allTypes("{{ent.name}}", {{ent.name}}Data::parseFrom)
+                        .stream().map(e -> ProtoJsonUtils.toJson(e))
+                        .collect(Collectors.joining(",")));
+                break;
+            {% endfor %}
+            default:
+                result="[]";
+                break;
+        }
+
+        return new GsonConverters.JsonString(result);
+    }
+
+    static String quoteList(String jsonLines){
+        return String.format("[%s]", jsonLines);
+    }
+}

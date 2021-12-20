@@ -9,6 +9,9 @@ import com.linecorp.armeria.common.annotation.Nullable;
 import com.linecorp.armeria.server.ServiceRequestContext;
 import com.linecorp.armeria.server.annotation.RequestConverterFunction;
 import com.linecorp.armeria.server.annotation.ResponseConverterFunction;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -36,6 +39,13 @@ public class GsonConverters {
         }
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class JsonString {
+        String value;
+    }
+
     public static final class GsonResponseConverter implements ResponseConverterFunction {
         @Override
         public HttpResponse convertResponse(
@@ -46,7 +56,10 @@ public class GsonConverters {
                 return ResponseConverterFunction.fallthrough();
             }
 
-            if (result.getClass().isPrimitive() || Primitives.isWrapperType(result.getClass())) {
+            if (result instanceof JsonString) {
+                return HttpResponse.of(headers, HttpData.ofUtf8(((JsonString) result).getValue()),
+                        trailers);
+            } else if (result.getClass().isPrimitive() || Primitives.isWrapperType(result.getClass())) {
                 return HttpResponse.of(headers, HttpData.ofUtf8(Util.prettyJson(
                         ImmutableMap.of("result", result))), trailers);
             } else if (result instanceof Response) {

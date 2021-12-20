@@ -72,6 +72,12 @@ public class ProtoMeta {
                 .collect(Collectors.toList());
     }
 
+    public List<EntityMeta> getTypeEntities(){
+        return MetaTypes.typeList.getEntities()
+                .stream().map(e -> getEntityMeta(e))
+                .collect(Collectors.toList());
+    }
+
     public EntityMeta.RelationQueryMeta findRelationQueryMeta(String entityName, String relField) {
         List<EntityMeta.RelationQueryMeta> rels = getEntityMeta(entityName).getRelationQueries();
         for (EntityMeta.RelationQueryMeta rel : rels) {
