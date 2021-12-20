@@ -4,6 +4,8 @@ import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.feed.DataBuilder;
+import com.bluecc.income.cli.CliHelpers;
+import com.bluecc.income.cli.ICmd;
 import com.bluecc.income.dao.WorkEffortDelegator;
 import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.exchange.MessageMapCollector;
@@ -37,6 +39,10 @@ import static com.linecorp.armeria.common.HttpStatus.OK;
 @Slf4j
 public class HttpEndpoints extends AbstractProcs {
     public static void main(String[] args) {
+        run(CliHelpers.runOpts(args));
+    }
+
+    public static void run(ICmd.Opts globalOpts) {
         HttpEndpoints endpoints = startup(HttpEndpoints.class);
         endpoints.init();
         endpoints.serve();

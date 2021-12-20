@@ -115,4 +115,8 @@ dist:
 	mvn package -DskipTests -f income/pom.xml
 
 start:
-	java -jar income/target/income-1.0-SNAPSHOT-shaded.jar
+	java -jar income/target/income-1.0-SNAPSHOT-shaded.jar -s rpc
+
+http:
+	java -jar income/target/income-1.0-SNAPSHOT-shaded.jar -s http
+

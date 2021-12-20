@@ -5,6 +5,7 @@ import com.beust.jcommander.Parameter;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.hubs.stub.*;
+import com.bluecc.income.cli.ICmd;
 import com.bluecc.income.procs.GenericProcs;
 import com.bluecc.hubs.fund.tenant.Tenants;
 import com.bluecc.income.service.ServiceFacade;
@@ -33,26 +34,22 @@ import static com.bluecc.income.dummy.store.StoreModule.startup;
  */
 @Slf4j
 public class RpcEndpoints {
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    static class Opts {
-        @Parameter(names = {"--silent", "-s"})
-        boolean silent;
-        @Parameter(names = {"--profile", "-p"})
-        String profile="default";
-    }
+
     /**
      * Main launches the server from the command line.
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-        Opts opts = new Opts();
+        ICmd.Opts opts = new ICmd.Opts();
         JCommander.newBuilder()
                 .addObject(opts)
                 .build()
                 .parse(args);
+        System.out.println("opts: "+opts);
+        run(opts);
+    }
 
-        final ServiceFacade server = startup(opts.profile, ServiceFacade.class);
+    public static void run(ICmd.Opts opts) throws IOException, InterruptedException {
+        final ServiceFacade server = startup(opts.getProfile(), ServiceFacade.class);
         server.start();
         server.blockUntilShutdown();
     }
