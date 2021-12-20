@@ -8,6 +8,8 @@ public class ProtoModule extends AbstractModule {
     @Override
     protected void configure() {
         super.configure();
+
+        bind(ISharedData.class).to(SharedData.class);
     }
 
     public static Injector startup(){

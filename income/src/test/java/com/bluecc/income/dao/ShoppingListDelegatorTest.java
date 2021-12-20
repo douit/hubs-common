@@ -50,8 +50,10 @@ public class ShoppingListDelegatorTest extends AbstractStoreProcTest {
         });
     }
 
+    // @Inject
+    // LiveCodecObjects liveObjects;
     @Inject
-    LiveCodecObjects liveObjects;
+    LiveObjects liveObjects;
 
     @Test
     public void createFromProto() {

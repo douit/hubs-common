@@ -2,6 +2,7 @@ package com.bluecc.income.procs;
 
 import com.bluecc.hubs.feed.FactBag;
 import com.bluecc.hubs.fund.DataSetUtil;
+import com.bluecc.hubs.fund.MetaTypes;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.fund.Tuple2;
 import com.bluecc.hubs.stub.EnumerationData;
@@ -24,7 +25,12 @@ import static com.bluecc.income.procs.GenericProcs.loadDataSet;
 public class TypeEntityProcs {
     public static void main(String[] args) {
         TypeEntityProcs typeEntityProcs=startup(TypeEntityProcs.class);
-        long cost=typeEntityProcs.publishSeedFiles();
+
+        // clear all maps
+        typeEntityProcs.clearAllMaps();
+
+        // publish seeds
+        long cost=typeEntityProcs.publishSeedFiles(true);
         System.out.format("total %d, cost %d ms\n", typeEntityProcs.total, cost);
         System.exit(0);
     }
@@ -35,7 +41,11 @@ public class TypeEntityProcs {
     ProtoMeta protoMeta;
 
     int total;
-    public long publishSeedFiles() {
+
+    public void clearAllMaps(){
+        MetaTypes.types().getEntities().forEach(e -> factBag.clearMap(e));
+    }
+    public long publishSeedFiles(boolean clear) {
         long start = System.currentTimeMillis();
         total=0;
         DataSetUtil.seedFiles("dataset/seed").forEach(f -> {

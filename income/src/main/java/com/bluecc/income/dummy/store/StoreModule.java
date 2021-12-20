@@ -1,10 +1,11 @@
 package com.bluecc.income.dummy.store;
 
+import com.bluecc.hubs.feed.ISharedData;
+import com.bluecc.hubs.feed.SharedData;
+import com.bluecc.hubs.fund.tenant.Tenants;
 import com.bluecc.income.helper.TenantHubs;
 import com.bluecc.income.helper.TenantId;
 import com.bluecc.income.helper.TestHubs;
-import com.bluecc.hubs.fund.tenant.Tenants;
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.name.Names;
@@ -30,6 +31,10 @@ public class StoreModule extends AbstractFacModule {
                 .to(MysqlFac.class);
         bind(String.class).annotatedWith(TenantId.class)
                 .toInstance(this.tenant);
+
+        // interfaces
+        // bind(ISharedData.class).to(SharedCodecData.class);
+        bind(ISharedData.class).to(SharedData.class);
 
         try {
             Tenants tenants = Tenants.load();

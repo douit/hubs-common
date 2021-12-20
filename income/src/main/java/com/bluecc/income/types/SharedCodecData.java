@@ -1,6 +1,7 @@
 package com.bluecc.income.types;
 
 import com.beust.jcommander.internal.Lists;
+import com.bluecc.hubs.feed.ISharedData;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
-public class SharedCodecData {
+public class SharedCodecData implements ISharedData {
     RedissonClient client;
     ObjectRegistries objectRegistries;
 

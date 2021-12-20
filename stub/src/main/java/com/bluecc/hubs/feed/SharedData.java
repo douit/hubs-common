@@ -8,12 +8,12 @@ import org.redisson.config.Config;
 import javax.inject.Singleton;
 
 @Singleton
-public class SharedData {
+public class SharedData implements ISharedData{
     RedissonClient client;
 
     SharedData() {
         Config config = new Config();
-        config.setCodec(new org.redisson.codec.KryoCodec(Lists.newArrayList(byte[].class)));
+        // config.setCodec(new org.redisson.codec.KryoCodec(Lists.newArrayList(byte[].class)));
         // config.setNettyThreads(2);
         config.useSingleServer()
                 .setAddress("redis://127.0.0.1:6379");

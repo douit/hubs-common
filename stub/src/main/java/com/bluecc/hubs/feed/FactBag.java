@@ -18,15 +18,15 @@ import static com.bluecc.hubs.ProtoTypes.getEntityType;
 import static com.bluecc.hubs.fund.FnUtil.wrap;
 
 public class FactBag {
-    public SharedData getSharedData() {
-        return sharedData;
-    }
-
-    SharedData sharedData;
+    ISharedData sharedData;
 
     @Inject
-    public FactBag(SharedData sharedData) {
+    public FactBag(ISharedData sharedData) {
         this.sharedData = sharedData;
+    }
+
+    public ISharedData getSharedData() {
+        return sharedData;
     }
 
     public FactBag addItemToBag(String bag, String entityName,
@@ -51,6 +51,10 @@ public class FactBag {
     public void putEntityData(String bag, Message entityData){
         String key= ProtoTypes.getEntityIden(entityData, ":");
         sharedData.getClient().getMap(bag).put(key, entityData.toByteArray());
+    }
+
+    public void clearMap(String bag){
+        sharedData.getClient().getMap(bag).clear();
     }
 
     public void getEntityData(String key, Message.Builder builder) throws InvalidProtocolBufferException {

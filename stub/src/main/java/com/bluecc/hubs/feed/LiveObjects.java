@@ -14,11 +14,11 @@ import java.util.concurrent.TimeUnit;
 
 @Singleton
 public class LiveObjects extends AbstractLiveObjects{
-    SharedData sharedData;
+    ISharedData sharedData;
     RLiveObjectService service;
 
     @Inject
-    LiveObjects(SharedData sharedData){
+    LiveObjects(ISharedData sharedData){
         this.sharedData=sharedData;
         this.service=sharedData.getClient().getLiveObjectService();
     }
