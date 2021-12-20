@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -1039,18 +1043,20 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         return ctx.attach(Dao.class).countFixedAsset();
     }
 
-
-    public void store(FixedAsset fixedAsset){
-        store(fixedAsset, true);
+    @Post("/fixed_assets")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(FixedAsset fixedAsset){
+        return store(fixedAsset, true);
     }
 
-    public void store(FixedAsset fixedAsset, boolean genId){
+    public String store(FixedAsset fixedAsset, boolean genId){
         process(c ->{
             if(genId){
                 fixedAsset.setFixedAssetId(sequence.nextStringId());
             }
             storeOrUpdate(c, fixedAsset.toData());
         });
+        return fixedAsset.getFixedAssetId();
     }
 
     @Override

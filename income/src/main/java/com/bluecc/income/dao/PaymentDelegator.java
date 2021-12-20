@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -763,18 +767,20 @@ public class PaymentDelegator extends AbstractProcs implements IChainQuery<Payme
         return ctx.attach(Dao.class).countPayment();
     }
 
-
-    public void store(Payment payment){
-        store(payment, true);
+    @Post("/payments")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(Payment payment){
+        return store(payment, true);
     }
 
-    public void store(Payment payment, boolean genId){
+    public String store(Payment payment, boolean genId){
         process(c ->{
             if(genId){
                 payment.setPaymentId(sequence.nextStringId());
             }
             storeOrUpdate(c, payment.toData());
         });
+        return payment.getPaymentId();
     }
 
     @Override

@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -533,18 +537,20 @@ public class PartyGroupDelegator extends AbstractProcs implements IChainQuery<Pa
         return ctx.attach(Dao.class).countPartyGroup();
     }
 
-
-    public void store(PartyGroup partyGroup){
-        store(partyGroup, true);
+    @Post("/party_groups")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(PartyGroup partyGroup){
+        return store(partyGroup, true);
     }
 
-    public void store(PartyGroup partyGroup, boolean genId){
+    public String store(PartyGroup partyGroup, boolean genId){
         process(c ->{
             if(genId){
                 partyGroup.setPartyId(sequence.nextStringId());
             }
             storeOrUpdate(c, partyGroup.toData());
         });
+        return partyGroup.getPartyId();
     }
 
     @Override

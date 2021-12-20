@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -579,18 +583,20 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
         return ctx.attach(Dao.class).countFinAccount();
     }
 
-
-    public void store(FinAccount finAccount){
-        store(finAccount, true);
+    @Post("/fin_accounts")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(FinAccount finAccount){
+        return store(finAccount, true);
     }
 
-    public void store(FinAccount finAccount, boolean genId){
+    public String store(FinAccount finAccount, boolean genId){
         process(c ->{
             if(genId){
                 finAccount.setFinAccountId(sequence.nextStringId());
             }
             storeOrUpdate(c, finAccount.toData());
         });
+        return finAccount.getFinAccountId();
     }
 
     @Override

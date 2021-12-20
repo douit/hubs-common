@@ -5,6 +5,7 @@ import com.beust.jcommander.Parameter;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.PersonFlatData;
 import com.bluecc.income.exchange.IProc;
+import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.helper.ISO8601TimestampConverter;
 import com.bluecc.income.template.UseHubsTemplateEngine;
 import com.google.common.base.Preconditions;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 import static com.bluecc.hubs.ProtoTypes.*;
 import static com.bluecc.hubs.fund.Util.pretty;
 import static com.bluecc.income.dummy.store.StoreModule.startup;
-import static com.bluecc.income.exchange.MessageMapCollector.collect;
+// import static com.bluecc.income.exchange.MessageMapCollector.collect;
 
 /**
  * $ just i procs.Parties sample
@@ -128,7 +129,7 @@ public class PartiesBeta extends AbstractProcs {
     }
 
     public void storePerson(IProc.ProcContext ctx, PersonFlatData flatData) {
-        collect((c, e) -> {
+        MessageMapCollector.collect((c, e) -> {
             System.out.println("Ⓜ️ " + c.getSymbol() + " -> " + e);
             List<String> names = new ArrayList<>(e.keySet());
             List<String> placers = names.stream().map(name -> ":" + name)

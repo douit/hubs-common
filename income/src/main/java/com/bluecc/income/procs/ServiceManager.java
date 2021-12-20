@@ -40,7 +40,7 @@ public class ServiceManager extends AbstractFunctionManager{
         // if(tokenString.getType()==proc.typeArguments[0]){
         //     System.out.println("input parameter is string");
         // }
-        Flux<IModel> flux=(Flux<IModel>)proc.fn.apply("fire-one");
+        Flux<IModel<?>> flux=(Flux<IModel<?>>)proc.fn.apply("fire-one");
         flux.subscribe(e -> pretty(e));
     }
 }

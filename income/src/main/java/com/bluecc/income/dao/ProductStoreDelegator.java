@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -1039,18 +1043,20 @@ public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<
         return ctx.attach(Dao.class).countProductStore();
     }
 
-
-    public void store(ProductStore productStore){
-        store(productStore, true);
+    @Post("/product_stores")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(ProductStore productStore){
+        return store(productStore, true);
     }
 
-    public void store(ProductStore productStore, boolean genId){
+    public String store(ProductStore productStore, boolean genId){
         process(c ->{
             if(genId){
                 productStore.setProductStoreId(sequence.nextStringId());
             }
             storeOrUpdate(c, productStore.toData());
         });
+        return productStore.getProductStoreId();
     }
 
     @Override

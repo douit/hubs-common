@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -303,18 +307,20 @@ public class SecurityGroupDelegator extends AbstractProcs implements IChainQuery
         return ctx.attach(Dao.class).countSecurityGroup();
     }
 
-
-    public void store(SecurityGroup securityGroup){
-        store(securityGroup, true);
+    @Post("/security_groups")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(SecurityGroup securityGroup){
+        return store(securityGroup, true);
     }
 
-    public void store(SecurityGroup securityGroup, boolean genId){
+    public String store(SecurityGroup securityGroup, boolean genId){
         process(c ->{
             if(genId){
                 securityGroup.setGroupId(sequence.nextStringId());
             }
             storeOrUpdate(c, securityGroup.toData());
         });
+        return securityGroup.getGroupId();
     }
 
     @Override

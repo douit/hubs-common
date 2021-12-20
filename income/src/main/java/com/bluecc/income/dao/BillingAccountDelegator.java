@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -441,18 +445,20 @@ public class BillingAccountDelegator extends AbstractProcs implements IChainQuer
         return ctx.attach(Dao.class).countBillingAccount();
     }
 
-
-    public void store(BillingAccount billingAccount){
-        store(billingAccount, true);
+    @Post("/billing_accounts")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(BillingAccount billingAccount){
+        return store(billingAccount, true);
     }
 
-    public void store(BillingAccount billingAccount, boolean genId){
+    public String store(BillingAccount billingAccount, boolean genId){
         process(c ->{
             if(genId){
                 billingAccount.setBillingAccountId(sequence.nextStringId());
             }
             storeOrUpdate(c, billingAccount.toData());
         });
+        return billingAccount.getBillingAccountId();
     }
 
     @Override

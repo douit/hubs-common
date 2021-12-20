@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -441,18 +445,20 @@ public class WebSiteDelegator extends AbstractProcs implements IChainQuery<WebSi
         return ctx.attach(Dao.class).countWebSite();
     }
 
-
-    public void store(WebSite webSite){
-        store(webSite, true);
+    @Post("/web_sites")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(WebSite webSite){
+        return store(webSite, true);
     }
 
-    public void store(WebSite webSite, boolean genId){
+    public String store(WebSite webSite, boolean genId){
         process(c ->{
             if(genId){
                 webSite.setWebSiteId(sequence.nextStringId());
             }
             storeOrUpdate(c, webSite.toData());
         });
+        return webSite.getWebSiteId();
     }
 
     @Override

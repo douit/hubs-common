@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -1959,18 +1963,20 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         return ctx.attach(Dao.class).countUserLogin();
     }
 
-
-    public void store(UserLogin userLogin){
-        store(userLogin, true);
+    @Post("/user_logins")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(UserLogin userLogin){
+        return store(userLogin, true);
     }
 
-    public void store(UserLogin userLogin, boolean genId){
+    public String store(UserLogin userLogin, boolean genId){
         process(c ->{
             if(genId){
                 userLogin.setUserLoginId(sequence.nextStringId());
             }
             storeOrUpdate(c, userLogin.toData());
         });
+        return userLogin.getUserLoginId();
     }
 
     @Override

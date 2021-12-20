@@ -97,7 +97,7 @@ public class Util {
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
 //            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
-            .registerTypeHierarchyAdapter(Collection.class, new GsonHelpers.CollectionAdapter())
+            .registerTypeHierarchyAdapter(List.class, new GsonHelpers.CollectionAdapter())
             .setPrettyPrinting()
             // .setExclusionStrategies(strategy)
             .create();

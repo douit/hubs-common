@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -395,18 +399,20 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         return ctx.attach(Dao.class).countQuote();
     }
 
-
-    public void store(Quote quote){
-        store(quote, true);
+    @Post("/quotes")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(Quote quote){
+        return store(quote, true);
     }
 
-    public void store(Quote quote, boolean genId){
+    public String store(Quote quote, boolean genId){
         process(c ->{
             if(genId){
                 quote.setQuoteId(sequence.nextStringId());
             }
             storeOrUpdate(c, quote.toData());
         });
+        return quote.getQuoteId();
     }
 
     @Override

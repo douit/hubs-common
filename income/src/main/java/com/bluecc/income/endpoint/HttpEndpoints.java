@@ -4,8 +4,11 @@ import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.fund.EntityMeta;
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.hubs.feed.DataBuilder;
+import com.bluecc.income.dao.WorkEffortDelegator;
+import com.bluecc.income.exchange.IDelegator;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.procs.AbstractProcs;
+import com.bluecc.income.procs.CatalogLocalCaches;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
@@ -22,6 +25,7 @@ import com.linecorp.armeria.server.annotation.Post;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -42,8 +46,9 @@ public class HttpEndpoints extends AbstractProcs {
     ProtoMeta protoMeta;
 
     void init(){
-        setupEntities("OrderItem", "OrderHeader", "ProductPrice");
+        setupEntities();  // sql tracer
     }
+
     void serve() {
         ServerBuilder sb = Server.builder();
         sb.http(4940);
@@ -51,7 +56,7 @@ public class HttpEndpoints extends AbstractProcs {
         sb.service("/", (ctx, req) -> HttpResponse.of("ok!"));
         sb.annotatedService(new Object() {
             @Get("/schema")
-            public HttpResponse greet(@Param("name") String name,
+            public HttpResponse schema(@Param("name") String name,
                                       @Param("type") @Default("entity") String type) {
                 EntityMeta meta = protoMeta.getEntityMeta(name);
                 if (meta != null) {
@@ -69,7 +74,7 @@ public class HttpEndpoints extends AbstractProcs {
 
         sb.annotatedService(new Object() {
             @Post("/store")
-            public HttpResponse greet(@Param("name") String name, String body){
+            public HttpResponse store(@Param("name") String name, String body){
                 System.out.println(name+": "+body);
                 Message.Builder builder = builderFor(name);
                 try {
@@ -96,9 +101,28 @@ public class HttpEndpoints extends AbstractProcs {
             }
         });
 
+        initServices(sb);
+
         Server server = sb.build();
         CompletableFuture<Void> future = server.start();
         future.join();
+    }
+
+    @Inject
+    Provider<CatalogLocalCaches> catalogProvider;
+    // @Inject
+    // Provider<WorkEffortDelegator> workEffortDelegatorProvider;
+    private final Map<String, IDelegator> delegators;
+
+    @Inject
+    HttpEndpoints(Map<String, IDelegator> delegators){
+        this.delegators=delegators;
+    }
+
+    private void initServices(ServerBuilder sb) {
+        sb.annotatedService(catalogProvider.get());
+        // sb.annotatedService(workEffortDelegatorProvider.get());
+        delegators.values().forEach(dele -> sb.annotatedService(dele));
     }
 
     DataBuilder dataBuilder=new DataBuilder();
@@ -134,3 +158,4 @@ POST http://localhost:4940/store?name=Shipment
 
 
  */
+

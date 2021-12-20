@@ -2,11 +2,16 @@ package com.bluecc.income.procs;
 
 import com.bluecc.hubs.fund.ProtoMeta;
 import com.bluecc.income.dao.ProductDelegator;
+import com.bluecc.income.exchange.GsonConverters;
 import com.bluecc.income.model.Product;
 import com.google.common.base.Suppliers;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.linecorp.armeria.server.annotation.Get;
+import com.linecorp.armeria.server.annotation.Param;
+import com.linecorp.armeria.server.annotation.ProducesJson;
+import com.linecorp.armeria.server.annotation.ResponseConverter;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -48,7 +53,10 @@ public class CatalogLocalCaches {
                 .build(CacheLoader.from(this::productsInCatalog));
     }
 
-    public Collection<Product> cachedProductsInCatalog(String catalog){
+    @Get("/catalogs/:catalog")
+    @ProducesJson
+    @ResponseConverter(GsonConverters.GsonResponseConverter.class)
+    public Collection<Product> cachedProductsInCatalog(@Param String catalog){
         return productsMemo.getUnchecked(catalog);
     }
 }

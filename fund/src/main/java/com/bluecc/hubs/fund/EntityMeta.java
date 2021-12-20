@@ -200,6 +200,10 @@ public class EntityMeta {
         return this.tableName.toLowerCase(Locale.ROOT);
     }
 
+    public String getPlural(){
+        return Inflector.getInstance().pluralize(getUnderscore());
+    }
+
     public boolean isHeadEntity() {
         return HeadEntityResources.contains(this.name);
     }
@@ -523,6 +527,10 @@ public class EntityMeta {
             return col.toLowerCase(Locale.ROOT);
         }
 
+        public String getPlural(){
+            return Inflector.getInstance().pluralize(getUnderscore());
+        }
+
         public String getSerializeName(){
             String prop=getUnderscore();
             if(prop.endsWith("user_login")){
@@ -739,6 +747,10 @@ public class EntityMeta {
 
         public String getProtoName() {
             return Util.toSnakecase(name);
+        }
+
+        public String getPlural(){
+            return Inflector.getInstance().pluralize(getProtoName());
         }
 
         public String getPrefix() {

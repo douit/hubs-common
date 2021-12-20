@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -257,18 +261,20 @@ public class ProdCatalogDelegator extends AbstractProcs implements IChainQuery<P
         return ctx.attach(Dao.class).countProdCatalog();
     }
 
-
-    public void store(ProdCatalog prodCatalog){
-        store(prodCatalog, true);
+    @Post("/prod_catalogs")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(ProdCatalog prodCatalog){
+        return store(prodCatalog, true);
     }
 
-    public void store(ProdCatalog prodCatalog, boolean genId){
+    public String store(ProdCatalog prodCatalog, boolean genId){
         process(c ->{
             if(genId){
                 prodCatalog.setProdCatalogId(sequence.nextStringId());
             }
             storeOrUpdate(c, prodCatalog.toData());
         });
+        return prodCatalog.getProdCatalogId();
     }
 
     @Override

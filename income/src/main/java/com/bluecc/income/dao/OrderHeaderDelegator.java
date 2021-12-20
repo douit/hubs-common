@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -1085,18 +1089,20 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         return ctx.attach(Dao.class).countOrderHeader();
     }
 
-
-    public void store(OrderHeader orderHeader){
-        store(orderHeader, true);
+    @Post("/order_headers")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(OrderHeader orderHeader){
+        return store(orderHeader, true);
     }
 
-    public void store(OrderHeader orderHeader, boolean genId){
+    public String store(OrderHeader orderHeader, boolean genId){
         process(c ->{
             if(genId){
                 orderHeader.setOrderId(sequence.nextStringId());
             }
             storeOrUpdate(c, orderHeader.toData());
         });
+        return orderHeader.getOrderId();
     }
 
     @Override

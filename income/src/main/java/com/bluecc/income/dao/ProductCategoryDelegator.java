@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -855,18 +859,20 @@ public class ProductCategoryDelegator extends AbstractProcs implements IChainQue
         return ctx.attach(Dao.class).countProductCategory();
     }
 
-
-    public void store(ProductCategory productCategory){
-        store(productCategory, true);
+    @Post("/product_categories")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(ProductCategory productCategory){
+        return store(productCategory, true);
     }
 
-    public void store(ProductCategory productCategory, boolean genId){
+    public String store(ProductCategory productCategory, boolean genId){
         process(c ->{
             if(genId){
                 productCategory.setProductCategoryId(sequence.nextStringId());
             }
             storeOrUpdate(c, productCategory.toData());
         });
+        return productCategory.getProductCategoryId();
     }
 
     @Override

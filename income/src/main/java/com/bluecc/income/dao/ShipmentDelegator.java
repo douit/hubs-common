@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -1453,18 +1457,20 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         return ctx.attach(Dao.class).countShipment();
     }
 
-
-    public void store(Shipment shipment){
-        store(shipment, true);
+    @Post("/shipments")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(Shipment shipment){
+        return store(shipment, true);
     }
 
-    public void store(Shipment shipment, boolean genId){
+    public String store(Shipment shipment, boolean genId){
         process(c ->{
             if(genId){
                 shipment.setShipmentId(sequence.nextStringId());
             }
             storeOrUpdate(c, shipment.toData());
         });
+        return shipment.getShipmentId();
     }
 
     @Override

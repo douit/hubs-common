@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -257,18 +261,20 @@ public class ProductStoreFacilityDelegator extends AbstractProcs implements ICha
         return ctx.attach(Dao.class).countProductStoreFacility();
     }
 
-
-    public void store(ProductStoreFacility productStoreFacility){
-        store(productStoreFacility, true);
+    @Post("/product_store_facilities")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(ProductStoreFacility productStoreFacility){
+        return store(productStoreFacility, true);
     }
 
-    public void store(ProductStoreFacility productStoreFacility, boolean genId){
+    public String store(ProductStoreFacility productStoreFacility, boolean genId){
         process(c ->{
             if(genId){
                 productStoreFacility.setId(sequence.nextStringId());
             }
             storeOrUpdate(c, productStoreFacility.toData());
         });
+        return productStoreFacility.getId();
     }
 
     @Override

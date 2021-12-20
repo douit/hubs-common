@@ -13,6 +13,10 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.SqlObject;
 
+import com.bluecc.income.exchange.GsonConverters;
+import com.linecorp.armeria.server.annotation.Post;
+import com.linecorp.armeria.server.annotation.RequestConverter;
+
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
@@ -1085,18 +1089,20 @@ public class WorkEffortDelegator extends AbstractProcs implements IChainQuery<Wo
         return ctx.attach(Dao.class).countWorkEffort();
     }
 
-
-    public void store(WorkEffort workEffort){
-        store(workEffort, true);
+    @Post("/work_efforts")
+    @RequestConverter(GsonConverters.GsonRequestConverter.class)
+    public String store(WorkEffort workEffort){
+        return store(workEffort, true);
     }
 
-    public void store(WorkEffort workEffort, boolean genId){
+    public String store(WorkEffort workEffort, boolean genId){
         process(c ->{
             if(genId){
                 workEffort.setWorkEffortId(sequence.nextStringId());
             }
             storeOrUpdate(c, workEffort.toData());
         });
+        return workEffort.getWorkEffortId();
     }
 
     @Override

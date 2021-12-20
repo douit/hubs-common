@@ -209,7 +209,13 @@ public class ProtoTypes {
             case "N":
                 return Indicator.NO;
             default:
-                Indicator indicator=Indicator.forNumber(Integer.parseInt(c));
+                Indicator indicator;
+                char firstChar=c.charAt(0);
+                if(Character.isUpperCase(firstChar)){
+                   indicator=Indicator.valueOf(c);
+                }else {
+                    indicator = Indicator.forNumber(Integer.parseInt(c));
+                }
                 if(indicator==null) {
                     indicator= Indicator.UNKNOWN;
                 }
@@ -226,6 +232,9 @@ public class ProtoTypes {
             case UNKNOWN:
                 return ' ';
             default:
+                if(indicator.getNumber()>=65 && indicator.getNumber()<=72){
+                    return (char) indicator.getNumber();
+                }
                 return String.valueOf(indicator.getNumber()).charAt(0);
         }
     }
