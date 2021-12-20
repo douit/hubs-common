@@ -634,6 +634,14 @@ public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Ser
     @SerializedName("quote_item") 
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addRequirement")
+    @SerializedName("requirement") 
+    List<Requirement> relRequirement= new ArrayList<>(); 
+    @Exclude
+    @Singular("addReturnItem")
+    @SerializedName("return_item") 
+    List<ReturnItem> relReturnItem= new ArrayList<>(); 
+    @Exclude
     @Singular("addShipmentItem")
     @SerializedName("shipment_item") 
     List<ShipmentItem> relShipmentItem= new ArrayList<>(); 
@@ -645,6 +653,10 @@ public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Ser
     @Singular("addShipmentReceipt")
     @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
+    @Exclude
+    @Singular("addShoppingListItem")
+    @SerializedName("shopping_list_item") 
+    List<ShoppingListItem> relShoppingListItem= new ArrayList<>(); 
     @Exclude
     @Singular("addSupplierProduct")
     @SerializedName("supplier_product") 
@@ -691,9 +703,12 @@ public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Ser
         supplierMap.put(PRODUCT_STORE_SURVEY_APPL, getter(this, Product::getRelProductStoreSurveyAppl)); 
         supplierMap.put(PRODUCT_SUBSCRIPTION_RESOURCE, getter(this, Product::getRelProductSubscriptionResource)); 
         supplierMap.put(QUOTE_ITEM, getter(this, Product::getRelQuoteItem)); 
+        supplierMap.put(REQUIREMENT, getter(this, Product::getRelRequirement)); 
+        supplierMap.put(RETURN_ITEM, getter(this, Product::getRelReturnItem)); 
         supplierMap.put(SHIPMENT_ITEM, getter(this, Product::getRelShipmentItem)); 
         supplierMap.put(SUB_SHIPMENT_PACKAGE_CONTENT, getter(this, Product::getRelSubShipmentPackageContent)); 
         supplierMap.put(SHIPMENT_RECEIPT, getter(this, Product::getRelShipmentReceipt)); 
+        supplierMap.put(SHOPPING_LIST_ITEM, getter(this, Product::getRelShoppingListItem)); 
         supplierMap.put(SUPPLIER_PRODUCT, getter(this, Product::getRelSupplierProduct)); 
         supplierMap.put(WORK_EFFORT_GOOD_STANDARD, getter(this, Product::getRelWorkEffortGoodStandard)); 
         supplierMap.put(TENANT, getter(this, Product::getRelTenant));

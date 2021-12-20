@@ -166,6 +166,10 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
     @SerializedName("payment_application") 
     List<PaymentApplication> relPaymentApplication= new ArrayList<>(); 
     @Exclude
+    @Singular("addReturnHeader")
+    @SerializedName("return_header") 
+    List<ReturnHeader> relReturnHeader= new ArrayList<>(); 
+    @Exclude
     @Singular("addTenant")
     @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
@@ -179,6 +183,7 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
         supplierMap.put(INVOICE, getter(this, BillingAccount::getRelInvoice)); 
         supplierMap.put(ORDER_HEADER, getter(this, BillingAccount::getRelOrderHeader)); 
         supplierMap.put(PAYMENT_APPLICATION, getter(this, BillingAccount::getRelPaymentApplication)); 
+        supplierMap.put(RETURN_HEADER, getter(this, BillingAccount::getRelReturnHeader)); 
         supplierMap.put(TENANT, getter(this, BillingAccount::getRelTenant));
 
         return supplierMap;

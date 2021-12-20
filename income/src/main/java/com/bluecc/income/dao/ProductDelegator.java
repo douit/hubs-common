@@ -939,6 +939,64 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         }
          
         @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Requirement.class, prefix = "rem")
+        default Map<String, Product> chainRequirement(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               boolean succInvoke) {
+            return chainRequirement(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = Requirement.class, prefix = "rem")
+        default Map<String, Product> chainRequirement(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(REQUIREMENT);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
+                                id -> rr.getRow(Product.class));
+                        if (rr.getColumn("rem_product_id", String.class) != null) {
+                            p.getRelRequirement()
+                                    .add(rr.getRow(Requirement.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = ReturnItem.class, prefix = "rim")
+        default Map<String, Product> chainReturnItem(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               boolean succInvoke) {
+            return chainReturnItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = ReturnItem.class, prefix = "rim")
+        default Map<String, Product> chainReturnItem(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RETURN_ITEM);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
+                                id -> rr.getRow(Product.class));
+                        if (rr.getColumn("rim_product_id", String.class) != null) {
+                            p.getRelReturnItem()
+                                    .add(rr.getRow(ReturnItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
         @RegisterBeanMapper(value = ShipmentItem.class, prefix = "sim")
         default Map<String, Product> chainShipmentItem(ProtoMeta protoMeta,
                                                Map<String, Product> inMap,
@@ -1020,6 +1078,35 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
                         if (rr.getColumn("srm_product_id", String.class) != null) {
                             p.getRelShipmentReceipt()
                                     .add(rr.getRow(ShipmentReceipt.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = ShoppingListItem.class, prefix = "slim")
+        default Map<String, Product> chainShoppingListItem(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               boolean succInvoke) {
+            return chainShoppingListItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Product.class, prefix = "pr")
+        @RegisterBeanMapper(value = ShoppingListItem.class, prefix = "slim")
+        default Map<String, Product> chainShoppingListItem(ProtoMeta protoMeta,
+                                               Map<String, Product> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Product", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHOPPING_LIST_ITEM);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        Product p = map.computeIfAbsent(rr.getColumn("pr_product_id", String.class),
+                                id -> rr.getRow(Product.class));
+                        if (rr.getColumn("slim_product_id", String.class) != null) {
+                            p.getRelShoppingListItem()
+                                    .add(rr.getRow(ShoppingListItem.class));
                         }
                         return map;
                     });
@@ -1445,6 +1532,28 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
         return e -> dao.chainQuoteItem(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Product>> requirement(Dao dao, boolean succ) {
+        return e -> dao.chainRequirement(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Product>> requirement(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainRequirement(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Product>> returnItem(Dao dao, boolean succ) {
+        return e -> dao.chainReturnItem(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Product>> returnItem(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainReturnItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Product>> shipmentItem(Dao dao, boolean succ) {
         return e -> dao.chainShipmentItem(protoMeta, e, succ);
     }
@@ -1476,6 +1585,17 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
                                         SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Product>> shoppingListItem(Dao dao, boolean succ) {
+        return e -> dao.chainShoppingListItem(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Product>> shoppingListItem(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainShoppingListItem(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, Product>> supplierProduct(Dao dao, boolean succ) {
@@ -1647,6 +1767,14 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
             chain = chain.andThen(quoteItem(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(REQUIREMENT)) {
+            chain = chain.andThen(requirement(dao, whereClause, binds, true));
+        }
+         
+        if (incls.contains(RETURN_ITEM)) {
+            chain = chain.andThen(returnItem(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(SHIPMENT_ITEM)) {
             chain = chain.andThen(shipmentItem(dao, whereClause, binds, true));
         }
@@ -1657,6 +1785,10 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
          
         if (incls.contains(SHIPMENT_RECEIPT)) {
             chain = chain.andThen(shipmentReceipt(dao, whereClause, binds, true));
+        }
+         
+        if (incls.contains(SHOPPING_LIST_ITEM)) {
+            chain = chain.andThen(shoppingListItem(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SUPPLIER_PRODUCT)) {
@@ -1751,12 +1883,18 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
                 productData.addProductSubscriptionResource(e.toDataBuilder())); 
             data.getRelQuoteItem().forEach(e -> 
                 productData.addQuoteItem(e.toDataBuilder())); 
+            data.getRelRequirement().forEach(e -> 
+                productData.addRequirement(e.toDataBuilder())); 
+            data.getRelReturnItem().forEach(e -> 
+                productData.addReturnItem(e.toDataBuilder())); 
             data.getRelShipmentItem().forEach(e -> 
                 productData.addShipmentItem(e.toDataBuilder())); 
             data.getRelSubShipmentPackageContent().forEach(e -> 
                 productData.addSubShipmentPackageContent(e.toDataBuilder())); 
             data.getRelShipmentReceipt().forEach(e -> 
                 productData.addShipmentReceipt(e.toDataBuilder())); 
+            data.getRelShoppingListItem().forEach(e -> 
+                productData.addShoppingListItem(e.toDataBuilder())); 
             data.getRelSupplierProduct().forEach(e -> 
                 productData.addSupplierProduct(e.toDataBuilder())); 
             data.getRelWorkEffortGoodStandard().forEach(e -> 
@@ -2185,6 +2323,28 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
                     .collect(Collectors.toList());
         }
          
+        public List<Requirement> getRequirement(){
+            return getRelationValues(ctx, p1, "requirement", Requirement.class);
+        }
+
+        public List<Requirement> mergeRequirement(){
+            return getRequirement().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelRequirement().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ReturnItem> getReturnItem(){
+            return getRelationValues(ctx, p1, "return_item", ReturnItem.class);
+        }
+
+        public List<ReturnItem> mergeReturnItem(){
+            return getReturnItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelReturnItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<ShipmentItem> getShipmentItem(){
             return getRelationValues(ctx, p1, "shipment_item", ShipmentItem.class);
         }
@@ -2215,6 +2375,17 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
             return getShipmentReceipt().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelShipmentReceipt().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShoppingListItem> getShoppingListItem(){
+            return getRelationValues(ctx, p1, "shopping_list_item", ShoppingListItem.class);
+        }
+
+        public List<ShoppingListItem> mergeShoppingListItem(){
+            return getShoppingListItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShoppingListItem().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -2328,11 +2499,17 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
          
     public static final String QUOTE_ITEM="quote_item";
          
+    public static final String REQUIREMENT="requirement";
+         
+    public static final String RETURN_ITEM="return_item";
+         
     public static final String SHIPMENT_ITEM="shipment_item";
          
     public static final String SUB_SHIPMENT_PACKAGE_CONTENT="sub_shipment_package_content";
          
     public static final String SHIPMENT_RECEIPT="shipment_receipt";
+         
+    public static final String SHOPPING_LIST_ITEM="shopping_list_item";
          
     public static final String SUPPLIER_PRODUCT="supplier_product";
          
@@ -2593,6 +2770,22 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
                                              el.toDataBuilder().build()));
                         }
                                                
+                        // add/set requirement to head entity                        
+                        if(relationsDemand.contains("requirement")) {
+                            getRelationValues(ctx, p1, "requirement",
+                                            Requirement.class)
+                                    .forEach(el -> pb.addRequirement(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set return_item to head entity                        
+                        if(relationsDemand.contains("return_item")) {
+                            getRelationValues(ctx, p1, "return_item",
+                                            ReturnItem.class)
+                                    .forEach(el -> pb.addReturnItem(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set shipment_item to head entity                        
                         if(relationsDemand.contains("shipment_item")) {
                             getRelationValues(ctx, p1, "shipment_item",
@@ -2614,6 +2807,14 @@ public class ProductDelegator extends AbstractProcs implements IChainQuery<Produ
                             getRelationValues(ctx, p1, "shipment_receipt",
                                             ShipmentReceipt.class)
                                     .forEach(el -> pb.addShipmentReceipt(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set shopping_list_item to head entity                        
+                        if(relationsDemand.contains("shopping_list_item")) {
+                            getRelationValues(ctx, p1, "shopping_list_item",
+                                            ShoppingListItem.class)
+                                    .forEach(el -> pb.addShoppingListItem(
                                              el.toDataBuilder().build()));
                         }
                                                

@@ -1896,6 +1896,64 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         }
          
         @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "rhm")
+        default Map<String, Party> chainReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainReturnHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "rhm")
+        default Map<String, Party> chainReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RETURN_HEADER);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("rhm_from_party_id", String.class) != null) {
+                            p.getRelReturnHeader()
+                                    .add(rr.getRow(ReturnHeader.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "trhm")
+        default Map<String, Party> chainToReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainToReturnHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "trhm")
+        default Map<String, Party> chainToReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(TO_RETURN_HEADER);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("trhm_to_party_id", String.class) != null) {
+                            p.getRelToReturnHeader()
+                                    .add(rr.getRow(ReturnHeader.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
         @RegisterBeanMapper(value = Shipment.class, prefix = "tsm")
         default Map<String, Party> chainToShipment(ProtoMeta protoMeta,
                                                Map<String, Party> inMap,
@@ -2006,6 +2064,35 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
                         if (rr.getColumn("csrsm_carrier_party_id", String.class) != null) {
                             p.getRelCarrierShipmentRouteSegment()
                                     .add(rr.getRow(ShipmentRouteSegment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = ShoppingList.class, prefix = "slm")
+        default Map<String, Party> chainShoppingList(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               boolean succInvoke) {
+            return chainShoppingList(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Party.class, prefix = "pa")
+        @RegisterBeanMapper(value = ShoppingList.class, prefix = "slm")
+        default Map<String, Party> chainShoppingList(ProtoMeta protoMeta,
+                                               Map<String, Party> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Party", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHOPPING_LIST);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        Party p = map.computeIfAbsent(rr.getColumn("pa_party_id", String.class),
+                                id -> rr.getRow(Party.class));
+                        if (rr.getColumn("slm_party_id", String.class) != null) {
+                            p.getRelShoppingList()
+                                    .add(rr.getRow(ShoppingList.class));
                         }
                         return map;
                     });
@@ -2910,6 +2997,28 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
         return e -> dao.chainRateAmount(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Party>> returnHeader(Dao dao, boolean succ) {
+        return e -> dao.chainReturnHeader(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> returnHeader(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainReturnHeader(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> toReturnHeader(Dao dao, boolean succ) {
+        return e -> dao.chainToReturnHeader(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> toReturnHeader(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainToReturnHeader(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Party>> toShipment(Dao dao, boolean succ) {
         return e -> dao.chainToShipment(protoMeta, e, succ);
     }
@@ -2952,6 +3061,17 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
                                         SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainCarrierShipmentRouteSegment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, Party>> shoppingList(Dao dao, boolean succ) {
+        return e -> dao.chainShoppingList(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Party>> shoppingList(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainShoppingList(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, Party>> supplierProduct(Dao dao, boolean succ) {
@@ -3299,6 +3419,14 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
             chain = chain.andThen(rateAmount(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(RETURN_HEADER)) {
+            chain = chain.andThen(returnHeader(dao, whereClause, binds, true));
+        }
+         
+        if (incls.contains(TO_RETURN_HEADER)) {
+            chain = chain.andThen(toReturnHeader(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(TO_SHIPMENT)) {
             chain = chain.andThen(toShipment(dao, whereClause, binds, true));
         }
@@ -3313,6 +3441,10 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
          
         if (incls.contains(CARRIER_SHIPMENT_ROUTE_SEGMENT)) {
             chain = chain.andThen(carrierShipmentRouteSegment(dao, whereClause, binds, true));
+        }
+         
+        if (incls.contains(SHOPPING_LIST)) {
+            chain = chain.andThen(shoppingList(dao, whereClause, binds, true));
         }
          
         if (incls.contains(SUPPLIER_PRODUCT)) {
@@ -3489,6 +3621,10 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
                 partyData.addQuoteRole(e.toDataBuilder())); 
             data.getRelRateAmount().forEach(e -> 
                 partyData.addRateAmount(e.toDataBuilder())); 
+            data.getRelReturnHeader().forEach(e -> 
+                partyData.addReturnHeader(e.toDataBuilder())); 
+            data.getRelToReturnHeader().forEach(e -> 
+                partyData.addToReturnHeader(e.toDataBuilder())); 
             data.getRelToShipment().forEach(e -> 
                 partyData.addToShipment(e.toHeadBuilder())); 
             data.getRelFromShipment().forEach(e -> 
@@ -3497,6 +3633,8 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
                 partyData.addShipmentCostEstimate(e.toDataBuilder())); 
             data.getRelCarrierShipmentRouteSegment().forEach(e -> 
                 partyData.addCarrierShipmentRouteSegment(e.toDataBuilder())); 
+            data.getRelShoppingList().forEach(e -> 
+                partyData.addShoppingList(e.toHeadBuilder())); 
             data.getRelSupplierProduct().forEach(e -> 
                 partyData.addSupplierProduct(e.toDataBuilder())); 
             data.getRelSupplierProductFeature().forEach(e -> 
@@ -4296,6 +4434,28 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
                     .collect(Collectors.toList());
         }
          
+        public List<ReturnHeader> getReturnHeader(){
+            return getRelationValues(ctx, p1, "return_header", ReturnHeader.class);
+        }
+
+        public List<ReturnHeader> mergeReturnHeader(){
+            return getReturnHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelReturnHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ReturnHeader> getToReturnHeader(){
+            return getRelationValues(ctx, p1, "to_return_header", ReturnHeader.class);
+        }
+
+        public List<ReturnHeader> mergeToReturnHeader(){
+            return getToReturnHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelToReturnHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<Shipment> getToShipment(){
             return getRelationValues(ctx, p1, "to_shipment", Shipment.class);
         }
@@ -4337,6 +4497,17 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
             return getCarrierShipmentRouteSegment().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelCarrierShipmentRouteSegment().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShoppingList> getShoppingList(){
+            return getRelationValues(ctx, p1, "shopping_list", ShoppingList.class);
+        }
+
+        public List<ShoppingList> mergeShoppingList(){
+            return getShoppingList().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShoppingList().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -4560,6 +4731,10 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
          
     public static final String RATE_AMOUNT="rate_amount";
          
+    public static final String RETURN_HEADER="return_header";
+         
+    public static final String TO_RETURN_HEADER="to_return_header";
+         
     public static final String TO_SHIPMENT="to_shipment";
          
     public static final String FROM_SHIPMENT="from_shipment";
@@ -4567,6 +4742,8 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
     public static final String SHIPMENT_COST_ESTIMATE="shipment_cost_estimate";
          
     public static final String CARRIER_SHIPMENT_ROUTE_SEGMENT="carrier_shipment_route_segment";
+         
+    public static final String SHOPPING_LIST="shopping_list";
          
     public static final String SUPPLIER_PRODUCT="supplier_product";
          
@@ -5099,6 +5276,22 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
                                              el.toDataBuilder().build()));
                         }
                                                
+                        // add/set return_header to head entity                        
+                        if(relationsDemand.contains("return_header")) {
+                            getRelationValues(ctx, p1, "return_header",
+                                            ReturnHeader.class)
+                                    .forEach(el -> pb.addReturnHeader(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set to_return_header to head entity                        
+                        if(relationsDemand.contains("to_return_header")) {
+                            getRelationValues(ctx, p1, "to_return_header",
+                                            ReturnHeader.class)
+                                    .forEach(el -> pb.addToReturnHeader(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
                         // add/set to_shipment to head entity                        
                         if(relationsDemand.contains("to_shipment")) {
                             getRelationValues(ctx, p1, "to_shipment",
@@ -5129,6 +5322,14 @@ public class PartyDelegator extends AbstractProcs implements IChainQuery<Party>,
                                             ShipmentRouteSegment.class)
                                     .forEach(el -> pb.addCarrierShipmentRouteSegment(
                                              el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set shopping_list to head entity                        
+                        if(relationsDemand.contains("shopping_list")) {
+                            getRelationValues(ctx, p1, "shopping_list",
+                                            ShoppingList.class)
+                                    .forEach(el -> pb.addShoppingList(
+                                             el.toHeadBuilder().build()));
                         }
                                                
                         // add/set supplier_product to head entity                        

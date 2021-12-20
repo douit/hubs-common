@@ -156,6 +156,35 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         }
          
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ShoppingList.class, prefix = "aoslo")
+        default Map<String, OrderHeader> chainAutoOrderShoppingList(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainAutoOrderShoppingList(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ShoppingList.class, prefix = "aoslo")
+        default Map<String, OrderHeader> chainAutoOrderShoppingList(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(AUTO_ORDER_SHOPPING_LIST);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("aoslo_shopping_list_id", String.class) != null) {
+                            p.getRelAutoOrderShoppingList()
+                                    .add(rr.getRow(ShoppingList.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
         @RegisterBeanMapper(value = UserLogin.class, prefix = "cbulo")
         default Map<String, OrderHeader> chainCreatedByUserLogin(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
@@ -591,6 +620,35 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         }
          
         @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ReturnItem.class, prefix = "rim")
+        default Map<String, OrderHeader> chainReturnItem(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               boolean succInvoke) {
+            return chainReturnItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
+        @RegisterBeanMapper(value = ReturnItem.class, prefix = "rim")
+        default Map<String, OrderHeader> chainReturnItem(ProtoMeta protoMeta,
+                                               Map<String, OrderHeader> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderHeader", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RETURN_ITEM);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderHeader p = map.computeIfAbsent(rr.getColumn("oh_order_id", String.class),
+                                id -> rr.getRow(OrderHeader.class));
+                        if (rr.getColumn("rim_order_id", String.class) != null) {
+                            p.getRelReturnItem()
+                                    .add(rr.getRow(ReturnItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderHeader.class, prefix = "oh")
         @RegisterBeanMapper(value = Shipment.class, prefix = "psm")
         default Map<String, OrderHeader> chainPrimaryShipment(ProtoMeta protoMeta,
                                                Map<String, OrderHeader> inMap,
@@ -711,6 +769,17 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
                                         SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, OrderHeader>> autoOrderShoppingList(Dao dao, boolean succ) {
+        return e -> dao.chainAutoOrderShoppingList(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderHeader>> autoOrderShoppingList(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainAutoOrderShoppingList(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, OrderHeader>> createdByUserLogin(Dao dao, boolean succ) {
@@ -878,6 +947,17 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
         return e -> dao.chainOrderStatus(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, OrderHeader>> returnItem(Dao dao, boolean succ) {
+        return e -> dao.chainReturnItem(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderHeader>> returnItem(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainReturnItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, OrderHeader>> primaryShipment(Dao dao, boolean succ) {
         return e -> dao.chainPrimaryShipment(protoMeta, e, succ);
     }
@@ -937,6 +1017,10 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
          
         if (incls.contains(PRODUCT_STORE)) {
             chain = chain.andThen(productStore(dao, whereClause, binds, true));
+        }
+         
+        if (incls.contains(AUTO_ORDER_SHOPPING_LIST)) {
+            chain = chain.andThen(autoOrderShoppingList(dao, whereClause, binds, true));
         }
          
         if (incls.contains(CREATED_BY_USER_LOGIN)) {
@@ -999,6 +1083,10 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
             chain = chain.andThen(orderStatus(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(RETURN_ITEM)) {
+            chain = chain.andThen(returnItem(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(PRIMARY_SHIPMENT)) {
             chain = chain.andThen(primaryShipment(dao, whereClause, binds, true));
         }
@@ -1037,6 +1125,8 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
                 orderHeaderData.setBillingAccount(e.toHeadBuilder())); 
             data.getRelProductStore().forEach(e -> 
                 orderHeaderData.setProductStore(e.toHeadBuilder())); 
+            data.getRelAutoOrderShoppingList().forEach(e -> 
+                orderHeaderData.setAutoOrderShoppingList(e.toHeadBuilder())); 
             data.getRelCreatedByUserLogin().forEach(e -> 
                 orderHeaderData.setCreatedByUserLogin(e.toHeadBuilder())); 
             data.getRelWebSite().forEach(e -> 
@@ -1067,6 +1157,8 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
                 orderHeaderData.addOrderRole(e.toDataBuilder())); 
             data.getRelOrderStatus().forEach(e -> 
                 orderHeaderData.addOrderStatus(e.toDataBuilder())); 
+            data.getRelReturnItem().forEach(e -> 
+                orderHeaderData.addReturnItem(e.toDataBuilder())); 
             data.getRelPrimaryShipment().forEach(e -> 
                 orderHeaderData.addPrimaryShipment(e.toHeadBuilder())); 
             data.getRelShipmentReceipt().forEach(e -> 
@@ -1195,6 +1287,17 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
             return getProductStore().stream()
                     .map(p -> liveObjectsProvider.get().merge(p))
                     .peek(c -> persistObject.getRelProductStore().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ShoppingList> getAutoOrderShoppingList(){
+            return getRelationValues(ctx, p1, "auto_order_shopping_list", ShoppingList.class);
+        }
+
+        public List<ShoppingList> mergeAutoOrderShoppingList(){
+            return getAutoOrderShoppingList().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelAutoOrderShoppingList().add(c))
                     .collect(Collectors.toList());
         }
          
@@ -1363,6 +1466,17 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
                     .collect(Collectors.toList());
         }
          
+        public List<ReturnItem> getReturnItem(){
+            return getRelationValues(ctx, p1, "return_item", ReturnItem.class);
+        }
+
+        public List<ReturnItem> mergeReturnItem(){
+            return getReturnItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelReturnItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<Shipment> getPrimaryShipment(){
             return getRelationValues(ctx, p1, "primary_shipment", Shipment.class);
         }
@@ -1419,6 +1533,8 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
          
     public static final String PRODUCT_STORE="product_store";
          
+    public static final String AUTO_ORDER_SHOPPING_LIST="auto_order_shopping_list";
+         
     public static final String CREATED_BY_USER_LOGIN="created_by_user_login";
          
     public static final String WEB_SITE="web_site";
@@ -1448,6 +1564,8 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
     public static final String ORDER_ROLE="order_role";
          
     public static final String ORDER_STATUS="order_status";
+         
+    public static final String RETURN_ITEM="return_item";
          
     public static final String PRIMARY_SHIPMENT="primary_shipment";
          
@@ -1489,6 +1607,14 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
                             getRelationValues(ctx, p1, "product_store",
                                             ProductStore.class)
                                     .forEach(el -> pb.setProductStore(
+                                             el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set auto_order_shopping_list to head entity                        
+                        if(relationsDemand.contains("auto_order_shopping_list")) {
+                            getRelationValues(ctx, p1, "auto_order_shopping_list",
+                                            ShoppingList.class)
+                                    .forEach(el -> pb.setAutoOrderShoppingList(
                                              el.toHeadBuilder().build()));
                         }
                                                
@@ -1609,6 +1735,14 @@ public class OrderHeaderDelegator extends AbstractProcs implements IChainQuery<O
                             getRelationValues(ctx, p1, "order_status",
                                             OrderStatus.class)
                                     .forEach(el -> pb.addOrderStatus(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set return_item to head entity                        
+                        if(relationsDemand.contains("return_item")) {
+                            getRelationValues(ctx, p1, "return_item",
+                                            ReturnItem.class)
+                                    .forEach(el -> pb.addReturnItem(
                                              el.toDataBuilder().build()));
                         }
                                                

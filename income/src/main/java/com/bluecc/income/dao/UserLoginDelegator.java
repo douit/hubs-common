@@ -1084,6 +1084,64 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         }
          
         @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = QuoteAdjustment.class, prefix = "qam")
+        default Map<String, UserLogin> chainQuoteAdjustment(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               boolean succInvoke) {
+            return chainQuoteAdjustment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = QuoteAdjustment.class, prefix = "qam")
+        default Map<String, UserLogin> chainQuoteAdjustment(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ADJUSTMENT);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
+                                id -> rr.getRow(UserLogin.class));
+                        if (rr.getColumn("qam_created_by_user_login", String.class) != null) {
+                            p.getRelQuoteAdjustment()
+                                    .add(rr.getRow(QuoteAdjustment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "rhm")
+        default Map<String, UserLogin> chainReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               boolean succInvoke) {
+            return chainReturnHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "rhm")
+        default Map<String, UserLogin> chainReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, UserLogin> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("UserLogin", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RETURN_HEADER);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        UserLogin p = map.computeIfAbsent(rr.getColumn("ul_user_login_id", String.class),
+                                id -> rr.getRow(UserLogin.class));
+                        if (rr.getColumn("rhm_created_by", String.class) != null) {
+                            p.getRelReturnHeader()
+                                    .add(rr.getRow(ReturnHeader.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = UserLogin.class, prefix = "ul")
         @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, UserLogin> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, UserLogin> inMap,
@@ -1616,6 +1674,28 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
         return e -> dao.chainProductReview(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, UserLogin>> quoteAdjustment(Dao dao, boolean succ) {
+        return e -> dao.chainQuoteAdjustment(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, UserLogin>> quoteAdjustment(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainQuoteAdjustment(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, UserLogin>> returnHeader(Dao dao, boolean succ) {
+        return e -> dao.chainReturnHeader(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, UserLogin>> returnHeader(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainReturnHeader(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, UserLogin>> shipmentReceipt(Dao dao, boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, succ);
     }
@@ -1827,6 +1907,14 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
             chain = chain.andThen(productReview(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(QUOTE_ADJUSTMENT)) {
+            chain = chain.andThen(quoteAdjustment(dao, whereClause, binds, true));
+        }
+         
+        if (incls.contains(RETURN_HEADER)) {
+            chain = chain.andThen(returnHeader(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(SHIPMENT_RECEIPT)) {
             chain = chain.andThen(shipmentReceipt(dao, whereClause, binds, true));
         }
@@ -1937,6 +2025,10 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
                 userLoginData.addLastModifiedByProductPromoCode(e.toDataBuilder())); 
             data.getRelProductReview().forEach(e -> 
                 userLoginData.addProductReview(e.toDataBuilder())); 
+            data.getRelQuoteAdjustment().forEach(e -> 
+                userLoginData.addQuoteAdjustment(e.toDataBuilder())); 
+            data.getRelReturnHeader().forEach(e -> 
+                userLoginData.addReturnHeader(e.toDataBuilder())); 
             data.getRelShipmentReceipt().forEach(e -> 
                 userLoginData.addShipmentReceipt(e.toDataBuilder())); 
             data.getRelChangeByShipmentStatus().forEach(e -> 
@@ -2424,6 +2516,28 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
                     .collect(Collectors.toList());
         }
          
+        public List<QuoteAdjustment> getQuoteAdjustment(){
+            return getRelationValues(ctx, p1, "quote_adjustment", QuoteAdjustment.class);
+        }
+
+        public List<QuoteAdjustment> mergeQuoteAdjustment(){
+            return getQuoteAdjustment().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelQuoteAdjustment().add(c))
+                    .collect(Collectors.toList());
+        }
+         
+        public List<ReturnHeader> getReturnHeader(){
+            return getRelationValues(ctx, p1, "return_header", ReturnHeader.class);
+        }
+
+        public List<ReturnHeader> mergeReturnHeader(){
+            return getReturnHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelReturnHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<ShipmentReceipt> getShipmentReceipt(){
             return getRelationValues(ctx, p1, "shipment_receipt", ShipmentReceipt.class);
         }
@@ -2565,6 +2679,10 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
     public static final String LAST_MODIFIED_BY_PRODUCT_PROMO_CODE="last_modified_by_product_promo_code";
          
     public static final String PRODUCT_REVIEW="product_review";
+         
+    public static final String QUOTE_ADJUSTMENT="quote_adjustment";
+         
+    public static final String RETURN_HEADER="return_header";
          
     public static final String SHIPMENT_RECEIPT="shipment_receipt";
          
@@ -2866,6 +2984,22 @@ public class UserLoginDelegator extends AbstractProcs implements IChainQuery<Use
                             getRelationValues(ctx, p1, "product_review",
                                             ProductReview.class)
                                     .forEach(el -> pb.addProductReview(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set quote_adjustment to head entity                        
+                        if(relationsDemand.contains("quote_adjustment")) {
+                            getRelationValues(ctx, p1, "quote_adjustment",
+                                            QuoteAdjustment.class)
+                                    .forEach(el -> pb.addQuoteAdjustment(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set return_header to head entity                        
+                        if(relationsDemand.contains("return_header")) {
+                            getRelationValues(ctx, p1, "return_header",
+                                            ReturnHeader.class)
+                                    .forEach(el -> pb.addReturnHeader(
                                              el.toDataBuilder().build()));
                         }
                                                

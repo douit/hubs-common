@@ -243,6 +243,35 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = ShoppingListItem.class, prefix = "slio")
+        default Map<String, OrderItem> chainShoppingListItem(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               boolean succInvoke) {
+            return chainShoppingListItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = ShoppingListItem.class, prefix = "slio")
+        default Map<String, OrderItem> chainShoppingListItem(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHOPPING_LIST_ITEM);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
+                                id -> rr.getRow(OrderItem.class));
+                        if (rr.getColumn("slio_shopping_list_id", String.class) != null) {
+                            p.getRelShoppingListItem()
+                                    .add(rr.getRow(ShoppingListItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
         @RegisterBeanMapper(value = GlAccount.class, prefix = "ogao")
         default Map<String, OrderItem> chainOverrideGlAccount(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
@@ -591,6 +620,35 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
         }
          
         @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = ReturnItem.class, prefix = "rim")
+        default Map<String, OrderItem> chainReturnItem(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               boolean succInvoke) {
+            return chainReturnItem(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
+        @RegisterBeanMapper(value = ReturnItem.class, prefix = "rim")
+        default Map<String, OrderItem> chainReturnItem(ProtoMeta protoMeta,
+                                               Map<String, OrderItem> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("OrderItem", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RETURN_ITEM);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        OrderItem p = map.computeIfAbsent(rr.getColumn("oi_id", String.class),
+                                id -> rr.getRow(OrderItem.class));
+                        if (rr.getColumn("rim_order_id", String.class) != null) {
+                            p.getRelReturnItem()
+                                    .add(rr.getRow(ReturnItem.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = OrderItem.class, prefix = "oi")
         @RegisterBeanMapper(value = ShipmentReceipt.class, prefix = "srm")
         default Map<String, OrderItem> chainShipmentReceipt(ProtoMeta protoMeta,
                                                Map<String, OrderItem> inMap,
@@ -715,6 +773,17 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
                                         SelectorBindings binds,
                                         boolean succ) {
         return e -> dao.chainQuoteItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
+    public Consumer<Map<String, OrderItem>> shoppingListItem(Dao dao, boolean succ) {
+        return e -> dao.chainShoppingListItem(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderItem>> shoppingListItem(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainShoppingListItem(protoMeta, e, whereClause, binds, succ);
     }
      
     public Consumer<Map<String, OrderItem>> overrideGlAccount(Dao dao, boolean succ) {
@@ -849,6 +918,17 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
         return e -> dao.chainOrderStatus(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, OrderItem>> returnItem(Dao dao, boolean succ) {
+        return e -> dao.chainReturnItem(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, OrderItem>> returnItem(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainReturnItem(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, OrderItem>> shipmentReceipt(Dao dao, boolean succ) {
         return e -> dao.chainShipmentReceipt(protoMeta, e, succ);
     }
@@ -911,6 +991,10 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
             chain = chain.andThen(quoteItem(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(SHOPPING_LIST_ITEM)) {
+            chain = chain.andThen(shoppingListItem(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(OVERRIDE_GL_ACCOUNT)) {
             chain = chain.andThen(overrideGlAccount(dao, whereClause, binds, true));
         }
@@ -959,6 +1043,10 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
             chain = chain.andThen(orderStatus(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(RETURN_ITEM)) {
+            chain = chain.andThen(returnItem(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(SHIPMENT_RECEIPT)) {
             chain = chain.andThen(shipmentReceipt(dao, whereClause, binds, true));
         }
@@ -999,6 +1087,8 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
                 orderItemData.setDontCancelSetUserLogin(e.toHeadBuilder())); 
             data.getRelQuoteItem().forEach(e -> 
                 orderItemData.setQuoteItem(e.toDataBuilder())); 
+            data.getRelShoppingListItem().forEach(e -> 
+                orderItemData.setShoppingListItem(e.toDataBuilder())); 
             data.getRelOverrideGlAccount().forEach(e -> 
                 orderItemData.setOverrideGlAccount(e.toDataBuilder())); 
             data.getRelChangeByUserLogin().forEach(e -> 
@@ -1023,6 +1113,8 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
                 orderItemData.addOrderPaymentPreference(e.toDataBuilder())); 
             data.getRelOrderStatus().forEach(e -> 
                 orderItemData.addOrderStatus(e.toDataBuilder())); 
+            data.getRelReturnItem().forEach(e -> 
+                orderItemData.addReturnItem(e.toDataBuilder())); 
             data.getRelShipmentReceipt().forEach(e -> 
                 orderItemData.addShipmentReceipt(e.toDataBuilder())); 
             data.getRelTenant().forEach(e -> 
@@ -1185,6 +1277,17 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
                     .collect(Collectors.toList());
         }
          
+        public List<ShoppingListItem> getShoppingListItem(){
+            return getRelationValues(ctx, p1, "shopping_list_item", ShoppingListItem.class);
+        }
+
+        public List<ShoppingListItem> mergeShoppingListItem(){
+            return getShoppingListItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShoppingListItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<GlAccount> getOverrideGlAccount(){
             return getRelationValues(ctx, p1, "override_gl_account", GlAccount.class);
         }
@@ -1317,6 +1420,17 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
                     .collect(Collectors.toList());
         }
          
+        public List<ReturnItem> getReturnItem(){
+            return getRelationValues(ctx, p1, "return_item", ReturnItem.class);
+        }
+
+        public List<ReturnItem> mergeReturnItem(){
+            return getReturnItem().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelReturnItem().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<ShipmentReceipt> getShipmentReceipt(){
             return getRelationValues(ctx, p1, "shipment_receipt", ShipmentReceipt.class);
         }
@@ -1368,6 +1482,8 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
          
     public static final String QUOTE_ITEM="quote_item";
          
+    public static final String SHOPPING_LIST_ITEM="shopping_list_item";
+         
     public static final String OVERRIDE_GL_ACCOUNT="override_gl_account";
          
     public static final String CHANGE_BY_USER_LOGIN="change_by_user_login";
@@ -1391,6 +1507,8 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
     public static final String ORDER_PAYMENT_PREFERENCE="order_payment_preference";
          
     public static final String ORDER_STATUS="order_status";
+         
+    public static final String RETURN_ITEM="return_item";
          
     public static final String SHIPMENT_RECEIPT="shipment_receipt";
          
@@ -1454,6 +1572,14 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
                             getRelationValues(ctx, p1, "quote_item",
                                             QuoteItem.class)
                                     .forEach(el -> pb.setQuoteItem(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set shopping_list_item to head entity                        
+                        if(relationsDemand.contains("shopping_list_item")) {
+                            getRelationValues(ctx, p1, "shopping_list_item",
+                                            ShoppingListItem.class)
+                                    .forEach(el -> pb.setShoppingListItem(
                                              el.toDataBuilder().build()));
                         }
                                                
@@ -1550,6 +1676,14 @@ public class OrderItemDelegator extends AbstractProcs implements IChainQuery<Ord
                             getRelationValues(ctx, p1, "order_status",
                                             OrderStatus.class)
                                     .forEach(el -> pb.addOrderStatus(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set return_item to head entity                        
+                        if(relationsDemand.contains("return_item")) {
+                            getRelationValues(ctx, p1, "return_item",
+                                            ReturnItem.class)
+                                    .forEach(el -> pb.addReturnItem(
                                              el.toDataBuilder().build()));
                         }
                                                

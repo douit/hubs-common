@@ -418,6 +418,14 @@ public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Seriali
     @SerializedName("rate_amount") 
     List<RateAmount> relRateAmount= new ArrayList<>(); 
     @Exclude
+    @Singular("addReturnHeader")
+    @SerializedName("return_header") 
+    List<ReturnHeader> relReturnHeader= new ArrayList<>(); 
+    @Exclude
+    @Singular("addToReturnHeader")
+    @SerializedName("to_return_header") 
+    List<ReturnHeader> relToReturnHeader= new ArrayList<>(); 
+    @Exclude
     @Singular("addToShipment")
     @SerializedName("to_shipment") 
     List<Shipment> relToShipment= new ArrayList<>(); 
@@ -433,6 +441,10 @@ public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Seriali
     @Singular("addCarrierShipmentRouteSegment")
     @SerializedName("carrier_shipment_route_segment") 
     List<ShipmentRouteSegment> relCarrierShipmentRouteSegment= new ArrayList<>(); 
+    @Exclude
+    @Singular("addShoppingList")
+    @SerializedName("shopping_list") 
+    List<ShoppingList> relShoppingList= new ArrayList<>(); 
     @Exclude
     @Singular("addSupplierProduct")
     @SerializedName("supplier_product") 
@@ -528,10 +540,13 @@ public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Seriali
         supplierMap.put(QUOTE, getter(this, Party::getRelQuote)); 
         supplierMap.put(QUOTE_ROLE, getter(this, Party::getRelQuoteRole)); 
         supplierMap.put(RATE_AMOUNT, getter(this, Party::getRelRateAmount)); 
+        supplierMap.put(RETURN_HEADER, getter(this, Party::getRelReturnHeader)); 
+        supplierMap.put(TO_RETURN_HEADER, getter(this, Party::getRelToReturnHeader)); 
         supplierMap.put(TO_SHIPMENT, getter(this, Party::getRelToShipment)); 
         supplierMap.put(FROM_SHIPMENT, getter(this, Party::getRelFromShipment)); 
         supplierMap.put(SHIPMENT_COST_ESTIMATE, getter(this, Party::getRelShipmentCostEstimate)); 
         supplierMap.put(CARRIER_SHIPMENT_ROUTE_SEGMENT, getter(this, Party::getRelCarrierShipmentRouteSegment)); 
+        supplierMap.put(SHOPPING_LIST, getter(this, Party::getRelShoppingList)); 
         supplierMap.put(SUPPLIER_PRODUCT, getter(this, Party::getRelSupplierProduct)); 
         supplierMap.put(SUPPLIER_PRODUCT_FEATURE, getter(this, Party::getRelSupplierProductFeature)); 
         supplierMap.put(TAX_AUTH_TAX_AUTHORITY, getter(this, Party::getRelTaxAuthTaxAuthority)); 

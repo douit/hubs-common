@@ -388,6 +388,35 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         }
          
         @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "prho")
+        default Map<String, Shipment> chainPrimaryReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, Shipment> inMap,
+                                               boolean succInvoke) {
+            return chainPrimaryReturnHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "prho")
+        default Map<String, Shipment> chainPrimaryReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, Shipment> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Shipment", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(PRIMARY_RETURN_HEADER);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        Shipment p = map.computeIfAbsent(rr.getColumn("sh_shipment_id", String.class),
+                                id -> rr.getRow(Shipment.class));
+                        if (rr.getColumn("prho_return_id", String.class) != null) {
+                            p.getRelPrimaryReturnHeader()
+                                    .add(rr.getRow(ReturnHeader.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Shipment.class, prefix = "sh")
         @RegisterBeanMapper(value = OrderItemShipGroup.class, prefix = "poisgo")
         default Map<String, Shipment> chainPrimaryOrderItemShipGroup(ProtoMeta protoMeta,
                                                Map<String, Shipment> inMap,
@@ -1033,6 +1062,17 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
         return e -> dao.chainPrimaryOrderHeader(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Shipment>> primaryReturnHeader(Dao dao, boolean succ) {
+        return e -> dao.chainPrimaryReturnHeader(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Shipment>> primaryReturnHeader(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainPrimaryReturnHeader(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Shipment>> primaryOrderItemShipGroup(Dao dao, boolean succ) {
         return e -> dao.chainPrimaryOrderItemShipGroup(protoMeta, e, succ);
     }
@@ -1291,6 +1331,10 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
             chain = chain.andThen(primaryOrderHeader(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(PRIMARY_RETURN_HEADER)) {
+            chain = chain.andThen(primaryReturnHeader(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(PRIMARY_ORDER_ITEM_SHIP_GROUP)) {
             chain = chain.andThen(primaryOrderItemShipGroup(dao, whereClause, binds, true));
         }
@@ -1405,6 +1449,8 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
                 shipmentData.setDestinationTelecomNumber(e.toDataBuilder())); 
             data.getRelPrimaryOrderHeader().forEach(e -> 
                 shipmentData.setPrimaryOrderHeader(e.toHeadBuilder())); 
+            data.getRelPrimaryReturnHeader().forEach(e -> 
+                shipmentData.setPrimaryReturnHeader(e.toDataBuilder())); 
             data.getRelPrimaryOrderItemShipGroup().forEach(e -> 
                 shipmentData.setPrimaryOrderItemShipGroup(e.toDataBuilder())); 
             data.getRelToParty().forEach(e -> 
@@ -1654,6 +1700,17 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
                     .collect(Collectors.toList());
         }
          
+        public List<ReturnHeader> getPrimaryReturnHeader(){
+            return getRelationValues(ctx, p1, "primary_return_header", ReturnHeader.class);
+        }
+
+        public List<ReturnHeader> mergePrimaryReturnHeader(){
+            return getPrimaryReturnHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelPrimaryReturnHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<OrderItemShipGroup> getPrimaryOrderItemShipGroup(){
             return getRelationValues(ctx, p1, "primary_order_item_ship_group", OrderItemShipGroup.class);
         }
@@ -1891,6 +1948,8 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
          
     public static final String PRIMARY_ORDER_HEADER="primary_order_header";
          
+    public static final String PRIMARY_RETURN_HEADER="primary_return_header";
+         
     public static final String PRIMARY_ORDER_ITEM_SHIP_GROUP="primary_order_item_ship_group";
          
     public static final String TO_PARTY="to_party";
@@ -2026,6 +2085,14 @@ public class ShipmentDelegator extends AbstractProcs implements IChainQuery<Ship
                                             OrderHeader.class)
                                     .forEach(el -> pb.setPrimaryOrderHeader(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set primary_return_header to head entity                        
+                        if(relationsDemand.contains("primary_return_header")) {
+                            getRelationValues(ctx, p1, "primary_return_header",
+                                            ReturnHeader.class)
+                                    .forEach(el -> pb.setPrimaryReturnHeader(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set primary_order_item_ship_group to head entity                        

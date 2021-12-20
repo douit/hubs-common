@@ -174,6 +174,10 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, HasId, Seriali
     @SerializedName("product_store") 
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
+    @Singular("addQuoteAdjustment")
+    @SerializedName("quote_adjustment") 
+    List<QuoteAdjustment> relQuoteAdjustment= new ArrayList<>(); 
+    @Exclude
     @Singular("addQuoteItem")
     @SerializedName("quote_item") 
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
@@ -195,6 +199,7 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, HasId, Seriali
          
         supplierMap.put(PARTY, getter(this, Quote::getRelParty)); 
         supplierMap.put(PRODUCT_STORE, getter(this, Quote::getRelProductStore)); 
+        supplierMap.put(QUOTE_ADJUSTMENT, getter(this, Quote::getRelQuoteAdjustment)); 
         supplierMap.put(QUOTE_ITEM, getter(this, Quote::getRelQuoteItem)); 
         supplierMap.put(QUOTE_ROLE, getter(this, Quote::getRelQuoteRole)); 
         supplierMap.put(QUOTE_TERM, getter(this, Quote::getRelQuoteTerm)); 

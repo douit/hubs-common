@@ -630,6 +630,10 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
     @SerializedName("quote") 
     List<Quote> relQuote= new ArrayList<>(); 
     @Exclude
+    @Singular("addShoppingList")
+    @SerializedName("shopping_list") 
+    List<ShoppingList> relShoppingList= new ArrayList<>(); 
+    @Exclude
     @Singular("addTaxAuthorityRateProduct")
     @SerializedName("tax_authority_rate_product") 
     List<TaxAuthorityRateProduct> relTaxAuthorityRateProduct= new ArrayList<>(); 
@@ -662,6 +666,7 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
         supplierMap.put(PRODUCT_STORE_ROLE, getter(this, ProductStore::getRelProductStoreRole)); 
         supplierMap.put(PRODUCT_STORE_SURVEY_APPL, getter(this, ProductStore::getRelProductStoreSurveyAppl)); 
         supplierMap.put(QUOTE, getter(this, ProductStore::getRelQuote)); 
+        supplierMap.put(SHOPPING_LIST, getter(this, ProductStore::getRelShoppingList)); 
         supplierMap.put(TAX_AUTHORITY_RATE_PRODUCT, getter(this, ProductStore::getRelTaxAuthorityRateProduct)); 
         supplierMap.put(WEB_SITE, getter(this, ProductStore::getRelWebSite)); 
         supplierMap.put(TENANT, getter(this, ProductStore::getRelTenant));

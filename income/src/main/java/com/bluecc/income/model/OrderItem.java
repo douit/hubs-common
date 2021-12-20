@@ -404,6 +404,10 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, HasId,
     @SerializedName("quote_item") 
     List<QuoteItem> relQuoteItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addShoppingListItem")
+    @SerializedName("shopping_list_item") 
+    List<ShoppingListItem> relShoppingListItem= new ArrayList<>(); 
+    @Exclude
     @Singular("addOverrideGlAccount")
     @SerializedName("override_gl_account") 
     List<GlAccount> relOverrideGlAccount= new ArrayList<>(); 
@@ -452,6 +456,10 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, HasId,
     @SerializedName("order_status") 
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     @Exclude
+    @Singular("addReturnItem")
+    @SerializedName("return_item") 
+    List<ReturnItem> relReturnItem= new ArrayList<>(); 
+    @Exclude
     @Singular("addShipmentReceipt")
     @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
@@ -469,6 +477,7 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, HasId,
         supplierMap.put(PRODUCT_FACILITY_LOCATION, getter(this, OrderItem::getRelProductFacilityLocation)); 
         supplierMap.put(DONT_CANCEL_SET_USER_LOGIN, getter(this, OrderItem::getRelDontCancelSetUserLogin)); 
         supplierMap.put(QUOTE_ITEM, getter(this, OrderItem::getRelQuoteItem)); 
+        supplierMap.put(SHOPPING_LIST_ITEM, getter(this, OrderItem::getRelShoppingListItem)); 
         supplierMap.put(OVERRIDE_GL_ACCOUNT, getter(this, OrderItem::getRelOverrideGlAccount)); 
         supplierMap.put(CHANGE_BY_USER_LOGIN, getter(this, OrderItem::getRelChangeByUserLogin)); 
         supplierMap.put(FIN_ACCOUNT_TRANS, getter(this, OrderItem::getRelFinAccountTrans)); 
@@ -481,6 +490,7 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, HasId,
         supplierMap.put(ORDER_ITEM_SHIP_GRP_INV_RES, getter(this, OrderItem::getRelOrderItemShipGrpInvRes)); 
         supplierMap.put(ORDER_PAYMENT_PREFERENCE, getter(this, OrderItem::getRelOrderPaymentPreference)); 
         supplierMap.put(ORDER_STATUS, getter(this, OrderItem::getRelOrderStatus)); 
+        supplierMap.put(RETURN_ITEM, getter(this, OrderItem::getRelReturnItem)); 
         supplierMap.put(SHIPMENT_RECEIPT, getter(this, OrderItem::getRelShipmentReceipt)); 
         supplierMap.put(TENANT, getter(this, OrderItem::getRelTenant));
 
@@ -535,9 +545,6 @@ public class OrderItem implements IEventModel<OrderItemFlatData.Builder>, HasId,
         }
         if (quoteItemSeqId != null) {
             builder.setQuoteItemSeqId(quoteItemSeqId);
-        }
-        if (shoppingListId != null) {
-            builder.setShoppingListId(shoppingListId);
         }
         if (shoppingListItemSeqId != null) {
             builder.setShoppingListItemSeqId(shoppingListItemSeqId);

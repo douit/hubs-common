@@ -23,6 +23,7 @@ public class DelegatorsPluginModule extends AbstractModule {
         uriBinder.addBinding("Product").to(ProductDelegator.class);
         uriBinder.addBinding("OrderHeader").to(OrderHeaderDelegator.class);
         uriBinder.addBinding("OrderItem").to(OrderItemDelegator.class);
+        uriBinder.addBinding("ShoppingList").to(ShoppingListDelegator.class);
         uriBinder.addBinding("Payment").to(PaymentDelegator.class);
         uriBinder.addBinding("Invoice").to(InvoiceDelegator.class);
         uriBinder.addBinding("InvoiceItem").to(InvoiceItemDelegator.class);

@@ -286,6 +286,10 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
     @SerializedName("product_store") 
     List<ProductStore> relProductStore= new ArrayList<>(); 
     @Exclude
+    @Singular("addAutoOrderShoppingList")
+    @SerializedName("auto_order_shopping_list") 
+    List<ShoppingList> relAutoOrderShoppingList= new ArrayList<>(); 
+    @Exclude
     @Singular("addCreatedByUserLogin")
     @SerializedName("created_by_user_login") 
     List<UserLogin> relCreatedByUserLogin= new ArrayList<>(); 
@@ -346,6 +350,10 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
     @SerializedName("order_status") 
     List<OrderStatus> relOrderStatus= new ArrayList<>(); 
     @Exclude
+    @Singular("addReturnItem")
+    @SerializedName("return_item") 
+    List<ReturnItem> relReturnItem= new ArrayList<>(); 
+    @Exclude
     @Singular("addPrimaryShipment")
     @SerializedName("primary_shipment") 
     List<Shipment> relPrimaryShipment= new ArrayList<>(); 
@@ -364,6 +372,7 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
         supplierMap.put(ORIGIN_FACILITY, getter(this, OrderHeader::getRelOriginFacility)); 
         supplierMap.put(BILLING_ACCOUNT, getter(this, OrderHeader::getRelBillingAccount)); 
         supplierMap.put(PRODUCT_STORE, getter(this, OrderHeader::getRelProductStore)); 
+        supplierMap.put(AUTO_ORDER_SHOPPING_LIST, getter(this, OrderHeader::getRelAutoOrderShoppingList)); 
         supplierMap.put(CREATED_BY_USER_LOGIN, getter(this, OrderHeader::getRelCreatedByUserLogin)); 
         supplierMap.put(WEB_SITE, getter(this, OrderHeader::getRelWebSite)); 
         supplierMap.put(ACQUIRE_FIXED_ASSET, getter(this, OrderHeader::getRelAcquireFixedAsset)); 
@@ -379,6 +388,7 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
         supplierMap.put(ORDER_PAYMENT_PREFERENCE, getter(this, OrderHeader::getRelOrderPaymentPreference)); 
         supplierMap.put(ORDER_ROLE, getter(this, OrderHeader::getRelOrderRole)); 
         supplierMap.put(ORDER_STATUS, getter(this, OrderHeader::getRelOrderStatus)); 
+        supplierMap.put(RETURN_ITEM, getter(this, OrderHeader::getRelReturnItem)); 
         supplierMap.put(PRIMARY_SHIPMENT, getter(this, OrderHeader::getRelPrimaryShipment)); 
         supplierMap.put(SHIPMENT_RECEIPT, getter(this, OrderHeader::getRelShipmentReceipt)); 
         supplierMap.put(TENANT, getter(this, OrderHeader::getRelTenant));
@@ -443,9 +453,6 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
         }
         if (transactionId != null) {
             builder.setTransactionId(transactionId);
-        }
-        if (autoOrderShoppingListId != null) {
-            builder.setAutoOrderShoppingListId(autoOrderShoppingListId);
         }
         if (needsInventoryIssuance != null) {
             builder.setNeedsInventoryIssuance(getIndicator(needsInventoryIssuance));

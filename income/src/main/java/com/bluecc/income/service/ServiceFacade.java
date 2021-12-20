@@ -51,6 +51,7 @@ public class ServiceFacade {
     @Inject Provider<ProductRpc> productRpc;
     @Inject Provider<OrderHeaderRpc> orderHeaderRpc;
     @Inject Provider<OrderItemRpc> orderItemRpc;
+    @Inject Provider<ShoppingListRpc> shoppingListRpc;
     @Inject Provider<PaymentRpc> paymentRpc;
     @Inject Provider<InvoiceRpc> invoiceRpc;
     @Inject Provider<InvoiceItemRpc> invoiceItemRpc;
@@ -90,6 +91,7 @@ public class ServiceFacade {
                 .addService(ServerInterceptors.intercept(productRpc.get(), interceptor))
                 .addService(ServerInterceptors.intercept(orderHeaderRpc.get(), interceptor))
                 .addService(ServerInterceptors.intercept(orderItemRpc.get(), interceptor))
+                .addService(ServerInterceptors.intercept(shoppingListRpc.get(), interceptor))
                 .addService(ServerInterceptors.intercept(paymentRpc.get(), interceptor))
                 .addService(ServerInterceptors.intercept(invoiceRpc.get(), interceptor))
                 .addService(ServerInterceptors.intercept(invoiceItemRpc.get(), interceptor))

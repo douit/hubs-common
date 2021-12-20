@@ -127,6 +127,35 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         }
          
         @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = QuoteAdjustment.class, prefix = "qam")
+        default Map<String, Quote> chainQuoteAdjustment(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               boolean succInvoke) {
+            return chainQuoteAdjustment(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
+        @RegisterBeanMapper(value = QuoteAdjustment.class, prefix = "qam")
+        default Map<String, Quote> chainQuoteAdjustment(ProtoMeta protoMeta,
+                                               Map<String, Quote> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("Quote", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(QUOTE_ADJUSTMENT);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        Quote p = map.computeIfAbsent(rr.getColumn("qu_quote_id", String.class),
+                                id -> rr.getRow(Quote.class));
+                        if (rr.getColumn("qam_quote_id", String.class) != null) {
+                            p.getRelQuoteAdjustment()
+                                    .add(rr.getRow(QuoteAdjustment.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = Quote.class, prefix = "qu")
         @RegisterBeanMapper(value = QuoteItem.class, prefix = "qim")
         default Map<String, Quote> chainQuoteItem(ProtoMeta protoMeta,
                                                Map<String, Quote> inMap,
@@ -267,6 +296,17 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
         return e -> dao.chainProductStore(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, Quote>> quoteAdjustment(Dao dao, boolean succ) {
+        return e -> dao.chainQuoteAdjustment(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, Quote>> quoteAdjustment(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainQuoteAdjustment(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, Quote>> quoteItem(Dao dao, boolean succ) {
         return e -> dao.chainQuoteItem(protoMeta, e, succ);
     }
@@ -335,6 +375,10 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
             chain = chain.andThen(productStore(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(QUOTE_ADJUSTMENT)) {
+            chain = chain.andThen(quoteAdjustment(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(QUOTE_ITEM)) {
             chain = chain.andThen(quoteItem(dao, whereClause, binds, true));
         }
@@ -375,6 +419,8 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
                 quoteData.setParty(e.toHeadBuilder())); 
             data.getRelProductStore().forEach(e -> 
                 quoteData.setProductStore(e.toHeadBuilder())); 
+            data.getRelQuoteAdjustment().forEach(e -> 
+                quoteData.addQuoteAdjustment(e.toDataBuilder())); 
             data.getRelQuoteItem().forEach(e -> 
                 quoteData.addQuoteItem(e.toDataBuilder())); 
             data.getRelQuoteRole().forEach(e -> 
@@ -497,6 +543,17 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
                     .collect(Collectors.toList());
         }
          
+        public List<QuoteAdjustment> getQuoteAdjustment(){
+            return getRelationValues(ctx, p1, "quote_adjustment", QuoteAdjustment.class);
+        }
+
+        public List<QuoteAdjustment> mergeQuoteAdjustment(){
+            return getQuoteAdjustment().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelQuoteAdjustment().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<QuoteItem> getQuoteItem(){
             return getRelationValues(ctx, p1, "quote_item", QuoteItem.class);
         }
@@ -562,6 +619,8 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
          
     public static final String PRODUCT_STORE="product_store";
          
+    public static final String QUOTE_ADJUSTMENT="quote_adjustment";
+         
     public static final String QUOTE_ITEM="quote_item";
          
     public static final String QUOTE_ROLE="quote_role";
@@ -597,6 +656,14 @@ public class QuoteDelegator extends AbstractProcs implements IChainQuery<Quote>,
                                             ProductStore.class)
                                     .forEach(el -> pb.setProductStore(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set quote_adjustment to head entity                        
+                        if(relationsDemand.contains("quote_adjustment")) {
+                            getRelationValues(ctx, p1, "quote_adjustment",
+                                            QuoteAdjustment.class)
+                                    .forEach(el -> pb.addQuoteAdjustment(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set quote_item to head entity                        

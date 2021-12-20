@@ -562,6 +562,35 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         }
          
         @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Requirement.class, prefix = "rem")
+        default Map<String, FixedAsset> chainRequirement(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               boolean succInvoke) {
+            return chainRequirement(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
+        @RegisterBeanMapper(value = Requirement.class, prefix = "rem")
+        default Map<String, FixedAsset> chainRequirement(ProtoMeta protoMeta,
+                                               Map<String, FixedAsset> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FixedAsset", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(REQUIREMENT);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        FixedAsset p = map.computeIfAbsent(rr.getColumn("fa_fixed_asset_id", String.class),
+                                id -> rr.getRow(FixedAsset.class));
+                        if (rr.getColumn("rem_fixed_asset_id", String.class) != null) {
+                            p.getRelRequirement()
+                                    .add(rr.getRow(Requirement.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FixedAsset.class, prefix = "fa")
         @RegisterBeanMapper(value = WorkEffort.class, prefix = "wem")
         default Map<String, FixedAsset> chainWorkEffort(ProtoMeta protoMeta,
                                                Map<String, FixedAsset> inMap,
@@ -838,6 +867,17 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
         return e -> dao.chainFixedAssetInventoryItem(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, FixedAsset>> requirement(Dao dao, boolean succ) {
+        return e -> dao.chainRequirement(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FixedAsset>> requirement(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainRequirement(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, FixedAsset>> workEffort(Dao dao, boolean succ) {
         return e -> dao.chainWorkEffort(protoMeta, e, succ);
     }
@@ -955,6 +995,10 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
             chain = chain.andThen(fixedAssetInventoryItem(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(REQUIREMENT)) {
+            chain = chain.andThen(requirement(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(WORK_EFFORT)) {
             chain = chain.andThen(workEffort(dao, whereClause, binds, true));
         }
@@ -1021,6 +1065,8 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
                 fixedAssetData.addFixedAssetStdCost(e.toDataBuilder())); 
             data.getRelFixedAssetInventoryItem().forEach(e -> 
                 fixedAssetData.addFixedAssetInventoryItem(e.toHeadBuilder())); 
+            data.getRelRequirement().forEach(e -> 
+                fixedAssetData.addRequirement(e.toDataBuilder())); 
             data.getRelWorkEffort().forEach(e -> 
                 fixedAssetData.addWorkEffort(e.toHeadBuilder())); 
             data.getRelWorkEffortFixedAssetAssign().forEach(e -> 
@@ -1306,6 +1352,17 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
                     .collect(Collectors.toList());
         }
          
+        public List<Requirement> getRequirement(){
+            return getRelationValues(ctx, p1, "requirement", Requirement.class);
+        }
+
+        public List<Requirement> mergeRequirement(){
+            return getRequirement().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelRequirement().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<WorkEffort> getWorkEffort(){
             return getRelationValues(ctx, p1, "work_effort", WorkEffort.class);
         }
@@ -1389,6 +1446,8 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
     public static final String FIXED_ASSET_STD_COST="fixed_asset_std_cost";
          
     public static final String FIXED_ASSET_INVENTORY_ITEM="fixed_asset_inventory_item";
+         
+    public static final String REQUIREMENT="requirement";
          
     public static final String WORK_EFFORT="work_effort";
          
@@ -1543,6 +1602,14 @@ public class FixedAssetDelegator extends AbstractProcs implements IChainQuery<Fi
                                             InventoryItem.class)
                                     .forEach(el -> pb.addFixedAssetInventoryItem(
                                              el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set requirement to head entity                        
+                        if(relationsDemand.contains("requirement")) {
+                            getRelationValues(ctx, p1, "requirement",
+                                            Requirement.class)
+                                    .forEach(el -> pb.addRequirement(
+                                             el.toDataBuilder().build()));
                         }
                                                
                         // add/set work_effort to head entity                        

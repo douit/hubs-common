@@ -232,6 +232,10 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, HasI
     @SerializedName("payment_method") 
     List<PaymentMethod> relPaymentMethod= new ArrayList<>(); 
     @Exclude
+    @Singular("addReturnHeader")
+    @SerializedName("return_header") 
+    List<ReturnHeader> relReturnHeader= new ArrayList<>(); 
+    @Exclude
     @Singular("addTenant")
     @SerializedName("tenant") 
     List<Tenant> relTenant= new ArrayList<>();
@@ -248,6 +252,7 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, HasI
         supplierMap.put(FIN_ACCOUNT_TRANS, getter(this, FinAccount::getRelFinAccountTrans)); 
         supplierMap.put(ORDER_PAYMENT_PREFERENCE, getter(this, FinAccount::getRelOrderPaymentPreference)); 
         supplierMap.put(PAYMENT_METHOD, getter(this, FinAccount::getRelPaymentMethod)); 
+        supplierMap.put(RETURN_HEADER, getter(this, FinAccount::getRelReturnHeader)); 
         supplierMap.put(TENANT, getter(this, FinAccount::getRelTenant));
 
         return supplierMap;

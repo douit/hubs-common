@@ -562,6 +562,35 @@ public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<
         }
          
         @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ShoppingList.class, prefix = "slm")
+        default Map<String, ProductStore> chainShoppingList(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               boolean succInvoke) {
+            return chainShoppingList(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
+        @RegisterBeanMapper(value = ShoppingList.class, prefix = "slm")
+        default Map<String, ProductStore> chainShoppingList(ProtoMeta protoMeta,
+                                               Map<String, ProductStore> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("ProductStore", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(SHOPPING_LIST);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        ProductStore p = map.computeIfAbsent(rr.getColumn("ps_product_store_id", String.class),
+                                id -> rr.getRow(ProductStore.class));
+                        if (rr.getColumn("slm_product_store_id", String.class) != null) {
+                            p.getRelShoppingList()
+                                    .add(rr.getRow(ShoppingList.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = ProductStore.class, prefix = "ps")
         @RegisterBeanMapper(value = TaxAuthorityRateProduct.class, prefix = "tarpm")
         default Map<String, ProductStore> chainTaxAuthorityRateProduct(ProtoMeta protoMeta,
                                                Map<String, ProductStore> inMap,
@@ -838,6 +867,17 @@ public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<
         return e -> dao.chainQuote(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, ProductStore>> shoppingList(Dao dao, boolean succ) {
+        return e -> dao.chainShoppingList(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, ProductStore>> shoppingList(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainShoppingList(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, ProductStore>> taxAuthorityRateProduct(Dao dao, boolean succ) {
         return e -> dao.chainTaxAuthorityRateProduct(protoMeta, e, succ);
     }
@@ -955,6 +995,10 @@ public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<
             chain = chain.andThen(quote(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(SHOPPING_LIST)) {
+            chain = chain.andThen(shoppingList(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(TAX_AUTHORITY_RATE_PRODUCT)) {
             chain = chain.andThen(taxAuthorityRateProduct(dao, whereClause, binds, true));
         }
@@ -1021,6 +1065,8 @@ public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<
                 productStoreData.addProductStoreSurveyAppl(e.toDataBuilder())); 
             data.getRelQuote().forEach(e -> 
                 productStoreData.addQuote(e.toHeadBuilder())); 
+            data.getRelShoppingList().forEach(e -> 
+                productStoreData.addShoppingList(e.toHeadBuilder())); 
             data.getRelTaxAuthorityRateProduct().forEach(e -> 
                 productStoreData.addTaxAuthorityRateProduct(e.toDataBuilder())); 
             data.getRelWebSite().forEach(e -> 
@@ -1306,6 +1352,17 @@ public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<
                     .collect(Collectors.toList());
         }
          
+        public List<ShoppingList> getShoppingList(){
+            return getRelationValues(ctx, p1, "shopping_list", ShoppingList.class);
+        }
+
+        public List<ShoppingList> mergeShoppingList(){
+            return getShoppingList().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelShoppingList().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<TaxAuthorityRateProduct> getTaxAuthorityRateProduct(){
             return getRelationValues(ctx, p1, "tax_authority_rate_product", TaxAuthorityRateProduct.class);
         }
@@ -1389,6 +1446,8 @@ public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<
     public static final String PRODUCT_STORE_SURVEY_APPL="product_store_survey_appl";
          
     public static final String QUOTE="quote";
+         
+    public static final String SHOPPING_LIST="shopping_list";
          
     public static final String TAX_AUTHORITY_RATE_PRODUCT="tax_authority_rate_product";
          
@@ -1542,6 +1601,14 @@ public class ProductStoreDelegator extends AbstractProcs implements IChainQuery<
                             getRelationValues(ctx, p1, "quote",
                                             Quote.class)
                                     .forEach(el -> pb.addQuote(
+                                             el.toHeadBuilder().build()));
+                        }
+                                               
+                        // add/set shopping_list to head entity                        
+                        if(relationsDemand.contains("shopping_list")) {
+                            getRelationValues(ctx, p1, "shopping_list",
+                                            ShoppingList.class)
+                                    .forEach(el -> pb.addShoppingList(
                                              el.toHeadBuilder().build()));
                         }
                                                

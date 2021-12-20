@@ -21,6 +21,7 @@
     "OrderItem": {
       "flatIds": []
     },
+    "ShoppingList": {},
 
     "Payment": {
       "flatIds": []

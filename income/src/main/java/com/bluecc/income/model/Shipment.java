@@ -318,6 +318,10 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, S
     @SerializedName("primary_order_header") 
     List<OrderHeader> relPrimaryOrderHeader= new ArrayList<>(); 
     @Exclude
+    @Singular("addPrimaryReturnHeader")
+    @SerializedName("primary_return_header") 
+    List<ReturnHeader> relPrimaryReturnHeader= new ArrayList<>(); 
+    @Exclude
     @Singular("addPrimaryOrderItemShipGroup")
     @SerializedName("primary_order_item_ship_group") 
     List<OrderItemShipGroup> relPrimaryOrderItemShipGroup= new ArrayList<>(); 
@@ -404,6 +408,7 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, S
         supplierMap.put(DESTINATION_POSTAL_ADDRESS, getter(this, Shipment::getRelDestinationPostalAddress)); 
         supplierMap.put(DESTINATION_TELECOM_NUMBER, getter(this, Shipment::getRelDestinationTelecomNumber)); 
         supplierMap.put(PRIMARY_ORDER_HEADER, getter(this, Shipment::getRelPrimaryOrderHeader)); 
+        supplierMap.put(PRIMARY_RETURN_HEADER, getter(this, Shipment::getRelPrimaryReturnHeader)); 
         supplierMap.put(PRIMARY_ORDER_ITEM_SHIP_GROUP, getter(this, Shipment::getRelPrimaryOrderItemShipGroup)); 
         supplierMap.put(TO_PARTY, getter(this, Shipment::getRelToParty)); 
         supplierMap.put(TO_PERSON, getter(this, Shipment::getRelToPerson)); 
@@ -441,9 +446,6 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, S
         }
         if (statusId != null) {
             builder.setStatusId(statusId);
-        }
-        if (primaryReturnId != null) {
-            builder.setPrimaryReturnId(primaryReturnId);
         }
         if (primaryShipGroupSeqId != null) {
             builder.setPrimaryShipGroupSeqId(primaryShipGroupSeqId);

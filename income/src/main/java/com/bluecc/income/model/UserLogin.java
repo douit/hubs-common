@@ -330,6 +330,14 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, HasId,
     @SerializedName("product_review") 
     List<ProductReview> relProductReview= new ArrayList<>(); 
     @Exclude
+    @Singular("addQuoteAdjustment")
+    @SerializedName("quote_adjustment") 
+    List<QuoteAdjustment> relQuoteAdjustment= new ArrayList<>(); 
+    @Exclude
+    @Singular("addReturnHeader")
+    @SerializedName("return_header") 
+    List<ReturnHeader> relReturnHeader= new ArrayList<>(); 
+    @Exclude
     @Singular("addShipmentReceipt")
     @SerializedName("shipment_receipt") 
     List<ShipmentReceipt> relShipmentReceipt= new ArrayList<>(); 
@@ -388,6 +396,8 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, HasId,
         supplierMap.put(CREATED_BY_PRODUCT_PROMO_CODE, getter(this, UserLogin::getRelCreatedByProductPromoCode)); 
         supplierMap.put(LAST_MODIFIED_BY_PRODUCT_PROMO_CODE, getter(this, UserLogin::getRelLastModifiedByProductPromoCode)); 
         supplierMap.put(PRODUCT_REVIEW, getter(this, UserLogin::getRelProductReview)); 
+        supplierMap.put(QUOTE_ADJUSTMENT, getter(this, UserLogin::getRelQuoteAdjustment)); 
+        supplierMap.put(RETURN_HEADER, getter(this, UserLogin::getRelReturnHeader)); 
         supplierMap.put(SHIPMENT_RECEIPT, getter(this, UserLogin::getRelShipmentReceipt)); 
         supplierMap.put(CHANGE_BY_SHIPMENT_STATUS, getter(this, UserLogin::getRelChangeByShipmentStatus)); 
         supplierMap.put(USER_LOGIN_SECURITY_GROUP, getter(this, UserLogin::getRelUserLoginSecurityGroup)); 

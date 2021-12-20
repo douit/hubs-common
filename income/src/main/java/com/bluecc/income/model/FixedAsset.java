@@ -312,6 +312,10 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, HasI
     @SerializedName("fixed_asset_inventory_item") 
     List<InventoryItem> relFixedAssetInventoryItem= new ArrayList<>(); 
     @Exclude
+    @Singular("addRequirement")
+    @SerializedName("requirement") 
+    List<Requirement> relRequirement= new ArrayList<>(); 
+    @Exclude
     @Singular("addWorkEffort")
     @SerializedName("work_effort") 
     List<WorkEffort> relWorkEffort= new ArrayList<>(); 
@@ -344,6 +348,7 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, HasI
         supplierMap.put(FIXED_ASSET_REGISTRATION, getter(this, FixedAsset::getRelFixedAssetRegistration)); 
         supplierMap.put(FIXED_ASSET_STD_COST, getter(this, FixedAsset::getRelFixedAssetStdCost)); 
         supplierMap.put(FIXED_ASSET_INVENTORY_ITEM, getter(this, FixedAsset::getRelFixedAssetInventoryItem)); 
+        supplierMap.put(REQUIREMENT, getter(this, FixedAsset::getRelRequirement)); 
         supplierMap.put(WORK_EFFORT, getter(this, FixedAsset::getRelWorkEffort)); 
         supplierMap.put(WORK_EFFORT_FIXED_ASSET_ASSIGN, getter(this, FixedAsset::getRelWorkEffortFixedAssetAssign)); 
         supplierMap.put(TENANT, getter(this, FixedAsset::getRelTenant));

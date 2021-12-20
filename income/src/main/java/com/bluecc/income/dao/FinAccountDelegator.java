@@ -330,6 +330,35 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
         }
          
         @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "rhm")
+        default Map<String, FinAccount> chainReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               boolean succInvoke) {
+            return chainReturnHeader(protoMeta, inMap, "", SelectorBindings.EMPTY, succInvoke);
+        }
+
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
+        @RegisterBeanMapper(value = ReturnHeader.class, prefix = "rhm")
+        default Map<String, FinAccount> chainReturnHeader(ProtoMeta protoMeta,
+                                               Map<String, FinAccount> inMap,
+                                               String whereClause,
+                                               SelectorBindings binds,
+                                               boolean succInvoke) {
+            SqlMeta sqlMeta = protoMeta.getSqlMeta("FinAccount", succInvoke);
+            SqlMeta.ViewDecl view = sqlMeta.leftJoin(RETURN_HEADER);
+            return binds.enrich(getHandle().select(view.getSql() + " " + whereClause))
+                    .reduceRows(inMap, (map, rr) -> {
+                        FinAccount p = map.computeIfAbsent(rr.getColumn("fa_fin_account_id", String.class),
+                                id -> rr.getRow(FinAccount.class));
+                        if (rr.getColumn("rhm_fin_account_id", String.class) != null) {
+                            p.getRelReturnHeader()
+                                    .add(rr.getRow(ReturnHeader.class));
+                        }
+                        return map;
+                    });
+        }
+         
+        @RegisterBeanMapper(value = FinAccount.class, prefix = "fa")
         @RegisterBeanMapper(value = Tenant.class, prefix = "teo")
         default Map<String, FinAccount> chainTenant(ProtoMeta protoMeta,
                                                Map<String, FinAccount> inMap,
@@ -460,6 +489,17 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
         return e -> dao.chainPaymentMethod(protoMeta, e, whereClause, binds, succ);
     }
      
+    public Consumer<Map<String, FinAccount>> returnHeader(Dao dao, boolean succ) {
+        return e -> dao.chainReturnHeader(protoMeta, e, succ);
+    }
+
+    public Consumer<Map<String, FinAccount>> returnHeader(Dao dao,
+                                        String whereClause,
+                                        SelectorBindings binds,
+                                        boolean succ) {
+        return e -> dao.chainReturnHeader(protoMeta, e, whereClause, binds, succ);
+    }
+     
     public Consumer<Map<String, FinAccount>> tenant(Dao dao, boolean succ) {
         return e -> dao.chainTenant(protoMeta, e, succ);
     }
@@ -523,6 +563,10 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
             chain = chain.andThen(paymentMethod(dao, whereClause, binds, true));
         }
          
+        if (incls.contains(RETURN_HEADER)) {
+            chain = chain.andThen(returnHeader(dao, whereClause, binds, true));
+        }
+         
         if (incls.contains(TENANT)) {
             chain = chain.andThen(tenant(dao, whereClause, binds, true));
         }
@@ -565,6 +609,8 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
                 finAccountData.addOrderPaymentPreference(e.toDataBuilder())); 
             data.getRelPaymentMethod().forEach(e -> 
                 finAccountData.addPaymentMethod(e.toDataBuilder())); 
+            data.getRelReturnHeader().forEach(e -> 
+                finAccountData.addReturnHeader(e.toDataBuilder())); 
             data.getRelTenant().forEach(e -> 
                 finAccountData.setTenant(e.toDataBuilder()));
             return finAccountData.build();
@@ -758,6 +804,17 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
                     .collect(Collectors.toList());
         }
          
+        public List<ReturnHeader> getReturnHeader(){
+            return getRelationValues(ctx, p1, "return_header", ReturnHeader.class);
+        }
+
+        public List<ReturnHeader> mergeReturnHeader(){
+            return getReturnHeader().stream()
+                    .map(p -> liveObjectsProvider.get().merge(p))
+                    .peek(c -> persistObject.getRelReturnHeader().add(c))
+                    .collect(Collectors.toList());
+        }
+         
         public List<Tenant> getTenant(){
             return getRelationValues(ctx, p1, "tenant", Tenant.class);
         }
@@ -803,6 +860,8 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
     public static final String ORDER_PAYMENT_PREFERENCE="order_payment_preference";
          
     public static final String PAYMENT_METHOD="payment_method";
+         
+    public static final String RETURN_HEADER="return_header";
          
     public static final String TENANT="tenant";
     
@@ -888,6 +947,14 @@ public class FinAccountDelegator extends AbstractProcs implements IChainQuery<Fi
                             getRelationValues(ctx, p1, "payment_method",
                                             PaymentMethod.class)
                                     .forEach(el -> pb.addPaymentMethod(
+                                             el.toDataBuilder().build()));
+                        }
+                                               
+                        // add/set return_header to head entity                        
+                        if(relationsDemand.contains("return_header")) {
+                            getRelationValues(ctx, p1, "return_header",
+                                            ReturnHeader.class)
+                                    .forEach(el -> pb.addReturnHeader(
                                              el.toDataBuilder().build()));
                         }
                                                
