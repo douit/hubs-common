@@ -74,38 +74,42 @@ public class ProductStoreKeywordOvrd implements IEventModel<ProductStoreKeywordO
 
     public ProductStoreKeywordOvrdData.Builder toDataBuilder() {
         ProductStoreKeywordOvrdData.Builder builder = ProductStoreKeywordOvrdData.newBuilder();
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (keyword != null) {
-            builder.setKeyword(keyword);
+        if (getKeyword() != null) {
+            builder.setKeyword(getKeyword());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (target != null) {
-            builder.setTarget(target);
+        if (getTarget() != null) {
+            builder.setTarget(getTarget());
         }
-        if (targetTypeEnumId != null) {
-            builder.setTargetTypeEnumId(targetTypeEnumId);
+        if (getTargetTypeEnumId() != null) {
+            builder.setTargetTypeEnumId(getTargetTypeEnumId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductStoreKeywordOvrd fromData(ProductStoreKeywordOvrdData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductStoreKeywordOvrd.ProductStoreKeywordOvrdBuilder fromPrototype(ProductStoreKeywordOvrdData data) {
         return ProductStoreKeywordOvrd.builder()
                 .productStoreId(data.getProductStoreId())
                 .keyword(data.getKeyword())
@@ -116,8 +120,7 @@ public class ProductStoreKeywordOvrd implements IEventModel<ProductStoreKeywordO
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

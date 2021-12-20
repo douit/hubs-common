@@ -80,44 +80,48 @@ public class ProductFacilityAssoc implements IEventModel<ProductFacilityAssocDat
 
     public ProductFacilityAssocData.Builder toDataBuilder() {
         ProductFacilityAssocData.Builder builder = ProductFacilityAssocData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (facilityIdTo != null) {
-            builder.setFacilityIdTo(facilityIdTo);
+        if (getFacilityIdTo() != null) {
+            builder.setFacilityIdTo(getFacilityIdTo());
         }
-        if (facilityAssocTypeId != null) {
-            builder.setFacilityAssocTypeId(facilityAssocTypeId);
+        if (getFacilityAssocTypeId() != null) {
+            builder.setFacilityAssocTypeId(getFacilityAssocTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (transitTime != null) {
-            builder.setTransitTime(transitTime);
+        if (getTransitTime() != null) {
+            builder.setTransitTime(getTransitTime());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductFacilityAssoc fromData(ProductFacilityAssocData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductFacilityAssoc.ProductFacilityAssocBuilder fromPrototype(ProductFacilityAssocData data) {
         return ProductFacilityAssoc.builder()
                 .productId(data.getProductId())
                 .facilityId(data.getFacilityId())
@@ -130,8 +134,7 @@ public class ProductFacilityAssoc implements IEventModel<ProductFacilityAssocDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

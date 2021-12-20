@@ -116,98 +116,102 @@ public class CommunicationEvent implements IEventModel<CommunicationEventData.Bu
 
     public CommunicationEventData.Builder toDataBuilder() {
         CommunicationEventData.Builder builder = CommunicationEventData.newBuilder();
-        if (communicationEventId != null) {
-            builder.setCommunicationEventId(communicationEventId);
+        if (getCommunicationEventId() != null) {
+            builder.setCommunicationEventId(getCommunicationEventId());
         }
-        if (communicationEventTypeId != null) {
-            builder.setCommunicationEventTypeId(communicationEventTypeId);
+        if (getCommunicationEventTypeId() != null) {
+            builder.setCommunicationEventTypeId(getCommunicationEventTypeId());
         }
-        if (origCommEventId != null) {
-            builder.setOrigCommEventId(origCommEventId);
+        if (getOrigCommEventId() != null) {
+            builder.setOrigCommEventId(getOrigCommEventId());
         }
-        if (parentCommEventId != null) {
-            builder.setParentCommEventId(parentCommEventId);
+        if (getParentCommEventId() != null) {
+            builder.setParentCommEventId(getParentCommEventId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (contactMechTypeId != null) {
-            builder.setContactMechTypeId(contactMechTypeId);
+        if (getContactMechTypeId() != null) {
+            builder.setContactMechTypeId(getContactMechTypeId());
         }
-        if (contactMechIdFrom != null) {
-            builder.setContactMechIdFrom(contactMechIdFrom);
+        if (getContactMechIdFrom() != null) {
+            builder.setContactMechIdFrom(getContactMechIdFrom());
         }
-        if (contactMechIdTo != null) {
-            builder.setContactMechIdTo(contactMechIdTo);
+        if (getContactMechIdTo() != null) {
+            builder.setContactMechIdTo(getContactMechIdTo());
         }
-        if (roleTypeIdFrom != null) {
-            builder.setRoleTypeIdFrom(roleTypeIdFrom);
+        if (getRoleTypeIdFrom() != null) {
+            builder.setRoleTypeIdFrom(getRoleTypeIdFrom());
         }
-        if (roleTypeIdTo != null) {
-            builder.setRoleTypeIdTo(roleTypeIdTo);
+        if (getRoleTypeIdTo() != null) {
+            builder.setRoleTypeIdTo(getRoleTypeIdTo());
         }
-        if (partyIdFrom != null) {
-            builder.setPartyIdFrom(partyIdFrom);
+        if (getPartyIdFrom() != null) {
+            builder.setPartyIdFrom(getPartyIdFrom());
         }
-        if (partyIdTo != null) {
-            builder.setPartyIdTo(partyIdTo);
+        if (getPartyIdTo() != null) {
+            builder.setPartyIdTo(getPartyIdTo());
         }
-        if (entryDate != null) {
-            builder.setEntryDate(getTimestamp(entryDate));
+        if (getEntryDate() != null) {
+            builder.setEntryDate(getTimestamp(getEntryDate()));
         }
-        if (datetimeStarted != null) {
-            builder.setDatetimeStarted(getTimestamp(datetimeStarted));
+        if (getDatetimeStarted() != null) {
+            builder.setDatetimeStarted(getTimestamp(getDatetimeStarted()));
         }
-        if (datetimeEnded != null) {
-            builder.setDatetimeEnded(getTimestamp(datetimeEnded));
+        if (getDatetimeEnded() != null) {
+            builder.setDatetimeEnded(getTimestamp(getDatetimeEnded()));
         }
-        if (subject != null) {
-            builder.setSubject(subject);
+        if (getSubject() != null) {
+            builder.setSubject(getSubject());
         }
-        if (contentMimeTypeId != null) {
-            builder.setContentMimeTypeId(contentMimeTypeId);
+        if (getContentMimeTypeId() != null) {
+            builder.setContentMimeTypeId(getContentMimeTypeId());
         }
-        if (content != null) {
-            builder.setContent(content);
+        if (getContent() != null) {
+            builder.setContent(getContent());
         }
-        if (note != null) {
-            builder.setNote(note);
+        if (getNote() != null) {
+            builder.setNote(getNote());
         }
-        if (reasonEnumId != null) {
-            builder.setReasonEnumId(reasonEnumId);
+        if (getReasonEnumId() != null) {
+            builder.setReasonEnumId(getReasonEnumId());
         }
-        if (contactListId != null) {
-            builder.setContactListId(contactListId);
+        if (getContactListId() != null) {
+            builder.setContactListId(getContactListId());
         }
-        if (headerString != null) {
-            builder.setHeaderString(headerString);
+        if (getHeaderString() != null) {
+            builder.setHeaderString(getHeaderString());
         }
-        if (fromText != null) {
-            builder.setFromText(fromText);
+        if (getFromText() != null) {
+            builder.setFromText(getFromText());
         }
-        if (toText != null) {
-            builder.setToText(toText);
+        if (getToText() != null) {
+            builder.setToText(getToText());
         }
-        if (ccString != null) {
-            builder.setCcString(ccString);
+        if (getCcString() != null) {
+            builder.setCcString(getCcString());
         }
-        if (bccString != null) {
-            builder.setBccString(bccString);
+        if (getBccString() != null) {
+            builder.setBccString(getBccString());
         }
-        if (messageId != null) {
-            builder.setMessageId(messageId);
+        if (getMessageId() != null) {
+            builder.setMessageId(getMessageId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static CommunicationEvent fromData(CommunicationEventData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CommunicationEvent.CommunicationEventBuilder fromPrototype(CommunicationEventData data) {
         return CommunicationEvent.builder()
                 .communicationEventId(data.getCommunicationEventId())
                 .communicationEventTypeId(data.getCommunicationEventTypeId())
@@ -238,8 +242,7 @@ public class CommunicationEvent implements IEventModel<CommunicationEventData.Bu
                 .messageId(data.getMessageId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

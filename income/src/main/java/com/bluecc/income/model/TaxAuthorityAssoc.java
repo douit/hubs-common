@@ -78,41 +78,45 @@ public class TaxAuthorityAssoc implements IEventModel<TaxAuthorityAssocData.Buil
 
     public TaxAuthorityAssocData.Builder toDataBuilder() {
         TaxAuthorityAssocData.Builder builder = TaxAuthorityAssocData.newBuilder();
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (toTaxAuthGeoId != null) {
-            builder.setToTaxAuthGeoId(toTaxAuthGeoId);
+        if (getToTaxAuthGeoId() != null) {
+            builder.setToTaxAuthGeoId(getToTaxAuthGeoId());
         }
-        if (toTaxAuthPartyId != null) {
-            builder.setToTaxAuthPartyId(toTaxAuthPartyId);
+        if (getToTaxAuthPartyId() != null) {
+            builder.setToTaxAuthPartyId(getToTaxAuthPartyId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (taxAuthorityAssocTypeId != null) {
-            builder.setTaxAuthorityAssocTypeId(taxAuthorityAssocTypeId);
+        if (getTaxAuthorityAssocTypeId() != null) {
+            builder.setTaxAuthorityAssocTypeId(getTaxAuthorityAssocTypeId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static TaxAuthorityAssoc fromData(TaxAuthorityAssocData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TaxAuthorityAssoc.TaxAuthorityAssocBuilder fromPrototype(TaxAuthorityAssocData data) {
         return TaxAuthorityAssoc.builder()
                 .taxAuthGeoId(data.getTaxAuthGeoId())
                 .taxAuthPartyId(data.getTaxAuthPartyId())
@@ -124,8 +128,7 @@ public class TaxAuthorityAssoc implements IEventModel<TaxAuthorityAssocData.Buil
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

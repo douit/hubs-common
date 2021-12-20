@@ -6,7 +6,7 @@
     public {{ent.flatMessageType}}.Builder toDataBuilder() {
         {{ent.flatMessageType}}.Builder builder = {{ent.flatMessageType}}.newBuilder();
         {% for f in ent.messageFields -%}
-        if ({{f.name}} != null) {
+        if ({{f.getter}}() != null) {
             builder.{{f.protoSetter}};
         }
         {% endfor %}            
@@ -14,9 +14,12 @@
     }
 
     public static {{ent.name}} fromData({{ent.flatMessageType}} data) {
+        return fromPrototype(data).build();
+    }
+
+    public static {{ent.name}}.{{ent.name}}Builder fromPrototype({{ent.flatMessageType}} data) {
         return {{ent.name}}.builder()
                 {% for f in ent.messageFields -%}
                 .{{f.name}}({{f.protoGetter}})
-                {% endfor %}
-                .build();
+                {% endfor -%};
     }

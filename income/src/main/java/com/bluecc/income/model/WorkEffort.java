@@ -173,176 +173,180 @@ public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, HasI
 
     public WorkEffortFlatData.Builder toDataBuilder() {
         WorkEffortFlatData.Builder builder = WorkEffortFlatData.newBuilder();
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (workEffortTypeId != null) {
-            builder.setWorkEffortTypeId(workEffortTypeId);
+        if (getWorkEffortTypeId() != null) {
+            builder.setWorkEffortTypeId(getWorkEffortTypeId());
         }
-        if (currentStatusId != null) {
-            builder.setCurrentStatusId(currentStatusId);
+        if (getCurrentStatusId() != null) {
+            builder.setCurrentStatusId(getCurrentStatusId());
         }
-        if (lastStatusUpdate != null) {
-            builder.setLastStatusUpdate(getTimestamp(lastStatusUpdate));
+        if (getLastStatusUpdate() != null) {
+            builder.setLastStatusUpdate(getTimestamp(getLastStatusUpdate()));
         }
-        if (workEffortPurposeTypeId != null) {
-            builder.setWorkEffortPurposeTypeId(workEffortPurposeTypeId);
+        if (getWorkEffortPurposeTypeId() != null) {
+            builder.setWorkEffortPurposeTypeId(getWorkEffortPurposeTypeId());
         }
-        if (workEffortParentId != null) {
-            builder.setWorkEffortParentId(workEffortParentId);
+        if (getWorkEffortParentId() != null) {
+            builder.setWorkEffortParentId(getWorkEffortParentId());
         }
-        if (scopeEnumId != null) {
-            builder.setScopeEnumId(scopeEnumId);
+        if (getScopeEnumId() != null) {
+            builder.setScopeEnumId(getScopeEnumId());
         }
-        if (priority != null) {
-            builder.setPriority(priority);
+        if (getPriority() != null) {
+            builder.setPriority(getPriority());
         }
-        if (percentComplete != null) {
-            builder.setPercentComplete(percentComplete);
+        if (getPercentComplete() != null) {
+            builder.setPercentComplete(getPercentComplete());
         }
-        if (workEffortName != null) {
-            builder.setWorkEffortName(workEffortName);
+        if (getWorkEffortName() != null) {
+            builder.setWorkEffortName(getWorkEffortName());
         }
-        if (showAsEnumId != null) {
-            builder.setShowAsEnumId(showAsEnumId);
+        if (getShowAsEnumId() != null) {
+            builder.setShowAsEnumId(getShowAsEnumId());
         }
-        if (sendNotificationEmail != null) {
-            builder.setSendNotificationEmail(getIndicator(sendNotificationEmail));
+        if (getSendNotificationEmail() != null) {
+            builder.setSendNotificationEmail(getIndicator(getSendNotificationEmail()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (locationDesc != null) {
-            builder.setLocationDesc(locationDesc);
+        if (getLocationDesc() != null) {
+            builder.setLocationDesc(getLocationDesc());
         }
-        if (estimatedStartDate != null) {
-            builder.setEstimatedStartDate(getTimestamp(estimatedStartDate));
+        if (getEstimatedStartDate() != null) {
+            builder.setEstimatedStartDate(getTimestamp(getEstimatedStartDate()));
         }
-        if (estimatedCompletionDate != null) {
-            builder.setEstimatedCompletionDate(getTimestamp(estimatedCompletionDate));
+        if (getEstimatedCompletionDate() != null) {
+            builder.setEstimatedCompletionDate(getTimestamp(getEstimatedCompletionDate()));
         }
-        if (actualStartDate != null) {
-            builder.setActualStartDate(getTimestamp(actualStartDate));
+        if (getActualStartDate() != null) {
+            builder.setActualStartDate(getTimestamp(getActualStartDate()));
         }
-        if (actualCompletionDate != null) {
-            builder.setActualCompletionDate(getTimestamp(actualCompletionDate));
+        if (getActualCompletionDate() != null) {
+            builder.setActualCompletionDate(getTimestamp(getActualCompletionDate()));
         }
-        if (estimatedMilliSeconds != null) {
-            builder.setEstimatedMilliSeconds(estimatedMilliSeconds);
+        if (getEstimatedMilliSeconds() != null) {
+            builder.setEstimatedMilliSeconds(getEstimatedMilliSeconds());
         }
-        if (estimatedSetupMillis != null) {
-            builder.setEstimatedSetupMillis(estimatedSetupMillis);
+        if (getEstimatedSetupMillis() != null) {
+            builder.setEstimatedSetupMillis(getEstimatedSetupMillis());
         }
-        if (estimateCalcMethod != null) {
-            builder.setEstimateCalcMethod(estimateCalcMethod);
+        if (getEstimateCalcMethod() != null) {
+            builder.setEstimateCalcMethod(getEstimateCalcMethod());
         }
-        if (actualMilliSeconds != null) {
-            builder.setActualMilliSeconds(actualMilliSeconds);
+        if (getActualMilliSeconds() != null) {
+            builder.setActualMilliSeconds(getActualMilliSeconds());
         }
-        if (actualSetupMillis != null) {
-            builder.setActualSetupMillis(actualSetupMillis);
+        if (getActualSetupMillis() != null) {
+            builder.setActualSetupMillis(getActualSetupMillis());
         }
-        if (totalMilliSecondsAllowed != null) {
-            builder.setTotalMilliSecondsAllowed(totalMilliSecondsAllowed);
+        if (getTotalMilliSecondsAllowed() != null) {
+            builder.setTotalMilliSecondsAllowed(getTotalMilliSecondsAllowed());
         }
-        if (totalMoneyAllowed != null) {
-            builder.setTotalMoneyAllowed(getCurrency(totalMoneyAllowed));
+        if (getTotalMoneyAllowed() != null) {
+            builder.setTotalMoneyAllowed(getCurrency(getTotalMoneyAllowed()));
         }
-        if (moneyUomId != null) {
-            builder.setMoneyUomId(moneyUomId);
+        if (getMoneyUomId() != null) {
+            builder.setMoneyUomId(getMoneyUomId());
         }
-        if (specialTerms != null) {
-            builder.setSpecialTerms(specialTerms);
+        if (getSpecialTerms() != null) {
+            builder.setSpecialTerms(getSpecialTerms());
         }
-        if (timeTransparency != null) {
-            builder.setTimeTransparency(timeTransparency);
+        if (getTimeTransparency() != null) {
+            builder.setTimeTransparency(getTimeTransparency());
         }
-        if (universalId != null) {
-            builder.setUniversalId(universalId);
+        if (getUniversalId() != null) {
+            builder.setUniversalId(getUniversalId());
         }
-        if (sourceReferenceId != null) {
-            builder.setSourceReferenceId(sourceReferenceId);
+        if (getSourceReferenceId() != null) {
+            builder.setSourceReferenceId(getSourceReferenceId());
         }
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (infoUrl != null) {
-            builder.setInfoUrl(infoUrl);
+        if (getInfoUrl() != null) {
+            builder.setInfoUrl(getInfoUrl());
         }
-        if (recurrenceInfoId != null) {
-            builder.setRecurrenceInfoId(recurrenceInfoId);
+        if (getRecurrenceInfoId() != null) {
+            builder.setRecurrenceInfoId(getRecurrenceInfoId());
         }
-        if (tempExprId != null) {
-            builder.setTempExprId(tempExprId);
+        if (getTempExprId() != null) {
+            builder.setTempExprId(getTempExprId());
         }
-        if (runtimeDataId != null) {
-            builder.setRuntimeDataId(runtimeDataId);
+        if (getRuntimeDataId() != null) {
+            builder.setRuntimeDataId(getRuntimeDataId());
         }
-        if (noteId != null) {
-            builder.setNoteId(noteId);
+        if (getNoteId() != null) {
+            builder.setNoteId(getNoteId());
         }
-        if (serviceLoaderName != null) {
-            builder.setServiceLoaderName(serviceLoaderName);
+        if (getServiceLoaderName() != null) {
+            builder.setServiceLoaderName(getServiceLoaderName());
         }
-        if (quantityToProduce != null) {
-            builder.setQuantityToProduce(getFixedPoint(quantityToProduce));
+        if (getQuantityToProduce() != null) {
+            builder.setQuantityToProduce(getFixedPoint(getQuantityToProduce()));
         }
-        if (quantityProduced != null) {
-            builder.setQuantityProduced(getFixedPoint(quantityProduced));
+        if (getQuantityProduced() != null) {
+            builder.setQuantityProduced(getFixedPoint(getQuantityProduced()));
         }
-        if (quantityRejected != null) {
-            builder.setQuantityRejected(getFixedPoint(quantityRejected));
+        if (getQuantityRejected() != null) {
+            builder.setQuantityRejected(getFixedPoint(getQuantityRejected()));
         }
-        if (reservPersons != null) {
-            builder.setReservPersons(getFixedPoint(reservPersons));
+        if (getReservPersons() != null) {
+            builder.setReservPersons(getFixedPoint(getReservPersons()));
         }
-        if (reserv2ndPPPerc != null) {
-            builder.setReserv2NdPPPerc(getFixedPoint(reserv2ndPPPerc));
+        if (getReserv2ndPPPerc() != null) {
+            builder.setReserv2NdPPPerc(getFixedPoint(getReserv2ndPPPerc()));
         }
-        if (reservNthPPPerc != null) {
-            builder.setReservNthPPPerc(getFixedPoint(reservNthPPPerc));
+        if (getReservNthPPPerc() != null) {
+            builder.setReservNthPPPerc(getFixedPoint(getReservNthPPPerc()));
         }
-        if (accommodationMapId != null) {
-            builder.setAccommodationMapId(accommodationMapId);
+        if (getAccommodationMapId() != null) {
+            builder.setAccommodationMapId(getAccommodationMapId());
         }
-        if (accommodationSpotId != null) {
-            builder.setAccommodationSpotId(accommodationSpotId);
+        if (getAccommodationSpotId() != null) {
+            builder.setAccommodationSpotId(getAccommodationSpotId());
         }
-        if (revisionNumber != null) {
-            builder.setRevisionNumber(revisionNumber);
+        if (getRevisionNumber() != null) {
+            builder.setRevisionNumber(getRevisionNumber());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static WorkEffort fromData(WorkEffortFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WorkEffort.WorkEffortBuilder fromPrototype(WorkEffortFlatData data) {
         return WorkEffort.builder()
                 .workEffortId(data.getWorkEffortId())
                 .workEffortTypeId(data.getWorkEffortTypeId())
@@ -399,8 +403,7 @@ public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, HasI
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .sequenceNum(data.getSequenceNum())
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -525,149 +528,149 @@ public class WorkEffort implements IEventModel<WorkEffortFlatData.Builder>, HasI
 
     public WorkEffortData.Builder toHeadBuilder() {
         WorkEffortData.Builder builder = WorkEffortData.newBuilder();
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (workEffortTypeId != null) {
-            builder.setWorkEffortTypeId(workEffortTypeId);
+        if (getWorkEffortTypeId() != null) {
+            builder.setWorkEffortTypeId(getWorkEffortTypeId());
         }
-        if (currentStatusId != null) {
-            builder.setCurrentStatusId(currentStatusId);
+        if (getCurrentStatusId() != null) {
+            builder.setCurrentStatusId(getCurrentStatusId());
         }
-        if (lastStatusUpdate != null) {
-            builder.setLastStatusUpdate(getTimestamp(lastStatusUpdate));
+        if (getLastStatusUpdate() != null) {
+            builder.setLastStatusUpdate(getTimestamp(getLastStatusUpdate()));
         }
-        if (workEffortPurposeTypeId != null) {
-            builder.setWorkEffortPurposeTypeId(workEffortPurposeTypeId);
+        if (getWorkEffortPurposeTypeId() != null) {
+            builder.setWorkEffortPurposeTypeId(getWorkEffortPurposeTypeId());
         }
-        if (scopeEnumId != null) {
-            builder.setScopeEnumId(scopeEnumId);
+        if (getScopeEnumId() != null) {
+            builder.setScopeEnumId(getScopeEnumId());
         }
-        if (priority != null) {
-            builder.setPriority(priority);
+        if (getPriority() != null) {
+            builder.setPriority(getPriority());
         }
-        if (percentComplete != null) {
-            builder.setPercentComplete(percentComplete);
+        if (getPercentComplete() != null) {
+            builder.setPercentComplete(getPercentComplete());
         }
-        if (workEffortName != null) {
-            builder.setWorkEffortName(workEffortName);
+        if (getWorkEffortName() != null) {
+            builder.setWorkEffortName(getWorkEffortName());
         }
-        if (showAsEnumId != null) {
-            builder.setShowAsEnumId(showAsEnumId);
+        if (getShowAsEnumId() != null) {
+            builder.setShowAsEnumId(getShowAsEnumId());
         }
-        if (sendNotificationEmail != null) {
-            builder.setSendNotificationEmail(getIndicator(sendNotificationEmail));
+        if (getSendNotificationEmail() != null) {
+            builder.setSendNotificationEmail(getIndicator(getSendNotificationEmail()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (locationDesc != null) {
-            builder.setLocationDesc(locationDesc);
+        if (getLocationDesc() != null) {
+            builder.setLocationDesc(getLocationDesc());
         }
-        if (estimatedStartDate != null) {
-            builder.setEstimatedStartDate(getTimestamp(estimatedStartDate));
+        if (getEstimatedStartDate() != null) {
+            builder.setEstimatedStartDate(getTimestamp(getEstimatedStartDate()));
         }
-        if (estimatedCompletionDate != null) {
-            builder.setEstimatedCompletionDate(getTimestamp(estimatedCompletionDate));
+        if (getEstimatedCompletionDate() != null) {
+            builder.setEstimatedCompletionDate(getTimestamp(getEstimatedCompletionDate()));
         }
-        if (actualStartDate != null) {
-            builder.setActualStartDate(getTimestamp(actualStartDate));
+        if (getActualStartDate() != null) {
+            builder.setActualStartDate(getTimestamp(getActualStartDate()));
         }
-        if (actualCompletionDate != null) {
-            builder.setActualCompletionDate(getTimestamp(actualCompletionDate));
+        if (getActualCompletionDate() != null) {
+            builder.setActualCompletionDate(getTimestamp(getActualCompletionDate()));
         }
-        if (estimatedMilliSeconds != null) {
-            builder.setEstimatedMilliSeconds(estimatedMilliSeconds);
+        if (getEstimatedMilliSeconds() != null) {
+            builder.setEstimatedMilliSeconds(getEstimatedMilliSeconds());
         }
-        if (estimatedSetupMillis != null) {
-            builder.setEstimatedSetupMillis(estimatedSetupMillis);
+        if (getEstimatedSetupMillis() != null) {
+            builder.setEstimatedSetupMillis(getEstimatedSetupMillis());
         }
-        if (actualMilliSeconds != null) {
-            builder.setActualMilliSeconds(actualMilliSeconds);
+        if (getActualMilliSeconds() != null) {
+            builder.setActualMilliSeconds(getActualMilliSeconds());
         }
-        if (actualSetupMillis != null) {
-            builder.setActualSetupMillis(actualSetupMillis);
+        if (getActualSetupMillis() != null) {
+            builder.setActualSetupMillis(getActualSetupMillis());
         }
-        if (totalMilliSecondsAllowed != null) {
-            builder.setTotalMilliSecondsAllowed(totalMilliSecondsAllowed);
+        if (getTotalMilliSecondsAllowed() != null) {
+            builder.setTotalMilliSecondsAllowed(getTotalMilliSecondsAllowed());
         }
-        if (totalMoneyAllowed != null) {
-            builder.setTotalMoneyAllowed(getCurrency(totalMoneyAllowed));
+        if (getTotalMoneyAllowed() != null) {
+            builder.setTotalMoneyAllowed(getCurrency(getTotalMoneyAllowed()));
         }
-        if (moneyUomId != null) {
-            builder.setMoneyUomId(moneyUomId);
+        if (getMoneyUomId() != null) {
+            builder.setMoneyUomId(getMoneyUomId());
         }
-        if (specialTerms != null) {
-            builder.setSpecialTerms(specialTerms);
+        if (getSpecialTerms() != null) {
+            builder.setSpecialTerms(getSpecialTerms());
         }
-        if (timeTransparency != null) {
-            builder.setTimeTransparency(timeTransparency);
+        if (getTimeTransparency() != null) {
+            builder.setTimeTransparency(getTimeTransparency());
         }
-        if (universalId != null) {
-            builder.setUniversalId(universalId);
+        if (getUniversalId() != null) {
+            builder.setUniversalId(getUniversalId());
         }
-        if (sourceReferenceId != null) {
-            builder.setSourceReferenceId(sourceReferenceId);
+        if (getSourceReferenceId() != null) {
+            builder.setSourceReferenceId(getSourceReferenceId());
         }
-        if (infoUrl != null) {
-            builder.setInfoUrl(infoUrl);
+        if (getInfoUrl() != null) {
+            builder.setInfoUrl(getInfoUrl());
         }
-        if (runtimeDataId != null) {
-            builder.setRuntimeDataId(runtimeDataId);
+        if (getRuntimeDataId() != null) {
+            builder.setRuntimeDataId(getRuntimeDataId());
         }
-        if (noteId != null) {
-            builder.setNoteId(noteId);
+        if (getNoteId() != null) {
+            builder.setNoteId(getNoteId());
         }
-        if (serviceLoaderName != null) {
-            builder.setServiceLoaderName(serviceLoaderName);
+        if (getServiceLoaderName() != null) {
+            builder.setServiceLoaderName(getServiceLoaderName());
         }
-        if (quantityToProduce != null) {
-            builder.setQuantityToProduce(getFixedPoint(quantityToProduce));
+        if (getQuantityToProduce() != null) {
+            builder.setQuantityToProduce(getFixedPoint(getQuantityToProduce()));
         }
-        if (quantityProduced != null) {
-            builder.setQuantityProduced(getFixedPoint(quantityProduced));
+        if (getQuantityProduced() != null) {
+            builder.setQuantityProduced(getFixedPoint(getQuantityProduced()));
         }
-        if (quantityRejected != null) {
-            builder.setQuantityRejected(getFixedPoint(quantityRejected));
+        if (getQuantityRejected() != null) {
+            builder.setQuantityRejected(getFixedPoint(getQuantityRejected()));
         }
-        if (reservPersons != null) {
-            builder.setReservPersons(getFixedPoint(reservPersons));
+        if (getReservPersons() != null) {
+            builder.setReservPersons(getFixedPoint(getReservPersons()));
         }
-        if (reserv2ndPPPerc != null) {
-            builder.setReserv2NdPPPerc(getFixedPoint(reserv2ndPPPerc));
+        if (getReserv2ndPPPerc() != null) {
+            builder.setReserv2NdPPPerc(getFixedPoint(getReserv2ndPPPerc()));
         }
-        if (reservNthPPPerc != null) {
-            builder.setReservNthPPPerc(getFixedPoint(reservNthPPPerc));
+        if (getReservNthPPPerc() != null) {
+            builder.setReservNthPPPerc(getFixedPoint(getReservNthPPPerc()));
         }
-        if (accommodationMapId != null) {
-            builder.setAccommodationMapId(accommodationMapId);
+        if (getAccommodationMapId() != null) {
+            builder.setAccommodationMapId(getAccommodationMapId());
         }
-        if (accommodationSpotId != null) {
-            builder.setAccommodationSpotId(accommodationSpotId);
+        if (getAccommodationSpotId() != null) {
+            builder.setAccommodationSpotId(getAccommodationSpotId());
         }
-        if (revisionNumber != null) {
-            builder.setRevisionNumber(revisionNumber);
+        if (getRevisionNumber() != null) {
+            builder.setRevisionNumber(getRevisionNumber());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
                     
         return builder;

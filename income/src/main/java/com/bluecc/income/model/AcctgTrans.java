@@ -118,101 +118,105 @@ public class AcctgTrans implements IEventModel<AcctgTransData.Builder>, HasId, S
 
     public AcctgTransData.Builder toDataBuilder() {
         AcctgTransData.Builder builder = AcctgTransData.newBuilder();
-        if (acctgTransId != null) {
-            builder.setAcctgTransId(acctgTransId);
+        if (getAcctgTransId() != null) {
+            builder.setAcctgTransId(getAcctgTransId());
         }
-        if (acctgTransTypeId != null) {
-            builder.setAcctgTransTypeId(acctgTransTypeId);
+        if (getAcctgTransTypeId() != null) {
+            builder.setAcctgTransTypeId(getAcctgTransTypeId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (transactionDate != null) {
-            builder.setTransactionDate(getTimestamp(transactionDate));
+        if (getTransactionDate() != null) {
+            builder.setTransactionDate(getTimestamp(getTransactionDate()));
         }
-        if (isPosted != null) {
-            builder.setIsPosted(getIndicator(isPosted));
+        if (getIsPosted() != null) {
+            builder.setIsPosted(getIndicator(getIsPosted()));
         }
-        if (postedDate != null) {
-            builder.setPostedDate(getTimestamp(postedDate));
+        if (getPostedDate() != null) {
+            builder.setPostedDate(getTimestamp(getPostedDate()));
         }
-        if (scheduledPostingDate != null) {
-            builder.setScheduledPostingDate(getTimestamp(scheduledPostingDate));
+        if (getScheduledPostingDate() != null) {
+            builder.setScheduledPostingDate(getTimestamp(getScheduledPostingDate()));
         }
-        if (glJournalId != null) {
-            builder.setGlJournalId(glJournalId);
+        if (getGlJournalId() != null) {
+            builder.setGlJournalId(getGlJournalId());
         }
-        if (glFiscalTypeId != null) {
-            builder.setGlFiscalTypeId(glFiscalTypeId);
+        if (getGlFiscalTypeId() != null) {
+            builder.setGlFiscalTypeId(getGlFiscalTypeId());
         }
-        if (voucherRef != null) {
-            builder.setVoucherRef(voucherRef);
+        if (getVoucherRef() != null) {
+            builder.setVoucherRef(getVoucherRef());
         }
-        if (voucherDate != null) {
-            builder.setVoucherDate(getTimestamp(voucherDate));
+        if (getVoucherDate() != null) {
+            builder.setVoucherDate(getTimestamp(getVoucherDate()));
         }
-        if (groupStatusId != null) {
-            builder.setGroupStatusId(groupStatusId);
+        if (getGroupStatusId() != null) {
+            builder.setGroupStatusId(getGroupStatusId());
         }
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (physicalInventoryId != null) {
-            builder.setPhysicalInventoryId(physicalInventoryId);
+        if (getPhysicalInventoryId() != null) {
+            builder.setPhysicalInventoryId(getPhysicalInventoryId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (paymentId != null) {
-            builder.setPaymentId(paymentId);
+        if (getPaymentId() != null) {
+            builder.setPaymentId(getPaymentId());
         }
-        if (finAccountTransId != null) {
-            builder.setFinAccountTransId(finAccountTransId);
+        if (getFinAccountTransId() != null) {
+            builder.setFinAccountTransId(getFinAccountTransId());
         }
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (receiptId != null) {
-            builder.setReceiptId(receiptId);
+        if (getReceiptId() != null) {
+            builder.setReceiptId(getReceiptId());
         }
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (theirAcctgTransId != null) {
-            builder.setTheirAcctgTransId(theirAcctgTransId);
+        if (getTheirAcctgTransId() != null) {
+            builder.setTheirAcctgTransId(getTheirAcctgTransId());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static AcctgTrans fromData(AcctgTransData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static AcctgTrans.AcctgTransBuilder fromPrototype(AcctgTransData data) {
         return AcctgTrans.builder()
                 .acctgTransId(data.getAcctgTransId())
                 .acctgTransTypeId(data.getAcctgTransTypeId())
@@ -244,8 +248,7 @@ public class AcctgTrans implements IEventModel<AcctgTransData.Builder>, HasId, S
                 .lastModifiedByUserLogin(data.getLastModifiedByUserLogin())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

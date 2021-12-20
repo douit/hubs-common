@@ -92,62 +92,66 @@ public class PartyRelationship implements IEventModel<PartyRelationshipData.Buil
 
     public PartyRelationshipData.Builder toDataBuilder() {
         PartyRelationshipData.Builder builder = PartyRelationshipData.newBuilder();
-        if (partyIdFrom != null) {
-            builder.setPartyIdFrom(partyIdFrom);
+        if (getPartyIdFrom() != null) {
+            builder.setPartyIdFrom(getPartyIdFrom());
         }
-        if (partyIdTo != null) {
-            builder.setPartyIdTo(partyIdTo);
+        if (getPartyIdTo() != null) {
+            builder.setPartyIdTo(getPartyIdTo());
         }
-        if (roleTypeIdFrom != null) {
-            builder.setRoleTypeIdFrom(roleTypeIdFrom);
+        if (getRoleTypeIdFrom() != null) {
+            builder.setRoleTypeIdFrom(getRoleTypeIdFrom());
         }
-        if (roleTypeIdTo != null) {
-            builder.setRoleTypeIdTo(roleTypeIdTo);
+        if (getRoleTypeIdTo() != null) {
+            builder.setRoleTypeIdTo(getRoleTypeIdTo());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (relationshipName != null) {
-            builder.setRelationshipName(relationshipName);
+        if (getRelationshipName() != null) {
+            builder.setRelationshipName(getRelationshipName());
         }
-        if (securityGroupId != null) {
-            builder.setSecurityGroupId(securityGroupId);
+        if (getSecurityGroupId() != null) {
+            builder.setSecurityGroupId(getSecurityGroupId());
         }
-        if (priorityTypeId != null) {
-            builder.setPriorityTypeId(priorityTypeId);
+        if (getPriorityTypeId() != null) {
+            builder.setPriorityTypeId(getPriorityTypeId());
         }
-        if (partyRelationshipTypeId != null) {
-            builder.setPartyRelationshipTypeId(partyRelationshipTypeId);
+        if (getPartyRelationshipTypeId() != null) {
+            builder.setPartyRelationshipTypeId(getPartyRelationshipTypeId());
         }
-        if (permissionsEnumId != null) {
-            builder.setPermissionsEnumId(permissionsEnumId);
+        if (getPermissionsEnumId() != null) {
+            builder.setPermissionsEnumId(getPermissionsEnumId());
         }
-        if (positionTitle != null) {
-            builder.setPositionTitle(positionTitle);
+        if (getPositionTitle() != null) {
+            builder.setPositionTitle(getPositionTitle());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PartyRelationship fromData(PartyRelationshipData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyRelationship.PartyRelationshipBuilder fromPrototype(PartyRelationshipData data) {
         return PartyRelationship.builder()
                 .partyIdFrom(data.getPartyIdFrom())
                 .partyIdTo(data.getPartyIdTo())
@@ -166,8 +170,7 @@ public class PartyRelationship implements IEventModel<PartyRelationshipData.Buil
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

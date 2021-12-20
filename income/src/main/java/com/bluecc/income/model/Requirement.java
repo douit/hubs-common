@@ -100,74 +100,78 @@ public class Requirement implements IEventModel<RequirementData.Builder>, HasId,
 
     public RequirementData.Builder toDataBuilder() {
         RequirementData.Builder builder = RequirementData.newBuilder();
-        if (requirementId != null) {
-            builder.setRequirementId(requirementId);
+        if (getRequirementId() != null) {
+            builder.setRequirementId(getRequirementId());
         }
-        if (requirementTypeId != null) {
-            builder.setRequirementTypeId(requirementTypeId);
+        if (getRequirementTypeId() != null) {
+            builder.setRequirementTypeId(getRequirementTypeId());
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (deliverableId != null) {
-            builder.setDeliverableId(deliverableId);
+        if (getDeliverableId() != null) {
+            builder.setDeliverableId(getDeliverableId());
         }
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (requirementStartDate != null) {
-            builder.setRequirementStartDate(getTimestamp(requirementStartDate));
+        if (getRequirementStartDate() != null) {
+            builder.setRequirementStartDate(getTimestamp(getRequirementStartDate()));
         }
-        if (requiredByDate != null) {
-            builder.setRequiredByDate(getTimestamp(requiredByDate));
+        if (getRequiredByDate() != null) {
+            builder.setRequiredByDate(getTimestamp(getRequiredByDate()));
         }
-        if (estimatedBudget != null) {
-            builder.setEstimatedBudget(getCurrency(estimatedBudget));
+        if (getEstimatedBudget() != null) {
+            builder.setEstimatedBudget(getCurrency(getEstimatedBudget()));
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (useCase != null) {
-            builder.setUseCase(useCase);
+        if (getUseCase() != null) {
+            builder.setUseCase(getUseCase());
         }
-        if (reason != null) {
-            builder.setReason(reason);
+        if (getReason() != null) {
+            builder.setReason(getReason());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (facilityIdTo != null) {
-            builder.setFacilityIdTo(facilityIdTo);
+        if (getFacilityIdTo() != null) {
+            builder.setFacilityIdTo(getFacilityIdTo());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static Requirement fromData(RequirementData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Requirement.RequirementBuilder fromPrototype(RequirementData data) {
         return Requirement.builder()
                 .requirementId(data.getRequirementId())
                 .requirementTypeId(data.getRequirementTypeId())
@@ -190,8 +194,7 @@ public class Requirement implements IEventModel<RequirementData.Builder>, HasId,
                 .facilityIdTo(data.getFacilityIdTo())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

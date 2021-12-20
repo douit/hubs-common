@@ -68,34 +68,37 @@ public class TechDataCalendar implements IEventModel<TechDataCalendarData.Builde
 
     public TechDataCalendarData.Builder toDataBuilder() {
         TechDataCalendarData.Builder builder = TechDataCalendarData.newBuilder();
-        if (calendarId != null) {
-            builder.setCalendarId(calendarId);
+        if (getCalendarId() != null) {
+            builder.setCalendarId(getCalendarId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (calendarWeekId != null) {
-            builder.setCalendarWeekId(calendarWeekId);
+        if (getCalendarWeekId() != null) {
+            builder.setCalendarWeekId(getCalendarWeekId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static TechDataCalendar fromData(TechDataCalendarData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TechDataCalendar.TechDataCalendarBuilder fromPrototype(TechDataCalendarData data) {
         return TechDataCalendar.builder()
                 .calendarId(data.getCalendarId())
                 .description(data.getDescription())
                 .calendarWeekId(data.getCalendarWeekId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

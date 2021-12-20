@@ -70,29 +70,33 @@ public class PaymentContentType implements IEventModel<PaymentContentTypeData.Bu
 
     public PaymentContentTypeData.Builder toDataBuilder() {
         PaymentContentTypeData.Builder builder = PaymentContentTypeData.newBuilder();
-        if (paymentContentTypeId != null) {
-            builder.setPaymentContentTypeId(paymentContentTypeId);
+        if (getPaymentContentTypeId() != null) {
+            builder.setPaymentContentTypeId(getPaymentContentTypeId());
         }
-        if (parentTypeId != null) {
-            builder.setParentTypeId(parentTypeId);
+        if (getParentTypeId() != null) {
+            builder.setParentTypeId(getParentTypeId());
         }
-        if (hasTable != null) {
-            builder.setHasTable(getIndicator(hasTable));
+        if (getHasTable() != null) {
+            builder.setHasTable(getIndicator(getHasTable()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static PaymentContentType fromData(PaymentContentTypeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PaymentContentType.PaymentContentTypeBuilder fromPrototype(PaymentContentTypeData data) {
         return PaymentContentType.builder()
                 .paymentContentTypeId(data.getPaymentContentTypeId())
                 .parentTypeId(data.getParentTypeId())
@@ -100,8 +104,7 @@ public class PaymentContentType implements IEventModel<PaymentContentTypeData.Bu
                 .description(data.getDescription())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

@@ -70,32 +70,36 @@ public class PartyGeoPoint implements IEventModel<PartyGeoPointData.Builder>, Ha
 
     public PartyGeoPointData.Builder toDataBuilder() {
         PartyGeoPointData.Builder builder = PartyGeoPointData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (geoPointId != null) {
-            builder.setGeoPointId(geoPointId);
+        if (getGeoPointId() != null) {
+            builder.setGeoPointId(getGeoPointId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PartyGeoPoint fromData(PartyGeoPointData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyGeoPoint.PartyGeoPointBuilder fromPrototype(PartyGeoPointData data) {
         return PartyGeoPoint.builder()
                 .partyId(data.getPartyId())
                 .geoPointId(data.getGeoPointId())
@@ -104,8 +108,7 @@ public class PartyGeoPoint implements IEventModel<PartyGeoPointData.Builder>, Ha
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

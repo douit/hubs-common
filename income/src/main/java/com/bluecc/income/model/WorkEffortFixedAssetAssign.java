@@ -78,44 +78,48 @@ public class WorkEffortFixedAssetAssign implements IEventModel<WorkEffortFixedAs
 
     public WorkEffortFixedAssetAssignData.Builder toDataBuilder() {
         WorkEffortFixedAssetAssignData.Builder builder = WorkEffortFixedAssetAssignData.newBuilder();
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (availabilityStatusId != null) {
-            builder.setAvailabilityStatusId(availabilityStatusId);
+        if (getAvailabilityStatusId() != null) {
+            builder.setAvailabilityStatusId(getAvailabilityStatusId());
         }
-        if (allocatedCost != null) {
-            builder.setAllocatedCost(getCurrency(allocatedCost));
+        if (getAllocatedCost() != null) {
+            builder.setAllocatedCost(getCurrency(getAllocatedCost()));
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static WorkEffortFixedAssetAssign fromData(WorkEffortFixedAssetAssignData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WorkEffortFixedAssetAssign.WorkEffortFixedAssetAssignBuilder fromPrototype(WorkEffortFixedAssetAssignData data) {
         return WorkEffortFixedAssetAssign.builder()
                 .workEffortId(data.getWorkEffortId())
                 .fixedAssetId(data.getFixedAssetId())
@@ -128,8 +132,7 @@ public class WorkEffortFixedAssetAssign implements IEventModel<WorkEffortFixedAs
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

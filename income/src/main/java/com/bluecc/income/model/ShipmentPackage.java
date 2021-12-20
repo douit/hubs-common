@@ -84,53 +84,57 @@ public class ShipmentPackage implements IEventModel<ShipmentPackageData.Builder>
 
     public ShipmentPackageData.Builder toDataBuilder() {
         ShipmentPackageData.Builder builder = ShipmentPackageData.newBuilder();
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentPackageSeqId != null) {
-            builder.setShipmentPackageSeqId(shipmentPackageSeqId);
+        if (getShipmentPackageSeqId() != null) {
+            builder.setShipmentPackageSeqId(getShipmentPackageSeqId());
         }
-        if (shipmentBoxTypeId != null) {
-            builder.setShipmentBoxTypeId(shipmentBoxTypeId);
+        if (getShipmentBoxTypeId() != null) {
+            builder.setShipmentBoxTypeId(getShipmentBoxTypeId());
         }
-        if (dateCreated != null) {
-            builder.setDateCreated(getTimestamp(dateCreated));
+        if (getDateCreated() != null) {
+            builder.setDateCreated(getTimestamp(getDateCreated()));
         }
-        if (boxLength != null) {
-            builder.setBoxLength(getFixedPoint(boxLength));
+        if (getBoxLength() != null) {
+            builder.setBoxLength(getFixedPoint(getBoxLength()));
         }
-        if (boxHeight != null) {
-            builder.setBoxHeight(getFixedPoint(boxHeight));
+        if (getBoxHeight() != null) {
+            builder.setBoxHeight(getFixedPoint(getBoxHeight()));
         }
-        if (boxWidth != null) {
-            builder.setBoxWidth(getFixedPoint(boxWidth));
+        if (getBoxWidth() != null) {
+            builder.setBoxWidth(getFixedPoint(getBoxWidth()));
         }
-        if (dimensionUomId != null) {
-            builder.setDimensionUomId(dimensionUomId);
+        if (getDimensionUomId() != null) {
+            builder.setDimensionUomId(getDimensionUomId());
         }
-        if (weight != null) {
-            builder.setWeight(getFixedPoint(weight));
+        if (getWeight() != null) {
+            builder.setWeight(getFixedPoint(getWeight()));
         }
-        if (weightUomId != null) {
-            builder.setWeightUomId(weightUomId);
+        if (getWeightUomId() != null) {
+            builder.setWeightUomId(getWeightUomId());
         }
-        if (insuredValue != null) {
-            builder.setInsuredValue(getCurrency(insuredValue));
+        if (getInsuredValue() != null) {
+            builder.setInsuredValue(getCurrency(getInsuredValue()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShipmentPackage fromData(ShipmentPackageData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentPackage.ShipmentPackageBuilder fromPrototype(ShipmentPackageData data) {
         return ShipmentPackage.builder()
                 .shipmentId(data.getShipmentId())
                 .shipmentPackageSeqId(data.getShipmentPackageSeqId())
@@ -146,8 +150,7 @@ public class ShipmentPackage implements IEventModel<ShipmentPackageData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

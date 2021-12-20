@@ -80,44 +80,48 @@ public class OrderItemBilling implements IEventModel<OrderItemBillingData.Builde
 
     public OrderItemBillingData.Builder toDataBuilder() {
         OrderItemBillingData.Builder builder = OrderItemBillingData.newBuilder();
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (invoiceItemSeqId != null) {
-            builder.setInvoiceItemSeqId(invoiceItemSeqId);
+        if (getInvoiceItemSeqId() != null) {
+            builder.setInvoiceItemSeqId(getInvoiceItemSeqId());
         }
-        if (itemIssuanceId != null) {
-            builder.setItemIssuanceId(itemIssuanceId);
+        if (getItemIssuanceId() != null) {
+            builder.setItemIssuanceId(getItemIssuanceId());
         }
-        if (shipmentReceiptId != null) {
-            builder.setShipmentReceiptId(shipmentReceiptId);
+        if (getShipmentReceiptId() != null) {
+            builder.setShipmentReceiptId(getShipmentReceiptId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static OrderItemBilling fromData(OrderItemBillingData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderItemBilling.OrderItemBillingBuilder fromPrototype(OrderItemBillingData data) {
         return OrderItemBilling.builder()
                 .orderId(data.getOrderId())
                 .orderItemSeqId(data.getOrderItemSeqId())
@@ -130,8 +134,7 @@ public class OrderItemBilling implements IEventModel<OrderItemBillingData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

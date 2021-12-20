@@ -87,56 +87,60 @@ public class ProductPromoAction implements IEventModel<ProductPromoActionData.Bu
 
     public ProductPromoActionData.Builder toDataBuilder() {
         ProductPromoActionData.Builder builder = ProductPromoActionData.newBuilder();
-        if (productPromoId != null) {
-            builder.setProductPromoId(productPromoId);
+        if (getProductPromoId() != null) {
+            builder.setProductPromoId(getProductPromoId());
         }
-        if (productPromoRuleId != null) {
-            builder.setProductPromoRuleId(productPromoRuleId);
+        if (getProductPromoRuleId() != null) {
+            builder.setProductPromoRuleId(getProductPromoRuleId());
         }
-        if (productPromoActionSeqId != null) {
-            builder.setProductPromoActionSeqId(productPromoActionSeqId);
+        if (getProductPromoActionSeqId() != null) {
+            builder.setProductPromoActionSeqId(getProductPromoActionSeqId());
         }
-        if (productPromoActionEnumId != null) {
-            builder.setProductPromoActionEnumId(productPromoActionEnumId);
+        if (getProductPromoActionEnumId() != null) {
+            builder.setProductPromoActionEnumId(getProductPromoActionEnumId());
         }
-        if (customMethodId != null) {
-            builder.setCustomMethodId(customMethodId);
+        if (getCustomMethodId() != null) {
+            builder.setCustomMethodId(getCustomMethodId());
         }
-        if (orderAdjustmentTypeId != null) {
-            builder.setOrderAdjustmentTypeId(orderAdjustmentTypeId);
+        if (getOrderAdjustmentTypeId() != null) {
+            builder.setOrderAdjustmentTypeId(getOrderAdjustmentTypeId());
         }
-        if (serviceName != null) {
-            builder.setServiceName(serviceName);
+        if (getServiceName() != null) {
+            builder.setServiceName(getServiceName());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (amount != null) {
-            builder.setAmount(getFixedPoint(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getFixedPoint(getAmount()));
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (useCartQuantity != null) {
-            builder.setUseCartQuantity(getIndicator(useCartQuantity));
+        if (getUseCartQuantity() != null) {
+            builder.setUseCartQuantity(getIndicator(getUseCartQuantity()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductPromoAction fromData(ProductPromoActionData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPromoAction.ProductPromoActionBuilder fromPrototype(ProductPromoActionData data) {
         return ProductPromoAction.builder()
                 .productPromoId(data.getProductPromoId())
                 .productPromoRuleId(data.getProductPromoRuleId())
@@ -153,8 +157,7 @@ public class ProductPromoAction implements IEventModel<ProductPromoActionData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

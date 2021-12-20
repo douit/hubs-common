@@ -69,29 +69,33 @@ public class OrderContactMech implements IEventModel<OrderContactMechData.Builde
 
     public OrderContactMechData.Builder toDataBuilder() {
         OrderContactMechData.Builder builder = OrderContactMechData.newBuilder();
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (contactMechPurposeTypeId != null) {
-            builder.setContactMechPurposeTypeId(contactMechPurposeTypeId);
+        if (getContactMechPurposeTypeId() != null) {
+            builder.setContactMechPurposeTypeId(getContactMechPurposeTypeId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static OrderContactMech fromData(OrderContactMechData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderContactMech.OrderContactMechBuilder fromPrototype(OrderContactMechData data) {
         return OrderContactMech.builder()
                 .orderId(data.getOrderId())
                 .contactMechPurposeTypeId(data.getContactMechPurposeTypeId())
@@ -99,8 +103,7 @@ public class OrderContactMech implements IEventModel<OrderContactMechData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

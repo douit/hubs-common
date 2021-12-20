@@ -80,47 +80,51 @@ public class SurveyQuestionOption implements IEventModel<SurveyQuestionOptionDat
 
     public SurveyQuestionOptionData.Builder toDataBuilder() {
         SurveyQuestionOptionData.Builder builder = SurveyQuestionOptionData.newBuilder();
-        if (surveyQuestionId != null) {
-            builder.setSurveyQuestionId(surveyQuestionId);
+        if (getSurveyQuestionId() != null) {
+            builder.setSurveyQuestionId(getSurveyQuestionId());
         }
-        if (surveyOptionSeqId != null) {
-            builder.setSurveyOptionSeqId(surveyOptionSeqId);
+        if (getSurveyOptionSeqId() != null) {
+            builder.setSurveyOptionSeqId(getSurveyOptionSeqId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (amountBase != null) {
-            builder.setAmountBase(getCurrency(amountBase));
+        if (getAmountBase() != null) {
+            builder.setAmountBase(getCurrency(getAmountBase()));
         }
-        if (amountBaseUomId != null) {
-            builder.setAmountBaseUomId(amountBaseUomId);
+        if (getAmountBaseUomId() != null) {
+            builder.setAmountBaseUomId(getAmountBaseUomId());
         }
-        if (weightFactor != null) {
-            builder.setWeightFactor(weightFactor);
+        if (getWeightFactor() != null) {
+            builder.setWeightFactor(getWeightFactor());
         }
-        if (duration != null) {
-            builder.setDuration(duration);
+        if (getDuration() != null) {
+            builder.setDuration(getDuration());
         }
-        if (durationUomId != null) {
-            builder.setDurationUomId(durationUomId);
+        if (getDurationUomId() != null) {
+            builder.setDurationUomId(getDurationUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SurveyQuestionOption fromData(SurveyQuestionOptionData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SurveyQuestionOption.SurveyQuestionOptionBuilder fromPrototype(SurveyQuestionOptionData data) {
         return SurveyQuestionOption.builder()
                 .surveyQuestionId(data.getSurveyQuestionId())
                 .surveyOptionSeqId(data.getSurveyOptionSeqId())
@@ -134,8 +138,7 @@ public class SurveyQuestionOption implements IEventModel<SurveyQuestionOptionDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

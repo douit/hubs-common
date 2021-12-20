@@ -96,68 +96,72 @@ public class CreditCard implements IEventModel<CreditCardData.Builder>, HasId, S
 
     public CreditCardData.Builder toDataBuilder() {
         CreditCardData.Builder builder = CreditCardData.newBuilder();
-        if (paymentMethodId != null) {
-            builder.setPaymentMethodId(paymentMethodId);
+        if (getPaymentMethodId() != null) {
+            builder.setPaymentMethodId(getPaymentMethodId());
         }
-        if (cardType != null) {
-            builder.setCardType(cardType);
+        if (getCardType() != null) {
+            builder.setCardType(getCardType());
         }
-        if (cardNumber != null) {
-            builder.setCardNumber(cardNumber);
+        if (getCardNumber() != null) {
+            builder.setCardNumber(getCardNumber());
         }
-        if (validFromDate != null) {
-            builder.setValidFromDate(validFromDate);
+        if (getValidFromDate() != null) {
+            builder.setValidFromDate(getValidFromDate());
         }
-        if (expireDate != null) {
-            builder.setExpireDate(expireDate);
+        if (getExpireDate() != null) {
+            builder.setExpireDate(getExpireDate());
         }
-        if (issueNumber != null) {
-            builder.setIssueNumber(issueNumber);
+        if (getIssueNumber() != null) {
+            builder.setIssueNumber(getIssueNumber());
         }
-        if (companyNameOnCard != null) {
-            builder.setCompanyNameOnCard(companyNameOnCard);
+        if (getCompanyNameOnCard() != null) {
+            builder.setCompanyNameOnCard(getCompanyNameOnCard());
         }
-        if (titleOnCard != null) {
-            builder.setTitleOnCard(titleOnCard);
+        if (getTitleOnCard() != null) {
+            builder.setTitleOnCard(getTitleOnCard());
         }
-        if (firstNameOnCard != null) {
-            builder.setFirstNameOnCard(firstNameOnCard);
+        if (getFirstNameOnCard() != null) {
+            builder.setFirstNameOnCard(getFirstNameOnCard());
         }
-        if (middleNameOnCard != null) {
-            builder.setMiddleNameOnCard(middleNameOnCard);
+        if (getMiddleNameOnCard() != null) {
+            builder.setMiddleNameOnCard(getMiddleNameOnCard());
         }
-        if (lastNameOnCard != null) {
-            builder.setLastNameOnCard(lastNameOnCard);
+        if (getLastNameOnCard() != null) {
+            builder.setLastNameOnCard(getLastNameOnCard());
         }
-        if (suffixOnCard != null) {
-            builder.setSuffixOnCard(suffixOnCard);
+        if (getSuffixOnCard() != null) {
+            builder.setSuffixOnCard(getSuffixOnCard());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (consecutiveFailedAuths != null) {
-            builder.setConsecutiveFailedAuths(consecutiveFailedAuths);
+        if (getConsecutiveFailedAuths() != null) {
+            builder.setConsecutiveFailedAuths(getConsecutiveFailedAuths());
         }
-        if (lastFailedAuthDate != null) {
-            builder.setLastFailedAuthDate(getTimestamp(lastFailedAuthDate));
+        if (getLastFailedAuthDate() != null) {
+            builder.setLastFailedAuthDate(getTimestamp(getLastFailedAuthDate()));
         }
-        if (consecutiveFailedNsf != null) {
-            builder.setConsecutiveFailedNsf(consecutiveFailedNsf);
+        if (getConsecutiveFailedNsf() != null) {
+            builder.setConsecutiveFailedNsf(getConsecutiveFailedNsf());
         }
-        if (lastFailedNsfDate != null) {
-            builder.setLastFailedNsfDate(getTimestamp(lastFailedNsfDate));
+        if (getLastFailedNsfDate() != null) {
+            builder.setLastFailedNsfDate(getTimestamp(getLastFailedNsfDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static CreditCard fromData(CreditCardData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CreditCard.CreditCardBuilder fromPrototype(CreditCardData data) {
         return CreditCard.builder()
                 .paymentMethodId(data.getPaymentMethodId())
                 .cardType(data.getCardType())
@@ -178,8 +182,7 @@ public class CreditCard implements IEventModel<CreditCardData.Builder>, HasId, S
                 .lastFailedNsfDate(getLocalDateTime(data.getLastFailedNsfDate()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

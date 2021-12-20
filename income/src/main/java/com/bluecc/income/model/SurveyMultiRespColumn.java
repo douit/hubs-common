@@ -73,35 +73,39 @@ public class SurveyMultiRespColumn implements IEventModel<SurveyMultiRespColumnD
 
     public SurveyMultiRespColumnData.Builder toDataBuilder() {
         SurveyMultiRespColumnData.Builder builder = SurveyMultiRespColumnData.newBuilder();
-        if (surveyId != null) {
-            builder.setSurveyId(surveyId);
+        if (getSurveyId() != null) {
+            builder.setSurveyId(getSurveyId());
         }
-        if (surveyMultiRespId != null) {
-            builder.setSurveyMultiRespId(surveyMultiRespId);
+        if (getSurveyMultiRespId() != null) {
+            builder.setSurveyMultiRespId(getSurveyMultiRespId());
         }
-        if (surveyMultiRespColId != null) {
-            builder.setSurveyMultiRespColId(surveyMultiRespColId);
+        if (getSurveyMultiRespColId() != null) {
+            builder.setSurveyMultiRespColId(getSurveyMultiRespColId());
         }
-        if (columnTitle != null) {
-            builder.setColumnTitle(columnTitle);
+        if (getColumnTitle() != null) {
+            builder.setColumnTitle(getColumnTitle());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SurveyMultiRespColumn fromData(SurveyMultiRespColumnData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SurveyMultiRespColumn.SurveyMultiRespColumnBuilder fromPrototype(SurveyMultiRespColumnData data) {
         return SurveyMultiRespColumn.builder()
                 .surveyId(data.getSurveyId())
                 .surveyMultiRespId(data.getSurveyMultiRespId())
@@ -111,8 +115,7 @@ public class SurveyMultiRespColumn implements IEventModel<SurveyMultiRespColumnD
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

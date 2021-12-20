@@ -85,44 +85,48 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
 
     public BillingAccountFlatData.Builder toDataBuilder() {
         BillingAccountFlatData.Builder builder = BillingAccountFlatData.newBuilder();
-        if (billingAccountId != null) {
-            builder.setBillingAccountId(billingAccountId);
+        if (getBillingAccountId() != null) {
+            builder.setBillingAccountId(getBillingAccountId());
         }
-        if (accountLimit != null) {
-            builder.setAccountLimit(getCurrency(accountLimit));
+        if (getAccountLimit() != null) {
+            builder.setAccountLimit(getCurrency(getAccountLimit()));
         }
-        if (accountCurrencyUomId != null) {
-            builder.setAccountCurrencyUomId(accountCurrencyUomId);
+        if (getAccountCurrencyUomId() != null) {
+            builder.setAccountCurrencyUomId(getAccountCurrencyUomId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (externalAccountId != null) {
-            builder.setExternalAccountId(externalAccountId);
+        if (getExternalAccountId() != null) {
+            builder.setExternalAccountId(getExternalAccountId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static BillingAccount fromData(BillingAccountFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static BillingAccount.BillingAccountBuilder fromPrototype(BillingAccountFlatData data) {
         return BillingAccount.builder()
                 .billingAccountId(data.getBillingAccountId())
                 .accountLimit(getBigDecimal(data.getAccountLimit()))
@@ -135,8 +139,7 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -196,32 +199,32 @@ public class BillingAccount implements IEventModel<BillingAccountFlatData.Builde
 
     public BillingAccountData.Builder toHeadBuilder() {
         BillingAccountData.Builder builder = BillingAccountData.newBuilder();
-        if (billingAccountId != null) {
-            builder.setBillingAccountId(billingAccountId);
+        if (getBillingAccountId() != null) {
+            builder.setBillingAccountId(getBillingAccountId());
         }
-        if (accountLimit != null) {
-            builder.setAccountLimit(getCurrency(accountLimit));
+        if (getAccountLimit() != null) {
+            builder.setAccountLimit(getCurrency(getAccountLimit()));
         }
-        if (accountCurrencyUomId != null) {
-            builder.setAccountCurrencyUomId(accountCurrencyUomId);
+        if (getAccountCurrencyUomId() != null) {
+            builder.setAccountCurrencyUomId(getAccountCurrencyUomId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (externalAccountId != null) {
-            builder.setExternalAccountId(externalAccountId);
+        if (getExternalAccountId() != null) {
+            builder.setExternalAccountId(getExternalAccountId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

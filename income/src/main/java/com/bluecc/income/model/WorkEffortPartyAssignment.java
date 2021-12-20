@@ -91,62 +91,66 @@ public class WorkEffortPartyAssignment implements IEventModel<WorkEffortPartyAss
 
     public WorkEffortPartyAssignmentData.Builder toDataBuilder() {
         WorkEffortPartyAssignmentData.Builder builder = WorkEffortPartyAssignmentData.newBuilder();
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (assignedByUserLoginId != null) {
-            builder.setAssignedByUserLoginId(assignedByUserLoginId);
+        if (getAssignedByUserLoginId() != null) {
+            builder.setAssignedByUserLoginId(getAssignedByUserLoginId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (statusDateTime != null) {
-            builder.setStatusDateTime(getTimestamp(statusDateTime));
+        if (getStatusDateTime() != null) {
+            builder.setStatusDateTime(getTimestamp(getStatusDateTime()));
         }
-        if (expectationEnumId != null) {
-            builder.setExpectationEnumId(expectationEnumId);
+        if (getExpectationEnumId() != null) {
+            builder.setExpectationEnumId(getExpectationEnumId());
         }
-        if (delegateReasonEnumId != null) {
-            builder.setDelegateReasonEnumId(delegateReasonEnumId);
+        if (getDelegateReasonEnumId() != null) {
+            builder.setDelegateReasonEnumId(getDelegateReasonEnumId());
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (mustRsvp != null) {
-            builder.setMustRsvp(getIndicator(mustRsvp));
+        if (getMustRsvp() != null) {
+            builder.setMustRsvp(getIndicator(getMustRsvp()));
         }
-        if (availabilityStatusId != null) {
-            builder.setAvailabilityStatusId(availabilityStatusId);
+        if (getAvailabilityStatusId() != null) {
+            builder.setAvailabilityStatusId(getAvailabilityStatusId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static WorkEffortPartyAssignment fromData(WorkEffortPartyAssignmentData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WorkEffortPartyAssignment.WorkEffortPartyAssignmentBuilder fromPrototype(WorkEffortPartyAssignmentData data) {
         return WorkEffortPartyAssignment.builder()
                 .workEffortId(data.getWorkEffortId())
                 .partyId(data.getPartyId())
@@ -165,8 +169,7 @@ public class WorkEffortPartyAssignment implements IEventModel<WorkEffortPartyAss
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

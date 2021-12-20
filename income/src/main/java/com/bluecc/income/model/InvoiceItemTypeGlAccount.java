@@ -68,29 +68,33 @@ public class InvoiceItemTypeGlAccount implements IEventModel<InvoiceItemTypeGlAc
 
     public InvoiceItemTypeGlAccountData.Builder toDataBuilder() {
         InvoiceItemTypeGlAccountData.Builder builder = InvoiceItemTypeGlAccountData.newBuilder();
-        if (invoiceItemTypeId != null) {
-            builder.setInvoiceItemTypeId(invoiceItemTypeId);
+        if (getInvoiceItemTypeId() != null) {
+            builder.setInvoiceItemTypeId(getInvoiceItemTypeId());
         }
-        if (organizationPartyId != null) {
-            builder.setOrganizationPartyId(organizationPartyId);
+        if (getOrganizationPartyId() != null) {
+            builder.setOrganizationPartyId(getOrganizationPartyId());
         }
-        if (glAccountId != null) {
-            builder.setGlAccountId(glAccountId);
+        if (getGlAccountId() != null) {
+            builder.setGlAccountId(getGlAccountId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static InvoiceItemTypeGlAccount fromData(InvoiceItemTypeGlAccountData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static InvoiceItemTypeGlAccount.InvoiceItemTypeGlAccountBuilder fromPrototype(InvoiceItemTypeGlAccountData data) {
         return InvoiceItemTypeGlAccount.builder()
                 .invoiceItemTypeId(data.getInvoiceItemTypeId())
                 .organizationPartyId(data.getOrganizationPartyId())
@@ -98,8 +102,7 @@ public class InvoiceItemTypeGlAccount implements IEventModel<InvoiceItemTypeGlAc
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

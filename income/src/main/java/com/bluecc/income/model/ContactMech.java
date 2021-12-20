@@ -68,34 +68,37 @@ public class ContactMech implements IEventModel<ContactMechData.Builder>, HasId,
 
     public ContactMechData.Builder toDataBuilder() {
         ContactMechData.Builder builder = ContactMechData.newBuilder();
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (contactMechTypeId != null) {
-            builder.setContactMechTypeId(contactMechTypeId);
+        if (getContactMechTypeId() != null) {
+            builder.setContactMechTypeId(getContactMechTypeId());
         }
-        if (infoString != null) {
-            builder.setInfoString(infoString);
+        if (getInfoString() != null) {
+            builder.setInfoString(getInfoString());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ContactMech fromData(ContactMechData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ContactMech.ContactMechBuilder fromPrototype(ContactMechData data) {
         return ContactMech.builder()
                 .contactMechId(data.getContactMechId())
                 .contactMechTypeId(data.getContactMechTypeId())
                 .infoString(data.getInfoString())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

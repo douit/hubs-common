@@ -94,65 +94,69 @@ public class TaxAuthorityRateProduct implements IEventModel<TaxAuthorityRateProd
 
     public TaxAuthorityRateProductData.Builder toDataBuilder() {
         TaxAuthorityRateProductData.Builder builder = TaxAuthorityRateProductData.newBuilder();
-        if (taxAuthorityRateSeqId != null) {
-            builder.setTaxAuthorityRateSeqId(taxAuthorityRateSeqId);
+        if (getTaxAuthorityRateSeqId() != null) {
+            builder.setTaxAuthorityRateSeqId(getTaxAuthorityRateSeqId());
         }
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (taxAuthorityRateTypeId != null) {
-            builder.setTaxAuthorityRateTypeId(taxAuthorityRateTypeId);
+        if (getTaxAuthorityRateTypeId() != null) {
+            builder.setTaxAuthorityRateTypeId(getTaxAuthorityRateTypeId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (titleTransferEnumId != null) {
-            builder.setTitleTransferEnumId(titleTransferEnumId);
+        if (getTitleTransferEnumId() != null) {
+            builder.setTitleTransferEnumId(getTitleTransferEnumId());
         }
-        if (minItemPrice != null) {
-            builder.setMinItemPrice(getCurrency(minItemPrice));
+        if (getMinItemPrice() != null) {
+            builder.setMinItemPrice(getCurrency(getMinItemPrice()));
         }
-        if (minPurchase != null) {
-            builder.setMinPurchase(getCurrency(minPurchase));
+        if (getMinPurchase() != null) {
+            builder.setMinPurchase(getCurrency(getMinPurchase()));
         }
-        if (taxShipping != null) {
-            builder.setTaxShipping(getIndicator(taxShipping));
+        if (getTaxShipping() != null) {
+            builder.setTaxShipping(getIndicator(getTaxShipping()));
         }
-        if (taxPercentage != null) {
-            builder.setTaxPercentage(getFixedPoint(taxPercentage));
+        if (getTaxPercentage() != null) {
+            builder.setTaxPercentage(getFixedPoint(getTaxPercentage()));
         }
-        if (taxPromotions != null) {
-            builder.setTaxPromotions(getIndicator(taxPromotions));
+        if (getTaxPromotions() != null) {
+            builder.setTaxPromotions(getIndicator(getTaxPromotions()));
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (isTaxInShippingPrice != null) {
-            builder.setIsTaxInShippingPrice(getIndicator(isTaxInShippingPrice));
+        if (getIsTaxInShippingPrice() != null) {
+            builder.setIsTaxInShippingPrice(getIndicator(getIsTaxInShippingPrice()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static TaxAuthorityRateProduct fromData(TaxAuthorityRateProductData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TaxAuthorityRateProduct.TaxAuthorityRateProductBuilder fromPrototype(TaxAuthorityRateProductData data) {
         return TaxAuthorityRateProduct.builder()
                 .taxAuthorityRateSeqId(data.getTaxAuthorityRateSeqId())
                 .taxAuthGeoId(data.getTaxAuthGeoId())
@@ -172,8 +176,7 @@ public class TaxAuthorityRateProduct implements IEventModel<TaxAuthorityRateProd
                 .isTaxInShippingPrice(getIndicatorChar(data.getIsTaxInShippingPrice()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

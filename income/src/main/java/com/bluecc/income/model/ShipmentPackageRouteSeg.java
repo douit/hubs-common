@@ -95,68 +95,72 @@ public class ShipmentPackageRouteSeg implements IEventModel<ShipmentPackageRoute
 
     public ShipmentPackageRouteSegData.Builder toDataBuilder() {
         ShipmentPackageRouteSegData.Builder builder = ShipmentPackageRouteSegData.newBuilder();
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentPackageSeqId != null) {
-            builder.setShipmentPackageSeqId(shipmentPackageSeqId);
+        if (getShipmentPackageSeqId() != null) {
+            builder.setShipmentPackageSeqId(getShipmentPackageSeqId());
         }
-        if (shipmentRouteSegmentId != null) {
-            builder.setShipmentRouteSegmentId(shipmentRouteSegmentId);
+        if (getShipmentRouteSegmentId() != null) {
+            builder.setShipmentRouteSegmentId(getShipmentRouteSegmentId());
         }
-        if (trackingCode != null) {
-            builder.setTrackingCode(trackingCode);
+        if (getTrackingCode() != null) {
+            builder.setTrackingCode(getTrackingCode());
         }
-        if (boxNumber != null) {
-            builder.setBoxNumber(boxNumber);
+        if (getBoxNumber() != null) {
+            builder.setBoxNumber(getBoxNumber());
         }
-        if (labelImage != null) {
-            builder.setLabelImage(ByteString.copyFrom(labelImage));
+        if (getLabelImage() != null) {
+            builder.setLabelImage(ByteString.copyFrom(getLabelImage()));
         }
-        if (labelIntlSignImage != null) {
-            builder.setLabelIntlSignImage(ByteString.copyFrom(labelIntlSignImage));
+        if (getLabelIntlSignImage() != null) {
+            builder.setLabelIntlSignImage(ByteString.copyFrom(getLabelIntlSignImage()));
         }
-        if (labelHtml != null) {
-            builder.setLabelHtml(labelHtml);
+        if (getLabelHtml() != null) {
+            builder.setLabelHtml(getLabelHtml());
         }
-        if (labelPrinted != null) {
-            builder.setLabelPrinted(getIndicator(labelPrinted));
+        if (getLabelPrinted() != null) {
+            builder.setLabelPrinted(getIndicator(getLabelPrinted()));
         }
-        if (internationalInvoice != null) {
-            builder.setInternationalInvoice(ByteString.copyFrom(internationalInvoice));
+        if (getInternationalInvoice() != null) {
+            builder.setInternationalInvoice(ByteString.copyFrom(getInternationalInvoice()));
         }
-        if (packageTransportCost != null) {
-            builder.setPackageTransportCost(getCurrency(packageTransportCost));
+        if (getPackageTransportCost() != null) {
+            builder.setPackageTransportCost(getCurrency(getPackageTransportCost()));
         }
-        if (packageServiceCost != null) {
-            builder.setPackageServiceCost(getCurrency(packageServiceCost));
+        if (getPackageServiceCost() != null) {
+            builder.setPackageServiceCost(getCurrency(getPackageServiceCost()));
         }
-        if (packageOtherCost != null) {
-            builder.setPackageOtherCost(getCurrency(packageOtherCost));
+        if (getPackageOtherCost() != null) {
+            builder.setPackageOtherCost(getCurrency(getPackageOtherCost()));
         }
-        if (codAmount != null) {
-            builder.setCodAmount(getCurrency(codAmount));
+        if (getCodAmount() != null) {
+            builder.setCodAmount(getCurrency(getCodAmount()));
         }
-        if (insuredAmount != null) {
-            builder.setInsuredAmount(getCurrency(insuredAmount));
+        if (getInsuredAmount() != null) {
+            builder.setInsuredAmount(getCurrency(getInsuredAmount()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShipmentPackageRouteSeg fromData(ShipmentPackageRouteSegData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentPackageRouteSeg.ShipmentPackageRouteSegBuilder fromPrototype(ShipmentPackageRouteSegData data) {
         return ShipmentPackageRouteSeg.builder()
                 .shipmentId(data.getShipmentId())
                 .shipmentPackageSeqId(data.getShipmentPackageSeqId())
@@ -177,8 +181,7 @@ public class ShipmentPackageRouteSeg implements IEventModel<ShipmentPackageRoute
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

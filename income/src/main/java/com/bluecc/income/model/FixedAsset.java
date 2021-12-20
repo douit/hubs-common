@@ -119,95 +119,99 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, HasI
 
     public FixedAssetFlatData.Builder toDataBuilder() {
         FixedAssetFlatData.Builder builder = FixedAssetFlatData.newBuilder();
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (fixedAssetTypeId != null) {
-            builder.setFixedAssetTypeId(fixedAssetTypeId);
+        if (getFixedAssetTypeId() != null) {
+            builder.setFixedAssetTypeId(getFixedAssetTypeId());
         }
-        if (parentFixedAssetId != null) {
-            builder.setParentFixedAssetId(parentFixedAssetId);
+        if (getParentFixedAssetId() != null) {
+            builder.setParentFixedAssetId(getParentFixedAssetId());
         }
-        if (instanceOfProductId != null) {
-            builder.setInstanceOfProductId(instanceOfProductId);
+        if (getInstanceOfProductId() != null) {
+            builder.setInstanceOfProductId(getInstanceOfProductId());
         }
-        if (classEnumId != null) {
-            builder.setClassEnumId(classEnumId);
+        if (getClassEnumId() != null) {
+            builder.setClassEnumId(getClassEnumId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (fixedAssetName != null) {
-            builder.setFixedAssetName(fixedAssetName);
+        if (getFixedAssetName() != null) {
+            builder.setFixedAssetName(getFixedAssetName());
         }
-        if (acquireOrderId != null) {
-            builder.setAcquireOrderId(acquireOrderId);
+        if (getAcquireOrderId() != null) {
+            builder.setAcquireOrderId(getAcquireOrderId());
         }
-        if (acquireOrderItemSeqId != null) {
-            builder.setAcquireOrderItemSeqId(acquireOrderItemSeqId);
+        if (getAcquireOrderItemSeqId() != null) {
+            builder.setAcquireOrderItemSeqId(getAcquireOrderItemSeqId());
         }
-        if (dateAcquired != null) {
-            builder.setDateAcquired(getTimestamp(dateAcquired));
+        if (getDateAcquired() != null) {
+            builder.setDateAcquired(getTimestamp(getDateAcquired()));
         }
-        if (dateLastServiced != null) {
-            builder.setDateLastServiced(getTimestamp(dateLastServiced));
+        if (getDateLastServiced() != null) {
+            builder.setDateLastServiced(getTimestamp(getDateLastServiced()));
         }
-        if (dateNextService != null) {
-            builder.setDateNextService(getTimestamp(dateNextService));
+        if (getDateNextService() != null) {
+            builder.setDateNextService(getTimestamp(getDateNextService()));
         }
-        if (expectedEndOfLife != null) {
-            builder.setExpectedEndOfLife(getDate(expectedEndOfLife));
+        if (getExpectedEndOfLife() != null) {
+            builder.setExpectedEndOfLife(getDate(getExpectedEndOfLife()));
         }
-        if (actualEndOfLife != null) {
-            builder.setActualEndOfLife(getDate(actualEndOfLife));
+        if (getActualEndOfLife() != null) {
+            builder.setActualEndOfLife(getDate(getActualEndOfLife()));
         }
-        if (productionCapacity != null) {
-            builder.setProductionCapacity(getFixedPoint(productionCapacity));
+        if (getProductionCapacity() != null) {
+            builder.setProductionCapacity(getFixedPoint(getProductionCapacity()));
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (calendarId != null) {
-            builder.setCalendarId(calendarId);
+        if (getCalendarId() != null) {
+            builder.setCalendarId(getCalendarId());
         }
-        if (serialNumber != null) {
-            builder.setSerialNumber(serialNumber);
+        if (getSerialNumber() != null) {
+            builder.setSerialNumber(getSerialNumber());
         }
-        if (locatedAtFacilityId != null) {
-            builder.setLocatedAtFacilityId(locatedAtFacilityId);
+        if (getLocatedAtFacilityId() != null) {
+            builder.setLocatedAtFacilityId(getLocatedAtFacilityId());
         }
-        if (locatedAtLocationSeqId != null) {
-            builder.setLocatedAtLocationSeqId(locatedAtLocationSeqId);
+        if (getLocatedAtLocationSeqId() != null) {
+            builder.setLocatedAtLocationSeqId(getLocatedAtLocationSeqId());
         }
-        if (salvageValue != null) {
-            builder.setSalvageValue(getCurrency(salvageValue));
+        if (getSalvageValue() != null) {
+            builder.setSalvageValue(getCurrency(getSalvageValue()));
         }
-        if (depreciation != null) {
-            builder.setDepreciation(getCurrency(depreciation));
+        if (getDepreciation() != null) {
+            builder.setDepreciation(getCurrency(getDepreciation()));
         }
-        if (purchaseCost != null) {
-            builder.setPurchaseCost(getCurrency(purchaseCost));
+        if (getPurchaseCost() != null) {
+            builder.setPurchaseCost(getCurrency(getPurchaseCost()));
         }
-        if (purchaseCostUomId != null) {
-            builder.setPurchaseCostUomId(purchaseCostUomId);
+        if (getPurchaseCostUomId() != null) {
+            builder.setPurchaseCostUomId(getPurchaseCostUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static FixedAsset fromData(FixedAssetFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FixedAsset.FixedAssetBuilder fromPrototype(FixedAssetFlatData data) {
         return FixedAsset.builder()
                 .fixedAssetId(data.getFixedAssetId())
                 .fixedAssetTypeId(data.getFixedAssetTypeId())
@@ -237,8 +241,7 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -363,68 +366,68 @@ public class FixedAsset implements IEventModel<FixedAssetFlatData.Builder>, HasI
 
     public FixedAssetData.Builder toHeadBuilder() {
         FixedAssetData.Builder builder = FixedAssetData.newBuilder();
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (fixedAssetTypeId != null) {
-            builder.setFixedAssetTypeId(fixedAssetTypeId);
+        if (getFixedAssetTypeId() != null) {
+            builder.setFixedAssetTypeId(getFixedAssetTypeId());
         }
-        if (classEnumId != null) {
-            builder.setClassEnumId(classEnumId);
+        if (getClassEnumId() != null) {
+            builder.setClassEnumId(getClassEnumId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (fixedAssetName != null) {
-            builder.setFixedAssetName(fixedAssetName);
+        if (getFixedAssetName() != null) {
+            builder.setFixedAssetName(getFixedAssetName());
         }
-        if (acquireOrderItemSeqId != null) {
-            builder.setAcquireOrderItemSeqId(acquireOrderItemSeqId);
+        if (getAcquireOrderItemSeqId() != null) {
+            builder.setAcquireOrderItemSeqId(getAcquireOrderItemSeqId());
         }
-        if (dateAcquired != null) {
-            builder.setDateAcquired(getTimestamp(dateAcquired));
+        if (getDateAcquired() != null) {
+            builder.setDateAcquired(getTimestamp(getDateAcquired()));
         }
-        if (dateLastServiced != null) {
-            builder.setDateLastServiced(getTimestamp(dateLastServiced));
+        if (getDateLastServiced() != null) {
+            builder.setDateLastServiced(getTimestamp(getDateLastServiced()));
         }
-        if (dateNextService != null) {
-            builder.setDateNextService(getTimestamp(dateNextService));
+        if (getDateNextService() != null) {
+            builder.setDateNextService(getTimestamp(getDateNextService()));
         }
-        if (expectedEndOfLife != null) {
-            builder.setExpectedEndOfLife(getDate(expectedEndOfLife));
+        if (getExpectedEndOfLife() != null) {
+            builder.setExpectedEndOfLife(getDate(getExpectedEndOfLife()));
         }
-        if (actualEndOfLife != null) {
-            builder.setActualEndOfLife(getDate(actualEndOfLife));
+        if (getActualEndOfLife() != null) {
+            builder.setActualEndOfLife(getDate(getActualEndOfLife()));
         }
-        if (productionCapacity != null) {
-            builder.setProductionCapacity(getFixedPoint(productionCapacity));
+        if (getProductionCapacity() != null) {
+            builder.setProductionCapacity(getFixedPoint(getProductionCapacity()));
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (serialNumber != null) {
-            builder.setSerialNumber(serialNumber);
+        if (getSerialNumber() != null) {
+            builder.setSerialNumber(getSerialNumber());
         }
-        if (locatedAtLocationSeqId != null) {
-            builder.setLocatedAtLocationSeqId(locatedAtLocationSeqId);
+        if (getLocatedAtLocationSeqId() != null) {
+            builder.setLocatedAtLocationSeqId(getLocatedAtLocationSeqId());
         }
-        if (salvageValue != null) {
-            builder.setSalvageValue(getCurrency(salvageValue));
+        if (getSalvageValue() != null) {
+            builder.setSalvageValue(getCurrency(getSalvageValue()));
         }
-        if (depreciation != null) {
-            builder.setDepreciation(getCurrency(depreciation));
+        if (getDepreciation() != null) {
+            builder.setDepreciation(getCurrency(getDepreciation()));
         }
-        if (purchaseCost != null) {
-            builder.setPurchaseCost(getCurrency(purchaseCost));
+        if (getPurchaseCost() != null) {
+            builder.setPurchaseCost(getCurrency(getPurchaseCost()));
         }
-        if (purchaseCostUomId != null) {
-            builder.setPurchaseCostUomId(purchaseCostUomId);
+        if (getPurchaseCostUomId() != null) {
+            builder.setPurchaseCostUomId(getPurchaseCostUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

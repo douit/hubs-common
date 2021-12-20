@@ -78,44 +78,48 @@ public class ProductFeatureAppl implements IEventModel<ProductFeatureApplData.Bu
 
     public ProductFeatureApplData.Builder toDataBuilder() {
         ProductFeatureApplData.Builder builder = ProductFeatureApplData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (productFeatureId != null) {
-            builder.setProductFeatureId(productFeatureId);
+        if (getProductFeatureId() != null) {
+            builder.setProductFeatureId(getProductFeatureId());
         }
-        if (productFeatureApplTypeId != null) {
-            builder.setProductFeatureApplTypeId(productFeatureApplTypeId);
+        if (getProductFeatureApplTypeId() != null) {
+            builder.setProductFeatureApplTypeId(getProductFeatureApplTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (recurringAmount != null) {
-            builder.setRecurringAmount(getCurrency(recurringAmount));
+        if (getRecurringAmount() != null) {
+            builder.setRecurringAmount(getCurrency(getRecurringAmount()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductFeatureAppl fromData(ProductFeatureApplData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductFeatureAppl.ProductFeatureApplBuilder fromPrototype(ProductFeatureApplData data) {
         return ProductFeatureAppl.builder()
                 .productId(data.getProductId())
                 .productFeatureId(data.getProductFeatureId())
@@ -128,8 +132,7 @@ public class ProductFeatureAppl implements IEventModel<ProductFeatureApplData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

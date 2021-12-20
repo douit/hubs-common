@@ -100,74 +100,78 @@ public class DataResource implements IEventModel<DataResourceData.Builder>, HasI
 
     public DataResourceData.Builder toDataBuilder() {
         DataResourceData.Builder builder = DataResourceData.newBuilder();
-        if (dataResourceId != null) {
-            builder.setDataResourceId(dataResourceId);
+        if (getDataResourceId() != null) {
+            builder.setDataResourceId(getDataResourceId());
         }
-        if (dataResourceTypeId != null) {
-            builder.setDataResourceTypeId(dataResourceTypeId);
+        if (getDataResourceTypeId() != null) {
+            builder.setDataResourceTypeId(getDataResourceTypeId());
         }
-        if (dataTemplateTypeId != null) {
-            builder.setDataTemplateTypeId(dataTemplateTypeId);
+        if (getDataTemplateTypeId() != null) {
+            builder.setDataTemplateTypeId(getDataTemplateTypeId());
         }
-        if (dataCategoryId != null) {
-            builder.setDataCategoryId(dataCategoryId);
+        if (getDataCategoryId() != null) {
+            builder.setDataCategoryId(getDataCategoryId());
         }
-        if (dataSourceId != null) {
-            builder.setDataSourceId(dataSourceId);
+        if (getDataSourceId() != null) {
+            builder.setDataSourceId(getDataSourceId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (dataResourceName != null) {
-            builder.setDataResourceName(dataResourceName);
+        if (getDataResourceName() != null) {
+            builder.setDataResourceName(getDataResourceName());
         }
-        if (localeString != null) {
-            builder.setLocaleString(localeString);
+        if (getLocaleString() != null) {
+            builder.setLocaleString(getLocaleString());
         }
-        if (mimeTypeId != null) {
-            builder.setMimeTypeId(mimeTypeId);
+        if (getMimeTypeId() != null) {
+            builder.setMimeTypeId(getMimeTypeId());
         }
-        if (characterSetId != null) {
-            builder.setCharacterSetId(characterSetId);
+        if (getCharacterSetId() != null) {
+            builder.setCharacterSetId(getCharacterSetId());
         }
-        if (objectInfo != null) {
-            builder.setObjectInfo(objectInfo);
+        if (getObjectInfo() != null) {
+            builder.setObjectInfo(getObjectInfo());
         }
-        if (surveyId != null) {
-            builder.setSurveyId(surveyId);
+        if (getSurveyId() != null) {
+            builder.setSurveyId(getSurveyId());
         }
-        if (surveyResponseId != null) {
-            builder.setSurveyResponseId(surveyResponseId);
+        if (getSurveyResponseId() != null) {
+            builder.setSurveyResponseId(getSurveyResponseId());
         }
-        if (relatedDetailId != null) {
-            builder.setRelatedDetailId(relatedDetailId);
+        if (getRelatedDetailId() != null) {
+            builder.setRelatedDetailId(getRelatedDetailId());
         }
-        if (isPublic != null) {
-            builder.setIsPublic(getIndicator(isPublic));
+        if (getIsPublic() != null) {
+            builder.setIsPublic(getIndicator(getIsPublic()));
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static DataResource fromData(DataResourceData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static DataResource.DataResourceBuilder fromPrototype(DataResourceData data) {
         return DataResource.builder()
                 .dataResourceId(data.getDataResourceId())
                 .dataResourceTypeId(data.getDataResourceTypeId())
@@ -190,8 +194,7 @@ public class DataResource implements IEventModel<DataResourceData.Builder>, HasI
                 .lastModifiedByUserLogin(data.getLastModifiedByUserLogin())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

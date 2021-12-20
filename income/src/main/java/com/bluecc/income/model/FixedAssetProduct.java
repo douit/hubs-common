@@ -81,47 +81,51 @@ public class FixedAssetProduct implements IEventModel<FixedAssetProductData.Buil
 
     public FixedAssetProductData.Builder toDataBuilder() {
         FixedAssetProductData.Builder builder = FixedAssetProductData.newBuilder();
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (fixedAssetProductTypeId != null) {
-            builder.setFixedAssetProductTypeId(fixedAssetProductTypeId);
+        if (getFixedAssetProductTypeId() != null) {
+            builder.setFixedAssetProductTypeId(getFixedAssetProductTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (quantityUomId != null) {
-            builder.setQuantityUomId(quantityUomId);
+        if (getQuantityUomId() != null) {
+            builder.setQuantityUomId(getQuantityUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FixedAssetProduct fromData(FixedAssetProductData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FixedAssetProduct.FixedAssetProductBuilder fromPrototype(FixedAssetProductData data) {
         return FixedAssetProduct.builder()
                 .fixedAssetId(data.getFixedAssetId())
                 .productId(data.getProductId())
@@ -135,8 +139,7 @@ public class FixedAssetProduct implements IEventModel<FixedAssetProductData.Buil
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

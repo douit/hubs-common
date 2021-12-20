@@ -76,41 +76,45 @@ public class FixedAssetMeter implements IEventModel<FixedAssetMeterData.Builder>
 
     public FixedAssetMeterData.Builder toDataBuilder() {
         FixedAssetMeterData.Builder builder = FixedAssetMeterData.newBuilder();
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (productMeterTypeId != null) {
-            builder.setProductMeterTypeId(productMeterTypeId);
+        if (getProductMeterTypeId() != null) {
+            builder.setProductMeterTypeId(getProductMeterTypeId());
         }
-        if (readingDate != null) {
-            builder.setReadingDate(getTimestamp(readingDate));
+        if (getReadingDate() != null) {
+            builder.setReadingDate(getTimestamp(getReadingDate()));
         }
-        if (meterValue != null) {
-            builder.setMeterValue(getFixedPoint(meterValue));
+        if (getMeterValue() != null) {
+            builder.setMeterValue(getFixedPoint(getMeterValue()));
         }
-        if (readingReasonEnumId != null) {
-            builder.setReadingReasonEnumId(readingReasonEnumId);
+        if (getReadingReasonEnumId() != null) {
+            builder.setReadingReasonEnumId(getReadingReasonEnumId());
         }
-        if (maintHistSeqId != null) {
-            builder.setMaintHistSeqId(maintHistSeqId);
+        if (getMaintHistSeqId() != null) {
+            builder.setMaintHistSeqId(getMaintHistSeqId());
         }
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FixedAssetMeter fromData(FixedAssetMeterData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FixedAssetMeter.FixedAssetMeterBuilder fromPrototype(FixedAssetMeterData data) {
         return FixedAssetMeter.builder()
                 .fixedAssetId(data.getFixedAssetId())
                 .productMeterTypeId(data.getProductMeterTypeId())
@@ -122,8 +126,7 @@ public class FixedAssetMeter implements IEventModel<FixedAssetMeterData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

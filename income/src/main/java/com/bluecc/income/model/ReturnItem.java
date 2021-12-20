@@ -92,65 +92,69 @@ public class ReturnItem implements IEventModel<ReturnItemData.Builder>, HasId, S
 
     public ReturnItemData.Builder toDataBuilder() {
         ReturnItemData.Builder builder = ReturnItemData.newBuilder();
-        if (returnId != null) {
-            builder.setReturnId(returnId);
+        if (getReturnId() != null) {
+            builder.setReturnId(getReturnId());
         }
-        if (returnItemSeqId != null) {
-            builder.setReturnItemSeqId(returnItemSeqId);
+        if (getReturnItemSeqId() != null) {
+            builder.setReturnItemSeqId(getReturnItemSeqId());
         }
-        if (returnReasonId != null) {
-            builder.setReturnReasonId(returnReasonId);
+        if (getReturnReasonId() != null) {
+            builder.setReturnReasonId(getReturnReasonId());
         }
-        if (returnTypeId != null) {
-            builder.setReturnTypeId(returnTypeId);
+        if (getReturnTypeId() != null) {
+            builder.setReturnTypeId(getReturnTypeId());
         }
-        if (returnItemTypeId != null) {
-            builder.setReturnItemTypeId(returnItemTypeId);
+        if (getReturnItemTypeId() != null) {
+            builder.setReturnItemTypeId(getReturnItemTypeId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (expectedItemStatus != null) {
-            builder.setExpectedItemStatus(expectedItemStatus);
+        if (getExpectedItemStatus() != null) {
+            builder.setExpectedItemStatus(getExpectedItemStatus());
         }
-        if (returnQuantity != null) {
-            builder.setReturnQuantity(getFixedPoint(returnQuantity));
+        if (getReturnQuantity() != null) {
+            builder.setReturnQuantity(getFixedPoint(getReturnQuantity()));
         }
-        if (receivedQuantity != null) {
-            builder.setReceivedQuantity(getFixedPoint(receivedQuantity));
+        if (getReceivedQuantity() != null) {
+            builder.setReceivedQuantity(getFixedPoint(getReceivedQuantity()));
         }
-        if (returnPrice != null) {
-            builder.setReturnPrice(getCurrency(returnPrice));
+        if (getReturnPrice() != null) {
+            builder.setReturnPrice(getCurrency(getReturnPrice()));
         }
-        if (returnItemResponseId != null) {
-            builder.setReturnItemResponseId(returnItemResponseId);
+        if (getReturnItemResponseId() != null) {
+            builder.setReturnItemResponseId(getReturnItemResponseId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ReturnItem fromData(ReturnItemData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ReturnItem.ReturnItemBuilder fromPrototype(ReturnItemData data) {
         return ReturnItem.builder()
                 .returnId(data.getReturnId())
                 .returnItemSeqId(data.getReturnItemSeqId())
@@ -170,8 +174,7 @@ public class ReturnItem implements IEventModel<ReturnItemData.Builder>, HasId, S
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

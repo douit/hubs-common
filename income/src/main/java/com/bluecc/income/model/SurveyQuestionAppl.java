@@ -86,56 +86,60 @@ public class SurveyQuestionAppl implements IEventModel<SurveyQuestionApplData.Bu
 
     public SurveyQuestionApplData.Builder toDataBuilder() {
         SurveyQuestionApplData.Builder builder = SurveyQuestionApplData.newBuilder();
-        if (surveyId != null) {
-            builder.setSurveyId(surveyId);
+        if (getSurveyId() != null) {
+            builder.setSurveyId(getSurveyId());
         }
-        if (surveyQuestionId != null) {
-            builder.setSurveyQuestionId(surveyQuestionId);
+        if (getSurveyQuestionId() != null) {
+            builder.setSurveyQuestionId(getSurveyQuestionId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (surveyPageSeqId != null) {
-            builder.setSurveyPageSeqId(surveyPageSeqId);
+        if (getSurveyPageSeqId() != null) {
+            builder.setSurveyPageSeqId(getSurveyPageSeqId());
         }
-        if (surveyMultiRespId != null) {
-            builder.setSurveyMultiRespId(surveyMultiRespId);
+        if (getSurveyMultiRespId() != null) {
+            builder.setSurveyMultiRespId(getSurveyMultiRespId());
         }
-        if (surveyMultiRespColId != null) {
-            builder.setSurveyMultiRespColId(surveyMultiRespColId);
+        if (getSurveyMultiRespColId() != null) {
+            builder.setSurveyMultiRespColId(getSurveyMultiRespColId());
         }
-        if (requiredField != null) {
-            builder.setRequiredField(getIndicator(requiredField));
+        if (getRequiredField() != null) {
+            builder.setRequiredField(getIndicator(getRequiredField()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (externalFieldRef != null) {
-            builder.setExternalFieldRef(externalFieldRef);
+        if (getExternalFieldRef() != null) {
+            builder.setExternalFieldRef(getExternalFieldRef());
         }
-        if (withSurveyQuestionId != null) {
-            builder.setWithSurveyQuestionId(withSurveyQuestionId);
+        if (getWithSurveyQuestionId() != null) {
+            builder.setWithSurveyQuestionId(getWithSurveyQuestionId());
         }
-        if (withSurveyOptionSeqId != null) {
-            builder.setWithSurveyOptionSeqId(withSurveyOptionSeqId);
+        if (getWithSurveyOptionSeqId() != null) {
+            builder.setWithSurveyOptionSeqId(getWithSurveyOptionSeqId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SurveyQuestionAppl fromData(SurveyQuestionApplData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SurveyQuestionAppl.SurveyQuestionApplBuilder fromPrototype(SurveyQuestionApplData data) {
         return SurveyQuestionAppl.builder()
                 .surveyId(data.getSurveyId())
                 .surveyQuestionId(data.getSurveyQuestionId())
@@ -152,8 +156,7 @@ public class SurveyQuestionAppl implements IEventModel<SurveyQuestionApplData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

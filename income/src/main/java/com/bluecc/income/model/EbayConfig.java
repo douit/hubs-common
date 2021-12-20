@@ -82,47 +82,51 @@ public class EbayConfig implements IEventModel<EbayConfigData.Builder>, HasId, S
 
     public EbayConfigData.Builder toDataBuilder() {
         EbayConfigData.Builder builder = EbayConfigData.newBuilder();
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (devId != null) {
-            builder.setDevId(devId);
+        if (getDevId() != null) {
+            builder.setDevId(getDevId());
         }
-        if (appId != null) {
-            builder.setAppId(appId);
+        if (getAppId() != null) {
+            builder.setAppId(getAppId());
         }
-        if (certId != null) {
-            builder.setCertId(certId);
+        if (getCertId() != null) {
+            builder.setCertId(getCertId());
         }
-        if (token != null) {
-            builder.setToken(token);
+        if (getToken() != null) {
+            builder.setToken(getToken());
         }
-        if (compatibilityLevel != null) {
-            builder.setCompatibilityLevel(compatibilityLevel);
+        if (getCompatibilityLevel() != null) {
+            builder.setCompatibilityLevel(getCompatibilityLevel());
         }
-        if (siteId != null) {
-            builder.setSiteId(siteId);
+        if (getSiteId() != null) {
+            builder.setSiteId(getSiteId());
         }
-        if (xmlGatewayUri != null) {
-            builder.setXmlGatewayUri(xmlGatewayUri);
+        if (getXmlGatewayUri() != null) {
+            builder.setXmlGatewayUri(getXmlGatewayUri());
         }
-        if (customXml != null) {
-            builder.setCustomXml(customXml);
+        if (getCustomXml() != null) {
+            builder.setCustomXml(getCustomXml());
         }
-        if (webSiteId != null) {
-            builder.setWebSiteId(webSiteId);
+        if (getWebSiteId() != null) {
+            builder.setWebSiteId(getWebSiteId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static EbayConfig fromData(EbayConfigData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static EbayConfig.EbayConfigBuilder fromPrototype(EbayConfigData data) {
         return EbayConfig.builder()
                 .productStoreId(data.getProductStoreId())
                 .devId(data.getDevId())
@@ -136,8 +140,7 @@ public class EbayConfig implements IEventModel<EbayConfigData.Builder>, HasId, S
                 .webSiteId(data.getWebSiteId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

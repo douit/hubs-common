@@ -75,38 +75,42 @@ public class ProductCategoryRole implements IEventModel<ProductCategoryRoleData.
 
     public ProductCategoryRoleData.Builder toDataBuilder() {
         ProductCategoryRoleData.Builder builder = ProductCategoryRoleData.newBuilder();
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductCategoryRole fromData(ProductCategoryRoleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductCategoryRole.ProductCategoryRoleBuilder fromPrototype(ProductCategoryRoleData data) {
         return ProductCategoryRole.builder()
                 .productCategoryId(data.getProductCategoryId())
                 .partyId(data.getPartyId())
@@ -117,8 +121,7 @@ public class ProductCategoryRole implements IEventModel<ProductCategoryRoleData.
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

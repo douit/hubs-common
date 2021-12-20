@@ -79,44 +79,48 @@ public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandar
 
     public WorkEffortGoodStandardData.Builder toDataBuilder() {
         WorkEffortGoodStandardData.Builder builder = WorkEffortGoodStandardData.newBuilder();
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (workEffortGoodStdTypeId != null) {
-            builder.setWorkEffortGoodStdTypeId(workEffortGoodStdTypeId);
+        if (getWorkEffortGoodStdTypeId() != null) {
+            builder.setWorkEffortGoodStdTypeId(getWorkEffortGoodStdTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (estimatedQuantity != null) {
-            builder.setEstimatedQuantity(estimatedQuantity);
+        if (getEstimatedQuantity() != null) {
+            builder.setEstimatedQuantity(getEstimatedQuantity());
         }
-        if (estimatedCost != null) {
-            builder.setEstimatedCost(getCurrency(estimatedCost));
+        if (getEstimatedCost() != null) {
+            builder.setEstimatedCost(getCurrency(getEstimatedCost()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static WorkEffortGoodStandard fromData(WorkEffortGoodStandardData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WorkEffortGoodStandard.WorkEffortGoodStandardBuilder fromPrototype(WorkEffortGoodStandardData data) {
         return WorkEffortGoodStandard.builder()
                 .workEffortId(data.getWorkEffortId())
                 .productId(data.getProductId())
@@ -129,8 +133,7 @@ public class WorkEffortGoodStandard implements IEventModel<WorkEffortGoodStandar
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

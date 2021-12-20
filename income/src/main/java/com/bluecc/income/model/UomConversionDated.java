@@ -80,47 +80,51 @@ public class UomConversionDated implements IEventModel<UomConversionDatedData.Bu
 
     public UomConversionDatedData.Builder toDataBuilder() {
         UomConversionDatedData.Builder builder = UomConversionDatedData.newBuilder();
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (uomIdTo != null) {
-            builder.setUomIdTo(uomIdTo);
+        if (getUomIdTo() != null) {
+            builder.setUomIdTo(getUomIdTo());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (conversionFactor != null) {
-            builder.setConversionFactor(conversionFactor);
+        if (getConversionFactor() != null) {
+            builder.setConversionFactor(getConversionFactor());
         }
-        if (customMethodId != null) {
-            builder.setCustomMethodId(customMethodId);
+        if (getCustomMethodId() != null) {
+            builder.setCustomMethodId(getCustomMethodId());
         }
-        if (decimalScale != null) {
-            builder.setDecimalScale(decimalScale);
+        if (getDecimalScale() != null) {
+            builder.setDecimalScale(getDecimalScale());
         }
-        if (roundingMode != null) {
-            builder.setRoundingMode(roundingMode);
+        if (getRoundingMode() != null) {
+            builder.setRoundingMode(getRoundingMode());
         }
-        if (purposeEnumId != null) {
-            builder.setPurposeEnumId(purposeEnumId);
+        if (getPurposeEnumId() != null) {
+            builder.setPurposeEnumId(getPurposeEnumId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static UomConversionDated fromData(UomConversionDatedData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static UomConversionDated.UomConversionDatedBuilder fromPrototype(UomConversionDatedData data) {
         return UomConversionDated.builder()
                 .uomId(data.getUomId())
                 .uomIdTo(data.getUomIdTo())
@@ -134,8 +138,7 @@ public class UomConversionDated implements IEventModel<UomConversionDatedData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

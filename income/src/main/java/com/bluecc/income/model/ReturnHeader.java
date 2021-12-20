@@ -92,62 +92,66 @@ public class ReturnHeader implements IEventModel<ReturnHeaderData.Builder>, HasI
 
     public ReturnHeaderData.Builder toDataBuilder() {
         ReturnHeaderData.Builder builder = ReturnHeaderData.newBuilder();
-        if (returnId != null) {
-            builder.setReturnId(returnId);
+        if (getReturnId() != null) {
+            builder.setReturnId(getReturnId());
         }
-        if (returnHeaderTypeId != null) {
-            builder.setReturnHeaderTypeId(returnHeaderTypeId);
+        if (getReturnHeaderTypeId() != null) {
+            builder.setReturnHeaderTypeId(getReturnHeaderTypeId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (createdBy != null) {
-            builder.setCreatedBy(createdBy);
+        if (getCreatedBy() != null) {
+            builder.setCreatedBy(getCreatedBy());
         }
-        if (fromPartyId != null) {
-            builder.setFromPartyId(fromPartyId);
+        if (getFromPartyId() != null) {
+            builder.setFromPartyId(getFromPartyId());
         }
-        if (toPartyId != null) {
-            builder.setToPartyId(toPartyId);
+        if (getToPartyId() != null) {
+            builder.setToPartyId(getToPartyId());
         }
-        if (paymentMethodId != null) {
-            builder.setPaymentMethodId(paymentMethodId);
+        if (getPaymentMethodId() != null) {
+            builder.setPaymentMethodId(getPaymentMethodId());
         }
-        if (finAccountId != null) {
-            builder.setFinAccountId(finAccountId);
+        if (getFinAccountId() != null) {
+            builder.setFinAccountId(getFinAccountId());
         }
-        if (billingAccountId != null) {
-            builder.setBillingAccountId(billingAccountId);
+        if (getBillingAccountId() != null) {
+            builder.setBillingAccountId(getBillingAccountId());
         }
-        if (entryDate != null) {
-            builder.setEntryDate(getTimestamp(entryDate));
+        if (getEntryDate() != null) {
+            builder.setEntryDate(getTimestamp(getEntryDate()));
         }
-        if (originContactMechId != null) {
-            builder.setOriginContactMechId(originContactMechId);
+        if (getOriginContactMechId() != null) {
+            builder.setOriginContactMechId(getOriginContactMechId());
         }
-        if (destinationFacilityId != null) {
-            builder.setDestinationFacilityId(destinationFacilityId);
+        if (getDestinationFacilityId() != null) {
+            builder.setDestinationFacilityId(getDestinationFacilityId());
         }
-        if (needsInventoryReceive != null) {
-            builder.setNeedsInventoryReceive(getIndicator(needsInventoryReceive));
+        if (getNeedsInventoryReceive() != null) {
+            builder.setNeedsInventoryReceive(getIndicator(getNeedsInventoryReceive()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (supplierRmaId != null) {
-            builder.setSupplierRmaId(supplierRmaId);
+        if (getSupplierRmaId() != null) {
+            builder.setSupplierRmaId(getSupplierRmaId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ReturnHeader fromData(ReturnHeaderData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ReturnHeader.ReturnHeaderBuilder fromPrototype(ReturnHeaderData data) {
         return ReturnHeader.builder()
                 .returnId(data.getReturnId())
                 .returnHeaderTypeId(data.getReturnHeaderTypeId())
@@ -166,8 +170,7 @@ public class ReturnHeader implements IEventModel<ReturnHeaderData.Builder>, HasI
                 .supplierRmaId(data.getSupplierRmaId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

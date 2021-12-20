@@ -72,35 +72,39 @@ public class FinAccountStatus implements IEventModel<FinAccountStatusData.Builde
 
     public FinAccountStatusData.Builder toDataBuilder() {
         FinAccountStatusData.Builder builder = FinAccountStatusData.newBuilder();
-        if (finAccountId != null) {
-            builder.setFinAccountId(finAccountId);
+        if (getFinAccountId() != null) {
+            builder.setFinAccountId(getFinAccountId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (statusDate != null) {
-            builder.setStatusDate(getTimestamp(statusDate));
+        if (getStatusDate() != null) {
+            builder.setStatusDate(getTimestamp(getStatusDate()));
         }
-        if (statusEndDate != null) {
-            builder.setStatusEndDate(getTimestamp(statusEndDate));
+        if (getStatusEndDate() != null) {
+            builder.setStatusEndDate(getTimestamp(getStatusEndDate()));
         }
-        if (changeByUserLoginId != null) {
-            builder.setChangeByUserLoginId(changeByUserLoginId);
+        if (getChangeByUserLoginId() != null) {
+            builder.setChangeByUserLoginId(getChangeByUserLoginId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FinAccountStatus fromData(FinAccountStatusData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FinAccountStatus.FinAccountStatusBuilder fromPrototype(FinAccountStatusData data) {
         return FinAccountStatus.builder()
                 .finAccountId(data.getFinAccountId())
                 .statusId(data.getStatusId())
@@ -110,8 +114,7 @@ public class FinAccountStatus implements IEventModel<FinAccountStatusData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

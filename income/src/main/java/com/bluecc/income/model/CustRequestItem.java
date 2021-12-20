@@ -96,71 +96,75 @@ public class CustRequestItem implements IEventModel<CustRequestItemData.Builder>
 
     public CustRequestItemData.Builder toDataBuilder() {
         CustRequestItemData.Builder builder = CustRequestItemData.newBuilder();
-        if (custRequestId != null) {
-            builder.setCustRequestId(custRequestId);
+        if (getCustRequestId() != null) {
+            builder.setCustRequestId(getCustRequestId());
         }
-        if (custRequestItemSeqId != null) {
-            builder.setCustRequestItemSeqId(custRequestItemSeqId);
+        if (getCustRequestItemSeqId() != null) {
+            builder.setCustRequestItemSeqId(getCustRequestItemSeqId());
         }
-        if (custRequestResolutionId != null) {
-            builder.setCustRequestResolutionId(custRequestResolutionId);
+        if (getCustRequestResolutionId() != null) {
+            builder.setCustRequestResolutionId(getCustRequestResolutionId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (priority != null) {
-            builder.setPriority(priority);
+        if (getPriority() != null) {
+            builder.setPriority(getPriority());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (requiredByDate != null) {
-            builder.setRequiredByDate(getTimestamp(requiredByDate));
+        if (getRequiredByDate() != null) {
+            builder.setRequiredByDate(getTimestamp(getRequiredByDate()));
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (selectedAmount != null) {
-            builder.setSelectedAmount(getFixedPoint(selectedAmount));
+        if (getSelectedAmount() != null) {
+            builder.setSelectedAmount(getFixedPoint(getSelectedAmount()));
         }
-        if (maximumAmount != null) {
-            builder.setMaximumAmount(getCurrency(maximumAmount));
+        if (getMaximumAmount() != null) {
+            builder.setMaximumAmount(getCurrency(getMaximumAmount()));
         }
-        if (reservStart != null) {
-            builder.setReservStart(getTimestamp(reservStart));
+        if (getReservStart() != null) {
+            builder.setReservStart(getTimestamp(getReservStart()));
         }
-        if (reservLength != null) {
-            builder.setReservLength(getFixedPoint(reservLength));
+        if (getReservLength() != null) {
+            builder.setReservLength(getFixedPoint(getReservLength()));
         }
-        if (reservPersons != null) {
-            builder.setReservPersons(getFixedPoint(reservPersons));
+        if (getReservPersons() != null) {
+            builder.setReservPersons(getFixedPoint(getReservPersons()));
         }
-        if (configId != null) {
-            builder.setConfigId(configId);
+        if (getConfigId() != null) {
+            builder.setConfigId(getConfigId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (story != null) {
-            builder.setStory(story);
+        if (getStory() != null) {
+            builder.setStory(getStory());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static CustRequestItem fromData(CustRequestItemData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CustRequestItem.CustRequestItemBuilder fromPrototype(CustRequestItemData data) {
         return CustRequestItem.builder()
                 .custRequestId(data.getCustRequestId())
                 .custRequestItemSeqId(data.getCustRequestItemSeqId())
@@ -182,8 +186,7 @@ public class CustRequestItem implements IEventModel<CustRequestItemData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

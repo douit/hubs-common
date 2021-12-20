@@ -70,32 +70,36 @@ public class PartyStatus implements IEventModel<PartyStatusData.Builder>, HasId,
 
     public PartyStatusData.Builder toDataBuilder() {
         PartyStatusData.Builder builder = PartyStatusData.newBuilder();
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (statusDate != null) {
-            builder.setStatusDate(getTimestamp(statusDate));
+        if (getStatusDate() != null) {
+            builder.setStatusDate(getTimestamp(getStatusDate()));
         }
-        if (changeByUserLoginId != null) {
-            builder.setChangeByUserLoginId(changeByUserLoginId);
+        if (getChangeByUserLoginId() != null) {
+            builder.setChangeByUserLoginId(getChangeByUserLoginId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PartyStatus fromData(PartyStatusData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyStatus.PartyStatusBuilder fromPrototype(PartyStatusData data) {
         return PartyStatus.builder()
                 .statusId(data.getStatusId())
                 .partyId(data.getPartyId())
@@ -104,8 +108,7 @@ public class PartyStatus implements IEventModel<PartyStatusData.Builder>, HasId,
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -116,98 +116,102 @@ public class CustRequest implements IEventModel<CustRequestData.Builder>, HasId,
 
     public CustRequestData.Builder toDataBuilder() {
         CustRequestData.Builder builder = CustRequestData.newBuilder();
-        if (custRequestId != null) {
-            builder.setCustRequestId(custRequestId);
+        if (getCustRequestId() != null) {
+            builder.setCustRequestId(getCustRequestId());
         }
-        if (custRequestTypeId != null) {
-            builder.setCustRequestTypeId(custRequestTypeId);
+        if (getCustRequestTypeId() != null) {
+            builder.setCustRequestTypeId(getCustRequestTypeId());
         }
-        if (custRequestCategoryId != null) {
-            builder.setCustRequestCategoryId(custRequestCategoryId);
+        if (getCustRequestCategoryId() != null) {
+            builder.setCustRequestCategoryId(getCustRequestCategoryId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (fromPartyId != null) {
-            builder.setFromPartyId(fromPartyId);
+        if (getFromPartyId() != null) {
+            builder.setFromPartyId(getFromPartyId());
         }
-        if (priority != null) {
-            builder.setPriority(priority);
+        if (getPriority() != null) {
+            builder.setPriority(getPriority());
         }
-        if (custRequestDate != null) {
-            builder.setCustRequestDate(getTimestamp(custRequestDate));
+        if (getCustRequestDate() != null) {
+            builder.setCustRequestDate(getTimestamp(getCustRequestDate()));
         }
-        if (responseRequiredDate != null) {
-            builder.setResponseRequiredDate(getTimestamp(responseRequiredDate));
+        if (getResponseRequiredDate() != null) {
+            builder.setResponseRequiredDate(getTimestamp(getResponseRequiredDate()));
         }
-        if (custRequestName != null) {
-            builder.setCustRequestName(custRequestName);
+        if (getCustRequestName() != null) {
+            builder.setCustRequestName(getCustRequestName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (maximumAmountUomId != null) {
-            builder.setMaximumAmountUomId(maximumAmountUomId);
+        if (getMaximumAmountUomId() != null) {
+            builder.setMaximumAmountUomId(getMaximumAmountUomId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (salesChannelEnumId != null) {
-            builder.setSalesChannelEnumId(salesChannelEnumId);
+        if (getSalesChannelEnumId() != null) {
+            builder.setSalesChannelEnumId(getSalesChannelEnumId());
         }
-        if (fulfillContactMechId != null) {
-            builder.setFulfillContactMechId(fulfillContactMechId);
+        if (getFulfillContactMechId() != null) {
+            builder.setFulfillContactMechId(getFulfillContactMechId());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (openDateTime != null) {
-            builder.setOpenDateTime(getTimestamp(openDateTime));
+        if (getOpenDateTime() != null) {
+            builder.setOpenDateTime(getTimestamp(getOpenDateTime()));
         }
-        if (closedDateTime != null) {
-            builder.setClosedDateTime(getTimestamp(closedDateTime));
+        if (getClosedDateTime() != null) {
+            builder.setClosedDateTime(getTimestamp(getClosedDateTime()));
         }
-        if (internalComment != null) {
-            builder.setInternalComment(internalComment);
+        if (getInternalComment() != null) {
+            builder.setInternalComment(getInternalComment());
         }
-        if (reason != null) {
-            builder.setReason(reason);
+        if (getReason() != null) {
+            builder.setReason(getReason());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (custEstimatedMilliSeconds != null) {
-            builder.setCustEstimatedMilliSeconds(custEstimatedMilliSeconds);
+        if (getCustEstimatedMilliSeconds() != null) {
+            builder.setCustEstimatedMilliSeconds(getCustEstimatedMilliSeconds());
         }
-        if (custSequenceNum != null) {
-            builder.setCustSequenceNum(custSequenceNum);
+        if (getCustSequenceNum() != null) {
+            builder.setCustSequenceNum(getCustSequenceNum());
         }
-        if (parentCustRequestId != null) {
-            builder.setParentCustRequestId(parentCustRequestId);
+        if (getParentCustRequestId() != null) {
+            builder.setParentCustRequestId(getParentCustRequestId());
         }
-        if (billed != null) {
-            builder.setBilled(getIndicator(billed));
+        if (getBilled() != null) {
+            builder.setBilled(getIndicator(getBilled()));
         }
                     
         return builder;
     }
 
     public static CustRequest fromData(CustRequestData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CustRequest.CustRequestBuilder fromPrototype(CustRequestData data) {
         return CustRequest.builder()
                 .custRequestId(data.getCustRequestId())
                 .custRequestTypeId(data.getCustRequestTypeId())
@@ -238,8 +242,7 @@ public class CustRequest implements IEventModel<CustRequestData.Builder>, HasId,
                 .custSequenceNum(data.getCustSequenceNum())
                 .parentCustRequestId(data.getParentCustRequestId())
                 .billed(getIndicatorChar(data.getBilled()))
-                
-                .build();
+                ;
     }
 
     

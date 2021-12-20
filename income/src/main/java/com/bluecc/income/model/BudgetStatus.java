@@ -72,35 +72,39 @@ public class BudgetStatus implements IEventModel<BudgetStatusData.Builder>, HasI
 
     public BudgetStatusData.Builder toDataBuilder() {
         BudgetStatusData.Builder builder = BudgetStatusData.newBuilder();
-        if (budgetId != null) {
-            builder.setBudgetId(budgetId);
+        if (getBudgetId() != null) {
+            builder.setBudgetId(getBudgetId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (statusDate != null) {
-            builder.setStatusDate(getTimestamp(statusDate));
+        if (getStatusDate() != null) {
+            builder.setStatusDate(getTimestamp(getStatusDate()));
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (changeByUserLoginId != null) {
-            builder.setChangeByUserLoginId(changeByUserLoginId);
+        if (getChangeByUserLoginId() != null) {
+            builder.setChangeByUserLoginId(getChangeByUserLoginId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static BudgetStatus fromData(BudgetStatusData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static BudgetStatus.BudgetStatusBuilder fromPrototype(BudgetStatusData data) {
         return BudgetStatus.builder()
                 .budgetId(data.getBudgetId())
                 .statusId(data.getStatusId())
@@ -110,8 +114,7 @@ public class BudgetStatus implements IEventModel<BudgetStatusData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

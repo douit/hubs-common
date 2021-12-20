@@ -68,29 +68,33 @@ public class ProductPromoRule implements IEventModel<ProductPromoRuleData.Builde
 
     public ProductPromoRuleData.Builder toDataBuilder() {
         ProductPromoRuleData.Builder builder = ProductPromoRuleData.newBuilder();
-        if (productPromoId != null) {
-            builder.setProductPromoId(productPromoId);
+        if (getProductPromoId() != null) {
+            builder.setProductPromoId(getProductPromoId());
         }
-        if (productPromoRuleId != null) {
-            builder.setProductPromoRuleId(productPromoRuleId);
+        if (getProductPromoRuleId() != null) {
+            builder.setProductPromoRuleId(getProductPromoRuleId());
         }
-        if (ruleName != null) {
-            builder.setRuleName(ruleName);
+        if (getRuleName() != null) {
+            builder.setRuleName(getRuleName());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductPromoRule fromData(ProductPromoRuleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPromoRule.ProductPromoRuleBuilder fromPrototype(ProductPromoRuleData data) {
         return ProductPromoRule.builder()
                 .productPromoId(data.getProductPromoId())
                 .productPromoRuleId(data.getProductPromoRuleId())
@@ -98,8 +102,7 @@ public class ProductPromoRule implements IEventModel<ProductPromoRuleData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

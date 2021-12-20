@@ -94,65 +94,69 @@ public class ShipmentReceipt implements IEventModel<ShipmentReceiptData.Builder>
 
     public ShipmentReceiptData.Builder toDataBuilder() {
         ShipmentReceiptData.Builder builder = ShipmentReceiptData.newBuilder();
-        if (receiptId != null) {
-            builder.setReceiptId(receiptId);
+        if (getReceiptId() != null) {
+            builder.setReceiptId(getReceiptId());
         }
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentItemSeqId != null) {
-            builder.setShipmentItemSeqId(shipmentItemSeqId);
+        if (getShipmentItemSeqId() != null) {
+            builder.setShipmentItemSeqId(getShipmentItemSeqId());
         }
-        if (shipmentPackageSeqId != null) {
-            builder.setShipmentPackageSeqId(shipmentPackageSeqId);
+        if (getShipmentPackageSeqId() != null) {
+            builder.setShipmentPackageSeqId(getShipmentPackageSeqId());
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (returnId != null) {
-            builder.setReturnId(returnId);
+        if (getReturnId() != null) {
+            builder.setReturnId(getReturnId());
         }
-        if (returnItemSeqId != null) {
-            builder.setReturnItemSeqId(returnItemSeqId);
+        if (getReturnItemSeqId() != null) {
+            builder.setReturnItemSeqId(getReturnItemSeqId());
         }
-        if (rejectionId != null) {
-            builder.setRejectionId(rejectionId);
+        if (getRejectionId() != null) {
+            builder.setRejectionId(getRejectionId());
         }
-        if (receivedByUserLoginId != null) {
-            builder.setReceivedByUserLoginId(receivedByUserLoginId);
+        if (getReceivedByUserLoginId() != null) {
+            builder.setReceivedByUserLoginId(getReceivedByUserLoginId());
         }
-        if (datetimeReceived != null) {
-            builder.setDatetimeReceived(getTimestamp(datetimeReceived));
+        if (getDatetimeReceived() != null) {
+            builder.setDatetimeReceived(getTimestamp(getDatetimeReceived()));
         }
-        if (itemDescription != null) {
-            builder.setItemDescription(itemDescription);
+        if (getItemDescription() != null) {
+            builder.setItemDescription(getItemDescription());
         }
-        if (quantityAccepted != null) {
-            builder.setQuantityAccepted(getFixedPoint(quantityAccepted));
+        if (getQuantityAccepted() != null) {
+            builder.setQuantityAccepted(getFixedPoint(getQuantityAccepted()));
         }
-        if (quantityRejected != null) {
-            builder.setQuantityRejected(getFixedPoint(quantityRejected));
+        if (getQuantityRejected() != null) {
+            builder.setQuantityRejected(getFixedPoint(getQuantityRejected()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ShipmentReceipt fromData(ShipmentReceiptData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentReceipt.ShipmentReceiptBuilder fromPrototype(ShipmentReceiptData data) {
         return ShipmentReceipt.builder()
                 .receiptId(data.getReceiptId())
                 .inventoryItemId(data.getInventoryItemId())
@@ -172,8 +176,7 @@ public class ShipmentReceipt implements IEventModel<ShipmentReceiptData.Builder>
                 .quantityRejected(getBigDecimal(data.getQuantityRejected()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

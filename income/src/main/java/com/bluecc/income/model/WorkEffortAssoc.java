@@ -75,38 +75,42 @@ public class WorkEffortAssoc implements IEventModel<WorkEffortAssocData.Builder>
 
     public WorkEffortAssocData.Builder toDataBuilder() {
         WorkEffortAssocData.Builder builder = WorkEffortAssocData.newBuilder();
-        if (workEffortIdFrom != null) {
-            builder.setWorkEffortIdFrom(workEffortIdFrom);
+        if (getWorkEffortIdFrom() != null) {
+            builder.setWorkEffortIdFrom(getWorkEffortIdFrom());
         }
-        if (workEffortIdTo != null) {
-            builder.setWorkEffortIdTo(workEffortIdTo);
+        if (getWorkEffortIdTo() != null) {
+            builder.setWorkEffortIdTo(getWorkEffortIdTo());
         }
-        if (workEffortAssocTypeId != null) {
-            builder.setWorkEffortAssocTypeId(workEffortAssocTypeId);
+        if (getWorkEffortAssocTypeId() != null) {
+            builder.setWorkEffortAssocTypeId(getWorkEffortAssocTypeId());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static WorkEffortAssoc fromData(WorkEffortAssocData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WorkEffortAssoc.WorkEffortAssocBuilder fromPrototype(WorkEffortAssocData data) {
         return WorkEffortAssoc.builder()
                 .workEffortIdFrom(data.getWorkEffortIdFrom())
                 .workEffortIdTo(data.getWorkEffortIdTo())
@@ -117,8 +121,7 @@ public class WorkEffortAssoc implements IEventModel<WorkEffortAssocData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

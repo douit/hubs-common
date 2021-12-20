@@ -559,6 +559,10 @@ public class EntityMeta {
             return format("set%s", fixedClassName());
         }
 
+        public String getGetter() {
+            return format("get%s", Util.toClassName(name));
+        }
+
         public String valuePart(String rawValue) {
             String value = format("\"%s\"", rawValue.replace('"', '\''));
             String valuePart;
@@ -613,6 +617,7 @@ public class EntityMeta {
 
         public String getProtoSetter() {
             String valuePart;
+            String name=getGetter()+"()";
             switch (type) {
                 case "date-time":
                     valuePart = format("getTimestamp(%s)", name);

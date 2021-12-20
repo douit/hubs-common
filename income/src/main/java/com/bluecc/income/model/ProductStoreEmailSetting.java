@@ -80,47 +80,51 @@ public class ProductStoreEmailSetting implements IEventModel<ProductStoreEmailSe
 
     public ProductStoreEmailSettingData.Builder toDataBuilder() {
         ProductStoreEmailSettingData.Builder builder = ProductStoreEmailSettingData.newBuilder();
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (emailType != null) {
-            builder.setEmailType(emailType);
+        if (getEmailType() != null) {
+            builder.setEmailType(getEmailType());
         }
-        if (bodyScreenLocation != null) {
-            builder.setBodyScreenLocation(bodyScreenLocation);
+        if (getBodyScreenLocation() != null) {
+            builder.setBodyScreenLocation(getBodyScreenLocation());
         }
-        if (xslfoAttachScreenLocation != null) {
-            builder.setXslfoAttachScreenLocation(xslfoAttachScreenLocation);
+        if (getXslfoAttachScreenLocation() != null) {
+            builder.setXslfoAttachScreenLocation(getXslfoAttachScreenLocation());
         }
-        if (fromAddress != null) {
-            builder.setFromAddress(fromAddress);
+        if (getFromAddress() != null) {
+            builder.setFromAddress(getFromAddress());
         }
-        if (ccAddress != null) {
-            builder.setCcAddress(ccAddress);
+        if (getCcAddress() != null) {
+            builder.setCcAddress(getCcAddress());
         }
-        if (bccAddress != null) {
-            builder.setBccAddress(bccAddress);
+        if (getBccAddress() != null) {
+            builder.setBccAddress(getBccAddress());
         }
-        if (subject != null) {
-            builder.setSubject(subject);
+        if (getSubject() != null) {
+            builder.setSubject(getSubject());
         }
-        if (contentType != null) {
-            builder.setContentType(contentType);
+        if (getContentType() != null) {
+            builder.setContentType(getContentType());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductStoreEmailSetting fromData(ProductStoreEmailSettingData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductStoreEmailSetting.ProductStoreEmailSettingBuilder fromPrototype(ProductStoreEmailSettingData data) {
         return ProductStoreEmailSetting.builder()
                 .productStoreId(data.getProductStoreId())
                 .emailType(data.getEmailType())
@@ -134,8 +138,7 @@ public class ProductStoreEmailSetting implements IEventModel<ProductStoreEmailSe
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

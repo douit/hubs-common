@@ -66,30 +66,33 @@ public class TenantDomainName implements IEventModel<TenantDomainNameData.Builde
 
     public TenantDomainNameData.Builder toDataBuilder() {
         TenantDomainNameData.Builder builder = TenantDomainNameData.newBuilder();
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
-        if (domainName != null) {
-            builder.setDomainName(domainName);
+        if (getDomainName() != null) {
+            builder.setDomainName(getDomainName());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static TenantDomainName fromData(TenantDomainNameData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TenantDomainName.TenantDomainNameBuilder fromPrototype(TenantDomainNameData data) {
         return TenantDomainName.builder()
                 .tenantId(data.getTenantId())
                 .domainName(data.getDomainName())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

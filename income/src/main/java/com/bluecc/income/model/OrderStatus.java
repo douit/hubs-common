@@ -78,41 +78,45 @@ public class OrderStatus implements IEventModel<OrderStatusData.Builder>, HasId,
 
     public OrderStatusData.Builder toDataBuilder() {
         OrderStatusData.Builder builder = OrderStatusData.newBuilder();
-        if (orderStatusId != null) {
-            builder.setOrderStatusId(orderStatusId);
+        if (getOrderStatusId() != null) {
+            builder.setOrderStatusId(getOrderStatusId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (orderPaymentPreferenceId != null) {
-            builder.setOrderPaymentPreferenceId(orderPaymentPreferenceId);
+        if (getOrderPaymentPreferenceId() != null) {
+            builder.setOrderPaymentPreferenceId(getOrderPaymentPreferenceId());
         }
-        if (statusDatetime != null) {
-            builder.setStatusDatetime(getTimestamp(statusDatetime));
+        if (getStatusDatetime() != null) {
+            builder.setStatusDatetime(getTimestamp(getStatusDatetime()));
         }
-        if (statusUserLogin != null) {
-            builder.setStatusUserLogin(statusUserLogin);
+        if (getStatusUserLogin() != null) {
+            builder.setStatusUserLogin(getStatusUserLogin());
         }
-        if (changeReason != null) {
-            builder.setChangeReason(changeReason);
+        if (getChangeReason() != null) {
+            builder.setChangeReason(getChangeReason());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static OrderStatus fromData(OrderStatusData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderStatus.OrderStatusBuilder fromPrototype(OrderStatusData data) {
         return OrderStatus.builder()
                 .orderStatusId(data.getOrderStatusId())
                 .statusId(data.getStatusId())
@@ -124,8 +128,7 @@ public class OrderStatus implements IEventModel<OrderStatusData.Builder>, HasId,
                 .changeReason(data.getChangeReason())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

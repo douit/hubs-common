@@ -72,35 +72,39 @@ public class SupplierProductFeature implements IEventModel<SupplierProductFeatur
 
     public SupplierProductFeatureData.Builder toDataBuilder() {
         SupplierProductFeatureData.Builder builder = SupplierProductFeatureData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (productFeatureId != null) {
-            builder.setProductFeatureId(productFeatureId);
+        if (getProductFeatureId() != null) {
+            builder.setProductFeatureId(getProductFeatureId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (idCode != null) {
-            builder.setIdCode(idCode);
+        if (getIdCode() != null) {
+            builder.setIdCode(getIdCode());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SupplierProductFeature fromData(SupplierProductFeatureData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SupplierProductFeature.SupplierProductFeatureBuilder fromPrototype(SupplierProductFeatureData data) {
         return SupplierProductFeature.builder()
                 .partyId(data.getPartyId())
                 .productFeatureId(data.getProductFeatureId())
@@ -110,8 +114,7 @@ public class SupplierProductFeature implements IEventModel<SupplierProductFeatur
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

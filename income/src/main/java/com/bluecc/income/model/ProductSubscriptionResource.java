@@ -100,77 +100,81 @@ public class ProductSubscriptionResource implements IEventModel<ProductSubscript
 
     public ProductSubscriptionResourceData.Builder toDataBuilder() {
         ProductSubscriptionResourceData.Builder builder = ProductSubscriptionResourceData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (subscriptionResourceId != null) {
-            builder.setSubscriptionResourceId(subscriptionResourceId);
+        if (getSubscriptionResourceId() != null) {
+            builder.setSubscriptionResourceId(getSubscriptionResourceId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (purchaseFromDate != null) {
-            builder.setPurchaseFromDate(getTimestamp(purchaseFromDate));
+        if (getPurchaseFromDate() != null) {
+            builder.setPurchaseFromDate(getTimestamp(getPurchaseFromDate()));
         }
-        if (purchaseThruDate != null) {
-            builder.setPurchaseThruDate(getTimestamp(purchaseThruDate));
+        if (getPurchaseThruDate() != null) {
+            builder.setPurchaseThruDate(getTimestamp(getPurchaseThruDate()));
         }
-        if (maxLifeTime != null) {
-            builder.setMaxLifeTime(maxLifeTime);
+        if (getMaxLifeTime() != null) {
+            builder.setMaxLifeTime(getMaxLifeTime());
         }
-        if (maxLifeTimeUomId != null) {
-            builder.setMaxLifeTimeUomId(maxLifeTimeUomId);
+        if (getMaxLifeTimeUomId() != null) {
+            builder.setMaxLifeTimeUomId(getMaxLifeTimeUomId());
         }
-        if (availableTime != null) {
-            builder.setAvailableTime(availableTime);
+        if (getAvailableTime() != null) {
+            builder.setAvailableTime(getAvailableTime());
         }
-        if (availableTimeUomId != null) {
-            builder.setAvailableTimeUomId(availableTimeUomId);
+        if (getAvailableTimeUomId() != null) {
+            builder.setAvailableTimeUomId(getAvailableTimeUomId());
         }
-        if (useCountLimit != null) {
-            builder.setUseCountLimit(useCountLimit);
+        if (getUseCountLimit() != null) {
+            builder.setUseCountLimit(getUseCountLimit());
         }
-        if (useTime != null) {
-            builder.setUseTime(useTime);
+        if (getUseTime() != null) {
+            builder.setUseTime(getUseTime());
         }
-        if (useTimeUomId != null) {
-            builder.setUseTimeUomId(useTimeUomId);
+        if (getUseTimeUomId() != null) {
+            builder.setUseTimeUomId(getUseTimeUomId());
         }
-        if (useRoleTypeId != null) {
-            builder.setUseRoleTypeId(useRoleTypeId);
+        if (getUseRoleTypeId() != null) {
+            builder.setUseRoleTypeId(getUseRoleTypeId());
         }
-        if (automaticExtend != null) {
-            builder.setAutomaticExtend(getIndicator(automaticExtend));
+        if (getAutomaticExtend() != null) {
+            builder.setAutomaticExtend(getIndicator(getAutomaticExtend()));
         }
-        if (canclAutmExtTime != null) {
-            builder.setCanclAutmExtTime(canclAutmExtTime);
+        if (getCanclAutmExtTime() != null) {
+            builder.setCanclAutmExtTime(getCanclAutmExtTime());
         }
-        if (canclAutmExtTimeUomId != null) {
-            builder.setCanclAutmExtTimeUomId(canclAutmExtTimeUomId);
+        if (getCanclAutmExtTimeUomId() != null) {
+            builder.setCanclAutmExtTimeUomId(getCanclAutmExtTimeUomId());
         }
-        if (gracePeriodOnExpiry != null) {
-            builder.setGracePeriodOnExpiry(gracePeriodOnExpiry);
+        if (getGracePeriodOnExpiry() != null) {
+            builder.setGracePeriodOnExpiry(getGracePeriodOnExpiry());
         }
-        if (gracePeriodOnExpiryUomId != null) {
-            builder.setGracePeriodOnExpiryUomId(gracePeriodOnExpiryUomId);
+        if (getGracePeriodOnExpiryUomId() != null) {
+            builder.setGracePeriodOnExpiryUomId(getGracePeriodOnExpiryUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductSubscriptionResource fromData(ProductSubscriptionResourceData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductSubscriptionResource.ProductSubscriptionResourceBuilder fromPrototype(ProductSubscriptionResourceData data) {
         return ProductSubscriptionResource.builder()
                 .productId(data.getProductId())
                 .subscriptionResourceId(data.getSubscriptionResourceId())
@@ -194,8 +198,7 @@ public class ProductSubscriptionResource implements IEventModel<ProductSubscript
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

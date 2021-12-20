@@ -66,30 +66,33 @@ public class ElectronicText implements IEventModel<ElectronicTextData.Builder>, 
 
     public ElectronicTextData.Builder toDataBuilder() {
         ElectronicTextData.Builder builder = ElectronicTextData.newBuilder();
-        if (dataResourceId != null) {
-            builder.setDataResourceId(dataResourceId);
+        if (getDataResourceId() != null) {
+            builder.setDataResourceId(getDataResourceId());
         }
-        if (textData != null) {
-            builder.setTextData(textData);
+        if (getTextData() != null) {
+            builder.setTextData(getTextData());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ElectronicText fromData(ElectronicTextData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ElectronicText.ElectronicTextBuilder fromPrototype(ElectronicTextData data) {
         return ElectronicText.builder()
                 .dataResourceId(data.getDataResourceId())
                 .textData(data.getTextData())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

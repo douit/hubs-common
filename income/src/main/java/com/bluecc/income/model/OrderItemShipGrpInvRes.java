@@ -90,59 +90,63 @@ public class OrderItemShipGrpInvRes implements IEventModel<OrderItemShipGrpInvRe
 
     public OrderItemShipGrpInvResData.Builder toDataBuilder() {
         OrderItemShipGrpInvResData.Builder builder = OrderItemShipGrpInvResData.newBuilder();
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (shipGroupSeqId != null) {
-            builder.setShipGroupSeqId(shipGroupSeqId);
+        if (getShipGroupSeqId() != null) {
+            builder.setShipGroupSeqId(getShipGroupSeqId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (reserveOrderEnumId != null) {
-            builder.setReserveOrderEnumId(reserveOrderEnumId);
+        if (getReserveOrderEnumId() != null) {
+            builder.setReserveOrderEnumId(getReserveOrderEnumId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (quantityNotAvailable != null) {
-            builder.setQuantityNotAvailable(getFixedPoint(quantityNotAvailable));
+        if (getQuantityNotAvailable() != null) {
+            builder.setQuantityNotAvailable(getFixedPoint(getQuantityNotAvailable()));
         }
-        if (reservedDatetime != null) {
-            builder.setReservedDatetime(getTimestamp(reservedDatetime));
+        if (getReservedDatetime() != null) {
+            builder.setReservedDatetime(getTimestamp(getReservedDatetime()));
         }
-        if (createdDatetime != null) {
-            builder.setCreatedDatetime(getTimestamp(createdDatetime));
+        if (getCreatedDatetime() != null) {
+            builder.setCreatedDatetime(getTimestamp(getCreatedDatetime()));
         }
-        if (promisedDatetime != null) {
-            builder.setPromisedDatetime(getTimestamp(promisedDatetime));
+        if (getPromisedDatetime() != null) {
+            builder.setPromisedDatetime(getTimestamp(getPromisedDatetime()));
         }
-        if (currentPromisedDate != null) {
-            builder.setCurrentPromisedDate(getTimestamp(currentPromisedDate));
+        if (getCurrentPromisedDate() != null) {
+            builder.setCurrentPromisedDate(getTimestamp(getCurrentPromisedDate()));
         }
-        if (priority != null) {
-            builder.setPriority(getIndicator(priority));
+        if (getPriority() != null) {
+            builder.setPriority(getIndicator(getPriority()));
         }
-        if (sequenceId != null) {
-            builder.setSequenceId(sequenceId);
+        if (getSequenceId() != null) {
+            builder.setSequenceId(getSequenceId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static OrderItemShipGrpInvRes fromData(OrderItemShipGrpInvResData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderItemShipGrpInvRes.OrderItemShipGrpInvResBuilder fromPrototype(OrderItemShipGrpInvResData data) {
         return OrderItemShipGrpInvRes.builder()
                 .orderId(data.getOrderId())
                 .shipGroupSeqId(data.getShipGroupSeqId())
@@ -160,8 +164,7 @@ public class OrderItemShipGrpInvRes implements IEventModel<OrderItemShipGrpInvRe
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

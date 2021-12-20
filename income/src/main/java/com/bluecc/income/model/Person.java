@@ -133,116 +133,120 @@ public class Person implements IEventModel<PersonFlatData.Builder>, HasId, Seria
 
     public PersonFlatData.Builder toDataBuilder() {
         PersonFlatData.Builder builder = PersonFlatData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (salutation != null) {
-            builder.setSalutation(salutation);
+        if (getSalutation() != null) {
+            builder.setSalutation(getSalutation());
         }
-        if (firstName != null) {
-            builder.setFirstName(firstName);
+        if (getFirstName() != null) {
+            builder.setFirstName(getFirstName());
         }
-        if (middleName != null) {
-            builder.setMiddleName(middleName);
+        if (getMiddleName() != null) {
+            builder.setMiddleName(getMiddleName());
         }
-        if (lastName != null) {
-            builder.setLastName(lastName);
+        if (getLastName() != null) {
+            builder.setLastName(getLastName());
         }
-        if (personalTitle != null) {
-            builder.setPersonalTitle(personalTitle);
+        if (getPersonalTitle() != null) {
+            builder.setPersonalTitle(getPersonalTitle());
         }
-        if (suffix != null) {
-            builder.setSuffix(suffix);
+        if (getSuffix() != null) {
+            builder.setSuffix(getSuffix());
         }
-        if (nickname != null) {
-            builder.setNickname(nickname);
+        if (getNickname() != null) {
+            builder.setNickname(getNickname());
         }
-        if (firstNameLocal != null) {
-            builder.setFirstNameLocal(firstNameLocal);
+        if (getFirstNameLocal() != null) {
+            builder.setFirstNameLocal(getFirstNameLocal());
         }
-        if (middleNameLocal != null) {
-            builder.setMiddleNameLocal(middleNameLocal);
+        if (getMiddleNameLocal() != null) {
+            builder.setMiddleNameLocal(getMiddleNameLocal());
         }
-        if (lastNameLocal != null) {
-            builder.setLastNameLocal(lastNameLocal);
+        if (getLastNameLocal() != null) {
+            builder.setLastNameLocal(getLastNameLocal());
         }
-        if (otherLocal != null) {
-            builder.setOtherLocal(otherLocal);
+        if (getOtherLocal() != null) {
+            builder.setOtherLocal(getOtherLocal());
         }
-        if (memberId != null) {
-            builder.setMemberId(memberId);
+        if (getMemberId() != null) {
+            builder.setMemberId(getMemberId());
         }
-        if (gender != null) {
-            builder.setGender(getIndicator(gender));
+        if (getGender() != null) {
+            builder.setGender(getIndicator(getGender()));
         }
-        if (birthDate != null) {
-            builder.setBirthDate(getDate(birthDate));
+        if (getBirthDate() != null) {
+            builder.setBirthDate(getDate(getBirthDate()));
         }
-        if (deceasedDate != null) {
-            builder.setDeceasedDate(getDate(deceasedDate));
+        if (getDeceasedDate() != null) {
+            builder.setDeceasedDate(getDate(getDeceasedDate()));
         }
-        if (height != null) {
-            builder.setHeight(height);
+        if (getHeight() != null) {
+            builder.setHeight(getHeight());
         }
-        if (weight != null) {
-            builder.setWeight(weight);
+        if (getWeight() != null) {
+            builder.setWeight(getWeight());
         }
-        if (mothersMaidenName != null) {
-            builder.setMothersMaidenName(mothersMaidenName);
+        if (getMothersMaidenName() != null) {
+            builder.setMothersMaidenName(getMothersMaidenName());
         }
-        if (maritalStatusEnumId != null) {
-            builder.setMaritalStatusEnumId(maritalStatusEnumId);
+        if (getMaritalStatusEnumId() != null) {
+            builder.setMaritalStatusEnumId(getMaritalStatusEnumId());
         }
-        if (socialSecurityNumber != null) {
-            builder.setSocialSecurityNumber(socialSecurityNumber);
+        if (getSocialSecurityNumber() != null) {
+            builder.setSocialSecurityNumber(getSocialSecurityNumber());
         }
-        if (passportNumber != null) {
-            builder.setPassportNumber(passportNumber);
+        if (getPassportNumber() != null) {
+            builder.setPassportNumber(getPassportNumber());
         }
-        if (passportExpireDate != null) {
-            builder.setPassportExpireDate(getDate(passportExpireDate));
+        if (getPassportExpireDate() != null) {
+            builder.setPassportExpireDate(getDate(getPassportExpireDate()));
         }
-        if (totalYearsWorkExperience != null) {
-            builder.setTotalYearsWorkExperience(totalYearsWorkExperience);
+        if (getTotalYearsWorkExperience() != null) {
+            builder.setTotalYearsWorkExperience(getTotalYearsWorkExperience());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (employmentStatusEnumId != null) {
-            builder.setEmploymentStatusEnumId(employmentStatusEnumId);
+        if (getEmploymentStatusEnumId() != null) {
+            builder.setEmploymentStatusEnumId(getEmploymentStatusEnumId());
         }
-        if (residenceStatusEnumId != null) {
-            builder.setResidenceStatusEnumId(residenceStatusEnumId);
+        if (getResidenceStatusEnumId() != null) {
+            builder.setResidenceStatusEnumId(getResidenceStatusEnumId());
         }
-        if (occupation != null) {
-            builder.setOccupation(occupation);
+        if (getOccupation() != null) {
+            builder.setOccupation(getOccupation());
         }
-        if (yearsWithEmployer != null) {
-            builder.setYearsWithEmployer(yearsWithEmployer);
+        if (getYearsWithEmployer() != null) {
+            builder.setYearsWithEmployer(getYearsWithEmployer());
         }
-        if (monthsWithEmployer != null) {
-            builder.setMonthsWithEmployer(monthsWithEmployer);
+        if (getMonthsWithEmployer() != null) {
+            builder.setMonthsWithEmployer(getMonthsWithEmployer());
         }
-        if (existingCustomer != null) {
-            builder.setExistingCustomer(getIndicator(existingCustomer));
+        if (getExistingCustomer() != null) {
+            builder.setExistingCustomer(getIndicator(getExistingCustomer()));
         }
-        if (cardId != null) {
-            builder.setCardId(cardId);
+        if (getCardId() != null) {
+            builder.setCardId(getCardId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static Person fromData(PersonFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Person.PersonBuilder fromPrototype(PersonFlatData data) {
         return Person.builder()
                 .partyId(data.getPartyId())
                 .salutation(data.getSalutation())
@@ -279,8 +283,7 @@ public class Person implements IEventModel<PersonFlatData.Builder>, HasId, Seria
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -345,107 +348,107 @@ public class Person implements IEventModel<PersonFlatData.Builder>, HasId, Seria
 
     public PersonData.Builder toHeadBuilder() {
         PersonData.Builder builder = PersonData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (salutation != null) {
-            builder.setSalutation(salutation);
+        if (getSalutation() != null) {
+            builder.setSalutation(getSalutation());
         }
-        if (firstName != null) {
-            builder.setFirstName(firstName);
+        if (getFirstName() != null) {
+            builder.setFirstName(getFirstName());
         }
-        if (middleName != null) {
-            builder.setMiddleName(middleName);
+        if (getMiddleName() != null) {
+            builder.setMiddleName(getMiddleName());
         }
-        if (lastName != null) {
-            builder.setLastName(lastName);
+        if (getLastName() != null) {
+            builder.setLastName(getLastName());
         }
-        if (personalTitle != null) {
-            builder.setPersonalTitle(personalTitle);
+        if (getPersonalTitle() != null) {
+            builder.setPersonalTitle(getPersonalTitle());
         }
-        if (suffix != null) {
-            builder.setSuffix(suffix);
+        if (getSuffix() != null) {
+            builder.setSuffix(getSuffix());
         }
-        if (nickname != null) {
-            builder.setNickname(nickname);
+        if (getNickname() != null) {
+            builder.setNickname(getNickname());
         }
-        if (firstNameLocal != null) {
-            builder.setFirstNameLocal(firstNameLocal);
+        if (getFirstNameLocal() != null) {
+            builder.setFirstNameLocal(getFirstNameLocal());
         }
-        if (middleNameLocal != null) {
-            builder.setMiddleNameLocal(middleNameLocal);
+        if (getMiddleNameLocal() != null) {
+            builder.setMiddleNameLocal(getMiddleNameLocal());
         }
-        if (lastNameLocal != null) {
-            builder.setLastNameLocal(lastNameLocal);
+        if (getLastNameLocal() != null) {
+            builder.setLastNameLocal(getLastNameLocal());
         }
-        if (otherLocal != null) {
-            builder.setOtherLocal(otherLocal);
+        if (getOtherLocal() != null) {
+            builder.setOtherLocal(getOtherLocal());
         }
-        if (memberId != null) {
-            builder.setMemberId(memberId);
+        if (getMemberId() != null) {
+            builder.setMemberId(getMemberId());
         }
-        if (gender != null) {
-            builder.setGender(getIndicator(gender));
+        if (getGender() != null) {
+            builder.setGender(getIndicator(getGender()));
         }
-        if (birthDate != null) {
-            builder.setBirthDate(getDate(birthDate));
+        if (getBirthDate() != null) {
+            builder.setBirthDate(getDate(getBirthDate()));
         }
-        if (deceasedDate != null) {
-            builder.setDeceasedDate(getDate(deceasedDate));
+        if (getDeceasedDate() != null) {
+            builder.setDeceasedDate(getDate(getDeceasedDate()));
         }
-        if (height != null) {
-            builder.setHeight(height);
+        if (getHeight() != null) {
+            builder.setHeight(getHeight());
         }
-        if (weight != null) {
-            builder.setWeight(weight);
+        if (getWeight() != null) {
+            builder.setWeight(getWeight());
         }
-        if (mothersMaidenName != null) {
-            builder.setMothersMaidenName(mothersMaidenName);
+        if (getMothersMaidenName() != null) {
+            builder.setMothersMaidenName(getMothersMaidenName());
         }
-        if (maritalStatusEnumId != null) {
-            builder.setMaritalStatusEnumId(maritalStatusEnumId);
+        if (getMaritalStatusEnumId() != null) {
+            builder.setMaritalStatusEnumId(getMaritalStatusEnumId());
         }
-        if (socialSecurityNumber != null) {
-            builder.setSocialSecurityNumber(socialSecurityNumber);
+        if (getSocialSecurityNumber() != null) {
+            builder.setSocialSecurityNumber(getSocialSecurityNumber());
         }
-        if (passportNumber != null) {
-            builder.setPassportNumber(passportNumber);
+        if (getPassportNumber() != null) {
+            builder.setPassportNumber(getPassportNumber());
         }
-        if (passportExpireDate != null) {
-            builder.setPassportExpireDate(getDate(passportExpireDate));
+        if (getPassportExpireDate() != null) {
+            builder.setPassportExpireDate(getDate(getPassportExpireDate()));
         }
-        if (totalYearsWorkExperience != null) {
-            builder.setTotalYearsWorkExperience(totalYearsWorkExperience);
+        if (getTotalYearsWorkExperience() != null) {
+            builder.setTotalYearsWorkExperience(getTotalYearsWorkExperience());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (employmentStatusEnumId != null) {
-            builder.setEmploymentStatusEnumId(employmentStatusEnumId);
+        if (getEmploymentStatusEnumId() != null) {
+            builder.setEmploymentStatusEnumId(getEmploymentStatusEnumId());
         }
-        if (residenceStatusEnumId != null) {
-            builder.setResidenceStatusEnumId(residenceStatusEnumId);
+        if (getResidenceStatusEnumId() != null) {
+            builder.setResidenceStatusEnumId(getResidenceStatusEnumId());
         }
-        if (occupation != null) {
-            builder.setOccupation(occupation);
+        if (getOccupation() != null) {
+            builder.setOccupation(getOccupation());
         }
-        if (yearsWithEmployer != null) {
-            builder.setYearsWithEmployer(yearsWithEmployer);
+        if (getYearsWithEmployer() != null) {
+            builder.setYearsWithEmployer(getYearsWithEmployer());
         }
-        if (monthsWithEmployer != null) {
-            builder.setMonthsWithEmployer(monthsWithEmployer);
+        if (getMonthsWithEmployer() != null) {
+            builder.setMonthsWithEmployer(getMonthsWithEmployer());
         }
-        if (existingCustomer != null) {
-            builder.setExistingCustomer(getIndicator(existingCustomer));
+        if (getExistingCustomer() != null) {
+            builder.setExistingCustomer(getIndicator(getExistingCustomer()));
         }
-        if (cardId != null) {
-            builder.setCardId(cardId);
+        if (getCardId() != null) {
+            builder.setCardId(getCardId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

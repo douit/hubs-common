@@ -118,101 +118,105 @@ public class ShipmentCostEstimate implements IEventModel<ShipmentCostEstimateDat
 
     public ShipmentCostEstimateData.Builder toDataBuilder() {
         ShipmentCostEstimateData.Builder builder = ShipmentCostEstimateData.newBuilder();
-        if (shipmentCostEstimateId != null) {
-            builder.setShipmentCostEstimateId(shipmentCostEstimateId);
+        if (getShipmentCostEstimateId() != null) {
+            builder.setShipmentCostEstimateId(getShipmentCostEstimateId());
         }
-        if (shipmentMethodTypeId != null) {
-            builder.setShipmentMethodTypeId(shipmentMethodTypeId);
+        if (getShipmentMethodTypeId() != null) {
+            builder.setShipmentMethodTypeId(getShipmentMethodTypeId());
         }
-        if (carrierPartyId != null) {
-            builder.setCarrierPartyId(carrierPartyId);
+        if (getCarrierPartyId() != null) {
+            builder.setCarrierPartyId(getCarrierPartyId());
         }
-        if (carrierRoleTypeId != null) {
-            builder.setCarrierRoleTypeId(carrierRoleTypeId);
+        if (getCarrierRoleTypeId() != null) {
+            builder.setCarrierRoleTypeId(getCarrierRoleTypeId());
         }
-        if (productStoreShipMethId != null) {
-            builder.setProductStoreShipMethId(productStoreShipMethId);
+        if (getProductStoreShipMethId() != null) {
+            builder.setProductStoreShipMethId(getProductStoreShipMethId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (geoIdTo != null) {
-            builder.setGeoIdTo(geoIdTo);
+        if (getGeoIdTo() != null) {
+            builder.setGeoIdTo(getGeoIdTo());
         }
-        if (geoIdFrom != null) {
-            builder.setGeoIdFrom(geoIdFrom);
+        if (getGeoIdFrom() != null) {
+            builder.setGeoIdFrom(getGeoIdFrom());
         }
-        if (weightBreakId != null) {
-            builder.setWeightBreakId(weightBreakId);
+        if (getWeightBreakId() != null) {
+            builder.setWeightBreakId(getWeightBreakId());
         }
-        if (weightUomId != null) {
-            builder.setWeightUomId(weightUomId);
+        if (getWeightUomId() != null) {
+            builder.setWeightUomId(getWeightUomId());
         }
-        if (weightUnitPrice != null) {
-            builder.setWeightUnitPrice(getCurrency(weightUnitPrice));
+        if (getWeightUnitPrice() != null) {
+            builder.setWeightUnitPrice(getCurrency(getWeightUnitPrice()));
         }
-        if (quantityBreakId != null) {
-            builder.setQuantityBreakId(quantityBreakId);
+        if (getQuantityBreakId() != null) {
+            builder.setQuantityBreakId(getQuantityBreakId());
         }
-        if (quantityUomId != null) {
-            builder.setQuantityUomId(quantityUomId);
+        if (getQuantityUomId() != null) {
+            builder.setQuantityUomId(getQuantityUomId());
         }
-        if (quantityUnitPrice != null) {
-            builder.setQuantityUnitPrice(getCurrency(quantityUnitPrice));
+        if (getQuantityUnitPrice() != null) {
+            builder.setQuantityUnitPrice(getCurrency(getQuantityUnitPrice()));
         }
-        if (priceBreakId != null) {
-            builder.setPriceBreakId(priceBreakId);
+        if (getPriceBreakId() != null) {
+            builder.setPriceBreakId(getPriceBreakId());
         }
-        if (priceUomId != null) {
-            builder.setPriceUomId(priceUomId);
+        if (getPriceUomId() != null) {
+            builder.setPriceUomId(getPriceUomId());
         }
-        if (priceUnitPrice != null) {
-            builder.setPriceUnitPrice(getCurrency(priceUnitPrice));
+        if (getPriceUnitPrice() != null) {
+            builder.setPriceUnitPrice(getCurrency(getPriceUnitPrice()));
         }
-        if (orderFlatPrice != null) {
-            builder.setOrderFlatPrice(getCurrency(orderFlatPrice));
+        if (getOrderFlatPrice() != null) {
+            builder.setOrderFlatPrice(getCurrency(getOrderFlatPrice()));
         }
-        if (orderPricePercent != null) {
-            builder.setOrderPricePercent(getFixedPoint(orderPricePercent));
+        if (getOrderPricePercent() != null) {
+            builder.setOrderPricePercent(getFixedPoint(getOrderPricePercent()));
         }
-        if (orderItemFlatPrice != null) {
-            builder.setOrderItemFlatPrice(getCurrency(orderItemFlatPrice));
+        if (getOrderItemFlatPrice() != null) {
+            builder.setOrderItemFlatPrice(getCurrency(getOrderItemFlatPrice()));
         }
-        if (shippingPricePercent != null) {
-            builder.setShippingPricePercent(getFixedPoint(shippingPricePercent));
+        if (getShippingPricePercent() != null) {
+            builder.setShippingPricePercent(getFixedPoint(getShippingPricePercent()));
         }
-        if (productFeatureGroupId != null) {
-            builder.setProductFeatureGroupId(productFeatureGroupId);
+        if (getProductFeatureGroupId() != null) {
+            builder.setProductFeatureGroupId(getProductFeatureGroupId());
         }
-        if (oversizeUnit != null) {
-            builder.setOversizeUnit(getFixedPoint(oversizeUnit));
+        if (getOversizeUnit() != null) {
+            builder.setOversizeUnit(getFixedPoint(getOversizeUnit()));
         }
-        if (oversizePrice != null) {
-            builder.setOversizePrice(getCurrency(oversizePrice));
+        if (getOversizePrice() != null) {
+            builder.setOversizePrice(getCurrency(getOversizePrice()));
         }
-        if (featurePercent != null) {
-            builder.setFeaturePercent(getFixedPoint(featurePercent));
+        if (getFeaturePercent() != null) {
+            builder.setFeaturePercent(getFixedPoint(getFeaturePercent()));
         }
-        if (featurePrice != null) {
-            builder.setFeaturePrice(getCurrency(featurePrice));
+        if (getFeaturePrice() != null) {
+            builder.setFeaturePrice(getCurrency(getFeaturePrice()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ShipmentCostEstimate fromData(ShipmentCostEstimateData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentCostEstimate.ShipmentCostEstimateBuilder fromPrototype(ShipmentCostEstimateData data) {
         return ShipmentCostEstimate.builder()
                 .shipmentCostEstimateId(data.getShipmentCostEstimateId())
                 .shipmentMethodTypeId(data.getShipmentMethodTypeId())
@@ -244,8 +248,7 @@ public class ShipmentCostEstimate implements IEventModel<ShipmentCostEstimateDat
                 .featurePrice(getBigDecimal(data.getFeaturePrice()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

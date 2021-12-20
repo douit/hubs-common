@@ -69,29 +69,33 @@ public class OrderRole implements IEventModel<OrderRoleData.Builder>, HasId, Ser
 
     public OrderRoleData.Builder toDataBuilder() {
         OrderRoleData.Builder builder = OrderRoleData.newBuilder();
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static OrderRole fromData(OrderRoleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderRole.OrderRoleBuilder fromPrototype(OrderRoleData data) {
         return OrderRole.builder()
                 .orderId(data.getOrderId())
                 .partyId(data.getPartyId())
@@ -99,8 +103,7 @@ public class OrderRole implements IEventModel<OrderRoleData.Builder>, HasId, Ser
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

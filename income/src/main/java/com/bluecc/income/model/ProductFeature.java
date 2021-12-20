@@ -82,47 +82,51 @@ public class ProductFeature implements IEventModel<ProductFeatureData.Builder>, 
 
     public ProductFeatureData.Builder toDataBuilder() {
         ProductFeatureData.Builder builder = ProductFeatureData.newBuilder();
-        if (productFeatureId != null) {
-            builder.setProductFeatureId(productFeatureId);
+        if (getProductFeatureId() != null) {
+            builder.setProductFeatureId(getProductFeatureId());
         }
-        if (productFeatureTypeId != null) {
-            builder.setProductFeatureTypeId(productFeatureTypeId);
+        if (getProductFeatureTypeId() != null) {
+            builder.setProductFeatureTypeId(getProductFeatureTypeId());
         }
-        if (productFeatureCategoryId != null) {
-            builder.setProductFeatureCategoryId(productFeatureCategoryId);
+        if (getProductFeatureCategoryId() != null) {
+            builder.setProductFeatureCategoryId(getProductFeatureCategoryId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (numberSpecified != null) {
-            builder.setNumberSpecified(getFixedPoint(numberSpecified));
+        if (getNumberSpecified() != null) {
+            builder.setNumberSpecified(getFixedPoint(getNumberSpecified()));
         }
-        if (defaultAmount != null) {
-            builder.setDefaultAmount(getCurrency(defaultAmount));
+        if (getDefaultAmount() != null) {
+            builder.setDefaultAmount(getCurrency(getDefaultAmount()));
         }
-        if (defaultSequenceNum != null) {
-            builder.setDefaultSequenceNum(defaultSequenceNum);
+        if (getDefaultSequenceNum() != null) {
+            builder.setDefaultSequenceNum(getDefaultSequenceNum());
         }
-        if (abbrev != null) {
-            builder.setAbbrev(abbrev);
+        if (getAbbrev() != null) {
+            builder.setAbbrev(getAbbrev());
         }
-        if (idCode != null) {
-            builder.setIdCode(idCode);
+        if (getIdCode() != null) {
+            builder.setIdCode(getIdCode());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ProductFeature fromData(ProductFeatureData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductFeature.ProductFeatureBuilder fromPrototype(ProductFeatureData data) {
         return ProductFeature.builder()
                 .productFeatureId(data.getProductFeatureId())
                 .productFeatureTypeId(data.getProductFeatureTypeId())
@@ -136,8 +140,7 @@ public class ProductFeature implements IEventModel<ProductFeatureData.Builder>, 
                 .idCode(data.getIdCode())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

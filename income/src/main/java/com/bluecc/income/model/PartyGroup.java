@@ -87,47 +87,51 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, HasI
 
     public PartyGroupFlatData.Builder toDataBuilder() {
         PartyGroupFlatData.Builder builder = PartyGroupFlatData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (groupName != null) {
-            builder.setGroupName(groupName);
+        if (getGroupName() != null) {
+            builder.setGroupName(getGroupName());
         }
-        if (groupNameLocal != null) {
-            builder.setGroupNameLocal(groupNameLocal);
+        if (getGroupNameLocal() != null) {
+            builder.setGroupNameLocal(getGroupNameLocal());
         }
-        if (officeSiteName != null) {
-            builder.setOfficeSiteName(officeSiteName);
+        if (getOfficeSiteName() != null) {
+            builder.setOfficeSiteName(getOfficeSiteName());
         }
-        if (annualRevenue != null) {
-            builder.setAnnualRevenue(getCurrency(annualRevenue));
+        if (getAnnualRevenue() != null) {
+            builder.setAnnualRevenue(getCurrency(getAnnualRevenue()));
         }
-        if (numEmployees != null) {
-            builder.setNumEmployees(numEmployees);
+        if (getNumEmployees() != null) {
+            builder.setNumEmployees(getNumEmployees());
         }
-        if (tickerSymbol != null) {
-            builder.setTickerSymbol(tickerSymbol);
+        if (getTickerSymbol() != null) {
+            builder.setTickerSymbol(getTickerSymbol());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (logoImageUrl != null) {
-            builder.setLogoImageUrl(logoImageUrl);
+        if (getLogoImageUrl() != null) {
+            builder.setLogoImageUrl(getLogoImageUrl());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static PartyGroup fromData(PartyGroupFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyGroup.PartyGroupBuilder fromPrototype(PartyGroupFlatData data) {
         return PartyGroup.builder()
                 .partyId(data.getPartyId())
                 .groupName(data.getGroupName())
@@ -141,8 +145,7 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -207,38 +210,38 @@ public class PartyGroup implements IEventModel<PartyGroupFlatData.Builder>, HasI
 
     public PartyGroupData.Builder toHeadBuilder() {
         PartyGroupData.Builder builder = PartyGroupData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (groupName != null) {
-            builder.setGroupName(groupName);
+        if (getGroupName() != null) {
+            builder.setGroupName(getGroupName());
         }
-        if (groupNameLocal != null) {
-            builder.setGroupNameLocal(groupNameLocal);
+        if (getGroupNameLocal() != null) {
+            builder.setGroupNameLocal(getGroupNameLocal());
         }
-        if (officeSiteName != null) {
-            builder.setOfficeSiteName(officeSiteName);
+        if (getOfficeSiteName() != null) {
+            builder.setOfficeSiteName(getOfficeSiteName());
         }
-        if (annualRevenue != null) {
-            builder.setAnnualRevenue(getCurrency(annualRevenue));
+        if (getAnnualRevenue() != null) {
+            builder.setAnnualRevenue(getCurrency(getAnnualRevenue()));
         }
-        if (numEmployees != null) {
-            builder.setNumEmployees(numEmployees);
+        if (getNumEmployees() != null) {
+            builder.setNumEmployees(getNumEmployees());
         }
-        if (tickerSymbol != null) {
-            builder.setTickerSymbol(tickerSymbol);
+        if (getTickerSymbol() != null) {
+            builder.setTickerSymbol(getTickerSymbol());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (logoImageUrl != null) {
-            builder.setLogoImageUrl(logoImageUrl);
+        if (getLogoImageUrl() != null) {
+            builder.setLogoImageUrl(getLogoImageUrl());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

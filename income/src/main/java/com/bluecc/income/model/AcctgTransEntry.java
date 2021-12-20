@@ -112,95 +112,99 @@ public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>
 
     public AcctgTransEntryData.Builder toDataBuilder() {
         AcctgTransEntryData.Builder builder = AcctgTransEntryData.newBuilder();
-        if (acctgTransId != null) {
-            builder.setAcctgTransId(acctgTransId);
+        if (getAcctgTransId() != null) {
+            builder.setAcctgTransId(getAcctgTransId());
         }
-        if (acctgTransEntrySeqId != null) {
-            builder.setAcctgTransEntrySeqId(acctgTransEntrySeqId);
+        if (getAcctgTransEntrySeqId() != null) {
+            builder.setAcctgTransEntrySeqId(getAcctgTransEntrySeqId());
         }
-        if (acctgTransEntryTypeId != null) {
-            builder.setAcctgTransEntryTypeId(acctgTransEntryTypeId);
+        if (getAcctgTransEntryTypeId() != null) {
+            builder.setAcctgTransEntryTypeId(getAcctgTransEntryTypeId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (voucherRef != null) {
-            builder.setVoucherRef(voucherRef);
+        if (getVoucherRef() != null) {
+            builder.setVoucherRef(getVoucherRef());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (theirPartyId != null) {
-            builder.setTheirPartyId(theirPartyId);
+        if (getTheirPartyId() != null) {
+            builder.setTheirPartyId(getTheirPartyId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (theirProductId != null) {
-            builder.setTheirProductId(theirProductId);
+        if (getTheirProductId() != null) {
+            builder.setTheirProductId(getTheirProductId());
         }
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (glAccountTypeId != null) {
-            builder.setGlAccountTypeId(glAccountTypeId);
+        if (getGlAccountTypeId() != null) {
+            builder.setGlAccountTypeId(getGlAccountTypeId());
         }
-        if (glAccountId != null) {
-            builder.setGlAccountId(glAccountId);
+        if (getGlAccountId() != null) {
+            builder.setGlAccountId(getGlAccountId());
         }
-        if (organizationPartyId != null) {
-            builder.setOrganizationPartyId(organizationPartyId);
+        if (getOrganizationPartyId() != null) {
+            builder.setOrganizationPartyId(getOrganizationPartyId());
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (origAmount != null) {
-            builder.setOrigAmount(getCurrency(origAmount));
+        if (getOrigAmount() != null) {
+            builder.setOrigAmount(getCurrency(getOrigAmount()));
         }
-        if (origCurrencyUomId != null) {
-            builder.setOrigCurrencyUomId(origCurrencyUomId);
+        if (getOrigCurrencyUomId() != null) {
+            builder.setOrigCurrencyUomId(getOrigCurrencyUomId());
         }
-        if (debitCreditFlag != null) {
-            builder.setDebitCreditFlag(getIndicator(debitCreditFlag));
+        if (getDebitCreditFlag() != null) {
+            builder.setDebitCreditFlag(getIndicator(getDebitCreditFlag()));
         }
-        if (dueDate != null) {
-            builder.setDueDate(getDate(dueDate));
+        if (getDueDate() != null) {
+            builder.setDueDate(getDate(getDueDate()));
         }
-        if (groupId != null) {
-            builder.setGroupId(groupId);
+        if (getGroupId() != null) {
+            builder.setGroupId(getGroupId());
         }
-        if (taxId != null) {
-            builder.setTaxId(taxId);
+        if (getTaxId() != null) {
+            builder.setTaxId(getTaxId());
         }
-        if (reconcileStatusId != null) {
-            builder.setReconcileStatusId(reconcileStatusId);
+        if (getReconcileStatusId() != null) {
+            builder.setReconcileStatusId(getReconcileStatusId());
         }
-        if (settlementTermId != null) {
-            builder.setSettlementTermId(settlementTermId);
+        if (getSettlementTermId() != null) {
+            builder.setSettlementTermId(getSettlementTermId());
         }
-        if (isSummary != null) {
-            builder.setIsSummary(getIndicator(isSummary));
+        if (getIsSummary() != null) {
+            builder.setIsSummary(getIndicator(getIsSummary()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static AcctgTransEntry fromData(AcctgTransEntryData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static AcctgTransEntry.AcctgTransEntryBuilder fromPrototype(AcctgTransEntryData data) {
         return AcctgTransEntry.builder()
                 .acctgTransId(data.getAcctgTransId())
                 .acctgTransEntrySeqId(data.getAcctgTransEntrySeqId())
@@ -230,8 +234,7 @@ public class AcctgTransEntry implements IEventModel<AcctgTransEntryData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

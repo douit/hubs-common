@@ -73,35 +73,39 @@ public class OrderItemShipGroupAssoc implements IEventModel<OrderItemShipGroupAs
 
     public OrderItemShipGroupAssocData.Builder toDataBuilder() {
         OrderItemShipGroupAssocData.Builder builder = OrderItemShipGroupAssocData.newBuilder();
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (shipGroupSeqId != null) {
-            builder.setShipGroupSeqId(shipGroupSeqId);
+        if (getShipGroupSeqId() != null) {
+            builder.setShipGroupSeqId(getShipGroupSeqId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (cancelQuantity != null) {
-            builder.setCancelQuantity(getFixedPoint(cancelQuantity));
+        if (getCancelQuantity() != null) {
+            builder.setCancelQuantity(getFixedPoint(getCancelQuantity()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static OrderItemShipGroupAssoc fromData(OrderItemShipGroupAssocData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderItemShipGroupAssoc.OrderItemShipGroupAssocBuilder fromPrototype(OrderItemShipGroupAssocData data) {
         return OrderItemShipGroupAssoc.builder()
                 .orderId(data.getOrderId())
                 .orderItemSeqId(data.getOrderItemSeqId())
@@ -111,8 +115,7 @@ public class OrderItemShipGroupAssoc implements IEventModel<OrderItemShipGroupAs
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

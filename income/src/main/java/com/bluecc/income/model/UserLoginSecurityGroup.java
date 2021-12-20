@@ -70,32 +70,36 @@ public class UserLoginSecurityGroup implements IEventModel<UserLoginSecurityGrou
 
     public UserLoginSecurityGroupData.Builder toDataBuilder() {
         UserLoginSecurityGroupData.Builder builder = UserLoginSecurityGroupData.newBuilder();
-        if (userLoginId != null) {
-            builder.setUserLoginId(userLoginId);
+        if (getUserLoginId() != null) {
+            builder.setUserLoginId(getUserLoginId());
         }
-        if (groupId != null) {
-            builder.setGroupId(groupId);
+        if (getGroupId() != null) {
+            builder.setGroupId(getGroupId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static UserLoginSecurityGroup fromData(UserLoginSecurityGroupData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static UserLoginSecurityGroup.UserLoginSecurityGroupBuilder fromPrototype(UserLoginSecurityGroupData data) {
         return UserLoginSecurityGroup.builder()
                 .userLoginId(data.getUserLoginId())
                 .groupId(data.getGroupId())
@@ -104,8 +108,7 @@ public class UserLoginSecurityGroup implements IEventModel<UserLoginSecurityGrou
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

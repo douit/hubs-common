@@ -87,56 +87,60 @@ public class ProductContent implements IEventModel<ProductContentData.Builder>, 
 
     public ProductContentData.Builder toDataBuilder() {
         ProductContentData.Builder builder = ProductContentData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (contentId != null) {
-            builder.setContentId(contentId);
+        if (getContentId() != null) {
+            builder.setContentId(getContentId());
         }
-        if (productContentTypeId != null) {
-            builder.setProductContentTypeId(productContentTypeId);
+        if (getProductContentTypeId() != null) {
+            builder.setProductContentTypeId(getProductContentTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (purchaseFromDate != null) {
-            builder.setPurchaseFromDate(getTimestamp(purchaseFromDate));
+        if (getPurchaseFromDate() != null) {
+            builder.setPurchaseFromDate(getTimestamp(getPurchaseFromDate()));
         }
-        if (purchaseThruDate != null) {
-            builder.setPurchaseThruDate(getTimestamp(purchaseThruDate));
+        if (getPurchaseThruDate() != null) {
+            builder.setPurchaseThruDate(getTimestamp(getPurchaseThruDate()));
         }
-        if (useCountLimit != null) {
-            builder.setUseCountLimit(useCountLimit);
+        if (getUseCountLimit() != null) {
+            builder.setUseCountLimit(getUseCountLimit());
         }
-        if (useTime != null) {
-            builder.setUseTime(useTime);
+        if (getUseTime() != null) {
+            builder.setUseTime(getUseTime());
         }
-        if (useTimeUomId != null) {
-            builder.setUseTimeUomId(useTimeUomId);
+        if (getUseTimeUomId() != null) {
+            builder.setUseTimeUomId(getUseTimeUomId());
         }
-        if (useRoleTypeId != null) {
-            builder.setUseRoleTypeId(useRoleTypeId);
+        if (getUseRoleTypeId() != null) {
+            builder.setUseRoleTypeId(getUseRoleTypeId());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductContent fromData(ProductContentData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductContent.ProductContentBuilder fromPrototype(ProductContentData data) {
         return ProductContent.builder()
                 .productId(data.getProductId())
                 .contentId(data.getContentId())
@@ -153,8 +157,7 @@ public class ProductContent implements IEventModel<ProductContentData.Builder>, 
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

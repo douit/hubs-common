@@ -109,80 +109,84 @@ public class ShoppingList implements IEventModel<ShoppingListFlatData.Builder>, 
 
     public ShoppingListFlatData.Builder toDataBuilder() {
         ShoppingListFlatData.Builder builder = ShoppingListFlatData.newBuilder();
-        if (shoppingListId != null) {
-            builder.setShoppingListId(shoppingListId);
+        if (getShoppingListId() != null) {
+            builder.setShoppingListId(getShoppingListId());
         }
-        if (shoppingListTypeId != null) {
-            builder.setShoppingListTypeId(shoppingListTypeId);
+        if (getShoppingListTypeId() != null) {
+            builder.setShoppingListTypeId(getShoppingListTypeId());
         }
-        if (parentShoppingListId != null) {
-            builder.setParentShoppingListId(parentShoppingListId);
+        if (getParentShoppingListId() != null) {
+            builder.setParentShoppingListId(getParentShoppingListId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (visitorId != null) {
-            builder.setVisitorId(visitorId);
+        if (getVisitorId() != null) {
+            builder.setVisitorId(getVisitorId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (listName != null) {
-            builder.setListName(listName);
+        if (getListName() != null) {
+            builder.setListName(getListName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (isPublic != null) {
-            builder.setIsPublic(getIndicator(isPublic));
+        if (getIsPublic() != null) {
+            builder.setIsPublic(getIndicator(getIsPublic()));
         }
-        if (isActive != null) {
-            builder.setIsActive(getIndicator(isActive));
+        if (getIsActive() != null) {
+            builder.setIsActive(getIndicator(getIsActive()));
         }
-        if (currencyUom != null) {
-            builder.setCurrencyUom(currencyUom);
+        if (getCurrencyUom() != null) {
+            builder.setCurrencyUom(getCurrencyUom());
         }
-        if (shipmentMethodTypeId != null) {
-            builder.setShipmentMethodTypeId(shipmentMethodTypeId);
+        if (getShipmentMethodTypeId() != null) {
+            builder.setShipmentMethodTypeId(getShipmentMethodTypeId());
         }
-        if (carrierPartyId != null) {
-            builder.setCarrierPartyId(carrierPartyId);
+        if (getCarrierPartyId() != null) {
+            builder.setCarrierPartyId(getCarrierPartyId());
         }
-        if (carrierRoleTypeId != null) {
-            builder.setCarrierRoleTypeId(carrierRoleTypeId);
+        if (getCarrierRoleTypeId() != null) {
+            builder.setCarrierRoleTypeId(getCarrierRoleTypeId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (paymentMethodId != null) {
-            builder.setPaymentMethodId(paymentMethodId);
+        if (getPaymentMethodId() != null) {
+            builder.setPaymentMethodId(getPaymentMethodId());
         }
-        if (recurrenceInfoId != null) {
-            builder.setRecurrenceInfoId(recurrenceInfoId);
+        if (getRecurrenceInfoId() != null) {
+            builder.setRecurrenceInfoId(getRecurrenceInfoId());
         }
-        if (lastOrderedDate != null) {
-            builder.setLastOrderedDate(getTimestamp(lastOrderedDate));
+        if (getLastOrderedDate() != null) {
+            builder.setLastOrderedDate(getTimestamp(getLastOrderedDate()));
         }
-        if (lastAdminModified != null) {
-            builder.setLastAdminModified(getTimestamp(lastAdminModified));
+        if (getLastAdminModified() != null) {
+            builder.setLastAdminModified(getTimestamp(getLastAdminModified()));
         }
-        if (productPromoCodeId != null) {
-            builder.setProductPromoCodeId(productPromoCodeId);
+        if (getProductPromoCodeId() != null) {
+            builder.setProductPromoCodeId(getProductPromoCodeId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static ShoppingList fromData(ShoppingListFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShoppingList.ShoppingListBuilder fromPrototype(ShoppingListFlatData data) {
         return ShoppingList.builder()
                 .shoppingListId(data.getShoppingListId())
                 .shoppingListTypeId(data.getShoppingListTypeId())
@@ -207,8 +211,7 @@ public class ShoppingList implements IEventModel<ShoppingListFlatData.Builder>, 
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -303,47 +306,47 @@ public class ShoppingList implements IEventModel<ShoppingListFlatData.Builder>, 
 
     public ShoppingListData.Builder toHeadBuilder() {
         ShoppingListData.Builder builder = ShoppingListData.newBuilder();
-        if (shoppingListId != null) {
-            builder.setShoppingListId(shoppingListId);
+        if (getShoppingListId() != null) {
+            builder.setShoppingListId(getShoppingListId());
         }
-        if (shoppingListTypeId != null) {
-            builder.setShoppingListTypeId(shoppingListTypeId);
+        if (getShoppingListTypeId() != null) {
+            builder.setShoppingListTypeId(getShoppingListTypeId());
         }
-        if (visitorId != null) {
-            builder.setVisitorId(visitorId);
+        if (getVisitorId() != null) {
+            builder.setVisitorId(getVisitorId());
         }
-        if (listName != null) {
-            builder.setListName(listName);
+        if (getListName() != null) {
+            builder.setListName(getListName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (isPublic != null) {
-            builder.setIsPublic(getIndicator(isPublic));
+        if (getIsPublic() != null) {
+            builder.setIsPublic(getIndicator(getIsPublic()));
         }
-        if (isActive != null) {
-            builder.setIsActive(getIndicator(isActive));
+        if (getIsActive() != null) {
+            builder.setIsActive(getIndicator(getIsActive()));
         }
-        if (currencyUom != null) {
-            builder.setCurrencyUom(currencyUom);
+        if (getCurrencyUom() != null) {
+            builder.setCurrencyUom(getCurrencyUom());
         }
-        if (carrierPartyId != null) {
-            builder.setCarrierPartyId(carrierPartyId);
+        if (getCarrierPartyId() != null) {
+            builder.setCarrierPartyId(getCarrierPartyId());
         }
-        if (carrierRoleTypeId != null) {
-            builder.setCarrierRoleTypeId(carrierRoleTypeId);
+        if (getCarrierRoleTypeId() != null) {
+            builder.setCarrierRoleTypeId(getCarrierRoleTypeId());
         }
-        if (lastOrderedDate != null) {
-            builder.setLastOrderedDate(getTimestamp(lastOrderedDate));
+        if (getLastOrderedDate() != null) {
+            builder.setLastOrderedDate(getTimestamp(getLastOrderedDate()));
         }
-        if (lastAdminModified != null) {
-            builder.setLastAdminModified(getTimestamp(lastAdminModified));
+        if (getLastAdminModified() != null) {
+            builder.setLastAdminModified(getTimestamp(getLastAdminModified()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

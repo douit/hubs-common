@@ -73,35 +73,39 @@ public class BillingAccountRole implements IEventModel<BillingAccountRoleData.Bu
 
     public BillingAccountRoleData.Builder toDataBuilder() {
         BillingAccountRoleData.Builder builder = BillingAccountRoleData.newBuilder();
-        if (billingAccountId != null) {
-            builder.setBillingAccountId(billingAccountId);
+        if (getBillingAccountId() != null) {
+            builder.setBillingAccountId(getBillingAccountId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static BillingAccountRole fromData(BillingAccountRoleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static BillingAccountRole.BillingAccountRoleBuilder fromPrototype(BillingAccountRoleData data) {
         return BillingAccountRole.builder()
                 .billingAccountId(data.getBillingAccountId())
                 .partyId(data.getPartyId())
@@ -111,8 +115,7 @@ public class BillingAccountRole implements IEventModel<BillingAccountRoleData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

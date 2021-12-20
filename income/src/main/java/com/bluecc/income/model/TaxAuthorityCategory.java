@@ -69,29 +69,33 @@ public class TaxAuthorityCategory implements IEventModel<TaxAuthorityCategoryDat
 
     public TaxAuthorityCategoryData.Builder toDataBuilder() {
         TaxAuthorityCategoryData.Builder builder = TaxAuthorityCategoryData.newBuilder();
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static TaxAuthorityCategory fromData(TaxAuthorityCategoryData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TaxAuthorityCategory.TaxAuthorityCategoryBuilder fromPrototype(TaxAuthorityCategoryData data) {
         return TaxAuthorityCategory.builder()
                 .taxAuthGeoId(data.getTaxAuthGeoId())
                 .taxAuthPartyId(data.getTaxAuthPartyId())
@@ -99,8 +103,7 @@ public class TaxAuthorityCategory implements IEventModel<TaxAuthorityCategoryDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

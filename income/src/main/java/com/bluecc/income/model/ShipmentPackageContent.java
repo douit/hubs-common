@@ -75,38 +75,42 @@ public class ShipmentPackageContent implements IEventModel<ShipmentPackageConten
 
     public ShipmentPackageContentData.Builder toDataBuilder() {
         ShipmentPackageContentData.Builder builder = ShipmentPackageContentData.newBuilder();
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentPackageSeqId != null) {
-            builder.setShipmentPackageSeqId(shipmentPackageSeqId);
+        if (getShipmentPackageSeqId() != null) {
+            builder.setShipmentPackageSeqId(getShipmentPackageSeqId());
         }
-        if (shipmentItemSeqId != null) {
-            builder.setShipmentItemSeqId(shipmentItemSeqId);
+        if (getShipmentItemSeqId() != null) {
+            builder.setShipmentItemSeqId(getShipmentItemSeqId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (subProductId != null) {
-            builder.setSubProductId(subProductId);
+        if (getSubProductId() != null) {
+            builder.setSubProductId(getSubProductId());
         }
-        if (subProductQuantity != null) {
-            builder.setSubProductQuantity(getFixedPoint(subProductQuantity));
+        if (getSubProductQuantity() != null) {
+            builder.setSubProductQuantity(getFixedPoint(getSubProductQuantity()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShipmentPackageContent fromData(ShipmentPackageContentData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentPackageContent.ShipmentPackageContentBuilder fromPrototype(ShipmentPackageContentData data) {
         return ShipmentPackageContent.builder()
                 .shipmentId(data.getShipmentId())
                 .shipmentPackageSeqId(data.getShipmentPackageSeqId())
@@ -117,8 +121,7 @@ public class ShipmentPackageContent implements IEventModel<ShipmentPackageConten
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

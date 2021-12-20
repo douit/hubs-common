@@ -70,32 +70,36 @@ public class ProductFeatureIactn implements IEventModel<ProductFeatureIactnData.
 
     public ProductFeatureIactnData.Builder toDataBuilder() {
         ProductFeatureIactnData.Builder builder = ProductFeatureIactnData.newBuilder();
-        if (productFeatureId != null) {
-            builder.setProductFeatureId(productFeatureId);
+        if (getProductFeatureId() != null) {
+            builder.setProductFeatureId(getProductFeatureId());
         }
-        if (productFeatureIdTo != null) {
-            builder.setProductFeatureIdTo(productFeatureIdTo);
+        if (getProductFeatureIdTo() != null) {
+            builder.setProductFeatureIdTo(getProductFeatureIdTo());
         }
-        if (productFeatureIactnTypeId != null) {
-            builder.setProductFeatureIactnTypeId(productFeatureIactnTypeId);
+        if (getProductFeatureIactnTypeId() != null) {
+            builder.setProductFeatureIactnTypeId(getProductFeatureIactnTypeId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductFeatureIactn fromData(ProductFeatureIactnData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductFeatureIactn.ProductFeatureIactnBuilder fromPrototype(ProductFeatureIactnData data) {
         return ProductFeatureIactn.builder()
                 .productFeatureId(data.getProductFeatureId())
                 .productFeatureIdTo(data.getProductFeatureIdTo())
@@ -104,8 +108,7 @@ public class ProductFeatureIactn implements IEventModel<ProductFeatureIactnData.
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

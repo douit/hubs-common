@@ -112,92 +112,96 @@ public class JobSandbox implements IEventModel<JobSandboxData.Builder>, HasId, S
 
     public JobSandboxData.Builder toDataBuilder() {
         JobSandboxData.Builder builder = JobSandboxData.newBuilder();
-        if (jobId != null) {
-            builder.setJobId(jobId);
+        if (getJobId() != null) {
+            builder.setJobId(getJobId());
         }
-        if (jobName != null) {
-            builder.setJobName(jobName);
+        if (getJobName() != null) {
+            builder.setJobName(getJobName());
         }
-        if (runTime != null) {
-            builder.setRunTime(getTimestamp(runTime));
+        if (getRunTime() != null) {
+            builder.setRunTime(getTimestamp(getRunTime()));
         }
-        if (priority != null) {
-            builder.setPriority(priority);
+        if (getPriority() != null) {
+            builder.setPriority(getPriority());
         }
-        if (poolId != null) {
-            builder.setPoolId(poolId);
+        if (getPoolId() != null) {
+            builder.setPoolId(getPoolId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (parentJobId != null) {
-            builder.setParentJobId(parentJobId);
+        if (getParentJobId() != null) {
+            builder.setParentJobId(getParentJobId());
         }
-        if (previousJobId != null) {
-            builder.setPreviousJobId(previousJobId);
+        if (getPreviousJobId() != null) {
+            builder.setPreviousJobId(getPreviousJobId());
         }
-        if (serviceName != null) {
-            builder.setServiceName(serviceName);
+        if (getServiceName() != null) {
+            builder.setServiceName(getServiceName());
         }
-        if (loaderName != null) {
-            builder.setLoaderName(loaderName);
+        if (getLoaderName() != null) {
+            builder.setLoaderName(getLoaderName());
         }
-        if (maxRetry != null) {
-            builder.setMaxRetry(maxRetry);
+        if (getMaxRetry() != null) {
+            builder.setMaxRetry(getMaxRetry());
         }
-        if (currentRetryCount != null) {
-            builder.setCurrentRetryCount(currentRetryCount);
+        if (getCurrentRetryCount() != null) {
+            builder.setCurrentRetryCount(getCurrentRetryCount());
         }
-        if (authUserLoginId != null) {
-            builder.setAuthUserLoginId(authUserLoginId);
+        if (getAuthUserLoginId() != null) {
+            builder.setAuthUserLoginId(getAuthUserLoginId());
         }
-        if (runAsUser != null) {
-            builder.setRunAsUser(runAsUser);
+        if (getRunAsUser() != null) {
+            builder.setRunAsUser(getRunAsUser());
         }
-        if (runtimeDataId != null) {
-            builder.setRuntimeDataId(runtimeDataId);
+        if (getRuntimeDataId() != null) {
+            builder.setRuntimeDataId(getRuntimeDataId());
         }
-        if (recurrenceInfoId != null) {
-            builder.setRecurrenceInfoId(recurrenceInfoId);
+        if (getRecurrenceInfoId() != null) {
+            builder.setRecurrenceInfoId(getRecurrenceInfoId());
         }
-        if (tempExprId != null) {
-            builder.setTempExprId(tempExprId);
+        if (getTempExprId() != null) {
+            builder.setTempExprId(getTempExprId());
         }
-        if (currentRecurrenceCount != null) {
-            builder.setCurrentRecurrenceCount(currentRecurrenceCount);
+        if (getCurrentRecurrenceCount() != null) {
+            builder.setCurrentRecurrenceCount(getCurrentRecurrenceCount());
         }
-        if (maxRecurrenceCount != null) {
-            builder.setMaxRecurrenceCount(maxRecurrenceCount);
+        if (getMaxRecurrenceCount() != null) {
+            builder.setMaxRecurrenceCount(getMaxRecurrenceCount());
         }
-        if (runByInstanceId != null) {
-            builder.setRunByInstanceId(runByInstanceId);
+        if (getRunByInstanceId() != null) {
+            builder.setRunByInstanceId(getRunByInstanceId());
         }
-        if (startDateTime != null) {
-            builder.setStartDateTime(getTimestamp(startDateTime));
+        if (getStartDateTime() != null) {
+            builder.setStartDateTime(getTimestamp(getStartDateTime()));
         }
-        if (finishDateTime != null) {
-            builder.setFinishDateTime(getTimestamp(finishDateTime));
+        if (getFinishDateTime() != null) {
+            builder.setFinishDateTime(getTimestamp(getFinishDateTime()));
         }
-        if (cancelDateTime != null) {
-            builder.setCancelDateTime(getTimestamp(cancelDateTime));
+        if (getCancelDateTime() != null) {
+            builder.setCancelDateTime(getTimestamp(getCancelDateTime()));
         }
-        if (jobResult != null) {
-            builder.setJobResult(jobResult);
+        if (getJobResult() != null) {
+            builder.setJobResult(getJobResult());
         }
-        if (recurrenceTimeZone != null) {
-            builder.setRecurrenceTimeZone(recurrenceTimeZone);
+        if (getRecurrenceTimeZone() != null) {
+            builder.setRecurrenceTimeZone(getRecurrenceTimeZone());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static JobSandbox fromData(JobSandboxData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static JobSandbox.JobSandboxBuilder fromPrototype(JobSandboxData data) {
         return JobSandbox.builder()
                 .jobId(data.getJobId())
                 .jobName(data.getJobName())
@@ -226,8 +230,7 @@ public class JobSandbox implements IEventModel<JobSandboxData.Builder>, HasId, S
                 .recurrenceTimeZone(data.getRecurrenceTimeZone())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

@@ -94,65 +94,69 @@ public class RecurrenceRule implements IEventModel<RecurrenceRuleData.Builder>, 
 
     public RecurrenceRuleData.Builder toDataBuilder() {
         RecurrenceRuleData.Builder builder = RecurrenceRuleData.newBuilder();
-        if (recurrenceRuleId != null) {
-            builder.setRecurrenceRuleId(recurrenceRuleId);
+        if (getRecurrenceRuleId() != null) {
+            builder.setRecurrenceRuleId(getRecurrenceRuleId());
         }
-        if (frequency != null) {
-            builder.setFrequency(frequency);
+        if (getFrequency() != null) {
+            builder.setFrequency(getFrequency());
         }
-        if (untilDateTime != null) {
-            builder.setUntilDateTime(getTimestamp(untilDateTime));
+        if (getUntilDateTime() != null) {
+            builder.setUntilDateTime(getTimestamp(getUntilDateTime()));
         }
-        if (countNumber != null) {
-            builder.setCountNumber(countNumber);
+        if (getCountNumber() != null) {
+            builder.setCountNumber(getCountNumber());
         }
-        if (intervalNumber != null) {
-            builder.setIntervalNumber(intervalNumber);
+        if (getIntervalNumber() != null) {
+            builder.setIntervalNumber(getIntervalNumber());
         }
-        if (bySecondList != null) {
-            builder.setBySecondList(bySecondList);
+        if (getBySecondList() != null) {
+            builder.setBySecondList(getBySecondList());
         }
-        if (byMinuteList != null) {
-            builder.setByMinuteList(byMinuteList);
+        if (getByMinuteList() != null) {
+            builder.setByMinuteList(getByMinuteList());
         }
-        if (byHourList != null) {
-            builder.setByHourList(byHourList);
+        if (getByHourList() != null) {
+            builder.setByHourList(getByHourList());
         }
-        if (byDayList != null) {
-            builder.setByDayList(byDayList);
+        if (getByDayList() != null) {
+            builder.setByDayList(getByDayList());
         }
-        if (byMonthDayList != null) {
-            builder.setByMonthDayList(byMonthDayList);
+        if (getByMonthDayList() != null) {
+            builder.setByMonthDayList(getByMonthDayList());
         }
-        if (byYearDayList != null) {
-            builder.setByYearDayList(byYearDayList);
+        if (getByYearDayList() != null) {
+            builder.setByYearDayList(getByYearDayList());
         }
-        if (byWeekNoList != null) {
-            builder.setByWeekNoList(byWeekNoList);
+        if (getByWeekNoList() != null) {
+            builder.setByWeekNoList(getByWeekNoList());
         }
-        if (byMonthList != null) {
-            builder.setByMonthList(byMonthList);
+        if (getByMonthList() != null) {
+            builder.setByMonthList(getByMonthList());
         }
-        if (bySetPosList != null) {
-            builder.setBySetPosList(bySetPosList);
+        if (getBySetPosList() != null) {
+            builder.setBySetPosList(getBySetPosList());
         }
-        if (weekStart != null) {
-            builder.setWeekStart(weekStart);
+        if (getWeekStart() != null) {
+            builder.setWeekStart(getWeekStart());
         }
-        if (xName != null) {
-            builder.setXName(xName);
+        if (getXName() != null) {
+            builder.setXName(getXName());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static RecurrenceRule fromData(RecurrenceRuleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static RecurrenceRule.RecurrenceRuleBuilder fromPrototype(RecurrenceRuleData data) {
         return RecurrenceRule.builder()
                 .recurrenceRuleId(data.getRecurrenceRuleId())
                 .frequency(data.getFrequency())
@@ -172,8 +176,7 @@ public class RecurrenceRule implements IEventModel<RecurrenceRuleData.Builder>, 
                 .xName(data.getXName())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

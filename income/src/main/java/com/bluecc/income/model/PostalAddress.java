@@ -98,71 +98,75 @@ public class PostalAddress implements IEventModel<PostalAddressData.Builder>, Ha
 
     public PostalAddressData.Builder toDataBuilder() {
         PostalAddressData.Builder builder = PostalAddressData.newBuilder();
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (toName != null) {
-            builder.setToName(toName);
+        if (getToName() != null) {
+            builder.setToName(getToName());
         }
-        if (attnName != null) {
-            builder.setAttnName(attnName);
+        if (getAttnName() != null) {
+            builder.setAttnName(getAttnName());
         }
-        if (address1 != null) {
-            builder.setAddress1(address1);
+        if (getAddress1() != null) {
+            builder.setAddress1(getAddress1());
         }
-        if (address2 != null) {
-            builder.setAddress2(address2);
+        if (getAddress2() != null) {
+            builder.setAddress2(getAddress2());
         }
-        if (houseNumber != null) {
-            builder.setHouseNumber(houseNumber);
+        if (getHouseNumber() != null) {
+            builder.setHouseNumber(getHouseNumber());
         }
-        if (houseNumberExt != null) {
-            builder.setHouseNumberExt(houseNumberExt);
+        if (getHouseNumberExt() != null) {
+            builder.setHouseNumberExt(getHouseNumberExt());
         }
-        if (directions != null) {
-            builder.setDirections(directions);
+        if (getDirections() != null) {
+            builder.setDirections(getDirections());
         }
-        if (city != null) {
-            builder.setCity(city);
+        if (getCity() != null) {
+            builder.setCity(getCity());
         }
-        if (cityGeoId != null) {
-            builder.setCityGeoId(cityGeoId);
+        if (getCityGeoId() != null) {
+            builder.setCityGeoId(getCityGeoId());
         }
-        if (postalCode != null) {
-            builder.setPostalCode(postalCode);
+        if (getPostalCode() != null) {
+            builder.setPostalCode(getPostalCode());
         }
-        if (postalCodeExt != null) {
-            builder.setPostalCodeExt(postalCodeExt);
+        if (getPostalCodeExt() != null) {
+            builder.setPostalCodeExt(getPostalCodeExt());
         }
-        if (countryGeoId != null) {
-            builder.setCountryGeoId(countryGeoId);
+        if (getCountryGeoId() != null) {
+            builder.setCountryGeoId(getCountryGeoId());
         }
-        if (stateProvinceGeoId != null) {
-            builder.setStateProvinceGeoId(stateProvinceGeoId);
+        if (getStateProvinceGeoId() != null) {
+            builder.setStateProvinceGeoId(getStateProvinceGeoId());
         }
-        if (countyGeoId != null) {
-            builder.setCountyGeoId(countyGeoId);
+        if (getCountyGeoId() != null) {
+            builder.setCountyGeoId(getCountyGeoId());
         }
-        if (municipalityGeoId != null) {
-            builder.setMunicipalityGeoId(municipalityGeoId);
+        if (getMunicipalityGeoId() != null) {
+            builder.setMunicipalityGeoId(getMunicipalityGeoId());
         }
-        if (postalCodeGeoId != null) {
-            builder.setPostalCodeGeoId(postalCodeGeoId);
+        if (getPostalCodeGeoId() != null) {
+            builder.setPostalCodeGeoId(getPostalCodeGeoId());
         }
-        if (geoPointId != null) {
-            builder.setGeoPointId(geoPointId);
+        if (getGeoPointId() != null) {
+            builder.setGeoPointId(getGeoPointId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static PostalAddress fromData(PostalAddressData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PostalAddress.PostalAddressBuilder fromPrototype(PostalAddressData data) {
         return PostalAddress.builder()
                 .contactMechId(data.getContactMechId())
                 .toName(data.getToName())
@@ -184,8 +188,7 @@ public class PostalAddress implements IEventModel<PostalAddressData.Builder>, Ha
                 .geoPointId(data.getGeoPointId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

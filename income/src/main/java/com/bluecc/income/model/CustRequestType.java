@@ -72,32 +72,36 @@ public class CustRequestType implements IEventModel<CustRequestTypeData.Builder>
 
     public CustRequestTypeData.Builder toDataBuilder() {
         CustRequestTypeData.Builder builder = CustRequestTypeData.newBuilder();
-        if (custRequestTypeId != null) {
-            builder.setCustRequestTypeId(custRequestTypeId);
+        if (getCustRequestTypeId() != null) {
+            builder.setCustRequestTypeId(getCustRequestTypeId());
         }
-        if (parentTypeId != null) {
-            builder.setParentTypeId(parentTypeId);
+        if (getParentTypeId() != null) {
+            builder.setParentTypeId(getParentTypeId());
         }
-        if (hasTable != null) {
-            builder.setHasTable(getIndicator(hasTable));
+        if (getHasTable() != null) {
+            builder.setHasTable(getIndicator(getHasTable()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static CustRequestType fromData(CustRequestTypeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CustRequestType.CustRequestTypeBuilder fromPrototype(CustRequestTypeData data) {
         return CustRequestType.builder()
                 .custRequestTypeId(data.getCustRequestTypeId())
                 .parentTypeId(data.getParentTypeId())
@@ -106,8 +110,7 @@ public class CustRequestType implements IEventModel<CustRequestTypeData.Builder>
                 .partyId(data.getPartyId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

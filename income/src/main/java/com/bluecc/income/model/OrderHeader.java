@@ -129,110 +129,114 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
 
     public OrderHeaderFlatData.Builder toDataBuilder() {
         OrderHeaderFlatData.Builder builder = OrderHeaderFlatData.newBuilder();
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderTypeId != null) {
-            builder.setOrderTypeId(orderTypeId);
+        if (getOrderTypeId() != null) {
+            builder.setOrderTypeId(getOrderTypeId());
         }
-        if (orderName != null) {
-            builder.setOrderName(orderName);
+        if (getOrderName() != null) {
+            builder.setOrderName(getOrderName());
         }
-        if (externalId != null) {
-            builder.setExternalId(externalId);
+        if (getExternalId() != null) {
+            builder.setExternalId(getExternalId());
         }
-        if (salesChannelEnumId != null) {
-            builder.setSalesChannelEnumId(salesChannelEnumId);
+        if (getSalesChannelEnumId() != null) {
+            builder.setSalesChannelEnumId(getSalesChannelEnumId());
         }
-        if (orderDate != null) {
-            builder.setOrderDate(getTimestamp(orderDate));
+        if (getOrderDate() != null) {
+            builder.setOrderDate(getTimestamp(getOrderDate()));
         }
-        if (priority != null) {
-            builder.setPriority(getIndicator(priority));
+        if (getPriority() != null) {
+            builder.setPriority(getIndicator(getPriority()));
         }
-        if (entryDate != null) {
-            builder.setEntryDate(getTimestamp(entryDate));
+        if (getEntryDate() != null) {
+            builder.setEntryDate(getTimestamp(getEntryDate()));
         }
-        if (pickSheetPrintedDate != null) {
-            builder.setPickSheetPrintedDate(getTimestamp(pickSheetPrintedDate));
+        if (getPickSheetPrintedDate() != null) {
+            builder.setPickSheetPrintedDate(getTimestamp(getPickSheetPrintedDate()));
         }
-        if (visitId != null) {
-            builder.setVisitId(visitId);
+        if (getVisitId() != null) {
+            builder.setVisitId(getVisitId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (createdBy != null) {
-            builder.setCreatedBy(createdBy);
+        if (getCreatedBy() != null) {
+            builder.setCreatedBy(getCreatedBy());
         }
-        if (firstAttemptOrderId != null) {
-            builder.setFirstAttemptOrderId(firstAttemptOrderId);
+        if (getFirstAttemptOrderId() != null) {
+            builder.setFirstAttemptOrderId(getFirstAttemptOrderId());
         }
-        if (currencyUom != null) {
-            builder.setCurrencyUom(currencyUom);
+        if (getCurrencyUom() != null) {
+            builder.setCurrencyUom(getCurrencyUom());
         }
-        if (syncStatusId != null) {
-            builder.setSyncStatusId(syncStatusId);
+        if (getSyncStatusId() != null) {
+            builder.setSyncStatusId(getSyncStatusId());
         }
-        if (billingAccountId != null) {
-            builder.setBillingAccountId(billingAccountId);
+        if (getBillingAccountId() != null) {
+            builder.setBillingAccountId(getBillingAccountId());
         }
-        if (originFacilityId != null) {
-            builder.setOriginFacilityId(originFacilityId);
+        if (getOriginFacilityId() != null) {
+            builder.setOriginFacilityId(getOriginFacilityId());
         }
-        if (webSiteId != null) {
-            builder.setWebSiteId(webSiteId);
+        if (getWebSiteId() != null) {
+            builder.setWebSiteId(getWebSiteId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (agreementId != null) {
-            builder.setAgreementId(agreementId);
+        if (getAgreementId() != null) {
+            builder.setAgreementId(getAgreementId());
         }
-        if (terminalId != null) {
-            builder.setTerminalId(terminalId);
+        if (getTerminalId() != null) {
+            builder.setTerminalId(getTerminalId());
         }
-        if (transactionId != null) {
-            builder.setTransactionId(transactionId);
+        if (getTransactionId() != null) {
+            builder.setTransactionId(getTransactionId());
         }
-        if (autoOrderShoppingListId != null) {
-            builder.setAutoOrderShoppingListId(autoOrderShoppingListId);
+        if (getAutoOrderShoppingListId() != null) {
+            builder.setAutoOrderShoppingListId(getAutoOrderShoppingListId());
         }
-        if (needsInventoryIssuance != null) {
-            builder.setNeedsInventoryIssuance(getIndicator(needsInventoryIssuance));
+        if (getNeedsInventoryIssuance() != null) {
+            builder.setNeedsInventoryIssuance(getIndicator(getNeedsInventoryIssuance()));
         }
-        if (isRushOrder != null) {
-            builder.setIsRushOrder(getIndicator(isRushOrder));
+        if (getIsRushOrder() != null) {
+            builder.setIsRushOrder(getIndicator(getIsRushOrder()));
         }
-        if (internalCode != null) {
-            builder.setInternalCode(internalCode);
+        if (getInternalCode() != null) {
+            builder.setInternalCode(getInternalCode());
         }
-        if (remainingSubTotal != null) {
-            builder.setRemainingSubTotal(getCurrency(remainingSubTotal));
+        if (getRemainingSubTotal() != null) {
+            builder.setRemainingSubTotal(getCurrency(getRemainingSubTotal()));
         }
-        if (grandTotal != null) {
-            builder.setGrandTotal(getCurrency(grandTotal));
+        if (getGrandTotal() != null) {
+            builder.setGrandTotal(getCurrency(getGrandTotal()));
         }
-        if (isViewed != null) {
-            builder.setIsViewed(getIndicator(isViewed));
+        if (getIsViewed() != null) {
+            builder.setIsViewed(getIndicator(getIsViewed()));
         }
-        if (invoicePerShipment != null) {
-            builder.setInvoicePerShipment(getIndicator(invoicePerShipment));
+        if (getInvoicePerShipment() != null) {
+            builder.setInvoicePerShipment(getIndicator(getInvoicePerShipment()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static OrderHeader fromData(OrderHeaderFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderHeader.OrderHeaderBuilder fromPrototype(OrderHeaderFlatData data) {
         return OrderHeader.builder()
                 .orderId(data.getOrderId())
                 .orderTypeId(data.getOrderTypeId())
@@ -267,8 +271,7 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -403,83 +406,83 @@ public class OrderHeader implements IEventModel<OrderHeaderFlatData.Builder>, Ha
 
     public OrderHeaderData.Builder toHeadBuilder() {
         OrderHeaderData.Builder builder = OrderHeaderData.newBuilder();
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderTypeId != null) {
-            builder.setOrderTypeId(orderTypeId);
+        if (getOrderTypeId() != null) {
+            builder.setOrderTypeId(getOrderTypeId());
         }
-        if (orderName != null) {
-            builder.setOrderName(orderName);
+        if (getOrderName() != null) {
+            builder.setOrderName(getOrderName());
         }
-        if (externalId != null) {
-            builder.setExternalId(externalId);
+        if (getExternalId() != null) {
+            builder.setExternalId(getExternalId());
         }
-        if (salesChannelEnumId != null) {
-            builder.setSalesChannelEnumId(salesChannelEnumId);
+        if (getSalesChannelEnumId() != null) {
+            builder.setSalesChannelEnumId(getSalesChannelEnumId());
         }
-        if (orderDate != null) {
-            builder.setOrderDate(getTimestamp(orderDate));
+        if (getOrderDate() != null) {
+            builder.setOrderDate(getTimestamp(getOrderDate()));
         }
-        if (priority != null) {
-            builder.setPriority(getIndicator(priority));
+        if (getPriority() != null) {
+            builder.setPriority(getIndicator(getPriority()));
         }
-        if (entryDate != null) {
-            builder.setEntryDate(getTimestamp(entryDate));
+        if (getEntryDate() != null) {
+            builder.setEntryDate(getTimestamp(getEntryDate()));
         }
-        if (pickSheetPrintedDate != null) {
-            builder.setPickSheetPrintedDate(getTimestamp(pickSheetPrintedDate));
+        if (getPickSheetPrintedDate() != null) {
+            builder.setPickSheetPrintedDate(getTimestamp(getPickSheetPrintedDate()));
         }
-        if (visitId != null) {
-            builder.setVisitId(visitId);
+        if (getVisitId() != null) {
+            builder.setVisitId(getVisitId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (firstAttemptOrderId != null) {
-            builder.setFirstAttemptOrderId(firstAttemptOrderId);
+        if (getFirstAttemptOrderId() != null) {
+            builder.setFirstAttemptOrderId(getFirstAttemptOrderId());
         }
-        if (currencyUom != null) {
-            builder.setCurrencyUom(currencyUom);
+        if (getCurrencyUom() != null) {
+            builder.setCurrencyUom(getCurrencyUom());
         }
-        if (syncStatusId != null) {
-            builder.setSyncStatusId(syncStatusId);
+        if (getSyncStatusId() != null) {
+            builder.setSyncStatusId(getSyncStatusId());
         }
-        if (agreementId != null) {
-            builder.setAgreementId(agreementId);
+        if (getAgreementId() != null) {
+            builder.setAgreementId(getAgreementId());
         }
-        if (terminalId != null) {
-            builder.setTerminalId(terminalId);
+        if (getTerminalId() != null) {
+            builder.setTerminalId(getTerminalId());
         }
-        if (transactionId != null) {
-            builder.setTransactionId(transactionId);
+        if (getTransactionId() != null) {
+            builder.setTransactionId(getTransactionId());
         }
-        if (needsInventoryIssuance != null) {
-            builder.setNeedsInventoryIssuance(getIndicator(needsInventoryIssuance));
+        if (getNeedsInventoryIssuance() != null) {
+            builder.setNeedsInventoryIssuance(getIndicator(getNeedsInventoryIssuance()));
         }
-        if (isRushOrder != null) {
-            builder.setIsRushOrder(getIndicator(isRushOrder));
+        if (getIsRushOrder() != null) {
+            builder.setIsRushOrder(getIndicator(getIsRushOrder()));
         }
-        if (internalCode != null) {
-            builder.setInternalCode(internalCode);
+        if (getInternalCode() != null) {
+            builder.setInternalCode(getInternalCode());
         }
-        if (remainingSubTotal != null) {
-            builder.setRemainingSubTotal(getCurrency(remainingSubTotal));
+        if (getRemainingSubTotal() != null) {
+            builder.setRemainingSubTotal(getCurrency(getRemainingSubTotal()));
         }
-        if (grandTotal != null) {
-            builder.setGrandTotal(getCurrency(grandTotal));
+        if (getGrandTotal() != null) {
+            builder.setGrandTotal(getCurrency(getGrandTotal()));
         }
-        if (isViewed != null) {
-            builder.setIsViewed(getIndicator(isViewed));
+        if (getIsViewed() != null) {
+            builder.setIsViewed(getIndicator(getIsViewed()));
         }
-        if (invoicePerShipment != null) {
-            builder.setInvoicePerShipment(getIndicator(invoicePerShipment));
+        if (getInvoicePerShipment() != null) {
+            builder.setInvoicePerShipment(getIndicator(getInvoicePerShipment()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

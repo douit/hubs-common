@@ -78,41 +78,45 @@ public class ShipmentBoxType implements IEventModel<ShipmentBoxTypeData.Builder>
 
     public ShipmentBoxTypeData.Builder toDataBuilder() {
         ShipmentBoxTypeData.Builder builder = ShipmentBoxTypeData.newBuilder();
-        if (shipmentBoxTypeId != null) {
-            builder.setShipmentBoxTypeId(shipmentBoxTypeId);
+        if (getShipmentBoxTypeId() != null) {
+            builder.setShipmentBoxTypeId(getShipmentBoxTypeId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (dimensionUomId != null) {
-            builder.setDimensionUomId(dimensionUomId);
+        if (getDimensionUomId() != null) {
+            builder.setDimensionUomId(getDimensionUomId());
         }
-        if (boxLength != null) {
-            builder.setBoxLength(getFixedPoint(boxLength));
+        if (getBoxLength() != null) {
+            builder.setBoxLength(getFixedPoint(getBoxLength()));
         }
-        if (boxWidth != null) {
-            builder.setBoxWidth(getFixedPoint(boxWidth));
+        if (getBoxWidth() != null) {
+            builder.setBoxWidth(getFixedPoint(getBoxWidth()));
         }
-        if (boxHeight != null) {
-            builder.setBoxHeight(getFixedPoint(boxHeight));
+        if (getBoxHeight() != null) {
+            builder.setBoxHeight(getFixedPoint(getBoxHeight()));
         }
-        if (weightUomId != null) {
-            builder.setWeightUomId(weightUomId);
+        if (getWeightUomId() != null) {
+            builder.setWeightUomId(getWeightUomId());
         }
-        if (boxWeight != null) {
-            builder.setBoxWeight(getFixedPoint(boxWeight));
+        if (getBoxWeight() != null) {
+            builder.setBoxWeight(getFixedPoint(getBoxWeight()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ShipmentBoxType fromData(ShipmentBoxTypeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentBoxType.ShipmentBoxTypeBuilder fromPrototype(ShipmentBoxTypeData data) {
         return ShipmentBoxType.builder()
                 .shipmentBoxTypeId(data.getShipmentBoxTypeId())
                 .description(data.getDescription())
@@ -124,8 +128,7 @@ public class ShipmentBoxType implements IEventModel<ShipmentBoxTypeData.Builder>
                 .boxWeight(getBigDecimal(data.getBoxWeight()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

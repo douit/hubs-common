@@ -82,47 +82,51 @@ public class Survey implements IEventModel<SurveyData.Builder>, HasId, Serializa
 
     public SurveyData.Builder toDataBuilder() {
         SurveyData.Builder builder = SurveyData.newBuilder();
-        if (surveyId != null) {
-            builder.setSurveyId(surveyId);
+        if (getSurveyId() != null) {
+            builder.setSurveyId(getSurveyId());
         }
-        if (surveyName != null) {
-            builder.setSurveyName(surveyName);
+        if (getSurveyName() != null) {
+            builder.setSurveyName(getSurveyName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (submitCaption != null) {
-            builder.setSubmitCaption(submitCaption);
+        if (getSubmitCaption() != null) {
+            builder.setSubmitCaption(getSubmitCaption());
         }
-        if (responseService != null) {
-            builder.setResponseService(responseService);
+        if (getResponseService() != null) {
+            builder.setResponseService(getResponseService());
         }
-        if (isAnonymous != null) {
-            builder.setIsAnonymous(getIndicator(isAnonymous));
+        if (getIsAnonymous() != null) {
+            builder.setIsAnonymous(getIndicator(getIsAnonymous()));
         }
-        if (allowMultiple != null) {
-            builder.setAllowMultiple(getIndicator(allowMultiple));
+        if (getAllowMultiple() != null) {
+            builder.setAllowMultiple(getIndicator(getAllowMultiple()));
         }
-        if (allowUpdate != null) {
-            builder.setAllowUpdate(getIndicator(allowUpdate));
+        if (getAllowUpdate() != null) {
+            builder.setAllowUpdate(getIndicator(getAllowUpdate()));
         }
-        if (acroFormContentId != null) {
-            builder.setAcroFormContentId(acroFormContentId);
+        if (getAcroFormContentId() != null) {
+            builder.setAcroFormContentId(getAcroFormContentId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static Survey fromData(SurveyData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Survey.SurveyBuilder fromPrototype(SurveyData data) {
         return Survey.builder()
                 .surveyId(data.getSurveyId())
                 .surveyName(data.getSurveyName())
@@ -136,8 +140,7 @@ public class Survey implements IEventModel<SurveyData.Builder>, HasId, Serializa
                 .acroFormContentId(data.getAcroFormContentId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

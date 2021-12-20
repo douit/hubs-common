@@ -68,34 +68,37 @@ public class ShipmentMethodType implements IEventModel<ShipmentMethodTypeData.Bu
 
     public ShipmentMethodTypeData.Builder toDataBuilder() {
         ShipmentMethodTypeData.Builder builder = ShipmentMethodTypeData.newBuilder();
-        if (shipmentMethodTypeId != null) {
-            builder.setShipmentMethodTypeId(shipmentMethodTypeId);
+        if (getShipmentMethodTypeId() != null) {
+            builder.setShipmentMethodTypeId(getShipmentMethodTypeId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ShipmentMethodType fromData(ShipmentMethodTypeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentMethodType.ShipmentMethodTypeBuilder fromPrototype(ShipmentMethodTypeData data) {
         return ShipmentMethodType.builder()
                 .shipmentMethodTypeId(data.getShipmentMethodTypeId())
                 .description(data.getDescription())
                 .sequenceNum(data.getSequenceNum())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

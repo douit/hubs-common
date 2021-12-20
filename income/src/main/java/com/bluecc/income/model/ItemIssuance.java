@@ -88,56 +88,60 @@ public class ItemIssuance implements IEventModel<ItemIssuanceData.Builder>, HasI
 
     public ItemIssuanceData.Builder toDataBuilder() {
         ItemIssuanceData.Builder builder = ItemIssuanceData.newBuilder();
-        if (itemIssuanceId != null) {
-            builder.setItemIssuanceId(itemIssuanceId);
+        if (getItemIssuanceId() != null) {
+            builder.setItemIssuanceId(getItemIssuanceId());
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (shipGroupSeqId != null) {
-            builder.setShipGroupSeqId(shipGroupSeqId);
+        if (getShipGroupSeqId() != null) {
+            builder.setShipGroupSeqId(getShipGroupSeqId());
         }
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentItemSeqId != null) {
-            builder.setShipmentItemSeqId(shipmentItemSeqId);
+        if (getShipmentItemSeqId() != null) {
+            builder.setShipmentItemSeqId(getShipmentItemSeqId());
         }
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (maintHistSeqId != null) {
-            builder.setMaintHistSeqId(maintHistSeqId);
+        if (getMaintHistSeqId() != null) {
+            builder.setMaintHistSeqId(getMaintHistSeqId());
         }
-        if (issuedDateTime != null) {
-            builder.setIssuedDateTime(getTimestamp(issuedDateTime));
+        if (getIssuedDateTime() != null) {
+            builder.setIssuedDateTime(getTimestamp(getIssuedDateTime()));
         }
-        if (issuedByUserLoginId != null) {
-            builder.setIssuedByUserLoginId(issuedByUserLoginId);
+        if (getIssuedByUserLoginId() != null) {
+            builder.setIssuedByUserLoginId(getIssuedByUserLoginId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (cancelQuantity != null) {
-            builder.setCancelQuantity(getFixedPoint(cancelQuantity));
+        if (getCancelQuantity() != null) {
+            builder.setCancelQuantity(getFixedPoint(getCancelQuantity()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ItemIssuance fromData(ItemIssuanceData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ItemIssuance.ItemIssuanceBuilder fromPrototype(ItemIssuanceData data) {
         return ItemIssuance.builder()
                 .itemIssuanceId(data.getItemIssuanceId())
                 .orderId(data.getOrderId())
@@ -154,8 +158,7 @@ public class ItemIssuance implements IEventModel<ItemIssuanceData.Builder>, HasI
                 .cancelQuantity(getBigDecimal(data.getCancelQuantity()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

@@ -66,30 +66,33 @@ public class SurveyApplType implements IEventModel<SurveyApplTypeData.Builder>, 
 
     public SurveyApplTypeData.Builder toDataBuilder() {
         SurveyApplTypeData.Builder builder = SurveyApplTypeData.newBuilder();
-        if (surveyApplTypeId != null) {
-            builder.setSurveyApplTypeId(surveyApplTypeId);
+        if (getSurveyApplTypeId() != null) {
+            builder.setSurveyApplTypeId(getSurveyApplTypeId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static SurveyApplType fromData(SurveyApplTypeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SurveyApplType.SurveyApplTypeBuilder fromPrototype(SurveyApplTypeData data) {
         return SurveyApplType.builder()
                 .surveyApplTypeId(data.getSurveyApplTypeId())
                 .description(data.getDescription())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

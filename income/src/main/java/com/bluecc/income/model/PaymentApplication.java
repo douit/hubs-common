@@ -80,44 +80,48 @@ public class PaymentApplication implements IEventModel<PaymentApplicationData.Bu
 
     public PaymentApplicationData.Builder toDataBuilder() {
         PaymentApplicationData.Builder builder = PaymentApplicationData.newBuilder();
-        if (paymentApplicationId != null) {
-            builder.setPaymentApplicationId(paymentApplicationId);
+        if (getPaymentApplicationId() != null) {
+            builder.setPaymentApplicationId(getPaymentApplicationId());
         }
-        if (paymentId != null) {
-            builder.setPaymentId(paymentId);
+        if (getPaymentId() != null) {
+            builder.setPaymentId(getPaymentId());
         }
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (invoiceItemSeqId != null) {
-            builder.setInvoiceItemSeqId(invoiceItemSeqId);
+        if (getInvoiceItemSeqId() != null) {
+            builder.setInvoiceItemSeqId(getInvoiceItemSeqId());
         }
-        if (billingAccountId != null) {
-            builder.setBillingAccountId(billingAccountId);
+        if (getBillingAccountId() != null) {
+            builder.setBillingAccountId(getBillingAccountId());
         }
-        if (overrideGlAccountId != null) {
-            builder.setOverrideGlAccountId(overrideGlAccountId);
+        if (getOverrideGlAccountId() != null) {
+            builder.setOverrideGlAccountId(getOverrideGlAccountId());
         }
-        if (toPaymentId != null) {
-            builder.setToPaymentId(toPaymentId);
+        if (getToPaymentId() != null) {
+            builder.setToPaymentId(getToPaymentId());
         }
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (amountApplied != null) {
-            builder.setAmountApplied(getCurrency(amountApplied));
+        if (getAmountApplied() != null) {
+            builder.setAmountApplied(getCurrency(getAmountApplied()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static PaymentApplication fromData(PaymentApplicationData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PaymentApplication.PaymentApplicationBuilder fromPrototype(PaymentApplicationData data) {
         return PaymentApplication.builder()
                 .paymentApplicationId(data.getPaymentApplicationId())
                 .paymentId(data.getPaymentId())
@@ -130,8 +134,7 @@ public class PaymentApplication implements IEventModel<PaymentApplicationData.Bu
                 .amountApplied(getBigDecimal(data.getAmountApplied()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

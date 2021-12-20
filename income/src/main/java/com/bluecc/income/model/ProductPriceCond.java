@@ -72,35 +72,39 @@ public class ProductPriceCond implements IEventModel<ProductPriceCondData.Builde
 
     public ProductPriceCondData.Builder toDataBuilder() {
         ProductPriceCondData.Builder builder = ProductPriceCondData.newBuilder();
-        if (productPriceRuleId != null) {
-            builder.setProductPriceRuleId(productPriceRuleId);
+        if (getProductPriceRuleId() != null) {
+            builder.setProductPriceRuleId(getProductPriceRuleId());
         }
-        if (productPriceCondSeqId != null) {
-            builder.setProductPriceCondSeqId(productPriceCondSeqId);
+        if (getProductPriceCondSeqId() != null) {
+            builder.setProductPriceCondSeqId(getProductPriceCondSeqId());
         }
-        if (inputParamEnumId != null) {
-            builder.setInputParamEnumId(inputParamEnumId);
+        if (getInputParamEnumId() != null) {
+            builder.setInputParamEnumId(getInputParamEnumId());
         }
-        if (operatorEnumId != null) {
-            builder.setOperatorEnumId(operatorEnumId);
+        if (getOperatorEnumId() != null) {
+            builder.setOperatorEnumId(getOperatorEnumId());
         }
-        if (condValue != null) {
-            builder.setCondValue(condValue);
+        if (getCondValue() != null) {
+            builder.setCondValue(getCondValue());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductPriceCond fromData(ProductPriceCondData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPriceCond.ProductPriceCondBuilder fromPrototype(ProductPriceCondData data) {
         return ProductPriceCond.builder()
                 .productPriceRuleId(data.getProductPriceRuleId())
                 .productPriceCondSeqId(data.getProductPriceCondSeqId())
@@ -110,8 +114,7 @@ public class ProductPriceCond implements IEventModel<ProductPriceCondData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

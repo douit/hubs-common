@@ -79,38 +79,42 @@ public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupF
 
     public ProductCategoryRollupFlatData.Builder toDataBuilder() {
         ProductCategoryRollupFlatData.Builder builder = ProductCategoryRollupFlatData.newBuilder();
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (parentProductCategoryId != null) {
-            builder.setParentProductCategoryId(parentProductCategoryId);
+        if (getParentProductCategoryId() != null) {
+            builder.setParentProductCategoryId(getParentProductCategoryId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static ProductCategoryRollup fromData(ProductCategoryRollupFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductCategoryRollup.ProductCategoryRollupBuilder fromPrototype(ProductCategoryRollupFlatData data) {
         return ProductCategoryRollup.builder()
                 .productCategoryId(data.getProductCategoryId())
                 .parentProductCategoryId(data.getParentProductCategoryId())
@@ -121,8 +125,7 @@ public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupF
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -172,29 +175,29 @@ public class ProductCategoryRollup implements IEventModel<ProductCategoryRollupF
 
     public ProductCategoryRollupData.Builder toHeadBuilder() {
         ProductCategoryRollupData.Builder builder = ProductCategoryRollupData.newBuilder();
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (parentProductCategoryId != null) {
-            builder.setParentProductCategoryId(parentProductCategoryId);
+        if (getParentProductCategoryId() != null) {
+            builder.setParentProductCategoryId(getParentProductCategoryId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;

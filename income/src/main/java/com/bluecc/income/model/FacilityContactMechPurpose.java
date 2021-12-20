@@ -73,35 +73,39 @@ public class FacilityContactMechPurpose implements IEventModel<FacilityContactMe
 
     public FacilityContactMechPurposeData.Builder toDataBuilder() {
         FacilityContactMechPurposeData.Builder builder = FacilityContactMechPurposeData.newBuilder();
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (contactMechPurposeTypeId != null) {
-            builder.setContactMechPurposeTypeId(contactMechPurposeTypeId);
+        if (getContactMechPurposeTypeId() != null) {
+            builder.setContactMechPurposeTypeId(getContactMechPurposeTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FacilityContactMechPurpose fromData(FacilityContactMechPurposeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FacilityContactMechPurpose.FacilityContactMechPurposeBuilder fromPrototype(FacilityContactMechPurposeData data) {
         return FacilityContactMechPurpose.builder()
                 .facilityId(data.getFacilityId())
                 .contactMechId(data.getContactMechId())
@@ -111,8 +115,7 @@ public class FacilityContactMechPurpose implements IEventModel<FacilityContactMe
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

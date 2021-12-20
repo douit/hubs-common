@@ -68,29 +68,33 @@ public class TemporalExpressionAssoc implements IEventModel<TemporalExpressionAs
 
     public TemporalExpressionAssocData.Builder toDataBuilder() {
         TemporalExpressionAssocData.Builder builder = TemporalExpressionAssocData.newBuilder();
-        if (fromTempExprId != null) {
-            builder.setFromTempExprId(fromTempExprId);
+        if (getFromTempExprId() != null) {
+            builder.setFromTempExprId(getFromTempExprId());
         }
-        if (toTempExprId != null) {
-            builder.setToTempExprId(toTempExprId);
+        if (getToTempExprId() != null) {
+            builder.setToTempExprId(getToTempExprId());
         }
-        if (exprAssocType != null) {
-            builder.setExprAssocType(exprAssocType);
+        if (getExprAssocType() != null) {
+            builder.setExprAssocType(getExprAssocType());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static TemporalExpressionAssoc fromData(TemporalExpressionAssocData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TemporalExpressionAssoc.TemporalExpressionAssocBuilder fromPrototype(TemporalExpressionAssocData data) {
         return TemporalExpressionAssoc.builder()
                 .fromTempExprId(data.getFromTempExprId())
                 .toTempExprId(data.getToTempExprId())
@@ -98,8 +102,7 @@ public class TemporalExpressionAssoc implements IEventModel<TemporalExpressionAs
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

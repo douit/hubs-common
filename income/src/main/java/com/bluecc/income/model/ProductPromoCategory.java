@@ -82,44 +82,48 @@ public class ProductPromoCategory implements IEventModel<ProductPromoCategoryDat
 
     public ProductPromoCategoryData.Builder toDataBuilder() {
         ProductPromoCategoryData.Builder builder = ProductPromoCategoryData.newBuilder();
-        if (productPromoId != null) {
-            builder.setProductPromoId(productPromoId);
+        if (getProductPromoId() != null) {
+            builder.setProductPromoId(getProductPromoId());
         }
-        if (productPromoRuleId != null) {
-            builder.setProductPromoRuleId(productPromoRuleId);
+        if (getProductPromoRuleId() != null) {
+            builder.setProductPromoRuleId(getProductPromoRuleId());
         }
-        if (productPromoActionSeqId != null) {
-            builder.setProductPromoActionSeqId(productPromoActionSeqId);
+        if (getProductPromoActionSeqId() != null) {
+            builder.setProductPromoActionSeqId(getProductPromoActionSeqId());
         }
-        if (productPromoCondSeqId != null) {
-            builder.setProductPromoCondSeqId(productPromoCondSeqId);
+        if (getProductPromoCondSeqId() != null) {
+            builder.setProductPromoCondSeqId(getProductPromoCondSeqId());
         }
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (andGroupId != null) {
-            builder.setAndGroupId(andGroupId);
+        if (getAndGroupId() != null) {
+            builder.setAndGroupId(getAndGroupId());
         }
-        if (productPromoApplEnumId != null) {
-            builder.setProductPromoApplEnumId(productPromoApplEnumId);
+        if (getProductPromoApplEnumId() != null) {
+            builder.setProductPromoApplEnumId(getProductPromoApplEnumId());
         }
-        if (includeSubCategories != null) {
-            builder.setIncludeSubCategories(getIndicator(includeSubCategories));
+        if (getIncludeSubCategories() != null) {
+            builder.setIncludeSubCategories(getIndicator(getIncludeSubCategories()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductPromoCategory fromData(ProductPromoCategoryData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPromoCategory.ProductPromoCategoryBuilder fromPrototype(ProductPromoCategoryData data) {
         return ProductPromoCategory.builder()
                 .productPromoId(data.getProductPromoId())
                 .productPromoRuleId(data.getProductPromoRuleId())
@@ -132,8 +136,7 @@ public class ProductPromoCategory implements IEventModel<ProductPromoCategoryDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

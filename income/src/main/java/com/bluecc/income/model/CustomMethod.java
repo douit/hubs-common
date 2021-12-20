@@ -70,29 +70,33 @@ public class CustomMethod implements IEventModel<CustomMethodData.Builder>, HasI
 
     public CustomMethodData.Builder toDataBuilder() {
         CustomMethodData.Builder builder = CustomMethodData.newBuilder();
-        if (customMethodId != null) {
-            builder.setCustomMethodId(customMethodId);
+        if (getCustomMethodId() != null) {
+            builder.setCustomMethodId(getCustomMethodId());
         }
-        if (customMethodTypeId != null) {
-            builder.setCustomMethodTypeId(customMethodTypeId);
+        if (getCustomMethodTypeId() != null) {
+            builder.setCustomMethodTypeId(getCustomMethodTypeId());
         }
-        if (customMethodName != null) {
-            builder.setCustomMethodName(customMethodName);
+        if (getCustomMethodName() != null) {
+            builder.setCustomMethodName(getCustomMethodName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static CustomMethod fromData(CustomMethodData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CustomMethod.CustomMethodBuilder fromPrototype(CustomMethodData data) {
         return CustomMethod.builder()
                 .customMethodId(data.getCustomMethodId())
                 .customMethodTypeId(data.getCustomMethodTypeId())
@@ -100,8 +104,7 @@ public class CustomMethod implements IEventModel<CustomMethodData.Builder>, HasI
                 .description(data.getDescription())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

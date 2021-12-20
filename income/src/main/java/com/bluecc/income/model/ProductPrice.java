@@ -107,83 +107,87 @@ public class ProductPrice implements IEventModel<ProductPriceData.Builder>, HasI
 
     public ProductPriceData.Builder toDataBuilder() {
         ProductPriceData.Builder builder = ProductPriceData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (productPriceTypeId != null) {
-            builder.setProductPriceTypeId(productPriceTypeId);
+        if (getProductPriceTypeId() != null) {
+            builder.setProductPriceTypeId(getProductPriceTypeId());
         }
-        if (productPricePurposeId != null) {
-            builder.setProductPricePurposeId(productPricePurposeId);
+        if (getProductPricePurposeId() != null) {
+            builder.setProductPricePurposeId(getProductPricePurposeId());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (productStoreGroupId != null) {
-            builder.setProductStoreGroupId(productStoreGroupId);
+        if (getProductStoreGroupId() != null) {
+            builder.setProductStoreGroupId(getProductStoreGroupId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (price != null) {
-            builder.setPrice(getCurrency(price));
+        if (getPrice() != null) {
+            builder.setPrice(getCurrency(getPrice()));
         }
-        if (termUomId != null) {
-            builder.setTermUomId(termUomId);
+        if (getTermUomId() != null) {
+            builder.setTermUomId(getTermUomId());
         }
-        if (customPriceCalcService != null) {
-            builder.setCustomPriceCalcService(customPriceCalcService);
+        if (getCustomPriceCalcService() != null) {
+            builder.setCustomPriceCalcService(getCustomPriceCalcService());
         }
-        if (priceWithoutTax != null) {
-            builder.setPriceWithoutTax(getCurrency(priceWithoutTax));
+        if (getPriceWithoutTax() != null) {
+            builder.setPriceWithoutTax(getCurrency(getPriceWithoutTax()));
         }
-        if (priceWithTax != null) {
-            builder.setPriceWithTax(getCurrency(priceWithTax));
+        if (getPriceWithTax() != null) {
+            builder.setPriceWithTax(getCurrency(getPriceWithTax()));
         }
-        if (taxAmount != null) {
-            builder.setTaxAmount(getCurrency(taxAmount));
+        if (getTaxAmount() != null) {
+            builder.setTaxAmount(getCurrency(getTaxAmount()));
         }
-        if (taxPercentage != null) {
-            builder.setTaxPercentage(getFixedPoint(taxPercentage));
+        if (getTaxPercentage() != null) {
+            builder.setTaxPercentage(getFixedPoint(getTaxPercentage()));
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxInPrice != null) {
-            builder.setTaxInPrice(getIndicator(taxInPrice));
+        if (getTaxInPrice() != null) {
+            builder.setTaxInPrice(getIndicator(getTaxInPrice()));
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductPrice fromData(ProductPriceData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPrice.ProductPriceBuilder fromPrototype(ProductPriceData data) {
         return ProductPrice.builder()
                 .productId(data.getProductId())
                 .productPriceTypeId(data.getProductPriceTypeId())
@@ -209,8 +213,7 @@ public class ProductPrice implements IEventModel<ProductPriceData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

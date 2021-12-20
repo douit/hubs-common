@@ -82,47 +82,51 @@ public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingDat
 
     public EmailTemplateSettingData.Builder toDataBuilder() {
         EmailTemplateSettingData.Builder builder = EmailTemplateSettingData.newBuilder();
-        if (emailTemplateSettingId != null) {
-            builder.setEmailTemplateSettingId(emailTemplateSettingId);
+        if (getEmailTemplateSettingId() != null) {
+            builder.setEmailTemplateSettingId(getEmailTemplateSettingId());
         }
-        if (emailType != null) {
-            builder.setEmailType(emailType);
+        if (getEmailType() != null) {
+            builder.setEmailType(getEmailType());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (bodyScreenLocation != null) {
-            builder.setBodyScreenLocation(bodyScreenLocation);
+        if (getBodyScreenLocation() != null) {
+            builder.setBodyScreenLocation(getBodyScreenLocation());
         }
-        if (xslfoAttachScreenLocation != null) {
-            builder.setXslfoAttachScreenLocation(xslfoAttachScreenLocation);
+        if (getXslfoAttachScreenLocation() != null) {
+            builder.setXslfoAttachScreenLocation(getXslfoAttachScreenLocation());
         }
-        if (fromAddress != null) {
-            builder.setFromAddress(fromAddress);
+        if (getFromAddress() != null) {
+            builder.setFromAddress(getFromAddress());
         }
-        if (ccAddress != null) {
-            builder.setCcAddress(ccAddress);
+        if (getCcAddress() != null) {
+            builder.setCcAddress(getCcAddress());
         }
-        if (bccAddress != null) {
-            builder.setBccAddress(bccAddress);
+        if (getBccAddress() != null) {
+            builder.setBccAddress(getBccAddress());
         }
-        if (subject != null) {
-            builder.setSubject(subject);
+        if (getSubject() != null) {
+            builder.setSubject(getSubject());
         }
-        if (contentType != null) {
-            builder.setContentType(contentType);
+        if (getContentType() != null) {
+            builder.setContentType(getContentType());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static EmailTemplateSetting fromData(EmailTemplateSettingData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static EmailTemplateSetting.EmailTemplateSettingBuilder fromPrototype(EmailTemplateSettingData data) {
         return EmailTemplateSetting.builder()
                 .emailTemplateSettingId(data.getEmailTemplateSettingId())
                 .emailType(data.getEmailType())
@@ -136,8 +140,7 @@ public class EmailTemplateSetting implements IEventModel<EmailTemplateSettingDat
                 .contentType(data.getContentType())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

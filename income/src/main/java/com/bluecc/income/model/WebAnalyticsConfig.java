@@ -68,29 +68,33 @@ public class WebAnalyticsConfig implements IEventModel<WebAnalyticsConfigData.Bu
 
     public WebAnalyticsConfigData.Builder toDataBuilder() {
         WebAnalyticsConfigData.Builder builder = WebAnalyticsConfigData.newBuilder();
-        if (webSiteId != null) {
-            builder.setWebSiteId(webSiteId);
+        if (getWebSiteId() != null) {
+            builder.setWebSiteId(getWebSiteId());
         }
-        if (webAnalyticsTypeId != null) {
-            builder.setWebAnalyticsTypeId(webAnalyticsTypeId);
+        if (getWebAnalyticsTypeId() != null) {
+            builder.setWebAnalyticsTypeId(getWebAnalyticsTypeId());
         }
-        if (webAnalyticsCode != null) {
-            builder.setWebAnalyticsCode(webAnalyticsCode);
+        if (getWebAnalyticsCode() != null) {
+            builder.setWebAnalyticsCode(getWebAnalyticsCode());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static WebAnalyticsConfig fromData(WebAnalyticsConfigData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WebAnalyticsConfig.WebAnalyticsConfigBuilder fromPrototype(WebAnalyticsConfigData data) {
         return WebAnalyticsConfig.builder()
                 .webSiteId(data.getWebSiteId())
                 .webAnalyticsTypeId(data.getWebAnalyticsTypeId())
@@ -98,8 +102,7 @@ public class WebAnalyticsConfig implements IEventModel<WebAnalyticsConfigData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

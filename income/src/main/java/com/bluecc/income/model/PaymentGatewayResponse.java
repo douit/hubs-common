@@ -106,83 +106,87 @@ public class PaymentGatewayResponse implements IEventModel<PaymentGatewayRespons
 
     public PaymentGatewayResponseData.Builder toDataBuilder() {
         PaymentGatewayResponseData.Builder builder = PaymentGatewayResponseData.newBuilder();
-        if (paymentGatewayResponseId != null) {
-            builder.setPaymentGatewayResponseId(paymentGatewayResponseId);
+        if (getPaymentGatewayResponseId() != null) {
+            builder.setPaymentGatewayResponseId(getPaymentGatewayResponseId());
         }
-        if (paymentServiceTypeEnumId != null) {
-            builder.setPaymentServiceTypeEnumId(paymentServiceTypeEnumId);
+        if (getPaymentServiceTypeEnumId() != null) {
+            builder.setPaymentServiceTypeEnumId(getPaymentServiceTypeEnumId());
         }
-        if (orderPaymentPreferenceId != null) {
-            builder.setOrderPaymentPreferenceId(orderPaymentPreferenceId);
+        if (getOrderPaymentPreferenceId() != null) {
+            builder.setOrderPaymentPreferenceId(getOrderPaymentPreferenceId());
         }
-        if (paymentMethodTypeId != null) {
-            builder.setPaymentMethodTypeId(paymentMethodTypeId);
+        if (getPaymentMethodTypeId() != null) {
+            builder.setPaymentMethodTypeId(getPaymentMethodTypeId());
         }
-        if (paymentMethodId != null) {
-            builder.setPaymentMethodId(paymentMethodId);
+        if (getPaymentMethodId() != null) {
+            builder.setPaymentMethodId(getPaymentMethodId());
         }
-        if (transCodeEnumId != null) {
-            builder.setTransCodeEnumId(transCodeEnumId);
+        if (getTransCodeEnumId() != null) {
+            builder.setTransCodeEnumId(getTransCodeEnumId());
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (referenceNum != null) {
-            builder.setReferenceNum(referenceNum);
+        if (getReferenceNum() != null) {
+            builder.setReferenceNum(getReferenceNum());
         }
-        if (altReference != null) {
-            builder.setAltReference(altReference);
+        if (getAltReference() != null) {
+            builder.setAltReference(getAltReference());
         }
-        if (subReference != null) {
-            builder.setSubReference(subReference);
+        if (getSubReference() != null) {
+            builder.setSubReference(getSubReference());
         }
-        if (gatewayCode != null) {
-            builder.setGatewayCode(gatewayCode);
+        if (getGatewayCode() != null) {
+            builder.setGatewayCode(getGatewayCode());
         }
-        if (gatewayFlag != null) {
-            builder.setGatewayFlag(gatewayFlag);
+        if (getGatewayFlag() != null) {
+            builder.setGatewayFlag(getGatewayFlag());
         }
-        if (gatewayAvsResult != null) {
-            builder.setGatewayAvsResult(gatewayAvsResult);
+        if (getGatewayAvsResult() != null) {
+            builder.setGatewayAvsResult(getGatewayAvsResult());
         }
-        if (gatewayCvResult != null) {
-            builder.setGatewayCvResult(gatewayCvResult);
+        if (getGatewayCvResult() != null) {
+            builder.setGatewayCvResult(getGatewayCvResult());
         }
-        if (gatewayScoreResult != null) {
-            builder.setGatewayScoreResult(gatewayScoreResult);
+        if (getGatewayScoreResult() != null) {
+            builder.setGatewayScoreResult(getGatewayScoreResult());
         }
-        if (gatewayMessage != null) {
-            builder.setGatewayMessage(gatewayMessage);
+        if (getGatewayMessage() != null) {
+            builder.setGatewayMessage(getGatewayMessage());
         }
-        if (transactionDate != null) {
-            builder.setTransactionDate(getTimestamp(transactionDate));
+        if (getTransactionDate() != null) {
+            builder.setTransactionDate(getTimestamp(getTransactionDate()));
         }
-        if (resultDeclined != null) {
-            builder.setResultDeclined(getIndicator(resultDeclined));
+        if (getResultDeclined() != null) {
+            builder.setResultDeclined(getIndicator(getResultDeclined()));
         }
-        if (resultNsf != null) {
-            builder.setResultNsf(getIndicator(resultNsf));
+        if (getResultNsf() != null) {
+            builder.setResultNsf(getIndicator(getResultNsf()));
         }
-        if (resultBadExpire != null) {
-            builder.setResultBadExpire(getIndicator(resultBadExpire));
+        if (getResultBadExpire() != null) {
+            builder.setResultBadExpire(getIndicator(getResultBadExpire()));
         }
-        if (resultBadCardNumber != null) {
-            builder.setResultBadCardNumber(getIndicator(resultBadCardNumber));
+        if (getResultBadCardNumber() != null) {
+            builder.setResultBadCardNumber(getIndicator(getResultBadCardNumber()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static PaymentGatewayResponse fromData(PaymentGatewayResponseData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PaymentGatewayResponse.PaymentGatewayResponseBuilder fromPrototype(PaymentGatewayResponseData data) {
         return PaymentGatewayResponse.builder()
                 .paymentGatewayResponseId(data.getPaymentGatewayResponseId())
                 .paymentServiceTypeEnumId(data.getPaymentServiceTypeEnumId())
@@ -208,8 +212,7 @@ public class PaymentGatewayResponse implements IEventModel<PaymentGatewayRespons
                 .resultBadCardNumber(getIndicatorChar(data.getResultBadCardNumber()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

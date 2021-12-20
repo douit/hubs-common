@@ -80,47 +80,51 @@ public class FacilityLocation implements IEventModel<FacilityLocationData.Builde
 
     public FacilityLocationData.Builder toDataBuilder() {
         FacilityLocationData.Builder builder = FacilityLocationData.newBuilder();
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (locationSeqId != null) {
-            builder.setLocationSeqId(locationSeqId);
+        if (getLocationSeqId() != null) {
+            builder.setLocationSeqId(getLocationSeqId());
         }
-        if (locationTypeEnumId != null) {
-            builder.setLocationTypeEnumId(locationTypeEnumId);
+        if (getLocationTypeEnumId() != null) {
+            builder.setLocationTypeEnumId(getLocationTypeEnumId());
         }
-        if (areaId != null) {
-            builder.setAreaId(areaId);
+        if (getAreaId() != null) {
+            builder.setAreaId(getAreaId());
         }
-        if (aisleId != null) {
-            builder.setAisleId(aisleId);
+        if (getAisleId() != null) {
+            builder.setAisleId(getAisleId());
         }
-        if (sectionId != null) {
-            builder.setSectionId(sectionId);
+        if (getSectionId() != null) {
+            builder.setSectionId(getSectionId());
         }
-        if (levelId != null) {
-            builder.setLevelId(levelId);
+        if (getLevelId() != null) {
+            builder.setLevelId(getLevelId());
         }
-        if (positionId != null) {
-            builder.setPositionId(positionId);
+        if (getPositionId() != null) {
+            builder.setPositionId(getPositionId());
         }
-        if (geoPointId != null) {
-            builder.setGeoPointId(geoPointId);
+        if (getGeoPointId() != null) {
+            builder.setGeoPointId(getGeoPointId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FacilityLocation fromData(FacilityLocationData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FacilityLocation.FacilityLocationBuilder fromPrototype(FacilityLocationData data) {
         return FacilityLocation.builder()
                 .facilityId(data.getFacilityId())
                 .locationSeqId(data.getLocationSeqId())
@@ -134,8 +138,7 @@ public class FacilityLocation implements IEventModel<FacilityLocationData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

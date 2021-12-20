@@ -101,68 +101,72 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, HasId, Ser
 
     public InvoiceFlatData.Builder toDataBuilder() {
         InvoiceFlatData.Builder builder = InvoiceFlatData.newBuilder();
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (invoiceTypeId != null) {
-            builder.setInvoiceTypeId(invoiceTypeId);
+        if (getInvoiceTypeId() != null) {
+            builder.setInvoiceTypeId(getInvoiceTypeId());
         }
-        if (partyIdFrom != null) {
-            builder.setPartyIdFrom(partyIdFrom);
+        if (getPartyIdFrom() != null) {
+            builder.setPartyIdFrom(getPartyIdFrom());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (billingAccountId != null) {
-            builder.setBillingAccountId(billingAccountId);
+        if (getBillingAccountId() != null) {
+            builder.setBillingAccountId(getBillingAccountId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (invoiceDate != null) {
-            builder.setInvoiceDate(getTimestamp(invoiceDate));
+        if (getInvoiceDate() != null) {
+            builder.setInvoiceDate(getTimestamp(getInvoiceDate()));
         }
-        if (dueDate != null) {
-            builder.setDueDate(getTimestamp(dueDate));
+        if (getDueDate() != null) {
+            builder.setDueDate(getTimestamp(getDueDate()));
         }
-        if (paidDate != null) {
-            builder.setPaidDate(getTimestamp(paidDate));
+        if (getPaidDate() != null) {
+            builder.setPaidDate(getTimestamp(getPaidDate()));
         }
-        if (invoiceMessage != null) {
-            builder.setInvoiceMessage(invoiceMessage);
+        if (getInvoiceMessage() != null) {
+            builder.setInvoiceMessage(getInvoiceMessage());
         }
-        if (referenceNumber != null) {
-            builder.setReferenceNumber(referenceNumber);
+        if (getReferenceNumber() != null) {
+            builder.setReferenceNumber(getReferenceNumber());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (recurrenceInfoId != null) {
-            builder.setRecurrenceInfoId(recurrenceInfoId);
+        if (getRecurrenceInfoId() != null) {
+            builder.setRecurrenceInfoId(getRecurrenceInfoId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static Invoice fromData(InvoiceFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Invoice.InvoiceBuilder fromPrototype(InvoiceFlatData data) {
         return Invoice.builder()
                 .invoiceId(data.getInvoiceId())
                 .invoiceTypeId(data.getInvoiceTypeId())
@@ -183,8 +187,7 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, HasId, Ser
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -279,44 +282,44 @@ public class Invoice implements IEventModel<InvoiceFlatData.Builder>, HasId, Ser
 
     public InvoiceData.Builder toHeadBuilder() {
         InvoiceData.Builder builder = InvoiceData.newBuilder();
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (invoiceTypeId != null) {
-            builder.setInvoiceTypeId(invoiceTypeId);
+        if (getInvoiceTypeId() != null) {
+            builder.setInvoiceTypeId(getInvoiceTypeId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (invoiceDate != null) {
-            builder.setInvoiceDate(getTimestamp(invoiceDate));
+        if (getInvoiceDate() != null) {
+            builder.setInvoiceDate(getTimestamp(getInvoiceDate()));
         }
-        if (dueDate != null) {
-            builder.setDueDate(getTimestamp(dueDate));
+        if (getDueDate() != null) {
+            builder.setDueDate(getTimestamp(getDueDate()));
         }
-        if (paidDate != null) {
-            builder.setPaidDate(getTimestamp(paidDate));
+        if (getPaidDate() != null) {
+            builder.setPaidDate(getTimestamp(getPaidDate()));
         }
-        if (invoiceMessage != null) {
-            builder.setInvoiceMessage(invoiceMessage);
+        if (getInvoiceMessage() != null) {
+            builder.setInvoiceMessage(getInvoiceMessage());
         }
-        if (referenceNumber != null) {
-            builder.setReferenceNumber(referenceNumber);
+        if (getReferenceNumber() != null) {
+            builder.setReferenceNumber(getReferenceNumber());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

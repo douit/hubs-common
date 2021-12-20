@@ -68,34 +68,37 @@ public class ProductFeatureCategory implements IEventModel<ProductFeatureCategor
 
     public ProductFeatureCategoryData.Builder toDataBuilder() {
         ProductFeatureCategoryData.Builder builder = ProductFeatureCategoryData.newBuilder();
-        if (productFeatureCategoryId != null) {
-            builder.setProductFeatureCategoryId(productFeatureCategoryId);
+        if (getProductFeatureCategoryId() != null) {
+            builder.setProductFeatureCategoryId(getProductFeatureCategoryId());
         }
-        if (parentCategoryId != null) {
-            builder.setParentCategoryId(parentCategoryId);
+        if (getParentCategoryId() != null) {
+            builder.setParentCategoryId(getParentCategoryId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ProductFeatureCategory fromData(ProductFeatureCategoryData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductFeatureCategory.ProductFeatureCategoryBuilder fromPrototype(ProductFeatureCategoryData data) {
         return ProductFeatureCategory.builder()
                 .productFeatureCategoryId(data.getProductFeatureCategoryId())
                 .parentCategoryId(data.getParentCategoryId())
                 .description(data.getDescription())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

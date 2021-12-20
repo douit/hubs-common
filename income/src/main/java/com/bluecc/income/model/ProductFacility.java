@@ -78,44 +78,48 @@ public class ProductFacility implements IEventModel<ProductFacilityData.Builder>
 
     public ProductFacilityData.Builder toDataBuilder() {
         ProductFacilityData.Builder builder = ProductFacilityData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (minimumStock != null) {
-            builder.setMinimumStock(getFixedPoint(minimumStock));
+        if (getMinimumStock() != null) {
+            builder.setMinimumStock(getFixedPoint(getMinimumStock()));
         }
-        if (reorderQuantity != null) {
-            builder.setReorderQuantity(getFixedPoint(reorderQuantity));
+        if (getReorderQuantity() != null) {
+            builder.setReorderQuantity(getFixedPoint(getReorderQuantity()));
         }
-        if (daysToShip != null) {
-            builder.setDaysToShip(daysToShip);
+        if (getDaysToShip() != null) {
+            builder.setDaysToShip(getDaysToShip());
         }
-        if (replenishMethodEnumId != null) {
-            builder.setReplenishMethodEnumId(replenishMethodEnumId);
+        if (getReplenishMethodEnumId() != null) {
+            builder.setReplenishMethodEnumId(getReplenishMethodEnumId());
         }
-        if (lastInventoryCount != null) {
-            builder.setLastInventoryCount(getFixedPoint(lastInventoryCount));
+        if (getLastInventoryCount() != null) {
+            builder.setLastInventoryCount(getFixedPoint(getLastInventoryCount()));
         }
-        if (requirementMethodEnumId != null) {
-            builder.setRequirementMethodEnumId(requirementMethodEnumId);
+        if (getRequirementMethodEnumId() != null) {
+            builder.setRequirementMethodEnumId(getRequirementMethodEnumId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductFacility fromData(ProductFacilityData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductFacility.ProductFacilityBuilder fromPrototype(ProductFacilityData data) {
         return ProductFacility.builder()
                 .productId(data.getProductId())
                 .facilityId(data.getFacilityId())
@@ -128,8 +132,7 @@ public class ProductFacility implements IEventModel<ProductFacilityData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -71,32 +71,36 @@ public class OrderAdjustmentBilling implements IEventModel<OrderAdjustmentBillin
 
     public OrderAdjustmentBillingData.Builder toDataBuilder() {
         OrderAdjustmentBillingData.Builder builder = OrderAdjustmentBillingData.newBuilder();
-        if (orderAdjustmentId != null) {
-            builder.setOrderAdjustmentId(orderAdjustmentId);
+        if (getOrderAdjustmentId() != null) {
+            builder.setOrderAdjustmentId(getOrderAdjustmentId());
         }
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (invoiceItemSeqId != null) {
-            builder.setInvoiceItemSeqId(invoiceItemSeqId);
+        if (getInvoiceItemSeqId() != null) {
+            builder.setInvoiceItemSeqId(getInvoiceItemSeqId());
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static OrderAdjustmentBilling fromData(OrderAdjustmentBillingData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderAdjustmentBilling.OrderAdjustmentBillingBuilder fromPrototype(OrderAdjustmentBillingData data) {
         return OrderAdjustmentBilling.builder()
                 .orderAdjustmentId(data.getOrderAdjustmentId())
                 .invoiceId(data.getInvoiceId())
@@ -105,8 +109,7 @@ public class OrderAdjustmentBilling implements IEventModel<OrderAdjustmentBillin
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

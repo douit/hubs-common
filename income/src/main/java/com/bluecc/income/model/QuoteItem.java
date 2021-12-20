@@ -104,83 +104,87 @@ public class QuoteItem implements IEventModel<QuoteItemData.Builder>, HasId, Ser
 
     public QuoteItemData.Builder toDataBuilder() {
         QuoteItemData.Builder builder = QuoteItemData.newBuilder();
-        if (quoteId != null) {
-            builder.setQuoteId(quoteId);
+        if (getQuoteId() != null) {
+            builder.setQuoteId(getQuoteId());
         }
-        if (quoteItemSeqId != null) {
-            builder.setQuoteItemSeqId(quoteItemSeqId);
+        if (getQuoteItemSeqId() != null) {
+            builder.setQuoteItemSeqId(getQuoteItemSeqId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (productFeatureId != null) {
-            builder.setProductFeatureId(productFeatureId);
+        if (getProductFeatureId() != null) {
+            builder.setProductFeatureId(getProductFeatureId());
         }
-        if (deliverableTypeId != null) {
-            builder.setDeliverableTypeId(deliverableTypeId);
+        if (getDeliverableTypeId() != null) {
+            builder.setDeliverableTypeId(getDeliverableTypeId());
         }
-        if (skillTypeId != null) {
-            builder.setSkillTypeId(skillTypeId);
+        if (getSkillTypeId() != null) {
+            builder.setSkillTypeId(getSkillTypeId());
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (custRequestId != null) {
-            builder.setCustRequestId(custRequestId);
+        if (getCustRequestId() != null) {
+            builder.setCustRequestId(getCustRequestId());
         }
-        if (custRequestItemSeqId != null) {
-            builder.setCustRequestItemSeqId(custRequestItemSeqId);
+        if (getCustRequestItemSeqId() != null) {
+            builder.setCustRequestItemSeqId(getCustRequestItemSeqId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (selectedAmount != null) {
-            builder.setSelectedAmount(getFixedPoint(selectedAmount));
+        if (getSelectedAmount() != null) {
+            builder.setSelectedAmount(getFixedPoint(getSelectedAmount()));
         }
-        if (quoteUnitPrice != null) {
-            builder.setQuoteUnitPrice(getCurrency(quoteUnitPrice));
+        if (getQuoteUnitPrice() != null) {
+            builder.setQuoteUnitPrice(getCurrency(getQuoteUnitPrice()));
         }
-        if (reservStart != null) {
-            builder.setReservStart(getTimestamp(reservStart));
+        if (getReservStart() != null) {
+            builder.setReservStart(getTimestamp(getReservStart()));
         }
-        if (reservLength != null) {
-            builder.setReservLength(getFixedPoint(reservLength));
+        if (getReservLength() != null) {
+            builder.setReservLength(getFixedPoint(getReservLength()));
         }
-        if (reservPersons != null) {
-            builder.setReservPersons(getFixedPoint(reservPersons));
+        if (getReservPersons() != null) {
+            builder.setReservPersons(getFixedPoint(getReservPersons()));
         }
-        if (configId != null) {
-            builder.setConfigId(configId);
+        if (getConfigId() != null) {
+            builder.setConfigId(getConfigId());
         }
-        if (estimatedDeliveryDate != null) {
-            builder.setEstimatedDeliveryDate(getTimestamp(estimatedDeliveryDate));
+        if (getEstimatedDeliveryDate() != null) {
+            builder.setEstimatedDeliveryDate(getTimestamp(getEstimatedDeliveryDate()));
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (isPromo != null) {
-            builder.setIsPromo(getIndicator(isPromo));
+        if (getIsPromo() != null) {
+            builder.setIsPromo(getIndicator(getIsPromo()));
         }
-        if (leadTimeDays != null) {
-            builder.setLeadTimeDays(leadTimeDays);
+        if (getLeadTimeDays() != null) {
+            builder.setLeadTimeDays(getLeadTimeDays());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static QuoteItem fromData(QuoteItemData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static QuoteItem.QuoteItemBuilder fromPrototype(QuoteItemData data) {
         return QuoteItem.builder()
                 .quoteId(data.getQuoteId())
                 .quoteItemSeqId(data.getQuoteItemSeqId())
@@ -206,8 +210,7 @@ public class QuoteItem implements IEventModel<QuoteItemData.Builder>, HasId, Ser
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

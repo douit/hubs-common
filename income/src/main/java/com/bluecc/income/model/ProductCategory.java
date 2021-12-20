@@ -91,53 +91,57 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
 
     public ProductCategoryFlatData.Builder toDataBuilder() {
         ProductCategoryFlatData.Builder builder = ProductCategoryFlatData.newBuilder();
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (productCategoryTypeId != null) {
-            builder.setProductCategoryTypeId(productCategoryTypeId);
+        if (getProductCategoryTypeId() != null) {
+            builder.setProductCategoryTypeId(getProductCategoryTypeId());
         }
-        if (primaryParentCategoryId != null) {
-            builder.setPrimaryParentCategoryId(primaryParentCategoryId);
+        if (getPrimaryParentCategoryId() != null) {
+            builder.setPrimaryParentCategoryId(getPrimaryParentCategoryId());
         }
-        if (categoryName != null) {
-            builder.setCategoryName(categoryName);
+        if (getCategoryName() != null) {
+            builder.setCategoryName(getCategoryName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (longDescription != null) {
-            builder.setLongDescription(longDescription);
+        if (getLongDescription() != null) {
+            builder.setLongDescription(getLongDescription());
         }
-        if (categoryImageUrl != null) {
-            builder.setCategoryImageUrl(categoryImageUrl);
+        if (getCategoryImageUrl() != null) {
+            builder.setCategoryImageUrl(getCategoryImageUrl());
         }
-        if (linkOneImageUrl != null) {
-            builder.setLinkOneImageUrl(linkOneImageUrl);
+        if (getLinkOneImageUrl() != null) {
+            builder.setLinkOneImageUrl(getLinkOneImageUrl());
         }
-        if (linkTwoImageUrl != null) {
-            builder.setLinkTwoImageUrl(linkTwoImageUrl);
+        if (getLinkTwoImageUrl() != null) {
+            builder.setLinkTwoImageUrl(getLinkTwoImageUrl());
         }
-        if (detailScreen != null) {
-            builder.setDetailScreen(detailScreen);
+        if (getDetailScreen() != null) {
+            builder.setDetailScreen(getDetailScreen());
         }
-        if (showInSelect != null) {
-            builder.setShowInSelect(getIndicator(showInSelect));
+        if (getShowInSelect() != null) {
+            builder.setShowInSelect(getIndicator(getShowInSelect()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static ProductCategory fromData(ProductCategoryFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductCategory.ProductCategoryBuilder fromPrototype(ProductCategoryFlatData data) {
         return ProductCategory.builder()
                 .productCategoryId(data.getProductCategoryId())
                 .productCategoryTypeId(data.getProductCategoryTypeId())
@@ -153,8 +157,7 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -254,41 +257,41 @@ public class ProductCategory implements IEventModel<ProductCategoryFlatData.Buil
 
     public ProductCategoryData.Builder toHeadBuilder() {
         ProductCategoryData.Builder builder = ProductCategoryData.newBuilder();
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (productCategoryTypeId != null) {
-            builder.setProductCategoryTypeId(productCategoryTypeId);
+        if (getProductCategoryTypeId() != null) {
+            builder.setProductCategoryTypeId(getProductCategoryTypeId());
         }
-        if (categoryName != null) {
-            builder.setCategoryName(categoryName);
+        if (getCategoryName() != null) {
+            builder.setCategoryName(getCategoryName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (longDescription != null) {
-            builder.setLongDescription(longDescription);
+        if (getLongDescription() != null) {
+            builder.setLongDescription(getLongDescription());
         }
-        if (categoryImageUrl != null) {
-            builder.setCategoryImageUrl(categoryImageUrl);
+        if (getCategoryImageUrl() != null) {
+            builder.setCategoryImageUrl(getCategoryImageUrl());
         }
-        if (linkOneImageUrl != null) {
-            builder.setLinkOneImageUrl(linkOneImageUrl);
+        if (getLinkOneImageUrl() != null) {
+            builder.setLinkOneImageUrl(getLinkOneImageUrl());
         }
-        if (linkTwoImageUrl != null) {
-            builder.setLinkTwoImageUrl(linkTwoImageUrl);
+        if (getLinkTwoImageUrl() != null) {
+            builder.setLinkTwoImageUrl(getLinkTwoImageUrl());
         }
-        if (detailScreen != null) {
-            builder.setDetailScreen(detailScreen);
+        if (getDetailScreen() != null) {
+            builder.setDetailScreen(getDetailScreen());
         }
-        if (showInSelect != null) {
-            builder.setShowInSelect(getIndicator(showInSelect));
+        if (getShowInSelect() != null) {
+            builder.setShowInSelect(getIndicator(getShowInSelect()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

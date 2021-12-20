@@ -70,32 +70,36 @@ public class ContentAttribute implements IEventModel<ContentAttributeData.Builde
 
     public ContentAttributeData.Builder toDataBuilder() {
         ContentAttributeData.Builder builder = ContentAttributeData.newBuilder();
-        if (contentId != null) {
-            builder.setContentId(contentId);
+        if (getContentId() != null) {
+            builder.setContentId(getContentId());
         }
-        if (attrName != null) {
-            builder.setAttrName(attrName);
+        if (getAttrName() != null) {
+            builder.setAttrName(getAttrName());
         }
-        if (attrValue != null) {
-            builder.setAttrValue(attrValue);
+        if (getAttrValue() != null) {
+            builder.setAttrValue(getAttrValue());
         }
-        if (attrDescription != null) {
-            builder.setAttrDescription(attrDescription);
+        if (getAttrDescription() != null) {
+            builder.setAttrDescription(getAttrDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ContentAttribute fromData(ContentAttributeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ContentAttribute.ContentAttributeBuilder fromPrototype(ContentAttributeData data) {
         return ContentAttribute.builder()
                 .contentId(data.getContentId())
                 .attrName(data.getAttrName())
@@ -104,8 +108,7 @@ public class ContentAttribute implements IEventModel<ContentAttributeData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -70,29 +70,33 @@ public class QuantityBreak implements IEventModel<QuantityBreakData.Builder>, Ha
 
     public QuantityBreakData.Builder toDataBuilder() {
         QuantityBreakData.Builder builder = QuantityBreakData.newBuilder();
-        if (quantityBreakId != null) {
-            builder.setQuantityBreakId(quantityBreakId);
+        if (getQuantityBreakId() != null) {
+            builder.setQuantityBreakId(getQuantityBreakId());
         }
-        if (quantityBreakTypeId != null) {
-            builder.setQuantityBreakTypeId(quantityBreakTypeId);
+        if (getQuantityBreakTypeId() != null) {
+            builder.setQuantityBreakTypeId(getQuantityBreakTypeId());
         }
-        if (fromQuantity != null) {
-            builder.setFromQuantity(getFixedPoint(fromQuantity));
+        if (getFromQuantity() != null) {
+            builder.setFromQuantity(getFixedPoint(getFromQuantity()));
         }
-        if (thruQuantity != null) {
-            builder.setThruQuantity(getFixedPoint(thruQuantity));
+        if (getThruQuantity() != null) {
+            builder.setThruQuantity(getFixedPoint(getThruQuantity()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static QuantityBreak fromData(QuantityBreakData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static QuantityBreak.QuantityBreakBuilder fromPrototype(QuantityBreakData data) {
         return QuantityBreak.builder()
                 .quantityBreakId(data.getQuantityBreakId())
                 .quantityBreakTypeId(data.getQuantityBreakTypeId())
@@ -100,8 +104,7 @@ public class QuantityBreak implements IEventModel<QuantityBreakData.Builder>, Ha
                 .thruQuantity(getBigDecimal(data.getThruQuantity()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

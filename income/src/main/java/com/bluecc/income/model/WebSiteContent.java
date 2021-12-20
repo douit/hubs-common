@@ -73,35 +73,39 @@ public class WebSiteContent implements IEventModel<WebSiteContentData.Builder>, 
 
     public WebSiteContentData.Builder toDataBuilder() {
         WebSiteContentData.Builder builder = WebSiteContentData.newBuilder();
-        if (webSiteId != null) {
-            builder.setWebSiteId(webSiteId);
+        if (getWebSiteId() != null) {
+            builder.setWebSiteId(getWebSiteId());
         }
-        if (contentId != null) {
-            builder.setContentId(contentId);
+        if (getContentId() != null) {
+            builder.setContentId(getContentId());
         }
-        if (webSiteContentTypeId != null) {
-            builder.setWebSiteContentTypeId(webSiteContentTypeId);
+        if (getWebSiteContentTypeId() != null) {
+            builder.setWebSiteContentTypeId(getWebSiteContentTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static WebSiteContent fromData(WebSiteContentData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WebSiteContent.WebSiteContentBuilder fromPrototype(WebSiteContentData data) {
         return WebSiteContent.builder()
                 .webSiteId(data.getWebSiteId())
                 .contentId(data.getContentId())
@@ -111,8 +115,7 @@ public class WebSiteContent implements IEventModel<WebSiteContentData.Builder>, 
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

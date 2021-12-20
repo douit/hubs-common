@@ -106,86 +106,90 @@ public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.
 
     public InventoryItemDetailData.Builder toDataBuilder() {
         InventoryItemDetailData.Builder builder = InventoryItemDetailData.newBuilder();
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (inventoryItemDetailSeqId != null) {
-            builder.setInventoryItemDetailSeqId(inventoryItemDetailSeqId);
+        if (getInventoryItemDetailSeqId() != null) {
+            builder.setInventoryItemDetailSeqId(getInventoryItemDetailSeqId());
         }
-        if (effectiveDate != null) {
-            builder.setEffectiveDate(getTimestamp(effectiveDate));
+        if (getEffectiveDate() != null) {
+            builder.setEffectiveDate(getTimestamp(getEffectiveDate()));
         }
-        if (quantityOnHandDiff != null) {
-            builder.setQuantityOnHandDiff(getFixedPoint(quantityOnHandDiff));
+        if (getQuantityOnHandDiff() != null) {
+            builder.setQuantityOnHandDiff(getFixedPoint(getQuantityOnHandDiff()));
         }
-        if (availableToPromiseDiff != null) {
-            builder.setAvailableToPromiseDiff(getFixedPoint(availableToPromiseDiff));
+        if (getAvailableToPromiseDiff() != null) {
+            builder.setAvailableToPromiseDiff(getFixedPoint(getAvailableToPromiseDiff()));
         }
-        if (accountingQuantityDiff != null) {
-            builder.setAccountingQuantityDiff(getFixedPoint(accountingQuantityDiff));
+        if (getAccountingQuantityDiff() != null) {
+            builder.setAccountingQuantityDiff(getFixedPoint(getAccountingQuantityDiff()));
         }
-        if (unitCost != null) {
-            builder.setUnitCost(getFixedPoint(unitCost));
+        if (getUnitCost() != null) {
+            builder.setUnitCost(getFixedPoint(getUnitCost()));
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (shipGroupSeqId != null) {
-            builder.setShipGroupSeqId(shipGroupSeqId);
+        if (getShipGroupSeqId() != null) {
+            builder.setShipGroupSeqId(getShipGroupSeqId());
         }
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentItemSeqId != null) {
-            builder.setShipmentItemSeqId(shipmentItemSeqId);
+        if (getShipmentItemSeqId() != null) {
+            builder.setShipmentItemSeqId(getShipmentItemSeqId());
         }
-        if (returnId != null) {
-            builder.setReturnId(returnId);
+        if (getReturnId() != null) {
+            builder.setReturnId(getReturnId());
         }
-        if (returnItemSeqId != null) {
-            builder.setReturnItemSeqId(returnItemSeqId);
+        if (getReturnItemSeqId() != null) {
+            builder.setReturnItemSeqId(getReturnItemSeqId());
         }
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (maintHistSeqId != null) {
-            builder.setMaintHistSeqId(maintHistSeqId);
+        if (getMaintHistSeqId() != null) {
+            builder.setMaintHistSeqId(getMaintHistSeqId());
         }
-        if (itemIssuanceId != null) {
-            builder.setItemIssuanceId(itemIssuanceId);
+        if (getItemIssuanceId() != null) {
+            builder.setItemIssuanceId(getItemIssuanceId());
         }
-        if (receiptId != null) {
-            builder.setReceiptId(receiptId);
+        if (getReceiptId() != null) {
+            builder.setReceiptId(getReceiptId());
         }
-        if (physicalInventoryId != null) {
-            builder.setPhysicalInventoryId(physicalInventoryId);
+        if (getPhysicalInventoryId() != null) {
+            builder.setPhysicalInventoryId(getPhysicalInventoryId());
         }
-        if (reasonEnumId != null) {
-            builder.setReasonEnumId(reasonEnumId);
+        if (getReasonEnumId() != null) {
+            builder.setReasonEnumId(getReasonEnumId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static InventoryItemDetail fromData(InventoryItemDetailData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static InventoryItemDetail.InventoryItemDetailBuilder fromPrototype(InventoryItemDetailData data) {
         return InventoryItemDetail.builder()
                 .inventoryItemId(data.getInventoryItemId())
                 .inventoryItemDetailSeqId(data.getInventoryItemDetailSeqId())
@@ -212,8 +216,7 @@ public class InventoryItemDetail implements IEventModel<InventoryItemDetailData.
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

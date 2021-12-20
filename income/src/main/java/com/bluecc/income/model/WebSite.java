@@ -103,71 +103,75 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, HasId, Ser
 
     public WebSiteFlatData.Builder toDataBuilder() {
         WebSiteFlatData.Builder builder = WebSiteFlatData.newBuilder();
-        if (webSiteId != null) {
-            builder.setWebSiteId(webSiteId);
+        if (getWebSiteId() != null) {
+            builder.setWebSiteId(getWebSiteId());
         }
-        if (siteName != null) {
-            builder.setSiteName(siteName);
+        if (getSiteName() != null) {
+            builder.setSiteName(getSiteName());
         }
-        if (httpHost != null) {
-            builder.setHttpHost(httpHost);
+        if (getHttpHost() != null) {
+            builder.setHttpHost(getHttpHost());
         }
-        if (httpPort != null) {
-            builder.setHttpPort(httpPort);
+        if (getHttpPort() != null) {
+            builder.setHttpPort(getHttpPort());
         }
-        if (httpsHost != null) {
-            builder.setHttpsHost(httpsHost);
+        if (getHttpsHost() != null) {
+            builder.setHttpsHost(getHttpsHost());
         }
-        if (httpsPort != null) {
-            builder.setHttpsPort(httpsPort);
+        if (getHttpsPort() != null) {
+            builder.setHttpsPort(getHttpsPort());
         }
-        if (enableHttps != null) {
-            builder.setEnableHttps(getIndicator(enableHttps));
+        if (getEnableHttps() != null) {
+            builder.setEnableHttps(getIndicator(getEnableHttps()));
         }
-        if (webappPath != null) {
-            builder.setWebappPath(webappPath);
+        if (getWebappPath() != null) {
+            builder.setWebappPath(getWebappPath());
         }
-        if (standardContentPrefix != null) {
-            builder.setStandardContentPrefix(standardContentPrefix);
+        if (getStandardContentPrefix() != null) {
+            builder.setStandardContentPrefix(getStandardContentPrefix());
         }
-        if (secureContentPrefix != null) {
-            builder.setSecureContentPrefix(secureContentPrefix);
+        if (getSecureContentPrefix() != null) {
+            builder.setSecureContentPrefix(getSecureContentPrefix());
         }
-        if (cookieDomain != null) {
-            builder.setCookieDomain(cookieDomain);
+        if (getCookieDomain() != null) {
+            builder.setCookieDomain(getCookieDomain());
         }
-        if (visualThemeSetId != null) {
-            builder.setVisualThemeSetId(visualThemeSetId);
+        if (getVisualThemeSetId() != null) {
+            builder.setVisualThemeSetId(getVisualThemeSetId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (allowProductStoreChange != null) {
-            builder.setAllowProductStoreChange(getIndicator(allowProductStoreChange));
+        if (getAllowProductStoreChange() != null) {
+            builder.setAllowProductStoreChange(getIndicator(getAllowProductStoreChange()));
         }
-        if (hostedPathAlias != null) {
-            builder.setHostedPathAlias(hostedPathAlias);
+        if (getHostedPathAlias() != null) {
+            builder.setHostedPathAlias(getHostedPathAlias());
         }
-        if (isDefault != null) {
-            builder.setIsDefault(getIndicator(isDefault));
+        if (getIsDefault() != null) {
+            builder.setIsDefault(getIndicator(getIsDefault()));
         }
-        if (displayMaintenancePage != null) {
-            builder.setDisplayMaintenancePage(getIndicator(displayMaintenancePage));
+        if (getDisplayMaintenancePage() != null) {
+            builder.setDisplayMaintenancePage(getIndicator(getDisplayMaintenancePage()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static WebSite fromData(WebSiteFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WebSite.WebSiteBuilder fromPrototype(WebSiteFlatData data) {
         return WebSite.builder()
                 .webSiteId(data.getWebSiteId())
                 .siteName(data.getSiteName())
@@ -189,8 +193,7 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, HasId, Ser
                 .isDefault(getIndicatorChar(data.getIsDefault()))
                 .displayMaintenancePage(getIndicatorChar(data.getDisplayMaintenancePage()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -245,59 +248,59 @@ public class WebSite implements IEventModel<WebSiteFlatData.Builder>, HasId, Ser
 
     public WebSiteData.Builder toHeadBuilder() {
         WebSiteData.Builder builder = WebSiteData.newBuilder();
-        if (webSiteId != null) {
-            builder.setWebSiteId(webSiteId);
+        if (getWebSiteId() != null) {
+            builder.setWebSiteId(getWebSiteId());
         }
-        if (siteName != null) {
-            builder.setSiteName(siteName);
+        if (getSiteName() != null) {
+            builder.setSiteName(getSiteName());
         }
-        if (httpHost != null) {
-            builder.setHttpHost(httpHost);
+        if (getHttpHost() != null) {
+            builder.setHttpHost(getHttpHost());
         }
-        if (httpPort != null) {
-            builder.setHttpPort(httpPort);
+        if (getHttpPort() != null) {
+            builder.setHttpPort(getHttpPort());
         }
-        if (httpsHost != null) {
-            builder.setHttpsHost(httpsHost);
+        if (getHttpsHost() != null) {
+            builder.setHttpsHost(getHttpsHost());
         }
-        if (httpsPort != null) {
-            builder.setHttpsPort(httpsPort);
+        if (getHttpsPort() != null) {
+            builder.setHttpsPort(getHttpsPort());
         }
-        if (enableHttps != null) {
-            builder.setEnableHttps(getIndicator(enableHttps));
+        if (getEnableHttps() != null) {
+            builder.setEnableHttps(getIndicator(getEnableHttps()));
         }
-        if (webappPath != null) {
-            builder.setWebappPath(webappPath);
+        if (getWebappPath() != null) {
+            builder.setWebappPath(getWebappPath());
         }
-        if (standardContentPrefix != null) {
-            builder.setStandardContentPrefix(standardContentPrefix);
+        if (getStandardContentPrefix() != null) {
+            builder.setStandardContentPrefix(getStandardContentPrefix());
         }
-        if (secureContentPrefix != null) {
-            builder.setSecureContentPrefix(secureContentPrefix);
+        if (getSecureContentPrefix() != null) {
+            builder.setSecureContentPrefix(getSecureContentPrefix());
         }
-        if (cookieDomain != null) {
-            builder.setCookieDomain(cookieDomain);
+        if (getCookieDomain() != null) {
+            builder.setCookieDomain(getCookieDomain());
         }
-        if (visualThemeSetId != null) {
-            builder.setVisualThemeSetId(visualThemeSetId);
+        if (getVisualThemeSetId() != null) {
+            builder.setVisualThemeSetId(getVisualThemeSetId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (allowProductStoreChange != null) {
-            builder.setAllowProductStoreChange(getIndicator(allowProductStoreChange));
+        if (getAllowProductStoreChange() != null) {
+            builder.setAllowProductStoreChange(getIndicator(getAllowProductStoreChange()));
         }
-        if (hostedPathAlias != null) {
-            builder.setHostedPathAlias(hostedPathAlias);
+        if (getHostedPathAlias() != null) {
+            builder.setHostedPathAlias(getHostedPathAlias());
         }
-        if (isDefault != null) {
-            builder.setIsDefault(getIndicator(isDefault));
+        if (getIsDefault() != null) {
+            builder.setIsDefault(getIndicator(getIsDefault()));
         }
-        if (displayMaintenancePage != null) {
-            builder.setDisplayMaintenancePage(getIndicator(displayMaintenancePage));
+        if (getDisplayMaintenancePage() != null) {
+            builder.setDisplayMaintenancePage(getIndicator(getDisplayMaintenancePage()));
         }
                     
         return builder;

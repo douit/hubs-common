@@ -23,7 +23,7 @@
     public {{ent.messageType}}.Builder toHeadBuilder() {
         {{ent.messageType}}.Builder builder = {{ent.messageType}}.newBuilder();
         {% for f in ent.messageFields -%}
-        if ({{f.name}} != null) {
+        if ({{f.getter}}() != null) {
             builder.{{f.protoSetter}};
         }
         {% endfor %}            

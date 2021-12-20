@@ -87,47 +87,51 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Ha
 
     public ProdCatalogFlatData.Builder toDataBuilder() {
         ProdCatalogFlatData.Builder builder = ProdCatalogFlatData.newBuilder();
-        if (prodCatalogId != null) {
-            builder.setProdCatalogId(prodCatalogId);
+        if (getProdCatalogId() != null) {
+            builder.setProdCatalogId(getProdCatalogId());
         }
-        if (catalogName != null) {
-            builder.setCatalogName(catalogName);
+        if (getCatalogName() != null) {
+            builder.setCatalogName(getCatalogName());
         }
-        if (useQuickAdd != null) {
-            builder.setUseQuickAdd(getIndicator(useQuickAdd));
+        if (getUseQuickAdd() != null) {
+            builder.setUseQuickAdd(getIndicator(getUseQuickAdd()));
         }
-        if (styleSheet != null) {
-            builder.setStyleSheet(styleSheet);
+        if (getStyleSheet() != null) {
+            builder.setStyleSheet(getStyleSheet());
         }
-        if (headerLogo != null) {
-            builder.setHeaderLogo(headerLogo);
+        if (getHeaderLogo() != null) {
+            builder.setHeaderLogo(getHeaderLogo());
         }
-        if (contentPathPrefix != null) {
-            builder.setContentPathPrefix(contentPathPrefix);
+        if (getContentPathPrefix() != null) {
+            builder.setContentPathPrefix(getContentPathPrefix());
         }
-        if (templatePathPrefix != null) {
-            builder.setTemplatePathPrefix(templatePathPrefix);
+        if (getTemplatePathPrefix() != null) {
+            builder.setTemplatePathPrefix(getTemplatePathPrefix());
         }
-        if (viewAllowPermReqd != null) {
-            builder.setViewAllowPermReqd(getIndicator(viewAllowPermReqd));
+        if (getViewAllowPermReqd() != null) {
+            builder.setViewAllowPermReqd(getIndicator(getViewAllowPermReqd()));
         }
-        if (purchaseAllowPermReqd != null) {
-            builder.setPurchaseAllowPermReqd(getIndicator(purchaseAllowPermReqd));
+        if (getPurchaseAllowPermReqd() != null) {
+            builder.setPurchaseAllowPermReqd(getIndicator(getPurchaseAllowPermReqd()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static ProdCatalog fromData(ProdCatalogFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProdCatalog.ProdCatalogBuilder fromPrototype(ProdCatalogFlatData data) {
         return ProdCatalog.builder()
                 .prodCatalogId(data.getProdCatalogId())
                 .catalogName(data.getCatalogName())
@@ -141,8 +145,7 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Ha
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -177,38 +180,38 @@ public class ProdCatalog implements IEventModel<ProdCatalogFlatData.Builder>, Ha
 
     public ProdCatalogData.Builder toHeadBuilder() {
         ProdCatalogData.Builder builder = ProdCatalogData.newBuilder();
-        if (prodCatalogId != null) {
-            builder.setProdCatalogId(prodCatalogId);
+        if (getProdCatalogId() != null) {
+            builder.setProdCatalogId(getProdCatalogId());
         }
-        if (catalogName != null) {
-            builder.setCatalogName(catalogName);
+        if (getCatalogName() != null) {
+            builder.setCatalogName(getCatalogName());
         }
-        if (useQuickAdd != null) {
-            builder.setUseQuickAdd(getIndicator(useQuickAdd));
+        if (getUseQuickAdd() != null) {
+            builder.setUseQuickAdd(getIndicator(getUseQuickAdd()));
         }
-        if (styleSheet != null) {
-            builder.setStyleSheet(styleSheet);
+        if (getStyleSheet() != null) {
+            builder.setStyleSheet(getStyleSheet());
         }
-        if (headerLogo != null) {
-            builder.setHeaderLogo(headerLogo);
+        if (getHeaderLogo() != null) {
+            builder.setHeaderLogo(getHeaderLogo());
         }
-        if (contentPathPrefix != null) {
-            builder.setContentPathPrefix(contentPathPrefix);
+        if (getContentPathPrefix() != null) {
+            builder.setContentPathPrefix(getContentPathPrefix());
         }
-        if (templatePathPrefix != null) {
-            builder.setTemplatePathPrefix(templatePathPrefix);
+        if (getTemplatePathPrefix() != null) {
+            builder.setTemplatePathPrefix(getTemplatePathPrefix());
         }
-        if (viewAllowPermReqd != null) {
-            builder.setViewAllowPermReqd(getIndicator(viewAllowPermReqd));
+        if (getViewAllowPermReqd() != null) {
+            builder.setViewAllowPermReqd(getIndicator(getViewAllowPermReqd()));
         }
-        if (purchaseAllowPermReqd != null) {
-            builder.setPurchaseAllowPermReqd(getIndicator(purchaseAllowPermReqd));
+        if (getPurchaseAllowPermReqd() != null) {
+            builder.setPurchaseAllowPermReqd(getIndicator(getPurchaseAllowPermReqd()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

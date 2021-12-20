@@ -74,38 +74,42 @@ public class FixedAssetStdCost implements IEventModel<FixedAssetStdCostData.Buil
 
     public FixedAssetStdCostData.Builder toDataBuilder() {
         FixedAssetStdCostData.Builder builder = FixedAssetStdCostData.newBuilder();
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (fixedAssetStdCostTypeId != null) {
-            builder.setFixedAssetStdCostTypeId(fixedAssetStdCostTypeId);
+        if (getFixedAssetStdCostTypeId() != null) {
+            builder.setFixedAssetStdCostTypeId(getFixedAssetStdCostTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (amountUomId != null) {
-            builder.setAmountUomId(amountUomId);
+        if (getAmountUomId() != null) {
+            builder.setAmountUomId(getAmountUomId());
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FixedAssetStdCost fromData(FixedAssetStdCostData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FixedAssetStdCost.FixedAssetStdCostBuilder fromPrototype(FixedAssetStdCostData data) {
         return FixedAssetStdCost.builder()
                 .fixedAssetId(data.getFixedAssetId())
                 .fixedAssetStdCostTypeId(data.getFixedAssetStdCostTypeId())
@@ -116,8 +120,7 @@ public class FixedAssetStdCost implements IEventModel<FixedAssetStdCostData.Buil
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -209,230 +209,234 @@ public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Ser
 
     public ProductFlatData.Builder toDataBuilder() {
         ProductFlatData.Builder builder = ProductFlatData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (productTypeId != null) {
-            builder.setProductTypeId(productTypeId);
+        if (getProductTypeId() != null) {
+            builder.setProductTypeId(getProductTypeId());
         }
-        if (primaryProductCategoryId != null) {
-            builder.setPrimaryProductCategoryId(primaryProductCategoryId);
+        if (getPrimaryProductCategoryId() != null) {
+            builder.setPrimaryProductCategoryId(getPrimaryProductCategoryId());
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (introductionDate != null) {
-            builder.setIntroductionDate(getTimestamp(introductionDate));
+        if (getIntroductionDate() != null) {
+            builder.setIntroductionDate(getTimestamp(getIntroductionDate()));
         }
-        if (releaseDate != null) {
-            builder.setReleaseDate(getTimestamp(releaseDate));
+        if (getReleaseDate() != null) {
+            builder.setReleaseDate(getTimestamp(getReleaseDate()));
         }
-        if (supportDiscontinuationDate != null) {
-            builder.setSupportDiscontinuationDate(getTimestamp(supportDiscontinuationDate));
+        if (getSupportDiscontinuationDate() != null) {
+            builder.setSupportDiscontinuationDate(getTimestamp(getSupportDiscontinuationDate()));
         }
-        if (salesDiscontinuationDate != null) {
-            builder.setSalesDiscontinuationDate(getTimestamp(salesDiscontinuationDate));
+        if (getSalesDiscontinuationDate() != null) {
+            builder.setSalesDiscontinuationDate(getTimestamp(getSalesDiscontinuationDate()));
         }
-        if (salesDiscWhenNotAvail != null) {
-            builder.setSalesDiscWhenNotAvail(getIndicator(salesDiscWhenNotAvail));
+        if (getSalesDiscWhenNotAvail() != null) {
+            builder.setSalesDiscWhenNotAvail(getIndicator(getSalesDiscWhenNotAvail()));
         }
-        if (internalName != null) {
-            builder.setInternalName(internalName);
+        if (getInternalName() != null) {
+            builder.setInternalName(getInternalName());
         }
-        if (brandName != null) {
-            builder.setBrandName(brandName);
+        if (getBrandName() != null) {
+            builder.setBrandName(getBrandName());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (productName != null) {
-            builder.setProductName(productName);
+        if (getProductName() != null) {
+            builder.setProductName(getProductName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (longDescription != null) {
-            builder.setLongDescription(longDescription);
+        if (getLongDescription() != null) {
+            builder.setLongDescription(getLongDescription());
         }
-        if (priceDetailText != null) {
-            builder.setPriceDetailText(priceDetailText);
+        if (getPriceDetailText() != null) {
+            builder.setPriceDetailText(getPriceDetailText());
         }
-        if (smallImageUrl != null) {
-            builder.setSmallImageUrl(smallImageUrl);
+        if (getSmallImageUrl() != null) {
+            builder.setSmallImageUrl(getSmallImageUrl());
         }
-        if (mediumImageUrl != null) {
-            builder.setMediumImageUrl(mediumImageUrl);
+        if (getMediumImageUrl() != null) {
+            builder.setMediumImageUrl(getMediumImageUrl());
         }
-        if (largeImageUrl != null) {
-            builder.setLargeImageUrl(largeImageUrl);
+        if (getLargeImageUrl() != null) {
+            builder.setLargeImageUrl(getLargeImageUrl());
         }
-        if (detailImageUrl != null) {
-            builder.setDetailImageUrl(detailImageUrl);
+        if (getDetailImageUrl() != null) {
+            builder.setDetailImageUrl(getDetailImageUrl());
         }
-        if (originalImageUrl != null) {
-            builder.setOriginalImageUrl(originalImageUrl);
+        if (getOriginalImageUrl() != null) {
+            builder.setOriginalImageUrl(getOriginalImageUrl());
         }
-        if (detailScreen != null) {
-            builder.setDetailScreen(detailScreen);
+        if (getDetailScreen() != null) {
+            builder.setDetailScreen(getDetailScreen());
         }
-        if (inventoryMessage != null) {
-            builder.setInventoryMessage(inventoryMessage);
+        if (getInventoryMessage() != null) {
+            builder.setInventoryMessage(getInventoryMessage());
         }
-        if (inventoryItemTypeId != null) {
-            builder.setInventoryItemTypeId(inventoryItemTypeId);
+        if (getInventoryItemTypeId() != null) {
+            builder.setInventoryItemTypeId(getInventoryItemTypeId());
         }
-        if (requireInventory != null) {
-            builder.setRequireInventory(getIndicator(requireInventory));
+        if (getRequireInventory() != null) {
+            builder.setRequireInventory(getIndicator(getRequireInventory()));
         }
-        if (quantityUomId != null) {
-            builder.setQuantityUomId(quantityUomId);
+        if (getQuantityUomId() != null) {
+            builder.setQuantityUomId(getQuantityUomId());
         }
-        if (quantityIncluded != null) {
-            builder.setQuantityIncluded(getFixedPoint(quantityIncluded));
+        if (getQuantityIncluded() != null) {
+            builder.setQuantityIncluded(getFixedPoint(getQuantityIncluded()));
         }
-        if (piecesIncluded != null) {
-            builder.setPiecesIncluded(piecesIncluded);
+        if (getPiecesIncluded() != null) {
+            builder.setPiecesIncluded(getPiecesIncluded());
         }
-        if (requireAmount != null) {
-            builder.setRequireAmount(getIndicator(requireAmount));
+        if (getRequireAmount() != null) {
+            builder.setRequireAmount(getIndicator(getRequireAmount()));
         }
-        if (fixedAmount != null) {
-            builder.setFixedAmount(getCurrency(fixedAmount));
+        if (getFixedAmount() != null) {
+            builder.setFixedAmount(getCurrency(getFixedAmount()));
         }
-        if (amountUomTypeId != null) {
-            builder.setAmountUomTypeId(amountUomTypeId);
+        if (getAmountUomTypeId() != null) {
+            builder.setAmountUomTypeId(getAmountUomTypeId());
         }
-        if (weightUomId != null) {
-            builder.setWeightUomId(weightUomId);
+        if (getWeightUomId() != null) {
+            builder.setWeightUomId(getWeightUomId());
         }
-        if (shippingWeight != null) {
-            builder.setShippingWeight(getFixedPoint(shippingWeight));
+        if (getShippingWeight() != null) {
+            builder.setShippingWeight(getFixedPoint(getShippingWeight()));
         }
-        if (productWeight != null) {
-            builder.setProductWeight(getFixedPoint(productWeight));
+        if (getProductWeight() != null) {
+            builder.setProductWeight(getFixedPoint(getProductWeight()));
         }
-        if (heightUomId != null) {
-            builder.setHeightUomId(heightUomId);
+        if (getHeightUomId() != null) {
+            builder.setHeightUomId(getHeightUomId());
         }
-        if (productHeight != null) {
-            builder.setProductHeight(getFixedPoint(productHeight));
+        if (getProductHeight() != null) {
+            builder.setProductHeight(getFixedPoint(getProductHeight()));
         }
-        if (shippingHeight != null) {
-            builder.setShippingHeight(getFixedPoint(shippingHeight));
+        if (getShippingHeight() != null) {
+            builder.setShippingHeight(getFixedPoint(getShippingHeight()));
         }
-        if (widthUomId != null) {
-            builder.setWidthUomId(widthUomId);
+        if (getWidthUomId() != null) {
+            builder.setWidthUomId(getWidthUomId());
         }
-        if (productWidth != null) {
-            builder.setProductWidth(getFixedPoint(productWidth));
+        if (getProductWidth() != null) {
+            builder.setProductWidth(getFixedPoint(getProductWidth()));
         }
-        if (shippingWidth != null) {
-            builder.setShippingWidth(getFixedPoint(shippingWidth));
+        if (getShippingWidth() != null) {
+            builder.setShippingWidth(getFixedPoint(getShippingWidth()));
         }
-        if (depthUomId != null) {
-            builder.setDepthUomId(depthUomId);
+        if (getDepthUomId() != null) {
+            builder.setDepthUomId(getDepthUomId());
         }
-        if (productDepth != null) {
-            builder.setProductDepth(getFixedPoint(productDepth));
+        if (getProductDepth() != null) {
+            builder.setProductDepth(getFixedPoint(getProductDepth()));
         }
-        if (shippingDepth != null) {
-            builder.setShippingDepth(getFixedPoint(shippingDepth));
+        if (getShippingDepth() != null) {
+            builder.setShippingDepth(getFixedPoint(getShippingDepth()));
         }
-        if (diameterUomId != null) {
-            builder.setDiameterUomId(diameterUomId);
+        if (getDiameterUomId() != null) {
+            builder.setDiameterUomId(getDiameterUomId());
         }
-        if (productDiameter != null) {
-            builder.setProductDiameter(getFixedPoint(productDiameter));
+        if (getProductDiameter() != null) {
+            builder.setProductDiameter(getFixedPoint(getProductDiameter()));
         }
-        if (productRating != null) {
-            builder.setProductRating(getFixedPoint(productRating));
+        if (getProductRating() != null) {
+            builder.setProductRating(getFixedPoint(getProductRating()));
         }
-        if (ratingTypeEnum != null) {
-            builder.setRatingTypeEnum(ratingTypeEnum);
+        if (getRatingTypeEnum() != null) {
+            builder.setRatingTypeEnum(getRatingTypeEnum());
         }
-        if (returnable != null) {
-            builder.setReturnable(getIndicator(returnable));
+        if (getReturnable() != null) {
+            builder.setReturnable(getIndicator(getReturnable()));
         }
-        if (taxable != null) {
-            builder.setTaxable(getIndicator(taxable));
+        if (getTaxable() != null) {
+            builder.setTaxable(getIndicator(getTaxable()));
         }
-        if (chargeShipping != null) {
-            builder.setChargeShipping(getIndicator(chargeShipping));
+        if (getChargeShipping() != null) {
+            builder.setChargeShipping(getIndicator(getChargeShipping()));
         }
-        if (autoCreateKeywords != null) {
-            builder.setAutoCreateKeywords(getIndicator(autoCreateKeywords));
+        if (getAutoCreateKeywords() != null) {
+            builder.setAutoCreateKeywords(getIndicator(getAutoCreateKeywords()));
         }
-        if (includeInPromotions != null) {
-            builder.setIncludeInPromotions(getIndicator(includeInPromotions));
+        if (getIncludeInPromotions() != null) {
+            builder.setIncludeInPromotions(getIndicator(getIncludeInPromotions()));
         }
-        if (isVirtual != null) {
-            builder.setIsVirtual(getIndicator(isVirtual));
+        if (getIsVirtual() != null) {
+            builder.setIsVirtual(getIndicator(getIsVirtual()));
         }
-        if (isVariant != null) {
-            builder.setIsVariant(getIndicator(isVariant));
+        if (getIsVariant() != null) {
+            builder.setIsVariant(getIndicator(getIsVariant()));
         }
-        if (virtualVariantMethodEnum != null) {
-            builder.setVirtualVariantMethodEnum(virtualVariantMethodEnum);
+        if (getVirtualVariantMethodEnum() != null) {
+            builder.setVirtualVariantMethodEnum(getVirtualVariantMethodEnum());
         }
-        if (originGeoId != null) {
-            builder.setOriginGeoId(originGeoId);
+        if (getOriginGeoId() != null) {
+            builder.setOriginGeoId(getOriginGeoId());
         }
-        if (requirementMethodEnumId != null) {
-            builder.setRequirementMethodEnumId(requirementMethodEnumId);
+        if (getRequirementMethodEnumId() != null) {
+            builder.setRequirementMethodEnumId(getRequirementMethodEnumId());
         }
-        if (billOfMaterialLevel != null) {
-            builder.setBillOfMaterialLevel(billOfMaterialLevel);
+        if (getBillOfMaterialLevel() != null) {
+            builder.setBillOfMaterialLevel(getBillOfMaterialLevel());
         }
-        if (reservMaxPersons != null) {
-            builder.setReservMaxPersons(getFixedPoint(reservMaxPersons));
+        if (getReservMaxPersons() != null) {
+            builder.setReservMaxPersons(getFixedPoint(getReservMaxPersons()));
         }
-        if (reserv2ndPPPerc != null) {
-            builder.setReserv2NdPPPerc(getFixedPoint(reserv2ndPPPerc));
+        if (getReserv2ndPPPerc() != null) {
+            builder.setReserv2NdPPPerc(getFixedPoint(getReserv2ndPPPerc()));
         }
-        if (reservNthPPPerc != null) {
-            builder.setReservNthPPPerc(getFixedPoint(reservNthPPPerc));
+        if (getReservNthPPPerc() != null) {
+            builder.setReservNthPPPerc(getFixedPoint(getReservNthPPPerc()));
         }
-        if (configId != null) {
-            builder.setConfigId(configId);
+        if (getConfigId() != null) {
+            builder.setConfigId(getConfigId());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (inShippingBox != null) {
-            builder.setInShippingBox(getIndicator(inShippingBox));
+        if (getInShippingBox() != null) {
+            builder.setInShippingBox(getIndicator(getInShippingBox()));
         }
-        if (defaultShipmentBoxTypeId != null) {
-            builder.setDefaultShipmentBoxTypeId(defaultShipmentBoxTypeId);
+        if (getDefaultShipmentBoxTypeId() != null) {
+            builder.setDefaultShipmentBoxTypeId(getDefaultShipmentBoxTypeId());
         }
-        if (lotIdFilledIn != null) {
-            builder.setLotIdFilledIn(lotIdFilledIn);
+        if (getLotIdFilledIn() != null) {
+            builder.setLotIdFilledIn(getLotIdFilledIn());
         }
-        if (orderDecimalQuantity != null) {
-            builder.setOrderDecimalQuantity(getIndicator(orderDecimalQuantity));
+        if (getOrderDecimalQuantity() != null) {
+            builder.setOrderDecimalQuantity(getIndicator(getOrderDecimalQuantity()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static Product fromData(ProductFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Product.ProductBuilder fromPrototype(ProductFlatData data) {
         return Product.builder()
                 .productId(data.getProductId())
                 .productTypeId(data.getProductTypeId())
@@ -507,8 +511,7 @@ public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Ser
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -723,206 +726,206 @@ public class Product implements IEventModel<ProductFlatData.Builder>, HasId, Ser
 
     public ProductData.Builder toHeadBuilder() {
         ProductData.Builder builder = ProductData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (productTypeId != null) {
-            builder.setProductTypeId(productTypeId);
+        if (getProductTypeId() != null) {
+            builder.setProductTypeId(getProductTypeId());
         }
-        if (introductionDate != null) {
-            builder.setIntroductionDate(getTimestamp(introductionDate));
+        if (getIntroductionDate() != null) {
+            builder.setIntroductionDate(getTimestamp(getIntroductionDate()));
         }
-        if (releaseDate != null) {
-            builder.setReleaseDate(getTimestamp(releaseDate));
+        if (getReleaseDate() != null) {
+            builder.setReleaseDate(getTimestamp(getReleaseDate()));
         }
-        if (supportDiscontinuationDate != null) {
-            builder.setSupportDiscontinuationDate(getTimestamp(supportDiscontinuationDate));
+        if (getSupportDiscontinuationDate() != null) {
+            builder.setSupportDiscontinuationDate(getTimestamp(getSupportDiscontinuationDate()));
         }
-        if (salesDiscontinuationDate != null) {
-            builder.setSalesDiscontinuationDate(getTimestamp(salesDiscontinuationDate));
+        if (getSalesDiscontinuationDate() != null) {
+            builder.setSalesDiscontinuationDate(getTimestamp(getSalesDiscontinuationDate()));
         }
-        if (salesDiscWhenNotAvail != null) {
-            builder.setSalesDiscWhenNotAvail(getIndicator(salesDiscWhenNotAvail));
+        if (getSalesDiscWhenNotAvail() != null) {
+            builder.setSalesDiscWhenNotAvail(getIndicator(getSalesDiscWhenNotAvail()));
         }
-        if (internalName != null) {
-            builder.setInternalName(internalName);
+        if (getInternalName() != null) {
+            builder.setInternalName(getInternalName());
         }
-        if (brandName != null) {
-            builder.setBrandName(brandName);
+        if (getBrandName() != null) {
+            builder.setBrandName(getBrandName());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (productName != null) {
-            builder.setProductName(productName);
+        if (getProductName() != null) {
+            builder.setProductName(getProductName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (longDescription != null) {
-            builder.setLongDescription(longDescription);
+        if (getLongDescription() != null) {
+            builder.setLongDescription(getLongDescription());
         }
-        if (priceDetailText != null) {
-            builder.setPriceDetailText(priceDetailText);
+        if (getPriceDetailText() != null) {
+            builder.setPriceDetailText(getPriceDetailText());
         }
-        if (smallImageUrl != null) {
-            builder.setSmallImageUrl(smallImageUrl);
+        if (getSmallImageUrl() != null) {
+            builder.setSmallImageUrl(getSmallImageUrl());
         }
-        if (mediumImageUrl != null) {
-            builder.setMediumImageUrl(mediumImageUrl);
+        if (getMediumImageUrl() != null) {
+            builder.setMediumImageUrl(getMediumImageUrl());
         }
-        if (largeImageUrl != null) {
-            builder.setLargeImageUrl(largeImageUrl);
+        if (getLargeImageUrl() != null) {
+            builder.setLargeImageUrl(getLargeImageUrl());
         }
-        if (detailImageUrl != null) {
-            builder.setDetailImageUrl(detailImageUrl);
+        if (getDetailImageUrl() != null) {
+            builder.setDetailImageUrl(getDetailImageUrl());
         }
-        if (originalImageUrl != null) {
-            builder.setOriginalImageUrl(originalImageUrl);
+        if (getOriginalImageUrl() != null) {
+            builder.setOriginalImageUrl(getOriginalImageUrl());
         }
-        if (detailScreen != null) {
-            builder.setDetailScreen(detailScreen);
+        if (getDetailScreen() != null) {
+            builder.setDetailScreen(getDetailScreen());
         }
-        if (inventoryMessage != null) {
-            builder.setInventoryMessage(inventoryMessage);
+        if (getInventoryMessage() != null) {
+            builder.setInventoryMessage(getInventoryMessage());
         }
-        if (inventoryItemTypeId != null) {
-            builder.setInventoryItemTypeId(inventoryItemTypeId);
+        if (getInventoryItemTypeId() != null) {
+            builder.setInventoryItemTypeId(getInventoryItemTypeId());
         }
-        if (requireInventory != null) {
-            builder.setRequireInventory(getIndicator(requireInventory));
+        if (getRequireInventory() != null) {
+            builder.setRequireInventory(getIndicator(getRequireInventory()));
         }
-        if (quantityUomId != null) {
-            builder.setQuantityUomId(quantityUomId);
+        if (getQuantityUomId() != null) {
+            builder.setQuantityUomId(getQuantityUomId());
         }
-        if (quantityIncluded != null) {
-            builder.setQuantityIncluded(getFixedPoint(quantityIncluded));
+        if (getQuantityIncluded() != null) {
+            builder.setQuantityIncluded(getFixedPoint(getQuantityIncluded()));
         }
-        if (piecesIncluded != null) {
-            builder.setPiecesIncluded(piecesIncluded);
+        if (getPiecesIncluded() != null) {
+            builder.setPiecesIncluded(getPiecesIncluded());
         }
-        if (requireAmount != null) {
-            builder.setRequireAmount(getIndicator(requireAmount));
+        if (getRequireAmount() != null) {
+            builder.setRequireAmount(getIndicator(getRequireAmount()));
         }
-        if (fixedAmount != null) {
-            builder.setFixedAmount(getCurrency(fixedAmount));
+        if (getFixedAmount() != null) {
+            builder.setFixedAmount(getCurrency(getFixedAmount()));
         }
-        if (amountUomTypeId != null) {
-            builder.setAmountUomTypeId(amountUomTypeId);
+        if (getAmountUomTypeId() != null) {
+            builder.setAmountUomTypeId(getAmountUomTypeId());
         }
-        if (weightUomId != null) {
-            builder.setWeightUomId(weightUomId);
+        if (getWeightUomId() != null) {
+            builder.setWeightUomId(getWeightUomId());
         }
-        if (shippingWeight != null) {
-            builder.setShippingWeight(getFixedPoint(shippingWeight));
+        if (getShippingWeight() != null) {
+            builder.setShippingWeight(getFixedPoint(getShippingWeight()));
         }
-        if (productWeight != null) {
-            builder.setProductWeight(getFixedPoint(productWeight));
+        if (getProductWeight() != null) {
+            builder.setProductWeight(getFixedPoint(getProductWeight()));
         }
-        if (heightUomId != null) {
-            builder.setHeightUomId(heightUomId);
+        if (getHeightUomId() != null) {
+            builder.setHeightUomId(getHeightUomId());
         }
-        if (productHeight != null) {
-            builder.setProductHeight(getFixedPoint(productHeight));
+        if (getProductHeight() != null) {
+            builder.setProductHeight(getFixedPoint(getProductHeight()));
         }
-        if (shippingHeight != null) {
-            builder.setShippingHeight(getFixedPoint(shippingHeight));
+        if (getShippingHeight() != null) {
+            builder.setShippingHeight(getFixedPoint(getShippingHeight()));
         }
-        if (widthUomId != null) {
-            builder.setWidthUomId(widthUomId);
+        if (getWidthUomId() != null) {
+            builder.setWidthUomId(getWidthUomId());
         }
-        if (productWidth != null) {
-            builder.setProductWidth(getFixedPoint(productWidth));
+        if (getProductWidth() != null) {
+            builder.setProductWidth(getFixedPoint(getProductWidth()));
         }
-        if (shippingWidth != null) {
-            builder.setShippingWidth(getFixedPoint(shippingWidth));
+        if (getShippingWidth() != null) {
+            builder.setShippingWidth(getFixedPoint(getShippingWidth()));
         }
-        if (depthUomId != null) {
-            builder.setDepthUomId(depthUomId);
+        if (getDepthUomId() != null) {
+            builder.setDepthUomId(getDepthUomId());
         }
-        if (productDepth != null) {
-            builder.setProductDepth(getFixedPoint(productDepth));
+        if (getProductDepth() != null) {
+            builder.setProductDepth(getFixedPoint(getProductDepth()));
         }
-        if (shippingDepth != null) {
-            builder.setShippingDepth(getFixedPoint(shippingDepth));
+        if (getShippingDepth() != null) {
+            builder.setShippingDepth(getFixedPoint(getShippingDepth()));
         }
-        if (diameterUomId != null) {
-            builder.setDiameterUomId(diameterUomId);
+        if (getDiameterUomId() != null) {
+            builder.setDiameterUomId(getDiameterUomId());
         }
-        if (productDiameter != null) {
-            builder.setProductDiameter(getFixedPoint(productDiameter));
+        if (getProductDiameter() != null) {
+            builder.setProductDiameter(getFixedPoint(getProductDiameter()));
         }
-        if (productRating != null) {
-            builder.setProductRating(getFixedPoint(productRating));
+        if (getProductRating() != null) {
+            builder.setProductRating(getFixedPoint(getProductRating()));
         }
-        if (ratingTypeEnum != null) {
-            builder.setRatingTypeEnum(ratingTypeEnum);
+        if (getRatingTypeEnum() != null) {
+            builder.setRatingTypeEnum(getRatingTypeEnum());
         }
-        if (returnable != null) {
-            builder.setReturnable(getIndicator(returnable));
+        if (getReturnable() != null) {
+            builder.setReturnable(getIndicator(getReturnable()));
         }
-        if (taxable != null) {
-            builder.setTaxable(getIndicator(taxable));
+        if (getTaxable() != null) {
+            builder.setTaxable(getIndicator(getTaxable()));
         }
-        if (chargeShipping != null) {
-            builder.setChargeShipping(getIndicator(chargeShipping));
+        if (getChargeShipping() != null) {
+            builder.setChargeShipping(getIndicator(getChargeShipping()));
         }
-        if (autoCreateKeywords != null) {
-            builder.setAutoCreateKeywords(getIndicator(autoCreateKeywords));
+        if (getAutoCreateKeywords() != null) {
+            builder.setAutoCreateKeywords(getIndicator(getAutoCreateKeywords()));
         }
-        if (includeInPromotions != null) {
-            builder.setIncludeInPromotions(getIndicator(includeInPromotions));
+        if (getIncludeInPromotions() != null) {
+            builder.setIncludeInPromotions(getIndicator(getIncludeInPromotions()));
         }
-        if (isVirtual != null) {
-            builder.setIsVirtual(getIndicator(isVirtual));
+        if (getIsVirtual() != null) {
+            builder.setIsVirtual(getIndicator(getIsVirtual()));
         }
-        if (isVariant != null) {
-            builder.setIsVariant(getIndicator(isVariant));
+        if (getIsVariant() != null) {
+            builder.setIsVariant(getIndicator(getIsVariant()));
         }
-        if (virtualVariantMethodEnum != null) {
-            builder.setVirtualVariantMethodEnum(virtualVariantMethodEnum);
+        if (getVirtualVariantMethodEnum() != null) {
+            builder.setVirtualVariantMethodEnum(getVirtualVariantMethodEnum());
         }
-        if (originGeoId != null) {
-            builder.setOriginGeoId(originGeoId);
+        if (getOriginGeoId() != null) {
+            builder.setOriginGeoId(getOriginGeoId());
         }
-        if (requirementMethodEnumId != null) {
-            builder.setRequirementMethodEnumId(requirementMethodEnumId);
+        if (getRequirementMethodEnumId() != null) {
+            builder.setRequirementMethodEnumId(getRequirementMethodEnumId());
         }
-        if (billOfMaterialLevel != null) {
-            builder.setBillOfMaterialLevel(billOfMaterialLevel);
+        if (getBillOfMaterialLevel() != null) {
+            builder.setBillOfMaterialLevel(getBillOfMaterialLevel());
         }
-        if (reservMaxPersons != null) {
-            builder.setReservMaxPersons(getFixedPoint(reservMaxPersons));
+        if (getReservMaxPersons() != null) {
+            builder.setReservMaxPersons(getFixedPoint(getReservMaxPersons()));
         }
-        if (reserv2ndPPPerc != null) {
-            builder.setReserv2NdPPPerc(getFixedPoint(reserv2ndPPPerc));
+        if (getReserv2ndPPPerc() != null) {
+            builder.setReserv2NdPPPerc(getFixedPoint(getReserv2ndPPPerc()));
         }
-        if (reservNthPPPerc != null) {
-            builder.setReservNthPPPerc(getFixedPoint(reservNthPPPerc));
+        if (getReservNthPPPerc() != null) {
+            builder.setReservNthPPPerc(getFixedPoint(getReservNthPPPerc()));
         }
-        if (configId != null) {
-            builder.setConfigId(configId);
+        if (getConfigId() != null) {
+            builder.setConfigId(getConfigId());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (inShippingBox != null) {
-            builder.setInShippingBox(getIndicator(inShippingBox));
+        if (getInShippingBox() != null) {
+            builder.setInShippingBox(getIndicator(getInShippingBox()));
         }
-        if (lotIdFilledIn != null) {
-            builder.setLotIdFilledIn(lotIdFilledIn);
+        if (getLotIdFilledIn() != null) {
+            builder.setLotIdFilledIn(getLotIdFilledIn());
         }
-        if (orderDecimalQuantity != null) {
-            builder.setOrderDecimalQuantity(getIndicator(orderDecimalQuantity));
+        if (getOrderDecimalQuantity() != null) {
+            builder.setOrderDecimalQuantity(getIndicator(getOrderDecimalQuantity()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

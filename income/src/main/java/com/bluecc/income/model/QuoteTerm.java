@@ -79,44 +79,48 @@ public class QuoteTerm implements IEventModel<QuoteTermData.Builder>, HasId, Ser
 
     public QuoteTermData.Builder toDataBuilder() {
         QuoteTermData.Builder builder = QuoteTermData.newBuilder();
-        if (termTypeId != null) {
-            builder.setTermTypeId(termTypeId);
+        if (getTermTypeId() != null) {
+            builder.setTermTypeId(getTermTypeId());
         }
-        if (quoteId != null) {
-            builder.setQuoteId(quoteId);
+        if (getQuoteId() != null) {
+            builder.setQuoteId(getQuoteId());
         }
-        if (quoteItemSeqId != null) {
-            builder.setQuoteItemSeqId(quoteItemSeqId);
+        if (getQuoteItemSeqId() != null) {
+            builder.setQuoteItemSeqId(getQuoteItemSeqId());
         }
-        if (termValue != null) {
-            builder.setTermValue(termValue);
+        if (getTermValue() != null) {
+            builder.setTermValue(getTermValue());
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (termDays != null) {
-            builder.setTermDays(termDays);
+        if (getTermDays() != null) {
+            builder.setTermDays(getTermDays());
         }
-        if (textValue != null) {
-            builder.setTextValue(textValue);
+        if (getTextValue() != null) {
+            builder.setTextValue(getTextValue());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static QuoteTerm fromData(QuoteTermData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static QuoteTerm.QuoteTermBuilder fromPrototype(QuoteTermData data) {
         return QuoteTerm.builder()
                 .termTypeId(data.getTermTypeId())
                 .quoteId(data.getQuoteId())
@@ -129,8 +133,7 @@ public class QuoteTerm implements IEventModel<QuoteTermData.Builder>, HasId, Ser
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

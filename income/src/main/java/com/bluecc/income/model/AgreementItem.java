@@ -74,38 +74,42 @@ public class AgreementItem implements IEventModel<AgreementItemData.Builder>, Ha
 
     public AgreementItemData.Builder toDataBuilder() {
         AgreementItemData.Builder builder = AgreementItemData.newBuilder();
-        if (agreementId != null) {
-            builder.setAgreementId(agreementId);
+        if (getAgreementId() != null) {
+            builder.setAgreementId(getAgreementId());
         }
-        if (agreementItemSeqId != null) {
-            builder.setAgreementItemSeqId(agreementItemSeqId);
+        if (getAgreementItemSeqId() != null) {
+            builder.setAgreementItemSeqId(getAgreementItemSeqId());
         }
-        if (agreementItemTypeId != null) {
-            builder.setAgreementItemTypeId(agreementItemTypeId);
+        if (getAgreementItemTypeId() != null) {
+            builder.setAgreementItemTypeId(getAgreementItemTypeId());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (agreementText != null) {
-            builder.setAgreementText(agreementText);
+        if (getAgreementText() != null) {
+            builder.setAgreementText(getAgreementText());
         }
-        if (agreementImage != null) {
-            builder.setAgreementImage(ByteString.copyFrom(agreementImage));
+        if (getAgreementImage() != null) {
+            builder.setAgreementImage(ByteString.copyFrom(getAgreementImage()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static AgreementItem fromData(AgreementItemData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static AgreementItem.AgreementItemBuilder fromPrototype(AgreementItemData data) {
         return AgreementItem.builder()
                 .agreementId(data.getAgreementId())
                 .agreementItemSeqId(data.getAgreementItemSeqId())
@@ -116,8 +120,7 @@ public class AgreementItem implements IEventModel<AgreementItemData.Builder>, Ha
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

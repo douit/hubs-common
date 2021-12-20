@@ -70,29 +70,33 @@ public class Budget implements IEventModel<BudgetData.Builder>, HasId, Serializa
 
     public BudgetData.Builder toDataBuilder() {
         BudgetData.Builder builder = BudgetData.newBuilder();
-        if (budgetId != null) {
-            builder.setBudgetId(budgetId);
+        if (getBudgetId() != null) {
+            builder.setBudgetId(getBudgetId());
         }
-        if (budgetTypeId != null) {
-            builder.setBudgetTypeId(budgetTypeId);
+        if (getBudgetTypeId() != null) {
+            builder.setBudgetTypeId(getBudgetTypeId());
         }
-        if (customTimePeriodId != null) {
-            builder.setCustomTimePeriodId(customTimePeriodId);
+        if (getCustomTimePeriodId() != null) {
+            builder.setCustomTimePeriodId(getCustomTimePeriodId());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static Budget fromData(BudgetData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Budget.BudgetBuilder fromPrototype(BudgetData data) {
         return Budget.builder()
                 .budgetId(data.getBudgetId())
                 .budgetTypeId(data.getBudgetTypeId())
@@ -100,8 +104,7 @@ public class Budget implements IEventModel<BudgetData.Builder>, HasId, Serializa
                 .comments(data.getComments())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

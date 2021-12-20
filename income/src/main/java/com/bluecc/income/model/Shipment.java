@@ -129,110 +129,114 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, S
 
     public ShipmentFlatData.Builder toDataBuilder() {
         ShipmentFlatData.Builder builder = ShipmentFlatData.newBuilder();
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentTypeId != null) {
-            builder.setShipmentTypeId(shipmentTypeId);
+        if (getShipmentTypeId() != null) {
+            builder.setShipmentTypeId(getShipmentTypeId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (primaryOrderId != null) {
-            builder.setPrimaryOrderId(primaryOrderId);
+        if (getPrimaryOrderId() != null) {
+            builder.setPrimaryOrderId(getPrimaryOrderId());
         }
-        if (primaryReturnId != null) {
-            builder.setPrimaryReturnId(primaryReturnId);
+        if (getPrimaryReturnId() != null) {
+            builder.setPrimaryReturnId(getPrimaryReturnId());
         }
-        if (primaryShipGroupSeqId != null) {
-            builder.setPrimaryShipGroupSeqId(primaryShipGroupSeqId);
+        if (getPrimaryShipGroupSeqId() != null) {
+            builder.setPrimaryShipGroupSeqId(getPrimaryShipGroupSeqId());
         }
-        if (picklistBinId != null) {
-            builder.setPicklistBinId(picklistBinId);
+        if (getPicklistBinId() != null) {
+            builder.setPicklistBinId(getPicklistBinId());
         }
-        if (estimatedReadyDate != null) {
-            builder.setEstimatedReadyDate(getTimestamp(estimatedReadyDate));
+        if (getEstimatedReadyDate() != null) {
+            builder.setEstimatedReadyDate(getTimestamp(getEstimatedReadyDate()));
         }
-        if (estimatedShipDate != null) {
-            builder.setEstimatedShipDate(getTimestamp(estimatedShipDate));
+        if (getEstimatedShipDate() != null) {
+            builder.setEstimatedShipDate(getTimestamp(getEstimatedShipDate()));
         }
-        if (estimatedShipWorkEffId != null) {
-            builder.setEstimatedShipWorkEffId(estimatedShipWorkEffId);
+        if (getEstimatedShipWorkEffId() != null) {
+            builder.setEstimatedShipWorkEffId(getEstimatedShipWorkEffId());
         }
-        if (estimatedArrivalDate != null) {
-            builder.setEstimatedArrivalDate(getTimestamp(estimatedArrivalDate));
+        if (getEstimatedArrivalDate() != null) {
+            builder.setEstimatedArrivalDate(getTimestamp(getEstimatedArrivalDate()));
         }
-        if (estimatedArrivalWorkEffId != null) {
-            builder.setEstimatedArrivalWorkEffId(estimatedArrivalWorkEffId);
+        if (getEstimatedArrivalWorkEffId() != null) {
+            builder.setEstimatedArrivalWorkEffId(getEstimatedArrivalWorkEffId());
         }
-        if (latestCancelDate != null) {
-            builder.setLatestCancelDate(getTimestamp(latestCancelDate));
+        if (getLatestCancelDate() != null) {
+            builder.setLatestCancelDate(getTimestamp(getLatestCancelDate()));
         }
-        if (estimatedShipCost != null) {
-            builder.setEstimatedShipCost(getCurrency(estimatedShipCost));
+        if (getEstimatedShipCost() != null) {
+            builder.setEstimatedShipCost(getCurrency(getEstimatedShipCost()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (handlingInstructions != null) {
-            builder.setHandlingInstructions(handlingInstructions);
+        if (getHandlingInstructions() != null) {
+            builder.setHandlingInstructions(getHandlingInstructions());
         }
-        if (originFacilityId != null) {
-            builder.setOriginFacilityId(originFacilityId);
+        if (getOriginFacilityId() != null) {
+            builder.setOriginFacilityId(getOriginFacilityId());
         }
-        if (destinationFacilityId != null) {
-            builder.setDestinationFacilityId(destinationFacilityId);
+        if (getDestinationFacilityId() != null) {
+            builder.setDestinationFacilityId(getDestinationFacilityId());
         }
-        if (originContactMechId != null) {
-            builder.setOriginContactMechId(originContactMechId);
+        if (getOriginContactMechId() != null) {
+            builder.setOriginContactMechId(getOriginContactMechId());
         }
-        if (originTelecomNumberId != null) {
-            builder.setOriginTelecomNumberId(originTelecomNumberId);
+        if (getOriginTelecomNumberId() != null) {
+            builder.setOriginTelecomNumberId(getOriginTelecomNumberId());
         }
-        if (destinationContactMechId != null) {
-            builder.setDestinationContactMechId(destinationContactMechId);
+        if (getDestinationContactMechId() != null) {
+            builder.setDestinationContactMechId(getDestinationContactMechId());
         }
-        if (destinationTelecomNumberId != null) {
-            builder.setDestinationTelecomNumberId(destinationTelecomNumberId);
+        if (getDestinationTelecomNumberId() != null) {
+            builder.setDestinationTelecomNumberId(getDestinationTelecomNumberId());
         }
-        if (partyIdTo != null) {
-            builder.setPartyIdTo(partyIdTo);
+        if (getPartyIdTo() != null) {
+            builder.setPartyIdTo(getPartyIdTo());
         }
-        if (partyIdFrom != null) {
-            builder.setPartyIdFrom(partyIdFrom);
+        if (getPartyIdFrom() != null) {
+            builder.setPartyIdFrom(getPartyIdFrom());
         }
-        if (additionalShippingCharge != null) {
-            builder.setAdditionalShippingCharge(getCurrency(additionalShippingCharge));
+        if (getAdditionalShippingCharge() != null) {
+            builder.setAdditionalShippingCharge(getCurrency(getAdditionalShippingCharge()));
         }
-        if (addtlShippingChargeDesc != null) {
-            builder.setAddtlShippingChargeDesc(addtlShippingChargeDesc);
+        if (getAddtlShippingChargeDesc() != null) {
+            builder.setAddtlShippingChargeDesc(getAddtlShippingChargeDesc());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static Shipment fromData(ShipmentFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Shipment.ShipmentBuilder fromPrototype(ShipmentFlatData data) {
         return Shipment.builder()
                 .shipmentId(data.getShipmentId())
                 .shipmentTypeId(data.getShipmentTypeId())
@@ -267,8 +271,7 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, S
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -438,65 +441,65 @@ public class Shipment implements IEventModel<ShipmentFlatData.Builder>, HasId, S
 
     public ShipmentData.Builder toHeadBuilder() {
         ShipmentData.Builder builder = ShipmentData.newBuilder();
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentTypeId != null) {
-            builder.setShipmentTypeId(shipmentTypeId);
+        if (getShipmentTypeId() != null) {
+            builder.setShipmentTypeId(getShipmentTypeId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (primaryShipGroupSeqId != null) {
-            builder.setPrimaryShipGroupSeqId(primaryShipGroupSeqId);
+        if (getPrimaryShipGroupSeqId() != null) {
+            builder.setPrimaryShipGroupSeqId(getPrimaryShipGroupSeqId());
         }
-        if (picklistBinId != null) {
-            builder.setPicklistBinId(picklistBinId);
+        if (getPicklistBinId() != null) {
+            builder.setPicklistBinId(getPicklistBinId());
         }
-        if (estimatedReadyDate != null) {
-            builder.setEstimatedReadyDate(getTimestamp(estimatedReadyDate));
+        if (getEstimatedReadyDate() != null) {
+            builder.setEstimatedReadyDate(getTimestamp(getEstimatedReadyDate()));
         }
-        if (estimatedShipDate != null) {
-            builder.setEstimatedShipDate(getTimestamp(estimatedShipDate));
+        if (getEstimatedShipDate() != null) {
+            builder.setEstimatedShipDate(getTimestamp(getEstimatedShipDate()));
         }
-        if (estimatedArrivalDate != null) {
-            builder.setEstimatedArrivalDate(getTimestamp(estimatedArrivalDate));
+        if (getEstimatedArrivalDate() != null) {
+            builder.setEstimatedArrivalDate(getTimestamp(getEstimatedArrivalDate()));
         }
-        if (latestCancelDate != null) {
-            builder.setLatestCancelDate(getTimestamp(latestCancelDate));
+        if (getLatestCancelDate() != null) {
+            builder.setLatestCancelDate(getTimestamp(getLatestCancelDate()));
         }
-        if (estimatedShipCost != null) {
-            builder.setEstimatedShipCost(getCurrency(estimatedShipCost));
+        if (getEstimatedShipCost() != null) {
+            builder.setEstimatedShipCost(getCurrency(getEstimatedShipCost()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (handlingInstructions != null) {
-            builder.setHandlingInstructions(handlingInstructions);
+        if (getHandlingInstructions() != null) {
+            builder.setHandlingInstructions(getHandlingInstructions());
         }
-        if (additionalShippingCharge != null) {
-            builder.setAdditionalShippingCharge(getCurrency(additionalShippingCharge));
+        if (getAdditionalShippingCharge() != null) {
+            builder.setAdditionalShippingCharge(getCurrency(getAdditionalShippingCharge()));
         }
-        if (addtlShippingChargeDesc != null) {
-            builder.setAddtlShippingChargeDesc(addtlShippingChargeDesc);
+        if (getAddtlShippingChargeDesc() != null) {
+            builder.setAddtlShippingChargeDesc(getAddtlShippingChargeDesc());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

@@ -70,32 +70,36 @@ public class CarrierShipmentBoxType implements IEventModel<CarrierShipmentBoxTyp
 
     public CarrierShipmentBoxTypeData.Builder toDataBuilder() {
         CarrierShipmentBoxTypeData.Builder builder = CarrierShipmentBoxTypeData.newBuilder();
-        if (shipmentBoxTypeId != null) {
-            builder.setShipmentBoxTypeId(shipmentBoxTypeId);
+        if (getShipmentBoxTypeId() != null) {
+            builder.setShipmentBoxTypeId(getShipmentBoxTypeId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (packagingTypeCode != null) {
-            builder.setPackagingTypeCode(packagingTypeCode);
+        if (getPackagingTypeCode() != null) {
+            builder.setPackagingTypeCode(getPackagingTypeCode());
         }
-        if (oversizeCode != null) {
-            builder.setOversizeCode(oversizeCode);
+        if (getOversizeCode() != null) {
+            builder.setOversizeCode(getOversizeCode());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static CarrierShipmentBoxType fromData(CarrierShipmentBoxTypeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CarrierShipmentBoxType.CarrierShipmentBoxTypeBuilder fromPrototype(CarrierShipmentBoxTypeData data) {
         return CarrierShipmentBoxType.builder()
                 .shipmentBoxTypeId(data.getShipmentBoxTypeId())
                 .partyId(data.getPartyId())
@@ -104,8 +108,7 @@ public class CarrierShipmentBoxType implements IEventModel<CarrierShipmentBoxTyp
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -82,50 +82,54 @@ public class ShoppingListItem implements IEventModel<ShoppingListItemData.Builde
 
     public ShoppingListItemData.Builder toDataBuilder() {
         ShoppingListItemData.Builder builder = ShoppingListItemData.newBuilder();
-        if (shoppingListId != null) {
-            builder.setShoppingListId(shoppingListId);
+        if (getShoppingListId() != null) {
+            builder.setShoppingListId(getShoppingListId());
         }
-        if (shoppingListItemSeqId != null) {
-            builder.setShoppingListItemSeqId(shoppingListItemSeqId);
+        if (getShoppingListItemSeqId() != null) {
+            builder.setShoppingListItemSeqId(getShoppingListItemSeqId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (modifiedPrice != null) {
-            builder.setModifiedPrice(getCurrency(modifiedPrice));
+        if (getModifiedPrice() != null) {
+            builder.setModifiedPrice(getCurrency(getModifiedPrice()));
         }
-        if (reservStart != null) {
-            builder.setReservStart(getTimestamp(reservStart));
+        if (getReservStart() != null) {
+            builder.setReservStart(getTimestamp(getReservStart()));
         }
-        if (reservLength != null) {
-            builder.setReservLength(getFixedPoint(reservLength));
+        if (getReservLength() != null) {
+            builder.setReservLength(getFixedPoint(getReservLength()));
         }
-        if (reservPersons != null) {
-            builder.setReservPersons(getFixedPoint(reservPersons));
+        if (getReservPersons() != null) {
+            builder.setReservPersons(getFixedPoint(getReservPersons()));
         }
-        if (quantityPurchased != null) {
-            builder.setQuantityPurchased(getFixedPoint(quantityPurchased));
+        if (getQuantityPurchased() != null) {
+            builder.setQuantityPurchased(getFixedPoint(getQuantityPurchased()));
         }
-        if (configId != null) {
-            builder.setConfigId(configId);
+        if (getConfigId() != null) {
+            builder.setConfigId(getConfigId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShoppingListItem fromData(ShoppingListItemData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShoppingListItem.ShoppingListItemBuilder fromPrototype(ShoppingListItemData data) {
         return ShoppingListItem.builder()
                 .shoppingListId(data.getShoppingListId())
                 .shoppingListItemSeqId(data.getShoppingListItemSeqId())
@@ -140,8 +144,7 @@ public class ShoppingListItem implements IEventModel<ShoppingListItemData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

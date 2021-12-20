@@ -104,80 +104,84 @@ public class SupplierProduct implements IEventModel<SupplierProductData.Builder>
 
     public SupplierProductData.Builder toDataBuilder() {
         SupplierProductData.Builder builder = SupplierProductData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (availableFromDate != null) {
-            builder.setAvailableFromDate(getTimestamp(availableFromDate));
+        if (getAvailableFromDate() != null) {
+            builder.setAvailableFromDate(getTimestamp(getAvailableFromDate()));
         }
-        if (availableThruDate != null) {
-            builder.setAvailableThruDate(getTimestamp(availableThruDate));
+        if (getAvailableThruDate() != null) {
+            builder.setAvailableThruDate(getTimestamp(getAvailableThruDate()));
         }
-        if (supplierPrefOrderId != null) {
-            builder.setSupplierPrefOrderId(supplierPrefOrderId);
+        if (getSupplierPrefOrderId() != null) {
+            builder.setSupplierPrefOrderId(getSupplierPrefOrderId());
         }
-        if (supplierRatingTypeId != null) {
-            builder.setSupplierRatingTypeId(supplierRatingTypeId);
+        if (getSupplierRatingTypeId() != null) {
+            builder.setSupplierRatingTypeId(getSupplierRatingTypeId());
         }
-        if (standardLeadTimeDays != null) {
-            builder.setStandardLeadTimeDays(getFixedPoint(standardLeadTimeDays));
+        if (getStandardLeadTimeDays() != null) {
+            builder.setStandardLeadTimeDays(getFixedPoint(getStandardLeadTimeDays()));
         }
-        if (minimumOrderQuantity != null) {
-            builder.setMinimumOrderQuantity(getFixedPoint(minimumOrderQuantity));
+        if (getMinimumOrderQuantity() != null) {
+            builder.setMinimumOrderQuantity(getFixedPoint(getMinimumOrderQuantity()));
         }
-        if (orderQtyIncrements != null) {
-            builder.setOrderQtyIncrements(getFixedPoint(orderQtyIncrements));
+        if (getOrderQtyIncrements() != null) {
+            builder.setOrderQtyIncrements(getFixedPoint(getOrderQtyIncrements()));
         }
-        if (unitsIncluded != null) {
-            builder.setUnitsIncluded(getFixedPoint(unitsIncluded));
+        if (getUnitsIncluded() != null) {
+            builder.setUnitsIncluded(getFixedPoint(getUnitsIncluded()));
         }
-        if (quantityUomId != null) {
-            builder.setQuantityUomId(quantityUomId);
+        if (getQuantityUomId() != null) {
+            builder.setQuantityUomId(getQuantityUomId());
         }
-        if (agreementId != null) {
-            builder.setAgreementId(agreementId);
+        if (getAgreementId() != null) {
+            builder.setAgreementId(getAgreementId());
         }
-        if (agreementItemSeqId != null) {
-            builder.setAgreementItemSeqId(agreementItemSeqId);
+        if (getAgreementItemSeqId() != null) {
+            builder.setAgreementItemSeqId(getAgreementItemSeqId());
         }
-        if (lastPrice != null) {
-            builder.setLastPrice(getCurrency(lastPrice));
+        if (getLastPrice() != null) {
+            builder.setLastPrice(getCurrency(getLastPrice()));
         }
-        if (shippingPrice != null) {
-            builder.setShippingPrice(getCurrency(shippingPrice));
+        if (getShippingPrice() != null) {
+            builder.setShippingPrice(getCurrency(getShippingPrice()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (supplierProductName != null) {
-            builder.setSupplierProductName(supplierProductName);
+        if (getSupplierProductName() != null) {
+            builder.setSupplierProductName(getSupplierProductName());
         }
-        if (supplierProductId != null) {
-            builder.setSupplierProductId(supplierProductId);
+        if (getSupplierProductId() != null) {
+            builder.setSupplierProductId(getSupplierProductId());
         }
-        if (canDropShip != null) {
-            builder.setCanDropShip(getIndicator(canDropShip));
+        if (getCanDropShip() != null) {
+            builder.setCanDropShip(getIndicator(getCanDropShip()));
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SupplierProduct fromData(SupplierProductData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SupplierProduct.SupplierProductBuilder fromPrototype(SupplierProductData data) {
         return SupplierProduct.builder()
                 .productId(data.getProductId())
                 .partyId(data.getPartyId())
@@ -202,8 +206,7 @@ public class SupplierProduct implements IEventModel<SupplierProductData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

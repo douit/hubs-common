@@ -73,35 +73,39 @@ public class ProductConfigProduct implements IEventModel<ProductConfigProductDat
 
     public ProductConfigProductData.Builder toDataBuilder() {
         ProductConfigProductData.Builder builder = ProductConfigProductData.newBuilder();
-        if (configItemId != null) {
-            builder.setConfigItemId(configItemId);
+        if (getConfigItemId() != null) {
+            builder.setConfigItemId(getConfigItemId());
         }
-        if (configOptionId != null) {
-            builder.setConfigOptionId(configOptionId);
+        if (getConfigOptionId() != null) {
+            builder.setConfigOptionId(getConfigOptionId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductConfigProduct fromData(ProductConfigProductData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductConfigProduct.ProductConfigProductBuilder fromPrototype(ProductConfigProductData data) {
         return ProductConfigProduct.builder()
                 .configItemId(data.getConfigItemId())
                 .configOptionId(data.getConfigOptionId())
@@ -111,8 +115,7 @@ public class ProductConfigProduct implements IEventModel<ProductConfigProductDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -80,44 +80,48 @@ public class ProductReview implements IEventModel<ProductReviewData.Builder>, Ha
 
     public ProductReviewData.Builder toDataBuilder() {
         ProductReviewData.Builder builder = ProductReviewData.newBuilder();
-        if (productReviewId != null) {
-            builder.setProductReviewId(productReviewId);
+        if (getProductReviewId() != null) {
+            builder.setProductReviewId(getProductReviewId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (userLoginId != null) {
-            builder.setUserLoginId(userLoginId);
+        if (getUserLoginId() != null) {
+            builder.setUserLoginId(getUserLoginId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (postedAnonymous != null) {
-            builder.setPostedAnonymous(getIndicator(postedAnonymous));
+        if (getPostedAnonymous() != null) {
+            builder.setPostedAnonymous(getIndicator(getPostedAnonymous()));
         }
-        if (postedDateTime != null) {
-            builder.setPostedDateTime(getTimestamp(postedDateTime));
+        if (getPostedDateTime() != null) {
+            builder.setPostedDateTime(getTimestamp(getPostedDateTime()));
         }
-        if (productRating != null) {
-            builder.setProductRating(getFixedPoint(productRating));
+        if (getProductRating() != null) {
+            builder.setProductRating(getFixedPoint(getProductRating()));
         }
-        if (productReview != null) {
-            builder.setProductReview(productReview);
+        if (getProductReview() != null) {
+            builder.setProductReview(getProductReview());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ProductReview fromData(ProductReviewData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductReview.ProductReviewBuilder fromPrototype(ProductReviewData data) {
         return ProductReview.builder()
                 .productReviewId(data.getProductReviewId())
                 .productStoreId(data.getProductStoreId())
@@ -130,8 +134,7 @@ public class ProductReview implements IEventModel<ProductReviewData.Builder>, Ha
                 .productReview(data.getProductReview())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

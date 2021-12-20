@@ -101,68 +101,72 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, HasId,
 
     public UserLoginFlatData.Builder toDataBuilder() {
         UserLoginFlatData.Builder builder = UserLoginFlatData.newBuilder();
-        if (userLoginId != null) {
-            builder.setUserLoginId(userLoginId);
+        if (getUserLoginId() != null) {
+            builder.setUserLoginId(getUserLoginId());
         }
-        if (currentPassword != null) {
-            builder.setCurrentPassword(currentPassword);
+        if (getCurrentPassword() != null) {
+            builder.setCurrentPassword(getCurrentPassword());
         }
-        if (passwordHint != null) {
-            builder.setPasswordHint(passwordHint);
+        if (getPasswordHint() != null) {
+            builder.setPasswordHint(getPasswordHint());
         }
-        if (isSystem != null) {
-            builder.setIsSystem(getIndicator(isSystem));
+        if (getIsSystem() != null) {
+            builder.setIsSystem(getIndicator(getIsSystem()));
         }
-        if (enabled != null) {
-            builder.setEnabled(getIndicator(enabled));
+        if (getEnabled() != null) {
+            builder.setEnabled(getIndicator(getEnabled()));
         }
-        if (hasLoggedOut != null) {
-            builder.setHasLoggedOut(getIndicator(hasLoggedOut));
+        if (getHasLoggedOut() != null) {
+            builder.setHasLoggedOut(getIndicator(getHasLoggedOut()));
         }
-        if (requirePasswordChange != null) {
-            builder.setRequirePasswordChange(getIndicator(requirePasswordChange));
+        if (getRequirePasswordChange() != null) {
+            builder.setRequirePasswordChange(getIndicator(getRequirePasswordChange()));
         }
-        if (lastCurrencyUom != null) {
-            builder.setLastCurrencyUom(lastCurrencyUom);
+        if (getLastCurrencyUom() != null) {
+            builder.setLastCurrencyUom(getLastCurrencyUom());
         }
-        if (lastLocale != null) {
-            builder.setLastLocale(lastLocale);
+        if (getLastLocale() != null) {
+            builder.setLastLocale(getLastLocale());
         }
-        if (lastTimeZone != null) {
-            builder.setLastTimeZone(lastTimeZone);
+        if (getLastTimeZone() != null) {
+            builder.setLastTimeZone(getLastTimeZone());
         }
-        if (disabledDateTime != null) {
-            builder.setDisabledDateTime(getTimestamp(disabledDateTime));
+        if (getDisabledDateTime() != null) {
+            builder.setDisabledDateTime(getTimestamp(getDisabledDateTime()));
         }
-        if (successiveFailedLogins != null) {
-            builder.setSuccessiveFailedLogins(successiveFailedLogins);
+        if (getSuccessiveFailedLogins() != null) {
+            builder.setSuccessiveFailedLogins(getSuccessiveFailedLogins());
         }
-        if (externalAuthId != null) {
-            builder.setExternalAuthId(externalAuthId);
+        if (getExternalAuthId() != null) {
+            builder.setExternalAuthId(getExternalAuthId());
         }
-        if (userLdapDn != null) {
-            builder.setUserLdapDn(userLdapDn);
+        if (getUserLdapDn() != null) {
+            builder.setUserLdapDn(getUserLdapDn());
         }
-        if (disabledBy != null) {
-            builder.setDisabledBy(disabledBy);
+        if (getDisabledBy() != null) {
+            builder.setDisabledBy(getDisabledBy());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static UserLogin fromData(UserLoginFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static UserLogin.UserLoginBuilder fromPrototype(UserLoginFlatData data) {
         return UserLogin.builder()
                 .userLoginId(data.getUserLoginId())
                 .currentPassword(data.getCurrentPassword())
@@ -183,8 +187,7 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, HasId,
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .partyId(data.getPartyId())
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -414,56 +417,56 @@ public class UserLogin implements IEventModel<UserLoginFlatData.Builder>, HasId,
 
     public UserLoginData.Builder toHeadBuilder() {
         UserLoginData.Builder builder = UserLoginData.newBuilder();
-        if (userLoginId != null) {
-            builder.setUserLoginId(userLoginId);
+        if (getUserLoginId() != null) {
+            builder.setUserLoginId(getUserLoginId());
         }
-        if (currentPassword != null) {
-            builder.setCurrentPassword(currentPassword);
+        if (getCurrentPassword() != null) {
+            builder.setCurrentPassword(getCurrentPassword());
         }
-        if (passwordHint != null) {
-            builder.setPasswordHint(passwordHint);
+        if (getPasswordHint() != null) {
+            builder.setPasswordHint(getPasswordHint());
         }
-        if (isSystem != null) {
-            builder.setIsSystem(getIndicator(isSystem));
+        if (getIsSystem() != null) {
+            builder.setIsSystem(getIndicator(getIsSystem()));
         }
-        if (enabled != null) {
-            builder.setEnabled(getIndicator(enabled));
+        if (getEnabled() != null) {
+            builder.setEnabled(getIndicator(getEnabled()));
         }
-        if (hasLoggedOut != null) {
-            builder.setHasLoggedOut(getIndicator(hasLoggedOut));
+        if (getHasLoggedOut() != null) {
+            builder.setHasLoggedOut(getIndicator(getHasLoggedOut()));
         }
-        if (requirePasswordChange != null) {
-            builder.setRequirePasswordChange(getIndicator(requirePasswordChange));
+        if (getRequirePasswordChange() != null) {
+            builder.setRequirePasswordChange(getIndicator(getRequirePasswordChange()));
         }
-        if (lastCurrencyUom != null) {
-            builder.setLastCurrencyUom(lastCurrencyUom);
+        if (getLastCurrencyUom() != null) {
+            builder.setLastCurrencyUom(getLastCurrencyUom());
         }
-        if (lastLocale != null) {
-            builder.setLastLocale(lastLocale);
+        if (getLastLocale() != null) {
+            builder.setLastLocale(getLastLocale());
         }
-        if (lastTimeZone != null) {
-            builder.setLastTimeZone(lastTimeZone);
+        if (getLastTimeZone() != null) {
+            builder.setLastTimeZone(getLastTimeZone());
         }
-        if (disabledDateTime != null) {
-            builder.setDisabledDateTime(getTimestamp(disabledDateTime));
+        if (getDisabledDateTime() != null) {
+            builder.setDisabledDateTime(getTimestamp(getDisabledDateTime()));
         }
-        if (successiveFailedLogins != null) {
-            builder.setSuccessiveFailedLogins(successiveFailedLogins);
+        if (getSuccessiveFailedLogins() != null) {
+            builder.setSuccessiveFailedLogins(getSuccessiveFailedLogins());
         }
-        if (externalAuthId != null) {
-            builder.setExternalAuthId(externalAuthId);
+        if (getExternalAuthId() != null) {
+            builder.setExternalAuthId(getExternalAuthId());
         }
-        if (userLdapDn != null) {
-            builder.setUserLdapDn(userLdapDn);
+        if (getUserLdapDn() != null) {
+            builder.setUserLdapDn(getUserLdapDn());
         }
-        if (disabledBy != null) {
-            builder.setDisabledBy(disabledBy);
+        if (getDisabledBy() != null) {
+            builder.setDisabledBy(getDisabledBy());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

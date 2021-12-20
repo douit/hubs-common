@@ -80,44 +80,48 @@ public class EftAccount implements IEventModel<EftAccountData.Builder>, HasId, S
 
     public EftAccountData.Builder toDataBuilder() {
         EftAccountData.Builder builder = EftAccountData.newBuilder();
-        if (paymentMethodId != null) {
-            builder.setPaymentMethodId(paymentMethodId);
+        if (getPaymentMethodId() != null) {
+            builder.setPaymentMethodId(getPaymentMethodId());
         }
-        if (bankName != null) {
-            builder.setBankName(bankName);
+        if (getBankName() != null) {
+            builder.setBankName(getBankName());
         }
-        if (routingNumber != null) {
-            builder.setRoutingNumber(routingNumber);
+        if (getRoutingNumber() != null) {
+            builder.setRoutingNumber(getRoutingNumber());
         }
-        if (accountType != null) {
-            builder.setAccountType(accountType);
+        if (getAccountType() != null) {
+            builder.setAccountType(getAccountType());
         }
-        if (accountNumber != null) {
-            builder.setAccountNumber(accountNumber);
+        if (getAccountNumber() != null) {
+            builder.setAccountNumber(getAccountNumber());
         }
-        if (nameOnAccount != null) {
-            builder.setNameOnAccount(nameOnAccount);
+        if (getNameOnAccount() != null) {
+            builder.setNameOnAccount(getNameOnAccount());
         }
-        if (companyNameOnAccount != null) {
-            builder.setCompanyNameOnAccount(companyNameOnAccount);
+        if (getCompanyNameOnAccount() != null) {
+            builder.setCompanyNameOnAccount(getCompanyNameOnAccount());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (yearsAtBank != null) {
-            builder.setYearsAtBank(yearsAtBank);
+        if (getYearsAtBank() != null) {
+            builder.setYearsAtBank(getYearsAtBank());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static EftAccount fromData(EftAccountData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static EftAccount.EftAccountBuilder fromPrototype(EftAccountData data) {
         return EftAccount.builder()
                 .paymentMethodId(data.getPaymentMethodId())
                 .bankName(data.getBankName())
@@ -130,8 +134,7 @@ public class EftAccount implements IEventModel<EftAccountData.Builder>, HasId, S
                 .yearsAtBank(data.getYearsAtBank())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

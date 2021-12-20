@@ -72,35 +72,39 @@ public class WorkEffortSkillStandard implements IEventModel<WorkEffortSkillStand
 
     public WorkEffortSkillStandardData.Builder toDataBuilder() {
         WorkEffortSkillStandardData.Builder builder = WorkEffortSkillStandardData.newBuilder();
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (skillTypeId != null) {
-            builder.setSkillTypeId(skillTypeId);
+        if (getSkillTypeId() != null) {
+            builder.setSkillTypeId(getSkillTypeId());
         }
-        if (estimatedNumPeople != null) {
-            builder.setEstimatedNumPeople(estimatedNumPeople);
+        if (getEstimatedNumPeople() != null) {
+            builder.setEstimatedNumPeople(getEstimatedNumPeople());
         }
-        if (estimatedDuration != null) {
-            builder.setEstimatedDuration(estimatedDuration);
+        if (getEstimatedDuration() != null) {
+            builder.setEstimatedDuration(getEstimatedDuration());
         }
-        if (estimatedCost != null) {
-            builder.setEstimatedCost(getCurrency(estimatedCost));
+        if (getEstimatedCost() != null) {
+            builder.setEstimatedCost(getCurrency(getEstimatedCost()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static WorkEffortSkillStandard fromData(WorkEffortSkillStandardData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static WorkEffortSkillStandard.WorkEffortSkillStandardBuilder fromPrototype(WorkEffortSkillStandardData data) {
         return WorkEffortSkillStandard.builder()
                 .workEffortId(data.getWorkEffortId())
                 .skillTypeId(data.getSkillTypeId())
@@ -110,8 +114,7 @@ public class WorkEffortSkillStandard implements IEventModel<WorkEffortSkillStand
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

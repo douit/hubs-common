@@ -98,71 +98,75 @@ public class Facility implements IEventModel<FacilityData.Builder>, HasId, Seria
 
     public FacilityData.Builder toDataBuilder() {
         FacilityData.Builder builder = FacilityData.newBuilder();
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (facilityTypeId != null) {
-            builder.setFacilityTypeId(facilityTypeId);
+        if (getFacilityTypeId() != null) {
+            builder.setFacilityTypeId(getFacilityTypeId());
         }
-        if (parentFacilityId != null) {
-            builder.setParentFacilityId(parentFacilityId);
+        if (getParentFacilityId() != null) {
+            builder.setParentFacilityId(getParentFacilityId());
         }
-        if (ownerPartyId != null) {
-            builder.setOwnerPartyId(ownerPartyId);
+        if (getOwnerPartyId() != null) {
+            builder.setOwnerPartyId(getOwnerPartyId());
         }
-        if (defaultInventoryItemTypeId != null) {
-            builder.setDefaultInventoryItemTypeId(defaultInventoryItemTypeId);
+        if (getDefaultInventoryItemTypeId() != null) {
+            builder.setDefaultInventoryItemTypeId(getDefaultInventoryItemTypeId());
         }
-        if (facilityName != null) {
-            builder.setFacilityName(facilityName);
+        if (getFacilityName() != null) {
+            builder.setFacilityName(getFacilityName());
         }
-        if (primaryFacilityGroupId != null) {
-            builder.setPrimaryFacilityGroupId(primaryFacilityGroupId);
+        if (getPrimaryFacilityGroupId() != null) {
+            builder.setPrimaryFacilityGroupId(getPrimaryFacilityGroupId());
         }
-        if (facilitySize != null) {
-            builder.setFacilitySize(getFixedPoint(facilitySize));
+        if (getFacilitySize() != null) {
+            builder.setFacilitySize(getFixedPoint(getFacilitySize()));
         }
-        if (facilitySizeUomId != null) {
-            builder.setFacilitySizeUomId(facilitySizeUomId);
+        if (getFacilitySizeUomId() != null) {
+            builder.setFacilitySizeUomId(getFacilitySizeUomId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (defaultDaysToShip != null) {
-            builder.setDefaultDaysToShip(defaultDaysToShip);
+        if (getDefaultDaysToShip() != null) {
+            builder.setDefaultDaysToShip(getDefaultDaysToShip());
         }
-        if (openedDate != null) {
-            builder.setOpenedDate(getTimestamp(openedDate));
+        if (getOpenedDate() != null) {
+            builder.setOpenedDate(getTimestamp(getOpenedDate()));
         }
-        if (closedDate != null) {
-            builder.setClosedDate(getTimestamp(closedDate));
+        if (getClosedDate() != null) {
+            builder.setClosedDate(getTimestamp(getClosedDate()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (defaultDimensionUomId != null) {
-            builder.setDefaultDimensionUomId(defaultDimensionUomId);
+        if (getDefaultDimensionUomId() != null) {
+            builder.setDefaultDimensionUomId(getDefaultDimensionUomId());
         }
-        if (defaultWeightUomId != null) {
-            builder.setDefaultWeightUomId(defaultWeightUomId);
+        if (getDefaultWeightUomId() != null) {
+            builder.setDefaultWeightUomId(getDefaultWeightUomId());
         }
-        if (geoPointId != null) {
-            builder.setGeoPointId(geoPointId);
+        if (getGeoPointId() != null) {
+            builder.setGeoPointId(getGeoPointId());
         }
-        if (facilityLevel != null) {
-            builder.setFacilityLevel(facilityLevel);
+        if (getFacilityLevel() != null) {
+            builder.setFacilityLevel(getFacilityLevel());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static Facility fromData(FacilityData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Facility.FacilityBuilder fromPrototype(FacilityData data) {
         return Facility.builder()
                 .facilityId(data.getFacilityId())
                 .facilityTypeId(data.getFacilityTypeId())
@@ -184,8 +188,7 @@ public class Facility implements IEventModel<FacilityData.Builder>, HasId, Seria
                 .facilityLevel(data.getFacilityLevel())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

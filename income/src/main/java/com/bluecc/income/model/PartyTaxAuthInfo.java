@@ -79,44 +79,48 @@ public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builde
 
     public PartyTaxAuthInfoData.Builder toDataBuilder() {
         PartyTaxAuthInfoData.Builder builder = PartyTaxAuthInfoData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (partyTaxId != null) {
-            builder.setPartyTaxId(partyTaxId);
+        if (getPartyTaxId() != null) {
+            builder.setPartyTaxId(getPartyTaxId());
         }
-        if (isExempt != null) {
-            builder.setIsExempt(getIndicator(isExempt));
+        if (getIsExempt() != null) {
+            builder.setIsExempt(getIndicator(getIsExempt()));
         }
-        if (isNexus != null) {
-            builder.setIsNexus(getIndicator(isNexus));
+        if (getIsNexus() != null) {
+            builder.setIsNexus(getIndicator(getIsNexus()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PartyTaxAuthInfo fromData(PartyTaxAuthInfoData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyTaxAuthInfo.PartyTaxAuthInfoBuilder fromPrototype(PartyTaxAuthInfoData data) {
         return PartyTaxAuthInfo.builder()
                 .partyId(data.getPartyId())
                 .taxAuthGeoId(data.getTaxAuthGeoId())
@@ -129,8 +133,7 @@ public class PartyTaxAuthInfo implements IEventModel<PartyTaxAuthInfoData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -107,77 +107,81 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, HasId, Ser
 
     public PaymentFlatData.Builder toDataBuilder() {
         PaymentFlatData.Builder builder = PaymentFlatData.newBuilder();
-        if (paymentId != null) {
-            builder.setPaymentId(paymentId);
+        if (getPaymentId() != null) {
+            builder.setPaymentId(getPaymentId());
         }
-        if (paymentTypeId != null) {
-            builder.setPaymentTypeId(paymentTypeId);
+        if (getPaymentTypeId() != null) {
+            builder.setPaymentTypeId(getPaymentTypeId());
         }
-        if (paymentMethodTypeId != null) {
-            builder.setPaymentMethodTypeId(paymentMethodTypeId);
+        if (getPaymentMethodTypeId() != null) {
+            builder.setPaymentMethodTypeId(getPaymentMethodTypeId());
         }
-        if (paymentMethodId != null) {
-            builder.setPaymentMethodId(paymentMethodId);
+        if (getPaymentMethodId() != null) {
+            builder.setPaymentMethodId(getPaymentMethodId());
         }
-        if (paymentGatewayResponseId != null) {
-            builder.setPaymentGatewayResponseId(paymentGatewayResponseId);
+        if (getPaymentGatewayResponseId() != null) {
+            builder.setPaymentGatewayResponseId(getPaymentGatewayResponseId());
         }
-        if (paymentPreferenceId != null) {
-            builder.setPaymentPreferenceId(paymentPreferenceId);
+        if (getPaymentPreferenceId() != null) {
+            builder.setPaymentPreferenceId(getPaymentPreferenceId());
         }
-        if (partyIdFrom != null) {
-            builder.setPartyIdFrom(partyIdFrom);
+        if (getPartyIdFrom() != null) {
+            builder.setPartyIdFrom(getPartyIdFrom());
         }
-        if (partyIdTo != null) {
-            builder.setPartyIdTo(partyIdTo);
+        if (getPartyIdTo() != null) {
+            builder.setPartyIdTo(getPartyIdTo());
         }
-        if (roleTypeIdTo != null) {
-            builder.setRoleTypeIdTo(roleTypeIdTo);
+        if (getRoleTypeIdTo() != null) {
+            builder.setRoleTypeIdTo(getRoleTypeIdTo());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (effectiveDate != null) {
-            builder.setEffectiveDate(getTimestamp(effectiveDate));
+        if (getEffectiveDate() != null) {
+            builder.setEffectiveDate(getTimestamp(getEffectiveDate()));
         }
-        if (paymentRefNum != null) {
-            builder.setPaymentRefNum(paymentRefNum);
+        if (getPaymentRefNum() != null) {
+            builder.setPaymentRefNum(getPaymentRefNum());
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (finAccountTransId != null) {
-            builder.setFinAccountTransId(finAccountTransId);
+        if (getFinAccountTransId() != null) {
+            builder.setFinAccountTransId(getFinAccountTransId());
         }
-        if (overrideGlAccountId != null) {
-            builder.setOverrideGlAccountId(overrideGlAccountId);
+        if (getOverrideGlAccountId() != null) {
+            builder.setOverrideGlAccountId(getOverrideGlAccountId());
         }
-        if (actualCurrencyAmount != null) {
-            builder.setActualCurrencyAmount(getCurrency(actualCurrencyAmount));
+        if (getActualCurrencyAmount() != null) {
+            builder.setActualCurrencyAmount(getCurrency(getActualCurrencyAmount()));
         }
-        if (actualCurrencyUomId != null) {
-            builder.setActualCurrencyUomId(actualCurrencyUomId);
+        if (getActualCurrencyUomId() != null) {
+            builder.setActualCurrencyUomId(getActualCurrencyUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static Payment fromData(PaymentFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Payment.PaymentBuilder fromPrototype(PaymentFlatData data) {
         return Payment.builder()
                 .paymentId(data.getPaymentId())
                 .paymentTypeId(data.getPaymentTypeId())
@@ -201,8 +205,7 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, HasId, Ser
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -292,47 +295,47 @@ public class Payment implements IEventModel<PaymentFlatData.Builder>, HasId, Ser
 
     public PaymentData.Builder toHeadBuilder() {
         PaymentData.Builder builder = PaymentData.newBuilder();
-        if (paymentId != null) {
-            builder.setPaymentId(paymentId);
+        if (getPaymentId() != null) {
+            builder.setPaymentId(getPaymentId());
         }
-        if (paymentTypeId != null) {
-            builder.setPaymentTypeId(paymentTypeId);
+        if (getPaymentTypeId() != null) {
+            builder.setPaymentTypeId(getPaymentTypeId());
         }
-        if (paymentMethodTypeId != null) {
-            builder.setPaymentMethodTypeId(paymentMethodTypeId);
+        if (getPaymentMethodTypeId() != null) {
+            builder.setPaymentMethodTypeId(getPaymentMethodTypeId());
         }
-        if (roleTypeIdTo != null) {
-            builder.setRoleTypeIdTo(roleTypeIdTo);
+        if (getRoleTypeIdTo() != null) {
+            builder.setRoleTypeIdTo(getRoleTypeIdTo());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (effectiveDate != null) {
-            builder.setEffectiveDate(getTimestamp(effectiveDate));
+        if (getEffectiveDate() != null) {
+            builder.setEffectiveDate(getTimestamp(getEffectiveDate()));
         }
-        if (paymentRefNum != null) {
-            builder.setPaymentRefNum(paymentRefNum);
+        if (getPaymentRefNum() != null) {
+            builder.setPaymentRefNum(getPaymentRefNum());
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (actualCurrencyAmount != null) {
-            builder.setActualCurrencyAmount(getCurrency(actualCurrencyAmount));
+        if (getActualCurrencyAmount() != null) {
+            builder.setActualCurrencyAmount(getCurrency(getActualCurrencyAmount()));
         }
-        if (actualCurrencyUomId != null) {
-            builder.setActualCurrencyUomId(actualCurrencyUomId);
+        if (getActualCurrencyUomId() != null) {
+            builder.setActualCurrencyUomId(getActualCurrencyUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

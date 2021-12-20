@@ -73,35 +73,39 @@ public class ProductFacilityLocation implements IEventModel<ProductFacilityLocat
 
     public ProductFacilityLocationData.Builder toDataBuilder() {
         ProductFacilityLocationData.Builder builder = ProductFacilityLocationData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (locationSeqId != null) {
-            builder.setLocationSeqId(locationSeqId);
+        if (getLocationSeqId() != null) {
+            builder.setLocationSeqId(getLocationSeqId());
         }
-        if (minimumStock != null) {
-            builder.setMinimumStock(getFixedPoint(minimumStock));
+        if (getMinimumStock() != null) {
+            builder.setMinimumStock(getFixedPoint(getMinimumStock()));
         }
-        if (moveQuantity != null) {
-            builder.setMoveQuantity(getFixedPoint(moveQuantity));
+        if (getMoveQuantity() != null) {
+            builder.setMoveQuantity(getFixedPoint(getMoveQuantity()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductFacilityLocation fromData(ProductFacilityLocationData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductFacilityLocation.ProductFacilityLocationBuilder fromPrototype(ProductFacilityLocationData data) {
         return ProductFacilityLocation.builder()
                 .productId(data.getProductId())
                 .facilityId(data.getFacilityId())
@@ -111,8 +115,7 @@ public class ProductFacilityLocation implements IEventModel<ProductFacilityLocat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -80,44 +80,48 @@ public class SurveyQuestion implements IEventModel<SurveyQuestionData.Builder>, 
 
     public SurveyQuestionData.Builder toDataBuilder() {
         SurveyQuestionData.Builder builder = SurveyQuestionData.newBuilder();
-        if (surveyQuestionId != null) {
-            builder.setSurveyQuestionId(surveyQuestionId);
+        if (getSurveyQuestionId() != null) {
+            builder.setSurveyQuestionId(getSurveyQuestionId());
         }
-        if (surveyQuestionCategoryId != null) {
-            builder.setSurveyQuestionCategoryId(surveyQuestionCategoryId);
+        if (getSurveyQuestionCategoryId() != null) {
+            builder.setSurveyQuestionCategoryId(getSurveyQuestionCategoryId());
         }
-        if (surveyQuestionTypeId != null) {
-            builder.setSurveyQuestionTypeId(surveyQuestionTypeId);
+        if (getSurveyQuestionTypeId() != null) {
+            builder.setSurveyQuestionTypeId(getSurveyQuestionTypeId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (question != null) {
-            builder.setQuestion(question);
+        if (getQuestion() != null) {
+            builder.setQuestion(getQuestion());
         }
-        if (hint != null) {
-            builder.setHint(hint);
+        if (getHint() != null) {
+            builder.setHint(getHint());
         }
-        if (enumTypeId != null) {
-            builder.setEnumTypeId(enumTypeId);
+        if (getEnumTypeId() != null) {
+            builder.setEnumTypeId(getEnumTypeId());
         }
-        if (geoId != null) {
-            builder.setGeoId(geoId);
+        if (getGeoId() != null) {
+            builder.setGeoId(getGeoId());
         }
-        if (formatString != null) {
-            builder.setFormatString(formatString);
+        if (getFormatString() != null) {
+            builder.setFormatString(getFormatString());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static SurveyQuestion fromData(SurveyQuestionData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SurveyQuestion.SurveyQuestionBuilder fromPrototype(SurveyQuestionData data) {
         return SurveyQuestion.builder()
                 .surveyQuestionId(data.getSurveyQuestionId())
                 .surveyQuestionCategoryId(data.getSurveyQuestionCategoryId())
@@ -130,8 +134,7 @@ public class SurveyQuestion implements IEventModel<SurveyQuestionData.Builder>, 
                 .formatString(data.getFormatString())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

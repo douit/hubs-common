@@ -73,35 +73,39 @@ public class ContentRole implements IEventModel<ContentRoleData.Builder>, HasId,
 
     public ContentRoleData.Builder toDataBuilder() {
         ContentRoleData.Builder builder = ContentRoleData.newBuilder();
-        if (contentId != null) {
-            builder.setContentId(contentId);
+        if (getContentId() != null) {
+            builder.setContentId(getContentId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ContentRole fromData(ContentRoleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ContentRole.ContentRoleBuilder fromPrototype(ContentRoleData data) {
         return ContentRole.builder()
                 .contentId(data.getContentId())
                 .partyId(data.getPartyId())
@@ -111,8 +115,7 @@ public class ContentRole implements IEventModel<ContentRoleData.Builder>, HasId,
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

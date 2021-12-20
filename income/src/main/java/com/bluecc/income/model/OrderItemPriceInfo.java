@@ -78,41 +78,45 @@ public class OrderItemPriceInfo implements IEventModel<OrderItemPriceInfoData.Bu
 
     public OrderItemPriceInfoData.Builder toDataBuilder() {
         OrderItemPriceInfoData.Builder builder = OrderItemPriceInfoData.newBuilder();
-        if (orderItemPriceInfoId != null) {
-            builder.setOrderItemPriceInfoId(orderItemPriceInfoId);
+        if (getOrderItemPriceInfoId() != null) {
+            builder.setOrderItemPriceInfoId(getOrderItemPriceInfoId());
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (productPriceRuleId != null) {
-            builder.setProductPriceRuleId(productPriceRuleId);
+        if (getProductPriceRuleId() != null) {
+            builder.setProductPriceRuleId(getProductPriceRuleId());
         }
-        if (productPriceActionSeqId != null) {
-            builder.setProductPriceActionSeqId(productPriceActionSeqId);
+        if (getProductPriceActionSeqId() != null) {
+            builder.setProductPriceActionSeqId(getProductPriceActionSeqId());
         }
-        if (modifyAmount != null) {
-            builder.setModifyAmount(getCurrency(modifyAmount));
+        if (getModifyAmount() != null) {
+            builder.setModifyAmount(getCurrency(getModifyAmount()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (rateCode != null) {
-            builder.setRateCode(rateCode);
+        if (getRateCode() != null) {
+            builder.setRateCode(getRateCode());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static OrderItemPriceInfo fromData(OrderItemPriceInfoData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderItemPriceInfo.OrderItemPriceInfoBuilder fromPrototype(OrderItemPriceInfoData data) {
         return OrderItemPriceInfo.builder()
                 .orderItemPriceInfoId(data.getOrderItemPriceInfoId())
                 .orderId(data.getOrderId())
@@ -124,8 +128,7 @@ public class OrderItemPriceInfo implements IEventModel<OrderItemPriceInfoData.Bu
                 .rateCode(data.getRateCode())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

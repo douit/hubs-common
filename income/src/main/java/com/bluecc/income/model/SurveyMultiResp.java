@@ -68,29 +68,33 @@ public class SurveyMultiResp implements IEventModel<SurveyMultiRespData.Builder>
 
     public SurveyMultiRespData.Builder toDataBuilder() {
         SurveyMultiRespData.Builder builder = SurveyMultiRespData.newBuilder();
-        if (surveyId != null) {
-            builder.setSurveyId(surveyId);
+        if (getSurveyId() != null) {
+            builder.setSurveyId(getSurveyId());
         }
-        if (surveyMultiRespId != null) {
-            builder.setSurveyMultiRespId(surveyMultiRespId);
+        if (getSurveyMultiRespId() != null) {
+            builder.setSurveyMultiRespId(getSurveyMultiRespId());
         }
-        if (multiRespTitle != null) {
-            builder.setMultiRespTitle(multiRespTitle);
+        if (getMultiRespTitle() != null) {
+            builder.setMultiRespTitle(getMultiRespTitle());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SurveyMultiResp fromData(SurveyMultiRespData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SurveyMultiResp.SurveyMultiRespBuilder fromPrototype(SurveyMultiRespData data) {
         return SurveyMultiResp.builder()
                 .surveyId(data.getSurveyId())
                 .surveyMultiRespId(data.getSurveyMultiRespId())
@@ -98,8 +102,7 @@ public class SurveyMultiResp implements IEventModel<SurveyMultiRespData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

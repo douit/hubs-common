@@ -32,7 +32,12 @@ public class ProtoTypes {
     }
 
     public static java.math.BigDecimal getBigDecimal(Currency serialized) {
-        return new BigDecimal(serialized.getValue());
+        try {
+            return new BigDecimal(serialized.getValue());
+        }catch(NumberFormatException e){
+            log.warn("Cannot parse value as decimal '{}'", serialized.getValue());
+            return BigDecimal.ZERO;
+        }
     }
 
     public static Currency getCurrency(String val) {

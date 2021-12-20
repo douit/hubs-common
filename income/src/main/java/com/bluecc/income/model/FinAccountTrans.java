@@ -92,62 +92,66 @@ public class FinAccountTrans implements IEventModel<FinAccountTransData.Builder>
 
     public FinAccountTransData.Builder toDataBuilder() {
         FinAccountTransData.Builder builder = FinAccountTransData.newBuilder();
-        if (finAccountTransId != null) {
-            builder.setFinAccountTransId(finAccountTransId);
+        if (getFinAccountTransId() != null) {
+            builder.setFinAccountTransId(getFinAccountTransId());
         }
-        if (finAccountTransTypeId != null) {
-            builder.setFinAccountTransTypeId(finAccountTransTypeId);
+        if (getFinAccountTransTypeId() != null) {
+            builder.setFinAccountTransTypeId(getFinAccountTransTypeId());
         }
-        if (finAccountId != null) {
-            builder.setFinAccountId(finAccountId);
+        if (getFinAccountId() != null) {
+            builder.setFinAccountId(getFinAccountId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (glReconciliationId != null) {
-            builder.setGlReconciliationId(glReconciliationId);
+        if (getGlReconciliationId() != null) {
+            builder.setGlReconciliationId(getGlReconciliationId());
         }
-        if (transactionDate != null) {
-            builder.setTransactionDate(getTimestamp(transactionDate));
+        if (getTransactionDate() != null) {
+            builder.setTransactionDate(getTimestamp(getTransactionDate()));
         }
-        if (entryDate != null) {
-            builder.setEntryDate(getTimestamp(entryDate));
+        if (getEntryDate() != null) {
+            builder.setEntryDate(getTimestamp(getEntryDate()));
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (paymentId != null) {
-            builder.setPaymentId(paymentId);
+        if (getPaymentId() != null) {
+            builder.setPaymentId(getPaymentId());
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (performedByPartyId != null) {
-            builder.setPerformedByPartyId(performedByPartyId);
+        if (getPerformedByPartyId() != null) {
+            builder.setPerformedByPartyId(getPerformedByPartyId());
         }
-        if (reasonEnumId != null) {
-            builder.setReasonEnumId(reasonEnumId);
+        if (getReasonEnumId() != null) {
+            builder.setReasonEnumId(getReasonEnumId());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static FinAccountTrans fromData(FinAccountTransData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FinAccountTrans.FinAccountTransBuilder fromPrototype(FinAccountTransData data) {
         return FinAccountTrans.builder()
                 .finAccountTransId(data.getFinAccountTransId())
                 .finAccountTransTypeId(data.getFinAccountTransTypeId())
@@ -166,8 +170,7 @@ public class FinAccountTrans implements IEventModel<FinAccountTransData.Builder>
                 .statusId(data.getStatusId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

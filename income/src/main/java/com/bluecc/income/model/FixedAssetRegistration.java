@@ -75,41 +75,45 @@ public class FixedAssetRegistration implements IEventModel<FixedAssetRegistratio
 
     public FixedAssetRegistrationData.Builder toDataBuilder() {
         FixedAssetRegistrationData.Builder builder = FixedAssetRegistrationData.newBuilder();
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (registrationDate != null) {
-            builder.setRegistrationDate(getTimestamp(registrationDate));
+        if (getRegistrationDate() != null) {
+            builder.setRegistrationDate(getTimestamp(getRegistrationDate()));
         }
-        if (govAgencyPartyId != null) {
-            builder.setGovAgencyPartyId(govAgencyPartyId);
+        if (getGovAgencyPartyId() != null) {
+            builder.setGovAgencyPartyId(getGovAgencyPartyId());
         }
-        if (registrationNumber != null) {
-            builder.setRegistrationNumber(registrationNumber);
+        if (getRegistrationNumber() != null) {
+            builder.setRegistrationNumber(getRegistrationNumber());
         }
-        if (licenseNumber != null) {
-            builder.setLicenseNumber(licenseNumber);
+        if (getLicenseNumber() != null) {
+            builder.setLicenseNumber(getLicenseNumber());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FixedAssetRegistration fromData(FixedAssetRegistrationData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FixedAssetRegistration.FixedAssetRegistrationBuilder fromPrototype(FixedAssetRegistrationData data) {
         return FixedAssetRegistration.builder()
                 .fixedAssetId(data.getFixedAssetId())
                 .fromDate(getLocalDateTime(data.getFromDate()))
@@ -121,8 +125,7 @@ public class FixedAssetRegistration implements IEventModel<FixedAssetRegistratio
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

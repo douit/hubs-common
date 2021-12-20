@@ -84,47 +84,51 @@ public class RateAmount implements IEventModel<RateAmountData.Builder>, HasId, S
 
     public RateAmountData.Builder toDataBuilder() {
         RateAmountData.Builder builder = RateAmountData.newBuilder();
-        if (rateTypeId != null) {
-            builder.setRateTypeId(rateTypeId);
+        if (getRateTypeId() != null) {
+            builder.setRateTypeId(getRateTypeId());
         }
-        if (rateCurrencyUomId != null) {
-            builder.setRateCurrencyUomId(rateCurrencyUomId);
+        if (getRateCurrencyUomId() != null) {
+            builder.setRateCurrencyUomId(getRateCurrencyUomId());
         }
-        if (periodTypeId != null) {
-            builder.setPeriodTypeId(periodTypeId);
+        if (getPeriodTypeId() != null) {
+            builder.setPeriodTypeId(getPeriodTypeId());
         }
-        if (workEffortId != null) {
-            builder.setWorkEffortId(workEffortId);
+        if (getWorkEffortId() != null) {
+            builder.setWorkEffortId(getWorkEffortId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (emplPositionTypeId != null) {
-            builder.setEmplPositionTypeId(emplPositionTypeId);
+        if (getEmplPositionTypeId() != null) {
+            builder.setEmplPositionTypeId(getEmplPositionTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (rateAmount != null) {
-            builder.setRateAmount(getCurrency(rateAmount));
+        if (getRateAmount() != null) {
+            builder.setRateAmount(getCurrency(getRateAmount()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static RateAmount fromData(RateAmountData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static RateAmount.RateAmountBuilder fromPrototype(RateAmountData data) {
         return RateAmount.builder()
                 .rateTypeId(data.getRateTypeId())
                 .rateCurrencyUomId(data.getRateCurrencyUomId())
@@ -138,8 +142,7 @@ public class RateAmount implements IEventModel<RateAmountData.Builder>, HasId, S
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

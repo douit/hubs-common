@@ -68,29 +68,33 @@ public class GlAccountTypeDefault implements IEventModel<GlAccountTypeDefaultDat
 
     public GlAccountTypeDefaultData.Builder toDataBuilder() {
         GlAccountTypeDefaultData.Builder builder = GlAccountTypeDefaultData.newBuilder();
-        if (glAccountTypeId != null) {
-            builder.setGlAccountTypeId(glAccountTypeId);
+        if (getGlAccountTypeId() != null) {
+            builder.setGlAccountTypeId(getGlAccountTypeId());
         }
-        if (organizationPartyId != null) {
-            builder.setOrganizationPartyId(organizationPartyId);
+        if (getOrganizationPartyId() != null) {
+            builder.setOrganizationPartyId(getOrganizationPartyId());
         }
-        if (glAccountId != null) {
-            builder.setGlAccountId(glAccountId);
+        if (getGlAccountId() != null) {
+            builder.setGlAccountId(getGlAccountId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static GlAccountTypeDefault fromData(GlAccountTypeDefaultData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static GlAccountTypeDefault.GlAccountTypeDefaultBuilder fromPrototype(GlAccountTypeDefaultData data) {
         return GlAccountTypeDefault.builder()
                 .glAccountTypeId(data.getGlAccountTypeId())
                 .organizationPartyId(data.getOrganizationPartyId())
@@ -98,8 +102,7 @@ public class GlAccountTypeDefault implements IEventModel<GlAccountTypeDefaultDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

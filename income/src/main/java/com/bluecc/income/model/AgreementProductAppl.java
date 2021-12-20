@@ -71,32 +71,36 @@ public class AgreementProductAppl implements IEventModel<AgreementProductApplDat
 
     public AgreementProductApplData.Builder toDataBuilder() {
         AgreementProductApplData.Builder builder = AgreementProductApplData.newBuilder();
-        if (agreementId != null) {
-            builder.setAgreementId(agreementId);
+        if (getAgreementId() != null) {
+            builder.setAgreementId(getAgreementId());
         }
-        if (agreementItemSeqId != null) {
-            builder.setAgreementItemSeqId(agreementItemSeqId);
+        if (getAgreementItemSeqId() != null) {
+            builder.setAgreementItemSeqId(getAgreementItemSeqId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (price != null) {
-            builder.setPrice(getCurrency(price));
+        if (getPrice() != null) {
+            builder.setPrice(getCurrency(getPrice()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static AgreementProductAppl fromData(AgreementProductApplData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static AgreementProductAppl.AgreementProductApplBuilder fromPrototype(AgreementProductApplData data) {
         return AgreementProductAppl.builder()
                 .agreementId(data.getAgreementId())
                 .agreementItemSeqId(data.getAgreementItemSeqId())
@@ -105,8 +109,7 @@ public class AgreementProductAppl implements IEventModel<AgreementProductApplDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

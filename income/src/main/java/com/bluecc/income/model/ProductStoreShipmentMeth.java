@@ -118,101 +118,105 @@ public class ProductStoreShipmentMeth implements IEventModel<ProductStoreShipmen
 
     public ProductStoreShipmentMethData.Builder toDataBuilder() {
         ProductStoreShipmentMethData.Builder builder = ProductStoreShipmentMethData.newBuilder();
-        if (productStoreShipMethId != null) {
-            builder.setProductStoreShipMethId(productStoreShipMethId);
+        if (getProductStoreShipMethId() != null) {
+            builder.setProductStoreShipMethId(getProductStoreShipMethId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (shipmentMethodTypeId != null) {
-            builder.setShipmentMethodTypeId(shipmentMethodTypeId);
+        if (getShipmentMethodTypeId() != null) {
+            builder.setShipmentMethodTypeId(getShipmentMethodTypeId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (companyPartyId != null) {
-            builder.setCompanyPartyId(companyPartyId);
+        if (getCompanyPartyId() != null) {
+            builder.setCompanyPartyId(getCompanyPartyId());
         }
-        if (minWeight != null) {
-            builder.setMinWeight(getFixedPoint(minWeight));
+        if (getMinWeight() != null) {
+            builder.setMinWeight(getFixedPoint(getMinWeight()));
         }
-        if (maxWeight != null) {
-            builder.setMaxWeight(getFixedPoint(maxWeight));
+        if (getMaxWeight() != null) {
+            builder.setMaxWeight(getFixedPoint(getMaxWeight()));
         }
-        if (minSize != null) {
-            builder.setMinSize(getFixedPoint(minSize));
+        if (getMinSize() != null) {
+            builder.setMinSize(getFixedPoint(getMinSize()));
         }
-        if (maxSize != null) {
-            builder.setMaxSize(getFixedPoint(maxSize));
+        if (getMaxSize() != null) {
+            builder.setMaxSize(getFixedPoint(getMaxSize()));
         }
-        if (minTotal != null) {
-            builder.setMinTotal(getCurrency(minTotal));
+        if (getMinTotal() != null) {
+            builder.setMinTotal(getCurrency(getMinTotal()));
         }
-        if (maxTotal != null) {
-            builder.setMaxTotal(getCurrency(maxTotal));
+        if (getMaxTotal() != null) {
+            builder.setMaxTotal(getCurrency(getMaxTotal()));
         }
-        if (allowUspsAddr != null) {
-            builder.setAllowUspsAddr(getIndicator(allowUspsAddr));
+        if (getAllowUspsAddr() != null) {
+            builder.setAllowUspsAddr(getIndicator(getAllowUspsAddr()));
         }
-        if (requireUspsAddr != null) {
-            builder.setRequireUspsAddr(getIndicator(requireUspsAddr));
+        if (getRequireUspsAddr() != null) {
+            builder.setRequireUspsAddr(getIndicator(getRequireUspsAddr()));
         }
-        if (allowCompanyAddr != null) {
-            builder.setAllowCompanyAddr(getIndicator(allowCompanyAddr));
+        if (getAllowCompanyAddr() != null) {
+            builder.setAllowCompanyAddr(getIndicator(getAllowCompanyAddr()));
         }
-        if (requireCompanyAddr != null) {
-            builder.setRequireCompanyAddr(getIndicator(requireCompanyAddr));
+        if (getRequireCompanyAddr() != null) {
+            builder.setRequireCompanyAddr(getIndicator(getRequireCompanyAddr()));
         }
-        if (includeNoChargeItems != null) {
-            builder.setIncludeNoChargeItems(getIndicator(includeNoChargeItems));
+        if (getIncludeNoChargeItems() != null) {
+            builder.setIncludeNoChargeItems(getIndicator(getIncludeNoChargeItems()));
         }
-        if (includeFeatureGroup != null) {
-            builder.setIncludeFeatureGroup(includeFeatureGroup);
+        if (getIncludeFeatureGroup() != null) {
+            builder.setIncludeFeatureGroup(getIncludeFeatureGroup());
         }
-        if (excludeFeatureGroup != null) {
-            builder.setExcludeFeatureGroup(excludeFeatureGroup);
+        if (getExcludeFeatureGroup() != null) {
+            builder.setExcludeFeatureGroup(getExcludeFeatureGroup());
         }
-        if (includeGeoId != null) {
-            builder.setIncludeGeoId(includeGeoId);
+        if (getIncludeGeoId() != null) {
+            builder.setIncludeGeoId(getIncludeGeoId());
         }
-        if (excludeGeoId != null) {
-            builder.setExcludeGeoId(excludeGeoId);
+        if (getExcludeGeoId() != null) {
+            builder.setExcludeGeoId(getExcludeGeoId());
         }
-        if (serviceName != null) {
-            builder.setServiceName(serviceName);
+        if (getServiceName() != null) {
+            builder.setServiceName(getServiceName());
         }
-        if (configProps != null) {
-            builder.setConfigProps(configProps);
+        if (getConfigProps() != null) {
+            builder.setConfigProps(getConfigProps());
         }
-        if (shipmentCustomMethodId != null) {
-            builder.setShipmentCustomMethodId(shipmentCustomMethodId);
+        if (getShipmentCustomMethodId() != null) {
+            builder.setShipmentCustomMethodId(getShipmentCustomMethodId());
         }
-        if (shipmentGatewayConfigId != null) {
-            builder.setShipmentGatewayConfigId(shipmentGatewayConfigId);
+        if (getShipmentGatewayConfigId() != null) {
+            builder.setShipmentGatewayConfigId(getShipmentGatewayConfigId());
         }
-        if (sequenceNumber != null) {
-            builder.setSequenceNumber(sequenceNumber);
+        if (getSequenceNumber() != null) {
+            builder.setSequenceNumber(getSequenceNumber());
         }
-        if (allowancePercent != null) {
-            builder.setAllowancePercent(getFixedPoint(allowancePercent));
+        if (getAllowancePercent() != null) {
+            builder.setAllowancePercent(getFixedPoint(getAllowancePercent()));
         }
-        if (minimumPrice != null) {
-            builder.setMinimumPrice(getCurrency(minimumPrice));
+        if (getMinimumPrice() != null) {
+            builder.setMinimumPrice(getCurrency(getMinimumPrice()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ProductStoreShipmentMeth fromData(ProductStoreShipmentMethData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductStoreShipmentMeth.ProductStoreShipmentMethBuilder fromPrototype(ProductStoreShipmentMethData data) {
         return ProductStoreShipmentMeth.builder()
                 .productStoreShipMethId(data.getProductStoreShipMethId())
                 .productStoreId(data.getProductStoreId())
@@ -244,8 +248,7 @@ public class ProductStoreShipmentMeth implements IEventModel<ProductStoreShipmen
                 .minimumPrice(getBigDecimal(data.getMinimumPrice()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

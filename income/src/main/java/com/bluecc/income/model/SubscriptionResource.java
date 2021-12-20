@@ -74,35 +74,39 @@ public class SubscriptionResource implements IEventModel<SubscriptionResourceDat
 
     public SubscriptionResourceData.Builder toDataBuilder() {
         SubscriptionResourceData.Builder builder = SubscriptionResourceData.newBuilder();
-        if (subscriptionResourceId != null) {
-            builder.setSubscriptionResourceId(subscriptionResourceId);
+        if (getSubscriptionResourceId() != null) {
+            builder.setSubscriptionResourceId(getSubscriptionResourceId());
         }
-        if (parentResourceId != null) {
-            builder.setParentResourceId(parentResourceId);
+        if (getParentResourceId() != null) {
+            builder.setParentResourceId(getParentResourceId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (contentId != null) {
-            builder.setContentId(contentId);
+        if (getContentId() != null) {
+            builder.setContentId(getContentId());
         }
-        if (webSiteId != null) {
-            builder.setWebSiteId(webSiteId);
+        if (getWebSiteId() != null) {
+            builder.setWebSiteId(getWebSiteId());
         }
-        if (serviceNameOnExpiry != null) {
-            builder.setServiceNameOnExpiry(serviceNameOnExpiry);
+        if (getServiceNameOnExpiry() != null) {
+            builder.setServiceNameOnExpiry(getServiceNameOnExpiry());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static SubscriptionResource fromData(SubscriptionResourceData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SubscriptionResource.SubscriptionResourceBuilder fromPrototype(SubscriptionResourceData data) {
         return SubscriptionResource.builder()
                 .subscriptionResourceId(data.getSubscriptionResourceId())
                 .parentResourceId(data.getParentResourceId())
@@ -112,8 +116,7 @@ public class SubscriptionResource implements IEventModel<SubscriptionResourceDat
                 .serviceNameOnExpiry(data.getServiceNameOnExpiry())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

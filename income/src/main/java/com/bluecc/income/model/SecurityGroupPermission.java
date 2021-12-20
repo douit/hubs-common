@@ -70,32 +70,36 @@ public class SecurityGroupPermission implements IEventModel<SecurityGroupPermiss
 
     public SecurityGroupPermissionData.Builder toDataBuilder() {
         SecurityGroupPermissionData.Builder builder = SecurityGroupPermissionData.newBuilder();
-        if (groupId != null) {
-            builder.setGroupId(groupId);
+        if (getGroupId() != null) {
+            builder.setGroupId(getGroupId());
         }
-        if (permissionId != null) {
-            builder.setPermissionId(permissionId);
+        if (getPermissionId() != null) {
+            builder.setPermissionId(getPermissionId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SecurityGroupPermission fromData(SecurityGroupPermissionData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SecurityGroupPermission.SecurityGroupPermissionBuilder fromPrototype(SecurityGroupPermissionData data) {
         return SecurityGroupPermission.builder()
                 .groupId(data.getGroupId())
                 .permissionId(data.getPermissionId())
@@ -104,8 +108,7 @@ public class SecurityGroupPermission implements IEventModel<SecurityGroupPermiss
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

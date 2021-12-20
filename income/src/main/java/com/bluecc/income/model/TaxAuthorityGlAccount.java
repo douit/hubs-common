@@ -71,32 +71,36 @@ public class TaxAuthorityGlAccount implements IEventModel<TaxAuthorityGlAccountD
 
     public TaxAuthorityGlAccountData.Builder toDataBuilder() {
         TaxAuthorityGlAccountData.Builder builder = TaxAuthorityGlAccountData.newBuilder();
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (organizationPartyId != null) {
-            builder.setOrganizationPartyId(organizationPartyId);
+        if (getOrganizationPartyId() != null) {
+            builder.setOrganizationPartyId(getOrganizationPartyId());
         }
-        if (glAccountId != null) {
-            builder.setGlAccountId(glAccountId);
+        if (getGlAccountId() != null) {
+            builder.setGlAccountId(getGlAccountId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static TaxAuthorityGlAccount fromData(TaxAuthorityGlAccountData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TaxAuthorityGlAccount.TaxAuthorityGlAccountBuilder fromPrototype(TaxAuthorityGlAccountData data) {
         return TaxAuthorityGlAccount.builder()
                 .taxAuthGeoId(data.getTaxAuthGeoId())
                 .taxAuthPartyId(data.getTaxAuthPartyId())
@@ -105,8 +109,7 @@ public class TaxAuthorityGlAccount implements IEventModel<TaxAuthorityGlAccountD
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

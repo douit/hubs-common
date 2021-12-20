@@ -88,59 +88,63 @@ public class ProductCategoryLink implements IEventModel<ProductCategoryLinkData.
 
     public ProductCategoryLinkData.Builder toDataBuilder() {
         ProductCategoryLinkData.Builder builder = ProductCategoryLinkData.newBuilder();
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (linkSeqId != null) {
-            builder.setLinkSeqId(linkSeqId);
+        if (getLinkSeqId() != null) {
+            builder.setLinkSeqId(getLinkSeqId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (titleText != null) {
-            builder.setTitleText(titleText);
+        if (getTitleText() != null) {
+            builder.setTitleText(getTitleText());
         }
-        if (detailText != null) {
-            builder.setDetailText(detailText);
+        if (getDetailText() != null) {
+            builder.setDetailText(getDetailText());
         }
-        if (imageUrl != null) {
-            builder.setImageUrl(imageUrl);
+        if (getImageUrl() != null) {
+            builder.setImageUrl(getImageUrl());
         }
-        if (imageTwoUrl != null) {
-            builder.setImageTwoUrl(imageTwoUrl);
+        if (getImageTwoUrl() != null) {
+            builder.setImageTwoUrl(getImageTwoUrl());
         }
-        if (linkTypeEnumId != null) {
-            builder.setLinkTypeEnumId(linkTypeEnumId);
+        if (getLinkTypeEnumId() != null) {
+            builder.setLinkTypeEnumId(getLinkTypeEnumId());
         }
-        if (linkInfo != null) {
-            builder.setLinkInfo(linkInfo);
+        if (getLinkInfo() != null) {
+            builder.setLinkInfo(getLinkInfo());
         }
-        if (detailSubScreen != null) {
-            builder.setDetailSubScreen(detailSubScreen);
+        if (getDetailSubScreen() != null) {
+            builder.setDetailSubScreen(getDetailSubScreen());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductCategoryLink fromData(ProductCategoryLinkData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductCategoryLink.ProductCategoryLinkBuilder fromPrototype(ProductCategoryLinkData data) {
         return ProductCategoryLink.builder()
                 .productCategoryId(data.getProductCategoryId())
                 .linkSeqId(data.getLinkSeqId())
@@ -158,8 +162,7 @@ public class ProductCategoryLink implements IEventModel<ProductCategoryLinkData.
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

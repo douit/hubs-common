@@ -86,53 +86,57 @@ public class ProductStoreSurveyAppl implements IEventModel<ProductStoreSurveyApp
 
     public ProductStoreSurveyApplData.Builder toDataBuilder() {
         ProductStoreSurveyApplData.Builder builder = ProductStoreSurveyApplData.newBuilder();
-        if (productStoreSurveyId != null) {
-            builder.setProductStoreSurveyId(productStoreSurveyId);
+        if (getProductStoreSurveyId() != null) {
+            builder.setProductStoreSurveyId(getProductStoreSurveyId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (surveyApplTypeId != null) {
-            builder.setSurveyApplTypeId(surveyApplTypeId);
+        if (getSurveyApplTypeId() != null) {
+            builder.setSurveyApplTypeId(getSurveyApplTypeId());
         }
-        if (groupName != null) {
-            builder.setGroupName(groupName);
+        if (getGroupName() != null) {
+            builder.setGroupName(getGroupName());
         }
-        if (surveyId != null) {
-            builder.setSurveyId(surveyId);
+        if (getSurveyId() != null) {
+            builder.setSurveyId(getSurveyId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (surveyTemplate != null) {
-            builder.setSurveyTemplate(surveyTemplate);
+        if (getSurveyTemplate() != null) {
+            builder.setSurveyTemplate(getSurveyTemplate());
         }
-        if (resultTemplate != null) {
-            builder.setResultTemplate(resultTemplate);
+        if (getResultTemplate() != null) {
+            builder.setResultTemplate(getResultTemplate());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ProductStoreSurveyAppl fromData(ProductStoreSurveyApplData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductStoreSurveyAppl.ProductStoreSurveyApplBuilder fromPrototype(ProductStoreSurveyApplData data) {
         return ProductStoreSurveyAppl.builder()
                 .productStoreSurveyId(data.getProductStoreSurveyId())
                 .productStoreId(data.getProductStoreId())
@@ -148,8 +152,7 @@ public class ProductStoreSurveyAppl implements IEventModel<ProductStoreSurveyApp
                 .sequenceNum(data.getSequenceNum())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

@@ -74,38 +74,42 @@ public class PartyRate implements IEventModel<PartyRateData.Builder>, HasId, Ser
 
     public PartyRateData.Builder toDataBuilder() {
         PartyRateData.Builder builder = PartyRateData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (rateTypeId != null) {
-            builder.setRateTypeId(rateTypeId);
+        if (getRateTypeId() != null) {
+            builder.setRateTypeId(getRateTypeId());
         }
-        if (defaultRate != null) {
-            builder.setDefaultRate(getIndicator(defaultRate));
+        if (getDefaultRate() != null) {
+            builder.setDefaultRate(getIndicator(getDefaultRate()));
         }
-        if (percentageUsed != null) {
-            builder.setPercentageUsed(percentageUsed);
+        if (getPercentageUsed() != null) {
+            builder.setPercentageUsed(getPercentageUsed());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PartyRate fromData(PartyRateData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyRate.PartyRateBuilder fromPrototype(PartyRateData data) {
         return PartyRate.builder()
                 .partyId(data.getPartyId())
                 .rateTypeId(data.getRateTypeId())
@@ -116,8 +120,7 @@ public class PartyRate implements IEventModel<PartyRateData.Builder>, HasId, Ser
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

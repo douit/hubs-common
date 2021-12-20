@@ -78,41 +78,45 @@ public class PaymentMethod implements IEventModel<PaymentMethodData.Builder>, Ha
 
     public PaymentMethodData.Builder toDataBuilder() {
         PaymentMethodData.Builder builder = PaymentMethodData.newBuilder();
-        if (paymentMethodId != null) {
-            builder.setPaymentMethodId(paymentMethodId);
+        if (getPaymentMethodId() != null) {
+            builder.setPaymentMethodId(getPaymentMethodId());
         }
-        if (paymentMethodTypeId != null) {
-            builder.setPaymentMethodTypeId(paymentMethodTypeId);
+        if (getPaymentMethodTypeId() != null) {
+            builder.setPaymentMethodTypeId(getPaymentMethodTypeId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (glAccountId != null) {
-            builder.setGlAccountId(glAccountId);
+        if (getGlAccountId() != null) {
+            builder.setGlAccountId(getGlAccountId());
         }
-        if (finAccountId != null) {
-            builder.setFinAccountId(finAccountId);
+        if (getFinAccountId() != null) {
+            builder.setFinAccountId(getFinAccountId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static PaymentMethod fromData(PaymentMethodData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PaymentMethod.PaymentMethodBuilder fromPrototype(PaymentMethodData data) {
         return PaymentMethod.builder()
                 .paymentMethodId(data.getPaymentMethodId())
                 .paymentMethodTypeId(data.getPaymentMethodTypeId())
@@ -124,8 +128,7 @@ public class PaymentMethod implements IEventModel<PaymentMethodData.Builder>, Ha
                 .thruDate(getLocalDateTime(data.getThruDate()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

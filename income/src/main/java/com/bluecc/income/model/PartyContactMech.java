@@ -84,53 +84,57 @@ public class PartyContactMech implements IEventModel<PartyContactMechData.Builde
 
     public PartyContactMechData.Builder toDataBuilder() {
         PartyContactMechData.Builder builder = PartyContactMechData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (allowSolicitation != null) {
-            builder.setAllowSolicitation(getIndicator(allowSolicitation));
+        if (getAllowSolicitation() != null) {
+            builder.setAllowSolicitation(getIndicator(getAllowSolicitation()));
         }
-        if (extension != null) {
-            builder.setExtension(extension);
+        if (getExtension() != null) {
+            builder.setExtension(getExtension());
         }
-        if (verified != null) {
-            builder.setVerified(getIndicator(verified));
+        if (getVerified() != null) {
+            builder.setVerified(getIndicator(getVerified()));
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (yearsWithContactMech != null) {
-            builder.setYearsWithContactMech(yearsWithContactMech);
+        if (getYearsWithContactMech() != null) {
+            builder.setYearsWithContactMech(getYearsWithContactMech());
         }
-        if (monthsWithContactMech != null) {
-            builder.setMonthsWithContactMech(monthsWithContactMech);
+        if (getMonthsWithContactMech() != null) {
+            builder.setMonthsWithContactMech(getMonthsWithContactMech());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PartyContactMech fromData(PartyContactMechData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyContactMech.PartyContactMechBuilder fromPrototype(PartyContactMechData data) {
         return PartyContactMech.builder()
                 .partyId(data.getPartyId())
                 .contactMechId(data.getContactMechId())
@@ -146,8 +150,7 @@ public class PartyContactMech implements IEventModel<PartyContactMechData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

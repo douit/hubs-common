@@ -80,44 +80,48 @@ public class TemporalExpression implements IEventModel<TemporalExpressionData.Bu
 
     public TemporalExpressionData.Builder toDataBuilder() {
         TemporalExpressionData.Builder builder = TemporalExpressionData.newBuilder();
-        if (tempExprId != null) {
-            builder.setTempExprId(tempExprId);
+        if (getTempExprId() != null) {
+            builder.setTempExprId(getTempExprId());
         }
-        if (tempExprTypeId != null) {
-            builder.setTempExprTypeId(tempExprTypeId);
+        if (getTempExprTypeId() != null) {
+            builder.setTempExprTypeId(getTempExprTypeId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (date1 != null) {
-            builder.setDate1(getTimestamp(date1));
+        if (getDate1() != null) {
+            builder.setDate1(getTimestamp(getDate1()));
         }
-        if (date2 != null) {
-            builder.setDate2(getTimestamp(date2));
+        if (getDate2() != null) {
+            builder.setDate2(getTimestamp(getDate2()));
         }
-        if (integer1 != null) {
-            builder.setInteger1(integer1);
+        if (getInteger1() != null) {
+            builder.setInteger1(getInteger1());
         }
-        if (integer2 != null) {
-            builder.setInteger2(integer2);
+        if (getInteger2() != null) {
+            builder.setInteger2(getInteger2());
         }
-        if (string1 != null) {
-            builder.setString1(string1);
+        if (getString1() != null) {
+            builder.setString1(getString1());
         }
-        if (string2 != null) {
-            builder.setString2(string2);
+        if (getString2() != null) {
+            builder.setString2(getString2());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static TemporalExpression fromData(TemporalExpressionData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TemporalExpression.TemporalExpressionBuilder fromPrototype(TemporalExpressionData data) {
         return TemporalExpression.builder()
                 .tempExprId(data.getTempExprId())
                 .tempExprTypeId(data.getTempExprTypeId())
@@ -130,8 +134,7 @@ public class TemporalExpression implements IEventModel<TemporalExpressionData.Bu
                 .string2(data.getString2())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

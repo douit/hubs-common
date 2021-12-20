@@ -68,29 +68,33 @@ public class PaymentGlAccountTypeMap implements IEventModel<PaymentGlAccountType
 
     public PaymentGlAccountTypeMapData.Builder toDataBuilder() {
         PaymentGlAccountTypeMapData.Builder builder = PaymentGlAccountTypeMapData.newBuilder();
-        if (paymentTypeId != null) {
-            builder.setPaymentTypeId(paymentTypeId);
+        if (getPaymentTypeId() != null) {
+            builder.setPaymentTypeId(getPaymentTypeId());
         }
-        if (organizationPartyId != null) {
-            builder.setOrganizationPartyId(organizationPartyId);
+        if (getOrganizationPartyId() != null) {
+            builder.setOrganizationPartyId(getOrganizationPartyId());
         }
-        if (glAccountTypeId != null) {
-            builder.setGlAccountTypeId(glAccountTypeId);
+        if (getGlAccountTypeId() != null) {
+            builder.setGlAccountTypeId(getGlAccountTypeId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PaymentGlAccountTypeMap fromData(PaymentGlAccountTypeMapData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PaymentGlAccountTypeMap.PaymentGlAccountTypeMapBuilder fromPrototype(PaymentGlAccountTypeMapData data) {
         return PaymentGlAccountTypeMap.builder()
                 .paymentTypeId(data.getPaymentTypeId())
                 .organizationPartyId(data.getOrganizationPartyId())
@@ -98,8 +102,7 @@ public class PaymentGlAccountTypeMap implements IEventModel<PaymentGlAccountType
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

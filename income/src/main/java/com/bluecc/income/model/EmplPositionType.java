@@ -70,29 +70,33 @@ public class EmplPositionType implements IEventModel<EmplPositionTypeData.Builde
 
     public EmplPositionTypeData.Builder toDataBuilder() {
         EmplPositionTypeData.Builder builder = EmplPositionTypeData.newBuilder();
-        if (emplPositionTypeId != null) {
-            builder.setEmplPositionTypeId(emplPositionTypeId);
+        if (getEmplPositionTypeId() != null) {
+            builder.setEmplPositionTypeId(getEmplPositionTypeId());
         }
-        if (parentTypeId != null) {
-            builder.setParentTypeId(parentTypeId);
+        if (getParentTypeId() != null) {
+            builder.setParentTypeId(getParentTypeId());
         }
-        if (hasTable != null) {
-            builder.setHasTable(getIndicator(hasTable));
+        if (getHasTable() != null) {
+            builder.setHasTable(getIndicator(getHasTable()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static EmplPositionType fromData(EmplPositionTypeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static EmplPositionType.EmplPositionTypeBuilder fromPrototype(EmplPositionTypeData data) {
         return EmplPositionType.builder()
                 .emplPositionTypeId(data.getEmplPositionTypeId())
                 .parentTypeId(data.getParentTypeId())
@@ -100,8 +104,7 @@ public class EmplPositionType implements IEventModel<EmplPositionTypeData.Builde
                 .description(data.getDescription())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

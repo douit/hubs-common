@@ -79,44 +79,48 @@ public class ProductStorePaymentSetting implements IEventModel<ProductStorePayme
 
     public ProductStorePaymentSettingData.Builder toDataBuilder() {
         ProductStorePaymentSettingData.Builder builder = ProductStorePaymentSettingData.newBuilder();
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (paymentMethodTypeId != null) {
-            builder.setPaymentMethodTypeId(paymentMethodTypeId);
+        if (getPaymentMethodTypeId() != null) {
+            builder.setPaymentMethodTypeId(getPaymentMethodTypeId());
         }
-        if (paymentServiceTypeEnumId != null) {
-            builder.setPaymentServiceTypeEnumId(paymentServiceTypeEnumId);
+        if (getPaymentServiceTypeEnumId() != null) {
+            builder.setPaymentServiceTypeEnumId(getPaymentServiceTypeEnumId());
         }
-        if (paymentService != null) {
-            builder.setPaymentService(paymentService);
+        if (getPaymentService() != null) {
+            builder.setPaymentService(getPaymentService());
         }
-        if (paymentCustomMethodId != null) {
-            builder.setPaymentCustomMethodId(paymentCustomMethodId);
+        if (getPaymentCustomMethodId() != null) {
+            builder.setPaymentCustomMethodId(getPaymentCustomMethodId());
         }
-        if (paymentGatewayConfigId != null) {
-            builder.setPaymentGatewayConfigId(paymentGatewayConfigId);
+        if (getPaymentGatewayConfigId() != null) {
+            builder.setPaymentGatewayConfigId(getPaymentGatewayConfigId());
         }
-        if (paymentPropertiesPath != null) {
-            builder.setPaymentPropertiesPath(paymentPropertiesPath);
+        if (getPaymentPropertiesPath() != null) {
+            builder.setPaymentPropertiesPath(getPaymentPropertiesPath());
         }
-        if (applyToAllProducts != null) {
-            builder.setApplyToAllProducts(getIndicator(applyToAllProducts));
+        if (getApplyToAllProducts() != null) {
+            builder.setApplyToAllProducts(getIndicator(getApplyToAllProducts()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductStorePaymentSetting fromData(ProductStorePaymentSettingData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductStorePaymentSetting.ProductStorePaymentSettingBuilder fromPrototype(ProductStorePaymentSettingData data) {
         return ProductStorePaymentSetting.builder()
                 .productStoreId(data.getProductStoreId())
                 .paymentMethodTypeId(data.getPaymentMethodTypeId())
@@ -129,8 +133,7 @@ public class ProductStorePaymentSetting implements IEventModel<ProductStorePayme
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

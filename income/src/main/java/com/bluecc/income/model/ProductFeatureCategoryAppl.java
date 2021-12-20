@@ -70,32 +70,36 @@ public class ProductFeatureCategoryAppl implements IEventModel<ProductFeatureCat
 
     public ProductFeatureCategoryApplData.Builder toDataBuilder() {
         ProductFeatureCategoryApplData.Builder builder = ProductFeatureCategoryApplData.newBuilder();
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (productFeatureCategoryId != null) {
-            builder.setProductFeatureCategoryId(productFeatureCategoryId);
+        if (getProductFeatureCategoryId() != null) {
+            builder.setProductFeatureCategoryId(getProductFeatureCategoryId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductFeatureCategoryAppl fromData(ProductFeatureCategoryApplData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductFeatureCategoryAppl.ProductFeatureCategoryApplBuilder fromPrototype(ProductFeatureCategoryApplData data) {
         return ProductFeatureCategoryAppl.builder()
                 .productCategoryId(data.getProductCategoryId())
                 .productFeatureCategoryId(data.getProductFeatureCategoryId())
@@ -104,8 +108,7 @@ public class ProductFeatureCategoryAppl implements IEventModel<ProductFeatureCat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

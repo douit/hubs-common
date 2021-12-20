@@ -70,32 +70,36 @@ public class ShipmentStatus implements IEventModel<ShipmentStatusData.Builder>, 
 
     public ShipmentStatusData.Builder toDataBuilder() {
         ShipmentStatusData.Builder builder = ShipmentStatusData.newBuilder();
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (statusDate != null) {
-            builder.setStatusDate(getTimestamp(statusDate));
+        if (getStatusDate() != null) {
+            builder.setStatusDate(getTimestamp(getStatusDate()));
         }
-        if (changeByUserLoginId != null) {
-            builder.setChangeByUserLoginId(changeByUserLoginId);
+        if (getChangeByUserLoginId() != null) {
+            builder.setChangeByUserLoginId(getChangeByUserLoginId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShipmentStatus fromData(ShipmentStatusData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentStatus.ShipmentStatusBuilder fromPrototype(ShipmentStatusData data) {
         return ShipmentStatus.builder()
                 .statusId(data.getStatusId())
                 .shipmentId(data.getShipmentId())
@@ -104,8 +108,7 @@ public class ShipmentStatus implements IEventModel<ShipmentStatusData.Builder>, 
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

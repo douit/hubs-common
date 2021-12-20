@@ -76,38 +76,42 @@ public class RecurrenceInfo implements IEventModel<RecurrenceInfoData.Builder>, 
 
     public RecurrenceInfoData.Builder toDataBuilder() {
         RecurrenceInfoData.Builder builder = RecurrenceInfoData.newBuilder();
-        if (recurrenceInfoId != null) {
-            builder.setRecurrenceInfoId(recurrenceInfoId);
+        if (getRecurrenceInfoId() != null) {
+            builder.setRecurrenceInfoId(getRecurrenceInfoId());
         }
-        if (startDateTime != null) {
-            builder.setStartDateTime(getTimestamp(startDateTime));
+        if (getStartDateTime() != null) {
+            builder.setStartDateTime(getTimestamp(getStartDateTime()));
         }
-        if (exceptionDateTimes != null) {
-            builder.setExceptionDateTimes(exceptionDateTimes);
+        if (getExceptionDateTimes() != null) {
+            builder.setExceptionDateTimes(getExceptionDateTimes());
         }
-        if (recurrenceDateTimes != null) {
-            builder.setRecurrenceDateTimes(recurrenceDateTimes);
+        if (getRecurrenceDateTimes() != null) {
+            builder.setRecurrenceDateTimes(getRecurrenceDateTimes());
         }
-        if (exceptionRuleId != null) {
-            builder.setExceptionRuleId(exceptionRuleId);
+        if (getExceptionRuleId() != null) {
+            builder.setExceptionRuleId(getExceptionRuleId());
         }
-        if (recurrenceRuleId != null) {
-            builder.setRecurrenceRuleId(recurrenceRuleId);
+        if (getRecurrenceRuleId() != null) {
+            builder.setRecurrenceRuleId(getRecurrenceRuleId());
         }
-        if (recurrenceCount != null) {
-            builder.setRecurrenceCount(recurrenceCount);
+        if (getRecurrenceCount() != null) {
+            builder.setRecurrenceCount(getRecurrenceCount());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static RecurrenceInfo fromData(RecurrenceInfoData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static RecurrenceInfo.RecurrenceInfoBuilder fromPrototype(RecurrenceInfoData data) {
         return RecurrenceInfo.builder()
                 .recurrenceInfoId(data.getRecurrenceInfoId())
                 .startDateTime(getLocalDateTime(data.getStartDateTime()))
@@ -118,8 +122,7 @@ public class RecurrenceInfo implements IEventModel<RecurrenceInfoData.Builder>, 
                 .recurrenceCount(data.getRecurrenceCount())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

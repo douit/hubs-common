@@ -94,65 +94,69 @@ public class TechDataCalendarWeek implements IEventModel<TechDataCalendarWeekDat
 
     public TechDataCalendarWeekData.Builder toDataBuilder() {
         TechDataCalendarWeekData.Builder builder = TechDataCalendarWeekData.newBuilder();
-        if (calendarWeekId != null) {
-            builder.setCalendarWeekId(calendarWeekId);
+        if (getCalendarWeekId() != null) {
+            builder.setCalendarWeekId(getCalendarWeekId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (mondayStartTime != null) {
-            builder.setMondayStartTime(getTimeOfDay(mondayStartTime));
+        if (getMondayStartTime() != null) {
+            builder.setMondayStartTime(getTimeOfDay(getMondayStartTime()));
         }
-        if (mondayCapacity != null) {
-            builder.setMondayCapacity(mondayCapacity);
+        if (getMondayCapacity() != null) {
+            builder.setMondayCapacity(getMondayCapacity());
         }
-        if (tuesdayStartTime != null) {
-            builder.setTuesdayStartTime(getTimeOfDay(tuesdayStartTime));
+        if (getTuesdayStartTime() != null) {
+            builder.setTuesdayStartTime(getTimeOfDay(getTuesdayStartTime()));
         }
-        if (tuesdayCapacity != null) {
-            builder.setTuesdayCapacity(tuesdayCapacity);
+        if (getTuesdayCapacity() != null) {
+            builder.setTuesdayCapacity(getTuesdayCapacity());
         }
-        if (wednesdayStartTime != null) {
-            builder.setWednesdayStartTime(getTimeOfDay(wednesdayStartTime));
+        if (getWednesdayStartTime() != null) {
+            builder.setWednesdayStartTime(getTimeOfDay(getWednesdayStartTime()));
         }
-        if (wednesdayCapacity != null) {
-            builder.setWednesdayCapacity(wednesdayCapacity);
+        if (getWednesdayCapacity() != null) {
+            builder.setWednesdayCapacity(getWednesdayCapacity());
         }
-        if (thursdayStartTime != null) {
-            builder.setThursdayStartTime(getTimeOfDay(thursdayStartTime));
+        if (getThursdayStartTime() != null) {
+            builder.setThursdayStartTime(getTimeOfDay(getThursdayStartTime()));
         }
-        if (thursdayCapacity != null) {
-            builder.setThursdayCapacity(thursdayCapacity);
+        if (getThursdayCapacity() != null) {
+            builder.setThursdayCapacity(getThursdayCapacity());
         }
-        if (fridayStartTime != null) {
-            builder.setFridayStartTime(getTimeOfDay(fridayStartTime));
+        if (getFridayStartTime() != null) {
+            builder.setFridayStartTime(getTimeOfDay(getFridayStartTime()));
         }
-        if (fridayCapacity != null) {
-            builder.setFridayCapacity(fridayCapacity);
+        if (getFridayCapacity() != null) {
+            builder.setFridayCapacity(getFridayCapacity());
         }
-        if (saturdayStartTime != null) {
-            builder.setSaturdayStartTime(getTimeOfDay(saturdayStartTime));
+        if (getSaturdayStartTime() != null) {
+            builder.setSaturdayStartTime(getTimeOfDay(getSaturdayStartTime()));
         }
-        if (saturdayCapacity != null) {
-            builder.setSaturdayCapacity(saturdayCapacity);
+        if (getSaturdayCapacity() != null) {
+            builder.setSaturdayCapacity(getSaturdayCapacity());
         }
-        if (sundayStartTime != null) {
-            builder.setSundayStartTime(getTimeOfDay(sundayStartTime));
+        if (getSundayStartTime() != null) {
+            builder.setSundayStartTime(getTimeOfDay(getSundayStartTime()));
         }
-        if (sundayCapacity != null) {
-            builder.setSundayCapacity(sundayCapacity);
+        if (getSundayCapacity() != null) {
+            builder.setSundayCapacity(getSundayCapacity());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static TechDataCalendarWeek fromData(TechDataCalendarWeekData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TechDataCalendarWeek.TechDataCalendarWeekBuilder fromPrototype(TechDataCalendarWeekData data) {
         return TechDataCalendarWeek.builder()
                 .calendarWeekId(data.getCalendarWeekId())
                 .description(data.getDescription())
@@ -172,8 +176,7 @@ public class TechDataCalendarWeek implements IEventModel<TechDataCalendarWeekDat
                 .sundayCapacity(data.getSundayCapacity())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

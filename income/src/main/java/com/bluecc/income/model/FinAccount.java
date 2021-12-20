@@ -103,71 +103,75 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, HasI
 
     public FinAccountFlatData.Builder toDataBuilder() {
         FinAccountFlatData.Builder builder = FinAccountFlatData.newBuilder();
-        if (finAccountId != null) {
-            builder.setFinAccountId(finAccountId);
+        if (getFinAccountId() != null) {
+            builder.setFinAccountId(getFinAccountId());
         }
-        if (finAccountTypeId != null) {
-            builder.setFinAccountTypeId(finAccountTypeId);
+        if (getFinAccountTypeId() != null) {
+            builder.setFinAccountTypeId(getFinAccountTypeId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (finAccountName != null) {
-            builder.setFinAccountName(finAccountName);
+        if (getFinAccountName() != null) {
+            builder.setFinAccountName(getFinAccountName());
         }
-        if (finAccountCode != null) {
-            builder.setFinAccountCode(finAccountCode);
+        if (getFinAccountCode() != null) {
+            builder.setFinAccountCode(getFinAccountCode());
         }
-        if (finAccountPin != null) {
-            builder.setFinAccountPin(finAccountPin);
+        if (getFinAccountPin() != null) {
+            builder.setFinAccountPin(getFinAccountPin());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (organizationPartyId != null) {
-            builder.setOrganizationPartyId(organizationPartyId);
+        if (getOrganizationPartyId() != null) {
+            builder.setOrganizationPartyId(getOrganizationPartyId());
         }
-        if (ownerPartyId != null) {
-            builder.setOwnerPartyId(ownerPartyId);
+        if (getOwnerPartyId() != null) {
+            builder.setOwnerPartyId(getOwnerPartyId());
         }
-        if (postToGlAccountId != null) {
-            builder.setPostToGlAccountId(postToGlAccountId);
+        if (getPostToGlAccountId() != null) {
+            builder.setPostToGlAccountId(getPostToGlAccountId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (isRefundable != null) {
-            builder.setIsRefundable(getIndicator(isRefundable));
+        if (getIsRefundable() != null) {
+            builder.setIsRefundable(getIndicator(getIsRefundable()));
         }
-        if (replenishPaymentId != null) {
-            builder.setReplenishPaymentId(replenishPaymentId);
+        if (getReplenishPaymentId() != null) {
+            builder.setReplenishPaymentId(getReplenishPaymentId());
         }
-        if (replenishLevel != null) {
-            builder.setReplenishLevel(getCurrency(replenishLevel));
+        if (getReplenishLevel() != null) {
+            builder.setReplenishLevel(getCurrency(getReplenishLevel()));
         }
-        if (actualBalance != null) {
-            builder.setActualBalance(getCurrency(actualBalance));
+        if (getActualBalance() != null) {
+            builder.setActualBalance(getCurrency(getActualBalance()));
         }
-        if (availableBalance != null) {
-            builder.setAvailableBalance(getCurrency(availableBalance));
+        if (getAvailableBalance() != null) {
+            builder.setAvailableBalance(getCurrency(getAvailableBalance()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static FinAccount fromData(FinAccountFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FinAccount.FinAccountBuilder fromPrototype(FinAccountFlatData data) {
         return FinAccount.builder()
                 .finAccountId(data.getFinAccountId())
                 .finAccountTypeId(data.getFinAccountTypeId())
@@ -189,8 +193,7 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -265,50 +268,50 @@ public class FinAccount implements IEventModel<FinAccountFlatData.Builder>, HasI
 
     public FinAccountData.Builder toHeadBuilder() {
         FinAccountData.Builder builder = FinAccountData.newBuilder();
-        if (finAccountId != null) {
-            builder.setFinAccountId(finAccountId);
+        if (getFinAccountId() != null) {
+            builder.setFinAccountId(getFinAccountId());
         }
-        if (finAccountTypeId != null) {
-            builder.setFinAccountTypeId(finAccountTypeId);
+        if (getFinAccountTypeId() != null) {
+            builder.setFinAccountTypeId(getFinAccountTypeId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (finAccountName != null) {
-            builder.setFinAccountName(finAccountName);
+        if (getFinAccountName() != null) {
+            builder.setFinAccountName(getFinAccountName());
         }
-        if (finAccountCode != null) {
-            builder.setFinAccountCode(finAccountCode);
+        if (getFinAccountCode() != null) {
+            builder.setFinAccountCode(getFinAccountCode());
         }
-        if (finAccountPin != null) {
-            builder.setFinAccountPin(finAccountPin);
+        if (getFinAccountPin() != null) {
+            builder.setFinAccountPin(getFinAccountPin());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (isRefundable != null) {
-            builder.setIsRefundable(getIndicator(isRefundable));
+        if (getIsRefundable() != null) {
+            builder.setIsRefundable(getIndicator(getIsRefundable()));
         }
-        if (replenishLevel != null) {
-            builder.setReplenishLevel(getCurrency(replenishLevel));
+        if (getReplenishLevel() != null) {
+            builder.setReplenishLevel(getCurrency(getReplenishLevel()));
         }
-        if (actualBalance != null) {
-            builder.setActualBalance(getCurrency(actualBalance));
+        if (getActualBalance() != null) {
+            builder.setActualBalance(getCurrency(getActualBalance()));
         }
-        if (availableBalance != null) {
-            builder.setAvailableBalance(getCurrency(availableBalance));
+        if (getAvailableBalance() != null) {
+            builder.setAvailableBalance(getCurrency(getAvailableBalance()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

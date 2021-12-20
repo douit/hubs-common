@@ -73,35 +73,39 @@ public class FacilityLocationGeoPoint implements IEventModel<FacilityLocationGeo
 
     public FacilityLocationGeoPointData.Builder toDataBuilder() {
         FacilityLocationGeoPointData.Builder builder = FacilityLocationGeoPointData.newBuilder();
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (locationSeqId != null) {
-            builder.setLocationSeqId(locationSeqId);
+        if (getLocationSeqId() != null) {
+            builder.setLocationSeqId(getLocationSeqId());
         }
-        if (geoPointId != null) {
-            builder.setGeoPointId(geoPointId);
+        if (getGeoPointId() != null) {
+            builder.setGeoPointId(getGeoPointId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FacilityLocationGeoPoint fromData(FacilityLocationGeoPointData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FacilityLocationGeoPoint.FacilityLocationGeoPointBuilder fromPrototype(FacilityLocationGeoPointData data) {
         return FacilityLocationGeoPoint.builder()
                 .facilityId(data.getFacilityId())
                 .locationSeqId(data.getLocationSeqId())
@@ -111,8 +115,7 @@ public class FacilityLocationGeoPoint implements IEventModel<FacilityLocationGeo
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

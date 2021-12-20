@@ -80,44 +80,48 @@ public class GeoPoint implements IEventModel<GeoPointData.Builder>, HasId, Seria
 
     public GeoPointData.Builder toDataBuilder() {
         GeoPointData.Builder builder = GeoPointData.newBuilder();
-        if (geoPointId != null) {
-            builder.setGeoPointId(geoPointId);
+        if (getGeoPointId() != null) {
+            builder.setGeoPointId(getGeoPointId());
         }
-        if (geoPointTypeEnumId != null) {
-            builder.setGeoPointTypeEnumId(geoPointTypeEnumId);
+        if (getGeoPointTypeEnumId() != null) {
+            builder.setGeoPointTypeEnumId(getGeoPointTypeEnumId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (dataSourceId != null) {
-            builder.setDataSourceId(dataSourceId);
+        if (getDataSourceId() != null) {
+            builder.setDataSourceId(getDataSourceId());
         }
-        if (latitude != null) {
-            builder.setLatitude(latitude);
+        if (getLatitude() != null) {
+            builder.setLatitude(getLatitude());
         }
-        if (longitude != null) {
-            builder.setLongitude(longitude);
+        if (getLongitude() != null) {
+            builder.setLongitude(getLongitude());
         }
-        if (elevation != null) {
-            builder.setElevation(getFixedPoint(elevation));
+        if (getElevation() != null) {
+            builder.setElevation(getFixedPoint(getElevation()));
         }
-        if (elevationUomId != null) {
-            builder.setElevationUomId(elevationUomId);
+        if (getElevationUomId() != null) {
+            builder.setElevationUomId(getElevationUomId());
         }
-        if (information != null) {
-            builder.setInformation(information);
+        if (getInformation() != null) {
+            builder.setInformation(getInformation());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static GeoPoint fromData(GeoPointData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static GeoPoint.GeoPointBuilder fromPrototype(GeoPointData data) {
         return GeoPoint.builder()
                 .geoPointId(data.getGeoPointId())
                 .geoPointTypeEnumId(data.getGeoPointTypeEnumId())
@@ -130,8 +134,7 @@ public class GeoPoint implements IEventModel<GeoPointData.Builder>, HasId, Seria
                 .information(data.getInformation())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

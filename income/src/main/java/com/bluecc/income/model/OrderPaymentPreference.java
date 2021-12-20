@@ -110,89 +110,93 @@ public class OrderPaymentPreference implements IEventModel<OrderPaymentPreferenc
 
     public OrderPaymentPreferenceData.Builder toDataBuilder() {
         OrderPaymentPreferenceData.Builder builder = OrderPaymentPreferenceData.newBuilder();
-        if (orderPaymentPreferenceId != null) {
-            builder.setOrderPaymentPreferenceId(orderPaymentPreferenceId);
+        if (getOrderPaymentPreferenceId() != null) {
+            builder.setOrderPaymentPreferenceId(getOrderPaymentPreferenceId());
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (shipGroupSeqId != null) {
-            builder.setShipGroupSeqId(shipGroupSeqId);
+        if (getShipGroupSeqId() != null) {
+            builder.setShipGroupSeqId(getShipGroupSeqId());
         }
-        if (productPricePurposeId != null) {
-            builder.setProductPricePurposeId(productPricePurposeId);
+        if (getProductPricePurposeId() != null) {
+            builder.setProductPricePurposeId(getProductPricePurposeId());
         }
-        if (paymentMethodTypeId != null) {
-            builder.setPaymentMethodTypeId(paymentMethodTypeId);
+        if (getPaymentMethodTypeId() != null) {
+            builder.setPaymentMethodTypeId(getPaymentMethodTypeId());
         }
-        if (paymentMethodId != null) {
-            builder.setPaymentMethodId(paymentMethodId);
+        if (getPaymentMethodId() != null) {
+            builder.setPaymentMethodId(getPaymentMethodId());
         }
-        if (finAccountId != null) {
-            builder.setFinAccountId(finAccountId);
+        if (getFinAccountId() != null) {
+            builder.setFinAccountId(getFinAccountId());
         }
-        if (securityCode != null) {
-            builder.setSecurityCode(securityCode);
+        if (getSecurityCode() != null) {
+            builder.setSecurityCode(getSecurityCode());
         }
-        if (track2 != null) {
-            builder.setTrack2(track2);
+        if (getTrack2() != null) {
+            builder.setTrack2(getTrack2());
         }
-        if (presentFlag != null) {
-            builder.setPresentFlag(getIndicator(presentFlag));
+        if (getPresentFlag() != null) {
+            builder.setPresentFlag(getIndicator(getPresentFlag()));
         }
-        if (swipedFlag != null) {
-            builder.setSwipedFlag(getIndicator(swipedFlag));
+        if (getSwipedFlag() != null) {
+            builder.setSwipedFlag(getIndicator(getSwipedFlag()));
         }
-        if (overflowFlag != null) {
-            builder.setOverflowFlag(getIndicator(overflowFlag));
+        if (getOverflowFlag() != null) {
+            builder.setOverflowFlag(getIndicator(getOverflowFlag()));
         }
-        if (maxAmount != null) {
-            builder.setMaxAmount(getCurrency(maxAmount));
+        if (getMaxAmount() != null) {
+            builder.setMaxAmount(getCurrency(getMaxAmount()));
         }
-        if (processAttempt != null) {
-            builder.setProcessAttempt(processAttempt);
+        if (getProcessAttempt() != null) {
+            builder.setProcessAttempt(getProcessAttempt());
         }
-        if (billingPostalCode != null) {
-            builder.setBillingPostalCode(billingPostalCode);
+        if (getBillingPostalCode() != null) {
+            builder.setBillingPostalCode(getBillingPostalCode());
         }
-        if (manualAuthCode != null) {
-            builder.setManualAuthCode(manualAuthCode);
+        if (getManualAuthCode() != null) {
+            builder.setManualAuthCode(getManualAuthCode());
         }
-        if (manualRefNum != null) {
-            builder.setManualRefNum(manualRefNum);
+        if (getManualRefNum() != null) {
+            builder.setManualRefNum(getManualRefNum());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (needsNsfRetry != null) {
-            builder.setNeedsNsfRetry(getIndicator(needsNsfRetry));
+        if (getNeedsNsfRetry() != null) {
+            builder.setNeedsNsfRetry(getIndicator(getNeedsNsfRetry()));
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static OrderPaymentPreference fromData(OrderPaymentPreferenceData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderPaymentPreference.OrderPaymentPreferenceBuilder fromPrototype(OrderPaymentPreferenceData data) {
         return OrderPaymentPreference.builder()
                 .orderPaymentPreferenceId(data.getOrderPaymentPreferenceId())
                 .orderId(data.getOrderId())
@@ -220,8 +224,7 @@ public class OrderPaymentPreference implements IEventModel<OrderPaymentPreferenc
                 .lastModifiedByUserLogin(data.getLastModifiedByUserLogin())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

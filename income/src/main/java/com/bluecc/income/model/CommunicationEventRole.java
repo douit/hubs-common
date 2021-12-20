@@ -73,35 +73,39 @@ public class CommunicationEventRole implements IEventModel<CommunicationEventRol
 
     public CommunicationEventRoleData.Builder toDataBuilder() {
         CommunicationEventRoleData.Builder builder = CommunicationEventRoleData.newBuilder();
-        if (communicationEventId != null) {
-            builder.setCommunicationEventId(communicationEventId);
+        if (getCommunicationEventId() != null) {
+            builder.setCommunicationEventId(getCommunicationEventId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static CommunicationEventRole fromData(CommunicationEventRoleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CommunicationEventRole.CommunicationEventRoleBuilder fromPrototype(CommunicationEventRoleData data) {
         return CommunicationEventRole.builder()
                 .communicationEventId(data.getCommunicationEventId())
                 .partyId(data.getPartyId())
@@ -111,8 +115,7 @@ public class CommunicationEventRole implements IEventModel<CommunicationEventRol
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -134,128 +134,132 @@ public class ShipmentRouteSegment implements IEventModel<ShipmentRouteSegmentDat
 
     public ShipmentRouteSegmentData.Builder toDataBuilder() {
         ShipmentRouteSegmentData.Builder builder = ShipmentRouteSegmentData.newBuilder();
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentRouteSegmentId != null) {
-            builder.setShipmentRouteSegmentId(shipmentRouteSegmentId);
+        if (getShipmentRouteSegmentId() != null) {
+            builder.setShipmentRouteSegmentId(getShipmentRouteSegmentId());
         }
-        if (deliveryId != null) {
-            builder.setDeliveryId(deliveryId);
+        if (getDeliveryId() != null) {
+            builder.setDeliveryId(getDeliveryId());
         }
-        if (originFacilityId != null) {
-            builder.setOriginFacilityId(originFacilityId);
+        if (getOriginFacilityId() != null) {
+            builder.setOriginFacilityId(getOriginFacilityId());
         }
-        if (destFacilityId != null) {
-            builder.setDestFacilityId(destFacilityId);
+        if (getDestFacilityId() != null) {
+            builder.setDestFacilityId(getDestFacilityId());
         }
-        if (originContactMechId != null) {
-            builder.setOriginContactMechId(originContactMechId);
+        if (getOriginContactMechId() != null) {
+            builder.setOriginContactMechId(getOriginContactMechId());
         }
-        if (originTelecomNumberId != null) {
-            builder.setOriginTelecomNumberId(originTelecomNumberId);
+        if (getOriginTelecomNumberId() != null) {
+            builder.setOriginTelecomNumberId(getOriginTelecomNumberId());
         }
-        if (destContactMechId != null) {
-            builder.setDestContactMechId(destContactMechId);
+        if (getDestContactMechId() != null) {
+            builder.setDestContactMechId(getDestContactMechId());
         }
-        if (destTelecomNumberId != null) {
-            builder.setDestTelecomNumberId(destTelecomNumberId);
+        if (getDestTelecomNumberId() != null) {
+            builder.setDestTelecomNumberId(getDestTelecomNumberId());
         }
-        if (carrierPartyId != null) {
-            builder.setCarrierPartyId(carrierPartyId);
+        if (getCarrierPartyId() != null) {
+            builder.setCarrierPartyId(getCarrierPartyId());
         }
-        if (shipmentMethodTypeId != null) {
-            builder.setShipmentMethodTypeId(shipmentMethodTypeId);
+        if (getShipmentMethodTypeId() != null) {
+            builder.setShipmentMethodTypeId(getShipmentMethodTypeId());
         }
-        if (carrierServiceStatusId != null) {
-            builder.setCarrierServiceStatusId(carrierServiceStatusId);
+        if (getCarrierServiceStatusId() != null) {
+            builder.setCarrierServiceStatusId(getCarrierServiceStatusId());
         }
-        if (carrierDeliveryZone != null) {
-            builder.setCarrierDeliveryZone(carrierDeliveryZone);
+        if (getCarrierDeliveryZone() != null) {
+            builder.setCarrierDeliveryZone(getCarrierDeliveryZone());
         }
-        if (carrierRestrictionCodes != null) {
-            builder.setCarrierRestrictionCodes(carrierRestrictionCodes);
+        if (getCarrierRestrictionCodes() != null) {
+            builder.setCarrierRestrictionCodes(getCarrierRestrictionCodes());
         }
-        if (carrierRestrictionDesc != null) {
-            builder.setCarrierRestrictionDesc(carrierRestrictionDesc);
+        if (getCarrierRestrictionDesc() != null) {
+            builder.setCarrierRestrictionDesc(getCarrierRestrictionDesc());
         }
-        if (billingWeight != null) {
-            builder.setBillingWeight(getFixedPoint(billingWeight));
+        if (getBillingWeight() != null) {
+            builder.setBillingWeight(getFixedPoint(getBillingWeight()));
         }
-        if (billingWeightUomId != null) {
-            builder.setBillingWeightUomId(billingWeightUomId);
+        if (getBillingWeightUomId() != null) {
+            builder.setBillingWeightUomId(getBillingWeightUomId());
         }
-        if (actualTransportCost != null) {
-            builder.setActualTransportCost(getCurrency(actualTransportCost));
+        if (getActualTransportCost() != null) {
+            builder.setActualTransportCost(getCurrency(getActualTransportCost()));
         }
-        if (actualServiceCost != null) {
-            builder.setActualServiceCost(getCurrency(actualServiceCost));
+        if (getActualServiceCost() != null) {
+            builder.setActualServiceCost(getCurrency(getActualServiceCost()));
         }
-        if (actualOtherCost != null) {
-            builder.setActualOtherCost(getCurrency(actualOtherCost));
+        if (getActualOtherCost() != null) {
+            builder.setActualOtherCost(getCurrency(getActualOtherCost()));
         }
-        if (actualCost != null) {
-            builder.setActualCost(getCurrency(actualCost));
+        if (getActualCost() != null) {
+            builder.setActualCost(getCurrency(getActualCost()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (actualStartDate != null) {
-            builder.setActualStartDate(getTimestamp(actualStartDate));
+        if (getActualStartDate() != null) {
+            builder.setActualStartDate(getTimestamp(getActualStartDate()));
         }
-        if (actualArrivalDate != null) {
-            builder.setActualArrivalDate(getTimestamp(actualArrivalDate));
+        if (getActualArrivalDate() != null) {
+            builder.setActualArrivalDate(getTimestamp(getActualArrivalDate()));
         }
-        if (estimatedStartDate != null) {
-            builder.setEstimatedStartDate(getTimestamp(estimatedStartDate));
+        if (getEstimatedStartDate() != null) {
+            builder.setEstimatedStartDate(getTimestamp(getEstimatedStartDate()));
         }
-        if (estimatedArrivalDate != null) {
-            builder.setEstimatedArrivalDate(getTimestamp(estimatedArrivalDate));
+        if (getEstimatedArrivalDate() != null) {
+            builder.setEstimatedArrivalDate(getTimestamp(getEstimatedArrivalDate()));
         }
-        if (trackingIdNumber != null) {
-            builder.setTrackingIdNumber(trackingIdNumber);
+        if (getTrackingIdNumber() != null) {
+            builder.setTrackingIdNumber(getTrackingIdNumber());
         }
-        if (trackingDigest != null) {
-            builder.setTrackingDigest(trackingDigest);
+        if (getTrackingDigest() != null) {
+            builder.setTrackingDigest(getTrackingDigest());
         }
-        if (updatedByUserLoginId != null) {
-            builder.setUpdatedByUserLoginId(updatedByUserLoginId);
+        if (getUpdatedByUserLoginId() != null) {
+            builder.setUpdatedByUserLoginId(getUpdatedByUserLoginId());
         }
-        if (lastUpdatedDate != null) {
-            builder.setLastUpdatedDate(getTimestamp(lastUpdatedDate));
+        if (getLastUpdatedDate() != null) {
+            builder.setLastUpdatedDate(getTimestamp(getLastUpdatedDate()));
         }
-        if (homeDeliveryType != null) {
-            builder.setHomeDeliveryType(homeDeliveryType);
+        if (getHomeDeliveryType() != null) {
+            builder.setHomeDeliveryType(getHomeDeliveryType());
         }
-        if (homeDeliveryDate != null) {
-            builder.setHomeDeliveryDate(getTimestamp(homeDeliveryDate));
+        if (getHomeDeliveryDate() != null) {
+            builder.setHomeDeliveryDate(getTimestamp(getHomeDeliveryDate()));
         }
-        if (thirdPartyAccountNumber != null) {
-            builder.setThirdPartyAccountNumber(thirdPartyAccountNumber);
+        if (getThirdPartyAccountNumber() != null) {
+            builder.setThirdPartyAccountNumber(getThirdPartyAccountNumber());
         }
-        if (thirdPartyPostalCode != null) {
-            builder.setThirdPartyPostalCode(thirdPartyPostalCode);
+        if (getThirdPartyPostalCode() != null) {
+            builder.setThirdPartyPostalCode(getThirdPartyPostalCode());
         }
-        if (thirdPartyCountryGeoCode != null) {
-            builder.setThirdPartyCountryGeoCode(thirdPartyCountryGeoCode);
+        if (getThirdPartyCountryGeoCode() != null) {
+            builder.setThirdPartyCountryGeoCode(getThirdPartyCountryGeoCode());
         }
-        if (upsHighValueReport != null) {
-            builder.setUpsHighValueReport(ByteString.copyFrom(upsHighValueReport));
+        if (getUpsHighValueReport() != null) {
+            builder.setUpsHighValueReport(ByteString.copyFrom(getUpsHighValueReport()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShipmentRouteSegment fromData(ShipmentRouteSegmentData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentRouteSegment.ShipmentRouteSegmentBuilder fromPrototype(ShipmentRouteSegmentData data) {
         return ShipmentRouteSegment.builder()
                 .shipmentId(data.getShipmentId())
                 .shipmentRouteSegmentId(data.getShipmentRouteSegmentId())
@@ -296,8 +300,7 @@ public class ShipmentRouteSegment implements IEventModel<ShipmentRouteSegmentDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

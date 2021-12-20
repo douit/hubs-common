@@ -73,35 +73,39 @@ public class PartyContactMechPurpose implements IEventModel<PartyContactMechPurp
 
     public PartyContactMechPurposeData.Builder toDataBuilder() {
         PartyContactMechPurposeData.Builder builder = PartyContactMechPurposeData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (contactMechPurposeTypeId != null) {
-            builder.setContactMechPurposeTypeId(contactMechPurposeTypeId);
+        if (getContactMechPurposeTypeId() != null) {
+            builder.setContactMechPurposeTypeId(getContactMechPurposeTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PartyContactMechPurpose fromData(PartyContactMechPurposeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyContactMechPurpose.PartyContactMechPurposeBuilder fromPrototype(PartyContactMechPurposeData data) {
         return PartyContactMechPurpose.builder()
                 .partyId(data.getPartyId())
                 .contactMechId(data.getContactMechId())
@@ -111,8 +115,7 @@ public class PartyContactMechPurpose implements IEventModel<PartyContactMechPurp
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

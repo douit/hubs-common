@@ -70,29 +70,33 @@ public class Tenant implements IEventModel<TenantData.Builder>, HasId, Serializa
 
     public TenantData.Builder toDataBuilder() {
         TenantData.Builder builder = TenantData.newBuilder();
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
-        if (tenantName != null) {
-            builder.setTenantName(tenantName);
+        if (getTenantName() != null) {
+            builder.setTenantName(getTenantName());
         }
-        if (initialPath != null) {
-            builder.setInitialPath(initialPath);
+        if (getInitialPath() != null) {
+            builder.setInitialPath(getInitialPath());
         }
-        if (disabled != null) {
-            builder.setDisabled(getIndicator(disabled));
+        if (getDisabled() != null) {
+            builder.setDisabled(getIndicator(getDisabled()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static Tenant fromData(TenantData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Tenant.TenantBuilder fromPrototype(TenantData data) {
         return Tenant.builder()
                 .tenantId(data.getTenantId())
                 .tenantName(data.getTenantName())
@@ -100,8 +104,7 @@ public class Tenant implements IEventModel<TenantData.Builder>, HasId, Serializa
                 .disabled(getIndicatorChar(data.getDisabled()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

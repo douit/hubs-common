@@ -93,65 +93,69 @@ public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, HasI
 
     public ContentAssocData.Builder toDataBuilder() {
         ContentAssocData.Builder builder = ContentAssocData.newBuilder();
-        if (contentId != null) {
-            builder.setContentId(contentId);
+        if (getContentId() != null) {
+            builder.setContentId(getContentId());
         }
-        if (contentIdTo != null) {
-            builder.setContentIdTo(contentIdTo);
+        if (getContentIdTo() != null) {
+            builder.setContentIdTo(getContentIdTo());
         }
-        if (contentAssocTypeId != null) {
-            builder.setContentAssocTypeId(contentAssocTypeId);
+        if (getContentAssocTypeId() != null) {
+            builder.setContentAssocTypeId(getContentAssocTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (contentAssocPredicateId != null) {
-            builder.setContentAssocPredicateId(contentAssocPredicateId);
+        if (getContentAssocPredicateId() != null) {
+            builder.setContentAssocPredicateId(getContentAssocPredicateId());
         }
-        if (dataSourceId != null) {
-            builder.setDataSourceId(dataSourceId);
+        if (getDataSourceId() != null) {
+            builder.setDataSourceId(getDataSourceId());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (mapKey != null) {
-            builder.setMapKey(mapKey);
+        if (getMapKey() != null) {
+            builder.setMapKey(getMapKey());
         }
-        if (upperCoordinate != null) {
-            builder.setUpperCoordinate(upperCoordinate);
+        if (getUpperCoordinate() != null) {
+            builder.setUpperCoordinate(getUpperCoordinate());
         }
-        if (leftCoordinate != null) {
-            builder.setLeftCoordinate(leftCoordinate);
+        if (getLeftCoordinate() != null) {
+            builder.setLeftCoordinate(getLeftCoordinate());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ContentAssoc fromData(ContentAssocData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ContentAssoc.ContentAssocBuilder fromPrototype(ContentAssocData data) {
         return ContentAssoc.builder()
                 .contentId(data.getContentId())
                 .contentIdTo(data.getContentIdTo())
@@ -171,8 +175,7 @@ public class ContentAssoc implements IEventModel<ContentAssocData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -70,32 +70,36 @@ public class FixedAssetGeoPoint implements IEventModel<FixedAssetGeoPointData.Bu
 
     public FixedAssetGeoPointData.Builder toDataBuilder() {
         FixedAssetGeoPointData.Builder builder = FixedAssetGeoPointData.newBuilder();
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (geoPointId != null) {
-            builder.setGeoPointId(geoPointId);
+        if (getGeoPointId() != null) {
+            builder.setGeoPointId(getGeoPointId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FixedAssetGeoPoint fromData(FixedAssetGeoPointData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FixedAssetGeoPoint.FixedAssetGeoPointBuilder fromPrototype(FixedAssetGeoPointData data) {
         return FixedAssetGeoPoint.builder()
                 .fixedAssetId(data.getFixedAssetId())
                 .geoPointId(data.getGeoPointId())
@@ -104,8 +108,7 @@ public class FixedAssetGeoPoint implements IEventModel<FixedAssetGeoPointData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

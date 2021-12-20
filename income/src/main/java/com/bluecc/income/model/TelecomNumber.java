@@ -72,32 +72,36 @@ public class TelecomNumber implements IEventModel<TelecomNumberData.Builder>, Ha
 
     public TelecomNumberData.Builder toDataBuilder() {
         TelecomNumberData.Builder builder = TelecomNumberData.newBuilder();
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (countryCode != null) {
-            builder.setCountryCode(countryCode);
+        if (getCountryCode() != null) {
+            builder.setCountryCode(getCountryCode());
         }
-        if (areaCode != null) {
-            builder.setAreaCode(areaCode);
+        if (getAreaCode() != null) {
+            builder.setAreaCode(getAreaCode());
         }
-        if (contactNumber != null) {
-            builder.setContactNumber(contactNumber);
+        if (getContactNumber() != null) {
+            builder.setContactNumber(getContactNumber());
         }
-        if (askForName != null) {
-            builder.setAskForName(askForName);
+        if (getAskForName() != null) {
+            builder.setAskForName(getAskForName());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static TelecomNumber fromData(TelecomNumberData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TelecomNumber.TelecomNumberBuilder fromPrototype(TelecomNumberData data) {
         return TelecomNumber.builder()
                 .contactMechId(data.getContactMechId())
                 .countryCode(data.getCountryCode())
@@ -106,8 +110,7 @@ public class TelecomNumber implements IEventModel<TelecomNumberData.Builder>, Ha
                 .askForName(data.getAskForName())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

@@ -74,38 +74,42 @@ public class ProductStorePromoAppl implements IEventModel<ProductStorePromoApplD
 
     public ProductStorePromoApplData.Builder toDataBuilder() {
         ProductStorePromoApplData.Builder builder = ProductStorePromoApplData.newBuilder();
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (productPromoId != null) {
-            builder.setProductPromoId(productPromoId);
+        if (getProductPromoId() != null) {
+            builder.setProductPromoId(getProductPromoId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (manualOnly != null) {
-            builder.setManualOnly(getIndicator(manualOnly));
+        if (getManualOnly() != null) {
+            builder.setManualOnly(getIndicator(getManualOnly()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductStorePromoAppl fromData(ProductStorePromoApplData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductStorePromoAppl.ProductStorePromoApplBuilder fromPrototype(ProductStorePromoApplData data) {
         return ProductStorePromoAppl.builder()
                 .productStoreId(data.getProductStoreId())
                 .productPromoId(data.getProductPromoId())
@@ -116,8 +120,7 @@ public class ProductStorePromoAppl implements IEventModel<ProductStorePromoApplD
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

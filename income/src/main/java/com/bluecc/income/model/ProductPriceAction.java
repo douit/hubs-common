@@ -72,35 +72,39 @@ public class ProductPriceAction implements IEventModel<ProductPriceActionData.Bu
 
     public ProductPriceActionData.Builder toDataBuilder() {
         ProductPriceActionData.Builder builder = ProductPriceActionData.newBuilder();
-        if (productPriceRuleId != null) {
-            builder.setProductPriceRuleId(productPriceRuleId);
+        if (getProductPriceRuleId() != null) {
+            builder.setProductPriceRuleId(getProductPriceRuleId());
         }
-        if (productPriceActionSeqId != null) {
-            builder.setProductPriceActionSeqId(productPriceActionSeqId);
+        if (getProductPriceActionSeqId() != null) {
+            builder.setProductPriceActionSeqId(getProductPriceActionSeqId());
         }
-        if (productPriceActionTypeId != null) {
-            builder.setProductPriceActionTypeId(productPriceActionTypeId);
+        if (getProductPriceActionTypeId() != null) {
+            builder.setProductPriceActionTypeId(getProductPriceActionTypeId());
         }
-        if (amount != null) {
-            builder.setAmount(getFixedPoint(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getFixedPoint(getAmount()));
         }
-        if (rateCode != null) {
-            builder.setRateCode(rateCode);
+        if (getRateCode() != null) {
+            builder.setRateCode(getRateCode());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductPriceAction fromData(ProductPriceActionData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPriceAction.ProductPriceActionBuilder fromPrototype(ProductPriceActionData data) {
         return ProductPriceAction.builder()
                 .productPriceRuleId(data.getProductPriceRuleId())
                 .productPriceActionSeqId(data.getProductPriceActionSeqId())
@@ -110,8 +114,7 @@ public class ProductPriceAction implements IEventModel<ProductPriceActionData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

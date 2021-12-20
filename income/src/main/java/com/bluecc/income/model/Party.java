@@ -93,56 +93,60 @@ public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Seriali
 
     public PartyFlatData.Builder toDataBuilder() {
         PartyFlatData.Builder builder = PartyFlatData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (partyTypeId != null) {
-            builder.setPartyTypeId(partyTypeId);
+        if (getPartyTypeId() != null) {
+            builder.setPartyTypeId(getPartyTypeId());
         }
-        if (externalId != null) {
-            builder.setExternalId(externalId);
+        if (getExternalId() != null) {
+            builder.setExternalId(getExternalId());
         }
-        if (preferredCurrencyUomId != null) {
-            builder.setPreferredCurrencyUomId(preferredCurrencyUomId);
+        if (getPreferredCurrencyUomId() != null) {
+            builder.setPreferredCurrencyUomId(getPreferredCurrencyUomId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (dataSourceId != null) {
-            builder.setDataSourceId(dataSourceId);
+        if (getDataSourceId() != null) {
+            builder.setDataSourceId(getDataSourceId());
         }
-        if (isUnread != null) {
-            builder.setIsUnread(getIndicator(isUnread));
+        if (getIsUnread() != null) {
+            builder.setIsUnread(getIndicator(getIsUnread()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static Party fromData(PartyFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Party.PartyBuilder fromPrototype(PartyFlatData data) {
         return Party.builder()
                 .partyId(data.getPartyId())
                 .partyTypeId(data.getPartyTypeId())
@@ -159,8 +163,7 @@ public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Seriali
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -565,41 +568,41 @@ public class Party implements IEventModel<PartyFlatData.Builder>, HasId, Seriali
 
     public PartyData.Builder toHeadBuilder() {
         PartyData.Builder builder = PartyData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (partyTypeId != null) {
-            builder.setPartyTypeId(partyTypeId);
+        if (getPartyTypeId() != null) {
+            builder.setPartyTypeId(getPartyTypeId());
         }
-        if (externalId != null) {
-            builder.setExternalId(externalId);
+        if (getExternalId() != null) {
+            builder.setExternalId(getExternalId());
         }
-        if (preferredCurrencyUomId != null) {
-            builder.setPreferredCurrencyUomId(preferredCurrencyUomId);
+        if (getPreferredCurrencyUomId() != null) {
+            builder.setPreferredCurrencyUomId(getPreferredCurrencyUomId());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (dataSourceId != null) {
-            builder.setDataSourceId(dataSourceId);
+        if (getDataSourceId() != null) {
+            builder.setDataSourceId(getDataSourceId());
         }
-        if (isUnread != null) {
-            builder.setIsUnread(getIndicator(isUnread));
+        if (getIsUnread() != null) {
+            builder.setIsUnread(getIndicator(getIsUnread()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

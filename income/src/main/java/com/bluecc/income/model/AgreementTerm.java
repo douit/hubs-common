@@ -88,56 +88,60 @@ public class AgreementTerm implements IEventModel<AgreementTermData.Builder>, Ha
 
     public AgreementTermData.Builder toDataBuilder() {
         AgreementTermData.Builder builder = AgreementTermData.newBuilder();
-        if (agreementTermId != null) {
-            builder.setAgreementTermId(agreementTermId);
+        if (getAgreementTermId() != null) {
+            builder.setAgreementTermId(getAgreementTermId());
         }
-        if (termTypeId != null) {
-            builder.setTermTypeId(termTypeId);
+        if (getTermTypeId() != null) {
+            builder.setTermTypeId(getTermTypeId());
         }
-        if (agreementId != null) {
-            builder.setAgreementId(agreementId);
+        if (getAgreementId() != null) {
+            builder.setAgreementId(getAgreementId());
         }
-        if (agreementItemSeqId != null) {
-            builder.setAgreementItemSeqId(agreementItemSeqId);
+        if (getAgreementItemSeqId() != null) {
+            builder.setAgreementItemSeqId(getAgreementItemSeqId());
         }
-        if (invoiceItemTypeId != null) {
-            builder.setInvoiceItemTypeId(invoiceItemTypeId);
+        if (getInvoiceItemTypeId() != null) {
+            builder.setInvoiceItemTypeId(getInvoiceItemTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (termValue != null) {
-            builder.setTermValue(getCurrency(termValue));
+        if (getTermValue() != null) {
+            builder.setTermValue(getCurrency(getTermValue()));
         }
-        if (termDays != null) {
-            builder.setTermDays(termDays);
+        if (getTermDays() != null) {
+            builder.setTermDays(getTermDays());
         }
-        if (textValue != null) {
-            builder.setTextValue(textValue);
+        if (getTextValue() != null) {
+            builder.setTextValue(getTextValue());
         }
-        if (minQuantity != null) {
-            builder.setMinQuantity(minQuantity);
+        if (getMinQuantity() != null) {
+            builder.setMinQuantity(getMinQuantity());
         }
-        if (maxQuantity != null) {
-            builder.setMaxQuantity(maxQuantity);
+        if (getMaxQuantity() != null) {
+            builder.setMaxQuantity(getMaxQuantity());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static AgreementTerm fromData(AgreementTermData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static AgreementTerm.AgreementTermBuilder fromPrototype(AgreementTermData data) {
         return AgreementTerm.builder()
                 .agreementTermId(data.getAgreementTermId())
                 .termTypeId(data.getTermTypeId())
@@ -154,8 +158,7 @@ public class AgreementTerm implements IEventModel<AgreementTermData.Builder>, Ha
                 .description(data.getDescription())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

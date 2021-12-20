@@ -84,50 +84,54 @@ public class GlAccount implements IEventModel<GlAccountData.Builder>, HasId, Ser
 
     public GlAccountData.Builder toDataBuilder() {
         GlAccountData.Builder builder = GlAccountData.newBuilder();
-        if (glAccountId != null) {
-            builder.setGlAccountId(glAccountId);
+        if (getGlAccountId() != null) {
+            builder.setGlAccountId(getGlAccountId());
         }
-        if (glAccountTypeId != null) {
-            builder.setGlAccountTypeId(glAccountTypeId);
+        if (getGlAccountTypeId() != null) {
+            builder.setGlAccountTypeId(getGlAccountTypeId());
         }
-        if (glAccountClassId != null) {
-            builder.setGlAccountClassId(glAccountClassId);
+        if (getGlAccountClassId() != null) {
+            builder.setGlAccountClassId(getGlAccountClassId());
         }
-        if (glResourceTypeId != null) {
-            builder.setGlResourceTypeId(glResourceTypeId);
+        if (getGlResourceTypeId() != null) {
+            builder.setGlResourceTypeId(getGlResourceTypeId());
         }
-        if (glXbrlClassId != null) {
-            builder.setGlXbrlClassId(glXbrlClassId);
+        if (getGlXbrlClassId() != null) {
+            builder.setGlXbrlClassId(getGlXbrlClassId());
         }
-        if (parentGlAccountId != null) {
-            builder.setParentGlAccountId(parentGlAccountId);
+        if (getParentGlAccountId() != null) {
+            builder.setParentGlAccountId(getParentGlAccountId());
         }
-        if (accountCode != null) {
-            builder.setAccountCode(accountCode);
+        if (getAccountCode() != null) {
+            builder.setAccountCode(getAccountCode());
         }
-        if (accountName != null) {
-            builder.setAccountName(accountName);
+        if (getAccountName() != null) {
+            builder.setAccountName(getAccountName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (externalId != null) {
-            builder.setExternalId(externalId);
+        if (getExternalId() != null) {
+            builder.setExternalId(getExternalId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static GlAccount fromData(GlAccountData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static GlAccount.GlAccountBuilder fromPrototype(GlAccountData data) {
         return GlAccount.builder()
                 .glAccountId(data.getGlAccountId())
                 .glAccountTypeId(data.getGlAccountTypeId())
@@ -142,8 +146,7 @@ public class GlAccount implements IEventModel<GlAccountData.Builder>, HasId, Ser
                 .externalId(data.getExternalId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

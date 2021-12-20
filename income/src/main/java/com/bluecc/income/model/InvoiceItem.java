@@ -107,80 +107,84 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Ha
 
     public InvoiceItemFlatData.Builder toDataBuilder() {
         InvoiceItemFlatData.Builder builder = InvoiceItemFlatData.newBuilder();
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (invoiceItemSeqId != null) {
-            builder.setInvoiceItemSeqId(invoiceItemSeqId);
+        if (getInvoiceItemSeqId() != null) {
+            builder.setInvoiceItemSeqId(getInvoiceItemSeqId());
         }
-        if (invoiceItemTypeId != null) {
-            builder.setInvoiceItemTypeId(invoiceItemTypeId);
+        if (getInvoiceItemTypeId() != null) {
+            builder.setInvoiceItemTypeId(getInvoiceItemTypeId());
         }
-        if (overrideGlAccountId != null) {
-            builder.setOverrideGlAccountId(overrideGlAccountId);
+        if (getOverrideGlAccountId() != null) {
+            builder.setOverrideGlAccountId(getOverrideGlAccountId());
         }
-        if (overrideOrgPartyId != null) {
-            builder.setOverrideOrgPartyId(overrideOrgPartyId);
+        if (getOverrideOrgPartyId() != null) {
+            builder.setOverrideOrgPartyId(getOverrideOrgPartyId());
         }
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (productFeatureId != null) {
-            builder.setProductFeatureId(productFeatureId);
+        if (getProductFeatureId() != null) {
+            builder.setProductFeatureId(getProductFeatureId());
         }
-        if (parentInvoiceId != null) {
-            builder.setParentInvoiceId(parentInvoiceId);
+        if (getParentInvoiceId() != null) {
+            builder.setParentInvoiceId(getParentInvoiceId());
         }
-        if (parentInvoiceItemSeqId != null) {
-            builder.setParentInvoiceItemSeqId(parentInvoiceItemSeqId);
+        if (getParentInvoiceItemSeqId() != null) {
+            builder.setParentInvoiceItemSeqId(getParentInvoiceItemSeqId());
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (taxableFlag != null) {
-            builder.setTaxableFlag(getIndicator(taxableFlag));
+        if (getTaxableFlag() != null) {
+            builder.setTaxableFlag(getIndicator(getTaxableFlag()));
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxAuthorityRateSeqId != null) {
-            builder.setTaxAuthorityRateSeqId(taxAuthorityRateSeqId);
+        if (getTaxAuthorityRateSeqId() != null) {
+            builder.setTaxAuthorityRateSeqId(getTaxAuthorityRateSeqId());
         }
-        if (salesOpportunityId != null) {
-            builder.setSalesOpportunityId(salesOpportunityId);
+        if (getSalesOpportunityId() != null) {
+            builder.setSalesOpportunityId(getSalesOpportunityId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static InvoiceItem fromData(InvoiceItemFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static InvoiceItem.InvoiceItemBuilder fromPrototype(InvoiceItemFlatData data) {
         return InvoiceItem.builder()
                 .invoiceId(data.getInvoiceId())
                 .invoiceItemSeqId(data.getInvoiceItemSeqId())
@@ -205,8 +209,7 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Ha
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -301,47 +304,47 @@ public class InvoiceItem implements IEventModel<InvoiceItemFlatData.Builder>, Ha
 
     public InvoiceItemData.Builder toHeadBuilder() {
         InvoiceItemData.Builder builder = InvoiceItemData.newBuilder();
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (invoiceItemSeqId != null) {
-            builder.setInvoiceItemSeqId(invoiceItemSeqId);
+        if (getInvoiceItemSeqId() != null) {
+            builder.setInvoiceItemSeqId(getInvoiceItemSeqId());
         }
-        if (invoiceItemTypeId != null) {
-            builder.setInvoiceItemTypeId(invoiceItemTypeId);
+        if (getInvoiceItemTypeId() != null) {
+            builder.setInvoiceItemTypeId(getInvoiceItemTypeId());
         }
-        if (parentInvoiceItemSeqId != null) {
-            builder.setParentInvoiceItemSeqId(parentInvoiceItemSeqId);
+        if (getParentInvoiceItemSeqId() != null) {
+            builder.setParentInvoiceItemSeqId(getParentInvoiceItemSeqId());
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (taxableFlag != null) {
-            builder.setTaxableFlag(getIndicator(taxableFlag));
+        if (getTaxableFlag() != null) {
+            builder.setTaxableFlag(getIndicator(getTaxableFlag()));
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (salesOpportunityId != null) {
-            builder.setSalesOpportunityId(salesOpportunityId);
+        if (getSalesOpportunityId() != null) {
+            builder.setSalesOpportunityId(getSalesOpportunityId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;

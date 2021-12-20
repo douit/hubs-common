@@ -72,32 +72,36 @@ public class ShipmentItemBilling implements IEventModel<ShipmentItemBillingData.
 
     public ShipmentItemBillingData.Builder toDataBuilder() {
         ShipmentItemBillingData.Builder builder = ShipmentItemBillingData.newBuilder();
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentItemSeqId != null) {
-            builder.setShipmentItemSeqId(shipmentItemSeqId);
+        if (getShipmentItemSeqId() != null) {
+            builder.setShipmentItemSeqId(getShipmentItemSeqId());
         }
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (invoiceItemSeqId != null) {
-            builder.setInvoiceItemSeqId(invoiceItemSeqId);
+        if (getInvoiceItemSeqId() != null) {
+            builder.setInvoiceItemSeqId(getInvoiceItemSeqId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShipmentItemBilling fromData(ShipmentItemBillingData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentItemBilling.ShipmentItemBillingBuilder fromPrototype(ShipmentItemBillingData data) {
         return ShipmentItemBilling.builder()
                 .shipmentId(data.getShipmentId())
                 .shipmentItemSeqId(data.getShipmentItemSeqId())
@@ -106,8 +110,7 @@ public class ShipmentItemBilling implements IEventModel<ShipmentItemBillingData.
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

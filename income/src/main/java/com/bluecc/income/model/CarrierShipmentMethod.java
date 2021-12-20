@@ -73,35 +73,39 @@ public class CarrierShipmentMethod implements IEventModel<CarrierShipmentMethodD
 
     public CarrierShipmentMethodData.Builder toDataBuilder() {
         CarrierShipmentMethodData.Builder builder = CarrierShipmentMethodData.newBuilder();
-        if (shipmentMethodTypeId != null) {
-            builder.setShipmentMethodTypeId(shipmentMethodTypeId);
+        if (getShipmentMethodTypeId() != null) {
+            builder.setShipmentMethodTypeId(getShipmentMethodTypeId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (sequenceNumber != null) {
-            builder.setSequenceNumber(sequenceNumber);
+        if (getSequenceNumber() != null) {
+            builder.setSequenceNumber(getSequenceNumber());
         }
-        if (carrierServiceCode != null) {
-            builder.setCarrierServiceCode(carrierServiceCode);
+        if (getCarrierServiceCode() != null) {
+            builder.setCarrierServiceCode(getCarrierServiceCode());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static CarrierShipmentMethod fromData(CarrierShipmentMethodData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static CarrierShipmentMethod.CarrierShipmentMethodBuilder fromPrototype(CarrierShipmentMethodData data) {
         return CarrierShipmentMethod.builder()
                 .shipmentMethodTypeId(data.getShipmentMethodTypeId())
                 .partyId(data.getPartyId())
@@ -111,8 +115,7 @@ public class CarrierShipmentMethod implements IEventModel<CarrierShipmentMethodD
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

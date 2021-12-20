@@ -92,65 +92,69 @@ public class ProductStoreFinActSetting implements IEventModel<ProductStoreFinAct
 
     public ProductStoreFinActSettingData.Builder toDataBuilder() {
         ProductStoreFinActSettingData.Builder builder = ProductStoreFinActSettingData.newBuilder();
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (finAccountTypeId != null) {
-            builder.setFinAccountTypeId(finAccountTypeId);
+        if (getFinAccountTypeId() != null) {
+            builder.setFinAccountTypeId(getFinAccountTypeId());
         }
-        if (requirePinCode != null) {
-            builder.setRequirePinCode(getIndicator(requirePinCode));
+        if (getRequirePinCode() != null) {
+            builder.setRequirePinCode(getIndicator(getRequirePinCode()));
         }
-        if (validateGCFinAcct != null) {
-            builder.setValidateGCFinAcct(getIndicator(validateGCFinAcct));
+        if (getValidateGCFinAcct() != null) {
+            builder.setValidateGCFinAcct(getIndicator(getValidateGCFinAcct()));
         }
-        if (accountCodeLength != null) {
-            builder.setAccountCodeLength(accountCodeLength);
+        if (getAccountCodeLength() != null) {
+            builder.setAccountCodeLength(getAccountCodeLength());
         }
-        if (pinCodeLength != null) {
-            builder.setPinCodeLength(pinCodeLength);
+        if (getPinCodeLength() != null) {
+            builder.setPinCodeLength(getPinCodeLength());
         }
-        if (accountValidDays != null) {
-            builder.setAccountValidDays(accountValidDays);
+        if (getAccountValidDays() != null) {
+            builder.setAccountValidDays(getAccountValidDays());
         }
-        if (authValidDays != null) {
-            builder.setAuthValidDays(authValidDays);
+        if (getAuthValidDays() != null) {
+            builder.setAuthValidDays(getAuthValidDays());
         }
-        if (purchaseSurveyId != null) {
-            builder.setPurchaseSurveyId(purchaseSurveyId);
+        if (getPurchaseSurveyId() != null) {
+            builder.setPurchaseSurveyId(getPurchaseSurveyId());
         }
-        if (purchSurveySendTo != null) {
-            builder.setPurchSurveySendTo(purchSurveySendTo);
+        if (getPurchSurveySendTo() != null) {
+            builder.setPurchSurveySendTo(getPurchSurveySendTo());
         }
-        if (purchSurveyCopyMe != null) {
-            builder.setPurchSurveyCopyMe(purchSurveyCopyMe);
+        if (getPurchSurveyCopyMe() != null) {
+            builder.setPurchSurveyCopyMe(getPurchSurveyCopyMe());
         }
-        if (allowAuthToNegative != null) {
-            builder.setAllowAuthToNegative(getIndicator(allowAuthToNegative));
+        if (getAllowAuthToNegative() != null) {
+            builder.setAllowAuthToNegative(getIndicator(getAllowAuthToNegative()));
         }
-        if (minBalance != null) {
-            builder.setMinBalance(getCurrency(minBalance));
+        if (getMinBalance() != null) {
+            builder.setMinBalance(getCurrency(getMinBalance()));
         }
-        if (replenishThreshold != null) {
-            builder.setReplenishThreshold(getCurrency(replenishThreshold));
+        if (getReplenishThreshold() != null) {
+            builder.setReplenishThreshold(getCurrency(getReplenishThreshold()));
         }
-        if (replenishMethodEnumId != null) {
-            builder.setReplenishMethodEnumId(replenishMethodEnumId);
+        if (getReplenishMethodEnumId() != null) {
+            builder.setReplenishMethodEnumId(getReplenishMethodEnumId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductStoreFinActSetting fromData(ProductStoreFinActSettingData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductStoreFinActSetting.ProductStoreFinActSettingBuilder fromPrototype(ProductStoreFinActSettingData data) {
         return ProductStoreFinActSetting.builder()
                 .productStoreId(data.getProductStoreId())
                 .finAccountTypeId(data.getFinAccountTypeId())
@@ -170,8 +174,7 @@ public class ProductStoreFinActSetting implements IEventModel<ProductStoreFinAct
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

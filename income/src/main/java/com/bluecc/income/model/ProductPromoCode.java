@@ -86,53 +86,57 @@ public class ProductPromoCode implements IEventModel<ProductPromoCodeData.Builde
 
     public ProductPromoCodeData.Builder toDataBuilder() {
         ProductPromoCodeData.Builder builder = ProductPromoCodeData.newBuilder();
-        if (productPromoCodeId != null) {
-            builder.setProductPromoCodeId(productPromoCodeId);
+        if (getProductPromoCodeId() != null) {
+            builder.setProductPromoCodeId(getProductPromoCodeId());
         }
-        if (productPromoId != null) {
-            builder.setProductPromoId(productPromoId);
+        if (getProductPromoId() != null) {
+            builder.setProductPromoId(getProductPromoId());
         }
-        if (userEntered != null) {
-            builder.setUserEntered(getIndicator(userEntered));
+        if (getUserEntered() != null) {
+            builder.setUserEntered(getIndicator(getUserEntered()));
         }
-        if (requireEmailOrParty != null) {
-            builder.setRequireEmailOrParty(getIndicator(requireEmailOrParty));
+        if (getRequireEmailOrParty() != null) {
+            builder.setRequireEmailOrParty(getIndicator(getRequireEmailOrParty()));
         }
-        if (useLimitPerCode != null) {
-            builder.setUseLimitPerCode(useLimitPerCode);
+        if (getUseLimitPerCode() != null) {
+            builder.setUseLimitPerCode(getUseLimitPerCode());
         }
-        if (useLimitPerCustomer != null) {
-            builder.setUseLimitPerCustomer(useLimitPerCustomer);
+        if (getUseLimitPerCustomer() != null) {
+            builder.setUseLimitPerCustomer(getUseLimitPerCustomer());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ProductPromoCode fromData(ProductPromoCodeData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPromoCode.ProductPromoCodeBuilder fromPrototype(ProductPromoCodeData data) {
         return ProductPromoCode.builder()
                 .productPromoCodeId(data.getProductPromoCodeId())
                 .productPromoId(data.getProductPromoId())
@@ -148,8 +152,7 @@ public class ProductPromoCode implements IEventModel<ProductPromoCodeData.Builde
                 .lastModifiedByUserLogin(data.getLastModifiedByUserLogin())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

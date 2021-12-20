@@ -68,29 +68,33 @@ public class PartyIdentification implements IEventModel<PartyIdentificationData.
 
     public PartyIdentificationData.Builder toDataBuilder() {
         PartyIdentificationData.Builder builder = PartyIdentificationData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (partyIdentificationTypeId != null) {
-            builder.setPartyIdentificationTypeId(partyIdentificationTypeId);
+        if (getPartyIdentificationTypeId() != null) {
+            builder.setPartyIdentificationTypeId(getPartyIdentificationTypeId());
         }
-        if (idValue != null) {
-            builder.setIdValue(idValue);
+        if (getIdValue() != null) {
+            builder.setIdValue(getIdValue());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static PartyIdentification fromData(PartyIdentificationData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyIdentification.PartyIdentificationBuilder fromPrototype(PartyIdentificationData data) {
         return PartyIdentification.builder()
                 .partyId(data.getPartyId())
                 .partyIdentificationTypeId(data.getPartyIdentificationTypeId())
@@ -98,8 +102,7 @@ public class PartyIdentification implements IEventModel<PartyIdentificationData.
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

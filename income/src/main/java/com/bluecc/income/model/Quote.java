@@ -93,56 +93,60 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, HasId, Seriali
 
     public QuoteFlatData.Builder toDataBuilder() {
         QuoteFlatData.Builder builder = QuoteFlatData.newBuilder();
-        if (quoteId != null) {
-            builder.setQuoteId(quoteId);
+        if (getQuoteId() != null) {
+            builder.setQuoteId(getQuoteId());
         }
-        if (quoteTypeId != null) {
-            builder.setQuoteTypeId(quoteTypeId);
+        if (getQuoteTypeId() != null) {
+            builder.setQuoteTypeId(getQuoteTypeId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (issueDate != null) {
-            builder.setIssueDate(getTimestamp(issueDate));
+        if (getIssueDate() != null) {
+            builder.setIssueDate(getTimestamp(getIssueDate()));
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (salesChannelEnumId != null) {
-            builder.setSalesChannelEnumId(salesChannelEnumId);
+        if (getSalesChannelEnumId() != null) {
+            builder.setSalesChannelEnumId(getSalesChannelEnumId());
         }
-        if (validFromDate != null) {
-            builder.setValidFromDate(getTimestamp(validFromDate));
+        if (getValidFromDate() != null) {
+            builder.setValidFromDate(getTimestamp(getValidFromDate()));
         }
-        if (validThruDate != null) {
-            builder.setValidThruDate(getTimestamp(validThruDate));
+        if (getValidThruDate() != null) {
+            builder.setValidThruDate(getTimestamp(getValidThruDate()));
         }
-        if (quoteName != null) {
-            builder.setQuoteName(quoteName);
+        if (getQuoteName() != null) {
+            builder.setQuoteName(getQuoteName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static Quote fromData(QuoteFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Quote.QuoteBuilder fromPrototype(QuoteFlatData data) {
         return Quote.builder()
                 .quoteId(data.getQuoteId())
                 .quoteTypeId(data.getQuoteTypeId())
@@ -159,8 +163,7 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, HasId, Seriali
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -215,41 +218,41 @@ public class Quote implements IEventModel<QuoteFlatData.Builder>, HasId, Seriali
 
     public QuoteData.Builder toHeadBuilder() {
         QuoteData.Builder builder = QuoteData.newBuilder();
-        if (quoteId != null) {
-            builder.setQuoteId(quoteId);
+        if (getQuoteId() != null) {
+            builder.setQuoteId(getQuoteId());
         }
-        if (quoteTypeId != null) {
-            builder.setQuoteTypeId(quoteTypeId);
+        if (getQuoteTypeId() != null) {
+            builder.setQuoteTypeId(getQuoteTypeId());
         }
-        if (issueDate != null) {
-            builder.setIssueDate(getTimestamp(issueDate));
+        if (getIssueDate() != null) {
+            builder.setIssueDate(getTimestamp(getIssueDate()));
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (salesChannelEnumId != null) {
-            builder.setSalesChannelEnumId(salesChannelEnumId);
+        if (getSalesChannelEnumId() != null) {
+            builder.setSalesChannelEnumId(getSalesChannelEnumId());
         }
-        if (validFromDate != null) {
-            builder.setValidFromDate(getTimestamp(validFromDate));
+        if (getValidFromDate() != null) {
+            builder.setValidFromDate(getTimestamp(getValidFromDate()));
         }
-        if (validThruDate != null) {
-            builder.setValidThruDate(getTimestamp(validThruDate));
+        if (getValidThruDate() != null) {
+            builder.setValidThruDate(getTimestamp(getValidThruDate()));
         }
-        if (quoteName != null) {
-            builder.setQuoteName(quoteName);
+        if (getQuoteName() != null) {
+            builder.setQuoteName(getQuoteName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

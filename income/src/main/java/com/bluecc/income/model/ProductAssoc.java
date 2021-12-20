@@ -89,59 +89,63 @@ public class ProductAssoc implements IEventModel<ProductAssocData.Builder>, HasI
 
     public ProductAssocData.Builder toDataBuilder() {
         ProductAssocData.Builder builder = ProductAssocData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (productIdTo != null) {
-            builder.setProductIdTo(productIdTo);
+        if (getProductIdTo() != null) {
+            builder.setProductIdTo(getProductIdTo());
         }
-        if (productAssocTypeId != null) {
-            builder.setProductAssocTypeId(productAssocTypeId);
+        if (getProductAssocTypeId() != null) {
+            builder.setProductAssocTypeId(getProductAssocTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (reason != null) {
-            builder.setReason(reason);
+        if (getReason() != null) {
+            builder.setReason(getReason());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (scrapFactor != null) {
-            builder.setScrapFactor(getFixedPoint(scrapFactor));
+        if (getScrapFactor() != null) {
+            builder.setScrapFactor(getFixedPoint(getScrapFactor()));
         }
-        if (instruction != null) {
-            builder.setInstruction(instruction);
+        if (getInstruction() != null) {
+            builder.setInstruction(getInstruction());
         }
-        if (routingWorkEffortId != null) {
-            builder.setRoutingWorkEffortId(routingWorkEffortId);
+        if (getRoutingWorkEffortId() != null) {
+            builder.setRoutingWorkEffortId(getRoutingWorkEffortId());
         }
-        if (estimateCalcMethod != null) {
-            builder.setEstimateCalcMethod(estimateCalcMethod);
+        if (getEstimateCalcMethod() != null) {
+            builder.setEstimateCalcMethod(getEstimateCalcMethod());
         }
-        if (recurrenceInfoId != null) {
-            builder.setRecurrenceInfoId(recurrenceInfoId);
+        if (getRecurrenceInfoId() != null) {
+            builder.setRecurrenceInfoId(getRecurrenceInfoId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductAssoc fromData(ProductAssocData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductAssoc.ProductAssocBuilder fromPrototype(ProductAssocData data) {
         return ProductAssoc.builder()
                 .productId(data.getProductId())
                 .productIdTo(data.getProductIdTo())
@@ -159,8 +163,7 @@ public class ProductAssoc implements IEventModel<ProductAssocData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

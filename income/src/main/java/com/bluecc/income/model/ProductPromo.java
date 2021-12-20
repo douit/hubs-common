@@ -92,62 +92,66 @@ public class ProductPromo implements IEventModel<ProductPromoData.Builder>, HasI
 
     public ProductPromoData.Builder toDataBuilder() {
         ProductPromoData.Builder builder = ProductPromoData.newBuilder();
-        if (productPromoId != null) {
-            builder.setProductPromoId(productPromoId);
+        if (getProductPromoId() != null) {
+            builder.setProductPromoId(getProductPromoId());
         }
-        if (promoName != null) {
-            builder.setPromoName(promoName);
+        if (getPromoName() != null) {
+            builder.setPromoName(getPromoName());
         }
-        if (promoText != null) {
-            builder.setPromoText(promoText);
+        if (getPromoText() != null) {
+            builder.setPromoText(getPromoText());
         }
-        if (userEntered != null) {
-            builder.setUserEntered(getIndicator(userEntered));
+        if (getUserEntered() != null) {
+            builder.setUserEntered(getIndicator(getUserEntered()));
         }
-        if (showToCustomer != null) {
-            builder.setShowToCustomer(getIndicator(showToCustomer));
+        if (getShowToCustomer() != null) {
+            builder.setShowToCustomer(getIndicator(getShowToCustomer()));
         }
-        if (requireCode != null) {
-            builder.setRequireCode(getIndicator(requireCode));
+        if (getRequireCode() != null) {
+            builder.setRequireCode(getIndicator(getRequireCode()));
         }
-        if (useLimitPerOrder != null) {
-            builder.setUseLimitPerOrder(useLimitPerOrder);
+        if (getUseLimitPerOrder() != null) {
+            builder.setUseLimitPerOrder(getUseLimitPerOrder());
         }
-        if (useLimitPerCustomer != null) {
-            builder.setUseLimitPerCustomer(useLimitPerCustomer);
+        if (getUseLimitPerCustomer() != null) {
+            builder.setUseLimitPerCustomer(getUseLimitPerCustomer());
         }
-        if (useLimitPerPromotion != null) {
-            builder.setUseLimitPerPromotion(useLimitPerPromotion);
+        if (getUseLimitPerPromotion() != null) {
+            builder.setUseLimitPerPromotion(getUseLimitPerPromotion());
         }
-        if (billbackFactor != null) {
-            builder.setBillbackFactor(getFixedPoint(billbackFactor));
+        if (getBillbackFactor() != null) {
+            builder.setBillbackFactor(getFixedPoint(getBillbackFactor()));
         }
-        if (overrideOrgPartyId != null) {
-            builder.setOverrideOrgPartyId(overrideOrgPartyId);
+        if (getOverrideOrgPartyId() != null) {
+            builder.setOverrideOrgPartyId(getOverrideOrgPartyId());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ProductPromo fromData(ProductPromoData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPromo.ProductPromoBuilder fromPrototype(ProductPromoData data) {
         return ProductPromo.builder()
                 .productPromoId(data.getProductPromoId())
                 .promoName(data.getPromoName())
@@ -166,8 +170,7 @@ public class ProductPromo implements IEventModel<ProductPromoData.Builder>, HasI
                 .lastModifiedByUserLogin(data.getLastModifiedByUserLogin())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

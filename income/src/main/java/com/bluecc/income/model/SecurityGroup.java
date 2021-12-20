@@ -75,29 +75,33 @@ public class SecurityGroup implements IEventModel<SecurityGroupFlatData.Builder>
 
     public SecurityGroupFlatData.Builder toDataBuilder() {
         SecurityGroupFlatData.Builder builder = SecurityGroupFlatData.newBuilder();
-        if (groupId != null) {
-            builder.setGroupId(groupId);
+        if (getGroupId() != null) {
+            builder.setGroupId(getGroupId());
         }
-        if (groupName != null) {
-            builder.setGroupName(groupName);
+        if (getGroupName() != null) {
+            builder.setGroupName(getGroupName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static SecurityGroup fromData(SecurityGroupFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SecurityGroup.SecurityGroupBuilder fromPrototype(SecurityGroupFlatData data) {
         return SecurityGroup.builder()
                 .groupId(data.getGroupId())
                 .groupName(data.getGroupName())
@@ -105,8 +109,7 @@ public class SecurityGroup implements IEventModel<SecurityGroupFlatData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -146,20 +149,20 @@ public class SecurityGroup implements IEventModel<SecurityGroupFlatData.Builder>
 
     public SecurityGroupData.Builder toHeadBuilder() {
         SecurityGroupData.Builder builder = SecurityGroupData.newBuilder();
-        if (groupId != null) {
-            builder.setGroupId(groupId);
+        if (getGroupId() != null) {
+            builder.setGroupId(getGroupId());
         }
-        if (groupName != null) {
-            builder.setGroupName(groupName);
+        if (getGroupName() != null) {
+            builder.setGroupName(getGroupName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

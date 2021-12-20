@@ -225,254 +225,258 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
 
     public ProductStoreFlatData.Builder toDataBuilder() {
         ProductStoreFlatData.Builder builder = ProductStoreFlatData.newBuilder();
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (primaryStoreGroupId != null) {
-            builder.setPrimaryStoreGroupId(primaryStoreGroupId);
+        if (getPrimaryStoreGroupId() != null) {
+            builder.setPrimaryStoreGroupId(getPrimaryStoreGroupId());
         }
-        if (storeName != null) {
-            builder.setStoreName(storeName);
+        if (getStoreName() != null) {
+            builder.setStoreName(getStoreName());
         }
-        if (companyName != null) {
-            builder.setCompanyName(companyName);
+        if (getCompanyName() != null) {
+            builder.setCompanyName(getCompanyName());
         }
-        if (title != null) {
-            builder.setTitle(title);
+        if (getTitle() != null) {
+            builder.setTitle(getTitle());
         }
-        if (subtitle != null) {
-            builder.setSubtitle(subtitle);
+        if (getSubtitle() != null) {
+            builder.setSubtitle(getSubtitle());
         }
-        if (payToPartyId != null) {
-            builder.setPayToPartyId(payToPartyId);
+        if (getPayToPartyId() != null) {
+            builder.setPayToPartyId(getPayToPartyId());
         }
-        if (daysToCancelNonPay != null) {
-            builder.setDaysToCancelNonPay(daysToCancelNonPay);
+        if (getDaysToCancelNonPay() != null) {
+            builder.setDaysToCancelNonPay(getDaysToCancelNonPay());
         }
-        if (manualAuthIsCapture != null) {
-            builder.setManualAuthIsCapture(getIndicator(manualAuthIsCapture));
+        if (getManualAuthIsCapture() != null) {
+            builder.setManualAuthIsCapture(getIndicator(getManualAuthIsCapture()));
         }
-        if (prorateShipping != null) {
-            builder.setProrateShipping(getIndicator(prorateShipping));
+        if (getProrateShipping() != null) {
+            builder.setProrateShipping(getIndicator(getProrateShipping()));
         }
-        if (prorateTaxes != null) {
-            builder.setProrateTaxes(getIndicator(prorateTaxes));
+        if (getProrateTaxes() != null) {
+            builder.setProrateTaxes(getIndicator(getProrateTaxes()));
         }
-        if (viewCartOnAdd != null) {
-            builder.setViewCartOnAdd(getIndicator(viewCartOnAdd));
+        if (getViewCartOnAdd() != null) {
+            builder.setViewCartOnAdd(getIndicator(getViewCartOnAdd()));
         }
-        if (autoSaveCart != null) {
-            builder.setAutoSaveCart(getIndicator(autoSaveCart));
+        if (getAutoSaveCart() != null) {
+            builder.setAutoSaveCart(getIndicator(getAutoSaveCart()));
         }
-        if (autoApproveReviews != null) {
-            builder.setAutoApproveReviews(getIndicator(autoApproveReviews));
+        if (getAutoApproveReviews() != null) {
+            builder.setAutoApproveReviews(getIndicator(getAutoApproveReviews()));
         }
-        if (isDemoStore != null) {
-            builder.setIsDemoStore(getIndicator(isDemoStore));
+        if (getIsDemoStore() != null) {
+            builder.setIsDemoStore(getIndicator(getIsDemoStore()));
         }
-        if (isImmediatelyFulfilled != null) {
-            builder.setIsImmediatelyFulfilled(getIndicator(isImmediatelyFulfilled));
+        if (getIsImmediatelyFulfilled() != null) {
+            builder.setIsImmediatelyFulfilled(getIndicator(getIsImmediatelyFulfilled()));
         }
-        if (inventoryFacilityId != null) {
-            builder.setInventoryFacilityId(inventoryFacilityId);
+        if (getInventoryFacilityId() != null) {
+            builder.setInventoryFacilityId(getInventoryFacilityId());
         }
-        if (oneInventoryFacility != null) {
-            builder.setOneInventoryFacility(getIndicator(oneInventoryFacility));
+        if (getOneInventoryFacility() != null) {
+            builder.setOneInventoryFacility(getIndicator(getOneInventoryFacility()));
         }
-        if (checkInventory != null) {
-            builder.setCheckInventory(getIndicator(checkInventory));
+        if (getCheckInventory() != null) {
+            builder.setCheckInventory(getIndicator(getCheckInventory()));
         }
-        if (reserveInventory != null) {
-            builder.setReserveInventory(getIndicator(reserveInventory));
+        if (getReserveInventory() != null) {
+            builder.setReserveInventory(getIndicator(getReserveInventory()));
         }
-        if (reserveOrderEnumId != null) {
-            builder.setReserveOrderEnumId(reserveOrderEnumId);
+        if (getReserveOrderEnumId() != null) {
+            builder.setReserveOrderEnumId(getReserveOrderEnumId());
         }
-        if (requireInventory != null) {
-            builder.setRequireInventory(getIndicator(requireInventory));
+        if (getRequireInventory() != null) {
+            builder.setRequireInventory(getIndicator(getRequireInventory()));
         }
-        if (balanceResOnOrderCreation != null) {
-            builder.setBalanceResOnOrderCreation(getIndicator(balanceResOnOrderCreation));
+        if (getBalanceResOnOrderCreation() != null) {
+            builder.setBalanceResOnOrderCreation(getIndicator(getBalanceResOnOrderCreation()));
         }
-        if (requirementMethodEnumId != null) {
-            builder.setRequirementMethodEnumId(requirementMethodEnumId);
+        if (getRequirementMethodEnumId() != null) {
+            builder.setRequirementMethodEnumId(getRequirementMethodEnumId());
         }
-        if (orderNumberPrefix != null) {
-            builder.setOrderNumberPrefix(orderNumberPrefix);
+        if (getOrderNumberPrefix() != null) {
+            builder.setOrderNumberPrefix(getOrderNumberPrefix());
         }
-        if (defaultLocaleString != null) {
-            builder.setDefaultLocaleString(defaultLocaleString);
+        if (getDefaultLocaleString() != null) {
+            builder.setDefaultLocaleString(getDefaultLocaleString());
         }
-        if (defaultCurrencyUomId != null) {
-            builder.setDefaultCurrencyUomId(defaultCurrencyUomId);
+        if (getDefaultCurrencyUomId() != null) {
+            builder.setDefaultCurrencyUomId(getDefaultCurrencyUomId());
         }
-        if (defaultTimeZoneString != null) {
-            builder.setDefaultTimeZoneString(defaultTimeZoneString);
+        if (getDefaultTimeZoneString() != null) {
+            builder.setDefaultTimeZoneString(getDefaultTimeZoneString());
         }
-        if (defaultSalesChannelEnumId != null) {
-            builder.setDefaultSalesChannelEnumId(defaultSalesChannelEnumId);
+        if (getDefaultSalesChannelEnumId() != null) {
+            builder.setDefaultSalesChannelEnumId(getDefaultSalesChannelEnumId());
         }
-        if (allowPassword != null) {
-            builder.setAllowPassword(getIndicator(allowPassword));
+        if (getAllowPassword() != null) {
+            builder.setAllowPassword(getIndicator(getAllowPassword()));
         }
-        if (defaultPassword != null) {
-            builder.setDefaultPassword(defaultPassword);
+        if (getDefaultPassword() != null) {
+            builder.setDefaultPassword(getDefaultPassword());
         }
-        if (explodeOrderItems != null) {
-            builder.setExplodeOrderItems(getIndicator(explodeOrderItems));
+        if (getExplodeOrderItems() != null) {
+            builder.setExplodeOrderItems(getIndicator(getExplodeOrderItems()));
         }
-        if (checkGcBalance != null) {
-            builder.setCheckGcBalance(getIndicator(checkGcBalance));
+        if (getCheckGcBalance() != null) {
+            builder.setCheckGcBalance(getIndicator(getCheckGcBalance()));
         }
-        if (retryFailedAuths != null) {
-            builder.setRetryFailedAuths(getIndicator(retryFailedAuths));
+        if (getRetryFailedAuths() != null) {
+            builder.setRetryFailedAuths(getIndicator(getRetryFailedAuths()));
         }
-        if (headerApprovedStatus != null) {
-            builder.setHeaderApprovedStatus(headerApprovedStatus);
+        if (getHeaderApprovedStatus() != null) {
+            builder.setHeaderApprovedStatus(getHeaderApprovedStatus());
         }
-        if (itemApprovedStatus != null) {
-            builder.setItemApprovedStatus(itemApprovedStatus);
+        if (getItemApprovedStatus() != null) {
+            builder.setItemApprovedStatus(getItemApprovedStatus());
         }
-        if (digitalItemApprovedStatus != null) {
-            builder.setDigitalItemApprovedStatus(digitalItemApprovedStatus);
+        if (getDigitalItemApprovedStatus() != null) {
+            builder.setDigitalItemApprovedStatus(getDigitalItemApprovedStatus());
         }
-        if (headerDeclinedStatus != null) {
-            builder.setHeaderDeclinedStatus(headerDeclinedStatus);
+        if (getHeaderDeclinedStatus() != null) {
+            builder.setHeaderDeclinedStatus(getHeaderDeclinedStatus());
         }
-        if (itemDeclinedStatus != null) {
-            builder.setItemDeclinedStatus(itemDeclinedStatus);
+        if (getItemDeclinedStatus() != null) {
+            builder.setItemDeclinedStatus(getItemDeclinedStatus());
         }
-        if (headerCancelStatus != null) {
-            builder.setHeaderCancelStatus(headerCancelStatus);
+        if (getHeaderCancelStatus() != null) {
+            builder.setHeaderCancelStatus(getHeaderCancelStatus());
         }
-        if (itemCancelStatus != null) {
-            builder.setItemCancelStatus(itemCancelStatus);
+        if (getItemCancelStatus() != null) {
+            builder.setItemCancelStatus(getItemCancelStatus());
         }
-        if (authDeclinedMessage != null) {
-            builder.setAuthDeclinedMessage(authDeclinedMessage);
+        if (getAuthDeclinedMessage() != null) {
+            builder.setAuthDeclinedMessage(getAuthDeclinedMessage());
         }
-        if (authFraudMessage != null) {
-            builder.setAuthFraudMessage(authFraudMessage);
+        if (getAuthFraudMessage() != null) {
+            builder.setAuthFraudMessage(getAuthFraudMessage());
         }
-        if (authErrorMessage != null) {
-            builder.setAuthErrorMessage(authErrorMessage);
+        if (getAuthErrorMessage() != null) {
+            builder.setAuthErrorMessage(getAuthErrorMessage());
         }
-        if (visualThemeId != null) {
-            builder.setVisualThemeId(visualThemeId);
+        if (getVisualThemeId() != null) {
+            builder.setVisualThemeId(getVisualThemeId());
         }
-        if (storeCreditAccountEnumId != null) {
-            builder.setStoreCreditAccountEnumId(storeCreditAccountEnumId);
+        if (getStoreCreditAccountEnumId() != null) {
+            builder.setStoreCreditAccountEnumId(getStoreCreditAccountEnumId());
         }
-        if (usePrimaryEmailUsername != null) {
-            builder.setUsePrimaryEmailUsername(getIndicator(usePrimaryEmailUsername));
+        if (getUsePrimaryEmailUsername() != null) {
+            builder.setUsePrimaryEmailUsername(getIndicator(getUsePrimaryEmailUsername()));
         }
-        if (requireCustomerRole != null) {
-            builder.setRequireCustomerRole(getIndicator(requireCustomerRole));
+        if (getRequireCustomerRole() != null) {
+            builder.setRequireCustomerRole(getIndicator(getRequireCustomerRole()));
         }
-        if (autoInvoiceDigitalItems != null) {
-            builder.setAutoInvoiceDigitalItems(getIndicator(autoInvoiceDigitalItems));
+        if (getAutoInvoiceDigitalItems() != null) {
+            builder.setAutoInvoiceDigitalItems(getIndicator(getAutoInvoiceDigitalItems()));
         }
-        if (reqShipAddrForDigItems != null) {
-            builder.setReqShipAddrForDigItems(getIndicator(reqShipAddrForDigItems));
+        if (getReqShipAddrForDigItems() != null) {
+            builder.setReqShipAddrForDigItems(getIndicator(getReqShipAddrForDigItems()));
         }
-        if (showCheckoutGiftOptions != null) {
-            builder.setShowCheckoutGiftOptions(getIndicator(showCheckoutGiftOptions));
+        if (getShowCheckoutGiftOptions() != null) {
+            builder.setShowCheckoutGiftOptions(getIndicator(getShowCheckoutGiftOptions()));
         }
-        if (selectPaymentTypePerItem != null) {
-            builder.setSelectPaymentTypePerItem(getIndicator(selectPaymentTypePerItem));
+        if (getSelectPaymentTypePerItem() != null) {
+            builder.setSelectPaymentTypePerItem(getIndicator(getSelectPaymentTypePerItem()));
         }
-        if (showPricesWithVatTax != null) {
-            builder.setShowPricesWithVatTax(getIndicator(showPricesWithVatTax));
+        if (getShowPricesWithVatTax() != null) {
+            builder.setShowPricesWithVatTax(getIndicator(getShowPricesWithVatTax()));
         }
-        if (showTaxIsExempt != null) {
-            builder.setShowTaxIsExempt(getIndicator(showTaxIsExempt));
+        if (getShowTaxIsExempt() != null) {
+            builder.setShowTaxIsExempt(getIndicator(getShowTaxIsExempt()));
         }
-        if (vatTaxAuthGeoId != null) {
-            builder.setVatTaxAuthGeoId(vatTaxAuthGeoId);
+        if (getVatTaxAuthGeoId() != null) {
+            builder.setVatTaxAuthGeoId(getVatTaxAuthGeoId());
         }
-        if (vatTaxAuthPartyId != null) {
-            builder.setVatTaxAuthPartyId(vatTaxAuthPartyId);
+        if (getVatTaxAuthPartyId() != null) {
+            builder.setVatTaxAuthPartyId(getVatTaxAuthPartyId());
         }
-        if (enableAutoSuggestionList != null) {
-            builder.setEnableAutoSuggestionList(getIndicator(enableAutoSuggestionList));
+        if (getEnableAutoSuggestionList() != null) {
+            builder.setEnableAutoSuggestionList(getIndicator(getEnableAutoSuggestionList()));
         }
-        if (enableDigProdUpload != null) {
-            builder.setEnableDigProdUpload(getIndicator(enableDigProdUpload));
+        if (getEnableDigProdUpload() != null) {
+            builder.setEnableDigProdUpload(getIndicator(getEnableDigProdUpload()));
         }
-        if (prodSearchExcludeVariants != null) {
-            builder.setProdSearchExcludeVariants(getIndicator(prodSearchExcludeVariants));
+        if (getProdSearchExcludeVariants() != null) {
+            builder.setProdSearchExcludeVariants(getIndicator(getProdSearchExcludeVariants()));
         }
-        if (digProdUploadCategoryId != null) {
-            builder.setDigProdUploadCategoryId(digProdUploadCategoryId);
+        if (getDigProdUploadCategoryId() != null) {
+            builder.setDigProdUploadCategoryId(getDigProdUploadCategoryId());
         }
-        if (autoOrderCcTryExp != null) {
-            builder.setAutoOrderCcTryExp(getIndicator(autoOrderCcTryExp));
+        if (getAutoOrderCcTryExp() != null) {
+            builder.setAutoOrderCcTryExp(getIndicator(getAutoOrderCcTryExp()));
         }
-        if (autoOrderCcTryOtherCards != null) {
-            builder.setAutoOrderCcTryOtherCards(getIndicator(autoOrderCcTryOtherCards));
+        if (getAutoOrderCcTryOtherCards() != null) {
+            builder.setAutoOrderCcTryOtherCards(getIndicator(getAutoOrderCcTryOtherCards()));
         }
-        if (autoOrderCcTryLaterNsf != null) {
-            builder.setAutoOrderCcTryLaterNsf(getIndicator(autoOrderCcTryLaterNsf));
+        if (getAutoOrderCcTryLaterNsf() != null) {
+            builder.setAutoOrderCcTryLaterNsf(getIndicator(getAutoOrderCcTryLaterNsf()));
         }
-        if (autoOrderCcTryLaterMax != null) {
-            builder.setAutoOrderCcTryLaterMax(autoOrderCcTryLaterMax);
+        if (getAutoOrderCcTryLaterMax() != null) {
+            builder.setAutoOrderCcTryLaterMax(getAutoOrderCcTryLaterMax());
         }
-        if (storeCreditValidDays != null) {
-            builder.setStoreCreditValidDays(storeCreditValidDays);
+        if (getStoreCreditValidDays() != null) {
+            builder.setStoreCreditValidDays(getStoreCreditValidDays());
         }
-        if (autoApproveInvoice != null) {
-            builder.setAutoApproveInvoice(getIndicator(autoApproveInvoice));
+        if (getAutoApproveInvoice() != null) {
+            builder.setAutoApproveInvoice(getIndicator(getAutoApproveInvoice()));
         }
-        if (autoApproveOrder != null) {
-            builder.setAutoApproveOrder(getIndicator(autoApproveOrder));
+        if (getAutoApproveOrder() != null) {
+            builder.setAutoApproveOrder(getIndicator(getAutoApproveOrder()));
         }
-        if (shipIfCaptureFails != null) {
-            builder.setShipIfCaptureFails(getIndicator(shipIfCaptureFails));
+        if (getShipIfCaptureFails() != null) {
+            builder.setShipIfCaptureFails(getIndicator(getShipIfCaptureFails()));
         }
-        if (setOwnerUponIssuance != null) {
-            builder.setSetOwnerUponIssuance(getIndicator(setOwnerUponIssuance));
+        if (getSetOwnerUponIssuance() != null) {
+            builder.setSetOwnerUponIssuance(getIndicator(getSetOwnerUponIssuance()));
         }
-        if (reqReturnInventoryReceive != null) {
-            builder.setReqReturnInventoryReceive(getIndicator(reqReturnInventoryReceive));
+        if (getReqReturnInventoryReceive() != null) {
+            builder.setReqReturnInventoryReceive(getIndicator(getReqReturnInventoryReceive()));
         }
-        if (addToCartRemoveIncompat != null) {
-            builder.setAddToCartRemoveIncompat(getIndicator(addToCartRemoveIncompat));
+        if (getAddToCartRemoveIncompat() != null) {
+            builder.setAddToCartRemoveIncompat(getIndicator(getAddToCartRemoveIncompat()));
         }
-        if (addToCartReplaceUpsell != null) {
-            builder.setAddToCartReplaceUpsell(getIndicator(addToCartReplaceUpsell));
+        if (getAddToCartReplaceUpsell() != null) {
+            builder.setAddToCartReplaceUpsell(getIndicator(getAddToCartReplaceUpsell()));
         }
-        if (splitPayPrefPerShpGrp != null) {
-            builder.setSplitPayPrefPerShpGrp(getIndicator(splitPayPrefPerShpGrp));
+        if (getSplitPayPrefPerShpGrp() != null) {
+            builder.setSplitPayPrefPerShpGrp(getIndicator(getSplitPayPrefPerShpGrp()));
         }
-        if (managedByLot != null) {
-            builder.setManagedByLot(getIndicator(managedByLot));
+        if (getManagedByLot() != null) {
+            builder.setManagedByLot(getIndicator(getManagedByLot()));
         }
-        if (showOutOfStockProducts != null) {
-            builder.setShowOutOfStockProducts(getIndicator(showOutOfStockProducts));
+        if (getShowOutOfStockProducts() != null) {
+            builder.setShowOutOfStockProducts(getIndicator(getShowOutOfStockProducts()));
         }
-        if (orderDecimalQuantity != null) {
-            builder.setOrderDecimalQuantity(getIndicator(orderDecimalQuantity));
+        if (getOrderDecimalQuantity() != null) {
+            builder.setOrderDecimalQuantity(getIndicator(getOrderDecimalQuantity()));
         }
-        if (allowComment != null) {
-            builder.setAllowComment(getIndicator(allowComment));
+        if (getAllowComment() != null) {
+            builder.setAllowComment(getIndicator(getAllowComment()));
         }
-        if (allocateInventory != null) {
-            builder.setAllocateInventory(getIndicator(allocateInventory));
+        if (getAllocateInventory() != null) {
+            builder.setAllocateInventory(getIndicator(getAllocateInventory()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static ProductStore fromData(ProductStoreFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductStore.ProductStoreBuilder fromPrototype(ProductStoreFlatData data) {
         return ProductStore.builder()
                 .productStoreId(data.getProductStoreId())
                 .primaryStoreGroupId(data.getPrimaryStoreGroupId())
@@ -555,8 +559,7 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -681,236 +684,236 @@ public class ProductStore implements IEventModel<ProductStoreFlatData.Builder>, 
 
     public ProductStoreData.Builder toHeadBuilder() {
         ProductStoreData.Builder builder = ProductStoreData.newBuilder();
-        if (productStoreId != null) {
-            builder.setProductStoreId(productStoreId);
+        if (getProductStoreId() != null) {
+            builder.setProductStoreId(getProductStoreId());
         }
-        if (primaryStoreGroupId != null) {
-            builder.setPrimaryStoreGroupId(primaryStoreGroupId);
+        if (getPrimaryStoreGroupId() != null) {
+            builder.setPrimaryStoreGroupId(getPrimaryStoreGroupId());
         }
-        if (storeName != null) {
-            builder.setStoreName(storeName);
+        if (getStoreName() != null) {
+            builder.setStoreName(getStoreName());
         }
-        if (companyName != null) {
-            builder.setCompanyName(companyName);
+        if (getCompanyName() != null) {
+            builder.setCompanyName(getCompanyName());
         }
-        if (title != null) {
-            builder.setTitle(title);
+        if (getTitle() != null) {
+            builder.setTitle(getTitle());
         }
-        if (subtitle != null) {
-            builder.setSubtitle(subtitle);
+        if (getSubtitle() != null) {
+            builder.setSubtitle(getSubtitle());
         }
-        if (daysToCancelNonPay != null) {
-            builder.setDaysToCancelNonPay(daysToCancelNonPay);
+        if (getDaysToCancelNonPay() != null) {
+            builder.setDaysToCancelNonPay(getDaysToCancelNonPay());
         }
-        if (manualAuthIsCapture != null) {
-            builder.setManualAuthIsCapture(getIndicator(manualAuthIsCapture));
+        if (getManualAuthIsCapture() != null) {
+            builder.setManualAuthIsCapture(getIndicator(getManualAuthIsCapture()));
         }
-        if (prorateShipping != null) {
-            builder.setProrateShipping(getIndicator(prorateShipping));
+        if (getProrateShipping() != null) {
+            builder.setProrateShipping(getIndicator(getProrateShipping()));
         }
-        if (prorateTaxes != null) {
-            builder.setProrateTaxes(getIndicator(prorateTaxes));
+        if (getProrateTaxes() != null) {
+            builder.setProrateTaxes(getIndicator(getProrateTaxes()));
         }
-        if (viewCartOnAdd != null) {
-            builder.setViewCartOnAdd(getIndicator(viewCartOnAdd));
+        if (getViewCartOnAdd() != null) {
+            builder.setViewCartOnAdd(getIndicator(getViewCartOnAdd()));
         }
-        if (autoSaveCart != null) {
-            builder.setAutoSaveCart(getIndicator(autoSaveCart));
+        if (getAutoSaveCart() != null) {
+            builder.setAutoSaveCart(getIndicator(getAutoSaveCart()));
         }
-        if (autoApproveReviews != null) {
-            builder.setAutoApproveReviews(getIndicator(autoApproveReviews));
+        if (getAutoApproveReviews() != null) {
+            builder.setAutoApproveReviews(getIndicator(getAutoApproveReviews()));
         }
-        if (isDemoStore != null) {
-            builder.setIsDemoStore(getIndicator(isDemoStore));
+        if (getIsDemoStore() != null) {
+            builder.setIsDemoStore(getIndicator(getIsDemoStore()));
         }
-        if (isImmediatelyFulfilled != null) {
-            builder.setIsImmediatelyFulfilled(getIndicator(isImmediatelyFulfilled));
+        if (getIsImmediatelyFulfilled() != null) {
+            builder.setIsImmediatelyFulfilled(getIndicator(getIsImmediatelyFulfilled()));
         }
-        if (oneInventoryFacility != null) {
-            builder.setOneInventoryFacility(getIndicator(oneInventoryFacility));
+        if (getOneInventoryFacility() != null) {
+            builder.setOneInventoryFacility(getIndicator(getOneInventoryFacility()));
         }
-        if (checkInventory != null) {
-            builder.setCheckInventory(getIndicator(checkInventory));
+        if (getCheckInventory() != null) {
+            builder.setCheckInventory(getIndicator(getCheckInventory()));
         }
-        if (reserveInventory != null) {
-            builder.setReserveInventory(getIndicator(reserveInventory));
+        if (getReserveInventory() != null) {
+            builder.setReserveInventory(getIndicator(getReserveInventory()));
         }
-        if (reserveOrderEnumId != null) {
-            builder.setReserveOrderEnumId(reserveOrderEnumId);
+        if (getReserveOrderEnumId() != null) {
+            builder.setReserveOrderEnumId(getReserveOrderEnumId());
         }
-        if (requireInventory != null) {
-            builder.setRequireInventory(getIndicator(requireInventory));
+        if (getRequireInventory() != null) {
+            builder.setRequireInventory(getIndicator(getRequireInventory()));
         }
-        if (balanceResOnOrderCreation != null) {
-            builder.setBalanceResOnOrderCreation(getIndicator(balanceResOnOrderCreation));
+        if (getBalanceResOnOrderCreation() != null) {
+            builder.setBalanceResOnOrderCreation(getIndicator(getBalanceResOnOrderCreation()));
         }
-        if (requirementMethodEnumId != null) {
-            builder.setRequirementMethodEnumId(requirementMethodEnumId);
+        if (getRequirementMethodEnumId() != null) {
+            builder.setRequirementMethodEnumId(getRequirementMethodEnumId());
         }
-        if (orderNumberPrefix != null) {
-            builder.setOrderNumberPrefix(orderNumberPrefix);
+        if (getOrderNumberPrefix() != null) {
+            builder.setOrderNumberPrefix(getOrderNumberPrefix());
         }
-        if (defaultLocaleString != null) {
-            builder.setDefaultLocaleString(defaultLocaleString);
+        if (getDefaultLocaleString() != null) {
+            builder.setDefaultLocaleString(getDefaultLocaleString());
         }
-        if (defaultCurrencyUomId != null) {
-            builder.setDefaultCurrencyUomId(defaultCurrencyUomId);
+        if (getDefaultCurrencyUomId() != null) {
+            builder.setDefaultCurrencyUomId(getDefaultCurrencyUomId());
         }
-        if (defaultTimeZoneString != null) {
-            builder.setDefaultTimeZoneString(defaultTimeZoneString);
+        if (getDefaultTimeZoneString() != null) {
+            builder.setDefaultTimeZoneString(getDefaultTimeZoneString());
         }
-        if (defaultSalesChannelEnumId != null) {
-            builder.setDefaultSalesChannelEnumId(defaultSalesChannelEnumId);
+        if (getDefaultSalesChannelEnumId() != null) {
+            builder.setDefaultSalesChannelEnumId(getDefaultSalesChannelEnumId());
         }
-        if (allowPassword != null) {
-            builder.setAllowPassword(getIndicator(allowPassword));
+        if (getAllowPassword() != null) {
+            builder.setAllowPassword(getIndicator(getAllowPassword()));
         }
-        if (defaultPassword != null) {
-            builder.setDefaultPassword(defaultPassword);
+        if (getDefaultPassword() != null) {
+            builder.setDefaultPassword(getDefaultPassword());
         }
-        if (explodeOrderItems != null) {
-            builder.setExplodeOrderItems(getIndicator(explodeOrderItems));
+        if (getExplodeOrderItems() != null) {
+            builder.setExplodeOrderItems(getIndicator(getExplodeOrderItems()));
         }
-        if (checkGcBalance != null) {
-            builder.setCheckGcBalance(getIndicator(checkGcBalance));
+        if (getCheckGcBalance() != null) {
+            builder.setCheckGcBalance(getIndicator(getCheckGcBalance()));
         }
-        if (retryFailedAuths != null) {
-            builder.setRetryFailedAuths(getIndicator(retryFailedAuths));
+        if (getRetryFailedAuths() != null) {
+            builder.setRetryFailedAuths(getIndicator(getRetryFailedAuths()));
         }
-        if (headerApprovedStatus != null) {
-            builder.setHeaderApprovedStatus(headerApprovedStatus);
+        if (getHeaderApprovedStatus() != null) {
+            builder.setHeaderApprovedStatus(getHeaderApprovedStatus());
         }
-        if (itemApprovedStatus != null) {
-            builder.setItemApprovedStatus(itemApprovedStatus);
+        if (getItemApprovedStatus() != null) {
+            builder.setItemApprovedStatus(getItemApprovedStatus());
         }
-        if (digitalItemApprovedStatus != null) {
-            builder.setDigitalItemApprovedStatus(digitalItemApprovedStatus);
+        if (getDigitalItemApprovedStatus() != null) {
+            builder.setDigitalItemApprovedStatus(getDigitalItemApprovedStatus());
         }
-        if (headerDeclinedStatus != null) {
-            builder.setHeaderDeclinedStatus(headerDeclinedStatus);
+        if (getHeaderDeclinedStatus() != null) {
+            builder.setHeaderDeclinedStatus(getHeaderDeclinedStatus());
         }
-        if (itemDeclinedStatus != null) {
-            builder.setItemDeclinedStatus(itemDeclinedStatus);
+        if (getItemDeclinedStatus() != null) {
+            builder.setItemDeclinedStatus(getItemDeclinedStatus());
         }
-        if (headerCancelStatus != null) {
-            builder.setHeaderCancelStatus(headerCancelStatus);
+        if (getHeaderCancelStatus() != null) {
+            builder.setHeaderCancelStatus(getHeaderCancelStatus());
         }
-        if (itemCancelStatus != null) {
-            builder.setItemCancelStatus(itemCancelStatus);
+        if (getItemCancelStatus() != null) {
+            builder.setItemCancelStatus(getItemCancelStatus());
         }
-        if (authDeclinedMessage != null) {
-            builder.setAuthDeclinedMessage(authDeclinedMessage);
+        if (getAuthDeclinedMessage() != null) {
+            builder.setAuthDeclinedMessage(getAuthDeclinedMessage());
         }
-        if (authFraudMessage != null) {
-            builder.setAuthFraudMessage(authFraudMessage);
+        if (getAuthFraudMessage() != null) {
+            builder.setAuthFraudMessage(getAuthFraudMessage());
         }
-        if (authErrorMessage != null) {
-            builder.setAuthErrorMessage(authErrorMessage);
+        if (getAuthErrorMessage() != null) {
+            builder.setAuthErrorMessage(getAuthErrorMessage());
         }
-        if (visualThemeId != null) {
-            builder.setVisualThemeId(visualThemeId);
+        if (getVisualThemeId() != null) {
+            builder.setVisualThemeId(getVisualThemeId());
         }
-        if (storeCreditAccountEnumId != null) {
-            builder.setStoreCreditAccountEnumId(storeCreditAccountEnumId);
+        if (getStoreCreditAccountEnumId() != null) {
+            builder.setStoreCreditAccountEnumId(getStoreCreditAccountEnumId());
         }
-        if (usePrimaryEmailUsername != null) {
-            builder.setUsePrimaryEmailUsername(getIndicator(usePrimaryEmailUsername));
+        if (getUsePrimaryEmailUsername() != null) {
+            builder.setUsePrimaryEmailUsername(getIndicator(getUsePrimaryEmailUsername()));
         }
-        if (requireCustomerRole != null) {
-            builder.setRequireCustomerRole(getIndicator(requireCustomerRole));
+        if (getRequireCustomerRole() != null) {
+            builder.setRequireCustomerRole(getIndicator(getRequireCustomerRole()));
         }
-        if (autoInvoiceDigitalItems != null) {
-            builder.setAutoInvoiceDigitalItems(getIndicator(autoInvoiceDigitalItems));
+        if (getAutoInvoiceDigitalItems() != null) {
+            builder.setAutoInvoiceDigitalItems(getIndicator(getAutoInvoiceDigitalItems()));
         }
-        if (reqShipAddrForDigItems != null) {
-            builder.setReqShipAddrForDigItems(getIndicator(reqShipAddrForDigItems));
+        if (getReqShipAddrForDigItems() != null) {
+            builder.setReqShipAddrForDigItems(getIndicator(getReqShipAddrForDigItems()));
         }
-        if (showCheckoutGiftOptions != null) {
-            builder.setShowCheckoutGiftOptions(getIndicator(showCheckoutGiftOptions));
+        if (getShowCheckoutGiftOptions() != null) {
+            builder.setShowCheckoutGiftOptions(getIndicator(getShowCheckoutGiftOptions()));
         }
-        if (selectPaymentTypePerItem != null) {
-            builder.setSelectPaymentTypePerItem(getIndicator(selectPaymentTypePerItem));
+        if (getSelectPaymentTypePerItem() != null) {
+            builder.setSelectPaymentTypePerItem(getIndicator(getSelectPaymentTypePerItem()));
         }
-        if (showPricesWithVatTax != null) {
-            builder.setShowPricesWithVatTax(getIndicator(showPricesWithVatTax));
+        if (getShowPricesWithVatTax() != null) {
+            builder.setShowPricesWithVatTax(getIndicator(getShowPricesWithVatTax()));
         }
-        if (showTaxIsExempt != null) {
-            builder.setShowTaxIsExempt(getIndicator(showTaxIsExempt));
+        if (getShowTaxIsExempt() != null) {
+            builder.setShowTaxIsExempt(getIndicator(getShowTaxIsExempt()));
         }
-        if (vatTaxAuthPartyId != null) {
-            builder.setVatTaxAuthPartyId(vatTaxAuthPartyId);
+        if (getVatTaxAuthPartyId() != null) {
+            builder.setVatTaxAuthPartyId(getVatTaxAuthPartyId());
         }
-        if (enableAutoSuggestionList != null) {
-            builder.setEnableAutoSuggestionList(getIndicator(enableAutoSuggestionList));
+        if (getEnableAutoSuggestionList() != null) {
+            builder.setEnableAutoSuggestionList(getIndicator(getEnableAutoSuggestionList()));
         }
-        if (enableDigProdUpload != null) {
-            builder.setEnableDigProdUpload(getIndicator(enableDigProdUpload));
+        if (getEnableDigProdUpload() != null) {
+            builder.setEnableDigProdUpload(getIndicator(getEnableDigProdUpload()));
         }
-        if (prodSearchExcludeVariants != null) {
-            builder.setProdSearchExcludeVariants(getIndicator(prodSearchExcludeVariants));
+        if (getProdSearchExcludeVariants() != null) {
+            builder.setProdSearchExcludeVariants(getIndicator(getProdSearchExcludeVariants()));
         }
-        if (digProdUploadCategoryId != null) {
-            builder.setDigProdUploadCategoryId(digProdUploadCategoryId);
+        if (getDigProdUploadCategoryId() != null) {
+            builder.setDigProdUploadCategoryId(getDigProdUploadCategoryId());
         }
-        if (autoOrderCcTryExp != null) {
-            builder.setAutoOrderCcTryExp(getIndicator(autoOrderCcTryExp));
+        if (getAutoOrderCcTryExp() != null) {
+            builder.setAutoOrderCcTryExp(getIndicator(getAutoOrderCcTryExp()));
         }
-        if (autoOrderCcTryOtherCards != null) {
-            builder.setAutoOrderCcTryOtherCards(getIndicator(autoOrderCcTryOtherCards));
+        if (getAutoOrderCcTryOtherCards() != null) {
+            builder.setAutoOrderCcTryOtherCards(getIndicator(getAutoOrderCcTryOtherCards()));
         }
-        if (autoOrderCcTryLaterNsf != null) {
-            builder.setAutoOrderCcTryLaterNsf(getIndicator(autoOrderCcTryLaterNsf));
+        if (getAutoOrderCcTryLaterNsf() != null) {
+            builder.setAutoOrderCcTryLaterNsf(getIndicator(getAutoOrderCcTryLaterNsf()));
         }
-        if (autoOrderCcTryLaterMax != null) {
-            builder.setAutoOrderCcTryLaterMax(autoOrderCcTryLaterMax);
+        if (getAutoOrderCcTryLaterMax() != null) {
+            builder.setAutoOrderCcTryLaterMax(getAutoOrderCcTryLaterMax());
         }
-        if (storeCreditValidDays != null) {
-            builder.setStoreCreditValidDays(storeCreditValidDays);
+        if (getStoreCreditValidDays() != null) {
+            builder.setStoreCreditValidDays(getStoreCreditValidDays());
         }
-        if (autoApproveInvoice != null) {
-            builder.setAutoApproveInvoice(getIndicator(autoApproveInvoice));
+        if (getAutoApproveInvoice() != null) {
+            builder.setAutoApproveInvoice(getIndicator(getAutoApproveInvoice()));
         }
-        if (autoApproveOrder != null) {
-            builder.setAutoApproveOrder(getIndicator(autoApproveOrder));
+        if (getAutoApproveOrder() != null) {
+            builder.setAutoApproveOrder(getIndicator(getAutoApproveOrder()));
         }
-        if (shipIfCaptureFails != null) {
-            builder.setShipIfCaptureFails(getIndicator(shipIfCaptureFails));
+        if (getShipIfCaptureFails() != null) {
+            builder.setShipIfCaptureFails(getIndicator(getShipIfCaptureFails()));
         }
-        if (setOwnerUponIssuance != null) {
-            builder.setSetOwnerUponIssuance(getIndicator(setOwnerUponIssuance));
+        if (getSetOwnerUponIssuance() != null) {
+            builder.setSetOwnerUponIssuance(getIndicator(getSetOwnerUponIssuance()));
         }
-        if (reqReturnInventoryReceive != null) {
-            builder.setReqReturnInventoryReceive(getIndicator(reqReturnInventoryReceive));
+        if (getReqReturnInventoryReceive() != null) {
+            builder.setReqReturnInventoryReceive(getIndicator(getReqReturnInventoryReceive()));
         }
-        if (addToCartRemoveIncompat != null) {
-            builder.setAddToCartRemoveIncompat(getIndicator(addToCartRemoveIncompat));
+        if (getAddToCartRemoveIncompat() != null) {
+            builder.setAddToCartRemoveIncompat(getIndicator(getAddToCartRemoveIncompat()));
         }
-        if (addToCartReplaceUpsell != null) {
-            builder.setAddToCartReplaceUpsell(getIndicator(addToCartReplaceUpsell));
+        if (getAddToCartReplaceUpsell() != null) {
+            builder.setAddToCartReplaceUpsell(getIndicator(getAddToCartReplaceUpsell()));
         }
-        if (splitPayPrefPerShpGrp != null) {
-            builder.setSplitPayPrefPerShpGrp(getIndicator(splitPayPrefPerShpGrp));
+        if (getSplitPayPrefPerShpGrp() != null) {
+            builder.setSplitPayPrefPerShpGrp(getIndicator(getSplitPayPrefPerShpGrp()));
         }
-        if (managedByLot != null) {
-            builder.setManagedByLot(getIndicator(managedByLot));
+        if (getManagedByLot() != null) {
+            builder.setManagedByLot(getIndicator(getManagedByLot()));
         }
-        if (showOutOfStockProducts != null) {
-            builder.setShowOutOfStockProducts(getIndicator(showOutOfStockProducts));
+        if (getShowOutOfStockProducts() != null) {
+            builder.setShowOutOfStockProducts(getIndicator(getShowOutOfStockProducts()));
         }
-        if (orderDecimalQuantity != null) {
-            builder.setOrderDecimalQuantity(getIndicator(orderDecimalQuantity));
+        if (getOrderDecimalQuantity() != null) {
+            builder.setOrderDecimalQuantity(getIndicator(getOrderDecimalQuantity()));
         }
-        if (allowComment != null) {
-            builder.setAllowComment(getIndicator(allowComment));
+        if (getAllowComment() != null) {
+            builder.setAllowComment(getIndicator(getAllowComment()));
         }
-        if (allocateInventory != null) {
-            builder.setAllocateInventory(getIndicator(allocateInventory));
+        if (getAllocateInventory() != null) {
+            builder.setAllocateInventory(getIndicator(getAllocateInventory()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

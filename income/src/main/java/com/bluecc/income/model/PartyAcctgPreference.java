@@ -102,77 +102,81 @@ public class PartyAcctgPreference implements IEventModel<PartyAcctgPreferenceDat
 
     public PartyAcctgPreferenceData.Builder toDataBuilder() {
         PartyAcctgPreferenceData.Builder builder = PartyAcctgPreferenceData.newBuilder();
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (fiscalYearStartMonth != null) {
-            builder.setFiscalYearStartMonth(fiscalYearStartMonth);
+        if (getFiscalYearStartMonth() != null) {
+            builder.setFiscalYearStartMonth(getFiscalYearStartMonth());
         }
-        if (fiscalYearStartDay != null) {
-            builder.setFiscalYearStartDay(fiscalYearStartDay);
+        if (getFiscalYearStartDay() != null) {
+            builder.setFiscalYearStartDay(getFiscalYearStartDay());
         }
-        if (taxFormId != null) {
-            builder.setTaxFormId(taxFormId);
+        if (getTaxFormId() != null) {
+            builder.setTaxFormId(getTaxFormId());
         }
-        if (cogsMethodId != null) {
-            builder.setCogsMethodId(cogsMethodId);
+        if (getCogsMethodId() != null) {
+            builder.setCogsMethodId(getCogsMethodId());
         }
-        if (baseCurrencyUomId != null) {
-            builder.setBaseCurrencyUomId(baseCurrencyUomId);
+        if (getBaseCurrencyUomId() != null) {
+            builder.setBaseCurrencyUomId(getBaseCurrencyUomId());
         }
-        if (invoiceSeqCustMethId != null) {
-            builder.setInvoiceSeqCustMethId(invoiceSeqCustMethId);
+        if (getInvoiceSeqCustMethId() != null) {
+            builder.setInvoiceSeqCustMethId(getInvoiceSeqCustMethId());
         }
-        if (invoiceIdPrefix != null) {
-            builder.setInvoiceIdPrefix(invoiceIdPrefix);
+        if (getInvoiceIdPrefix() != null) {
+            builder.setInvoiceIdPrefix(getInvoiceIdPrefix());
         }
-        if (lastInvoiceNumber != null) {
-            builder.setLastInvoiceNumber(lastInvoiceNumber);
+        if (getLastInvoiceNumber() != null) {
+            builder.setLastInvoiceNumber(getLastInvoiceNumber());
         }
-        if (lastInvoiceRestartDate != null) {
-            builder.setLastInvoiceRestartDate(getTimestamp(lastInvoiceRestartDate));
+        if (getLastInvoiceRestartDate() != null) {
+            builder.setLastInvoiceRestartDate(getTimestamp(getLastInvoiceRestartDate()));
         }
-        if (useInvoiceIdForReturns != null) {
-            builder.setUseInvoiceIdForReturns(getIndicator(useInvoiceIdForReturns));
+        if (getUseInvoiceIdForReturns() != null) {
+            builder.setUseInvoiceIdForReturns(getIndicator(getUseInvoiceIdForReturns()));
         }
-        if (quoteSeqCustMethId != null) {
-            builder.setQuoteSeqCustMethId(quoteSeqCustMethId);
+        if (getQuoteSeqCustMethId() != null) {
+            builder.setQuoteSeqCustMethId(getQuoteSeqCustMethId());
         }
-        if (quoteIdPrefix != null) {
-            builder.setQuoteIdPrefix(quoteIdPrefix);
+        if (getQuoteIdPrefix() != null) {
+            builder.setQuoteIdPrefix(getQuoteIdPrefix());
         }
-        if (lastQuoteNumber != null) {
-            builder.setLastQuoteNumber(lastQuoteNumber);
+        if (getLastQuoteNumber() != null) {
+            builder.setLastQuoteNumber(getLastQuoteNumber());
         }
-        if (orderSeqCustMethId != null) {
-            builder.setOrderSeqCustMethId(orderSeqCustMethId);
+        if (getOrderSeqCustMethId() != null) {
+            builder.setOrderSeqCustMethId(getOrderSeqCustMethId());
         }
-        if (orderIdPrefix != null) {
-            builder.setOrderIdPrefix(orderIdPrefix);
+        if (getOrderIdPrefix() != null) {
+            builder.setOrderIdPrefix(getOrderIdPrefix());
         }
-        if (lastOrderNumber != null) {
-            builder.setLastOrderNumber(lastOrderNumber);
+        if (getLastOrderNumber() != null) {
+            builder.setLastOrderNumber(getLastOrderNumber());
         }
-        if (refundPaymentMethodId != null) {
-            builder.setRefundPaymentMethodId(refundPaymentMethodId);
+        if (getRefundPaymentMethodId() != null) {
+            builder.setRefundPaymentMethodId(getRefundPaymentMethodId());
         }
-        if (errorGlJournalId != null) {
-            builder.setErrorGlJournalId(errorGlJournalId);
+        if (getErrorGlJournalId() != null) {
+            builder.setErrorGlJournalId(getErrorGlJournalId());
         }
-        if (enableAccounting != null) {
-            builder.setEnableAccounting(getIndicator(enableAccounting));
+        if (getEnableAccounting() != null) {
+            builder.setEnableAccounting(getIndicator(getEnableAccounting()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static PartyAcctgPreference fromData(PartyAcctgPreferenceData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static PartyAcctgPreference.PartyAcctgPreferenceBuilder fromPrototype(PartyAcctgPreferenceData data) {
         return PartyAcctgPreference.builder()
                 .partyId(data.getPartyId())
                 .fiscalYearStartMonth(data.getFiscalYearStartMonth())
@@ -196,8 +200,7 @@ public class PartyAcctgPreference implements IEventModel<PartyAcctgPreferenceDat
                 .enableAccounting(getIndicatorChar(data.getEnableAccounting()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

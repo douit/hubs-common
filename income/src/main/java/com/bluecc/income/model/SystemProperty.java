@@ -70,32 +70,36 @@ public class SystemProperty implements IEventModel<SystemPropertyData.Builder>, 
 
     public SystemPropertyData.Builder toDataBuilder() {
         SystemPropertyData.Builder builder = SystemPropertyData.newBuilder();
-        if (systemResourceId != null) {
-            builder.setSystemResourceId(systemResourceId);
+        if (getSystemResourceId() != null) {
+            builder.setSystemResourceId(getSystemResourceId());
         }
-        if (systemPropertyId != null) {
-            builder.setSystemPropertyId(systemPropertyId);
+        if (getSystemPropertyId() != null) {
+            builder.setSystemPropertyId(getSystemPropertyId());
         }
-        if (systemPropertyValue != null) {
-            builder.setSystemPropertyValue(systemPropertyValue);
+        if (getSystemPropertyValue() != null) {
+            builder.setSystemPropertyValue(getSystemPropertyValue());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SystemProperty fromData(SystemPropertyData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SystemProperty.SystemPropertyBuilder fromPrototype(SystemPropertyData data) {
         return SystemProperty.builder()
                 .systemResourceId(data.getSystemResourceId())
                 .systemPropertyId(data.getSystemPropertyId())
@@ -104,8 +108,7 @@ public class SystemProperty implements IEventModel<SystemPropertyData.Builder>, 
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

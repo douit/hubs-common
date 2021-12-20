@@ -85,50 +85,54 @@ public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateDat
 
     public ShipmentTimeEstimateData.Builder toDataBuilder() {
         ShipmentTimeEstimateData.Builder builder = ShipmentTimeEstimateData.newBuilder();
-        if (shipmentMethodTypeId != null) {
-            builder.setShipmentMethodTypeId(shipmentMethodTypeId);
+        if (getShipmentMethodTypeId() != null) {
+            builder.setShipmentMethodTypeId(getShipmentMethodTypeId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (geoIdTo != null) {
-            builder.setGeoIdTo(geoIdTo);
+        if (getGeoIdTo() != null) {
+            builder.setGeoIdTo(getGeoIdTo());
         }
-        if (geoIdFrom != null) {
-            builder.setGeoIdFrom(geoIdFrom);
+        if (getGeoIdFrom() != null) {
+            builder.setGeoIdFrom(getGeoIdFrom());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (leadTime != null) {
-            builder.setLeadTime(getFixedPoint(leadTime));
+        if (getLeadTime() != null) {
+            builder.setLeadTime(getFixedPoint(getLeadTime()));
         }
-        if (leadTimeUomId != null) {
-            builder.setLeadTimeUomId(leadTimeUomId);
+        if (getLeadTimeUomId() != null) {
+            builder.setLeadTimeUomId(getLeadTimeUomId());
         }
-        if (sequenceNumber != null) {
-            builder.setSequenceNumber(sequenceNumber);
+        if (getSequenceNumber() != null) {
+            builder.setSequenceNumber(getSequenceNumber());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShipmentTimeEstimate fromData(ShipmentTimeEstimateData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentTimeEstimate.ShipmentTimeEstimateBuilder fromPrototype(ShipmentTimeEstimateData data) {
         return ShipmentTimeEstimate.builder()
                 .shipmentMethodTypeId(data.getShipmentMethodTypeId())
                 .partyId(data.getPartyId())
@@ -143,8 +147,7 @@ public class ShipmentTimeEstimate implements IEventModel<ShipmentTimeEstimateDat
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

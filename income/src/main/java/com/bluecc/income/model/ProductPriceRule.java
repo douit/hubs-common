@@ -74,35 +74,39 @@ public class ProductPriceRule implements IEventModel<ProductPriceRuleData.Builde
 
     public ProductPriceRuleData.Builder toDataBuilder() {
         ProductPriceRuleData.Builder builder = ProductPriceRuleData.newBuilder();
-        if (productPriceRuleId != null) {
-            builder.setProductPriceRuleId(productPriceRuleId);
+        if (getProductPriceRuleId() != null) {
+            builder.setProductPriceRuleId(getProductPriceRuleId());
         }
-        if (ruleName != null) {
-            builder.setRuleName(ruleName);
+        if (getRuleName() != null) {
+            builder.setRuleName(getRuleName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (isSale != null) {
-            builder.setIsSale(getIndicator(isSale));
+        if (getIsSale() != null) {
+            builder.setIsSale(getIndicator(getIsSale()));
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static ProductPriceRule fromData(ProductPriceRuleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPriceRule.ProductPriceRuleBuilder fromPrototype(ProductPriceRuleData data) {
         return ProductPriceRule.builder()
                 .productPriceRuleId(data.getProductPriceRuleId())
                 .ruleName(data.getRuleName())
@@ -112,8 +116,7 @@ public class ProductPriceRule implements IEventModel<ProductPriceRuleData.Builde
                 .thruDate(getLocalDateTime(data.getThruDate()))
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

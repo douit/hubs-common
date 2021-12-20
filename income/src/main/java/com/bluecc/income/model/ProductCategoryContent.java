@@ -81,47 +81,51 @@ public class ProductCategoryContent implements IEventModel<ProductCategoryConten
 
     public ProductCategoryContentData.Builder toDataBuilder() {
         ProductCategoryContentData.Builder builder = ProductCategoryContentData.newBuilder();
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (contentId != null) {
-            builder.setContentId(contentId);
+        if (getContentId() != null) {
+            builder.setContentId(getContentId());
         }
-        if (prodCatContentTypeId != null) {
-            builder.setProdCatContentTypeId(prodCatContentTypeId);
+        if (getProdCatContentTypeId() != null) {
+            builder.setProdCatContentTypeId(getProdCatContentTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (purchaseFromDate != null) {
-            builder.setPurchaseFromDate(getTimestamp(purchaseFromDate));
+        if (getPurchaseFromDate() != null) {
+            builder.setPurchaseFromDate(getTimestamp(getPurchaseFromDate()));
         }
-        if (purchaseThruDate != null) {
-            builder.setPurchaseThruDate(getTimestamp(purchaseThruDate));
+        if (getPurchaseThruDate() != null) {
+            builder.setPurchaseThruDate(getTimestamp(getPurchaseThruDate()));
         }
-        if (useCountLimit != null) {
-            builder.setUseCountLimit(useCountLimit);
+        if (getUseCountLimit() != null) {
+            builder.setUseCountLimit(getUseCountLimit());
         }
-        if (useDaysLimit != null) {
-            builder.setUseDaysLimit(getFixedPoint(useDaysLimit));
+        if (getUseDaysLimit() != null) {
+            builder.setUseDaysLimit(getFixedPoint(getUseDaysLimit()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductCategoryContent fromData(ProductCategoryContentData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductCategoryContent.ProductCategoryContentBuilder fromPrototype(ProductCategoryContentData data) {
         return ProductCategoryContent.builder()
                 .productCategoryId(data.getProductCategoryId())
                 .contentId(data.getContentId())
@@ -135,8 +139,7 @@ public class ProductCategoryContent implements IEventModel<ProductCategoryConten
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

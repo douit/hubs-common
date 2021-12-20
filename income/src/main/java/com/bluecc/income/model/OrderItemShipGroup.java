@@ -102,80 +102,84 @@ public class OrderItemShipGroup implements IEventModel<OrderItemShipGroupData.Bu
 
     public OrderItemShipGroupData.Builder toDataBuilder() {
         OrderItemShipGroupData.Builder builder = OrderItemShipGroupData.newBuilder();
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (shipGroupSeqId != null) {
-            builder.setShipGroupSeqId(shipGroupSeqId);
+        if (getShipGroupSeqId() != null) {
+            builder.setShipGroupSeqId(getShipGroupSeqId());
         }
-        if (shipmentMethodTypeId != null) {
-            builder.setShipmentMethodTypeId(shipmentMethodTypeId);
+        if (getShipmentMethodTypeId() != null) {
+            builder.setShipmentMethodTypeId(getShipmentMethodTypeId());
         }
-        if (supplierPartyId != null) {
-            builder.setSupplierPartyId(supplierPartyId);
+        if (getSupplierPartyId() != null) {
+            builder.setSupplierPartyId(getSupplierPartyId());
         }
-        if (supplierAgreementId != null) {
-            builder.setSupplierAgreementId(supplierAgreementId);
+        if (getSupplierAgreementId() != null) {
+            builder.setSupplierAgreementId(getSupplierAgreementId());
         }
-        if (vendorPartyId != null) {
-            builder.setVendorPartyId(vendorPartyId);
+        if (getVendorPartyId() != null) {
+            builder.setVendorPartyId(getVendorPartyId());
         }
-        if (carrierPartyId != null) {
-            builder.setCarrierPartyId(carrierPartyId);
+        if (getCarrierPartyId() != null) {
+            builder.setCarrierPartyId(getCarrierPartyId());
         }
-        if (carrierRoleTypeId != null) {
-            builder.setCarrierRoleTypeId(carrierRoleTypeId);
+        if (getCarrierRoleTypeId() != null) {
+            builder.setCarrierRoleTypeId(getCarrierRoleTypeId());
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (contactMechId != null) {
-            builder.setContactMechId(contactMechId);
+        if (getContactMechId() != null) {
+            builder.setContactMechId(getContactMechId());
         }
-        if (telecomContactMechId != null) {
-            builder.setTelecomContactMechId(telecomContactMechId);
+        if (getTelecomContactMechId() != null) {
+            builder.setTelecomContactMechId(getTelecomContactMechId());
         }
-        if (trackingNumber != null) {
-            builder.setTrackingNumber(trackingNumber);
+        if (getTrackingNumber() != null) {
+            builder.setTrackingNumber(getTrackingNumber());
         }
-        if (shippingInstructions != null) {
-            builder.setShippingInstructions(shippingInstructions);
+        if (getShippingInstructions() != null) {
+            builder.setShippingInstructions(getShippingInstructions());
         }
-        if (maySplit != null) {
-            builder.setMaySplit(getIndicator(maySplit));
+        if (getMaySplit() != null) {
+            builder.setMaySplit(getIndicator(getMaySplit()));
         }
-        if (giftMessage != null) {
-            builder.setGiftMessage(giftMessage);
+        if (getGiftMessage() != null) {
+            builder.setGiftMessage(getGiftMessage());
         }
-        if (isGift != null) {
-            builder.setIsGift(getIndicator(isGift));
+        if (getIsGift() != null) {
+            builder.setIsGift(getIndicator(getIsGift()));
         }
-        if (shipAfterDate != null) {
-            builder.setShipAfterDate(getTimestamp(shipAfterDate));
+        if (getShipAfterDate() != null) {
+            builder.setShipAfterDate(getTimestamp(getShipAfterDate()));
         }
-        if (shipByDate != null) {
-            builder.setShipByDate(getTimestamp(shipByDate));
+        if (getShipByDate() != null) {
+            builder.setShipByDate(getTimestamp(getShipByDate()));
         }
-        if (estimatedShipDate != null) {
-            builder.setEstimatedShipDate(getTimestamp(estimatedShipDate));
+        if (getEstimatedShipDate() != null) {
+            builder.setEstimatedShipDate(getTimestamp(getEstimatedShipDate()));
         }
-        if (estimatedDeliveryDate != null) {
-            builder.setEstimatedDeliveryDate(getTimestamp(estimatedDeliveryDate));
+        if (getEstimatedDeliveryDate() != null) {
+            builder.setEstimatedDeliveryDate(getTimestamp(getEstimatedDeliveryDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static OrderItemShipGroup fromData(OrderItemShipGroupData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderItemShipGroup.OrderItemShipGroupBuilder fromPrototype(OrderItemShipGroupData data) {
         return OrderItemShipGroup.builder()
                 .orderId(data.getOrderId())
                 .shipGroupSeqId(data.getShipGroupSeqId())
@@ -200,8 +204,7 @@ public class OrderItemShipGroup implements IEventModel<OrderItemShipGroupData.Bu
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

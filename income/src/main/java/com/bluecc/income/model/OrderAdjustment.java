@@ -128,116 +128,120 @@ public class OrderAdjustment implements IEventModel<OrderAdjustmentData.Builder>
 
     public OrderAdjustmentData.Builder toDataBuilder() {
         OrderAdjustmentData.Builder builder = OrderAdjustmentData.newBuilder();
-        if (orderAdjustmentId != null) {
-            builder.setOrderAdjustmentId(orderAdjustmentId);
+        if (getOrderAdjustmentId() != null) {
+            builder.setOrderAdjustmentId(getOrderAdjustmentId());
         }
-        if (orderAdjustmentTypeId != null) {
-            builder.setOrderAdjustmentTypeId(orderAdjustmentTypeId);
+        if (getOrderAdjustmentTypeId() != null) {
+            builder.setOrderAdjustmentTypeId(getOrderAdjustmentTypeId());
         }
-        if (orderId != null) {
-            builder.setOrderId(orderId);
+        if (getOrderId() != null) {
+            builder.setOrderId(getOrderId());
         }
-        if (orderItemSeqId != null) {
-            builder.setOrderItemSeqId(orderItemSeqId);
+        if (getOrderItemSeqId() != null) {
+            builder.setOrderItemSeqId(getOrderItemSeqId());
         }
-        if (shipGroupSeqId != null) {
-            builder.setShipGroupSeqId(shipGroupSeqId);
+        if (getShipGroupSeqId() != null) {
+            builder.setShipGroupSeqId(getShipGroupSeqId());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (amount != null) {
-            builder.setAmount(getCurrency(amount));
+        if (getAmount() != null) {
+            builder.setAmount(getCurrency(getAmount()));
         }
-        if (recurringAmount != null) {
-            builder.setRecurringAmount(getCurrency(recurringAmount));
+        if (getRecurringAmount() != null) {
+            builder.setRecurringAmount(getCurrency(getRecurringAmount()));
         }
-        if (amountAlreadyIncluded != null) {
-            builder.setAmountAlreadyIncluded(getCurrency(amountAlreadyIncluded));
+        if (getAmountAlreadyIncluded() != null) {
+            builder.setAmountAlreadyIncluded(getCurrency(getAmountAlreadyIncluded()));
         }
-        if (productPromoId != null) {
-            builder.setProductPromoId(productPromoId);
+        if (getProductPromoId() != null) {
+            builder.setProductPromoId(getProductPromoId());
         }
-        if (productPromoRuleId != null) {
-            builder.setProductPromoRuleId(productPromoRuleId);
+        if (getProductPromoRuleId() != null) {
+            builder.setProductPromoRuleId(getProductPromoRuleId());
         }
-        if (productPromoActionSeqId != null) {
-            builder.setProductPromoActionSeqId(productPromoActionSeqId);
+        if (getProductPromoActionSeqId() != null) {
+            builder.setProductPromoActionSeqId(getProductPromoActionSeqId());
         }
-        if (productFeatureId != null) {
-            builder.setProductFeatureId(productFeatureId);
+        if (getProductFeatureId() != null) {
+            builder.setProductFeatureId(getProductFeatureId());
         }
-        if (correspondingProductId != null) {
-            builder.setCorrespondingProductId(correspondingProductId);
+        if (getCorrespondingProductId() != null) {
+            builder.setCorrespondingProductId(getCorrespondingProductId());
         }
-        if (taxAuthorityRateSeqId != null) {
-            builder.setTaxAuthorityRateSeqId(taxAuthorityRateSeqId);
+        if (getTaxAuthorityRateSeqId() != null) {
+            builder.setTaxAuthorityRateSeqId(getTaxAuthorityRateSeqId());
         }
-        if (sourceReferenceId != null) {
-            builder.setSourceReferenceId(sourceReferenceId);
+        if (getSourceReferenceId() != null) {
+            builder.setSourceReferenceId(getSourceReferenceId());
         }
-        if (sourcePercentage != null) {
-            builder.setSourcePercentage(getFixedPoint(sourcePercentage));
+        if (getSourcePercentage() != null) {
+            builder.setSourcePercentage(getFixedPoint(getSourcePercentage()));
         }
-        if (customerReferenceId != null) {
-            builder.setCustomerReferenceId(customerReferenceId);
+        if (getCustomerReferenceId() != null) {
+            builder.setCustomerReferenceId(getCustomerReferenceId());
         }
-        if (primaryGeoId != null) {
-            builder.setPrimaryGeoId(primaryGeoId);
+        if (getPrimaryGeoId() != null) {
+            builder.setPrimaryGeoId(getPrimaryGeoId());
         }
-        if (secondaryGeoId != null) {
-            builder.setSecondaryGeoId(secondaryGeoId);
+        if (getSecondaryGeoId() != null) {
+            builder.setSecondaryGeoId(getSecondaryGeoId());
         }
-        if (exemptAmount != null) {
-            builder.setExemptAmount(getCurrency(exemptAmount));
+        if (getExemptAmount() != null) {
+            builder.setExemptAmount(getCurrency(getExemptAmount()));
         }
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (overrideGlAccountId != null) {
-            builder.setOverrideGlAccountId(overrideGlAccountId);
+        if (getOverrideGlAccountId() != null) {
+            builder.setOverrideGlAccountId(getOverrideGlAccountId());
         }
-        if (includeInTax != null) {
-            builder.setIncludeInTax(getIndicator(includeInTax));
+        if (getIncludeInTax() != null) {
+            builder.setIncludeInTax(getIndicator(getIncludeInTax()));
         }
-        if (includeInShipping != null) {
-            builder.setIncludeInShipping(getIndicator(includeInShipping));
+        if (getIncludeInShipping() != null) {
+            builder.setIncludeInShipping(getIndicator(getIncludeInShipping()));
         }
-        if (isManual != null) {
-            builder.setIsManual(getIndicator(isManual));
+        if (getIsManual() != null) {
+            builder.setIsManual(getIndicator(getIsManual()));
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (originalAdjustmentId != null) {
-            builder.setOriginalAdjustmentId(originalAdjustmentId);
+        if (getOriginalAdjustmentId() != null) {
+            builder.setOriginalAdjustmentId(getOriginalAdjustmentId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static OrderAdjustment fromData(OrderAdjustmentData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static OrderAdjustment.OrderAdjustmentBuilder fromPrototype(OrderAdjustmentData data) {
         return OrderAdjustment.builder()
                 .orderAdjustmentId(data.getOrderAdjustmentId())
                 .orderAdjustmentTypeId(data.getOrderAdjustmentTypeId())
@@ -274,8 +278,7 @@ public class OrderAdjustment implements IEventModel<OrderAdjustmentData.Builder>
                 .originalAdjustmentId(data.getOriginalAdjustmentId())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

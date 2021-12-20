@@ -73,35 +73,39 @@ public class InvoiceRole implements IEventModel<InvoiceRoleData.Builder>, HasId,
 
     public InvoiceRoleData.Builder toDataBuilder() {
         InvoiceRoleData.Builder builder = InvoiceRoleData.newBuilder();
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (roleTypeId != null) {
-            builder.setRoleTypeId(roleTypeId);
+        if (getRoleTypeId() != null) {
+            builder.setRoleTypeId(getRoleTypeId());
         }
-        if (datetimePerformed != null) {
-            builder.setDatetimePerformed(getTimestamp(datetimePerformed));
+        if (getDatetimePerformed() != null) {
+            builder.setDatetimePerformed(getTimestamp(getDatetimePerformed()));
         }
-        if (percentage != null) {
-            builder.setPercentage(getFixedPoint(percentage));
+        if (getPercentage() != null) {
+            builder.setPercentage(getFixedPoint(getPercentage()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static InvoiceRole fromData(InvoiceRoleData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static InvoiceRole.InvoiceRoleBuilder fromPrototype(InvoiceRoleData data) {
         return InvoiceRole.builder()
                 .invoiceId(data.getInvoiceId())
                 .partyId(data.getPartyId())
@@ -111,8 +115,7 @@ public class InvoiceRole implements IEventModel<InvoiceRoleData.Builder>, HasId,
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

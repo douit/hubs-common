@@ -71,35 +71,39 @@ public class TechDataCalendarExcDay implements IEventModel<TechDataCalendarExcDa
 
     public TechDataCalendarExcDayData.Builder toDataBuilder() {
         TechDataCalendarExcDayData.Builder builder = TechDataCalendarExcDayData.newBuilder();
-        if (calendarId != null) {
-            builder.setCalendarId(calendarId);
+        if (getCalendarId() != null) {
+            builder.setCalendarId(getCalendarId());
         }
-        if (exceptionDateStartTime != null) {
-            builder.setExceptionDateStartTime(getTimestamp(exceptionDateStartTime));
+        if (getExceptionDateStartTime() != null) {
+            builder.setExceptionDateStartTime(getTimestamp(getExceptionDateStartTime()));
         }
-        if (exceptionCapacity != null) {
-            builder.setExceptionCapacity(getFixedPoint(exceptionCapacity));
+        if (getExceptionCapacity() != null) {
+            builder.setExceptionCapacity(getFixedPoint(getExceptionCapacity()));
         }
-        if (usedCapacity != null) {
-            builder.setUsedCapacity(getFixedPoint(usedCapacity));
+        if (getUsedCapacity() != null) {
+            builder.setUsedCapacity(getFixedPoint(getUsedCapacity()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static TechDataCalendarExcDay fromData(TechDataCalendarExcDayData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TechDataCalendarExcDay.TechDataCalendarExcDayBuilder fromPrototype(TechDataCalendarExcDayData data) {
         return TechDataCalendarExcDay.builder()
                 .calendarId(data.getCalendarId())
                 .exceptionDateStartTime(getLocalDateTime(data.getExceptionDateStartTime()))
@@ -109,8 +113,7 @@ public class TechDataCalendarExcDay implements IEventModel<TechDataCalendarExcDa
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

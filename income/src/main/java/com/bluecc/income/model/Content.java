@@ -108,86 +108,90 @@ public class Content implements IEventModel<ContentData.Builder>, HasId, Seriali
 
     public ContentData.Builder toDataBuilder() {
         ContentData.Builder builder = ContentData.newBuilder();
-        if (contentId != null) {
-            builder.setContentId(contentId);
+        if (getContentId() != null) {
+            builder.setContentId(getContentId());
         }
-        if (contentTypeId != null) {
-            builder.setContentTypeId(contentTypeId);
+        if (getContentTypeId() != null) {
+            builder.setContentTypeId(getContentTypeId());
         }
-        if (ownerContentId != null) {
-            builder.setOwnerContentId(ownerContentId);
+        if (getOwnerContentId() != null) {
+            builder.setOwnerContentId(getOwnerContentId());
         }
-        if (decoratorContentId != null) {
-            builder.setDecoratorContentId(decoratorContentId);
+        if (getDecoratorContentId() != null) {
+            builder.setDecoratorContentId(getDecoratorContentId());
         }
-        if (instanceOfContentId != null) {
-            builder.setInstanceOfContentId(instanceOfContentId);
+        if (getInstanceOfContentId() != null) {
+            builder.setInstanceOfContentId(getInstanceOfContentId());
         }
-        if (dataResourceId != null) {
-            builder.setDataResourceId(dataResourceId);
+        if (getDataResourceId() != null) {
+            builder.setDataResourceId(getDataResourceId());
         }
-        if (templateDataResourceId != null) {
-            builder.setTemplateDataResourceId(templateDataResourceId);
+        if (getTemplateDataResourceId() != null) {
+            builder.setTemplateDataResourceId(getTemplateDataResourceId());
         }
-        if (dataSourceId != null) {
-            builder.setDataSourceId(dataSourceId);
+        if (getDataSourceId() != null) {
+            builder.setDataSourceId(getDataSourceId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (privilegeEnumId != null) {
-            builder.setPrivilegeEnumId(privilegeEnumId);
+        if (getPrivilegeEnumId() != null) {
+            builder.setPrivilegeEnumId(getPrivilegeEnumId());
         }
-        if (serviceName != null) {
-            builder.setServiceName(serviceName);
+        if (getServiceName() != null) {
+            builder.setServiceName(getServiceName());
         }
-        if (customMethodId != null) {
-            builder.setCustomMethodId(customMethodId);
+        if (getCustomMethodId() != null) {
+            builder.setCustomMethodId(getCustomMethodId());
         }
-        if (contentName != null) {
-            builder.setContentName(contentName);
+        if (getContentName() != null) {
+            builder.setContentName(getContentName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (localeString != null) {
-            builder.setLocaleString(localeString);
+        if (getLocaleString() != null) {
+            builder.setLocaleString(getLocaleString());
         }
-        if (mimeTypeId != null) {
-            builder.setMimeTypeId(mimeTypeId);
+        if (getMimeTypeId() != null) {
+            builder.setMimeTypeId(getMimeTypeId());
         }
-        if (characterSetId != null) {
-            builder.setCharacterSetId(characterSetId);
+        if (getCharacterSetId() != null) {
+            builder.setCharacterSetId(getCharacterSetId());
         }
-        if (childLeafCount != null) {
-            builder.setChildLeafCount(childLeafCount);
+        if (getChildLeafCount() != null) {
+            builder.setChildLeafCount(getChildLeafCount());
         }
-        if (childBranchCount != null) {
-            builder.setChildBranchCount(childBranchCount);
+        if (getChildBranchCount() != null) {
+            builder.setChildBranchCount(getChildBranchCount());
         }
-        if (createdDate != null) {
-            builder.setCreatedDate(getTimestamp(createdDate));
+        if (getCreatedDate() != null) {
+            builder.setCreatedDate(getTimestamp(getCreatedDate()));
         }
-        if (createdByUserLogin != null) {
-            builder.setCreatedByUserLogin(createdByUserLogin);
+        if (getCreatedByUserLogin() != null) {
+            builder.setCreatedByUserLogin(getCreatedByUserLogin());
         }
-        if (lastModifiedDate != null) {
-            builder.setLastModifiedDate(getTimestamp(lastModifiedDate));
+        if (getLastModifiedDate() != null) {
+            builder.setLastModifiedDate(getTimestamp(getLastModifiedDate()));
         }
-        if (lastModifiedByUserLogin != null) {
-            builder.setLastModifiedByUserLogin(lastModifiedByUserLogin);
+        if (getLastModifiedByUserLogin() != null) {
+            builder.setLastModifiedByUserLogin(getLastModifiedByUserLogin());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static Content fromData(ContentData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Content.ContentBuilder fromPrototype(ContentData data) {
         return Content.builder()
                 .contentId(data.getContentId())
                 .contentTypeId(data.getContentTypeId())
@@ -214,8 +218,7 @@ public class Content implements IEventModel<ContentData.Builder>, HasId, Seriali
                 .lastModifiedByUserLogin(data.getLastModifiedByUserLogin())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

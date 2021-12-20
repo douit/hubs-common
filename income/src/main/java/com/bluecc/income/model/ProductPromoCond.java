@@ -79,44 +79,48 @@ public class ProductPromoCond implements IEventModel<ProductPromoCondData.Builde
 
     public ProductPromoCondData.Builder toDataBuilder() {
         ProductPromoCondData.Builder builder = ProductPromoCondData.newBuilder();
-        if (productPromoId != null) {
-            builder.setProductPromoId(productPromoId);
+        if (getProductPromoId() != null) {
+            builder.setProductPromoId(getProductPromoId());
         }
-        if (productPromoRuleId != null) {
-            builder.setProductPromoRuleId(productPromoRuleId);
+        if (getProductPromoRuleId() != null) {
+            builder.setProductPromoRuleId(getProductPromoRuleId());
         }
-        if (productPromoCondSeqId != null) {
-            builder.setProductPromoCondSeqId(productPromoCondSeqId);
+        if (getProductPromoCondSeqId() != null) {
+            builder.setProductPromoCondSeqId(getProductPromoCondSeqId());
         }
-        if (customMethodId != null) {
-            builder.setCustomMethodId(customMethodId);
+        if (getCustomMethodId() != null) {
+            builder.setCustomMethodId(getCustomMethodId());
         }
-        if (inputParamEnumId != null) {
-            builder.setInputParamEnumId(inputParamEnumId);
+        if (getInputParamEnumId() != null) {
+            builder.setInputParamEnumId(getInputParamEnumId());
         }
-        if (operatorEnumId != null) {
-            builder.setOperatorEnumId(operatorEnumId);
+        if (getOperatorEnumId() != null) {
+            builder.setOperatorEnumId(getOperatorEnumId());
         }
-        if (condValue != null) {
-            builder.setCondValue(condValue);
+        if (getCondValue() != null) {
+            builder.setCondValue(getCondValue());
         }
-        if (otherValue != null) {
-            builder.setOtherValue(otherValue);
+        if (getOtherValue() != null) {
+            builder.setOtherValue(getOtherValue());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductPromoCond fromData(ProductPromoCondData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductPromoCond.ProductPromoCondBuilder fromPrototype(ProductPromoCondData data) {
         return ProductPromoCond.builder()
                 .productPromoId(data.getProductPromoId())
                 .productPromoRuleId(data.getProductPromoRuleId())
@@ -129,8 +133,7 @@ public class ProductPromoCond implements IEventModel<ProductPromoCondData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

@@ -70,32 +70,36 @@ public class SurveyPage implements IEventModel<SurveyPageData.Builder>, HasId, S
 
     public SurveyPageData.Builder toDataBuilder() {
         SurveyPageData.Builder builder = SurveyPageData.newBuilder();
-        if (surveyId != null) {
-            builder.setSurveyId(surveyId);
+        if (getSurveyId() != null) {
+            builder.setSurveyId(getSurveyId());
         }
-        if (surveyPageSeqId != null) {
-            builder.setSurveyPageSeqId(surveyPageSeqId);
+        if (getSurveyPageSeqId() != null) {
+            builder.setSurveyPageSeqId(getSurveyPageSeqId());
         }
-        if (pageName != null) {
-            builder.setPageName(pageName);
+        if (getPageName() != null) {
+            builder.setPageName(getPageName());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static SurveyPage fromData(SurveyPageData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static SurveyPage.SurveyPageBuilder fromPrototype(SurveyPageData data) {
         return SurveyPage.builder()
                 .surveyId(data.getSurveyId())
                 .surveyPageSeqId(data.getSurveyPageSeqId())
@@ -104,8 +108,7 @@ public class SurveyPage implements IEventModel<SurveyPageData.Builder>, HasId, S
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

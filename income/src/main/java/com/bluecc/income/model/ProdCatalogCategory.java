@@ -82,41 +82,45 @@ public class ProdCatalogCategory implements IEventModel<ProdCatalogCategoryFlatD
 
     public ProdCatalogCategoryFlatData.Builder toDataBuilder() {
         ProdCatalogCategoryFlatData.Builder builder = ProdCatalogCategoryFlatData.newBuilder();
-        if (prodCatalogId != null) {
-            builder.setProdCatalogId(prodCatalogId);
+        if (getProdCatalogId() != null) {
+            builder.setProdCatalogId(getProdCatalogId());
         }
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (prodCatalogCategoryTypeId != null) {
-            builder.setProdCatalogCategoryTypeId(prodCatalogCategoryTypeId);
+        if (getProdCatalogCategoryTypeId() != null) {
+            builder.setProdCatalogCategoryTypeId(getProdCatalogCategoryTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static ProdCatalogCategory fromData(ProdCatalogCategoryFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProdCatalogCategory.ProdCatalogCategoryBuilder fromPrototype(ProdCatalogCategoryFlatData data) {
         return ProdCatalogCategory.builder()
                 .prodCatalogId(data.getProdCatalogId())
                 .productCategoryId(data.getProductCategoryId())
@@ -128,8 +132,7 @@ public class ProdCatalogCategory implements IEventModel<ProdCatalogCategoryFlatD
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -164,32 +167,32 @@ public class ProdCatalogCategory implements IEventModel<ProdCatalogCategoryFlatD
 
     public ProdCatalogCategoryData.Builder toHeadBuilder() {
         ProdCatalogCategoryData.Builder builder = ProdCatalogCategoryData.newBuilder();
-        if (prodCatalogId != null) {
-            builder.setProdCatalogId(prodCatalogId);
+        if (getProdCatalogId() != null) {
+            builder.setProdCatalogId(getProdCatalogId());
         }
-        if (productCategoryId != null) {
-            builder.setProductCategoryId(productCategoryId);
+        if (getProductCategoryId() != null) {
+            builder.setProductCategoryId(getProductCategoryId());
         }
-        if (prodCatalogCategoryTypeId != null) {
-            builder.setProdCatalogCategoryTypeId(prodCatalogCategoryTypeId);
+        if (getProdCatalogCategoryTypeId() != null) {
+            builder.setProdCatalogCategoryTypeId(getProdCatalogCategoryTypeId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;

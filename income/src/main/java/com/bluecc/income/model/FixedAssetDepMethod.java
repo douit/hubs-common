@@ -70,32 +70,36 @@ public class FixedAssetDepMethod implements IEventModel<FixedAssetDepMethodData.
 
     public FixedAssetDepMethodData.Builder toDataBuilder() {
         FixedAssetDepMethodData.Builder builder = FixedAssetDepMethodData.newBuilder();
-        if (depreciationCustomMethodId != null) {
-            builder.setDepreciationCustomMethodId(depreciationCustomMethodId);
+        if (getDepreciationCustomMethodId() != null) {
+            builder.setDepreciationCustomMethodId(getDepreciationCustomMethodId());
         }
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static FixedAssetDepMethod fromData(FixedAssetDepMethodData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static FixedAssetDepMethod.FixedAssetDepMethodBuilder fromPrototype(FixedAssetDepMethodData data) {
         return FixedAssetDepMethod.builder()
                 .depreciationCustomMethodId(data.getDepreciationCustomMethodId())
                 .fixedAssetId(data.getFixedAssetId())
@@ -104,8 +108,7 @@ public class FixedAssetDepMethod implements IEventModel<FixedAssetDepMethodData.
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

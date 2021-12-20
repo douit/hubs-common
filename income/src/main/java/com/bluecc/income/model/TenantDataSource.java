@@ -72,35 +72,39 @@ public class TenantDataSource implements IEventModel<TenantDataSourceData.Builde
 
     public TenantDataSourceData.Builder toDataBuilder() {
         TenantDataSourceData.Builder builder = TenantDataSourceData.newBuilder();
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
-        if (entityGroupName != null) {
-            builder.setEntityGroupName(entityGroupName);
+        if (getEntityGroupName() != null) {
+            builder.setEntityGroupName(getEntityGroupName());
         }
-        if (jdbcUri != null) {
-            builder.setJdbcUri(jdbcUri);
+        if (getJdbcUri() != null) {
+            builder.setJdbcUri(getJdbcUri());
         }
-        if (jdbcUsername != null) {
-            builder.setJdbcUsername(jdbcUsername);
+        if (getJdbcUsername() != null) {
+            builder.setJdbcUsername(getJdbcUsername());
         }
-        if (jdbcPassword != null) {
-            builder.setJdbcPassword(jdbcPassword);
+        if (getJdbcPassword() != null) {
+            builder.setJdbcPassword(getJdbcPassword());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static TenantDataSource fromData(TenantDataSourceData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TenantDataSource.TenantDataSourceBuilder fromPrototype(TenantDataSourceData data) {
         return TenantDataSource.builder()
                 .tenantId(data.getTenantId())
                 .entityGroupName(data.getEntityGroupName())
@@ -110,8 +114,7 @@ public class TenantDataSource implements IEventModel<TenantDataSourceData.Builde
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

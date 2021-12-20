@@ -86,53 +86,57 @@ public class Agreement implements IEventModel<AgreementData.Builder>, HasId, Ser
 
     public AgreementData.Builder toDataBuilder() {
         AgreementData.Builder builder = AgreementData.newBuilder();
-        if (agreementId != null) {
-            builder.setAgreementId(agreementId);
+        if (getAgreementId() != null) {
+            builder.setAgreementId(getAgreementId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (partyIdFrom != null) {
-            builder.setPartyIdFrom(partyIdFrom);
+        if (getPartyIdFrom() != null) {
+            builder.setPartyIdFrom(getPartyIdFrom());
         }
-        if (partyIdTo != null) {
-            builder.setPartyIdTo(partyIdTo);
+        if (getPartyIdTo() != null) {
+            builder.setPartyIdTo(getPartyIdTo());
         }
-        if (roleTypeIdFrom != null) {
-            builder.setRoleTypeIdFrom(roleTypeIdFrom);
+        if (getRoleTypeIdFrom() != null) {
+            builder.setRoleTypeIdFrom(getRoleTypeIdFrom());
         }
-        if (roleTypeIdTo != null) {
-            builder.setRoleTypeIdTo(roleTypeIdTo);
+        if (getRoleTypeIdTo() != null) {
+            builder.setRoleTypeIdTo(getRoleTypeIdTo());
         }
-        if (agreementTypeId != null) {
-            builder.setAgreementTypeId(agreementTypeId);
+        if (getAgreementTypeId() != null) {
+            builder.setAgreementTypeId(getAgreementTypeId());
         }
-        if (agreementDate != null) {
-            builder.setAgreementDate(getTimestamp(agreementDate));
+        if (getAgreementDate() != null) {
+            builder.setAgreementDate(getTimestamp(getAgreementDate()));
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (textData != null) {
-            builder.setTextData(textData);
+        if (getTextData() != null) {
+            builder.setTextData(getTextData());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;
     }
 
     public static Agreement fromData(AgreementData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static Agreement.AgreementBuilder fromPrototype(AgreementData data) {
         return Agreement.builder()
                 .agreementId(data.getAgreementId())
                 .productId(data.getProductId())
@@ -148,8 +152,7 @@ public class Agreement implements IEventModel<AgreementData.Builder>, HasId, Ser
                 .textData(data.getTextData())
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
-                
-                .build();
+                ;
     }
 
     

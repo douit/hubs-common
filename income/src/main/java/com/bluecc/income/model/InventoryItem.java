@@ -121,98 +121,102 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
 
     public InventoryItemFlatData.Builder toDataBuilder() {
         InventoryItemFlatData.Builder builder = InventoryItemFlatData.newBuilder();
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (inventoryItemTypeId != null) {
-            builder.setInventoryItemTypeId(inventoryItemTypeId);
+        if (getInventoryItemTypeId() != null) {
+            builder.setInventoryItemTypeId(getInventoryItemTypeId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (partyId != null) {
-            builder.setPartyId(partyId);
+        if (getPartyId() != null) {
+            builder.setPartyId(getPartyId());
         }
-        if (ownerPartyId != null) {
-            builder.setOwnerPartyId(ownerPartyId);
+        if (getOwnerPartyId() != null) {
+            builder.setOwnerPartyId(getOwnerPartyId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (datetimeReceived != null) {
-            builder.setDatetimeReceived(getTimestamp(datetimeReceived));
+        if (getDatetimeReceived() != null) {
+            builder.setDatetimeReceived(getTimestamp(getDatetimeReceived()));
         }
-        if (datetimeManufactured != null) {
-            builder.setDatetimeManufactured(getTimestamp(datetimeManufactured));
+        if (getDatetimeManufactured() != null) {
+            builder.setDatetimeManufactured(getTimestamp(getDatetimeManufactured()));
         }
-        if (expireDate != null) {
-            builder.setExpireDate(getTimestamp(expireDate));
+        if (getExpireDate() != null) {
+            builder.setExpireDate(getTimestamp(getExpireDate()));
         }
-        if (facilityId != null) {
-            builder.setFacilityId(facilityId);
+        if (getFacilityId() != null) {
+            builder.setFacilityId(getFacilityId());
         }
-        if (containerId != null) {
-            builder.setContainerId(containerId);
+        if (getContainerId() != null) {
+            builder.setContainerId(getContainerId());
         }
-        if (lotId != null) {
-            builder.setLotId(lotId);
+        if (getLotId() != null) {
+            builder.setLotId(getLotId());
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (binNumber != null) {
-            builder.setBinNumber(binNumber);
+        if (getBinNumber() != null) {
+            builder.setBinNumber(getBinNumber());
         }
-        if (locationSeqId != null) {
-            builder.setLocationSeqId(locationSeqId);
+        if (getLocationSeqId() != null) {
+            builder.setLocationSeqId(getLocationSeqId());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (quantityOnHandTotal != null) {
-            builder.setQuantityOnHandTotal(getFixedPoint(quantityOnHandTotal));
+        if (getQuantityOnHandTotal() != null) {
+            builder.setQuantityOnHandTotal(getFixedPoint(getQuantityOnHandTotal()));
         }
-        if (availableToPromiseTotal != null) {
-            builder.setAvailableToPromiseTotal(getFixedPoint(availableToPromiseTotal));
+        if (getAvailableToPromiseTotal() != null) {
+            builder.setAvailableToPromiseTotal(getFixedPoint(getAvailableToPromiseTotal()));
         }
-        if (accountingQuantityTotal != null) {
-            builder.setAccountingQuantityTotal(getFixedPoint(accountingQuantityTotal));
+        if (getAccountingQuantityTotal() != null) {
+            builder.setAccountingQuantityTotal(getFixedPoint(getAccountingQuantityTotal()));
         }
-        if (serialNumber != null) {
-            builder.setSerialNumber(serialNumber);
+        if (getSerialNumber() != null) {
+            builder.setSerialNumber(getSerialNumber());
         }
-        if (softIdentifier != null) {
-            builder.setSoftIdentifier(softIdentifier);
+        if (getSoftIdentifier() != null) {
+            builder.setSoftIdentifier(getSoftIdentifier());
         }
-        if (activationNumber != null) {
-            builder.setActivationNumber(activationNumber);
+        if (getActivationNumber() != null) {
+            builder.setActivationNumber(getActivationNumber());
         }
-        if (activationValidThru != null) {
-            builder.setActivationValidThru(getTimestamp(activationValidThru));
+        if (getActivationValidThru() != null) {
+            builder.setActivationValidThru(getTimestamp(getActivationValidThru()));
         }
-        if (unitCost != null) {
-            builder.setUnitCost(getFixedPoint(unitCost));
+        if (getUnitCost() != null) {
+            builder.setUnitCost(getFixedPoint(getUnitCost()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (fixedAssetId != null) {
-            builder.setFixedAssetId(fixedAssetId);
+        if (getFixedAssetId() != null) {
+            builder.setFixedAssetId(getFixedAssetId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (tenantId != null) {
-            builder.setTenantId(tenantId);
+        if (getTenantId() != null) {
+            builder.setTenantId(getTenantId());
         }
                     
         return builder;
     }
 
     public static InventoryItem fromData(InventoryItemFlatData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static InventoryItem.InventoryItemBuilder fromPrototype(InventoryItemFlatData data) {
         return InventoryItem.builder()
                 .inventoryItemId(data.getInventoryItemId())
                 .inventoryItemTypeId(data.getInventoryItemTypeId())
@@ -243,8 +247,7 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .tenantId(data.getTenantId())
-                
-                .build();
+                ;
     }
 
         // relations
@@ -349,74 +352,74 @@ public class InventoryItem implements IEventModel<InventoryItemFlatData.Builder>
 
     public InventoryItemData.Builder toHeadBuilder() {
         InventoryItemData.Builder builder = InventoryItemData.newBuilder();
-        if (inventoryItemId != null) {
-            builder.setInventoryItemId(inventoryItemId);
+        if (getInventoryItemId() != null) {
+            builder.setInventoryItemId(getInventoryItemId());
         }
-        if (inventoryItemTypeId != null) {
-            builder.setInventoryItemTypeId(inventoryItemTypeId);
+        if (getInventoryItemTypeId() != null) {
+            builder.setInventoryItemTypeId(getInventoryItemTypeId());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (datetimeReceived != null) {
-            builder.setDatetimeReceived(getTimestamp(datetimeReceived));
+        if (getDatetimeReceived() != null) {
+            builder.setDatetimeReceived(getTimestamp(getDatetimeReceived()));
         }
-        if (datetimeManufactured != null) {
-            builder.setDatetimeManufactured(getTimestamp(datetimeManufactured));
+        if (getDatetimeManufactured() != null) {
+            builder.setDatetimeManufactured(getTimestamp(getDatetimeManufactured()));
         }
-        if (expireDate != null) {
-            builder.setExpireDate(getTimestamp(expireDate));
+        if (getExpireDate() != null) {
+            builder.setExpireDate(getTimestamp(getExpireDate()));
         }
-        if (containerId != null) {
-            builder.setContainerId(containerId);
+        if (getContainerId() != null) {
+            builder.setContainerId(getContainerId());
         }
-        if (lotId != null) {
-            builder.setLotId(lotId);
+        if (getLotId() != null) {
+            builder.setLotId(getLotId());
         }
-        if (uomId != null) {
-            builder.setUomId(uomId);
+        if (getUomId() != null) {
+            builder.setUomId(getUomId());
         }
-        if (binNumber != null) {
-            builder.setBinNumber(binNumber);
+        if (getBinNumber() != null) {
+            builder.setBinNumber(getBinNumber());
         }
-        if (locationSeqId != null) {
-            builder.setLocationSeqId(locationSeqId);
+        if (getLocationSeqId() != null) {
+            builder.setLocationSeqId(getLocationSeqId());
         }
-        if (comments != null) {
-            builder.setComments(comments);
+        if (getComments() != null) {
+            builder.setComments(getComments());
         }
-        if (quantityOnHandTotal != null) {
-            builder.setQuantityOnHandTotal(getFixedPoint(quantityOnHandTotal));
+        if (getQuantityOnHandTotal() != null) {
+            builder.setQuantityOnHandTotal(getFixedPoint(getQuantityOnHandTotal()));
         }
-        if (availableToPromiseTotal != null) {
-            builder.setAvailableToPromiseTotal(getFixedPoint(availableToPromiseTotal));
+        if (getAvailableToPromiseTotal() != null) {
+            builder.setAvailableToPromiseTotal(getFixedPoint(getAvailableToPromiseTotal()));
         }
-        if (accountingQuantityTotal != null) {
-            builder.setAccountingQuantityTotal(getFixedPoint(accountingQuantityTotal));
+        if (getAccountingQuantityTotal() != null) {
+            builder.setAccountingQuantityTotal(getFixedPoint(getAccountingQuantityTotal()));
         }
-        if (serialNumber != null) {
-            builder.setSerialNumber(serialNumber);
+        if (getSerialNumber() != null) {
+            builder.setSerialNumber(getSerialNumber());
         }
-        if (softIdentifier != null) {
-            builder.setSoftIdentifier(softIdentifier);
+        if (getSoftIdentifier() != null) {
+            builder.setSoftIdentifier(getSoftIdentifier());
         }
-        if (activationNumber != null) {
-            builder.setActivationNumber(activationNumber);
+        if (getActivationNumber() != null) {
+            builder.setActivationNumber(getActivationNumber());
         }
-        if (activationValidThru != null) {
-            builder.setActivationValidThru(getTimestamp(activationValidThru));
+        if (getActivationValidThru() != null) {
+            builder.setActivationValidThru(getTimestamp(getActivationValidThru()));
         }
-        if (unitCost != null) {
-            builder.setUnitCost(getFixedPoint(unitCost));
+        if (getUnitCost() != null) {
+            builder.setUnitCost(getFixedPoint(getUnitCost()));
         }
-        if (currencyUomId != null) {
-            builder.setCurrencyUomId(currencyUomId);
+        if (getCurrencyUomId() != null) {
+            builder.setCurrencyUomId(getCurrencyUomId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
                     
         return builder;

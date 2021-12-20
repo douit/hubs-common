@@ -76,41 +76,45 @@ public class ProductConfigOption implements IEventModel<ProductConfigOptionData.
 
     public ProductConfigOptionData.Builder toDataBuilder() {
         ProductConfigOptionData.Builder builder = ProductConfigOptionData.newBuilder();
-        if (configItemId != null) {
-            builder.setConfigItemId(configItemId);
+        if (getConfigItemId() != null) {
+            builder.setConfigItemId(getConfigItemId());
         }
-        if (configOptionId != null) {
-            builder.setConfigOptionId(configOptionId);
+        if (getConfigOptionId() != null) {
+            builder.setConfigOptionId(getConfigOptionId());
         }
-        if (fromDate != null) {
-            builder.setFromDate(getTimestamp(fromDate));
+        if (getFromDate() != null) {
+            builder.setFromDate(getTimestamp(getFromDate()));
         }
-        if (thruDate != null) {
-            builder.setThruDate(getTimestamp(thruDate));
+        if (getThruDate() != null) {
+            builder.setThruDate(getTimestamp(getThruDate()));
         }
-        if (configOptionName != null) {
-            builder.setConfigOptionName(configOptionName);
+        if (getConfigOptionName() != null) {
+            builder.setConfigOptionName(getConfigOptionName());
         }
-        if (description != null) {
-            builder.setDescription(description);
+        if (getDescription() != null) {
+            builder.setDescription(getDescription());
         }
-        if (sequenceNum != null) {
-            builder.setSequenceNum(sequenceNum);
+        if (getSequenceNum() != null) {
+            builder.setSequenceNum(getSequenceNum());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductConfigOption fromData(ProductConfigOptionData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductConfigOption.ProductConfigOptionBuilder fromPrototype(ProductConfigOptionData data) {
         return ProductConfigOption.builder()
                 .configItemId(data.getConfigItemId())
                 .configOptionId(data.getConfigOptionId())
@@ -122,8 +126,7 @@ public class ProductConfigOption implements IEventModel<ProductConfigOptionData.
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

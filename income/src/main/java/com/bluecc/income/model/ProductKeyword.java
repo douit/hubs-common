@@ -73,35 +73,39 @@ public class ProductKeyword implements IEventModel<ProductKeywordData.Builder>, 
 
     public ProductKeywordData.Builder toDataBuilder() {
         ProductKeywordData.Builder builder = ProductKeywordData.newBuilder();
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (keyword != null) {
-            builder.setKeyword(keyword);
+        if (getKeyword() != null) {
+            builder.setKeyword(getKeyword());
         }
-        if (keywordTypeId != null) {
-            builder.setKeywordTypeId(keywordTypeId);
+        if (getKeywordTypeId() != null) {
+            builder.setKeywordTypeId(getKeywordTypeId());
         }
-        if (relevancyWeight != null) {
-            builder.setRelevancyWeight(relevancyWeight);
+        if (getRelevancyWeight() != null) {
+            builder.setRelevancyWeight(getRelevancyWeight());
         }
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ProductKeyword fromData(ProductKeywordData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ProductKeyword.ProductKeywordBuilder fromPrototype(ProductKeywordData data) {
         return ProductKeyword.builder()
                 .productId(data.getProductId())
                 .keyword(data.getKeyword())
@@ -111,8 +115,7 @@ public class ProductKeyword implements IEventModel<ProductKeywordData.Builder>, 
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

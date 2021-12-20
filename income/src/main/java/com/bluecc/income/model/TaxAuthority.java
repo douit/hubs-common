@@ -72,35 +72,39 @@ public class TaxAuthority implements IEventModel<TaxAuthorityData.Builder>, HasI
 
     public TaxAuthorityData.Builder toDataBuilder() {
         TaxAuthorityData.Builder builder = TaxAuthorityData.newBuilder();
-        if (taxAuthGeoId != null) {
-            builder.setTaxAuthGeoId(taxAuthGeoId);
+        if (getTaxAuthGeoId() != null) {
+            builder.setTaxAuthGeoId(getTaxAuthGeoId());
         }
-        if (taxAuthPartyId != null) {
-            builder.setTaxAuthPartyId(taxAuthPartyId);
+        if (getTaxAuthPartyId() != null) {
+            builder.setTaxAuthPartyId(getTaxAuthPartyId());
         }
-        if (requireTaxIdForExemption != null) {
-            builder.setRequireTaxIdForExemption(getIndicator(requireTaxIdForExemption));
+        if (getRequireTaxIdForExemption() != null) {
+            builder.setRequireTaxIdForExemption(getIndicator(getRequireTaxIdForExemption()));
         }
-        if (taxIdFormatPattern != null) {
-            builder.setTaxIdFormatPattern(taxIdFormatPattern);
+        if (getTaxIdFormatPattern() != null) {
+            builder.setTaxIdFormatPattern(getTaxIdFormatPattern());
         }
-        if (includeTaxInPrice != null) {
-            builder.setIncludeTaxInPrice(getIndicator(includeTaxInPrice));
+        if (getIncludeTaxInPrice() != null) {
+            builder.setIncludeTaxInPrice(getIndicator(getIncludeTaxInPrice()));
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static TaxAuthority fromData(TaxAuthorityData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static TaxAuthority.TaxAuthorityBuilder fromPrototype(TaxAuthorityData data) {
         return TaxAuthority.builder()
                 .taxAuthGeoId(data.getTaxAuthGeoId())
                 .taxAuthPartyId(data.getTaxAuthPartyId())
@@ -110,8 +114,7 @@ public class TaxAuthority implements IEventModel<TaxAuthorityData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

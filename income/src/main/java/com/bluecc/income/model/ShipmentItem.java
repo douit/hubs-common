@@ -72,35 +72,39 @@ public class ShipmentItem implements IEventModel<ShipmentItemData.Builder>, HasI
 
     public ShipmentItemData.Builder toDataBuilder() {
         ShipmentItemData.Builder builder = ShipmentItemData.newBuilder();
-        if (shipmentId != null) {
-            builder.setShipmentId(shipmentId);
+        if (getShipmentId() != null) {
+            builder.setShipmentId(getShipmentId());
         }
-        if (shipmentItemSeqId != null) {
-            builder.setShipmentItemSeqId(shipmentItemSeqId);
+        if (getShipmentItemSeqId() != null) {
+            builder.setShipmentItemSeqId(getShipmentItemSeqId());
         }
-        if (productId != null) {
-            builder.setProductId(productId);
+        if (getProductId() != null) {
+            builder.setProductId(getProductId());
         }
-        if (quantity != null) {
-            builder.setQuantity(getFixedPoint(quantity));
+        if (getQuantity() != null) {
+            builder.setQuantity(getFixedPoint(getQuantity()));
         }
-        if (shipmentContentDescription != null) {
-            builder.setShipmentContentDescription(shipmentContentDescription);
+        if (getShipmentContentDescription() != null) {
+            builder.setShipmentContentDescription(getShipmentContentDescription());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static ShipmentItem fromData(ShipmentItemData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static ShipmentItem.ShipmentItemBuilder fromPrototype(ShipmentItemData data) {
         return ShipmentItem.builder()
                 .shipmentId(data.getShipmentId())
                 .shipmentItemSeqId(data.getShipmentItemSeqId())
@@ -110,8 +114,7 @@ public class ShipmentItem implements IEventModel<ShipmentItemData.Builder>, HasI
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     

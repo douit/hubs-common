@@ -70,32 +70,36 @@ public class InvoiceStatus implements IEventModel<InvoiceStatusData.Builder>, Ha
 
     public InvoiceStatusData.Builder toDataBuilder() {
         InvoiceStatusData.Builder builder = InvoiceStatusData.newBuilder();
-        if (statusId != null) {
-            builder.setStatusId(statusId);
+        if (getStatusId() != null) {
+            builder.setStatusId(getStatusId());
         }
-        if (invoiceId != null) {
-            builder.setInvoiceId(invoiceId);
+        if (getInvoiceId() != null) {
+            builder.setInvoiceId(getInvoiceId());
         }
-        if (statusDate != null) {
-            builder.setStatusDate(getTimestamp(statusDate));
+        if (getStatusDate() != null) {
+            builder.setStatusDate(getTimestamp(getStatusDate()));
         }
-        if (changeByUserLoginId != null) {
-            builder.setChangeByUserLoginId(changeByUserLoginId);
+        if (getChangeByUserLoginId() != null) {
+            builder.setChangeByUserLoginId(getChangeByUserLoginId());
         }
-        if (lastUpdatedTxStamp != null) {
-            builder.setLastUpdatedTxStamp(getTimestamp(lastUpdatedTxStamp));
+        if (getLastUpdatedTxStamp() != null) {
+            builder.setLastUpdatedTxStamp(getTimestamp(getLastUpdatedTxStamp()));
         }
-        if (createdTxStamp != null) {
-            builder.setCreatedTxStamp(getTimestamp(createdTxStamp));
+        if (getCreatedTxStamp() != null) {
+            builder.setCreatedTxStamp(getTimestamp(getCreatedTxStamp()));
         }
-        if (id != null) {
-            builder.setId(id);
+        if (getId() != null) {
+            builder.setId(getId());
         }
                     
         return builder;
     }
 
     public static InvoiceStatus fromData(InvoiceStatusData data) {
+        return fromPrototype(data).build();
+    }
+
+    public static InvoiceStatus.InvoiceStatusBuilder fromPrototype(InvoiceStatusData data) {
         return InvoiceStatus.builder()
                 .statusId(data.getStatusId())
                 .invoiceId(data.getInvoiceId())
@@ -104,8 +108,7 @@ public class InvoiceStatus implements IEventModel<InvoiceStatusData.Builder>, Ha
                 .lastUpdatedTxStamp(getLocalDateTime(data.getLastUpdatedTxStamp()))
                 .createdTxStamp(getLocalDateTime(data.getCreatedTxStamp()))
                 .id(data.getId())
-                
-                .build();
+                ;
     }
 
     
