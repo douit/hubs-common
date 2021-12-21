@@ -76,7 +76,7 @@ public class StatusXmlFormatTest {
         });
     }
 
-    StatusTypeData typeData(String typeName) {
+    public static StatusTypeData typeData(String typeName) {
         return StatusTypeData.newBuilder()
                 .setDescription(typeName)
                 .setHasTable(Indicator.NO)
@@ -84,7 +84,7 @@ public class StatusXmlFormatTest {
                 .build();
     }
 
-    List<StatusItemData> statusItems(String typeName, String... items) {
+    public static List<StatusItemData> statusItems(String typeName, String... items) {
         String prefix = Util.toConstName(typeName) + "_";
         return EntryStream.of(items).map(e ->
                 StatusItemData.newBuilder()

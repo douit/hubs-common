@@ -1,5 +1,5 @@
 meshes:
-  simple:
+  orderProcessor:
     start: default
     states:
       default:
@@ -7,9 +7,19 @@ meshes:
       initing:
         ok: inited
         fail: failed
+      initingProfle:
+        timeout: [10s, fail]
       inited:
         stop: stopped
         talk: self
+      processing:
+        stop: stopping
+        complete: stopped
+        fail: failed
+      processingProfile:
+        timeout: [30m, fail]
+      stopping:
+        complete: stopped
       stopped:
         restart: initing
       failed:
@@ -25,12 +35,59 @@ meshes:
         fail: failed
       opened:
         close: closing
-        trade: self
+        trade: _self
+        receiveOrder: ordering
+      ordering:
+        # ordering没有timeout事件, timeout都是在orderProcessor中管理,
+        # 并在timeout时发送cancel事件
+        processorComplete(orderId, status): opened
+        processorCancel: opened
+        cancelOrder(orderId): opened
+        if(afterTime("10pm")): closing
+      orderingProfile:
+        # 进入事件, 创建子actor, complete事件由orderProcessor发送
+        enter: [spawn, orderProcessor]
+        # 将cancelOrder事件作为stop事件forward到orderProcessor
+        forward(cancelOrder): [orderProcessor, stop]
       closing:
         ok: closed
         fail: failed
       failed:
         restart: openning
+
+  quickShoppingCart:
+    start: createProposal
+    entity: ShoppingList
+    states:
+      createProposal:
+        approve: created
+      created:
+        # addItem, removeItem, 都是可以根据实体及子项推断并生成默认实现的stubs
+        addItem(shoppingListItem): created
+        removeItem(shoppingListItem): created
+        cancel: cancelled
+        submit: submitting
+      submitting:
+        lockInventoryFail: failPrompting
+        fail: failPrompting
+        complete: submitted
+      submittingProfile:
+        enter: [action, lockInventoryItems]
+        timeout: [30s, fail]
+      submitted:
+        # _stop表示结束这个actor
+        ok: _stop
+      submittedProfile:
+        # 由dummyStore来执行spawn-orderProcessor的操作
+        enter: [spawn, orderProcessor, dummyStore]
+      failPrompting:
+        ok: created
+        fail: cancelled
+      cancelled:
+        restart: createProposal
+        stop: _stop
+
+
 
 
 
