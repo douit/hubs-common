@@ -52,7 +52,7 @@ public class StatusXmlFormatTest {
         printObjectStatus(objectStatus);
     }
 
-    private ModelTransition.ObjectStatus getObjectStatus(Document doc, StatusTypeData statusTypeData) {
+    public static ModelTransition.ObjectStatus getObjectStatus(Document doc, StatusTypeData statusTypeData) {
         SeedScanner scanner = new SeedScanner();
         Util.childElements(doc.getDocumentElement()).forEach(e -> scanner.processElement(e));
         scanner.setupChanges();
@@ -67,7 +67,7 @@ public class StatusXmlFormatTest {
         return objectStatus;
     }
 
-    private void printObjectStatus(ModelTransition.ObjectStatus objectStatus) {
+    private static void printObjectStatus(ModelTransition.ObjectStatus objectStatus) {
         System.out.println(objectStatus.getStartEvent());
 
         ModelTransition.StatusTransitions mesh = objectStatus.getTransitions();

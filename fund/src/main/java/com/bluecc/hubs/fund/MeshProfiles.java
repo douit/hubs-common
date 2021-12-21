@@ -6,9 +6,7 @@ import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import lombok.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -18,9 +16,16 @@ public class MeshProfiles {
     @Data
     public static class MeshesProfile {
         Map<String, MeshProfile> meshes;
+        Map<String, WorkflowProfile> workflows;
         public MeshProfile getMeshProfile(String name){
             return meshes.get(name);
         }
+    }
+
+    @Data
+    public static class WorkflowProfile{
+        List<Object> sequence;
+        Map<String, Object> stats;
     }
 
     @Data
@@ -74,6 +79,23 @@ public class MeshProfiles {
 
         public Map<String, Object> getRawBranches(String stateName){
             return (Map<String, Object>)states.get(stateName);
+        }
+
+        public Set<String> getTargetStates(String state){
+            return getGraph().successors(state);
+        }
+
+        public boolean isConnected(String from, String to){
+            return getGraph().hasEdgeConnecting(from, to);
+        }
+
+        public Optional<EventProfile> getBranchEvent(String from, String to){
+            return getGraph().edgeValue(from, to);
+        }
+
+        public MeshState getMeshState(String stateName){
+            return getMeshStates().stream().filter(m -> m.getStateName().equals(stateName))
+                    .findFirst().orElse(null);
         }
     }
 
@@ -216,7 +238,7 @@ public class MeshProfiles {
     /*
      * After these Java keywords may come an opening parenthesis.
      */
-    private static List<String> keyWordsBeforeParens = Arrays.asList("while", "for",
+    private static final List<String> keyWordsBeforeParens = Arrays.asList("while", "for",
             "if", "try", "catch", "switch");
 
     public static boolean containsMethodCall(final String s, MeshProfiles.EventProfile event) {

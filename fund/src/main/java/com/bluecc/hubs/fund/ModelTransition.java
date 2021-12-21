@@ -235,7 +235,7 @@ public class ModelTransition {
                 .stream()
                 .map(change -> Printers.TreeNode.builder()
                         .name(change.getTransitionName())
-                        .data(change.getTo().getDescription())
+                        .data(change.getTo()!=null?change.getTo().getDescription():"(EMPTY)")
                         .build())
                 .collect(Collectors.toList());
     }

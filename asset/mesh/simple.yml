@@ -1,6 +1,7 @@
 meshes:
   orderProcessor:
     start: default
+    entity: OrderHeader
     states:
       default:
         init: initing
@@ -27,6 +28,7 @@ meshes:
 
   dummyStore:
     start: closed
+    entity: ProductStore
     states:
       closed:
         open: openning
@@ -44,7 +46,7 @@ meshes:
         processorCancel: opened
         cancelOrder(orderId): opened
         if(afterTime("10pm")): closing
-      orderingProfile:
+      orderingProfile: &approveOrderByStore
         # 进入事件, 创建子actor, complete事件由orderProcessor发送
         enter: [spawn, orderProcessor]
         # 将cancelOrder事件作为stop事件forward到orderProcessor
@@ -71,7 +73,7 @@ meshes:
         lockInventoryFail: failPrompting
         fail: failPrompting
         complete: submitted
-      submittingProfile:
+      submittingProfile: &payByCustomer
         enter: [action, lockInventoryItems]
         timeout: [30s, fail]
       submitted:
@@ -87,6 +89,33 @@ meshes:
         restart: createProposal
         stop: _stop
 
+  dummyCustomer:
+    start: default
+    states:
+      default:
+        sendOrder: waitingShipment
+      waitingShipment:
+        receiveGood: confirmOrder
+      confirmOrder:
+        ok: default
+        fail: default
+      confirmOrderProfile: &confirmOrderByCustomer
+        enter: [action, autoConfirmOrder]
+        # 一小时后自动关闭
+        timeout: [1h, ok]
+
+workflows:
+  order:
+    sequence:
+      - postOrderTo(dummyStore)
+      - *approveOrderByStore
+      - createInvoiceFromOrder(orderProcessor)
+      - *payByCustomer
+      - createShipmentFromOrder(orderProcessor)
+      - *confirmOrderByCustomer
+      - completeOrder
+    stats:
+      entities: [OrderHeader, OrderItem]
 
 
 

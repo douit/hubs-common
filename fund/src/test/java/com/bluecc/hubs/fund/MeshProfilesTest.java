@@ -6,6 +6,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -93,6 +94,27 @@ public class MeshProfilesTest {
         System.out.println(event);
         boolean isInvoke=containsMethodCall("processorComplete", event);
         assertFalse(isInvoke);
+    }
+
+    @Test
+    public void loadWorkflows() throws FileNotFoundException {
+        MeshProfiles.MeshesProfile profile = sampleMeshes();
+        MeshProfiles.WorkflowProfile workflowProfile=profile.getWorkflows().get("order");
+        workflowProfile.getSequence().forEach(s ->{
+            System.out.println(s.getClass().getSimpleName()+": "+s);
+            if(s instanceof Map){
+                System.out.println("\tsignal: "+joinString(((Map<?, ?>) s).get("enter")));
+            }
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    private String joinString(Object enter) {
+        if(enter instanceof List){
+            return String.join("|", (List<String>)enter);
+        }else{
+            return enter.toString();
+        }
     }
 }
 

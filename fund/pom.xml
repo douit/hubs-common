@@ -49,8 +49,15 @@
             <artifactId>streamex</artifactId>
             <version>0.8.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.vavr/vavr -->
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>0.10.4</version>
+        </dependency>
 
-<!--        <dependency>-->
+
+        <!--        <dependency>-->
 <!--            <groupId>org.antlr</groupId>-->
 <!--            <artifactId>ST4</artifactId>-->
 <!--            <version>4.3</version>-->
