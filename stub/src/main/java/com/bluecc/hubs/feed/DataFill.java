@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.bluecc.hubs.ProtoTypes;
 import com.bluecc.hubs.stub.*;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
@@ -23,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalTime;
 import java.util.Base64;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.ProtoTypes.*;
 import static com.bluecc.hubs.fund.SeedReader.collectEntityData;
@@ -137,10 +140,13 @@ public class DataFill {
             // System.out.println(key + ":");
             for (JsonObject jsonObject : dataList.get(key)) {
                 // pretty(jsonObject);
-                Builder<?> msg = opts.flatMode ? fillDataWithFlatMode(key, jsonObject)
+                Builder<?> msgBuilder = opts.flatMode ? fillDataWithFlatMode(key, jsonObject)
                         : fillDataWithHeadMode(key, jsonObject);
-                if (msg != null) {
-                    result.put(key, msg.build());
+                if (msgBuilder != null) {
+                    Message msg=msgBuilder.build();
+                    result.put(key, msg);
+                    // log.info("input json: {}", jsonObject); // ok
+                    // log.info("(flat: {}) key {} -> {}", opts.flatMode, key, msg);
                 }
             }
         }
@@ -156,60 +162,24 @@ public class DataFill {
 
     public Builder<?> fillDataWithFlatMode(String entityName, JsonObject jsonObject) {
         Builder<?> msg = null;
-        switch (entityName) {
-            case "Party": {
-                msg = PartyFlatData.newBuilder();
-                convertData(entityName, msg, jsonObject, PartyFlatData.getDescriptor());
-                break;
-            }
-            case "Person": {
-                msg = PersonFlatData.newBuilder();
-                convertData(entityName, msg, jsonObject, PersonFlatData.getDescriptor());
-                break;
-            }
-            case "PartyRole": {
-                msg = PartyRoleData.newBuilder();
-                convertData(entityName, msg, jsonObject, PartyRoleData.getDescriptor());
-                break;
-            }
-            case "PartyStatus": {
-                msg = PartyStatusData.newBuilder();
-                convertData(entityName, msg, jsonObject, PartyStatusData.getDescriptor());
-                break;
-            }
-            case "UserLogin": {
-                msg = UserLoginData.newBuilder();
-                convertData(entityName, msg, jsonObject, UserLoginData.getDescriptor());
-                break;
-            }
-            case "UserLoginSecurityGroup": {
-                msg = UserLoginSecurityGroupData.newBuilder();
-                convertData(entityName, msg, jsonObject, UserLoginSecurityGroupData.getDescriptor());
-                break;
-            }
-            case "Product": {
-                msg = ProductFlatData.newBuilder();
-                convertData(entityName, msg, jsonObject, ProductFlatData.getDescriptor());
-                break;
-            }
-            case "ProductPrice": {
-                msg = ProductPriceData.newBuilder();
-                convertData(entityName, msg, jsonObject, ProductPriceData.getDescriptor());
-                break;
-            }
-            default:
-                // log.warn(".. ignore " + entityName);
-                DataBuilder.ProtoBuilder protoBuilder = dataBuilder.procData(entityName, true);
-                convertData(entityName, protoBuilder.getBuilder(), jsonObject,
-                        protoBuilder.getDescriptor());
-                msg = protoBuilder.getBuilder();
-        }
+        // log.warn(".. ignore " + entityName);
+        DataBuilder.ProtoBuilder protoBuilder = dataBuilder.procData(entityName, true);
+        convertData(entityName, protoBuilder.getBuilder(), jsonObject,
+                protoBuilder.getDescriptor());
+        msg = protoBuilder.getBuilder();
         return msg;
     }
 
     private void convertData(String entityName, Builder<?> msg, JsonObject jsonObject, Descriptors.Descriptor descriptor) {
-        // System.out.println("field names: "+descriptor.getFields().stream().map(f ->
-        //         f.getName()).collect(Collectors.joining(", ")));
+        // for debug
+        if(entityName.equals("UserLogin")) {
+            Set<String> flds=descriptor.getFields().stream().map(f ->
+                    f.getName()).collect(Collectors.toSet());
+            log.debug("descriptor for {}", descriptor.getName());
+            log.debug("field names: " + String.join(", ", flds));
+            Preconditions.checkArgument(flds.contains("party_id"), "field party_id?");
+        }
+
         // log.info("{}/{}: {}", entityName, descriptor.getName(), jsonObject.toString());
         // for (Map.Entry<Descriptors.FieldDescriptor, Object> fld : msg.getAllFields().entrySet()) {
         for (Descriptors.FieldDescriptor fld : descriptor.getFields()) {

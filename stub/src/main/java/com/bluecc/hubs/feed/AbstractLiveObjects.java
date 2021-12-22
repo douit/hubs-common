@@ -1,5 +1,6 @@
 package com.bluecc.hubs.feed;
 
+import org.redisson.api.RAtomicLong;
 import org.redisson.api.RLiveObjectService;
 import org.redisson.api.RQueue;
 import org.redisson.api.RedissonClient;
@@ -68,5 +69,10 @@ public abstract class AbstractLiveObjects {
     public <T> T pollQueue(String queueName){
         RQueue<T> queue = redisson().getQueue(queueName);
         return queue.poll();
+    }
+
+    public long getSeqId(String subject){
+        RAtomicLong atomicLong = redisson().getAtomicLong(subject);
+        return atomicLong.getAndIncrement();
     }
 }

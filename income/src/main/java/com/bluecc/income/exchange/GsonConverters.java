@@ -1,5 +1,6 @@
 package com.bluecc.income.exchange;
 
+import com.bluecc.hubs.fund.JsonString;
 import com.bluecc.hubs.fund.Util;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableMap;
@@ -9,12 +10,15 @@ import com.linecorp.armeria.common.annotation.Nullable;
 import com.linecorp.armeria.server.ServiceRequestContext;
 import com.linecorp.armeria.server.annotation.RequestConverterFunction;
 import com.linecorp.armeria.server.annotation.ResponseConverterFunction;
+import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.ParameterizedType;
 
+@Slf4j
 public class GsonConverters {
 
     public static final class Response {
@@ -39,13 +43,6 @@ public class GsonConverters {
         }
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class JsonString {
-        String value;
-    }
-
     public static final class GsonResponseConverter implements ResponseConverterFunction {
         @Override
         public HttpResponse convertResponse(
@@ -56,7 +53,19 @@ public class GsonConverters {
                 return ResponseConverterFunction.fallthrough();
             }
 
-            if (result instanceof JsonString) {
+            if (result instanceof Try) {
+                Try<?> tryData = (Try<?>) result;
+                if (tryData.isFailure()) {
+                    log.warn("failure: {}", tryData.getCause().getMessage());
+                    return HttpResponse.of(HttpStatus.BAD_REQUEST,
+                            MediaType.PLAIN_TEXT_UTF_8,
+                            tryData.getCause().getMessage());
+                } else {
+                    log.info("success: {}", tryData.get());
+                    return HttpResponse.of(headers, HttpData.ofUtf8(Util.prettyJson(
+                            ImmutableMap.of("result", tryData.get()))), trailers);
+                }
+            } else if (result instanceof JsonString) {
                 return HttpResponse.of(headers, HttpData.ofUtf8(((JsonString) result).getValue()),
                         trailers);
             } else if (result.getClass().isPrimitive() || Primitives.isWrapperType(result.getClass())) {
@@ -67,6 +76,7 @@ public class GsonConverters {
                 final HttpData body = HttpData.ofUtf8(response.result() + ':' + response.from());
                 return HttpResponse.of(headers, body, trailers);
             } else {
+                log.debug("serialize result type: {}", result.getClass().getSimpleName());
                 String resultBody = Util.prettyJson(result);
                 final HttpData body = HttpData.ofUtf8(resultBody);
                 return HttpResponse.of(headers, body, trailers);

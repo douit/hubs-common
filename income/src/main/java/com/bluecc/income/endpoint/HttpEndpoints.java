@@ -8,6 +8,7 @@ import com.bluecc.income.cli.CliHelpers;
 import com.bluecc.income.cli.ICmd;
 import com.bluecc.income.dao.WorkEffortDelegator;
 import com.bluecc.income.exchange.IDelegator;
+import com.bluecc.income.exchange.IService;
 import com.bluecc.income.exchange.MessageMapCollector;
 import com.bluecc.income.procs.AbstractProcs;
 import com.bluecc.income.procs.CatalogLocalCaches;
@@ -31,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import static com.bluecc.hubs.fund.Util.prettyJson;
@@ -125,10 +127,12 @@ public class HttpEndpoints extends AbstractProcs {
     // @Inject
     // Provider<WorkEffortDelegator> workEffortDelegatorProvider;
     private final Map<String, IDelegator> delegators;
+    private final Set<IService> serviceSet;
 
     @Inject
-    HttpEndpoints(Map<String, IDelegator> delegators){
+    HttpEndpoints(Map<String, IDelegator> delegators, Set<IService> serviceSet){
         this.delegators=delegators;
+        this.serviceSet=serviceSet;
     }
 
     private void initServices(ServerBuilder sb) {
@@ -146,6 +150,10 @@ public class HttpEndpoints extends AbstractProcs {
 
         // sb.annotatedService(workEffortDelegatorProvider.get());
         delegators.values().forEach(dele -> sb.annotatedService(dele));
+        serviceSet.forEach(s -> {
+            log.info(".. register service: {}", s.getClass().getSimpleName());
+            sb.annotatedService(s);
+        });
     }
 
     DataBuilder dataBuilder=new DataBuilder();

@@ -59,7 +59,8 @@ public class StoreModule extends AbstractFacModule {
 
     public static Injector startup(String tenant){
         return Guice.createInjector(new StoreModule(tenant),
-                new DelegatorsPluginModule());
+                new DelegatorsPluginModule(),
+                new ServicesPluginModule());
     }
 
     public static <T> T startup(Class<T> clz){

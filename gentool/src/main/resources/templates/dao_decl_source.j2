@@ -192,12 +192,14 @@ public class {{ent.name}}Delegator extends AbstractProcs implements IChainQuery<
     }
 
     @Post("/{{ent.plural}}")
+    @ProducesJson
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String store({{ent.name}} {{ent.varName}}){
         return store({{ent.varName}}, true);
     }
 
     @Put("/{{ent.plural}}")
+    @ProducesJson
     @RequestConverter(GsonConverters.GsonRequestConverter.class)
     public String storeOrUpdate({{ent.name}} {{ent.varName}}){
         return store({{ent.varName}}, false);

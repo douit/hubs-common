@@ -64,12 +64,7 @@ public class ShoppingListDelegatorTest extends AbstractStoreProcTest {
         System.out.println(id + " ==> " + shoppingList);
 
         // add a item
-        ShoppingListItem itemData = ShoppingListItem
-                .fromPrototype(ShoppingListItem_DemoWishList_00001())
-                .id(sequence.nextStringId())
-                .shoppingListId(id)
-                .shoppingListItemSeqId("1")
-                .build();
+        ShoppingListItem itemData = newShoppingListItem(id);
         System.out.println("will save ==>");
         prettyFull(itemData);
 
@@ -111,6 +106,16 @@ public class ShoppingListDelegatorTest extends AbstractStoreProcTest {
         //   "last_updated_tx_stamp": "2021-12-21T02:30:49.569Z",
         //   "created_tx_stamp": "1970-01-01T00:00:00Z"
         // }
+    }
+
+    private ShoppingListItem newShoppingListItem(String id) {
+        ShoppingListItem itemData = ShoppingListItem
+                .fromPrototype(ShoppingListItem_DemoWishList_00001())
+                .id(sequence.nextStringId())
+                .shoppingListId(id)
+                .shoppingListItemSeqId("1")
+                .build();
+        return itemData;
     }
 
     private ShoppingList getShoppingList() {

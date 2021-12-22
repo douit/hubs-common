@@ -92,7 +92,7 @@ public class ModelTransition {
         }
     }
 
-    static String toVar(String s){
+    public static String toVar(String s){
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, s);
     }
 
@@ -216,6 +216,9 @@ public class ModelTransition {
 
         public String getEventName(){
             return wordsToClassName(transitionName);
+        }
+        public String getEventVarName(){
+            return Util.toVarName(getEventName());
         }
         public String getToHandler(){
             return toVar(statusIdTo);

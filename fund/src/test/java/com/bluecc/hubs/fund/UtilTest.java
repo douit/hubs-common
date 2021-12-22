@@ -1,6 +1,8 @@
 package com.bluecc.hubs.fund;
 
 import com.google.common.base.CaseFormat;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pivovarit.function.ThrowingPredicate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.bluecc.hubs.fund.Util.createRegexFromGlob;
-import static com.bluecc.hubs.fund.Util.flatten;
+import static com.bluecc.hubs.fund.Util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
@@ -156,5 +157,17 @@ public class UtilTest {
 
     }
 
+    @Test
+    public void testJsonSerialize(){
+        String url="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png";
+        Customer john = new Customer("John P.", 15, url);
+
+        Gson gson= new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(gson.toJson(john));
+
+        pretty(john);
+
+        System.out.println(underscoreJson(john));
+    }
 
 }

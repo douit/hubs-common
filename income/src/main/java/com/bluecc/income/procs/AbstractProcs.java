@@ -349,7 +349,7 @@ public class AbstractProcs {
                 .collect(Collectors.toList());
 
         if (fieldsCond.isEmpty()) {
-            log.warn("no fields to update.");
+            log.warn("no fields to update: "+flatData);
             return 0;
         }
 

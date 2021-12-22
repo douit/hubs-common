@@ -17,7 +17,7 @@ public class YamlTest {
 
     @Test
     public void loadMap() throws FileNotFoundException {
-        File simpleFile=SystemDefs.prependHubsHomeFile("asset/mesh/simple.yml");
+        File simpleFile=SystemDefs.prependHubsHomeFile("asset/mesh/draft.yml");
         Yaml yaml=new Yaml();
         Map<String, Object> simpeLoader=yaml.load(new FileReader(simpleFile));
         System.out.println(simpeLoader.keySet());

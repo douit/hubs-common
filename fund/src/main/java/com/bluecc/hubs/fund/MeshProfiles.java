@@ -24,11 +24,15 @@ public class MeshProfiles {
 
     @Data
     public static class WorkflowProfile{
+        Map<String, Object> start;
         List<Object> sequence;
         Map<String, Object> stats;
     }
 
     @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     @SuppressWarnings("unchecked")
     public static class MeshProfile{
         String start;
@@ -106,10 +110,18 @@ public class MeshProfiles {
 
         public MeshState(String name, Map<String, Object> rawBranches) {
             this.stateName=name;
-            setBranchList(rawBranches.entrySet().stream().map(e ->{
-                return new MeshProfiles.Branch(parseEvent(e.getKey()),
-                        e.getValue().toString());
-            }).collect(Collectors.toList()));
+            if(rawBranches==null){
+                this.branchList=Lists.newArrayList();
+            }else {
+                setBranchList(rawBranches.entrySet().stream().map(e -> {
+                    return new MeshProfiles.Branch(parseEvent(e.getKey()),
+                            e.getValue().toString());
+                }).collect(Collectors.toList()));
+            }
+        }
+
+        public boolean hasBranch(){
+            return !branchList.isEmpty();
         }
     }
 

@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.bluecc.hubs.fund.GsonHelpers.EXCLUSION_STRATEGY;
+import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
 import static java.util.Objects.requireNonNull;
 import static org.yaml.snakeyaml.DumperOptions.FlowStyle.AUTO;
 
@@ -110,6 +111,16 @@ public class Util {
             // .setExclusionStrategies(strategy)
             .create();
 
+    public static final Gson GSON_UNDER_SCORE = new GsonBuilder()
+            .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+//            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
+            .registerTypeHierarchyAdapter(List.class, new GsonHelpers.CollectionAdapter())
+            .setPrettyPrinting()
+            // .setExclusionStrategies(strategy)
+            .create();
+
     public static void pretty(Object o) {
         System.out.println(GSON.toJson(o));
     }
@@ -121,6 +132,10 @@ public class Util {
         // return GSON.toJson(o);
         // 不用Exclude标注, 使用TypeHierarchyAdapter方式来过滤空列表和对象
         return GSON_NO_EXCLUDE.toJson(o);
+    }
+
+    public static String underscoreJson(Object o) {
+        return GSON_UNDER_SCORE.toJson(o);
     }
 
     public static String toString(Object o){

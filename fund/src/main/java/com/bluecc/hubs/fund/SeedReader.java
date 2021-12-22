@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,6 +17,7 @@ import java.util.Set;
 import static com.bluecc.hubs.fund.Util.GSON;
 import static com.bluecc.hubs.fund.Util.pretty;
 
+@Slf4j
 public class SeedReader {
 
     public static void main(String[] args) throws Exception {
@@ -84,6 +86,7 @@ public class SeedReader {
             if (nodeList.item(i) instanceof Element){
                 Element element=(Element) nodeList.item(i);
                 dataList.put(element.getTagName(), convertElement(element, camelCase));
+
             }
         }
     }
@@ -100,6 +103,8 @@ public class SeedReader {
         children.forEach(c -> jsonObject.addProperty(
                 camelCase?c.getTagName():Util.toSnakecase(c.getTagName()),
                 fixTextContent(c.getTextContent())));
+
+        log.debug("convert: {}", jsonObject);
         return jsonObject;
     }
 

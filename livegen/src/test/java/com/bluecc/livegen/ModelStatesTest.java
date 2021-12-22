@@ -105,7 +105,7 @@ public class ModelStatesTest {
 
     Yaml yaml=new Yaml();
     private MeshProfiles.MeshesProfile sampleMeshes() throws FileNotFoundException {
-        File simpleFile= SystemDefs.prependHubsHomeFile("asset/mesh/simple.yml");
+        File simpleFile= SystemDefs.prependHubsHomeFile("asset/mesh/draft.yml");
         MeshProfiles.MeshesProfile profile=yaml.loadAs(new FileReader(simpleFile),
                 MeshProfiles.MeshesProfile.class);
         return profile;

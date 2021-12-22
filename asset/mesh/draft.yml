@@ -38,7 +38,7 @@ meshes:
       opened:
         close: closing
         trade: _self
-        receiveOrder: ordering
+        receiveOrder(orderHeader): ordering
       ordering:
         # ordering没有timeout事件, timeout都是在orderProcessor中管理,
         # 并在timeout时发送cancel事件
@@ -47,6 +47,7 @@ meshes:
         cancelOrder(orderId): opened
         if(afterTime("10pm")): closing
       orderingProfile: &approveOrderByStore
+        createWorkflow(order): [orderHeader]
         # 进入事件, 创建子actor, complete事件由orderProcessor发送
         enter: [spawn, orderProcessor]
         # 将cancelOrder事件作为stop事件forward到orderProcessor
@@ -56,17 +57,19 @@ meshes:
         fail: failed
       failed:
         restart: openning
+      idle:
+
 
   quickShoppingCart:
-    start: createProposal
+    start: createRequest
     entity: ShoppingList
     states:
-      createProposal:
-        approve: created
+      createRequest:
+        approveRequest: created
       created:
         # addItem, removeItem, 都是可以根据实体及子项推断并生成默认实现的stubs
-        addItem(shoppingListItem): created
-        removeItem(shoppingListItem): created
+        addItem(shoppingListItem): _self
+        removeItem(shoppingListItem): _self
         cancel: cancelled
         submit: submitting
       submitting:
@@ -106,9 +109,8 @@ meshes:
 
 workflows:
   order:
+    start: *approveOrderByStore
     sequence:
-      - postOrderTo(dummyStore)
-      - *approveOrderByStore
       - createInvoiceFromOrder(orderProcessor)
       - *payByCustomer
       - createShipmentFromOrder(orderProcessor)

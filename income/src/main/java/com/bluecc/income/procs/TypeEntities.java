@@ -2,6 +2,7 @@ package com.bluecc.income.procs;
 
 import com.bluecc.hubs.ProtoJsonUtils;
 import com.bluecc.hubs.feed.FactBag;
+import com.bluecc.hubs.fund.JsonString;
 import com.bluecc.hubs.stub.*;
 import com.bluecc.income.exchange.GsonConverters;
 import com.linecorp.armeria.server.annotation.Get;
@@ -24,7 +25,7 @@ public class TypeEntities {
     @Get("/types/:name")
     @ProducesJson
     @ResponseConverter(GsonConverters.GsonResponseConverter.class)
-    public GsonConverters.JsonString queryTypes(@Param String name) {
+    public JsonString queryTypes(@Param String name) {
         String result;
         switch (name){
             
@@ -1113,7 +1114,7 @@ public class TypeEntities {
                 break;
         }
 
-        return new GsonConverters.JsonString(result);
+        return new JsonString(result);
     }
 
     static String quoteList(String jsonLines){
