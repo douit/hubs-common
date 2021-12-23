@@ -101,6 +101,14 @@ public class MeshProfiles {
             return getMeshStates().stream().filter(m -> m.getStateName().equals(stateName))
                     .findFirst().orElse(null);
         }
+
+        public Set<String> getEventSources(String stateName){
+            return this.getGraph().predecessors(stateName).stream()
+                    .map(st -> getGraph().edgeValue(st, stateName))
+                    .filter(o -> o.isPresent())
+                    .map(ev -> ev.get().getEventName())
+                    .collect(Collectors.toSet());
+        }
     }
 
     @Data

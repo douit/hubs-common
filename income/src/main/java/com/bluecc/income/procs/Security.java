@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.bluecc.hubs.feed.LiveObjects;
 import com.bluecc.hubs.fund.Sequence;
 import com.bluecc.income.dao.UserLoginDelegator;
 import com.bluecc.income.exchange.GsonConverters;
@@ -13,8 +14,10 @@ import com.linecorp.armeria.server.annotation.*;
 import io.vavr.control.Try;
 import lombok.Builder;
 import lombok.Data;
+import org.redisson.api.RBloomFilter;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +29,8 @@ public class Security implements IService {
     Sequence sequence;
     @Inject
     UserLoginDelegator userLogins;
+    @Inject
+    Provider<LiveObjects> liveObjectsProvider;
 
     Algorithm algorithm = Algorithm.HMAC256("secret");
     long DAY_IN_MS = 1000 * 60 * 60 * 24;
@@ -82,5 +87,14 @@ public class Security implements IService {
                 .loginId(claims.get("login").asString())
                 .ownerId(claims.get("owner").asString())
                 .build();
+    }
+
+    public boolean isInBlacklist(String loginId){
+        RBloomFilter<String> blackListFilter = liveObjectsProvider.get().getBlacklistFilter();
+        return blackListFilter.contains(loginId);
+    }
+
+    public void addToBlacklist(String loginId){
+        liveObjectsProvider.get().getBlacklistFilter().add(loginId);
     }
 }

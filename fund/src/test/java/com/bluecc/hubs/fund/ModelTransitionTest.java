@@ -4,6 +4,11 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -59,10 +64,32 @@ public class ModelTransitionTest {
         return StringUtils.repeat(DEFAULT_INDENT, times);
     }
 
+    static void format(Writer writer, String format, Object...args) throws IOException {
+        writer.append(String.format(format, args));
+    }
+
     @Test
-    public void testModelTransitionYaml(){
-        // String objTrans="Order";
-        String objTrans="Party";
+    public void testModelTransitionYaml() throws IOException {
+        String objTrans="Order";
+        // String objTrans="Party";
+        StringWriter writer=new StringWriter();
+        printTransitionsTo(objTrans, writer);
+
+        writer.close();
+        System.out.println(writer.toString());
+    }
+
+    @Test
+    public void testModelTransitionYamlFile() throws IOException {
+        String objTrans="Order";
+        String targetPath=SystemDefs.prependHubsHome("asset/mesh");
+        // String objTrans="Party";
+        Writer writer=new FileWriter(Paths.get(targetPath, objTrans+".yml").toFile());
+        printTransitionsTo(objTrans, writer);
+        writer.close();
+    }
+
+    private void printTransitionsTo(String objTrans, Writer writer) throws IOException {
         ModelTransition.ObjectStatus statusTransitions= modelTransition
                 .getTransitions(objTrans);
         assertNotNull(statusTransitions);
@@ -70,28 +97,33 @@ public class ModelTransitionTest {
                 .getTransitions()
                 .getEventNames());
 
-        System.out.println("meshes:");
+        writer.append("meshes:\n");
         // Map<String, Object> meshMap= Maps.newHashMap();
         // meshMap.put("start", statusTransitions.getStartEvent());
         int level=1;
-        System.out.format("%s%s:\n", indent(level), Util.toVarName(objTrans));
+        format(writer, "%s%s:\n", indent(level), Util.toVarName(objTrans));
 
         level++;
-        System.out.format("%sstart: %s\n", indent(level),statusTransitions.getStartState());
-        System.out.println(indent(level)+"states:");
+        format(writer, "%sstart: %s\n", indent(level),statusTransitions.getStartState());
+        format(writer, indent(level)+"states:\n");
 
         // for (String state : statusTransitions.getTransitions().states) {
         level++;
         for (String state : statusTransitions.getTransitions().getAvailableStates()) {
             String stateName=ModelTransition.toVar(state);
-            System.out.println(indent(level)+stateName+":");
+            format(writer, indent(level)+stateName+":\n");
             // System.out.println("to:");
             int finalLevel = level+1;
             statusTransitions.getTransitions().getFromTransitions(state).forEach(chg ->{
-                System.out.format("%s%s: %s\n", indent(finalLevel),
-                        chg.getEventVarName(),
-                        chg.getToHandler());
+                try {
+                    format(writer, "%s%s: %s\n", indent(finalLevel),
+                            chg.getEventVarName(),
+                            chg.getToHandler());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
         }
+
     }
 }

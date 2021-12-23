@@ -111,6 +111,7 @@ public class ShoppingCarts implements IService {
                     .lastUpdatedStamp(LocalDateTime.now())
                     .lastUpdatedTxStamp(LocalDateTime.now())
                     .build());
+
             carts.put(shoppingList.getShoppingListId(),
                     new ShoppingCart(ownerId, shoppingList));
             return shoppingList.getShoppingListId();

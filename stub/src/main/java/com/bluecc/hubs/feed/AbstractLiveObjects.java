@@ -1,13 +1,11 @@
 package com.bluecc.hubs.feed;
 
-import org.redisson.api.RAtomicLong;
-import org.redisson.api.RLiveObjectService;
-import org.redisson.api.RQueue;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.redisson.api.condition.Condition;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -74,5 +72,28 @@ public abstract class AbstractLiveObjects {
     public long getSeqId(String subject){
         RAtomicLong atomicLong = redisson().getAtomicLong(subject);
         return atomicLong.getAndIncrement();
+    }
+
+    public boolean containsId(String entityName, String id){
+        RBloomFilter<String> bloomFilter = getIdFilter(entityName);
+        return bloomFilter.contains(id);
+    }
+
+    private RBloomFilter<String> getIdFilter(String entityName) {
+        RBloomFilter<String> bloomFilter = redisson().getBloomFilter(entityName +"Ids");
+        return bloomFilter;
+    }
+
+    public void populateIds(String entityName, List<String> ids){
+        RBloomFilter<String> bloomFilter = getIdFilter(entityName);
+        ids.forEach(id -> bloomFilter.add(id));
+    }
+
+    public long count(String entityName){
+        return getIdFilter(entityName).count();
+    }
+
+    public RBloomFilter<String> getBlacklistFilter(){
+        return redisson().getBloomFilter("Blacklist");
     }
 }

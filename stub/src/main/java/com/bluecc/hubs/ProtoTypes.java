@@ -4,11 +4,14 @@ import com.bluecc.hubs.fund.MetaTypes;
 import com.bluecc.hubs.fund.Util;
 import com.bluecc.hubs.feed.DataBuilder;
 import com.bluecc.hubs.stub.*;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.protobuf.*;
+import com.google.protobuf.StringValue;
 import com.google.type.Date;
 import com.google.type.Money;
 import com.google.type.TimeOfDay;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 // import org.joda.time.DateTime;
 
@@ -17,6 +20,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +38,7 @@ public class ProtoTypes {
     public static java.math.BigDecimal getBigDecimal(Currency serialized) {
         try {
             return new BigDecimal(serialized.getValue());
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             log.warn("Cannot parse value as decimal '{}'", serialized.getValue());
             return BigDecimal.ZERO;
         }
@@ -215,14 +219,14 @@ public class ProtoTypes {
                 return Indicator.NO;
             default:
                 Indicator indicator;
-                char firstChar=c.charAt(0);
-                if(Character.isUpperCase(firstChar)){
-                   indicator=Indicator.valueOf(c);
-                }else {
+                char firstChar = c.charAt(0);
+                if (Character.isUpperCase(firstChar)) {
+                    indicator = Indicator.valueOf(c);
+                } else {
                     indicator = Indicator.forNumber(Integer.parseInt(c));
                 }
-                if(indicator==null) {
-                    indicator= Indicator.UNKNOWN;
+                if (indicator == null) {
+                    indicator = Indicator.UNKNOWN;
                 }
                 return indicator;
         }
@@ -237,7 +241,7 @@ public class ProtoTypes {
             case UNKNOWN:
                 return ' ';
             default:
-                if(indicator.getNumber()>=65 && indicator.getNumber()<=72){
+                if (indicator.getNumber() >= 65 && indicator.getNumber() <= 72) {
                     return (char) indicator.getNumber();
                 }
                 return String.valueOf(indicator.getNumber()).charAt(0);
@@ -335,6 +339,25 @@ public class ProtoTypes {
         return envelope;
     }
 
+    public static Envelope packString(String value) {
+        return Envelope.newBuilder()
+                .setDataType("string")
+                .setData(Any.pack(StringValue.newBuilder()
+                        .setValue(value)
+                        .build()))
+                .build();
+    }
+
+    public static Envelope packValueMap(Map<String, Value> map){
+        Struct struct= Struct.newBuilder()
+                .putAllFields(map)
+                .build();
+        return Envelope.newBuilder()
+                .setDataType("value-map")
+                .setData(Any.pack(struct))
+                .build();
+    }
+
     public static byte[] serializeEntityWithEnvelope(Message protoMess) {
         return packEntity(protoMess).toByteArray();
     }
@@ -352,6 +375,20 @@ public class ProtoTypes {
                 DataBuilder.getEntityClass(request.getDataType(), request.getFlat());
         Message msg = any.unpack(entityClass);
         return msg;
+    }
+
+    public static Try<Map<String, Value>> unpackValueMap(Envelope request) {
+        Any any = request.getData();
+        return Try.of(()-> any.unpack(Struct.class).getFieldsMap());
+    }
+
+    public static Try<String> unpackString(Envelope request) {
+        return Try.of(()-> {
+            Any any = request.getData();
+            Preconditions.checkArgument(any.is(StringValue.class),
+                    "pack-object is not string value");
+            return any.unpack(StringValue.class).getValue();
+        });
     }
 
     public static Message deserializeEntityWithEnvelope(byte[] cnt) throws InvalidProtocolBufferException {

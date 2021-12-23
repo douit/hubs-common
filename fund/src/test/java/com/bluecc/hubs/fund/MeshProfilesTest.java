@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.bluecc.hubs.fund.MeshProfiles.containsMethodCall;
@@ -15,9 +16,52 @@ import static com.bluecc.hubs.fund.MeshProfiles.parseEvent;
 import static com.bluecc.hubs.fund.Util.pretty;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MeshProfilesTest {
     Yaml yaml=new Yaml();
+
+
+    private MeshProfiles.MeshesProfile orderMeshes() throws FileNotFoundException {
+        File simpleFile= SystemDefs.prependHubsHomeFile("asset/mesh/Order.yml");
+        MeshProfiles.MeshesProfile profile=yaml.loadAs(new FileReader(simpleFile),
+                MeshProfiles.MeshesProfile.class);
+        return profile;
+    }
+
+    @Test
+    public void testEventSources() throws FileNotFoundException {
+        MeshProfiles.MeshesProfile profile = orderMeshes();
+        MeshProfiles.MeshProfile mesh = profile.getMeshProfile("order");
+        mesh.getMeshStates().forEach(st -> {
+            System.out.println(st.stateName);
+            st.getBranchList().forEach(b -> {
+                System.out.format("\t%s - %s\n", b.getEvent().getEventName(), b.getTargetState());
+            });
+        });
+
+        System.out.println("succ: "+mesh.getGraph().successors("orderHold"));
+        System.out.println("pred: "+mesh.getGraph().predecessors("orderHold"));
+
+        System.out.println("pred: "+mesh.getGraph().predecessors("orderCancelled"));
+        System.out.println("all events ===> ");
+        mesh.getGraph().predecessors("orderCancelled").forEach(st ->{
+            System.out.println("orderCancelled -> "+ st);
+            System.out.println("\t"+mesh.getGraph().edgeValue(st, "orderCancelled")
+                    .orElse(null));
+        });
+
+        String stateName="orderCancelled";
+        Set<String> collectEvts = mesh.getGraph().predecessors(stateName).stream()
+                .map(st -> mesh.getGraph().edgeValue(st, stateName))
+                .filter(o -> o.isPresent())
+                .map(ev -> ev.get().getEventName())
+                .collect(Collectors.toSet());
+        System.out.println(collectEvts);
+
+        //
+        assertThat(mesh.getEventSources(stateName)).containsOnly("orderCancelled", "cancelOrder");
+    }
 
     @Test
     public void loadBranches() throws FileNotFoundException {

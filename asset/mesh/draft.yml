@@ -61,10 +61,10 @@ meshes:
 
 
   quickShoppingCart:
-    start: createRequest
+    start: default
     entity: ShoppingList
     states:
-      createRequest:
+      default:
         approveRequest: created
       created:
         # addItem, removeItem, 都是可以根据实体及子项推断并生成默认实现的stubs

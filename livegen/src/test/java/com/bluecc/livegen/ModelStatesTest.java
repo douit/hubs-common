@@ -111,6 +111,13 @@ public class ModelStatesTest {
         return profile;
     }
 
+    private MeshProfiles.MeshesProfile orderMeshes() throws FileNotFoundException {
+        File simpleFile= SystemDefs.prependHubsHomeFile("asset/mesh/Order.yml");
+        MeshProfiles.MeshesProfile profile=yaml.loadAs(new FileReader(simpleFile),
+                MeshProfiles.MeshesProfile.class);
+        return profile;
+    }
+
     public static final List<StatusItemData> statusItemList = ImmutableList.of(
             StatusItem_ORDER_CREATED,
             StatusItem_ORDER_PROCESSING,
